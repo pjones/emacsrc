@@ -1,0 +1,9 @@
+inf-ruby.el      : From the Ruby source code, misc directory
+ri-emacs.rb      : From http://rubyforge.org/projects/ri-emacs/
+ri-ruby.el       : From http://rubyforge.org/projects/ri-emacs/
+ruby-electric.el : From the Ruby source code, with local modifications
+ruby-mode.el     : From the Ruby source code, with local modifications
+
+Other ruby things:
+rails            : From http://rubyforge.org/projects/emacs-rails/
+rhtml            : From http://rubyforge.org/projects/rinari/
