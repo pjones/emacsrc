@@ -1,4 +1,4 @@
-DIRS = packages emacs.d
+DIRS = download packages emacs.d
 
 all:
 	@ for d in $(DIRS); do $(MAKE) -C $$d; done

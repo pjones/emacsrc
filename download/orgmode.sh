@@ -3,12 +3,6 @@
 # Load in common items
 . `dirname $0`/common.sh
 
-if [ $# -ne 1 ]; then
-  echo "missing version number"
-  exit 1
-fi
-
-VERSION=$1
 URL="http://orgmode.org/org-${VERSION}.tar.gz"
 
 file=`fetch_url $URL`
