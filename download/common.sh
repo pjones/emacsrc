@@ -31,15 +31,28 @@ fetch_url ()
 ################################################################################
 untar_name ()
 {
-  echo $1 | sed -E 's/\.tar\.gz|\.tgz|\.tar\.bz2//'
+  echo $1 | sed -E 's/\.tar\.gz|\.tgz|\.tar\.bz2|\.zip//'
 }
 
 ################################################################################
 untar ()
 {
   # $1: the name of the tarball (should be .tar.gz)
-  dir=`untar_name $1`
-  test -d $dir || tar xzf $1 || die "failed to untar file: $1"
+  # $2: the name of the expected directory (optional)
+  if [ "x$2" != "x" ]; then
+    dir=$2
+  else
+    dir=`untar_name $1`
+  fi
+  
+  if [ ! -d $dir ]; then
+    if echo $1 | egrep -q '\.tar.gz|\.tgz'; then
+      tar xzf $1 || die "failed to untar file: $1"
+    elif echo $1 | egrep -q '\.zip'; then
+      unzip $1 || die "failed to unzip file: $1"
+    fi
+  fi
+
   test -d $dir || die "failed to create: $dir from $1"
   echo $dir
 }
