@@ -9,7 +9,7 @@
 
 ;; Muse Projects
 (setq muse-project-alist
-      `(("pmade.com" 
+      `(("pmade.com"
          (,@(muse-project-alist-dirs pmade-com-src) :default "index" :set (muse-barecms-url "http://pmade.com"))
          ,@(muse-project-alist-styles pmade-com-src pmade-com-dst "barecms" :include "\\.muse$" :exclude "/snippets/"))))
 
@@ -46,6 +46,6 @@
 <lisp>(and muse-publish-generate-contents
            (not muse-latex-permit-contents-tag)
            \"\\\\tableofcontents\n\\\\newpage\")</lisp>\n\n")
-  
+
 (muse-derive-style "printable-xhtml" "xhtml"
                    :header 'pmade-muse-html-header)

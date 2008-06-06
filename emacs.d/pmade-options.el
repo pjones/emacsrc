@@ -15,7 +15,7 @@
 (and terminal-frame (fboundp 'menu-bar-mode) (menu-bar-mode -1))
 
 ;; General options
-(setq 
+(setq
  inhibit-startup-message t        ; I've seen it already
  ring-bell-function (lambda ())   ; kill those damn bells
  visible-bell nil                 ; no visual bell
@@ -25,7 +25,7 @@
  disabled-command-hook nil)       ; Enable commands disabled by default for novice users
 
 ;; Frame setup
-(setq 
+(setq
  default-frame-alist '((cursor-type  . bar) (cursor-color . "yellow")))
 
 ;; Window Fringes
@@ -56,3 +56,6 @@
 (setq kept-old-versions 2)
 (setq version-control t)
 (setq backup-by-copying t)
+
+;; Use Aspell
+(setq ispell-program-name "aspell")

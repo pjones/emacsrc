@@ -23,14 +23,14 @@
 
 ;; manually set some keys because for some reason, local-set-key
 ;; doesn't work for ruby-mode in terminal emacs :(
-(add-hook 'ruby-mode-hook 
-          '(lambda ()
-             (pmade-ruby-mode-hook)
-             (define-key ruby-mode-map "\t"   'pmade-smart-tab)
-             (define-key ruby-mode-map "\C-m" 'pmade-newline)))
+(add-hook 'ruby-mode-hook
+          (lambda ()
+            (pmade-ruby-mode-hook)
+            (define-key ruby-mode-map "\t"   'pmade-smart-tab)
+            (define-key ruby-mode-map "\C-m" 'pmade-newline)))
 
 ;; Getting Ruby Documentation via RI
-(setq ri-ruby-script (concat (getenv "HOME") "/.emacs.d/packages/ruby/ri-emacs.rb"))
+(setq ri-ruby-script (concat (getenv "HOME") "/.emacs.d/packages/ri-emacs.rb"))
 (autoload 'ri "ri-ruby.el" nil t)
 
 ;; Running IRB inside Emacs
@@ -52,7 +52,7 @@
 
 ;; Use the XMP filter
 (defun ruby-xmp-region (start end)
-  "Send the region through Ruby's xmp utility, and replace 
+  "Send the region through Ruby's xmp utility, and replace
 the region with the output.  Requires the rcodetools Ruby gem."
   (interactive "r")
   (shell-command-on-region start end "xmpfilter" t))
@@ -63,18 +63,18 @@ the region with the output.  Requires the rcodetools Ruby gem."
   (ruby-xmp-region (point-min) (point-max)))
 
 ;; Ruby on Rails
-(add-to-list 'load-path "~/.emacs.d/packages/ruby/rails")
-(add-to-list 'load-path "~/.emacs.d/packages/ruby/rhtml")
-(setq rails-features:list (list))
-(setq rails-features:installed-p t)
+(setq
+ rails-features:list (list)
+ rails-features:installed-p t)
 (require 'rails)                        ; there has to be a way to autoload this
 
-(defun pmade-rhtml-mode-hook ()
-  "Stuff common across all RHTML buffers"
-  (pmade-programming-mode-hook)
-  (setq fill-column 120))
+;; (defun pmade-rhtml-mode-hook ()
+;;   "Stuff common across all RHTML buffers"
+;;   (pmade-programming-mode-hook)
+;;   (setq fill-column 120))
 
-(autoload 'rhtml-mode "rhtml-mode" "RHTML" t)
-(add-to-list 'auto-mode-alist '("\\.rhtml$" . rhtml-mode))
-(add-to-list 'auto-mode-alist '("\\.html\.erb$" . rhtml-mode))
-(add-hook 'rhtml-mode-hook 'pmade-rhtml-mode-hook)
+;; (add-to-list 'load-path "~/.emacs.d/packages/ruby/rhtml")
+;; (autoload 'rhtml-mode "rhtml-mode" "RHTML" t)
+;; (add-to-list 'auto-mode-alist '("\\.rhtml$" . rhtml-mode))
+;; (add-to-list 'auto-mode-alist '("\\.html\.erb$" . rhtml-mode))
+;; (add-hook 'rhtml-mode-hook 'pmade-rhtml-mode-hook)
