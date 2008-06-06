@@ -8,6 +8,7 @@ EMACS_FLAGS += --eval "(add-to-list 'load-path \"~/.emacs.d/packages\")"
 EMACS_FLAGS += --eval "(add-to-list 'load-path \"~/Local/share/emacs/site-lisp/muse\")"
 EMACS_FLAGS += --eval "(add-to-list 'load-path \"~/Local/share/emacs/site-lisp/apel\")"
 EMACS_FLAGS += --eval "(add-to-list 'load-path \"~/Local/share/emacs/site-lisp/emu\")"
+EMACS_FLAGS += --eval "(add-to-list 'load-path \"~/Local/share/emacs/site-lisp/rails\")"
 EMACS_FLAGS += -f batch-byte-compile
 
 all: $(COMPILED)
