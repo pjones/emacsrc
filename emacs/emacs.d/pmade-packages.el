@@ -1,6 +1,8 @@
 ;; Better buffer switching and file finding
-(setq ido-completion-buffer-all-completions t)
-(setq ido-auto-merge-work-directories-length -1)
+(setq
+ ido-enable-flex-matching t
+ ido-completion-buffer-all-completions t
+ ido-auto-merge-work-directories-length 0)
 (require 'ido)
 (ido-mode t)
 
@@ -19,15 +21,13 @@
 (setq display-time-format "%A, %B %d, %Y  %H:%M")
 (require 'title-time)
 
-;; If ElScreen can be used, do so
-(when (file-exists-p (concat pmade-site-lisp "/apel"))
-  (add-to-list 'load-path (concat pmade-site-lisp "/apel"))
-  (add-to-list 'load-path (concat pmade-site-lisp "/emu"))
-  (setq elscreen-display-screen-number nil)
-  (setq elscreen-display-tab nil)
-  (setq elscreen-tab-display-kill-screen t)
-  (setq elscreen-tab-display-control nil)
-  (require 'elscreen))
+;; ElScreen
+(setq
+ elscreen-display-screen-number t
+ elscreen-display-tab nil
+ elscreen-tab-display-kill-screen t
+ elscreen-tab-display-control nil)
+(require 'elscreen)
 
 ;; Editing the Emacs Wiki
 (defun pmade-oddmuse-hook ()

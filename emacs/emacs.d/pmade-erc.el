@@ -1,5 +1,5 @@
 (eval-when-compile
-  (load-file "./loadpath.el"))
+  (load-file "pmade-loadpath.el"))
 
 ;; Load in my passwords
 (setq pmade-comm-sync "~/.comm-sync")
@@ -50,10 +50,10 @@
 ;; Identify with IRC servers
 (defun pmade-erc-after-connect (server nick)
   (cond
-   ((string-match "localhost" server) (erc-message "PRIVMSG" (concat "&bitlbee identify " bitlbee-password)))
-   ((string-match "freenode"  server) (erc-message "PRIVMSG" (concat "NickServ identify " freenode-password)))
+   ((string-match "localhost" server) (erc-message "PRIVMSG" (concat "&bitlbee identify "     bitlbee-password)))
+   ((string-match "freenode"  server) (erc-message "PRIVMSG" (concat "NickServ identify "     freenode-password)))
    ((string-match "pmade"     server) (erc-message "PRIVMSG" (concat "userserv login pjones " pmade-irc-pjones-password)))))
-  
+
 ;; Setup ERC buffers
 (defun pmade-erc-hook ()
   "Correctly configure ERC buffers"
@@ -104,8 +104,4 @@
 (setq bitlbee-user-directory "~/.comm-sync/etc/bitlbee")
 (setq bitlbee-executable "/opt/local/sbin/bitlbee")
 (bitlbee-start)
-
-;; Give bitlbee a chance to bind to the local port
-(sleep-for 1)
-
-;; Now connect to all my favorites
+(sleep-for 1) ;; Give bitlbee a chance to bind to the local port

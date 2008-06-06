@@ -3,24 +3,19 @@
 
 ;; Correctly configure the hippie-expand function
 (setq hippie-expand-try-functions-list
-      '(try-complete-abbrev
-	try-complete-file-name
-	try-expand-dabbrev))
-
-;; '(try-expand-dabbrev
-;; try-expand-dabbrev-all-buffers
-;; try-expand-dabbrev-from-kill
-;; try-complete-file-name-partially
-;; try-complete-file-name
-;; try-complete-lisp-symbol-partially
-;; try-complete-lisp-symbol
-;; try-expand-whole-kill))
+      '(try-expand-dabbrev
+        try-expand-dabbrev-all-buffers
+        try-expand-dabbrev-from-kill
+        try-complete-lisp-symbol-partially
+        try-complete-lisp-symbol
+        try-complete-file-name-partially
+        try-complete-file-name
+        try-expand-whole-kill))
 
 ;; Newline that puts you in the correct place
 (defun pmade-newline ()
-  "Emulate indent-then-newline-and-indent for modes that don't have it"
+  "Emulate newline-and-indent for modes that don't have it"
   (interactive)
-  (indent-according-to-mode)
   (newline)
   (indent-according-to-mode))
 
@@ -70,7 +65,7 @@
 (add-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p)
 
 ;; I keep Ruby programming stuff in a separate file
-(load "~/.emacs.d/pmade/ruby.el")
+(load "~/.emacs.d/pmade/pmade-ruby")
 
 ;; Great Subversion Integration
 (setq svn-restore-windows t)

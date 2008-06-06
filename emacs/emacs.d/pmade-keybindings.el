@@ -36,10 +36,10 @@
 (defun save-to-kill-ring-and-normalize-whitespace ()
   (interactive)
   (let ((text (buffer-substring (region-beginning) (region-end))))
-    (kill-new 
+    (kill-new
      (replace-regexp-in-string "^\s+" "" (replace-regexp-in-string "\n\s*" " " text))))
   (deactivate-mark))
-                               
+
 (defun pmade-outline-mode-hook ()
   "Some key bindings and changes for outline mode"
   (local-set-key "\C-j" 'outline-insert-heading))
@@ -49,7 +49,7 @@
 
 (defun pmade-smart-org-cycle ()
   "Prevent recursion with org-mode"
-  (if (= pmade-inside-smart-tab 0) 
+  (if (= pmade-inside-smart-tab 0)
       (let ((pmade-inside-smart-tab 1)) (org-cycle))
     (indent-for-tab-command)))
 
@@ -58,7 +58,7 @@
   region.  Otherwise attempt to perform tab completion or
   indentation."
   (interactive)
-  (cond 
+  (cond
    ((minibufferp) (minibuffer-complete))
    ((string= major-mode "org-mode") (pmade-smart-org-cycle))
    (mark-active (indent-region (region-beginning) (region-end)))
@@ -129,10 +129,6 @@
 (define-key global-map [f2] 'org-go-to-remember-target)
 
 ;; Key Bindings for Working with Windows
-(define-key global-map [(control down)]  'windmove-down)              ; Move to the window below
-(define-key global-map [(control up)]    'windmove-up)                ; Move to the window above
-(define-key global-map [(control left)]  'windmove-left)              ; Move to the window to the left
-(define-key global-map [(control right)] 'windmove-right)             ; Move to the window to the right
 (define-key global-map [(meta down)]     'shrink-window)              ; Make window smaller (vertical)
 (define-key global-map [(meta up)]       'enlarge-window)             ; Make window bigger (vertical)
 (define-key global-map [(meta left)]     'shrink-window-horizontally) ; Make window smaller

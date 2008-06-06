@@ -19,14 +19,14 @@
    '(font-lock-preprocessor-face ((t (:background "#202020"))))
    '(ecb-default-highlight-face ((t (:background "#A5F26E" :foreground "#000000"))))
    '(show-paren-match ((t (:background "#DA44FF" :foreground "#F6CCFF" :bold t))))
-   
+
    ;; Outline Mode
    '(outline-1 ((t (:foreground "#D6B163" :bold t))))
    '(outline-2 ((t (:foreground "#A5F26E" :bold t))))
    '(outline-3 ((t (:foreground "#B150E7" :bold nil))))
    '(outline-4 ((t (:foreground "#529DB0" :bold nil))))
    '(outline-5 ((t (:foreground "#CC7832" :bold nil))))
-   
+
    ;; Muse Mode
    '(muse-header-1 ((t (:foreground "#D6B163" :height 1.5 :inherit variable-pitch))))
    '(muse-header-2 ((t (:foreground "#A5F26E" :height 1.4 :inherit variable-pitch))))
@@ -36,7 +36,7 @@
    '(muse-verbatim ((t (:foreground "#B150E7"))))
    '(muse-link     ((t (:foreground "#5DA8F6"))))
    '(muse-bad-link ((t (:foreground "#FF8882"))))
-   
+
    ;; ERB (Ruby Embedded in HTML)
    '(erb-face ((t (:background "grey15"))))
    '(erb-delim-face ((t (:foreground "#FFAEEA" :background "grey15"))))
@@ -44,7 +44,7 @@
    '(erb-out-delim-face ((t (:foreground "#FFAEEA" :background "grey15"))))
    '(erb-comment-delim-face ((t (:foreground "#B150E7" :background "grey15"))))
    '(erb-comment-face ((t (:italic t :foreground "#B150E7" :background "grey15"))))
-   
+
    ;; Diff Mode
    '(diff-added ((t (:foreground "#d7ffaf"))))
    '(diff-changed ((t (:foreground "#ffc28d"))))
@@ -53,7 +53,7 @@
    '(diff-indicator-chnaged ((t (:background "#ffc28d" :foreground "#000000"))))
    '(diff-indicator-removed ((t (:background "#ff9999" :foreground "#000000"))))
    '(diff-context ((t (:foreground "#888888"))))
-   
+
    ;; Compilation
    '(compilation-info ((t (:inherit 'font-lock-string-face :bold t))))
    '(compilation-error ((t (:background "sienna4" :bold t))))
@@ -84,22 +84,19 @@
    '(nxml-tag-slash-face    ((t (:inherit 'font-lock-function-name-face))))
    '(nxml-comment-delimiter-face ((t (:inherit 'font-lock-comment-face))))
    '(nxml-comment-content-face ((t (:inherit 'font-lock-comment-face))))
-   
-   ;; JS2
-   '(js2-keyword-face ((t :inherit 'font-lock-keyword-face)))
-     
+
    ;; ido
    '(ido-first-match ((t (:inherit 'font-lock-string-face))))
    '(ido-subdir ((t (:inherit 'font-lock-function-name-face))))
-   
+
    ;; ElScreen
    '(elscreen-tab-background-face ((t (:background "#787878" :box (:line-width 1 :style released-button)))))
    '(elscreen-tab-current-screen-face ((t (:background "#969696" :foreground "#000000" :height 1.1 :inherit variable-pitch))))
    '(elscreen-tab-other-screen-face ((t (:background "#787878" :foreground "#444444" :height 1.1 :inherit variable-pitch))))
-   
+
    ;; Minibuffer
    '(minibuffer-noticeable-prompt ((t (:inherit 'font-lock-builtin-face :bold t))))
-   
+
    ;; Modeline and Things in the Modeline
    '(modeline ((t (:background "DarkRed" :foreground "white" :box (:line-width 1 :style released-button)))))
    '(mode-line-inactive ((t (:background "#4D4D4D" :foreground "#FFFFFF" :box (:line-width 1 :style released-button)))))
@@ -116,7 +113,7 @@
   (color-theme-pmade)
   (custom-set-faces
    '(default ((t (:background "#191919" :foreground "#FFFFFF"))))))
-  
+
 (defun color-theme-pmade-terminal ()
   (color-theme-pmade)
   (custom-set-faces
@@ -129,7 +126,7 @@
    '(show-paren-match ((t (:background "red" :foreground "yellow" :bold t))))
    '(font-lock-comment-delimiter-face ((t (:foreground "white"))))
    '(font-lock-comment-face ((t (:italic t :foreground "magenta"))))))
-  
+
 ;; Load color-theme
 (if terminal-frame (color-theme-pmade-terminal)
   (color-theme-pmade-gui))
