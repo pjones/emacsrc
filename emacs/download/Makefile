@@ -3,6 +3,7 @@ PACKAGE_VERSIONS += apel/10.7
 PACKAGE_VERSIONS += erc/5.3
 PACKAGE_VERSIONS += muse/3.12
 PACKAGE_VERSIONS += rails/git-head
+PACKAGE_VERSIONS += rhtml/svn-trunk
 
 DEST = $(HOME)/.emacs.d/download
 PACKAGES = $(wildcard *.sh)

@@ -11,4 +11,3 @@
 (add-to-list 'load-path pmade-site-lisp)
 (add-to-list 'load-path (concat pmade-site-lisp "/apel"))
 (add-to-list 'load-path (concat pmade-site-lisp "/emu"))
-(add-to-list 'load-path (concat pmade-site-lisp "/rails"))

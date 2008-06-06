@@ -66,15 +66,16 @@ the region with the output.  Requires the rcodetools Ruby gem."
 (setq
  rails-features:list (list)
  rails-features:installed-p t)
+(add-to-list 'load-path (concat pmade-site-lisp "/rails"))
 (require 'rails)                        ; there has to be a way to autoload this
 
-;; (defun pmade-rhtml-mode-hook ()
-;;   "Stuff common across all RHTML buffers"
-;;   (pmade-programming-mode-hook)
-;;   (setq fill-column 120))
+(defun pmade-rhtml-mode-hook ()
+  "Stuff common across all RHTML buffers"
+  (pmade-programming-mode-hook)
+  (setq fill-column 120))
 
-;; (add-to-list 'load-path "~/.emacs.d/packages/ruby/rhtml")
-;; (autoload 'rhtml-mode "rhtml-mode" "RHTML" t)
-;; (add-to-list 'auto-mode-alist '("\\.rhtml$" . rhtml-mode))
-;; (add-to-list 'auto-mode-alist '("\\.html\.erb$" . rhtml-mode))
-;; (add-hook 'rhtml-mode-hook 'pmade-rhtml-mode-hook)
+(add-to-list 'load-path (concat pmade-site-lisp "/rhtml"))
+(autoload 'rhtml-mode "rhtml-mode" "RHTML" t)
+(add-to-list 'auto-mode-alist '("\\.rhtml$" . rhtml-mode))
+(add-to-list 'auto-mode-alist '("\\.html\.erb$" . rhtml-mode))
+(add-hook 'rhtml-mode-hook 'pmade-rhtml-mode-hook)
