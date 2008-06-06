@@ -13,7 +13,7 @@ EMACS_FLAGS += -f batch-byte-compile
 
 all: $(COMPILED)
 
-clean:
+uninstall:
 	rm -f $(COMPILED)
 
 .SUFFIXES: .el .elc

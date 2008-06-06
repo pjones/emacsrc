@@ -1,7 +1,11 @@
 DIRS = download packages emacs.d
+DOTFILE = $(HOME)/.emacs
 
-all:
+all: $(DOTFILE)
 	@ for d in $(DIRS); do $(MAKE) -C $$d; done
 
-clean:
-	@ for d in $(DIRS); do $(MAKE) -C $$d clean; done
+uninstall:
+	@ for d in $(DIRS); do $(MAKE) -C $$d $@; done
+
+$(DOTFILE): dot.emacs.el
+	cp $< $@
