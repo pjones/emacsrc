@@ -1,0 +1,12 @@
+[user]
+	name = Peter Jones
+	email = pjones@pmade.com
+[color]
+	status = auto
+	diff = auto
+	branch = auto
+        interactive = auto
+[alias]
+        st = status
+        ci = commit
+        co = checkout
