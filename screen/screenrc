@@ -1,0 +1,31 @@
+############################################################################
+# Bindings
+
+# Change the escape key to something that works better with emacs
+escape ^tt
+
+# Fix backspace and delete
+bindkey -k kb   
+bindkey -d -k kb
+bindkey -k kD
+bindkey -d -k kD
+
+bind ^t other # Jump to the last used window
+bind T  title # change the window title
+
+############################################################################
+# Term settings
+termcapinfo * 'hs:ts=\E]0;:fs=\007:ds=\E]0;screen\007'
+
+############################################################################
+# Settings
+startup_message off
+shelltitle "sh"
+autodetach on
+defscrollback 5000
+maptimeout 100
+caption always "%{= Kw}%?%F%{= bw}%?%-Lw%50>%{.R.}[ %n %t ]%{= bw}%+Lw %= $SCREEN_SESSION_NAME"
+bufferfile $HOME/.screen-exchange
+
+# Load a Screen File
+source $SCREEN_SOURCE
