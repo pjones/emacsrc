@@ -1,6 +1,10 @@
+(eval-when-compile
+  (require 'gnus)
+  (require 'nnheader))
+
 ;; Personal Settings
-(setq gnus-ignored-from-addresses 
-      (regexp-opt 
+(setq gnus-ignored-from-addresses
+      (regexp-opt
        `(,user-mail-address "mlists@pmade.com" "suv8@pmade.org")))
 
 ;; Various Settings
@@ -25,14 +29,14 @@
  gnus-read-newsrc-file nil)                                  ; don't read ~/.newsrc
 
 ;; MIME
-(eval-after-load "mm-decode" 
-  '(progn 
-     (add-to-list 'mm-discouraged-alternatives "text/html") 
-     (add-to-list 'mm-discouraged-alternatives "text/richtext"))) 
+(eval-after-load "mm-decode"
+  '(progn
+     (add-to-list 'mm-discouraged-alternatives "text/html")
+     (add-to-list 'mm-discouraged-alternatives "text/richtext")))
 
 ;; Apple Address Book
 (require 'external-abook)
-(setq external-abook-command 
+(setq external-abook-command
       (concat "ressbo-mutt -c " pmade-gnus-etc "/ressbo.db '%s'"))
 
 ;; Checking for New Mail
@@ -50,23 +54,6 @@ group and summary buffers)"
 (add-hook 'gnus-group-mode-hook   'pmade-gnus-index-hook)
 (add-hook 'gnus-summary-mode-hook 'pmade-gnus-index-hook)
 
-;; ;; Window Layout
-;; (gnus-add-configuration
-;;  '(article
-;;    (horizontal 1.0
-;; 	       (vertical 0.35
-;; 			 (group 1.0))
-;; 	       (vertical 1.0
-;; 			 (summary 0.25 point)
-;; 			 (article 1.0)))))
-;; (gnus-add-configuration
-;;  '(summary
-;;    (horizontal 1.0
-;; 	       (vertical 0.35
-;; 			 (group 1.0))
-;; 	       (vertical 1.0
-;; 			 (summary 1.0 point)))))
-
 ;; User Format Functions
 (defun gnus-user-format-function-d (header)
   "Display group and article dates in an easy to read format."
@@ -75,4 +62,4 @@ group and summary buffers)"
      (header (setq date (gnus-date-get-time (mail-header-date header))))
      (t      (setq date (gnus-group-timestamp gnus-tmp-group))))
     (if date (format-time-string "%a %b %d, %Y %R" date) "")))
-                      
+
