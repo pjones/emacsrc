@@ -1,5 +1,5 @@
-SRC	 = $(wildcard *.el)
-COMPILED = $(patsubst %.el,$(DEST)/%.elc,$(SRC))
+SRC	 ?= $(wildcard *.el)
+COMPILED  = $(patsubst %.el,$(DEST)/%.elc,$(SRC))
 
 EMACS = emacs
 EMACS_FLAGS = -q --no-site-file --batch
