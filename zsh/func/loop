@@ -1,0 +1,17 @@
+#!/usr/bin/env zsh
+
+sleep_for=30
+[ $# -eq 1 ] && sleep_for=$1
+
+hist_number=1
+while :; do
+    [ $hist_number -eq 10 ] && return
+    the_command=`fc -l -$hist_number -$hist_number|sed 's/ *[0-9]* *//'`
+    [[ $the_command != loop* ]] && break
+    let "hist_number++"
+done
+
+while :; do
+    eval $the_command
+    sleep $sleep_for
+done

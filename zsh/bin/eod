@@ -1,0 +1,87 @@
+#!/bin/sh
+
+# End of Day chores to run
+
+# repositories that automatically get committed
+git_commit_repos="
+    ~/Documents/pmade/planning
+    ~/.journal"
+
+# repositories to push
+git_repositories="
+    $git_commit_repos
+    ~/Documents/pmade/pmade-inc
+    ~/Documents/pmade/pmade.com
+    ~/Documents/pmade/pmade.org
+    ~/Documents/pmade/ventures
+    ~/Documents/for-sale"
+
+################################################################################
+# Test to see if a repository has any uncommitted changes
+eod_git_repo_has_changes ()
+{
+    if ! git-status|grep -q -F '(working directory clean)'; then
+        return 0
+    else
+        return 1
+    fi
+}
+
+################################################################################
+# Push all Git repositories back to pmade.com
+eod_git_push_all_repositories ()
+{
+    for repo in $git_repositories; do
+        eval "repo=$repo"
+        
+        if test -d $repo; then
+            # echo "==> sync $repo"
+            cd $repo || die "failed cd"
+            
+            if eod_git_repo_has_changes; then
+                die "uncommitted changes in $repo"
+            fi
+
+            git-pull > /dev/null 2>&1 || die "failed pull"
+            git-push > /dev/null 2>&1 || die "failed push"
+        fi
+    done
+}
+
+################################################################################
+# Commit certain repositories without intervention
+eod_git_commit_repositories ()
+{
+    for repo in $git_commit_repos; do
+        eval "cd $repo" || die "failed cd"
+
+        if eod_git_repo_has_changes; then
+            # echo "==> ci $repo"
+            git-add . > /dev/null || die "failed git-add"
+            git-commit -m "end of day commit" > /dev/null || die "failed commit"
+        fi
+    done
+}
+
+################################################################################
+# Sync ~/.comm-sync
+eod_comm_sync ()
+{
+    comm-sync || exit 1
+}
+
+################################################################################
+die ()
+{
+    echo "ERROR: $1" > /dev/stderr
+    exit 1
+}
+
+################################################################################
+# Run all of the EOD functions
+echo "==> git-sync"
+eod_git_commit_repositories   || die "eod_git_commit_repositories"
+eod_git_push_all_repositories || die "eod_git_push_all_repositories"
+
+echo "==> comm-sync"
+eod_comm_sync || die "eod_comm_sync"

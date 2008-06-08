@@ -1,0 +1,15 @@
+#!/usr/bin/env zsh
+
+if [ ! -r config/database.yml ]; then
+    echo "no database configuration in config/"
+    exit 1
+fi
+
+database=`ruby -ryaml -e 'puts YAML.load_file("config/database.yml")["development"]["database"]'`
+dropdb $database
+createdb $database
+rake db:migrate
+
+if [ -r script/setup ]; then
+    ruby script/setup
+fi

@@ -1,0 +1,18 @@
+#!/usr/local/bin/zsh
+
+if which wget > /dev/null; then
+    wget $1
+
+elif which curl > /dev/null; then
+    curl -o `basename $1` $1
+
+elif which fetch > /dev/null; then
+    fetch $1
+
+elif which lftpget > /dev/null; then
+    lftpget $1
+
+else
+    echo "no http/ftp program installed"
+
+fi

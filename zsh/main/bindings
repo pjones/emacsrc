@@ -1,0 +1,25 @@
+#!/usr/local/bin/zsh
+
+# fix ^w
+export WORDCHARS="*?_-.[]~={}<>"
+autoload backward-kill-word-match select-word-style match-words-by-style
+zle -N backward-kill-word-match
+select-word-style normal
+match-words-by-style normal
+
+# my widgets
+for widget in last-cmd-as-expansion; do
+    autoload $widget
+    zle -N $widget
+done
+
+# default key binding is emacs
+bindkey -e
+
+# Insert some custom keybindings
+bindkey -e ^q  push-line-or-edit
+bindkey -e ^u  kill-whole-line
+bindkey -e ^xh run-help
+bindkey -e ^r  history-incremental-search-backward
+bindkey -e ^w  backward-kill-word-match
+bindkey -e ^o  last-cmd-as-expansion

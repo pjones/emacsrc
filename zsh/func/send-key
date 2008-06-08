@@ -1,0 +1,23 @@
+#!zsh
+
+#
+# send your SSH public key to another host
+#
+if [ $# != 1 ]; then
+    echo "Usage: $0 <host>"
+    return
+fi
+
+to_host=$1
+src=~/.ssh/id_dsa.pub
+tmp=newkey
+
+echo "You will be asked for your $to_host password twice."
+scp -q $src ${to_host}:$tmp
+ssh $to_host "
+    mkdir -p ~/.ssh;
+    chmod 700 ~/.ssh;
+    cat ~/$tmp >> ~/.ssh/authorized_keys;
+    chmod 600 ~/.ssh/authorized_keys;
+    rm ~/$tmp;
+"

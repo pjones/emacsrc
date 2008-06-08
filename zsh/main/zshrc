@@ -1,0 +1,106 @@
+#!/usr/local/bin/zsh
+
+# keep some arrays unique
+typeset -U path
+typeset -U fpath
+typeset -U cdpath
+typeset -U manpath
+
+# some variables to export
+export OSNAME=`uname -s`
+
+# add our function path
+functions_directory=~/.zsh/func
+widgets_directory=~/.zsh/wids
+fpath=($functions_directory $widgets_directory $fpath)
+
+# history stuff
+HISTSIZE=100
+SAVEHIST=100
+HISTFILE=~/.zsh/history
+setopt append_history 
+setopt inc_append_history 
+setopt extended_history 
+setopt hist_find_no_dups
+setopt hist_ignore_all_dups
+setopt hist_reduce_blanks 
+setopt hist_ignore_space
+setopt hist_no_store 
+setopt hist_no_functions 
+setopt no_hist_beep
+setopt hist_save_no_dups
+
+# clober stuff
+setopt no_clobber 
+setopt hist_allow_clobber
+
+# directory stuff
+DIRSTACKSIZE=16
+setopt auto_pushd
+setopt pushd_minus
+setopt pushd_silent
+setopt pushd_ignore_dups
+
+# other options
+setopt no_beep
+setopt auto_cd
+setopt multios
+setopt completeinword
+setopt alwaystoend
+setopt correct 
+setopt no_correct_all
+setopt magic_equal_subst
+
+# job control
+setopt no_hup
+setopt no_check_jobs
+
+# add some path directories
+path=(~/bin /usr/local/bin $path)
+
+# prompt magic
+autoload -U colors; colors
+
+if [[ "$TERM" = "eterm-color" ]]; then
+    # Looks like a bad termcap on Mac OS X
+    TERM=xterm-color
+fi
+
+if [[ "x$INSIDE_SCRIPT" = "x" ]]; then
+    setopt prompt_percent
+    setopt prompt_subst
+    prompt_newline=$'\n%{\r%}'
+    prompt_backtick='\`'
+
+    precmd () 
+    { 
+        lc=`fc -lnD -1|awk '{print $1}'`
+        PS1="%{$fg[cyan]%}.----(%{$fg[blue]%} %n%{$fg[red]%}@%{$fg[green]%}%m %{$fg[cyan]%})----(%{$fg[magenta]%} %?/$lc %{$fg[cyan]%})----%{$fg[cyan]%}(%{$fg[yellow]%} %2~ %{$fg[cyan]%})${prompt_newline}${prompt_backtick}--%{$reset_color%}%B>%b "
+        test "x$INSIDE_EMACS" = "x" && print -Pn "\e]0;%n@%m: %~\a"
+    }
+else
+    PS1="$ "
+fi
+
+# autoload my functions
+autoload -U ${fpath[1]}/*(:t)
+
+# load some useful modules
+zmodload zsh/datetime
+
+# bring in other files
+. ~/.zsh/bindings
+. ~/.zsh/aliases
+. ~/.zsh/hosts
+. ~/.zsh/completion
+. ~/.zsh/emacs
+
+# load in optional local override file
+if [ -r ~/.zsh/local ]; then
+    . ~/.zsh/local
+fi
+
+osfile=`echo $OSNAME | tr 'A-Z' 'a-z'`
+if [ -r ~/.zsh/$osfile ]; then
+    . ~/.zsh/$osfile
+fi

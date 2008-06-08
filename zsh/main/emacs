@@ -1,0 +1,13 @@
+#!/usr/bin/env zsh
+
+# set our editor
+if which emacs > /dev/null 2>&1; then
+    export EDITOR="remote-emacs-session.sh"
+elif which vim > /dev/null 2>&1; then
+    export EDITOR=vim
+else
+    export EDITOR=vi
+fi
+
+# Load a file in emacs via emacsclient, and then raise emacs
+alias e='remote-emacs-session.sh -n'

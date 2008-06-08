@@ -1,0 +1,16 @@
+#!/usr/bin/env zsh
+
+if [[ $# -ge 1 && ${1[1]} != '-' ]]; then
+    database=$1
+    shift
+else
+    if [ ! -r config/database.yml ]; then
+        echo "no database configuration in config/"
+        exit 1
+    fi
+
+    RAILS_ENV=${RAILS_ENV:-development}
+    database=`ruby -ryaml -e "puts YAML.load_file('config/database.yml')['$RAILS_ENV']['database']"`
+fi
+
+eval psql $database $*

@@ -1,0 +1,18 @@
+#!zsh
+
+#
+# change to a directory in the directory stack
+#
+
+typeset -a dlist
+dlist=(`dirs`)
+shift dlist
+
+PROMPT3="Choose a directory: "
+
+select i in $dlist; do
+    cd_to=$i
+    break
+done
+
+eval "cd $cd_to"

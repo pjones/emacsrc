@@ -1,0 +1,22 @@
+#!/usr/local/bin/zsh
+
+####
+#
+# Help print out columns
+#
+####
+
+if [ "$#" -eq 1 ]; then
+    awk "{print \$$1}"
+else
+    read -A cols
+    read -t -k 1 && cat > /dev/null
+
+    echo 1 | \
+    (
+	 PROMPT3=""
+	 select i in $cols; do
+	     break
+	 done
+    )
+fi

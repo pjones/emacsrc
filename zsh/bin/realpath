@@ -1,0 +1,10 @@
+#!/usr/bin/env ruby
+
+if ARGV.size != 1
+  $stderr.puts("Usage: realpath path")
+  exit(1)
+end
+
+path = File.expand_path(ARGV.first)
+path = File.readlink(path) if File.symlink?(path)
+$stdout.puts(path)

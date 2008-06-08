@@ -1,0 +1,20 @@
+#!zsh
+
+src=~/develop
+zshrc=zshrc-trunk
+vimrc=vimrc-trunk
+
+to_host=$1
+
+scp -rq $src/$zshrc $src/$vimrc ${to_host}:
+
+ssh ${to_host} "
+    cd $zshrc;
+    sh install.sh;
+    cd ~;
+    rm -rf $zshrc;
+    cd $vimrc;
+    sh install.sh;
+    cd ~;
+    rm -rf $vimrc;
+"

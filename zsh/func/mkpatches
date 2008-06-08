@@ -1,0 +1,9 @@
+#!/usr/local/bin/zsh
+
+for orig in `find . -name '*.orig'`; do
+    name=`echo $orig | sed 's/\.orig$//g'`
+    patch="$name.patch"
+
+    echo "$orig $name ==> $patch"
+    diff -u $orig $name > $patch
+done

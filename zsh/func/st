@@ -1,0 +1,24 @@
+#!/usr/bin/env zsh
+
+typeset -axU st
+
+OLD_IFS=$IFS
+IFS="
+"
+
+if [ -d .svn ]; then
+    # Subversion Status
+    st=(`svn status --ignore-externals | egrep -v '^X'`)
+    index=1
+
+    while [ $index -le $#st ]; do
+        printf "%2d %s\n" $index "$st[$index]"
+        st[$index]=`echo $st[$index] | sed 's/^[^[:space:]]*[[:space:]]*//'`
+        let "++index"
+    done
+else
+    # Git Status
+    git status
+fi
+
+IFS=$OLD_IFS

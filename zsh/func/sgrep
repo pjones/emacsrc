@@ -1,0 +1,22 @@
+#!zsh
+
+# $1 a pattern passed to egrep
+# $* directories to start in
+
+if [ $# -eq 0 ]; then
+    echo "sgrep: pattern [dir]"
+    exit 1
+fi
+
+pattern=$1
+shift
+
+dirs="."
+if [ $# -ne 0 ]; then
+    dirs=$*
+fi
+
+# egrep though source, skip svn and CVS directories
+find $dirs \( -name .svn -type d -prune \) -o \
+    \! -name '.*' \! -name '*.log' -type f \
+    -exec egrep -H --color -n "$pattern" \{\} \;

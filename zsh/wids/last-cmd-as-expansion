@@ -1,0 +1,10 @@
+#!/usr/bin/env zsh
+
+last_command='$('`fc -l -1|sed 's/ *[0-9]* *//'`')'
+
+if [[ -z $BUFFER ]]; then
+    BUFFER=" $last_command"
+    CURSOR=0
+else
+    BUFFER="$BUFFER $last_command"
+fi
