@@ -24,6 +24,9 @@
  echo-keystrokes 0.1              ; show unfinished keystrokes early
  disabled-command-hook nil)       ; Enable commands disabled by default for novice users
 
+;; Aliases
+(defalias 'yes-or-no-p 'y-or-n-p)
+
 ;; Frame setup
 (setq
  default-frame-alist '((cursor-type  . bar) (cursor-color . "yellow")))
@@ -56,6 +59,3 @@
 (setq kept-old-versions 2)
 (setq version-control t)
 (setq backup-by-copying t)
-
-;; Use Aspell
-(setq ispell-program-name "aspell")
