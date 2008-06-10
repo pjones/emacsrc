@@ -1,3 +1,6 @@
+;; Use Aspell
+(setq ispell-program-name "aspell")
+
 ;; Better buffer switching and file finding
 (setq
  ido-enable-flex-matching t
@@ -8,7 +11,13 @@
 
 ;; Save you place in files you edit
 (setq-default save-place t)
+(setq save-place-file "~/.comm-sync/var/emacs/places.el")
 (require 'saveplace)
+
+;; Bookmarks
+(setq
+ bookmark-save-flag 1
+ bookmark-default-file "~/.comm-sync/var/emacs/bookmarks.el")
 
 ;; Add window numbers
 (require 'window-number)

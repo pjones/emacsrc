@@ -10,6 +10,7 @@ git_commit_repos="
 # repositories to push
 git_repositories="
     $git_commit_repos
+    ~/Develop/pmade/rc
     ~/Documents/pmade/pmade-inc
     ~/Documents/pmade/pmade.com
     ~/Documents/pmade/pmade.org

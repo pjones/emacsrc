@@ -68,9 +68,10 @@
 (load "~/.emacs.d/pmade/pmade-ruby")
 
 ;; Great Subversion Integration
-(setq svn-restore-windows t)
-(autoload 'svn-status "dsvn" "Run `svn status'." t)
-(autoload 'svn-update "dsvn" "Run `svn update'." t)
+(setq svn-restore-windows t) ;; needed only for dsvn
+(setq svn-status-verbose nil)
+(autoload 'svn-status "psvn" "Run `svn status'." t)
+(autoload 'svn-update "psvn" "Run `svn update'." t)
 
 ;; Git Integration
 (autoload 'git-status "git" "Run `git status'." t)
