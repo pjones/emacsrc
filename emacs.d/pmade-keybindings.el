@@ -76,7 +76,7 @@
 (defun pmade-erc-start (&optional bitlbee-only)
   "Load and start ERC.  With prefix key, only connect to bitlbee."
   (interactive "P")
-  (load "~/.emacs.d/pmade/erc.el")
+  (load "~/.emacs.d/pmade/pmade-erc")
   (erc :server "127.0.0.1")
   (erc-tls :server "irc.pmade.com" :port 6697 :password pmade-irc-password)
   (unless bitlbee-only (erc :server "irc.freenode.net")))
