@@ -31,7 +31,7 @@
 
 ;; Getting Ruby Documentation via RI
 (setq ri-ruby-script (concat (getenv "HOME") "/.emacs.d/packages/ri-emacs.rb"))
-(autoload 'ri "ri-ruby.el" nil t)
+(autoload 'ri "ri-ruby" nil t)
 
 ;; Running IRB inside Emacs
 (add-to-list 'interpreter-mode-alist '(("ruby" . ruby-mode)) t)
