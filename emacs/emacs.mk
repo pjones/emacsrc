@@ -11,7 +11,7 @@ EMACS_FLAGS += --eval "(add-to-list 'load-path \"~/Local/share/emacs/site-lisp/e
 EMACS_FLAGS += --eval "(add-to-list 'load-path \"~/Local/share/emacs/site-lisp/rails\")"
 EMACS_FLAGS += -f batch-byte-compile
 
-all: $(COMPILED) $(DEST)
+all: $(DEST) $(COMPILED)
 
 uninstall:
 	rm -f $(COMPILED)
