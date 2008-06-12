@@ -7,7 +7,7 @@ dir=`untar $file`
 
 (
   cd $dir || die "WTF"
-  sed -E "s|^PREFIX *=.*|PREFIX=${PREFIX}|" < Makefile.defs.default > Makefile.defs
+  sed $SED_OPTIONS "s|^PREFIX *=.*|PREFIX=${PREFIX}|" < Makefile.defs.default > Makefile.defs
   make install || die "make failed"
 )
 

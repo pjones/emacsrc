@@ -11,7 +11,7 @@ dir=`untar $file`
 (
   cd $dir || die "WTF"
   mv Makefile Makefile.org
-  sed -E "s|^PREFIX *=.*|PREFIX=${PREFIX}|" < Makefile.org > Makefile
+  sed $SED_OPTIONS "s|^PREFIX *=.*|PREFIX=${PREFIX}|" < Makefile.org > Makefile
   make install || die "make failed"
 )
 

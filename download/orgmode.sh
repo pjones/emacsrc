@@ -9,7 +9,7 @@ dir=`untar $file`
 (
   cd $dir || die "WTF"
   mv Makefile Makefile.org
-  sed -E "s|^prefix=.*|prefix=${PREFIX}|" < Makefile.org > Makefile
+  sed $SED_OPTIONS "s|^prefix=.*|prefix=${PREFIX}|" < Makefile.org > Makefile
   make install || die "make failed"
 )
 
