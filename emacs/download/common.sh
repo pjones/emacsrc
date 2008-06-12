@@ -9,6 +9,10 @@ fi
 VERSION=$1
 PREFIX="${HOME}/Local"
 CURL_OPTIONS="-O --progress-bar"
+OSNAME=`uname -s`
+
+SED_OPTIONS="-E"
+test $OSNAME = Linux && SED_OPTIONS="-r"
 
 ################################################################################
 die ()
@@ -31,7 +35,7 @@ fetch_url ()
 ################################################################################
 untar_name ()
 {
-  echo $1 | sed -E 's/\.tar\.gz|\.tgz|\.tar\.bz2|\.zip//'
+  echo $1 | sed $SED_OPTIONS 's/\.tar\.gz|\.tgz|\.tar\.bz2|\.zip//'
 }
 
 ################################################################################
