@@ -14,6 +14,7 @@
 (load "~/.emacs.d/pmade/pmade-colors")
 (load "~/.emacs.d/pmade/pmade-term")
 (load "~/.emacs.d/pmade/pmade-server")
+(load "~/.emacs.d/pmade/pmade-local")
 
 ;; Stuff for the custom interface (not used)
 (setq custom-file "~/.emacs.d/pmade/pmade-custom.el")
