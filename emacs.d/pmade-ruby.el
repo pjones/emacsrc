@@ -74,8 +74,22 @@ the region with the output.  Requires the rcodetools Ruby gem."
   (pmade-programming-mode-hook)
   (setq fill-column 120))
 
-(add-to-list 'load-path (concat pmade-site-lisp "/rhtml"))
-(autoload 'rhtml-mode "rhtml-mode" "RHTML" t)
-(add-to-list 'auto-mode-alist '("\\.rhtml$" . rhtml-mode))
-(add-to-list 'auto-mode-alist '("\\.html\.erb$" . rhtml-mode))
-(add-hook 'rhtml-mode-hook 'pmade-rhtml-mode-hook)
+;;(add-to-list 'auto-mode-alist '("\\.html$"       . nxhtml-mode))
+(add-to-list 'auto-mode-alist '("\\.rhtml$"      . nxhtml-mode))
+(add-to-list 'auto-mode-alist '("\\.html\\.erb$" . nxhtml-mode))
+
+(autoload 'nxhtml-mode "nxml/autostart" "" t)
+;;(autoload 'nxml-mode   "nxml/autostart" "" t)
+
+(setq
+ nxhtml-skip-welcome t
+;; nxhtml-global-minor-mode t
+ nxml-degraded t
+ rng-nxml-auto-validate-flag nil
+ mumamo-chunk-coloring 'submode-colored)
+
+;; (add-to-list 'load-path (concat pmade-site-lisp "/rhtml"))
+;; (autoload 'rhtml-mode "rhtml-mode" "RHTML" t)
+;; (add-to-list 'auto-mode-alist '("\\.rhtml$" . rhtml-mode))
+;; (add-to-list 'auto-mode-alist '("\\.html\.erb$" . rhtml-mode))
+;; (add-hook 'rhtml-mode-hook 'pmade-rhtml-mode-hook)
