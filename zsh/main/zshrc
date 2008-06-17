@@ -94,6 +94,7 @@ zmodload zsh/datetime
 . ~/.zsh/hosts
 . ~/.zsh/completion
 . ~/.zsh/emacs
+. ~/.zsh/git
 
 # load in optional local override file
 if [ -r ~/.zsh/local ]; then
