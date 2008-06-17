@@ -36,9 +36,11 @@ $(eval $(call DIR_template,$(WID_DEST)))
 $(foreach f,$(WID_FILES),$(eval $(call COPY_template,$(WID_DEST)/$(notdir $(f)),$(f))))
 
 # Local (hostname based) Override
+ifneq (,$(wildcard local/$(HOST)))
 all: $(DEST)/local
 $(DEST)/local: local/$(HOST)
 	cp -p $< $@
+endif
 
 # The main startup file
 all: $(HOME)/.zshrc
