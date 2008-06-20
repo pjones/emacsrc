@@ -13,19 +13,28 @@
    '(font-lock-warning-face ((t (:underline "red"))))
    '(font-lock-constant-face ((t (:foreground "#6BCFF7"))))
    '(font-lock-type-face ((t (:bold t :foreground "#8888ff"))))
-   '(Font-lock-variable-name-face ((t (:foreground "#D0D0F3"))))
+   '(font-lock-variable-name-face ((t (:foreground "#D0D0F3"))))
    '(font-lock-function-name-face ((t (:bold t :foreground "#E8BF6A"))))
    '(font-lock-builtin-face ((t (:foreground "#59ACC2"))))
    '(font-lock-preprocessor-face ((t (:background "#202020"))))
    '(ecb-default-highlight-face ((t (:background "#A5F26E" :foreground "#000000"))))
    '(show-paren-match ((t (:background "#DA44FF" :foreground "#F6CCFF" :bold t))))
 
-   ;; Outline Mode
+   ;; Outline Mode and Org-Mode
    '(outline-1 ((t (:foreground "#D6B163" :bold t))))
    '(outline-2 ((t (:foreground "#A5F26E" :bold t))))
    '(outline-3 ((t (:foreground "#B150E7" :bold nil))))
    '(outline-4 ((t (:foreground "#529DB0" :bold nil))))
    '(outline-5 ((t (:foreground "#CC7832" :bold nil))))
+   '(org-level-1 ((t (:inherit outline-1))))
+   '(org-level-2 ((t (:inherit outline-2))))
+   '(org-level-3 ((t (:inherit outline-3))))
+   '(org-level-4 ((t (:inherit outline-4))))
+   '(org-level-5 ((t (:inherit outline-5))))
+   '(org-agenda-date ((t (:inherit font-lock-type-face))))
+   '(org-agenda-date-weekend ((t (:inherit org-agenda-date))))
+   '(org-date ((t (:inherit font-lock-constant-face))))
+   '(org-hide ((t (:foreground "#191919"))))
 
    ;; Muse Mode
    '(muse-header-1 ((t (:foreground "#D6B163" :height 1.5 :inherit variable-pitch))))
