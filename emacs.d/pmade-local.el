@@ -18,4 +18,5 @@
     (set-frame-position frame 116 6)
     (set-frame-size frame 191 63)))
 
-(add-hook 'window-setup-hook 'pmade-local-settings t)
+(when window-system
+  (add-hook 'window-setup-hook 'pmade-local-settings t))
