@@ -35,6 +35,8 @@
    '(org-agenda-date-weekend ((t (:inherit org-agenda-date))))
    '(org-date ((t (:inherit font-lock-constant-face))))
    '(org-hide ((t (:foreground "#191919"))))
+   '(org-todo ((t (:background "DarkRed" :foreground "white" :box (:line-width 1 :style released-button)))))
+   '(org-done ((t (:background "DarkGreen" :foreground "white" :box (:line-width 1 :style released-button)))))
 
    ;; Muse Mode
    '(muse-header-1 ((t (:foreground "#D6B163" :height 1.5 :inherit variable-pitch))))
