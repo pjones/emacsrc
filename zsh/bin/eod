@@ -75,10 +75,11 @@ eod_each_repo ()
   shift
   
   for repo in $@; do
+    # resolve shell globs like ~/
     eval "repo=$repo"
     
     if test -d $repo; then
-            # echo "==> sync $repo"
+      # echo "==> $repo"
       cd $repo || die "failed cd"
       eval "$block \$repo"
     fi
