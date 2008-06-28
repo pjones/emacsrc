@@ -1,6 +1,9 @@
 #!/bin/sh
-
 # End of Day chores to run
+
+################################################################################
+# Load my Git functions
+. ~/.zsh/git
 
 # repositories that automatically get committed
 git_commit_repos="
@@ -10,6 +13,7 @@ git_commit_repos="
 # repositories to push
 git_repositories="
     $git_commit_repos
+    ~/Develop/clients
     ~/Develop/pmade/rc
     ~/Documents/pmade/pmade-inc
     ~/Documents/pmade/pmade.com
@@ -18,13 +22,11 @@ git_repositories="
     ~/Documents/for-sale"
 
 ################################################################################
-# Test to see if a repository has any uncommitted changes
-eod_git_repo_has_changes ()
+# Check each repo to ensure there are no uncomitted changes.
+eod_git_check_uncommitted ()
 {
-  if ! git-status|grep -q -F '(working directory clean)'; then
-    return 0
-  else
-    return 1
+  if git_repo_has_changes; then
+    die "uncommitted changes in $1"
   fi
 }
 
@@ -32,36 +34,19 @@ eod_git_repo_has_changes ()
 # Push all Git repositories back to pmade.com
 eod_git_push_all_repositories ()
 {
-  for repo in $git_repositories; do
-    eval "repo=$repo"
-    
-    if test -d $repo; then
-            # echo "==> sync $repo"
-      cd $repo || die "failed cd"
-      
-      if eod_git_repo_has_changes; then
-        die "uncommitted changes in $repo"
-      fi
-
-      git-pull > /dev/null 2>&1 || die "failed pull"
-      git-push > /dev/null 2>&1 || die "failed push"
-    fi
-  done
+  git-pull > /dev/null 2>&1 || die "failed pull: $1"
+  git-push > /dev/null 2>&1 || die "failed push: $1"
 }
 
 ################################################################################
 # Commit certain repositories without intervention
 eod_git_commit_repositories ()
 {
-  for repo in $git_commit_repos; do
-    eval "cd $repo" || die "failed cd"
-
-    if eod_git_repo_has_changes; then
-      # echo "==> ci $repo"
-      git-add . > /dev/null || die "failed git-add"
-      git-commit -m "end of day commit" > /dev/null || die "failed commit"
-    fi
-  done
+  if git_repo_has_changes; then
+    # echo "==> ci $1"
+    git-add . > /dev/null || die "failed git-add: $1"
+    git-commit -m "end of day commit" > /dev/null || die "failed commit: $1"
+  fi
 }
 
 ################################################################################
@@ -80,6 +65,27 @@ eod_install_rc ()
 }
 
 ################################################################################
+# Call the given function for each repo in the list.
+#
+# $1: The function
+# $*: The repos
+eod_each_repo ()
+{
+  block=$1
+  shift
+  
+  for repo in $@; do
+    eval "repo=$repo"
+    
+    if test -d $repo; then
+            # echo "==> sync $repo"
+      cd $repo || die "failed cd"
+      eval "$block \$repo"
+    fi
+  done
+}
+
+################################################################################
 die ()
 {
   echo "ERROR: $1" > /dev/stderr
@@ -89,8 +95,9 @@ die ()
 ################################################################################
 # Run all of the EOD functions
 echo "==> git-sync"
-eod_git_commit_repositories   || die "eod_git_commit_repositories"
-eod_git_push_all_repositories || die "eod_git_push_all_repositories"
+eod_each_repo eod_git_commit_repositories   $git_commit_repos || die "eod_git_commit_repositories"
+eod_each_repo eod_git_check_uncommitted     $git_repositories || die "eod_git_check_uncommitted"
+eod_each_repo eod_git_push_all_repositories $git_repositories || die "eod_git_push_all_repositories"
 
 echo "==> comm-sync"
 eod_comm_sync || die "eod_comm_sync"
