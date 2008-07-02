@@ -3,7 +3,8 @@
 ;; The notes file and options
 (setq
  org-directory          "~/Documents/pmade/planning/"
- org-default-notes-file (concat org-directory "clients/notes.org")
+ org-default-notes-file (concat org-directory "clients/pmade.org")
+ org-combined-agenda-icalendar-file (concat org-directory "export/agenda.ics")
  org-reverse-note-order t               ; put new notes on top
  org-archive-location  "archive/%s::")
 
