@@ -20,7 +20,9 @@
  org-M-RET-may-split-line nil
  org-time-clocksum-format "%02d:%02d"
  org-agenda-window-setup 'current-window
- org-export-html-auto-postamble nil)
+ org-export-html-auto-postamble nil
+ org-icalendar-include-todo nil
+ org-icalendar-store-UID t)
 
 ;; These remaining items are only used when I'm in a GUI
 (and window-system (load "~/.emacs.d/pmade/pmade-org-full"))
