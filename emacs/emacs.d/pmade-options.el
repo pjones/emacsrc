@@ -49,6 +49,7 @@
 (setq paren-priority 'both)
 (setq paren-sexp-mode nil)
 (setq paren-match-face 'show-paren-match-face)
+(setq mark-even-if-inactive t)
 (show-paren-mode t)
 (transient-mark-mode t)
 
