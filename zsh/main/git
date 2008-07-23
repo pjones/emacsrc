@@ -43,3 +43,36 @@ git_repo_has_changes ()
     return 1
   fi
 }
+
+################################################################################
+# Track a remote branch
+git_track ()
+{
+  if [ $# -ne 1 ]; then
+    echo "$0: missing branch name"
+    return 1
+  fi
+
+  branch=$1
+  git-branch --track $branch origin/$branch || return 1
+}
+
+################################################################################
+# Create a new branch, and push it to the origin server
+git_make_branch ()
+{
+  if [ $# -ne 1 ]; then
+    echo "$0: missing branch name"
+    return 1
+  fi
+
+  branch=$1
+
+  git-checkout -b $branch || return 1
+  git-push origin $branch || return 1
+  git-checkout master     || return 1
+  git-branch -d $branch   || return 1
+  git-pull                || return 1
+  git_track $branch       || return 1
+  git-checkout $branch    || return 1
+}

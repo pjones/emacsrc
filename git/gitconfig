@@ -10,3 +10,5 @@
         st = status
         ci = commit
         co = checkout
+[core]
+	excludesfile = /Users/pjones/.gitignore
