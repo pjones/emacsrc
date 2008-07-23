@@ -97,7 +97,8 @@
     (when window-conf (set-window-configuration window-conf))))
 
 ;; For Carbon Emacs only
-(setq mac-option-modifier 'meta)
+(setq mac-option-modifier  'meta)
+(setq mac-command-modifier 'meta)
 
 ;; Global Key Bindings
 (define-key global-map "\C-x\C-m" 'execute-extended-command)          ; Use M-x with the Meta key
