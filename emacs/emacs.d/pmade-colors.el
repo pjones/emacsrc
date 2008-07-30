@@ -104,6 +104,8 @@
    '(erc-notice-face ((t (:foreground "#444444"))))
    '(erc-my-nick-face ((t (:foreground "#888888" :bold t))))
    '(erc-input-face ((t (:foreground "#A6E2DC"))))
+   '(erc-timestamp-face ((t (:foreground "#2d412b"))))
+   '(erc-prompt-face ((t (:background "#223c63" :foreground "white" :box (:line-width 1 :style released-button)))))
 
    ;; Minibuffer
    '(minibuffer-noticeable-prompt ((t (:inherit 'font-lock-builtin-face :bold t))))
