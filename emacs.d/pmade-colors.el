@@ -5,7 +5,7 @@
    '(text-cursor ((t (:background "yellow" :foreground "black"))))
    '(match ((t :background "#4A6152")))
    '(region ((t :background "#505C74")))
-   '(hl-line ((t :background "#000000" :underline "#444444" :bolt t)))
+   '(hl-line ((t :background "#000000" :underline "#444444" :bold t)))
    '(font-lock-comment-face ((t (:italic t :foreground "#B150E7"))))
    '(font-lock-comment-delimiter-face ((t (:foreground "#888888"))))
    '(font-lock-string-face ((t (:foreground "#A5F26E"))))
@@ -74,13 +74,6 @@
    '(flymake-errline ((t :underline "red")))
    '(flymake-warnline ((t :underline "green")))
 
-   ;; MMM
-   '(mmm-declaration-submode-face ((t (:inherit 'font-lock-preprocessor-face))))
-   '(mmm-default-submode-face ((t (:inherit 'font-lock-preprocessor-face))))
-   '(mmm-output-submode-face  ((t (:inherit 'font-lock-preprocessor-face))))
-   '(mmm-code-submode-face    ((t (:inherit 'font-lock-preprocessor-face))))
-   '(mmm-comment-submode-face ((t (:inherit 'font-lock-comment-face))))
-
    ;; nXML
    '(nxml-element-colon-face    ((t (:bold t :foreground "#92D229"))))
    '(nxml-element-prefix-face    ((t (:bold t :foreground "#92D229"))))
@@ -106,6 +99,11 @@
    '(elscreen-tab-background-face ((t (:background "#787878" :box (:line-width 1 :style released-button)))))
    '(elscreen-tab-current-screen-face ((t (:background "#969696" :foreground "#000000" :height 1.1 :inherit variable-pitch))))
    '(elscreen-tab-other-screen-face ((t (:background "#787878" :foreground "#444444" :height 1.1 :inherit variable-pitch))))
+
+   ;; ERC
+   '(erc-notice-face ((t (:foreground "#444444"))))
+   '(erc-my-nick-face ((t (:foreground "#888888" :bold t))))
+   '(erc-input-face ((t (:foreground "#A6E2DC"))))
 
    ;; Minibuffer
    '(minibuffer-noticeable-prompt ((t (:inherit 'font-lock-builtin-face :bold t))))
