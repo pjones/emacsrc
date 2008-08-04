@@ -80,6 +80,13 @@
    ((member (buffer-name buffer) pmade-log-exclude) nil)
    (t t)))
 
+;; Open links easier
+(defun pmade:erc-open-last-link (arg)
+  (interactive "*p")
+  (save-excursion
+    (search-backward "http" nil nil arg)
+    (erc-button-press-button)))
+
 ;; Bring ERC in
 (add-to-list 'load-path (concat pmade-site-lisp "/erc"))
 (require 'erc)
