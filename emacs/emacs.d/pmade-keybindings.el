@@ -87,6 +87,10 @@
   (erc-tls :server "irc.pmade.com" :port 6697 :password pmade-irc-password)
   (unless bitlbee-only (erc :server "irc.freenode.net")))
 
+;; ERC special key bindings
+(defun pmade:erc-keys-hook ()
+  (local-set-key "\C-c\C-o" 'pmade:erc-open-last-link))
+
 ;; Better buffer menu
 (defun pmade-buffer-menu (&optional arg)
   "Load a buffer-menu and when it quits, restore the window configuration"
