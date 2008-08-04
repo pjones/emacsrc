@@ -40,9 +40,15 @@
      (replace-regexp-in-string "^\s+" "" (replace-regexp-in-string "\n\s*" " " text))))
   (deactivate-mark))
 
-(defun pmade-outline-mode-hook ()
+(defun pmade-org-mode-keys ()
   "Some key bindings and changes for outline mode"
-  (local-set-key "\C-j" 'outline-insert-heading))
+  (local-set-key "\C-j"       'outline-insert-heading)
+  (local-set-key "\C-\M-f"    'org-metaright)
+  (local-set-key "\C-\M-b"    'org-metaleft)
+  (local-set-key "\C-\M-S-f"  'org-shiftmetaright)
+  (local-set-key "\C-\M-S-b"  'org-shiftmetaleft)
+  (local-set-key "\C-\M-p"    'org-metaup)
+  (local-set-key "\C-\M-n"    'org-metadown))
 
 ;; Based on smart tab: http://www.emacswiki.org/cgi-bin/emacs-en/TabCompletion
 (defvar pmade-inside-smart-tab 0)
@@ -96,21 +102,26 @@
   (let ((window-conf pmade-saved-window-configuration))
     (when window-conf (set-window-configuration window-conf))))
 
-;; For Carbon Emacs only
+;; For Macintosh Emacs only
 (setq mac-option-modifier  'meta)
 (setq mac-command-modifier 'meta)
 
 ;; Global Key Bindings
-(define-key global-map "\C-x\C-m" 'execute-extended-command)          ; Use M-x with the Meta key
-(define-key global-map "\C-x\C-b" 'pmade-buffer-menu)                 ; My buffer menu helper
-(define-key global-map "\C-o" 'open-line-below-like-vim)              ; Open a newline below and go there
-(define-key global-map "\M-o" 'open-line-above-like-vim)              ; Open a newline above and go there
-(define-key global-map [(control shift k)] 'kill-whole-line)          ; Shortcut for C-S-backspace
-(define-key global-map [?\C-x ?t] 'new-window-with-terminal)          ; Open a new window with a terminal
-(define-key global-map [?\C-x ?x] 'switch-to-previous-buffer)         ; Jump to the last buffer
-(define-key global-map "\C-w" 'kill-region-or-backward-kill-word)     ; Act more like a shell
-(define-key global-map "\t" 'pmade-smart-tab)                         ; Make tab smarter
-(define-key global-map [?\C-c ?\M-w] 'save-to-kill-ring-and-normalize-whitespace)
+(define-key global-map "\C-x\C-m" 'execute-extended-command)
+(define-key global-map "\C-x\C-b" 'pmade-buffer-menu)
+(define-key global-map "\C-o"     'open-line-below-like-vim)
+(define-key global-map "\M-o"     'open-line-above-like-vim)
+(define-key global-map "\C-xx"    'switch-to-previous-buffer)
+(define-key global-map "\C-w"     'kill-region-or-backward-kill-word)
+(define-key global-map "\t"       'pmade-smart-tab)
+
+;; User Key Bindings (using the C-c prefix)
+(define-key global-map "\C-ca"    'org-agenda)
+(define-key global-map "\C-cd"    'delete-trailing-whitespace)
+(define-key global-map "\C-cl"    'org-store-link)
+(define-key global-map "\C-cr"    'revert-buffer)
+(define-key global-map "\C-ct"    'new-window-with-terminal)
+(define-key global-map "\C-c\M-w" 'save-to-kill-ring-and-normalize-whitespace)
 
 ;; These are mostly for terminal emacs, since C-0 through C-9 don't
 ;; work there.  I use M-0 through M-9 with the window-number package,
@@ -126,9 +137,6 @@
 (define-key global-map "\C-x\M-8" 'digit-argument)
 (define-key global-map "\C-x\M-9" 'digit-argument)
 
-;; Function Keys
-(define-key global-map [f2] 'org-go-to-remember-target)
-
 ;; Key Bindings for Working with Windows
 (define-key global-map [(meta down)]     'shrink-window)              ; Make window smaller (vertical)
 (define-key global-map [(meta up)]       'enlarge-window)             ; Make window bigger (vertical)
@@ -143,10 +151,7 @@
   (define-key global-map "\C-z\C-z" 'elscreen-toggle))
 
 ;; Outline and Org Mode Bindings
-(add-hook 'outline-mode-hook 'pmade-outline-mode-hook)
-(define-key global-map "\C-ca" 'org-agenda)
-(define-key global-map "\C-cl" 'org-store-link)
-(define-key global-map "\C-cr" 'org-remember)
+(add-hook 'org-mode-hook 'pmade-org-mode-keys)
 
 ;; ido key bindings
 (add-hook 'ido-setup-hook 'pmade-ido-mode-hook)
