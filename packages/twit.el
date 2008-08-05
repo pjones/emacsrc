@@ -276,7 +276,8 @@ The variable name is a bit of a misnomer, because it is not actually based on id
 
 (defface twit-info-face
   '((t (:height 0.8 :slant italic)))
-  "Face for displaying where, how and when someone tweeted.")
+  "Face for displaying where, how and when someone tweeted."
+  :group 'twit)
 
 (defface twit-title-face
   '((t
@@ -341,6 +342,8 @@ The variable name is a bit of a misnomer, because it is not actually based on id
 (defvar twit-rate-limit-timer
   nil
   "Timer object to poll the rate-limiting.")
+
+(defvar twit-first-time-through nil)
 
 ;; Most of this will be used in the yet-to-be-written twitter
 ;; reading functions.
@@ -500,7 +503,7 @@ It is in the format of (timestamp user-id message) ")
 					  (if (= times-through 1)
 						  (progn
 						   (setq last-tweet (list timestamp user-id message))
-						   (setq first-time-through nil)))
+						   (setq twit-first-time-through nil)))
 					  ;; the string-match is a bit weird, as emacswiki.org won't
 					  ;; accept pages with the href in it per se
 					  (when (and src-info (string-match (concat "<a h" "ref=\"\\(.*\\)\">\\(.*\\)<" "/a>")
@@ -540,12 +543,12 @@ It is in the format of (timestamp user-id message) ")
 					(setq times-through (+ 1 times-through))))
 	(if (not (equal last-tweet twit-last-tweet))
 		(progn (setq twit-last-tweet last-tweet)
-			   (setq first-time-through nil)
+			   (setq twit-first-time-through nil)
 			   (run-hooks 'twit-new-tweet-hook))))
   
   ;; go back to top so we see the latest messages
   (goto-address)
-  (beginning-of-buffer))
+  (goto-char (point-min)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; User images.  Not complete.
@@ -662,7 +665,7 @@ long."
   (interactive "r")
   (let ((post (buffer-substring start end)))
     (if (> (length post) 140)
-	(error twit-too-long-error)
+	(error twit-too-long-msg)
       (if (twit-post-function twit-update-url post)
 		  (twit-alert twit-success-msg)))))
 
@@ -675,7 +678,7 @@ long."
   (interactive)
   (let ((post (buffer-substring (point-min) (point-max))))
     (if (> (length post) 140)
-	(error twit-too-long-error)
+	(error twit-too-long-msg)
       (if (twit-post-function twit-update-url post)
 		  (twit-alert twit-success-msg)))))
 
@@ -718,9 +721,9 @@ long."
 
 (defun twit-stop-following-tweets ()
   "When you want to stop following tweets, you can use this function to turn off the timer."
+  (interactive)
   (if (featurep 'todochiku)
 	  (todochiku-message "Twit.el" "Twit.el Stopped Following Tweets" (todochiku-icon 'social)))
-  (interactive)
   (cancel-timer twit-timer))
 
 ;;;###autoload
