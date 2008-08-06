@@ -25,7 +25,11 @@
 ;;
 ;; Publish files to BareCMS via Emacs Muse.
 (require 'muse-publish)
+(require 'muse-project)
 (require 'muse-html)
+
+(eval-when-compile
+  (require 'cl))
 
 (defgroup muse-barecms nil
   "Options controlling the behavior of Muse BareCMS publishing."
@@ -38,7 +42,7 @@
 (defcustom muse-barecms-author-date-separator " / "
   "The text placed between the author and date in the header."
   :type 'string :group 'muse-barecms)
-  
+
 (defcustom muse-barecms-header
   "<!-- Published with Emacs Muse and BareCMS -->
 <div class=\"heading\">
@@ -66,11 +70,18 @@
   "The default stage to publish to."
   :type 'string :group 'muse-barecms)
 
+(defcustom muse-barecms-base-path "/"
+  "A path that is prefixed to the URL path for a published file.
+Usually this will be a forward slash, but if you are publishing
+a file to a sub-directory on the BareCMS site, you'll need to
+adjust this."
+  :type 'string :group 'muse-barecms)
+
 (defcustom muse-barecms-url "http://localhost:3000"
   "The protocol, hostname, and port number parts of the URL to use."
   :type 'string :group 'muse-barecms)
 
-(defcustom muse-barecms-path "/admin/pages/upload"
+(defcustom muse-barecms-admin-path "/admin/pages/upload"
   "The URL path for the BareCMS page upload handler."
   :type 'string :group 'muse-barecms)
 
@@ -83,56 +94,55 @@
 (defvar muse-barecms-curl-command-line nil
   "The cURL command line that is about to be used.")
 
-(defun muse-barecms-publishing-directive (name)
-  "Like muse-publishing-directive, but turns \"nil\" into nil."
+(defun muse-barecms-publishing-directive (name &optional missing-directive)
+  "Like muse-publishing-directive, but turns \"nil\" into missing-directive."
   (let ((value (muse-publishing-directive name)))
-    (if (and value (string= value "nil")) nil value)))
-                            
+    (cond
+     ((and value (string= value "nil")) missing-directive)
+     ((not value) missing-directive)
+     (t value))))
+
 (defun muse-barecms-calculate-remote-path (source-file)
   "Figure out the full path to the remote file in BareCMS."
-  (concat "/"
-          (file-relative-name 
+  (concat muse-barecms-base-path
+          (file-relative-name
            (file-name-sans-extension (expand-file-name source-file))
            (expand-file-name (caadr (muse-project-of-file source-file))))))
 
 (defun muse-barecms-formatted-date ()
   "Returns the date directive, formatted using muse-barecms-date-format."
   (let ((date (muse-publishing-directive "date")))
-    (format-time-string 
+    (format-time-string
      muse-publish-date-format
-     (apply 'encode-time 0 0 0 
+     (apply 'encode-time 0 0 0
             (mapcar 'string-to-number (reverse (split-string date "-")))))))
 
 (defun muse-barecms-full-url ()
   "Calculate the full URL needed to post a page."
-  (concat muse-barecms-url muse-barecms-path))
+  (concat muse-barecms-url muse-barecms-admin-path))
 
 (defun muse-barecms-upload (source-file published-file)
   "Upload the given file."
   (muse-barecms-upload-curl source-file published-file))
 
-(defun muse-barecms-escape (string)
-  "Escape special characters in the given string"
-  (replace-regexp-in-string "[']" "'\"'\"'" (concat "" string)))
-
 (defun muse-barecms-curl-cmd (source-file published-file)
   "Calculate the cURL command line."
   (concat "curl " muse-barecms-curl-extra " "
-          "-F 'page[published_at]=" (muse-barecms-escape (muse-publishing-directive "date"))   "' "
-          "-F 'page[author_name]="  (muse-barecms-escape (muse-publishing-directive "author")) "' "
-          "-F 'page[title]="        (muse-barecms-escape (muse-publishing-directive "title"))  "' "
-          "-F 'page[tags]="         (muse-barecms-escape (muse-publishing-directive "tags"))   "' "
-          "-F 'page[path]="         (muse-barecms-escape (muse-barecms-calculate-remote-path source-file)) "' "
-          "-F 'page[stage]="        (muse-barecms-escape muse-barecms-stage) "' "
-          "-F 'page[body]=<"        (muse-barecms-escape published-file)     "' "
+          "-F 'page[published_at]='" (shell-quote-argument (muse-barecms-publishing-directive "date" ""))    " "
+          "-F 'page[author_name]='"  (shell-quote-argument (muse-barecms-publishing-directive "author" ""))  " "
+          "-F 'page[title]='"        (shell-quote-argument (muse-barecms-publishing-directive "title" ""))   " "
+          "-F 'page[tags]='"         (shell-quote-argument (muse-barecms-publishing-directive "tags" ""))    " "
+          "-F 'page[path]='"         (shell-quote-argument (muse-barecms-calculate-remote-path source-file)) " "
+          "-F 'page[stage]='"        (shell-quote-argument muse-barecms-stage) " "
+          "-F 'page[body]=<'"        (shell-quote-argument published-file)     " "
           (muse-barecms-full-url)))
-  
+
 (defun muse-barecms-upload-curl (source-file published-file)
   "Upload the given file using the cURL command line tool."
   (let ((result (shell-command muse-barecms-curl-command-line)))
     (if (= 0 result) (message "Published via BareCMS")
       (error "Error publishing to BareCMS"))))
-      
+
 (defun muse-barecms-deploy (source-file published-file second-stage-file)
   "Called from Emacs Muse after a file has been published."
   (muse-barecms-upload source-file published-file))
@@ -141,10 +151,10 @@
   "Prepare to upload a file to BareCMS"
   (when (not muse-current-project) (error "BareCMS files must be in a Muse project"))
   (setq muse-barecms-curl-command-line
-        (muse-barecms-curl-cmd 
-         muse-publishing-current-file 
+        (muse-barecms-curl-cmd
+         muse-publishing-current-file
          muse-publishing-current-output-path)))
-      
+
 ;; Tell Emacs Muse about our style
 (muse-derive-style "barecms" "xhtml"
                    :suffix      'muse-barecms-extension
