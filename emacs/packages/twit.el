@@ -161,6 +161,7 @@
 ;;            URLs now are fontified and hot.
 ;;            Maybe (maybe?) fixed the bug where following tweets
 ;;            kills the mark, and dumps the point at the bottom. (JA)
+;; * 0.0.16 - Fixed most compilation warnings. (PeterJones)
 ;;
 ;; Bugs:
 ;; * Following recent tweets does this really annoying thing where
