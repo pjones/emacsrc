@@ -39,11 +39,8 @@
 (require 'elscreen)
 
 ;; Twitter
-(autoload 'twit-post "twit" nil t)
-(autoload 'twit-post-region "twit" nil t)
-(autoload 'twit-post-buffer "twit" nil t)
-(autoload 'twit-show-recent-tweets "twit" nil t)
-(autoload 'twit-follow-recent-tweets "twit" nil t)
+(autoload 'twitter-get-friends-timeline "twitter" nil t)
+(autoload 'twitter-status-edit "twitter" nil t)
 (let ((twitter-conf "~/.comm-sync/etc/twitter/twit.el"))
   (when (file-exists-p twitter-conf) (load-file twitter-conf)))
 
