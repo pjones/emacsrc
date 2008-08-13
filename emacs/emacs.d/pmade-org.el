@@ -21,6 +21,8 @@
  org-time-clocksum-format "%02d:%02d"
  org-agenda-window-setup 'current-window
  org-export-html-auto-postamble nil
+ org-export-with-sub-superscripts nil
+ org-export-with-emphasize nil
  org-icalendar-include-todo nil
  org-icalendar-store-UID t)
 
