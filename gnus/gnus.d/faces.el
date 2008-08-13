@@ -15,7 +15,10 @@
  '(my-gnus-face-6 ((t (:foreground "#A5F26E"))))
  '(my-gnus-face-7 ((t (:foreground "#D6B163"))))
  '(my-gnus-face-8 ((t (:foreground "#CC7832"))))
- '(my-gnus-face-9 ((t (:foreground "#888888" :family "Arial Unicode MS")))))
+ '(my-gnus-face-9 ((t (:foreground "#888888" :family "Arial Unicode MS"))))
+ '(gnus-header-name ((t (:foreground "#8CCC5F" :bold t))))
+ '(gnus-header-from ((t (:foreground "#D6B163"))))
+ '(gnus-header-subject ((t (:foreground "#CC7832" :height 1.3 :inherit variable-pitch)))))
 
 ;; Make Gnus use them
 (setq

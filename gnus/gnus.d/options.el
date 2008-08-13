@@ -32,7 +32,8 @@
 (eval-after-load "mm-decode"
   '(progn
      (add-to-list 'mm-discouraged-alternatives "text/html")
-     (add-to-list 'mm-discouraged-alternatives "text/richtext")))
+     (add-to-list 'mm-discouraged-alternatives "text/richtext")
+     (add-to-list 'mm-discouraged-alternatives "multipart/mixed")))
 
 ;; Apple Address Book
 (require 'external-abook)
@@ -63,3 +64,7 @@ group and summary buffers)"
      (t      (setq date (gnus-group-timestamp gnus-tmp-group))))
     (if date (format-time-string "%a %b %d, %Y %R" date) "")))
 
+;; Headers
+(setq gnus-visible-headers
+      '("^From:" "^Subject:" "^To:\\|^[BGF]?Cc:" "^Date:" "^X-Mailer:" "^X-URL:"
+        "^Newsgroups:" "^Posted-To:" "^Gnus-Warning:"))
