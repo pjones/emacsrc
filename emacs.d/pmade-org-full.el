@@ -15,7 +15,30 @@
        (directory-files (concat (expand-file-name org-directory) "/tasks") t "\\.org$")))
 
 ;; Exporting
-(setq org-export-html-style (concat "<link rel=\"stylesheet\" type=\"text/css\" href=\"" pmade-print-css "\"/>"))
+(setq
+ org-export-html-style-default ""
+ org-export-html-style-extra ""
+ org-export-html-style (concat "<link rel=\"stylesheet\" type=\"text/css\" href=\"" pmade-print-css "\"/>"))
+
+(defun pmade:org-remove-redundant-heading-markers ()
+  "Called from an export buffer, removes leading stars so that the first heading in the export has only one star."
+  (let ((reduce-by 0)
+        (remove-regex "^"))
+    (save-excursion
+      (goto-char (point-min))
+      (save-match-data
+        (search-forward-regexp "^\\*")
+        (beginning-of-line)
+        (when (looking-at "^\\(\\*+\\)[ \t]+")
+          (setq reduce-by (- (match-end 1) (point))))
+        (when (not (= 0 reduce-by))
+          (setq remove-regex (concat remove-regex (regexp-quote (make-string reduce-by ?*))))
+          (forward-line 1) ; leave the top heading alone (org must ignore it as well)
+          (while (re-search-forward remove-regex nil t)
+            (replace-match "" nil nil)
+            (forward-line 1)))))))
+
+(add-hook 'org-export-preprocess-hook 'pmade:org-remove-redundant-heading-markers)
 
 ;; Org and Remember Mode
 (require 'remember)
