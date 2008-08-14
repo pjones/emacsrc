@@ -8,11 +8,13 @@
  org-reverse-note-order t               ; put new notes on top
  org-archive-location  "archive/%s::")
 
-;; Agenda Files
+;; Agenda Files and Agenda Settings
 (setq org-agenda-files
       (append
        (directory-files (concat (expand-file-name org-directory) "/clients") t "\\.org$")
        (directory-files (concat (expand-file-name org-directory) "/tasks") t "\\.org$")))
+
+(add-hook 'org-agenda-mode-hook '(lambda () (hl-line-mode 1)))
 
 ;; Exporting
 (setq
@@ -49,4 +51,3 @@
        (list "Client Tasks"   ?t "** TODO %?\n   %i" (concat org-directory "clients/pmade.org")  "Tasks")
        (list "General Tasks"  ?g "** TODO %?\n   %i" (concat org-directory "tasks/general.org")  "Tasks")
        (list "Devenv Tasks"   ?d "** TODO %?\n   %i" (concat org-directory "tasks/devenv.org")   "Tasks")))
-
