@@ -39,6 +39,10 @@
   "Default file extension for publishing BareCMS files."
   :type 'string :group 'muse-barecms)
 
+(defcustom muse-barecms-link-suffix ""
+  "Default suffix added to links."
+  :type 'string :group 'muse-barecms)
+
 (defcustom muse-barecms-author-date-separator " / "
   "The text placed between the author and date in the header."
   :type 'string :group 'muse-barecms)
@@ -158,7 +162,7 @@ adjust this."
 ;; Tell Emacs Muse about our style
 (muse-derive-style "barecms" "xhtml"
                    :suffix      'muse-barecms-extension
-                   :link-suffix 'muse-xhtml-extension
+                   :link-suffix 'muse-barecms-link-suffix
                    :header      'muse-barecms-header
                    :footer      'muse-barecms-footer
                    :after       'muse-barecms-prepare
