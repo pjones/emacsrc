@@ -1,12 +1,12 @@
 ;;; Mail and News Servers
 
 ;; News via NNTP
-(setq 
+(setq
  nntp-authinfo-file pmade-authinfo
- gnus-select-method '(nntp "text.giganews.com"))
+ gnus-select-method '(nntp "nntp.aioe.org"))
 
 ;; Mail via IMAP and SMTP
-(setq 
+(setq
  pmade-mail-server "mail.pmade.com"
  gnus-secondary-select-methods `((nnimap ,pmade-mail-server (nnimap-stream ssl)))
  nnimap-authinfo-file pmade-authinfo
@@ -20,5 +20,5 @@
 (setq gnus-message-archive-group "nnimap+mail.pmade.com:INBOX.Sent")
 
 ;; Use the correct value for the Message-ID header
-(defun message-make-message-id () 
+(defun message-make-message-id ()
   (concat "<" (message-unique-id) "@pmade.com>"))
