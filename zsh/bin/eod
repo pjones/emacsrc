@@ -34,8 +34,8 @@ eod_git_check_uncommitted ()
 # Push all Git repositories back to pmade.com
 eod_git_push_all_repositories ()
 {
-  git-pull > /dev/null 2>&1 || die "failed pull: $1"
-  git-push > /dev/null 2>&1 || die "failed push: $1"
+  git pull > /dev/null 2>&1 || die "failed pull: $1"
+  git push > /dev/null 2>&1 || die "failed push: $1"
 }
 
 ################################################################################
@@ -44,8 +44,8 @@ eod_git_commit_repositories ()
 {
   if git_repo_has_changes; then
     # echo "==> ci $1"
-    git-add . > /dev/null || die "failed git-add: $1"
-    git-commit -m "end of day commit" > /dev/null || die "failed commit: $1"
+    git add . > /dev/null || die "failed git add: $1"
+    git commit -m "end of day commit" > /dev/null || die "failed commit: $1"
   fi
 }
 
@@ -95,12 +95,12 @@ die ()
 
 ################################################################################
 # Run all of the EOD functions
-echo "==> git-sync"
+echo "==> git sync"
 eod_each_repo eod_git_commit_repositories   $git_commit_repos || die "eod_git_commit_repositories"
 eod_each_repo eod_git_check_uncommitted     $git_repositories || die "eod_git_check_uncommitted"
 eod_each_repo eod_git_push_all_repositories $git_repositories || die "eod_git_push_all_repositories"
 
-echo "==> comm-sync"
+echo "==> comm sync"
 eod_comm_sync || die "eod_comm_sync"
 
 echo "==> install rc"
