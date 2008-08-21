@@ -8,7 +8,7 @@ fi
 
 VERSION=$1
 PREFIX="${HOME}/Local"
-CURL_OPTIONS="-O --progress-bar"
+CURL_OPTIONS="--progress-bar"
 OSNAME=`uname -s`
 
 SED_OPTIONS="-E"
@@ -26,8 +26,14 @@ die ()
 fetch_url ()
 {
   # $1: the URL to fetch
-  file=`basename $1`
-  test -r $file  || curl ${CURL_OPTIONS} $1 || die "cURL failure"
+  # $2: What to call the downloaded file
+  if [ "x$2" != "x" ]; then
+    file=$2
+  else
+    file=`basename $1`
+  fi
+  
+  test -r $file  || curl ${CURL_OPTIONS} -o $file $1 || die "cURL failure"
   test -r $file  || die "file not downloaded: $file"
   echo $file
 }

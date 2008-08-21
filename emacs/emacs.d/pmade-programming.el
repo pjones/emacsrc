@@ -72,6 +72,3 @@
 (setq svn-status-verbose nil)
 (autoload 'svn-status "psvn" "Run `svn status'." t)
 (autoload 'svn-update "psvn" "Run `svn update'." t)
-
-;; Git Integration
-(autoload 'git-status "git" "Run `git status'." t)
