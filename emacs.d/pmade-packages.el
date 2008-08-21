@@ -60,3 +60,6 @@
   (add-hook 'oddmuse-mode-hook 'pmade-oddmuse-hook)
   (oddmuse-mode-initialize)
   (call-interactively 'oddmuse-edit))
+
+;; Magit (Git Interface for Emacs)
+(autoload 'magit-status "magit" "Magit Status" t)
