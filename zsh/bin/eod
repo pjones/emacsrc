@@ -7,7 +7,6 @@
 
 # repositories that automatically get committed
 git_commit_repos="
-    ~/Documents/pmade/planning
     ~/.journal"
 
 # repositories to push
