@@ -4,6 +4,7 @@ PACKAGE_VERSIONS += erc/5.3
 PACKAGE_VERSIONS += muse/3.12
 PACKAGE_VERSIONS += rails/git-head
 PACKAGE_VERSIONS += rhtml/svn-trunk
+PACKAGE_VERSIONS += gnus/git-head
 #PACKAGE_VERSIONS += magit/52abed7629f23ebff56799c557a4ef0299df032c
 
 DEST = $(HOME)/.emacs.d/download

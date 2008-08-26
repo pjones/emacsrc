@@ -1,3 +1,10 @@
+(eval-and-compile
+    (load-file "pmade-loadpath.el")
+    (add-to-list 'load-path (concat pmade-site-lisp "/gnus/lisp")))
+
+;; Gnus CVS
+(require 'gnus-load)
+
 ;; Use Aspell
 (setq ispell-program-name "aspell")
 
