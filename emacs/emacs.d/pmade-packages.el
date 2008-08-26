@@ -1,6 +1,5 @@
-(eval-and-compile
-    (load-file "pmade-loadpath.el")
-    (add-to-list 'load-path (concat pmade-site-lisp "/gnus/lisp")))
+(eval-when-compile
+    (load "pmade-loadpath"))
 
 ;; Gnus CVS
 (require 'gnus-load)
