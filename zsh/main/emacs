@@ -10,4 +10,8 @@ else
 fi
 
 # Load a file in emacs via emacsclient, and then raise emacs
-alias e='remote-emacs-session.sh -n'
+e () 
+{
+  remote-emacs-session.sh --eval '(elscreen-goto 3)' > /dev/null
+  remote-emacs-session.sh -n $1
+}
