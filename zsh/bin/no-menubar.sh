@@ -13,5 +13,5 @@ if [ ! -d $APP ]; then
   exit 1
 fi
 
-defaults write $APP/Info LSUIPresentationMode 4
+defaults write $APP/Info LSUIPresentationMode -int 4
 echo "done."
