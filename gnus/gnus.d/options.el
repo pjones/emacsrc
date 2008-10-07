@@ -9,7 +9,7 @@
 
 ;; Various Settings
 (setq
- gnus-inhibit-startup-message t         ; I've seen it
+ gnus-large-newsgroup 1000
  gnus-read-active-file 'some)           ; Speed up initial load
 
 ;; File locations
