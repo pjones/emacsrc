@@ -21,7 +21,7 @@
    '(show-paren-match ((t (:background "#DA44FF" :foreground "#F6CCFF" :bold t))))
 
    ;; Outline Mode and Org-Mode
-   '(outline-1 ((t (:foreground "#D6B163" :bold t))))
+   '(outline-1 ((t (:foreground "#D6B163" :bold t :height 1.3))))
    '(outline-2 ((t (:foreground "#A5F26E" :bold t))))
    '(outline-3 ((t (:foreground "#B150E7" :bold nil))))
    '(outline-4 ((t (:foreground "#529DB0" :bold nil))))
