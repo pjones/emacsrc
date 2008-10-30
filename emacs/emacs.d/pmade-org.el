@@ -5,45 +5,53 @@
 (require 'org-install nil t)
 (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
 
-(setq
- org-log-done t
- org-reverse-note-order t
- org-agenda-ndays 14
- org-deadline-warning-days 14
- org-agenda-skip-deadline-if-done t
- org-agenda-skip-scheduled-if-done t
- org-agenda-show-all-dates t
- org-agenda-start-on-weekday 1
- org-hide-leading-stars t
- org-use-fast-todo-selection t
- org-special-ctrl-a/e t
- org-special-ctrl-k t
- org-M-RET-may-split-line nil
- org-time-clocksum-format "%02d:%02d"
- org-agenda-window-setup 'current-window
- org-export-html-auto-postamble nil
- org-export-with-sub-superscripts nil
- org-export-with-emphasize nil
- org-icalendar-include-todo nil
- org-icalendar-store-UID t)
+(add-hook 'org-load-hook 
+          (lambda ()
+            (require 'org-invoice)
+            (setq
+             ;; General Org Settings
+             org-log-done t
+             org-reverse-note-order t
+             org-deadline-warning-days 14
+             org-hide-leading-stars t
+             org-use-fast-todo-selection t
+             org-special-ctrl-a/e t
+             org-special-ctrl-k t
+             org-M-RET-may-split-line nil
+             org-time-clocksum-format "%02d:%02d"
 
-;; The notes file and options
-(setq
- org-directory "~/Documents/pmade/pmade-inc/planning"
- org-default-notes-file (concat org-directory "/general/business.org"))
+            ;; The notes file and options
+             org-directory "~/Documents/pmade/pmade-inc/planning"
+             org-default-notes-file (concat org-directory "/general/business.org")
+             pmade-org-active-clients (concat (expand-file-name org-directory) "/clients/active")
+             pmade-org-general-files (concat (expand-file-name org-directory) "/general")
 
-;; Agenda Files and Agenda Settings
-(setq org-agenda-files
-      (append
-       (directory-files (concat (expand-file-name org-directory) "/clients/active") t "\\.org$")
-       (directory-files (concat (expand-file-name org-directory) "/general") t "\\.org$")))
-(add-hook 'org-agenda-mode-hook '(lambda () (hl-line-mode 1)))
+            ;; Agenda Files and Agenda Settings
+             org-agenda-window-setup 'current-window
+             org-agenda-ndays 1
+             org-agenda-skip-deadline-if-done t
+             org-agenda-skip-scheduled-if-done t
+             org-agenda-show-all-dates t
+             org-agenda-start-on-weekday 1
+             org-agenda-files (append
+                               (directory-files pmade-org-active-clients t "\\.org$")
+                               (directory-files pmade-org-general-files  t "\\.org$")))))
 
-;; Exporting
-(setq
- org-export-html-style-default ""
- org-export-html-style-extra ""
- org-export-html-style (concat "<link rel=\"stylesheet\" type=\"text/css\" href=\"" pmade-print-css "\"/>"))
+(add-hook 'org-mode-hook
+          (lambda ()
+            ;; Exporting
+            (setq
+             org-export-html-auto-postamble nil
+             org-export-with-sub-superscripts nil
+             org-export-with-emphasize nil
+             org-icalendar-include-todo nil
+             org-icalendar-store-UID t
+             org-export-html-style-default ""
+             org-export-html-style-extra ""
+             org-export-html-style (concat "<link rel=\"stylesheet\" type=\"text/css\" href=\"" pmade-print-css "\"/>"))))
+
+;; Use line highlighting in the Org Agenda
+(add-hook 'org-agenda-mode-hook (lambda () (hl-line-mode 1)))
 
 (defun pmade:org-remove-redundant-heading-markers ()
   "Called from an export buffer, removes leading stars so that the first heading in the export has only one star."
