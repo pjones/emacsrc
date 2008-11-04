@@ -50,6 +50,13 @@
 (let ((twitter-conf "~/.comm-sync/etc/twitter/twit.el"))
   (when (file-exists-p twitter-conf) (load-file twitter-conf)))
 
+;; Typing Breaks
+(setq 
+ type-break-demo-functions '(type-break-demo-boring)
+ type-break-demo-boring-stats t
+ type-break-file-name (expand-file-name "~/.comm-sync/etc/type-break"))
+(type-break-mode)
+
 ;; Editing the Emacs Wiki
 (defun pmade-oddmuse-hook ()
   "Hook is run after oddmuse is started"
