@@ -71,7 +71,7 @@ git_make_branch ()
   git checkout -b $branch || return 1
   git push origin $branch || return 1
   git checkout master     || return 1
-  git branch -d $branch   || return 1
+  git branch -D $branch   || return 1
   git pull                || return 1
   git_track $branch       || return 1
   git checkout $branch    || return 1
