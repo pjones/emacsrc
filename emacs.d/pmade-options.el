@@ -43,7 +43,7 @@
 
 ;; White-space and Special Characters
 (set-default 'require-final-newline t)
-(setq next-line-add-newlines nil)
+(setq next-line-add-newlines t)
 (setq-default indent-tabs-mode nil)
 (setq default-truncate-lines t)
 (setq paren-priority 'both)
