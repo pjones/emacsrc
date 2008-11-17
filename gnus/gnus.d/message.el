@@ -30,7 +30,13 @@
         (kill-region beg (point)))
       (insert-file-contents sig-file))))
 
+(defun pmade-gnus-article-hook ()
+  "Called when gnus prepares to show a message"
+  (setq truncate-lines nil))
+
 (eval-after-load "message"
   '(progn
      (add-to-list 'message-mode-hook  'pmade-message-mode-hook)
      (add-to-list 'message-setup-hook 'pmade-message-setup-hook)))
+
+(add-hook 'gnus-article-prepare-hook 'pmade-gnus-article-hook)

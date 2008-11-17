@@ -9,7 +9,9 @@
 
 ;; Various Settings
 (setq
+ message-kill-buffer-on-exit t
  gnus-large-newsgroup 1000
+ gnus-treat-date-local 'head
  gnus-read-active-file 'some)           ; Speed up initial load
 
 ;; File locations
