@@ -1,4 +1,7 @@
 ;; Ruby Programming
+(eval-when-compile
+  (load-file "pmade-loadpath.el"))
+
 (defun pmade-ruby-mode-hook ()
   "Correctly setup a Ruby buffer"
   (require 'ruby-electric)
@@ -63,11 +66,8 @@ the region with the output.  Requires the rcodetools Ruby gem."
   (ruby-xmp-region (point-min) (point-max)))
 
 ;; Ruby on Rails
-(setq
- rails-features:list (list)
- rails-features:installed-p t)
-(add-to-list 'load-path (concat pmade-site-lisp "/rails"))
-(require 'rails)                        ; there has to be a way to autoload this
+(add-to-list 'load-path (concat pmade-site-lisp "/rinari"))
+(require 'rinari)
 
 (defun pmade-rhtml-mode-hook ()
   "Stuff common across all RHTML buffers"
@@ -79,20 +79,3 @@ the region with the output.  Requires the rcodetools Ruby gem."
 (add-to-list 'auto-mode-alist '("\\.rhtml$" . rhtml-mode))
 (add-to-list 'auto-mode-alist '("\\.html\.erb$" . rhtml-mode))
 (add-hook 'rhtml-mode-hook 'pmade-rhtml-mode-hook)
-
-;; nXhtml mode sucks ass
-;; ;;(add-to-list 'auto-mode-alist '("\\.html$"       . nxhtml-mode))
-;; (add-to-list 'auto-mode-alist '("\\.rhtml$"      . nxhtml-mode))
-;; (add-to-list 'auto-mode-alist '("\\.html\\.erb$" . nxhtml-mode))
-
-;; (autoload 'nxhtml-mode "nxml/autostart" "" t)
-;; ;;(autoload 'nxml-mode   "nxml/autostart" "" t)
-
-;; (setq
-;;  nxhtml-skip-welcome t
-;; ;; nxhtml-global-minor-mode t
-;;  nxml-degraded t
-;;  rng-nxml-auto-validate-flag nil
-;;  mumamo-chunk-coloring 'submode-colored)
-
-;; (add-hook 'nxhtml-mode-hook 'pmade-rhtml-mode-hook)

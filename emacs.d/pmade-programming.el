@@ -1,6 +1,3 @@
-;; Load in a few files that are great for programming
-(require 'find-recursive)
-
 ;; Correctly configure the hippie-expand function
 (setq hippie-expand-try-functions-list
       '(try-expand-dabbrev
