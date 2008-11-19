@@ -8,10 +8,10 @@ EMACS_FLAGS += --eval "(add-to-list 'load-path \"~/.emacs.d/packages\")"
 EMACS_FLAGS += --eval "(add-to-list 'load-path \"~/Local/share/emacs/site-lisp/muse\")"
 EMACS_FLAGS += --eval "(add-to-list 'load-path \"~/Local/share/emacs/site-lisp/apel\")"
 EMACS_FLAGS += --eval "(add-to-list 'load-path \"~/Local/share/emacs/site-lisp/emu\")"
-EMACS_FLAGS += --eval "(add-to-list 'load-path \"~/Local/share/emacs/site-lisp/rails\")"
+EMACS_FLAGS += --eval "(add-to-list 'load-path \"~/Local/share/emacs/site-lisp/rinari\")"
 EMACS_FLAGS += -f batch-byte-compile
 
-all: $(DEST) $(COMPILED)
+all: $(DEST) $(COMPILED) $(addprefix $(DEST)/,$(TO_REMOVE)) 
 
 uninstall:
 	rm -f $(COMPILED)
@@ -25,3 +25,6 @@ $(DEST)/%.elc: %.el
 
 $(DEST):
 	mkdir $@
+
+$(addprefix $(DEST)/,$(TO_REMOVE))::
+	@ rm -f $@
