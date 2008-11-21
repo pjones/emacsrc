@@ -43,6 +43,8 @@
  elscreen-tab-display-kill-screen t
  elscreen-tab-display-control nil)
 (require 'elscreen)
+(dotimes (i 4) (elscreen-create))
+(elscreen-goto 0)
 
 ;; Twitter
 (autoload 'twitter-get-friends-timeline "twitter" nil t)
