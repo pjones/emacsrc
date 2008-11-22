@@ -18,6 +18,13 @@
     (set-frame-position frame 116 6)
     (set-frame-size frame 191 63)))
 
+(defun pmade-local:gui-specific ()
+  "Settings for the GUI Emacs."
+  (dotimes (i 4) (elscreen-create))
+  (elscreen-goto 0))
+
 ;; These settings only take affect if we're running the GUI.
 (when window-system
-  (add-hook 'window-setup-hook 'pmade-local-settings t))
+  (add-hook 'window-setup-hook 'pmade-local-settings t)
+  (add-hook 'window-setup-hook 'pmade-local:gui-specific t))
+
