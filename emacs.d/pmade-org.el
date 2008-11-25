@@ -19,6 +19,7 @@
              org-special-ctrl-k t
              org-M-RET-may-split-line nil
              org-time-clocksum-format "%02d:%02d"
+             org-completion-use-ido t
 
             ;; The notes file and options
              org-directory "~/Documents/pmade/pmade-inc/planning"
