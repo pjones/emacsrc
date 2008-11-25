@@ -43,6 +43,7 @@
 (setq erc-prompt 'pmade-erc-prompt)
 (setq erc-max-buffer-size 20000)
 (setq erc-track-showcount t)
+(setq erc-join-buffer 'bury)
 (setq erc-auto-query 'bury)             ; Private messages go to a hidden buffer
 (setq erc-query-display 'buffer)        ; Reuse current buffer when sending private messages
 (setq erc-keywords '("pmade" "peter"))
