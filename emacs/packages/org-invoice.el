@@ -166,7 +166,7 @@ looks like tree2, where the level is 2."
           (cons 'work work)
           (cons 'rate rate)
           (cons 'level level)
-          (cons 'price (* rate (/ work 60.)))))
+          (cons 'price (* rate (/ work 60.0)))))
     (run-hook-with-args 'org-invoice-heading-hook)
     org-invoice-current-item))
 
@@ -258,7 +258,8 @@ looks like tree2, where the level is 2."
 return it.  Before you call this function, move point to the
 heading that begins the invoice data, usually using the
 `org-invoice-goto-tree' function."
-  (let ((org-invoice-current-invoice (list (cons 'point (point))))
+  (let ((org-invoice-current-invoice
+         (list (cons 'point (point)) (cons 'buffer (current-buffer))))
         (org-invoice-current-item nil))
     (save-restriction
       (org-narrow-to-subtree)
