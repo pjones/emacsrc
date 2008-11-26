@@ -52,10 +52,13 @@
 
 ;; Typing Breaks
 (setq 
+ type-break-query-mode nil
+ type-break-mode-line-message-mode t
  type-break-demo-functions '(type-break-demo-boring)
  type-break-demo-boring-stats t
  type-break-file-name (expand-file-name "~/.comm-sync/etc/type-break"))
 (type-break-mode)
+
 
 ;; Editing the Emacs Wiki
 (defun pmade-oddmuse-hook ()
