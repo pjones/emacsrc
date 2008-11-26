@@ -5,6 +5,14 @@
 (require 'org-install nil t)
 (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
 
+;; Org Invoice
+(autoload 'org-invoice-report "org-invoice")
+(autoload 'org-dblock-write:invoice "org-invoice")
+(autoload 'org-eva-submit "org-eva")
+
+(let ((eva-conf "~/.comm-sync/etc/eva.el"))
+  (when (file-exists-p eva-conf) (load-file eva-conf)))
+
 (add-hook 'org-load-hook 
           (lambda ()
             (require 'org-invoice)
@@ -40,6 +48,9 @@
 
 (add-hook 'org-mode-hook
           (lambda ()
+            ;; Extra Bindings
+            (define-key org-mode-map "\C-ci" 'org-invoice-report)
+
             ;; Exporting
             (setq
              org-export-html-auto-postamble nil
@@ -74,7 +85,9 @@
 
 (add-hook 'org-export-preprocess-hook 'pmade:org-remove-redundant-heading-markers)
 
-;; Org Invoice
-(autoload 'org-invoice-report "org-invoice")
-(autoload 'org-dblock-write:invoice "org-invoice")
-(define-key org-mode-map "\C-ci" 'org-invoice-report)
+
+
+
+
+
+
