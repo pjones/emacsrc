@@ -2,7 +2,7 @@
 (setq 
  gnus-extract-address-components 'mail-extract-address-components ; slower but more accurate address parsing
  gnus-auto-center-summary nil                                     ; don't auto-center the summary buffer
- gnus-list-identifiers "\\[[^]]*\\]")
+ gnus-list-identifiers "\\[\\w+-\\w+]*\\]")
 
 ;; How the summary line should look
 (setq 
