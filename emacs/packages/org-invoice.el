@@ -23,22 +23,28 @@
 ;;
 ;; Commentary:
 ;;
-;; Building on top of the terrific OrgMode library, org-invoice tries
-;; to provide functionality for managing invoices.  Currently, it
-;; does this by implementing an OrgMode dynamic block where invoice
+;; Building on top of the terrific OrgMode, org-invoice tries to
+;; provide functionality for managing invoices.  Currently, it does
+;; this by implementing an OrgMode dynamic block where invoice
 ;; information is aggregated so that it can be exported.
 ;;
-;; Future plans include integration with invoicing web sites, so that
-;; you can submit your invoice from OrgMode to a service such as
-;; Freshbooks.
+;; It also provides a library of functions that can be used to collect
+;; this invoice information and use it in other ways, such as
+;; submitting it to on-line invoicing tools.
+;;
+;; I'm already working on an elisp package to submit this invoice data
+;; to the FreshBooks on-line accounting tool.
 ;;
 ;; Usage:
 ;;
 ;; In your ~/.emacs:
-;; (require 'org-invoice)
+;; (autoload 'org-invoice-report "org-invoice")
+;; (autoload 'org-dblock-write:invoice "org-invoice")
 ;;
-;; In your OrgMode buffer:
-;; More to come.
+;; See the documentation in the following functions:
+;;
+;; `org-invoice-report'
+;; `org-dblock-write:invoice'
 ;;
 ;; Latest version:
 ;;
@@ -58,7 +64,52 @@
 (defcustom org-invoice-strip-ts t
   "Remove org timestamps that appear in headings."
   :type 'boolean :group 'org-invoice)
-  
+
+(defcustom org-invoice-default-level 2
+  "The heading level at which a new invoice starts.  This value
+is used if you don't specify a scope option to the invoice block,
+and when other invoice helpers are trying to find the heading
+that starts an invoice.
+
+The default is 2, assuming that you structure your invoices so
+that they fall under a single heading like below:
+
+* Invoices
+** This is invoice number 1...
+** This is invoice number 2...
+
+If you don't structure your invoices using those conventions,
+change this setting to the number that corresponds to the heading
+at which an invoice begins."
+  :type 'integer :group 'org-invoice)
+
+(defcustom org-invoice-start-hook nil
+  "Hook called when org-invoice is about to collect data from an
+invoice heading.  When this hook is called, point will be on the
+heading where the invoice begins.
+
+When called, `org-invoice-current-invoice' will be set to the
+alist that represents the info for this invoice."
+  :type 'hook :group 'org-invoice)
+
+  (defcustom org-invoice-heading-hook nil
+  "Hook called when org-invoice is collecting data from a
+heading. You can use this hook to add additional information to
+the alist that represents the heading.
+
+When this hook is called, point will be on the current heading
+being processed, and `org-invoice-current-item' will contain the
+alist for the current heading.
+
+This hook is called repeatedly for each invoice item processed."
+  :type 'hook :group 'org-invoice)
+
+(defvar org-invoice-current-invoice nil
+  "Information about the current invoice.")
+
+(defvar org-invoice-current-item nil
+  "Information about the current invoice item.")
+
 (defvar org-invoice-table-params nil
   "The table parameters currently being used.")
 
@@ -68,12 +119,21 @@
 (defvar org-invoice-total-price nil
   "The total invoice price for the summary line.")
 
-(defun org-invoice-goto-tree (tree)
-  (save-match-data
-    (when (string-match "^tree\\([0-9]+\\)$" tree)
-      (let ((level (string-to-number (match-string 1 tree))))
-        (while (and (org-up-heading-safe)
-                (< (org-reduced-level (org-outline-level)) level)) t)))))
+(defconst org-invoice-version "1.0.0"
+  "The org-invoice version number.")
+
+(defun org-invoice-goto-tree (&optional tree)
+  "Move point to the heading that represents the head of the
+current invoice.  The heading level will be taken from
+`org-invoice-default-level' unless tree is set to a string that
+looks like tree2, where the level is 2."
+  (let ((level org-invoice-default-level))
+    (save-match-data
+      (when (and tree (string-match "^tree\\([0-9]+\\)$" tree))
+        (setq level (string-to-number (match-string 1 tree)))))
+    (org-back-to-heading)
+    (while (and (> (org-reduced-level (org-outline-level)) level)
+                (org-up-heading-safe)))))
 
 (defun org-invoice-heading-info ()
   "Return invoice information from the current heading."
@@ -82,8 +142,6 @@
         (work    (org-entry-get nil "WORK" nil))
         (rate    (or (org-entry-get nil "RATE" t) "0"))
         (level   (org-outline-level))
-        (project (org-entry-get nil "PROJECT" 'selective))
-        (task    (org-entry-get nil "TASK" 'selective))
         raw-date long-date)
     (unless date (setq date (org-entry-get nil "TIMESTAMP_IA" 'selective)))
     (unless date (setq date (org-entry-get nil "TIMESTAMP" t)))
@@ -95,18 +153,22 @@
       (setq long-date (format-time-string org-invoice-long-date-format raw-date)))
     (when (and org-invoice-strip-ts (string-match org-ts-regexp-both title))
       (setq title (replace-match "" nil nil title)))
+    (when (string-match "^[ \t]+" title)
+      (setq title (replace-match "" nil nil title)))
+    (when (string-match "[ \t]+$" title)
+      (setq title (replace-match "" nil nil title)))
     (setq work (org-hh:mm-string-to-minutes work))
     (setq rate (string-to-number rate))
-    (list (cons 'title title)
+    (setq org-invoice-current-item (list (cons 'title title)
           (cons 'date date)
           (cons 'raw-date raw-date)
           (cons 'long-date long-date)
           (cons 'work work)
           (cons 'rate rate)
           (cons 'level level)
-          (cons 'project project)
-          (cons 'task task)
-          (cons 'price (* rate (/ work (float 60)))))))
+          (cons 'price (* rate (/ work 60.)))))
+    (run-hook-with-args 'org-invoice-heading-hook)
+    org-invoice-current-item))
 
 (defun org-invoice-level-min-max (ls)
   "Return a list where the car is the min level, and the cdr the max."
@@ -190,28 +252,147 @@
                (org-minutes-to-hh:mm-string org-invoice-total-time)
                (and with-price (concat "|" (format "%.2f" org-invoice-total-price)))
                "|\n")))))
+
+(defun org-invoice-collect-invoice-data ()
+  "Collect all the invoice data from the current OrgMode tree and
+return it.  Before you call this function, move point to the
+heading that begins the invoice data, usually using the
+`org-invoice-goto-tree' function."
+  (let ((org-invoice-current-invoice (list (cons 'point (point))))
+        (org-invoice-current-item nil))
+    (save-restriction
+      (org-narrow-to-subtree)
+      (org-clock-sum)
+      (run-hook-with-args 'org-invoice-start-hook)
+      (cons org-invoice-current-invoice
+            (org-invoice-collapse-list 
+             (org-map-entries 'org-invoice-heading-info t 'tree 'archive))))))
   
 (defun org-dblock-write:invoice (params)
-  "Function used by OrgMode for generating a dynamic block."
+  "Function called by OrgMode to write the invoice dblock.  To
+create an invoice dblock you can use the `org-invoice-report'
+function.
+
+The following parameters can be given to the invoice block (for
+information about dblock parameters, please see the Org manual):
+
+:scope Allows you to override the `org-invoice-default-level'
+       variable.  The only supported values right now are ones
+       that look like :tree1, :tree2, etc.
+
+:prices Set to nil to turn off the price column.
+
+:headers Set to nil to turn off the group headers.
+
+:summary Set to nil to turn off the final summary line."
   (let ((scope (plist-get params :scope))
         (org-invoice-table-params params)
         (zone (move-marker (make-marker) (point)))
         table)
-    (when (not scope) (setq scope 'invoice))
+    (unless scope (setq scope 'default))
+    (unless (plist-member params :price) (plist-put params :price t))
+    (unless (plist-member params :summary) (plist-put params :summary t))
+    (unless (plist-member params :headers) (plist-put params :headers t))
     (save-excursion
       (cond
        ((eq scope 'tree) (org-invoice-goto-tree "tree1"))
-       ((eq scope 'invoice) (org-invoice-goto-tree "tree2"))
+       ((eq scope 'default) (org-invoice-goto-tree))
        ((symbolp scope) (org-invoice-goto-tree (symbol-name scope))))
-      (save-restriction
-        (org-narrow-to-subtree)
-        (org-clock-sum)
-        (setq table (org-map-entries 'org-invoice-heading-info t 'tree 'archive))
-        (setq table (org-invoice-collapse-list table)))
+      (setq table (org-invoice-collect-invoice-data))
       (goto-char zone)
-      (org-invoice-list-to-table table)
+      (org-invoice-list-to-table (cdr table))
       (goto-char zone)
       (org-table-align)
       (move-marker zone nil))))
-    
+
+(defun org-invoice-in-report-p ()
+  "Check to see if point is inside an invoice report."
+  (let ((pos (point)) start)
+    (save-excursion
+      (end-of-line 1)
+      (and (re-search-backward "^#\\+BEGIN:[ \t]+invoice" nil t)
+	   (setq start (match-beginning 0))
+	   (re-search-forward "^#\\+END:.*" nil t)
+	   (>= (match-end 0) pos)
+	   start))))
+
+(defun org-invoice-report (&optional jump)
+  "Create or update an invoice dblock report.  If point is inside
+an existing invoice report, the report is updated.  If point
+isn't inside an invoice report, a new report is created.
+
+When called with a prefix argument, move to the first invoice
+report after point and update it.
+
+For information about various settings for the invoice report,
+see the `org-dblock-write:invoice' function documentation.
+
+An invoice report is created by reading a heading tree and
+collecting information from various properties.  It is assumed
+that all invoices start at a second level heading, but this can
+be configured using the `org-invoice-default-level' variable.
+
+Here is an example, where all invoices fall under the first-level
+heading Invoices:
+
+* Invoices
+** Client Foo (Jan 01 - Jan 15)
+*** [2008-01-01 Tue] Built New Server for Production
+*** [2008-01-02 Wed] Meeting with Team to Design New System
+** Client Bar (Jan 01 - Jan 15)
+*** [2008-01-01 Tue] Searched for Widgets on Google
+*** [2008-01-02 Wed] Billed You for Taking a Nap
+
+In this layout, invoices begin at level two, and invoice
+items (tasks) are at level three.  You'll notice that each level
+three heading starts with an inactive timestamp.  The timestamp
+can actually go anywhere you want, either in the heading, or in
+the text under the heading.  But you must have a timestamp
+somewhere so that the invoice report can group your items by
+date.
+
+Properties are used to collect various bits of information for
+the invoice.  All properties can be set on the invoice item
+headings, or anywhere in the tree.  The invoice report will scan
+up the tree looking for each of the properties.
+
+Properties used:
+
+CLOCKSUM: You can use the Org clock-in and clock-out commands to
+          create a CLOCKSUM property.  Also see WORK.
+
+WORK: An alternative to the CLOCKSUM property.  This property
+      should contain the amount of work that went into this
+      invoice item formatted as HH:MM (e.g. 01:30).
+
+RATE: Used to calculate the total price for an invoice item.
+      Should be the price per hour that you charge (e.g. 45.00).
+      It might make more sense to place this property higher in
+      the hierarchy than on the invoice item headings.
+
+Using this information, a report is generated that details the
+items grouped by days.  For each day you will be able to see the
+total number of hours worked, the total price, and the items
+worked on.
+
+You can place the invoice report anywhere in the tree you want.
+I place mine under a third-level heading like so:
+
+* Invoices
+** An Invoice Header
+*** [2008-11-25 Tue] An Invoice Item
+*** Invoice Report
+#+BEGIN: invoice
+#+END:"
+  (interactive "P")
+  (let ((report (org-invoice-in-report-p)))
+    (when (and (not report) jump)
+      (when (re-search-forward "^#\\+BEGIN:[ \t]+invoice" nil t)
+        (org-show-entry)
+        (beginning-of-line)
+        (setq report (point))))
+    (if report (goto-char report)
+      (org-create-dblock (list :name "invoice")))
+    (org-update-dblock)))
+  
 (provide 'org-invoice)

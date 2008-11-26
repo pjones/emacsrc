@@ -73,3 +73,8 @@
             (forward-line 1)))))))
 
 (add-hook 'org-export-preprocess-hook 'pmade:org-remove-redundant-heading-markers)
+
+;; Org Invoice
+(autoload 'org-invoice-report "org-invoice")
+(autoload 'org-dblock-write:invoice "org-invoice")
+(define-key org-mode-map "\C-ci" 'org-invoice-report)
