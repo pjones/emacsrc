@@ -55,6 +55,7 @@ git_track ()
 
   branch=$1
   git branch --track $branch origin/$branch || return 1
+  git checkout $branch || return 1
 }
 
 ################################################################################
@@ -74,5 +75,21 @@ git_make_branch ()
   git branch -D $branch   || return 1
   git pull                || return 1
   git_track $branch       || return 1
-  git checkout $branch    || return 1
+}
+
+################################################################################
+# Delete a branch
+git_rm_branch ()
+{
+  if [ $# -ne 1 ]; then
+    echo "$0: missing branch name"
+    return 1
+  fi
+  
+  branch=$1
+  git branch -d $branch || return 1
+  
+  if git branch -a | grep -q origin/$branch
+    git push origin :heads/$branch
+  fi
 }
