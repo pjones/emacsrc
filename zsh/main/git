@@ -89,7 +89,7 @@ git_rm_branch ()
   branch=$1
   git branch -d $branch || return 1
   
-  if git branch -a | grep -q origin/$branch
+  if git branch -a | grep -q origin/$branch; then
     git push origin :heads/$branch
   fi
 }
