@@ -14,6 +14,9 @@ functions_directory=~/.zsh/func
 widgets_directory=~/.zsh/wids
 fpath=($functions_directory $widgets_directory $fpath)
 
+# add some path directories
+path=(~/bin /usr/local/bin $path)
+
 # history stuff
 HISTSIZE=100
 SAVEHIST=100
@@ -55,31 +58,9 @@ setopt magic_equal_subst
 setopt no_hup
 setopt no_check_jobs
 
-# add some path directories
-path=(~/bin /usr/local/bin $path)
-
-# prompt magic
-autoload -U colors; colors
-
 if [[ "$TERM" = "eterm-color" ]]; then
-    # Looks like a bad termcap on Mac OS X
-    TERM=xterm-color
-fi
-
-if [[ "x$INSIDE_SCRIPT" = "x" ]]; then
-    setopt prompt_percent
-    setopt prompt_subst
-    prompt_newline=$'\n%{\r%}'
-    prompt_backtick='\`'
-
-    precmd () 
-    { 
-        lc=`fc -lnD -1|awk '{print $1}'`
-        PS1="%{$fg[cyan]%}.----(%{$fg[blue]%} %n%{$fg[red]%}@%{$fg[green]%}%m %{$fg[cyan]%})----(%{$fg[magenta]%} %?/$lc %{$fg[cyan]%})----%{$fg[cyan]%}(%{$fg[yellow]%} %2~ %{$fg[cyan]%})${prompt_newline}${prompt_backtick}--%{$reset_color%}%B>%b "
-        test "x$INSIDE_EMACS" = "x" && print -Pn "\e]0;%n@%m: %~\a"
-    }
-else
-    PS1="$ "
+  # Looks like a bad termcap on Mac OS X
+  TERM=xterm-color
 fi
 
 # autoload my functions
@@ -97,11 +78,10 @@ zmodload zsh/datetime
 . ~/.zsh/git
 
 # load in optional local override file
-if [ -r ~/.zsh/local ]; then
-    . ~/.zsh/local
-fi
+[ -r ~/.zsh/local ] && . ~/.zsh/local
 
 osfile=`echo $OSNAME | tr 'A-Z' 'a-z'`
-if [ -r ~/.zsh/$osfile ]; then
-    . ~/.zsh/$osfile
-fi
+[ -r ~/.zsh/$osfile ] && . ~/.zsh/$osfile
+
+# finally configure the prompt
+. ~/.zsh/prompt

@@ -15,3 +15,13 @@ e ()
   remote-emacs-session.sh --eval '(elscreen-goto 3)' > /dev/null
   remote-emacs-session.sh -n $1
 }
+
+# Tell Emacs where we are
+emacs_prompt_magic ()
+{
+  [ $TERM = 'screen' ] && echo -n "P"
+  echo "AnSiTh" `hostname`
+  echo "AnSiTu" `whoami`
+  echo "AnSiTc" $PWD
+  [ $TERM = 'screen' ] && echo -n "\\"
+}

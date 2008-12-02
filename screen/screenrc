@@ -14,8 +14,19 @@ bind ^t other # Jump to the last used window
 bind T  title # change the window title
 
 ############################################################################
-# Term settings
-termcapinfo * 'hs:ts=\E]0;:fs=\007:ds=\E]0;screen\007'
+# Use the title bar as the hard status line
+# termcapinfo * 'hs:ts=\E]0;:fs=\007:ds=\E]0;screen\007'
+
+############################################################################
+# Copy mode bindings like Emacs
+markkeys ^B=Y:^F=V:h=^B:l=^F:0=^A:$=^E
+markkeys ' '=^@
+bindkey -m ^e stuff "$^f"
+markkeys \033=\015=^G=^D=h=j=k=l=H=M=L=G=g=y=c=v=a=x=b=e=B=E=w
+markkeys @=\033
+markkeys B=[:E=]:b={:e=}:w=>
+bindkey -m ^[Od stuff {  #"[[}"
+bindkey -m ^[Oc stuff ]  #"}]^f"
 
 ############################################################################
 # Settings
@@ -24,7 +35,8 @@ shelltitle "sh"
 autodetach on
 defscrollback 5000
 maptimeout 100
-caption always "%{= Kw}%?%F%{= bw}%?%-Lw%50>%{.R.}[ %n %t ]%{= bw}%+Lw %= $SCREEN_SESSION_NAME"
+hardstatus lastline
+caption always "%{= Kw}%?%F%{= bw}%?%-Lw%50>%{r.}[ %n %t ]%{= bw}%+Lw %= $SCREEN_SESSION_NAME"
 bufferfile $HOME/.screen-exchange
 
 # Load a Screen File
