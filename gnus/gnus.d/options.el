@@ -24,18 +24,18 @@
  gnus-directory pmade-gnus-var
  mail-signature-dir pmade-sigs-dir
  gnus-agent-directory (concat pmade-gnus-var "/agent")
- gnus-article-save-directory (concat pmade-gnus-var "/news") ;
- gnus-cache-directory (concat pmade-gnus-var "/cache")       ;
- gnus-startup-file (concat pmade-gnus-etc "/newsrc")         ; where to place El Dingo newsrc
- gnus-save-newsrc-file nil                                   ; don't create ~/.newsrc
- gnus-read-newsrc-file nil)                                  ; don't read ~/.newsrc
+ gnus-article-save-directory (concat pmade-gnus-var "/news")
+ gnus-cache-directory (concat pmade-gnus-var "/cache")
+ gnus-startup-file (concat pmade-gnus-etc "/newsrc")
+ gnus-save-newsrc-file nil
+ gnus-read-newsrc-file nil)
 
 ;; MIME
 (eval-after-load "mm-decode"
   '(progn
-     (add-to-list 'mm-discouraged-alternatives "text/html")
-     (add-to-list 'mm-discouraged-alternatives "text/richtext")
-     (add-to-list 'mm-discouraged-alternatives "multipart/mixed")))
+     (dolist (i '("text/html" "text/richtext" "multipart/mixed" "multipart/related"))
+       (add-to-list 'mm-discouraged-alternatives i)
+       (setq mm-automatic-display (remove i mm-automatic-display)))))
 
 ;; Apple Address Book
 (require 'external-abook)
