@@ -17,6 +17,9 @@
   ;; C-z is used for elscreen, C-x C-z send C-z to terminal
   (define-key term-raw-escape-map "\C-z" 'term-send-raw)
   (when (fboundp 'elscreen-create) (define-key term-raw-map "\C-z" elscreen-map))
+
+  ;; C-x C-f opens a file in other-window
+  (define-key term-raw-map "\C-x\C-f" 'ido-find-file-other-window)
   
   ;; Some other nice bindings
   (define-key term-raw-map "\C-y" 'pmade-term-yank)
