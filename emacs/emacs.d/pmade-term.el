@@ -1,3 +1,6 @@
+(eval-when-compile
+  (require 'term))
+
 ;; Settings for Terminal mode
 (defun pmade-term-mode-hook ()
   ;; Window Number Mode F**ks up C-x C-j
