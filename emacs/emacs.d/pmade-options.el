@@ -1,4 +1,5 @@
-;;; This file contains general settings and options for emacs, to make it work more like what I expect
+;;; This file contains general settings and options for emacs, to make
+;;; it work more like what I expect
 
 ;; Personal Settings
 (setq

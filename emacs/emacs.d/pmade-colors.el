@@ -71,6 +71,16 @@
    '(diff-indicator-removed ((t (:background "#ff9999" :foreground "#000000"))))
    '(diff-context ((t (:foreground "#888888"))))
 
+   ;; Magit (Git GUI)
+   '(magit-branch ((t (:foreground "#E07BE0"))))
+   '(magit-diff-add ((t (:inherit 'diff-added))))
+   '(magit-diff-del ((t (:inherit 'diff-removed))))
+   '(magit-diff-file-header ((t (:inherit 'font-lock-constant-face))))
+   '(magit-diff-hunk-header ((t (:inherit 'font-lock-keyword-face))))
+   '(magit-diff-none ((t (:inherit 'font-lock-comment-delimiter-face))))
+   '(magit-header ((t (:inherit 'org-level-1))))
+   '(magit-item-highlight ((t (:background "#000000"))))
+   
    ;; Compilation
    '(compilation-info ((t (:inherit 'font-lock-string-face :bold t))))
    '(compilation-error ((t (:background "sienna4" :bold t))))

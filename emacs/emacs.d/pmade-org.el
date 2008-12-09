@@ -10,10 +10,11 @@
 (autoload 'org-dblock-write:invoice "org-invoice")
 (autoload 'org-eva-submit "org-eva")
 
-(let ((eva-conf "~/.comm-sync/etc/eva.el"))
-  (when (file-exists-p eva-conf) (load-file eva-conf)))
+(eval-after-load "org-eva"
+  (let ((eva-conf "~/.comm-sync/etc/eva.el"))
+    (when (file-exists-p eva-conf) (load-file eva-conf))))
 
-(add-hook 'org-load-hook 
+(add-hook 'org-load-hook
           (lambda ()
             (require 'org-invoice)
             (setq
@@ -49,7 +50,14 @@
 (add-hook 'org-mode-hook
           (lambda ()
             ;; Extra Bindings
-            (define-key org-mode-map "\C-ci" 'org-invoice-report)
+            (define-key org-mode-map "\C-ci"     'org-invoice-report)
+            (define-key org-mode-map "\C-j"      'org-meta-return)
+            (define-key org-mode-map "\C-\M-f"   'org-metaright)
+            (define-key org-mode-map "\C-\M-b"   'org-metaleft)
+            (define-key org-mode-map "\C-\M-S-f" 'org-shiftmetaright)
+            (define-key org-mode-map "\C-\M-S-b" 'org-shiftmetaleft)
+            (define-key org-mode-map "\C-\M-p"   'org-metaup)
+            (define-key org-mode-map "\C-\M-n"   'org-metadown)
 
             ;; Exporting
             (setq

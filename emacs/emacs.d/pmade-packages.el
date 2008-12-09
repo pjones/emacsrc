@@ -1,6 +1,9 @@
 (eval-when-compile
     (load "pmade-loadpath"))
 
+;; Emacs nonstandard editing commands
+(autolaod 'zap-up-to-char "misc" nil t)
+
 ;; Gnus CVS
 (require 'gnus-load)
 
@@ -8,11 +11,19 @@
 (setq ispell-program-name "aspell")
 
 ;; Better buffer switching and file finding
-(setq
- ido-enable-flex-matching t
- ido-completion-buffer-all-completions t
- ido-auto-merge-work-directories-length 0)
 (require 'ido)
+(add-hook 'ido-setup-hook 
+          (lambda ()
+            (define-key ido-file-dir-completion-map "\C-n" 'ido-next-work-directory)
+            (define-key ido-file-dir-completion-map "\C-p" 'ido-prev-work-directory)
+            (define-key ido-file-completion-map     "\C-w" 'ido-delete-backward-word-updir)))
+(setq
+ ido-enable-prefix nil
+ ido-enable-flex-matching t
+ ido-use-filename-at-point t
+ ido-completion-buffer-all-completions t
+ ido-max-prospects 10
+ ido-auto-merge-work-directories-length 0)
 (ido-mode t)
 
 ;; Save you place in files you edit
@@ -30,7 +41,9 @@
 (window-number-mode 1)
 
 ;; Getting and fetching pastie.caboo.se
-(require 'pastie)
+(autolaod 'pastie-region "pastie" nil t)
+(autolaod 'pastie-buffer "pastie" nil t)
+(autolaod 'pastie-get    "pastie" nil t)
 
 ;; Place the time in the title bar
 (setq display-time-format "%A, %B %d, %Y  %H:%M")
@@ -47,8 +60,9 @@
 ;; Twitter
 (autoload 'twitter-get-friends-timeline "twitter" nil t)
 (autoload 'twitter-status-edit "twitter" nil t)
-(let ((twitter-conf "~/.comm-sync/etc/twitter/twit.el"))
-  (when (file-exists-p twitter-conf) (load-file twitter-conf)))
+(eval-after-load "twitter"
+  (let ((twitter-conf "~/.comm-sync/etc/twitter/twit.el"))
+    (when (file-exists-p twitter-conf) (load-file twitter-conf))))
 
 ;; Go-to Last Change
 (autoload 'goto-last-change "goto-chg" nil t)

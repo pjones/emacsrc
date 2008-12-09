@@ -14,19 +14,29 @@
 ;;            (Dan McKinley)
 ;; 2008-08-04 Fixed xml escaping. Fixed naming conflict with pastie-buffer.
 ;;            Updated for the new pastie.org domain. (Dan McKinley)
-;; 2008-12-09 Allow pastie.el to compile correctly (Peter Jones)
+;; 2008-12-09 Allow pastie.el to compile without warnings and add
+;;            prefix argument toggling of restricted posting. (Peter Jones)
 ;;
 (eval-when-compile
   (require 'cl))
 
-(defcustom *pastie-last-url* ""
-  "The last url pasted.")
+(defgroup pastie nil
+  "Interface to pastie.org"
+  :tag "Pastie" :group 'applications)
 
 (defcustom *pastie-restricted* t
-  "When non-nil, creates private pastes.")
+  "When non-nil, creates private pastes."
+  :type 'boolean :group 'pastie)
 
 (defcustom *pastie-timeout* 10
-  "The time, in seconds, to wait for a pastie request.")
+  "The time, in seconds, to wait for a pastie request."
+  :type 'integer :group 'pastie)
+
+(defvar *pastie-last-url* ""
+  "The last url pasted.")
+
+(defvar *pastie-buffer* nil
+  "The buffer used to show fetched pastes.")
 
 (defun pastie-language ()
   "Sniffs for the language of the region that is being pasted"
@@ -54,10 +64,13 @@
   (if *pastie-restricted* "http://pastie.org/private/%s"
     "http://pastie.org/paste/%s"))
 
-(defun pastie-region (begin end)
+(defun pastie-region (begin end &optional toggle-restricted)
   "Post the current region as a new paste at pastie.org.
-Copies the URL into the kill ring."
-  (interactive "r")
+Copies the URL into the kill ring.
+
+With a prefix argument, toggle the current value of
+`*pastie-restricted*'."
+  (interactive "r\nP")
   (let* ((body-raw (buffer-substring-no-properties begin end))
          (body (replace-regexp-in-string
                 "[<>&]"
@@ -72,13 +85,13 @@ Copies the URL into the kill ring."
          (url-mime-accept-string "application/xml")
          (url-request-extra-headers '(("Content-Type" . "application/xml")))
          (url (url-generic-parse-url "http://pastie.org/pastes"))
-	 (restricted (if *pastie-restricted* "<restricted>1</restricted>"
-		       ""))
+         (*pastie-restricted* (if toggle-restricted (not *pastie-restricted*)
+                                *pastie-restricted*))
          (url-request-data
           (concat "<paste>"
                   "<parser>" mode "</parser>"
                   "<authorization>burger</authorization>"
-		  restricted
+                  (when *pastie-restricted* "<restricted>1</restricted>")
                   "<body>" body "</body>"
                   "</paste>")))
     (with-timeout (*pastie-timeout* (error "Pastie timed out."))
@@ -103,11 +116,14 @@ Copies the URL into the kill ring."
 	  (message "Error occured: %s" status))))
     (kill-buffer *pastie-buffer*)))
 
-(defun pastie-buffer ()
+(defun pastie-buffer (&optional toggle-restricted)
   "Post the current buffer as a new paste at pastie.org.
-Copies the URL into the kill ring."
-  (interactive)
-  (pastie-region (point-min) (point-max)))
+Copies the URL into the kill ring.
+
+With a prefix argument, toggle the current value of
+`*pastie-restricted*'."
+  (interactive "P")
+  (pastie-region (point-min) (point-max) toggle-restricted))
 
 (defun pastie-get (id)
   "Fetch the contents of the paste from pastie.org into a new buffer."
