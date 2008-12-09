@@ -14,7 +14,10 @@
 ;;            (Dan McKinley)
 ;; 2008-08-04 Fixed xml escaping. Fixed naming conflict with pastie-buffer.
 ;;            Updated for the new pastie.org domain. (Dan McKinley)
+;; 2008-12-09 Allow pastie.el to compile correctly (Peter Jones)
 ;;
+(eval-when-compile
+  (require 'cl))
 
 (defcustom *pastie-last-url* ""
   "The last url pasted.")
