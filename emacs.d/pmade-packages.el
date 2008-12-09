@@ -2,7 +2,7 @@
     (load "pmade-loadpath"))
 
 ;; Emacs nonstandard editing commands
-(autolaod 'zap-up-to-char "misc" nil t)
+(autoload 'zap-up-to-char "misc" nil t)
 
 ;; Gnus CVS
 (require 'gnus-load)
@@ -41,9 +41,9 @@
 (window-number-mode 1)
 
 ;; Getting and fetching pastie.caboo.se
-(autolaod 'pastie-region "pastie" nil t)
-(autolaod 'pastie-buffer "pastie" nil t)
-(autolaod 'pastie-get    "pastie" nil t)
+(autoload 'pastie-region "pastie" nil t)
+(autoload 'pastie-buffer "pastie" nil t)
+(autoload 'pastie-get    "pastie" nil t)
 
 ;; Place the time in the title bar
 (setq display-time-format "%A, %B %d, %Y  %H:%M")
