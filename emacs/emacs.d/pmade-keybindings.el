@@ -126,21 +126,8 @@
 (define-key global-map "\C-cm"    'magit-status)
 (define-key global-map "\C-cr"    'revert-buffer)
 (define-key global-map "\C-ct"    'new-window-with-terminal)
+(define-key global-map "\C-cu"    'goto-last-change)
 (define-key global-map "\C-c\M-w" 'save-to-kill-ring-and-normalize-whitespace)
-
-;; These are mostly for terminal emacs, since C-0 through C-9 don't
-;; work there.  I use M-0 through M-9 with the window-number package,
-;; but still need a way to provide digit arguments to functions.
-(define-key global-map "\C-x\M-0" 'digit-argument)
-(define-key global-map "\C-x\M-1" 'digit-argument)
-(define-key global-map "\C-x\M-2" 'digit-argument)
-(define-key global-map "\C-x\M-3" 'digit-argument)
-(define-key global-map "\C-x\M-4" 'digit-argument)
-(define-key global-map "\C-x\M-5" 'digit-argument)
-(define-key global-map "\C-x\M-6" 'digit-argument)
-(define-key global-map "\C-x\M-7" 'digit-argument)
-(define-key global-map "\C-x\M-8" 'digit-argument)
-(define-key global-map "\C-x\M-9" 'digit-argument)
 
 ;; Key Bindings for Working with Windows
 (define-key global-map [(meta down)]     'shrink-window)              ; Make window smaller (vertical)
@@ -149,11 +136,9 @@
 (define-key global-map [(meta right)]    'enlarge-window-horizontally); Make window bigger
 
 ;; I freaking hate C-z (unless I'm using ElScreen)
-(unless (fboundp 'elscreen-create) (define-key global-map "\C-z" nil))
-
-;; If I am using ElScreen, however...
-(when (fboundp 'elscreen-create)
-  (define-key global-map "\C-z\C-z" 'elscreen-toggle))
+(if (fboundp 'elscreen-create) 
+    (define-key global-map "\C-z\C-z" 'elscreen-toggle)
+  (define-key global-map "\C-z" nil))
 
 ;; Outline and Org Mode Bindings
 (add-hook 'org-mode-hook 'pmade-org-mode-keys)
