@@ -59,8 +59,9 @@
 ;; Setup ERC buffers
 (defun pmade-erc-hook ()
   "Correctly configure ERC buffers"
-  (auto-fill-mode 0)                    ; disable auto fill
-  (setq truncate-lines nil))            ; wrap lines
+  (auto-fill-mode 0)
+  (setq truncate-lines nil)
+  (local-set-key "\C-c\C-o" 'pmade-erc-open-last-link))
 
 ;; Mac Rumors
 (defun macrumors-irc ()
@@ -83,7 +84,7 @@
    (t t)))
 
 ;; Open links easier
-(defun pmade:erc-open-last-link (arg)
+(defun pmade-erc-open-last-link (arg)
   (interactive "*p")
   (save-excursion
     (search-backward "http" nil nil arg)

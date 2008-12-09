@@ -14,13 +14,6 @@
   (previous-line)
   (indent-according-to-mode))
 
-(defun new-window-with-terminal ()
-  "Open a new window, small in size, and run a terminal"
-  (interactive)
-  (let ((window (split-window-vertically)))
-    (select-window window)
-    (term (getenv "SHELL"))))
-
 (defun switch-to-previous-buffer ()
   "Switch back to the previous buffer"
   (interactive)
@@ -40,23 +33,13 @@
      (replace-regexp-in-string "^\s+" "" (replace-regexp-in-string "\n\s*" " " text))))
   (deactivate-mark))
 
-(defun pmade-org-mode-keys ()
-  "Some key bindings and changes for outline mode"
-  (local-set-key "\C-j"       'outline-insert-heading)
-  (local-set-key "\C-\M-f"    'org-metaright)
-  (local-set-key "\C-\M-b"    'org-metaleft)
-  (local-set-key "\C-\M-S-f"  'org-shiftmetaright)
-  (local-set-key "\C-\M-S-b"  'org-shiftmetaleft)
-  (local-set-key "\C-\M-p"    'org-metaup)
-  (local-set-key "\C-\M-n"    'org-metadown))
-
 ;; Based on smart tab: http://www.emacswiki.org/cgi-bin/emacs-en/TabCompletion
-(defvar pmade-inside-smart-tab 0)
+(defvar pmade-inside-smart-tab nil)
 
 (defun pmade-smart-org-cycle ()
   "Prevent recursion with org-mode"
-  (if (= pmade-inside-smart-tab 0)
-      (let ((pmade-inside-smart-tab 1)) (org-cycle))
+  (if (not pmade-inside-smart-tab)
+      (let ((pmade-inside-smart-tab t)) (org-cycle))
     (indent-for-tab-command)))
 
 (defun pmade-smart-tab ()
@@ -71,13 +54,6 @@
    ((looking-at "\\_>") (hippie-expand nil))
    (t (indent-for-tab-command))))
 
-;; For iDo
-(defun pmade-ido-mode-hook ()
-  "Some key bindings and changes for ido mode"
-  (define-key ido-file-dir-completion-map "\C-n" 'ido-next-work-directory)
-  (define-key ido-file-dir-completion-map "\C-p" 'ido-prev-work-directory)
-  (define-key ido-file-completion-map     "\C-w" 'ido-delete-backward-word-updir))
-
 ;; Help start ERC
 (defun pmade-erc-start (&optional bitlbee-only)
   "Load and start ERC.  With prefix key, only connect to bitlbee."
@@ -86,10 +62,6 @@
   (erc :server "127.0.0.1")
   (erc-tls :server "irc.pmade.com" :port 6697 :password pmade-irc-password)
   (unless bitlbee-only (erc :server "irc.freenode.net")))
-
-;; ERC special key bindings
-(defun pmade:erc-keys-hook ()
-  (local-set-key "\C-c\C-o" 'pmade:erc-open-last-link))
 
 ;; Better buffer menu
 (defun pmade-buffer-menu (&optional arg)
@@ -115,8 +87,14 @@
 (define-key global-map "\C-x\C-b" 'pmade-buffer-menu)
 (define-key global-map "\C-o"     'open-line-below-like-vim)
 (define-key global-map "\M-o"     'open-line-above-like-vim)
+(define-key global-map "\C-s"     'isearch-forward-regexp)
+(define-key global-map "\C-r"     'isearch-backward-regexp)
+(define-key global-map "\C-\M-s"  'isearch-forward)
+(define-key global-map "\C-\M-r"  'isearch-backward)
 (define-key global-map "\C-xx"    'switch-to-previous-buffer)
 (define-key global-map "\C-w"     'kill-region-or-backward-kill-word)
+(define-key global-map "\M-z"     'zap-up-to-char)
+(define-key global-map "\M-\S-z"  'zap-to-char)
 (define-key global-map "\t"       'pmade-smart-tab)
 
 ;; User Key Bindings (using the C-c prefix)
@@ -139,9 +117,3 @@
 (if (fboundp 'elscreen-create) 
     (define-key global-map "\C-z\C-z" 'elscreen-toggle)
   (define-key global-map "\C-z" nil))
-
-;; Outline and Org Mode Bindings
-(add-hook 'org-mode-hook 'pmade-org-mode-keys)
-
-;; ido key bindings
-(add-hook 'ido-setup-hook 'pmade-ido-mode-hook)
