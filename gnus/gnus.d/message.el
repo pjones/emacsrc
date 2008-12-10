@@ -9,8 +9,7 @@
   (define-key message-mode-map "\C-c\C-w" 'pmade-mail-signature-next)
   (define-key message-mode-map "\C-c\C-q" 'boxquote-region)
   (define-key message-mode-map "\C-c\C-y" 'boxquote-yank)
-  (orgstruct-mode t)
-  (pmade-org-mode-keys))
+  (orgstruct-mode t))
 
 (defun pmade-message-setup-hook ()
   "Called after a new message has been initialized")
