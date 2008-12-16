@@ -68,6 +68,10 @@
 (autoload 'goto-last-change "goto-chg" nil t)
 (autoload 'goto-last-change-reverse "goto-chg" nil t)
 
+;; Markdown Mode
+(autoload 'markdown-mode "markdown-mode" nil t)
+(add-to-list 'auto-mode-alist '("\\.markdown$" . markdown-mode))
+
 ;; Typing Breaks
 (setq 
  type-break-query-mode nil
