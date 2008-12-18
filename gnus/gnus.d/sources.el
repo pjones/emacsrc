@@ -3,7 +3,7 @@
 ;; News via NNTP
 (setq
  nntp-authinfo-file pmade-authinfo
- gnus-select-method '(nntp "nntp.aioe.org"))
+ gnus-select-method '(nntp "news.gmane.org"))
 
 ;; Mail via IMAP and SMTP
 (setq
@@ -16,8 +16,7 @@
  smtpmail-local-domain "pmade.com")
 
 (setq gnus-secondary-select-methods
-      `((nntp   "news.gmane.org")
-        (nnimap ,pmade-mail-server (nnimap-stream ssl))))
+      `((nnimap ,pmade-mail-server (nnimap-stream ssl))))
 
 ;; Place sent mail on the server
 (setq gnus-message-archive-group "nnimap+mail.pmade.com:INBOX.Sent")
