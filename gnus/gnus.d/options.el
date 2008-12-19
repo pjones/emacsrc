@@ -39,8 +39,7 @@
 
 ;; Apple Address Book
 (require 'external-abook)
-(setq external-abook-command
-      (concat "ressbo-mutt -c " pmade-gnus-etc "/ressbo.db '%s'"))
+(setq external-abook-command "contacts -lf '%%e\t%%n' %s")
 
 ;; Checking for New Mail
 (defun pmade-new-level-one-mail () (gnus-group-get-new-news 1))

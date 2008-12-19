@@ -79,7 +79,7 @@
     (when window-conf (set-window-configuration window-conf))))
 
 ;; For Macintosh Emacs only
-(setq mac-option-modifier  'meta)
+(setq mac-option-modifier  'hyper)
 (setq mac-command-modifier 'meta)
 
 ;; Global Key Bindings
@@ -106,6 +106,11 @@
 (define-key global-map "\C-ct"    'new-window-with-terminal)
 (define-key global-map "\C-cu"    'goto-last-change)
 (define-key global-map "\C-c\M-w" 'save-to-kill-ring-and-normalize-whitespace)
+
+;; Hyper Keys
+(define-key global-map (kbd "H-m") 'bm-toggle)
+(define-key global-map (kbd "H-p") 'bm-previous)
+(define-key global-map (kbd "H-n") 'bm-next)
 
 ;; Key Bindings for Working with Windows
 (define-key global-map [(meta down)]     'shrink-window)              ; Make window smaller (vertical)
