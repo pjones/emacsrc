@@ -72,6 +72,15 @@
 (autoload 'markdown-mode "markdown-mode" nil t)
 (add-to-list 'auto-mode-alist '("\\.markdown$" . markdown-mode))
 
+;; Visual Bookmarks
+(autoload 'bm-toggle   "bm" "Toggle bookmark in current buffer." t)
+(autoload 'bm-next     "bm" "Goto bookmark."                     t)
+(autoload 'bm-previous "bm" "Goto previous bookmark."            t)
+(setq
+ bm-highlight-style 'bm-highlight-only-fringe
+ bm-repository-file "~/.comm-sync/etc/bm-repo"
+ bm-restore-repository-on-load t)
+
 ;; Typing Breaks
 (setq 
  type-break-query-mode nil
