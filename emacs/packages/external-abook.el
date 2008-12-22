@@ -33,14 +33,12 @@
 ;; (setq external-abook-command "my-query-script '%s'")
 ;;
 ;; Bind `external-abook-try-expand' to a key binding of your choice.
-;; It will expand the word around point into an email address from
+;; It will expand the text before point into an email address from
 ;; your external address book.
 ;;
 ;; Git Repository:
 ;;
 ;; git clone git://pmade.com/elisp
-
-(require 'thingatpt)
 
 (defvar external-abook-command nil
   "The command line tool to use for searching the external address book.
@@ -61,8 +59,10 @@ See http://www.mutt.org/doc/manual/manual-4.html#query for more information.")
   (if (null strings) nil
     (let ((elements (split-string (car strings) "\t+" t))
           (others (external-abook-parse (cdr strings))))
-      (append others (list (nreverse elements))))))
+      (append others (list (nreverse (external-abook-strip elements)))))))
 
+(defun external-abook-strip (elements)
+  (mapcar (lambda (s) (replace-regexp-in-string "[ \t]+$" "" s)) elements))
 (defun external-abook-make-string (address)
   "Create a valid email address string from the given address."
   (if (null address) nil
@@ -79,17 +79,24 @@ See http://www.mutt.org/doc/manual/manual-4.html#query for more information.")
    ((null results) nil)
    ((= 1 (length results)) (external-abook-make-string (car results)))
    (t (external-abook-make-string (assoc (external-abook-completing-read "Select Name: " results) results)))))
-      
+
+(defun external-abook-bounds ()
+  "Find text before point that should be used to search with."
+  (let* ((end (point))
+         (bol (save-excursion (beginning-of-line) (point)))
+         (start (save-excursion (search-backward-regexp "[ :,]" bol t))))
+    (if start (cons (1+ start) end) (cons bol end))))
+
 (defun external-abook-try-expand ()
-  "Attempt to expand the word around point from the external address book.
+  "Attempt to expand the text behind point from the external address book.
 
 This function is useful when bound to a key, for example, in Gnus
 message mode.  When called, it will search the external address
-book for entries that match the word around point.  If a match is
-found, the word around point will be replaced with the matching
-email address."
+book for entries that match the text behind point.  If a match is
+found, that text will be replaced with the matching email
+address."
   (interactive)
-  (let* ((bounds (bounds-of-thing-at-point 'word))
+  (let* ((bounds (external-abook-bounds))
          (query (and bounds (buffer-substring (car bounds) (cdr bounds))))
          (results (and query (external-abook-search query)))
          (email (external-abook-single-result results)))

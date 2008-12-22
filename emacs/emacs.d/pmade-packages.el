@@ -93,8 +93,8 @@
 ;; Editing the Emacs Wiki
 (defun pmade-oddmuse-hook ()
   "Hook is run after oddmuse is started"
-  (unless (string-match "answer" oddmuse-post)
-    (setq oddmuse-post (concat "answer=emacs;" oddmuse-post))))
+  (unless (string-match "question" oddmuse-post)
+    (setq oddmuse-post (concat "uihnscuskc=1;" oddmuse-post))))
 
 (setq oddmuse-username "PeterJones")
 (setq oddmuse-directory "~/.oddmuse")
