@@ -1,5 +1,5 @@
 ;;; oddmuse.el -- edit pages on an Oddmuse wiki
-;; $Id: oddmuse.el,v 2.2 2007/11/15 14:59:39 rubikitch Exp $
+;; $Id: oddmuse.el,v 2.3 2008/04/21 06:06:08 rubikitch Exp $
 
 ;; Copyright (C) 2006  Alex Schroeder
 ;;           (C) 2007  rubikitch <rubikitch@ruby-lang.org>
@@ -39,6 +39,9 @@
 ;;; History:
 
 ;; $Log: oddmuse.el,v $
+;; Revision 2.3  2008/04/21 06:06:08  rubikitch
+;; oddmuse-post: s/password/pwd/
+;;
 ;; Revision 2.2  2007/11/15 14:59:39  rubikitch
 ;; Changed command behavior: oddmuse-post
 ;;  With prefix argument, prompts pagename, otherwise set pagename as basename of `buffer-file-name'.
@@ -173,7 +176,7 @@ It must print the page to stdout.
   (concat "title=%t;"
           "summary=%s;"
           "username=%u;"
-          "password=%p;"
+          "pwd=%p;"
           "recent_edit=%m;"
           "text=%x")
   "URL arguments to use for publishing pages.
