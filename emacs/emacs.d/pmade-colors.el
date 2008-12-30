@@ -132,6 +132,9 @@
    '(modeline-mousable-minor-mode ((t (:background "DarkRed" :foreground "white"))))
    '(window-number-face ((t (:foreground "#FF7777"))))
 
+   ;; Non-Standard Faces
+   '(pmade-fixme-face ((t (:background "#670000" :foreground "#ffffff" :bold t :box (:line-width 1 :color "#ff8e43")))))
+   
    ;; Remaining Junk
    '(completion-dynamic-face ((t (:inherit 'match))))
    '(highlight ((t (:inherit 'match))))))
@@ -154,7 +157,11 @@
    '(font-lock-comment-delimiter-face ((t (:foreground "white"))))
    '(font-lock-comment-face ((t (:italic t :foreground "magenta"))))))
 
-;; Load color-theme
+;; Create some faces
+(copy-face 'font-lock-warning-face 'pmade-fixme-face)
+(setq pmade-fixme-face 'pmade-fixme-face)
+
+ ;; Load color-theme
 (if terminal-frame (color-theme-pmade-terminal)
   (color-theme-pmade-gui))
 

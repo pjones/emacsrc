@@ -23,7 +23,8 @@
   (local-set-key "\C-m" 'pmade-newline)
   (local-set-key "\t"   'pmade-smart-tab)
   (turn-on-auto-fill)
-  (flyspell-prog-mode))
+  (flyspell-prog-mode)
+  (font-lock-add-keywords nil '(("\\<\\(FIXME:\\|TODO:\\)" 1 pmade-fixme-face t))))
 
 (defun create-and-use-tags ()
   (interactive)
