@@ -132,6 +132,9 @@
    '(modeline-mousable-minor-mode ((t (:background "DarkRed" :foreground "white"))))
    '(window-number-face ((t (:foreground "#FF7777"))))
 
+   ;; Bookmarks
+   '(bm-fringe-face ((t (:foreground "#ff8e43"))))
+   
    ;; Non-Standard Faces
    '(pmade-fixme-face ((t (:background "#670000" :foreground "#ffffff" :bold t :box (:line-width 1 :color "#ff8e43")))))
    
