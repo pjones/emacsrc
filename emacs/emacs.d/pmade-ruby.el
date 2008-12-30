@@ -8,7 +8,17 @@
   (ruby-electric-mode t)
   (inf-ruby-keys)
   (pmade-programming-mode-hook)
-  (define-key ruby-mode-map "\C-c\t" 'pmade-ruby-comment-bar))
+  (define-key ruby-mode-map "\C-c\t" 'pmade-ruby-comment-bar)
+  (require 'align)
+  (setq align-mode-rules-list
+        '((ruby-comma
+           (regexp . ",\\(\\s-*\\)")
+           (group  . 1)
+           (repeat . t))
+          (ruby-hash
+           (regexp . "\\(\\s-*\\)=>")
+           (group  . 1)
+           (repeat . t)))))
 
 (defun pmade-ruby-comment-bar (&optional without-newline)
   "Create 80 pound signs"

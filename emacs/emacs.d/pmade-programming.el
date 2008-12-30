@@ -20,11 +20,12 @@
 (defun pmade-programming-mode-hook ()
   (setq show-trailing-whitespace nil)
   (set (make-local-variable 'comment-auto-fill-only-comments) t)
-  (local-set-key "\C-m" 'pmade-newline)
-  (local-set-key "\t"   'pmade-smart-tab)
   (turn-on-auto-fill)
   (flyspell-prog-mode)
-  (font-lock-add-keywords nil '(("\\<\\(FIXME:\\|TODO:\\)" 1 pmade-fixme-face t))))
+  (font-lock-add-keywords nil '(("\\<\\(FIXME:\\|TODO:\\)" 1 pmade-fixme-face t)))
+  (local-set-key "\C-m" 'pmade-newline)
+  (local-set-key "\t"   'pmade-smart-tab)
+  (local-set-key (kbd "H-a") 'align))
 
 (defun create-and-use-tags ()
   (interactive)
@@ -41,11 +42,11 @@
 (add-hook 'yaml-mode-hook 'pmade-programming-mode-hook)
 
 ;; C Programming
-(defun pmade-c-mode-hook ()
-  (c-set-style "bsd")
-  (setq c-basic-offset 4)
-  (pmade-programming-mode-hook))
-(add-hook 'c-mode-hook 'pmade-c-mode-hook)
+(add-hook 'c-mode-hook
+  (lambda ()
+    (c-set-style "bsd")
+    (setq c-basic-offset 4)
+    (pmade-programming-mode-hook)))
 
 ;; CSS, HTML
 (autoload 'css-mode "css-mode" "CSS" t)
@@ -57,9 +58,14 @@
 ;; Javascript
 (autoload 'js2-mode "js2" nil t)
 (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
+(add-hook 'js2-mode-hook 'pmade-programming-mode-hook)
 
 ;; Shell scripting
 (setq sh-basic-offset 2)
+(add-hook 'sh-mode-hook 'pmade-programming-mode-hook)
+
+;; SQL Files
+(add-hook 'sql-mode-hook 'pmade-programming-mode-hook)
 
 ;; Make #! scripts executable after saving them
 (add-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p)
