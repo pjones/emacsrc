@@ -24,8 +24,7 @@
   (flyspell-prog-mode)
   (font-lock-add-keywords nil '(("\\<\\(FIXME:\\|TODO:\\)" 1 pmade-fixme-face t)))
   (local-set-key "\C-m" 'pmade-newline)
-  (local-set-key "\t"   'pmade-smart-tab)
-  (local-set-key (kbd "H-a") 'align))
+  (local-set-key "\t"   'pmade-smart-tab))
 
 (defun create-and-use-tags ()
   (interactive)
