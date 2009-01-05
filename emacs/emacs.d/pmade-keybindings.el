@@ -103,7 +103,6 @@
 (define-key global-map "\C-cl"    'org-store-link)
 (define-key global-map "\C-cm"    'magit-status)
 (define-key global-map "\C-cr"    'revert-buffer)
-(define-key global-map "\C-ct"    'new-window-with-terminal)
 (define-key global-map "\C-cu"    'goto-last-change)
 (define-key global-map "\C-c\M-w" 'save-to-kill-ring-and-normalize-whitespace)
 
@@ -111,6 +110,7 @@
 (define-key global-map (kbd "H-m") 'bm-toggle)
 (define-key global-map (kbd "H-p") 'bm-previous)
 (define-key global-map (kbd "H-n") 'bm-next)
+(define-key global-map (kbd "H-a") 'align)
 
 ;; Key Bindings for Working with Windows
 (define-key global-map [(meta down)]     'shrink-window)              ; Make window smaller (vertical)
