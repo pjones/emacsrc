@@ -42,6 +42,7 @@
      org-agenda-skip-scheduled-if-done t
      org-agenda-show-all-dates t
      org-agenda-start-on-weekday 1
+     org-agenda-todo-ignore-with-date t
      org-agenda-files (append
                        (directory-files pmade-org-active-clients t "\\.org$")
                        (directory-files pmade-org-general-files  t "\\.org$")))))
