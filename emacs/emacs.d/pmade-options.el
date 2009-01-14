@@ -61,3 +61,8 @@
 (setq kept-old-versions 2)
 (setq version-control t)
 (setq backup-by-copying t)
+
+;; Helpful stuff for tramp
+(setq 
+ max-lisp-eval-depth 40000
+ max-specpdl-size 100000)
