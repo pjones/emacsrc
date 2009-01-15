@@ -26,8 +26,13 @@
  ido-auto-merge-work-directories-length 0)
 (ido-mode t)
 
-;; Save you place in files you edit
-(setq-default save-place t)
+;; Tramp kicks ass
+(setq tramp-default-method "ssh"
+      tramp-verbose 3                   ; For reference if I need to
+      tramp-debug-buffer nil)           ; debug Tramp
+(require 'tramp)
+
+;; Save your place in files you edit
 (setq save-place-file "~/.comm-sync/var/emacs/places.el")
 (require 'saveplace)
 
