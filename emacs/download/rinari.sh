@@ -1,7 +1,7 @@
 #!/bin/sh
 
 . `dirname $0`/common.sh
-URL="git://github.com/eschulte/rinari.git"
+URL="git://github.com/technomancy/rinari.git"
 DEST=${PREFIX}/share/emacs/site-lisp/rinari
 dir="rinari"
 
