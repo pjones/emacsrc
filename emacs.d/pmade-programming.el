@@ -18,7 +18,8 @@
 
 ;; Code that should be called for each programming mode
 (defun pmade-programming-mode-hook ()
-  (setq show-trailing-whitespace nil)
+  (setq show-trailing-whitespace nil
+        save-place t)
   (set (make-local-variable 'comment-auto-fill-only-comments) t)
   (turn-on-auto-fill)
   (flyspell-prog-mode)
