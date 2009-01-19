@@ -21,7 +21,7 @@
    '(show-paren-match ((t (:background "#DA44FF" :foreground "#F6CCFF" :bold t))))
 
    ;; Outline Mode and Org-Mode
-   '(outline-1 ((t (:foreground "#D6B163" :bold t :height 1.3))))
+   '(outline-1 ((t (:foreground "#D6B163" :bold t))))
    '(outline-2 ((t (:foreground "#A5F26E" :bold t))))
    '(outline-3 ((t (:foreground "#B150E7" :bold nil))))
    '(outline-4 ((t (:foreground "#529DB0" :bold nil))))
@@ -38,11 +38,15 @@
    '(org-upcoming-deadline ((t (:foreground "#d6ff9c"))))
    '(org-warning ((t (:foreground "#8f6aff" :italic t))))
    '(org-date ((t (:inherit font-lock-constant-face))))
+   '(org-tag ((t (:inherit font-lock-comment-delimiter-face))))
    '(org-hide ((t (:foreground "#191919"))))
    '(org-todo ((t (:background "DarkRed" :foreground "white" :box (:line-width 1 :style released-button)))))
    '(org-done ((t (:background "DarkGreen" :foreground "white" :box (:line-width 1 :style released-button)))))
    '(org-column ((t (:background "#222222"))))
    '(org-column-title ((t (:background "DarkGreen" :foreground "white" :bold t :box (:line-width 1 :style released-button)))))
+   '(pmade-org-next-face ((t (:background "#4f97e9" :foreground "white" :box (:line-width 1 :style released-button)))))
+   '(pmade-org-pending-face ((t (:background "#d85b00" :foreground "white" :box (:line-width 1 :style released-button)))))
+   '(pmade-org-reading-face ((t (:background "#68527a" :foreground "white" :box (:line-width 1 :style released-button)))))
 
    ;; Muse Mode
    '(muse-header-1 ((t (:foreground "#D6B163" :height 1.5 :inherit variable-pitch))))
@@ -162,7 +166,13 @@
 
 ;; Create some faces
 (copy-face 'font-lock-warning-face 'pmade-fixme-face)
-(setq pmade-fixme-face 'pmade-fixme-face)
+(make-face 'pmade-org-next-face)
+(make-face 'pmade-org-pending-face)
+(make-face 'pmade-org-reading-face)
+(setq pmade-fixme-face       'pmade-fixme-face
+      pmade-org-next-face    'pmade-org-next-face
+      pmade-org-pending-face 'pmade-org-pending-face
+      pmade-org-reading-face 'pmade-org-reading-face)
 
  ;; Load color-theme
 (if terminal-frame (color-theme-pmade-terminal)
