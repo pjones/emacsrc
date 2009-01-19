@@ -48,9 +48,10 @@
 
  ;; Custom Agenda Views
  org-agenda-custom-commands
- '(("d" "Daily Agenda and Next Actions"
+ '(("d" "Daily Agenda"
     ((agenda ""
-             ((org-agenda-todo-keyword-format "")))
+             ((org-agenda-todo-keyword-format "")
+              (org-agenda-remove-tags t)))
      (tags "LEVEL=2+affirmation"
            ((org-agenda-remove-tags t)
             (org-agenda-prefix-format "")
@@ -58,12 +59,11 @@
      (todo "NEXT" 
            ((org-agenda-sorting-strategy '(tag-up))
             (org-agenda-show-inherited-tags nil)
-            (org-agenda-todo-keyword-format "")))))
-   ("w" "Weekly Agenda Review"
-    ((agenda "" ((org-agenda-ndays 7)))
+            (org-agenda-todo-keyword-format "")))
      (todo "PENDING"
            ((org-agenda-todo-keyword-format "")))
-     (stuck ""))))
+     (stuck ""
+            ((org-agenda-remove-tags t))))))
  
  ;; Faces
  org-todo-keyword-faces
