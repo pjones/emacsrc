@@ -96,8 +96,20 @@
           org-export-html-style-extra ""
           org-export-html-style (concat "<link rel=\"stylesheet\" type=\"text/css\" href=\"" pmade-print-css "\"/>"))))
 
-;; Use line highlighting in the Org Agenda
-(add-hook 'org-agenda-mode-hook (lambda () (hl-line-mode 1)))
+(add-hook 'org-agenda-mode-hook 
+  (lambda () 
+    ;; Use line highlighting in the Org Agenda
+    (hl-line-mode 1)
+    
+    ;; Keys
+    (local-set-key "\C-x\C-w" 'pmade:org-write-agenda)))
+
+(defun pmade:org-write-agenda ()
+  "Write the agenda buffer to a file, and send to pmade.com."
+  (interactive)
+  (org-write-agenda "~/agenda.html")
+  (shell-command "sed -E 's/T:([0-9+-]+)/T:<a href=\"tel:\\1\">\\1<\\/a>/' < ~/agenda.html | ssh -q pmade.com 'cat > /opt/sites/pmade.com/www/private/agenda.html'")
+  (delete-file "~/agenda.html"))
 
 (defun pmade:org-remove-redundant-heading-markers ()
   "Called from an export buffer, removes leading stars so that
