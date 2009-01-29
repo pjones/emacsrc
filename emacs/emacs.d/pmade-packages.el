@@ -88,7 +88,7 @@
 
 ;; Typing Breaks
 (setq 
- type-break-query-mode nil
+ type-break-query-mode t
  type-break-mode-line-message-mode t
  type-break-demo-functions '(type-break-demo-boring)
  type-break-demo-boring-stats t
