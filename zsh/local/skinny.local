@@ -4,4 +4,4 @@
 [ x$DISPLAY = x ] && export DISPLAY=:0
 
 # Correct path
-path=(/opt/local/bin /opt/local/lib/postgresql/bin $path)
+path=(/opt/local/bin /opt/local/lib/postgresql/bin /usr/local/texlive/2008/bin/universal-darwin $path)
