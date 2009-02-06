@@ -121,3 +121,9 @@
 (require 'org-install nil t)
 (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
 (eval-after-load "org" (load "~/.emacs.d/pmade/pmade-org"))
+
+;; Muse is great for writing documents and articles
+(add-to-list 'load-path (concat pmade-site-lisp "/muse"))
+(autoload 'muse-mode-choose-mode "muse-mode" "Emacs Muse" t)
+(add-to-list 'auto-mode-alist '("\\.muse$" . muse-mode-choose-mode))
+(eval-after-load "muse-mode" (load "~/.emacs.d/pmade/pmade-muse"))
