@@ -80,8 +80,8 @@ zmodload zsh/datetime
 # load in optional local override file
 [ -r ~/.zsh/local ] && . ~/.zsh/local
 
-osfile=`echo $OSNAME | tr 'A-Z' 'a-z'`
-[ -r ~/.zsh/$osfile ] && . ~/.zsh/$osfile
+# load in optional operating system override
+[ -r ~/.zsh/os ] && . ~/.zsh/os
 
 # finally configure the prompt
 . ~/.zsh/prompt

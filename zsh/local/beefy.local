@@ -1,7 +1,2 @@
 #!/usr/bin/env zsh
-
-# set DISPLAY if it's not set
-[ x$DISPLAY = x ] && export DISPLAY=:0
-
-# Correct path
-path=(/opt/local/bin /opt/local/lib/postgresql/bin $path)
+# My desktop (Mac Pro)

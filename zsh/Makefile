@@ -1,5 +1,6 @@
 DEST = $(HOME)/.zsh
 HOST = $(shell hostname)
+OS   = $(shell uname -s | tr '[:upper:]' '[:lower:]')
 
 define DIR_template
 all: $(1)
@@ -42,7 +43,15 @@ $(DEST)/local: local/$(HOST)
 	cp -p $< $@
 endif
 
+# OS (os name based) Override
+ifneq (,$(wildcard os/$(OS)))
+all: $(DEST)/os
+$(DEST)/os: os/$(OS)
+	cp -p $< $@
+endif
+
 # The main startup file
 all: $(HOME)/.zshrc
 $(HOME)/.zshrc:
 	echo "source $(HOME)/.zsh/zshrc" > $@
+
