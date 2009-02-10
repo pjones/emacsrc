@@ -1,0 +1,48 @@
+\documentclass[12pt,titlepage]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[pdftex]{graphicx}
+\usepackage[colorlinks,hyperindex,plainpages=false]{hyperref}
+
+\pagestyle{headings}
+\begin{document}
+
+% http://en.wikibooks.org/wiki/LaTeX/Title_Creation
+\begin{titlepage}
+\begin{center}
+
+\includegraphics[width=0.75\textwidth]{/Users/pjones/Documents/pmade/pmade-inc/artwork/logo/PNG/Trademark_Bright.png}\\[1cm]
+
+\begin{huge}
+%\begin{textsf}
+<lisp>(muse-publish-escape-specials-in-string 
+  (muse-publishing-directive "title") 'document)</lisp>
+\par
+%\end{textsf}
+\end{huge}
+
+\rule{\linewidth}{0.5mm} \\[1.5cm]
+
+% Author and Version
+\begin{minipage}{0.4\textwidth}
+\begin{flushleft} \large
+\emph{Author:}\\
+<lisp>(muse-publishing-directive "author")</lisp>
+\end{flushleft}
+\end{minipage}
+\begin{minipage}{0.4\textwidth}
+\begin{flushright} \large
+\emph{Version:}\\
+<lisp>(muse-publishing-directive "version")</lisp>
+\end{flushright}
+\end{minipage}
+
+\vfill
+{\large <lisp>(muse-barecms-formatted-date)</lisp>}
+
+\end{center}
+\end{titlepage}
+
+\tableofcontents
+\newpage

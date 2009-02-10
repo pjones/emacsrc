@@ -114,18 +114,20 @@
 (defun pmade:org-remove-redundant-heading-markers ()
   "Called from an export buffer, removes leading stars so that
 the first heading in the export has only one star."
-  (let ((reduce-by 0)
-        (remove-regex "^"))
-    (save-excursion
-      (goto-char (point-min))
-      (save-match-data
-        (search-forward-regexp "^\\*")
-        (beginning-of-line)
-        (setq reduce-by (- (org-outline-level) 1))
-        (when (> reduce-by 0)
-          (setq remove-regex (concat remove-regex (regexp-quote (make-string reduce-by ?*))))
-          (while (re-search-forward remove-regex nil t)
-            (replace-match "" nil nil)
-            (forward-line)))))))
+  (condition-case nil
+      (let ((reduce-by 0)
+            (remove-regex "^"))
+        (save-excursion
+          (goto-char (point-min))
+          (save-match-data
+            (search-forward-regexp "^\\*")
+            (beginning-of-line)
+            (setq reduce-by (- (org-outline-level) 1))
+            (when (> reduce-by 0)
+              (setq remove-regex (concat remove-regex (regexp-quote (make-string reduce-by ?*))))
+              (while (re-search-forward remove-regex nil t)
+                (replace-match "" nil nil)
+                (forward-line))))))
+    (error nil)))
 
 (add-hook 'org-export-preprocess-hook 'pmade:org-remove-redundant-heading-markers)
