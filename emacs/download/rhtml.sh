@@ -1,6 +1,10 @@
 #!/bin/sh
 
 . `dirname $0`/common.sh
-URL="http://rinari.rubyforge.org/svn/trunk/rhtml"
-svn co $URL || die "failed to svn co rhtml"
-mv rhtml $PREFIX/share/emacs/site-lisp/ || die "failed to move rhtml to site-lisp"
+
+URL="git://github.com/eschulte/rhtml.git"
+dir=`fetch_url $URL`
+
+DEST=$PREFIX/share/emacs/site-lisp/rhtml
+rm -rf $DEST
+cp -rp $dir $DEST || die "failed to move rhtml to site-lisp"

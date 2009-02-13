@@ -1,14 +1,14 @@
 #!/bin/sh
 
 . `dirname $0`/common.sh
-URL="http://download.gna.org/muse-el/muse-${VERSION}.tar.gz"
-file=`fetch_url $URL`
-dir=`untar $file`
+URL="git://pmade.com/muse.git"
+dir=`fetch_url $URL`
 
 (
   cd $dir || die "WTF"
   sed $SED_OPTIONS "s|^PREFIX *=.*|PREFIX=${PREFIX}|" < Makefile.defs.default > Makefile.defs
-  make install || die "make failed"
+  make clean > /dev/null 2>&1
+  make install > /dev/null 2>&1 || die "make failed"
 )
 
 clean_files $dir

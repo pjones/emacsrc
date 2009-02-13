@@ -27,15 +27,49 @@ fetch_url ()
 {
   # $1: the URL to fetch
   # $2: What to call the downloaded file
+  # $3: The name of the expected dir after running untar (optional)
+
   if [ "x$2" != "x" ]; then
     file=$2
   else
     file=`basename $1`
   fi
+
+  if echo $1 | egrep -q '\.git$'; then
+    fetch_git_url $1 $file
+  else
+    test -r $file  || curl ${CURL_OPTIONS} -o $file $1 || die "cURL failure"
+    test -r $file  || die "file not downloaded: $file"
+    untar $file $3
+  fi
+}
+
+################################################################################
+fetch_git_url ()
+{
+  # $1: The URL to the Git repo
+  # $2: The basename of the repo
   
-  test -r $file  || curl ${CURL_OPTIONS} -o $file $1 || die "cURL failure"
-  test -r $file  || die "file not downloaded: $file"
-  echo $file
+  gitcache=~/.emacs.d/gitcache/$2
+  
+  if [ ! -d `dirname $gitcache` ]; then
+    mkdir -p `dirname $gitcache` || die "failed to mkdir"
+  fi
+
+  if [ -d $gitcache ]; then
+    (
+      cd $gitcache 
+      git checkout master > /dev/null 2>&1
+      git pull -q > /dev/stderr || exit 1
+    ) || die "git pull failed"
+  else
+    (
+      cd `dirname $gitcache`
+      git clone -q $1 $2 > /dev/stderr || exit 1
+    ) || die "git clone failed"
+  fi
+  
+  echo $gitcache
 }
 
 ################################################################################
@@ -71,5 +105,9 @@ untar ()
 clean_files ()
 {
   # $1: basename to clean
-  rm -rf ${1}*
+  if echo $1 | grep -q gitcache; then
+    : # nothing
+  else
+    rm -rf ${1}*
+  fi
 }
