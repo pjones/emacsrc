@@ -5,8 +5,7 @@ PACKAGE_VERSIONS += muse/20090213
 PACKAGE_VERSIONS += rhtml/20090213
 PACKAGE_VERSIONS += gnus/git-head
 PACKAGE_VERSIONS += rinari/20090115
-#PACKAGE_VERSIONS += rails/delete
-#PACKAGE_VERSIONS += magit/52abed7629f23ebff56799c557a4ef0299df032c
+PACKAGE_VERSIONS += magit/20090213
 
 DEST = $(HOME)/.emacs.d/download
 PACKAGES = $(wildcard *.sh)

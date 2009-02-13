@@ -10,11 +10,10 @@ if [ $VERSION = 'delete' ]; then
 fi
 
 (
-  cd $dir
-  git submodule init
-  git submodule update
+  cd $dir || die "WTF"
+  git submodule update --init
 )
 
 DEST=${PREFIX}/share/emacs/site-lisp/rinari
 rm -rf $DEST
-mv $dir $DEST
+cp -rp $dir $DEST
