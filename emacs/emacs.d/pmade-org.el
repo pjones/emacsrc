@@ -23,6 +23,7 @@
  org-M-RET-may-split-line nil
  org-time-clocksum-format "%02d:%02d"
  org-clock-into-drawer t
+ org-log-state-notes-into-drawer t
  org-completion-use-ido t
  org-tags-exclude-from-inheritance nil
 
