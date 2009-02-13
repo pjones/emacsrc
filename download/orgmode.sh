@@ -2,14 +2,12 @@
 
 . `dirname $0`/common.sh
 URL="git://repo.or.cz/org-mode.git"
-dir="org-mode"
-
-test -d $dir || git clone $URL || die "failed to clone git repo"
-test -d $dir || die "git repo didn't create $dir"
+dir=`fetch_url $URL`
 
 (
   cd $dir || die "WTF"
-  make prefix=${PREFIX} install || die "make failed"
+  make clean > /dev/null 2>&1
+  make prefix=${PREFIX} install > /dev/null 2>&1 || die "make failed"
 )
 
 clean_files $dir
