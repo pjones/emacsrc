@@ -34,3 +34,6 @@
 
 (muse-derive-style "printable-xhtml" "xhtml"
                    :header 'pmade-muse-html-header)
+
+(muse-derive-style "pdf-logo-article" "pdf"
+                   :header "~/Develop/pmade/rc/latex/muse/logo-article.tex")
