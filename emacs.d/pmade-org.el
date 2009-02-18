@@ -113,23 +113,23 @@
   (shell-command "sed -E 's/T:([0-9+-]+)/T:<a href=\"tel:\\1\">\\1<\\/a>/' < ~/agenda.html | ssh -q pmade.com 'cat > /opt/sites/pmade.com/www/private/agenda.html'")
   (delete-file "~/agenda.html"))
 
-(defun pmade:org-remove-redundant-heading-markers ()
-  "Called from an export buffer, removes leading stars so that
-the first heading in the export has only one star."
-  (condition-case nil
-      (let ((reduce-by 0)
-            (remove-regex "^"))
-        (save-excursion
-          (goto-char (point-min))
-          (save-match-data
-            (search-forward-regexp "^\\*")
-            (beginning-of-line)
-            (setq reduce-by (- (org-outline-level) 1))
-            (when (> reduce-by 0)
-              (setq remove-regex (concat remove-regex (regexp-quote (make-string reduce-by ?*))))
-              (while (re-search-forward remove-regex nil t)
-                (replace-match "" nil nil)
-                (forward-line))))))
-    (error nil)))
+;; (defun pmade:org-remove-redundant-heading-markers ()
+;;   "Called from an export buffer, removes leading stars so that
+;; the first heading in the export has only one star."
+;;   (condition-case nil
+;;       (let ((reduce-by 0)
+;;             (remove-regex "^"))
+;;         (save-excursion
+;;           (goto-char (point-min))
+;;           (save-match-data
+;;             (search-forward-regexp "^\\*")
+;;             (beginning-of-line)
+;;             (setq reduce-by (- (org-outline-level) 1))
+;;             (when (> reduce-by 0)
+;;               (setq remove-regex (concat remove-regex (regexp-quote (make-string reduce-by ?*))))
+;;               (while (re-search-forward remove-regex nil t)
+;;                 (replace-match "" nil nil)
+;;                 (forward-line))))))
+;;     (error nil)))
 
-(add-hook 'org-export-preprocess-hook 'pmade:org-remove-redundant-heading-markers)
+;; (add-hook 'org-export-preprocess-hook 'pmade:org-remove-redundant-heading-markers)
