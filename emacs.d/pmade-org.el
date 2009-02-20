@@ -22,11 +22,15 @@
  org-special-ctrl-k t
  org-M-RET-may-split-line nil
  org-time-clocksum-format "%02d:%02d"
- org-clock-into-drawer t
- org-log-into-drawer t
  org-clock-into-drawer "CLOCK"
+ org-log-into-drawer "LOGBOOK"
  org-completion-use-ido t
  org-tags-exclude-from-inheritance nil
+ 
+ ;; Showing context
+ org-show-hierarchy-above '((default . t))
+ org-show-following-heading '((default . t))
+ org-show-siblings '((default . t))
 
  ;; The notes file and options
  org-directory "~/Documents/pmade/pmade-inc/planning"

@@ -40,7 +40,11 @@
 (defun pmade-term-toggle-mode ()
   "Toggle between term-char-mode and term-line-mode."
   (interactive)
-  (if (term-in-line-mode) (term-char-mode) (term-line-mode)))
+  (if (term-in-line-mode) 
+      (progn 
+        (term-char-mode)
+        (term-send-raw-string "\C-e"))
+    (term-line-mode)))
 
 (defun pmade-term-yank ()
   "Allow yank to work in raw char mode"
