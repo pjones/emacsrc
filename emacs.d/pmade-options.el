@@ -30,7 +30,9 @@
 
 ;; Frame setup
 (setq
- default-frame-alist '((cursor-type  . bar) (cursor-color . "yellow")))
+ default-frame-alist 
+ '((cursor-type  . bar)
+   (cursor-color . "yellow")))
 
 ;; Window Fringes
 (require 'fringe)
