@@ -63,28 +63,13 @@
   (erc-tls :server "irc.pmade.com" :port 6697 :password pmade-irc-password)
   (unless bitlbee-only (erc :server "irc.freenode.net")))
 
-;; Better buffer menu
-(defun pmade-buffer-menu (&optional arg)
-  "Load a buffer-menu and when it quits, restore the window configuration"
-  (interactive "P")
-  (let ((window-conf (current-window-configuration)))
-    (buffer-menu-other-window arg)
-    (set (make-local-variable 'pmade-saved-window-configuration) window-conf)
-    (define-key Buffer-menu-mode-map "q" 'pmade-quit-buffer-menu)))
-
-(defun pmade-quit-buffer-menu ()
-  "Restore the window configuration, closing a buffer window"
-  (interactive)
-  (let ((window-conf pmade-saved-window-configuration))
-    (when window-conf (set-window-configuration window-conf))))
-
 ;; For Macintosh Emacs only
 (setq mac-option-modifier  'hyper)
 (setq mac-command-modifier 'meta)
 
 ;; Global Key Bindings
 (define-key global-map "\C-x\C-m" 'execute-extended-command)
-(define-key global-map "\C-x\C-b" 'pmade-buffer-menu)
+(define-key global-map "\C-x\C-b" 'ibuffer)
 (define-key global-map "\C-o"     'open-line-below-like-vim)
 (define-key global-map "\M-o"     'open-line-above-like-vim)
 (define-key global-map "\C-s"     'isearch-forward-regexp)
