@@ -81,14 +81,17 @@
 (add-hook 'org-mode-hook
   (lambda ()
     ;; Extra Bindings
-    (define-key org-mode-map "\C-ci"     'org-invoice-report)
-    (define-key org-mode-map "\C-j"      'org-meta-return)
-    (define-key org-mode-map "\C-\M-f"   'org-metaright)
-    (define-key org-mode-map "\C-\M-b"   'org-metaleft)
-    (define-key org-mode-map "\C-\M-S-f" 'org-shiftmetaright)
-    (define-key org-mode-map "\C-\M-S-b" 'org-shiftmetaleft)
-    (define-key org-mode-map "\C-\M-p"   'org-metaup)
-    (define-key org-mode-map "\C-\M-n"   'org-metadown)
+    (org-defkey org-mode-map "\C-ci"     'org-invoice-report)
+    (org-defkey org-mode-map "\C-\M-f"   'org-metaright)
+    (org-defkey org-mode-map "\C-\M-b"   'org-metaleft)
+    (org-defkey org-mode-map "\C-\M-S-f" 'org-shiftmetaright)
+    (org-defkey org-mode-map "\C-\M-S-b" 'org-shiftmetaleft)
+    (org-defkey org-mode-map "\C-\M-p"   'org-metaup)
+    (org-defkey org-mode-map "\C-\M-n"   'org-metadown)
+
+    (org-defkey org-mode-map "\C-j"                'pmade:org-list-append)
+    (org-defkey org-mode-map [(meta return)]       'pmade:org-list-append)
+    (org-defkey org-mode-map [(shift meta return)] 'pmade:org-list-append-with-checkbox)
 
     ;; Buffer Settings
     (setq save-place nil)
@@ -138,3 +141,24 @@
 ;;     (error nil)))
 
 ;; (add-hook 'org-export-preprocess-hook 'pmade:org-remove-redundant-heading-markers)
+
+(defun pmade:org-list-append (&optional checkbox)
+  "Append a plain list item to the current heading.  If the
+current heading already has plain list items, a new one will be
+added, otherwise a new plain list will be created.  If checkbox
+is set, add a plain list item with a checkbox."
+  (interactive "P")
+  (when (not (org-insert-item (if checkbox 'checkbox)))
+    (org-back-to-heading)
+    (org-show-subtree)
+    (outline-next-heading)
+    (if (eolp) (newline)
+      (newline)
+      (previous-line))
+    (org-indent-line-function)
+    (insert (concat "-" (if checkbox " [ ] " " ")))))
+
+(defun pmade:org-list-append-with-checkbox ()
+  "Calls `pmade:org-list-append' with checkbox set."
+  (interactive)
+  (pmade:org-list-append t))
