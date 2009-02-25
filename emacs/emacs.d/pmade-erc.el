@@ -27,7 +27,7 @@
 
 ;; Auto join the given channels
 (setq erc-autojoin-channels-alist
-      '(("freenode" "#gnus" "#erc" "#emacs")
+      '(("freenode" "#emacs" "#boulder.rb")
         ("macrumors" "#macrumors")))
 
 ;; Logging

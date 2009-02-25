@@ -63,11 +63,3 @@
 (setq kept-old-versions 2)
 (setq version-control t)
 (setq backup-by-copying t)
-
-;; Always split horizontally
-(defun pmade:split-horizontally-for-temp-buffers ()
-  "Split the window horizontally for temp buffers."
-  (when (one-window-p t) 
-    (split-window-horizontally)))
-
-(add-hook 'temp-buffer-setup-hook 'pmade:split-horizontally-for-temp-buffers)

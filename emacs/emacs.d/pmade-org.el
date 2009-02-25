@@ -59,10 +59,10 @@
     ((agenda ""
              ((org-agenda-todo-keyword-format "")
               (org-agenda-remove-tags t)))
-     (tags "LEVEL=2+affirmation"
-           ((org-agenda-remove-tags t)
-            (org-agenda-prefix-format "")
-           (org-agenda-todo-keyword-format "")))
+;;      (tags "LEVEL=2+affirmation"
+;;            ((org-agenda-remove-tags t)
+;;             (org-agenda-prefix-format "")
+;;            (org-agenda-todo-keyword-format "")))
      (todo "NEXT" 
            ((org-agenda-sorting-strategy '(tag-up))
             (org-agenda-show-inherited-tags nil)
