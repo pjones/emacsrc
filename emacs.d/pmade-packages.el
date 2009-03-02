@@ -5,7 +5,8 @@
 (autoload 'zap-up-to-char "misc" nil t)
 
 ;; Gnus CVS
-(require 'gnus-load)
+(when (= 22 emacs-major-version)
+  (require 'gnus-load))
 
 ;; Use Aspell
 (setq ispell-program-name "aspell")
