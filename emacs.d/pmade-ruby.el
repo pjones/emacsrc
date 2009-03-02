@@ -23,7 +23,7 @@
 (defun pmade-ruby-comment-bar (&optional without-newline)
   "Create 80 pound signs"
   (interactive "P")
-  (insert-char ?# 80)
+  (insert-char ?# (- 80 (current-column)))
   (if without-newline (beginning-of-line) (newline))
   (indent-according-to-mode))
 
