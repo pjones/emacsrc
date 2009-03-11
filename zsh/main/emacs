@@ -22,6 +22,6 @@ emacs_prompt_magic ()
   [ $TERM = 'screen' ] && echo -n "P"
   echo "AnSiTh" `hostname`
   echo "AnSiTu" `whoami`
-  echo "AnSiTc" $PWD
+  echo "AnSiTc" `pwd`
   [ $TERM = 'screen' ] && echo -n "\\"
 }
