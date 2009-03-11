@@ -34,6 +34,10 @@
  '((cursor-type  . bar)
    (cursor-color . "yellow")))
 
+(when window-system
+  (setq-default cursor-in-non-selected-windows 'hbar)
+  (blink-cursor-mode 1))
+
 ;; Window Fringes
 (require 'fringe)
 (setq default-indicate-buffer-boundaries 'left) ; Indicate the top and bottom of a buffer
