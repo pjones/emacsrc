@@ -59,6 +59,11 @@
 (autoload 'js2-mode "js2" nil t)
 (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
 (add-hook 'js2-mode-hook 'pmade-programming-mode-hook)
+(setq js2-auto-indent-flag nil
+      js2-bounce-indent-flag nil
+      js2-rebind-eol-bol-keys nil
+      js2-mode-escape-quotes nil
+      js2-basic-offset 2)
 
 ;; Shell scripting
 (setq sh-basic-offset 2)
