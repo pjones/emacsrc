@@ -53,6 +53,7 @@
 (setq next-line-add-newlines t)
 (setq-default indent-tabs-mode nil)
 (setq default-truncate-lines t)
+(setq truncate-partial-width-windows nil)
 (setq paren-priority 'both)
 (setq paren-sexp-mode nil)
 (setq paren-match-face 'show-paren-match-face)
