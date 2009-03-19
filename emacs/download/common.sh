@@ -10,6 +10,7 @@ VERSION=$1
 PREFIX="${HOME}/Local"
 CURL_OPTIONS="--progress-bar"
 OSNAME=`uname -s`
+export EMACS=`which emacs` # fix for a bug in my env
 
 SED_OPTIONS="-E"
 test $OSNAME = Linux && SED_OPTIONS="-r"

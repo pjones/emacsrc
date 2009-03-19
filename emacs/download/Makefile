@@ -6,6 +6,7 @@ PACKAGE_VERSIONS += gnus/20090213
 PACKAGE_VERSIONS += magit/20090213
 PACKAGE_VERSIONS += apel/10.7
 PACKAGE_VERSIONS += erc/5.3
+PACKAGE_VERSIONS += epg/0.0.16
 
 DEST = $(HOME)/.emacs.d/download
 PACKAGES = $(wildcard *.sh)
