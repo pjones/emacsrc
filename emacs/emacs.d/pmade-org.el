@@ -26,6 +26,7 @@
  org-log-into-drawer "LOGBOOK"
  org-completion-use-ido t
  org-tags-exclude-from-inheritance nil
+ org-goto-interface 'outline-path-completion
  
  ;; Showing context
  org-show-hierarchy-above '((default . t))
@@ -59,10 +60,10 @@
     ((agenda ""
              ((org-agenda-todo-keyword-format "")
               (org-agenda-remove-tags t)))
-;;      (tags "LEVEL=2+affirmation"
-;;            ((org-agenda-remove-tags t)
-;;             (org-agenda-prefix-format "")
-;;            (org-agenda-todo-keyword-format "")))
+     (tags "LEVEL=2+goals"
+           ((org-agenda-remove-tags t)
+            (org-agenda-prefix-format "")
+           (org-agenda-todo-keyword-format "")))
      (todo "NEXT" 
            ((org-agenda-sorting-strategy '(tag-up))
             (org-agenda-show-inherited-tags nil)
@@ -156,7 +157,10 @@ is set, add a plain list item with a checkbox."
       (newline)
       (previous-line))
     (org-indent-line-function)
-    (insert (concat "-" (if checkbox " [ ] " " ")))))
+    (insert (concat "-" (if checkbox " [ ] " " ")))
+    (save-excursion
+      (org-back-to-heading)
+      (org-cycle-hide-drawers 'subtree))))
 
 (defun pmade:org-list-append-with-checkbox ()
   "Calls `pmade:org-list-append' with checkbox set."
