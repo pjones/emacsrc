@@ -118,6 +118,8 @@
 
 ;; EasyPG http://www.easypg.org/
 (require 'epa-setup)
+(setq epa-file-encrypt-to "61C4F407C4EB56B7"
+      epa-popup-info-window nil)
 
 ;; I love Org Mode!
 ;; Attempt to load org-mode from a local installation, but if that
