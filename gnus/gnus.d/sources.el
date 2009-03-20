@@ -1,19 +1,32 @@
 ;;; Mail and News Servers
 
 ;; News via NNTP
-(setq
- nntp-authinfo-file pmade-authinfo
- gnus-select-method '(nntp "news.gmane.org"))
+(setq nntp-authinfo-file pmade-authinfo
+      gnus-select-method '(nntp "news.gmane.org"))
 
-;; Mail via IMAP and SMTP
-(setq
- pmade-mail-server "mail.pmade.com"
- nnimap-authinfo-file pmade-authinfo
- message-send-mail-function 'smtpmail-send-it
- smtpmail-smtp-server pmade-mail-server
- smtpmail-auth-credentials pmade-authinfo
- smtpmail-starttls-credentials `((,pmade-mail-server 25 nil nil))
- smtpmail-local-domain "pmade.com")
+;; IMAP (incoming mail)
+(setq pmade-mail-server "mail.pmade.com"
+      nnimap-authinfo-file pmade-authinfo)
+
+;; SMTP (outgoing mail)
+(setq pmade-smtp-host pmade-mail-server
+      pmade-smtp-port 25)
+
+;; When I'm on my laptop, do SMTP through a SSH tunnel (because port
+;; 25 is blocked by my ISP and at most coffee shops I frequent)
+(let ((host (replace-regexp-in-string "\n" "" (shell-command-to-string "hostname"))))
+  (when (string= "skinny.local" host)
+    (setq pmade-smtp-host "127.0.0.1"
+          pmade-smtp-port 2525
+          starttls-extra-arguments '("--insecure"))))
+
+(setq message-send-mail-function 'smtpmail-send-it
+      smtpmail-smtp-server pmade-smtp-host
+      smtpmail-smtp-service pmade-smtp-port
+      smtpmail-auth-credentials pmade-authinfo
+      smtpmail-starttls-credentials `((,pmade-smtp-host ,pmade-smtp-port nil nil))
+      smtpmail-local-domain "pmade.com"
+      starttls-use-gnutls t)
 
 (setq gnus-secondary-select-methods
       `((nnimap ,pmade-mail-server (nnimap-stream ssl))))
