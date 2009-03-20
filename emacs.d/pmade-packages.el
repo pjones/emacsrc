@@ -116,6 +116,9 @@
 ;; Magit (Git Interface for Emacs)
 (autoload 'magit-status "magit" "Magit Status" t)
 
+;; EasyPG http://www.easypg.org/
+(require 'epa-setup)
+
 ;; I love Org Mode!
 ;; Attempt to load org-mode from a local installation, but if that
 ;; fails, ignore the error since an older org-mode comes with emacs.

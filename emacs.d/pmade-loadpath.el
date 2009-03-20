@@ -11,6 +11,7 @@
 (add-to-list 'load-path pmade-site-lisp)
 (add-to-list 'load-path (concat pmade-site-lisp "/apel"))
 (add-to-list 'load-path (concat pmade-site-lisp "/emu"))
+(add-to-list 'load-path (concat pmade-site-lisp "/epg"))
 
 ;; Gnus
 (add-to-list 'load-path (concat pmade-site-lisp "/gnus/lisp"))
