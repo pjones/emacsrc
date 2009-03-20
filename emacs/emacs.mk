@@ -4,11 +4,7 @@ COMPILED  = $(patsubst %.el,$(DEST)/%.elc,$(SRC))
 EMACS = emacs
 EMACS_FLAGS = -q --no-site-file --batch
 EMACS_FLAGS += --eval "(add-to-list 'load-path \".\")"
-EMACS_FLAGS += --eval "(add-to-list 'load-path \"~/.emacs.d/packages\")"
-EMACS_FLAGS += --eval "(add-to-list 'load-path \"~/Local/share/emacs/site-lisp/muse\")"
-EMACS_FLAGS += --eval "(add-to-list 'load-path \"~/Local/share/emacs/site-lisp/apel\")"
-EMACS_FLAGS += --eval "(add-to-list 'load-path \"~/Local/share/emacs/site-lisp/emu\")"
-EMACS_FLAGS += --eval "(add-to-list 'load-path \"~/Local/share/emacs/site-lisp/rinari\")"
+EMACS_FLAGS += --eval "(load \"~/.emacs.d/pmade/pmade-loadpath\")"
 EMACS_FLAGS += -f batch-byte-compile
 
 all: $(DEST) $(COMPILED) $(addprefix $(DEST)/,$(TO_REMOVE)) 

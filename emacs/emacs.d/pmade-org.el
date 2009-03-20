@@ -9,6 +9,10 @@
   (let ((eva-conf "~/.comm-sync/etc/eva.el"))
     (when (file-exists-p eva-conf) (load-file eva-conf))))
 
+;; Org Crypt
+(autoload 'org-encrypt-entries "org-crypt" nil t)
+(autoload 'org-decrypt-entry "org-crypt" nil t)
+
 (setq
  ;; General Org Settings
  org-log-done t

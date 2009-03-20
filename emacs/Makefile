@@ -1,4 +1,4 @@
-DIRS = download packages emacs.d
+DIRS = emacs.d download packages
 DOTFILE = $(HOME)/.emacs
 
 all: $(DOTFILE)
