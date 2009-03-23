@@ -20,7 +20,7 @@ $(DEST)/%.elc: %.el
 	@ mv $(<:.el=.elc) $@
 
 $(DEST):
-	mkdir $@
+	mkdir -p $@
 
 $(addprefix $(DEST)/,$(TO_REMOVE))::
 	@ rm -f $@

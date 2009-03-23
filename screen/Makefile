@@ -4,11 +4,11 @@ $(HOME)/.screenrc: screenrc
 	cp -p $< $@
 
 $(HOME)/.screen:
-	mkdir $@
+	mkdir -p $@
 
 define SESSIONS_template
 all: $(HOME)/.screen/$(1)
-$(HOME)/.screen/$(1): sessions/$(1)
+$(HOME)/.screen/$(1): sessions/$(1) $(HOME)/.screen
 	cp $$< $$@
 endef
 
