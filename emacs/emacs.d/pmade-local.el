@@ -1,10 +1,9 @@
 ;;; Local settings based on host name
 
 (defun pmade-local-settings ()
-  (let ((host (replace-regexp-in-string "\n" "" (shell-command-to-string "hostname"))))
-    (cond
-     ((string= "skinny.local" host) (pmade-local:skinny))
-     ((string= "beefy.local"  host) (pmade-local:beefy)))))
+  (cond
+   ((string= "skinny.local" system-name) (pmade-local:skinny))
+   ((string= "beefy.local"  system-name) (pmade-local:beefy))))
 
 (defun pmade-center-frame (frame)
   "Move the frame to the center of the screen.  The screen space
