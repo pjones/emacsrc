@@ -1,0 +1,14 @@
+install aspell
+install bitlbee
+install contacts
+install curl +ssl
+install emacs +carbon
+install git-core +svn
+install gnupg
+install ruby @1.8.6
+install rb-rubygems
+install screen
+install subversion
+install zsh-devel
+install postgresql83-server
+install mysql5 +server
