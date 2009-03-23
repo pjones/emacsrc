@@ -6,8 +6,8 @@
 (autoload 'org-eva-submit "org-eva" nil t)
 
 (eval-after-load "org-eva"
-  (let ((eva-conf "~/.comm-sync/etc/eva.el"))
-    (when (file-exists-p eva-conf) (load-file eva-conf))))
+  '(let ((eva-conf "~/.comm-sync/etc/eva.el"))
+     (when (file-exists-p eva-conf) (load-file eva-conf))))
 
 ;; Org Crypt
 (autoload 'org-encrypt-entries "org-crypt" nil t)

@@ -63,13 +63,6 @@
  elscreen-tab-display-control nil)
 (require 'elscreen)
 
-;; Twitter
-(autoload 'twitter-get-friends-timeline "twitter" nil t)
-(autoload 'twitter-status-edit "twitter" nil t)
-(eval-after-load "twitter"
-  (let ((twitter-conf "~/.comm-sync/etc/twitter/twit.el"))
-    (when (file-exists-p twitter-conf) (load-file twitter-conf))))
-
 ;; Go-to Last Change
 (autoload 'goto-last-change "goto-chg" nil t)
 (autoload 'goto-last-change-reverse "goto-chg" nil t)
@@ -93,7 +86,7 @@
  type-break-mode-line-message-mode t
  type-break-demo-functions '(type-break-demo-boring)
  type-break-demo-boring-stats t
- type-break-file-name (expand-file-name "~/.comm-sync/etc/type-break"))
+ type-break-file-name (expand-file-name "~/.emacs.d/type-break"))
 (type-break-mode)
 
 ;; Editing the Emacs Wiki
@@ -122,14 +115,11 @@
       epa-popup-info-window nil)
 
 ;; I love Org Mode!
-;; Attempt to load org-mode from a local installation, but if that
-;; fails, ignore the error since an older org-mode comes with emacs.
-(require 'org-install nil t)
+(require 'org-install)
 (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
-(eval-after-load "org" (load "~/.emacs.d/pmade/pmade-org"))
+(eval-after-load 'org '(load "~/.emacs.d/pmade/pmade-org"))
 
 ;; Muse is great for writing documents and articles
-(add-to-list 'load-path (concat pmade-site-lisp "/muse"))
 (autoload 'muse-mode-choose-mode "muse-mode" "Emacs Muse" t)
 (add-to-list 'auto-mode-alist '("\\.muse$" . muse-mode-choose-mode))
-(eval-after-load "muse-mode" (load "~/.emacs.d/pmade/pmade-muse"))
+(eval-after-load "muse-mode" '(load "~/.emacs.d/pmade/pmade-muse"))
