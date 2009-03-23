@@ -14,11 +14,10 @@
 
 ;; When I'm on my laptop, do SMTP through a SSH tunnel (because port
 ;; 25 is blocked by my ISP and at most coffee shops I frequent)
-(let ((host (replace-regexp-in-string "\n" "" (shell-command-to-string "hostname"))))
-  (when (string= "skinny.local" host)
-    (setq pmade-smtp-host "127.0.0.1"
-          pmade-smtp-port 2525
-          starttls-extra-arguments '("--insecure"))))
+(when (string= "skinny.local" system-name)
+  (setq pmade-smtp-host "127.0.0.1"
+        pmade-smtp-port 2525
+        starttls-extra-arguments '("--insecure")))
 
 (setq message-send-mail-function 'smtpmail-send-it
       smtpmail-smtp-server pmade-smtp-host
