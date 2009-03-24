@@ -1,0 +1,27 @@
+After installing a fresh copy of Mac OS X:
+
+- Start FileVault (if on a mobile device)
+
+- Install the latest version of Xcode
+
+- Install the latest version of MacPorts
+
+- Install selected ports:
+
+    sudo port -F <ports-file>
+
+- Run the scripts in the after directory
+
+- Install the must-have applications:
+
+    Quicksilver
+    http://www.blacktree.com/
+
+    MagiCal
+    http://www.charcoaldesign.co.uk/magical
+
+    SlimBatteryMonitor
+    http://www.orange-carb.org/SBM/
+
+    MenuMeters
+    http://www.ragingmenace.com/software/menumeters/
