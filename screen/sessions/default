@@ -4,5 +4,3 @@ screen -t top 0
 
 # go back to the main window
 # select 0
-
-# vim:ft=screen

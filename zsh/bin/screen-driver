@@ -14,6 +14,11 @@ class Sessions
     @source = nil
     
     parse_args
+  end
+  
+  ##############################################################################
+  def sessions
+    @sessions.clear
 
     open("|screen -ls") do |io|
       io.each do |line|
@@ -22,6 +27,8 @@ class Sessions
         end
       end
     end
+    
+    @sessions
   end
 
   ##############################################################################
@@ -45,7 +52,6 @@ class Sessions
   
   ##############################################################################
   def run
-    @new ||= ARGV.shift
     start(@new) if @new
 
     loop do
@@ -53,7 +59,9 @@ class Sessions
 
       session = choose do |menu|
         menu.prompt = "Select a screen session: "
-        menu.choices(*@sessions.keys.sort)
+        menu.choices(*sessions.keys.sort)
+        menu.first_answer = ARGV.first
+        ARGV.clear
       end
       
       start(session)
