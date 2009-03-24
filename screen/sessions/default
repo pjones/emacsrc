@@ -1,6 +1,6 @@
 # Open a few windows
 # screen -t vim 0 zsh -i -c vs
-screen -t top 1
+screen -t top 0
 
 # go back to the main window
 # select 0

@@ -1,13 +1,19 @@
 #!/usr/bin/env ruby
 ################################################################################
+require 'optparse'
 require 'rubygems'
 require 'highline/import'
 
 ################################################################################
 class Sessions
-  ################################################################################
+  
+  ##############################################################################
   def initialize
     @sessions = {}
+    @new = nil
+    @source = nil
+    
+    parse_args
 
     open("|screen -ls") do |io|
       io.each do |line|
@@ -18,19 +24,14 @@ class Sessions
     end
   end
 
-  ################################################################################
-  def names
-    @sessions.keys.sort
-  end
-
-  ################################################################################
+  ##############################################################################
   def start (name)
     ENV['SCREEN_SESSION_NAME'] = name
 
-    if File.exist?(File.expand_path("~/.screen/#{name}"))
+    if @source and File.exist?(File.expand_path("~/.screen/#{@source}"))
+      ENV['SCREEN_SOURCE'] = File.expand_path("~/.screen/#{@source}")
+    elsif File.exist?(File.expand_path("~/.screen/#{name}"))
       ENV['SCREEN_SOURCE'] = File.expand_path("~/.screen/#{name}")
-    elsif File.exist?('script/server') # looks like rails!
-      ENV['SCREEN_SOURCE'] = File.expand_path("~/.screen/rails")
     else
       ENV['SCREEN_SOURCE'] = File.expand_path("~/.screen/default")
     end
@@ -41,30 +42,40 @@ class Sessions
       system('screen', '-S', name)
     end
   end
+  
+  ##############################################################################
+  def run
+    @new ||= ARGV.shift
+    start(@new) if @new
 
-end
+    loop do
+      system('clear')
 
-################################################################################
-loop do
-  sessions = Sessions.new
-  system('clear')
-
-  begin
-    session = choose do |menu|
-      menu.prompt = "Select a screen session: "
-      menu.choices("New Screen Session", *sessions.names)
-      menu.first_answer = ARGV.first unless ARGV.empty?
-      ARGV.clear
+      session = choose do |menu|
+        menu.prompt = "Select a screen session: "
+        menu.choices(*@sessions.keys.sort)
+      end
+      
+      start(session)
     end
   rescue EOFError => e
     exit
   end
-
-  if session.match(/^New/)
-    name = ask("Name: ")
-    path = ask("Path: ") {|q| q.readline = true}
-    Dir.chdir(path) {sessions.start(name)}
-  else
-    sessions.start(session)
+  
+  ##############################################################################
+  private
+  
+  ##############################################################################
+  def parse_args
+    OptionParser.new do |parser|
+      parser.banner = "Usage: #{File.basename(__FILE__)} [options] [name]"
+      parser.on('-n', '--new=NAME',  "Create a new screen session") {|n| @new = n}
+      parser.on('-l', '--load=NAME', "Tell screen to load the NAME file") {|f| @source = f}
+      parser.parse!
+    end
   end
 end
+
+################################################################################
+sessions = Sessions.new
+sessions.run
