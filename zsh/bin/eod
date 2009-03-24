@@ -5,20 +5,14 @@
 # Load my Git functions
 . ~/.zsh/git
 
-# repositories that automatically get committed
-git_commit_repos="
-    ~/.journal"
-
 # repositories to push
 git_repositories="
-    $git_commit_repos
     ~/Develop/clients
     ~/Develop/pmade/rc
     ~/Documents/pmade/documents
     ~/Documents/pmade/pmade-inc
     ~/Documents/pmade/pmade.com
-    ~/Documents/pmade/pmade.org
-    ~/Documents/for-sale"
+    ~/Documents/pmade/pmade.org"
 
 ################################################################################
 # Check each repo to ensure there are no uncomitted changes.
@@ -102,7 +96,6 @@ die ()
 ################################################################################
 # Run all of the EOD functions
 echo "==> git sync"
-eod_each_repo eod_git_commit_repositories   $git_commit_repos || die "eod_git_commit_repositories"
 eod_each_repo eod_git_check_uncommitted     $git_repositories || die "eod_git_check_uncommitted"
 eod_each_repo eod_git_push_all_repositories $git_repositories || die "eod_git_push_all_repositories"
 
