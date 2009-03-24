@@ -34,7 +34,7 @@
 (require 'tramp)
 
 ;; Save your place in files you edit
-(setq save-place-file "~/.comm-sync/var/emacs/places.el")
+(setq save-place-file "~/.emacs.d/places.el")
 (require 'saveplace)
 
 ;; Bookmarks
