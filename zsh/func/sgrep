@@ -5,7 +5,7 @@
 
 if [ $# -eq 0 ]; then
     echo "sgrep: pattern [dir]"
-    exit 1
+    return 1
 fi
 
 pattern=$1
@@ -18,5 +18,6 @@ fi
 
 # egrep though source, skip svn and CVS directories
 find $dirs \( -name .svn -type d -prune \) -o \
-    \! -name '.*' \! -name '*.log' -type f \
-    -exec egrep -H --color -n "$pattern" \{\} \;
+  \( -name .git -type d -prune \) -o \
+  \! -name '.*' \! -name '*.log' -type f \
+  -exec egrep -H --color -n "$pattern" \{\} \;

@@ -6,7 +6,7 @@ if [[ $# -ge 1 && ${1[1]} != '-' ]]; then
 else
     if [ ! -r config/database.yml ]; then
         echo "no database configuration in config/"
-        exit 1
+        return 1
     fi
 
     RAILS_ENV=${RAILS_ENV:-development}
