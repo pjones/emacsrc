@@ -34,7 +34,7 @@ git_resolve_with_local ()
 }
 
 ################################################################################
-
+# Find out if a repo has uncommitted changes
 git_repo_has_changes ()
 {
   if ! git status|grep -q -F '(working directory clean)'; then
@@ -60,7 +60,7 @@ git_track ()
 
 ################################################################################
 # Create a new branch, and push it to the origin server
-git_make_branch ()
+git_mk_branch ()
 {
   if [ $# -ne 1 ]; then
     echo "$0: missing branch name"
@@ -92,4 +92,18 @@ git_rm_branch ()
   if git branch -a | grep -q origin/$branch; then
     git push origin :heads/$branch
   fi
+}
+
+################################################################################
+# Pull master, and return to the current branch
+git_master_pull ()
+{
+  remote=origin
+  test $# -eq 1 && remote=$1
+  
+  branch=`git branch|egrep '^\*'|sed 's/^\* //'`
+  echo "==> Leaving branch ${branch}"
+  git checkout master  || return 1
+  git pull $remote     || return 1
+  git checkout $branch || return 1
 }
