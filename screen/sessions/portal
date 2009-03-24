@@ -1,0 +1,7 @@
+# Working on a client's portal application
+screen -t idw
+stuff "cd ~/Develop/clients/asap/idw"
+screen -t portal
+screen -t ccf
+stuff "cd vendor/plugins/idwccf"
+select 1

@@ -1,0 +1,10 @@
+screen -t rc
+screen -t inc
+stuff "cd ~/Documents/pmade/pmade-inc"
+screen -t www
+stuff "cd ~/Documents/pmade/pmade.com"
+screen -t docs
+stuff "cd ~/Documents/pmade/documents"
+screen -t comm
+stuff "cd ~/.comm-sync"
+select 0

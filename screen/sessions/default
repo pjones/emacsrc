@@ -1,6 +1,1 @@
-# Open a few windows
-# screen -t vim 0 zsh -i -c vs
-screen -t top 0
-
-# go back to the main window
-# select 0
+screen -t $SCREEN_SESSION_NAME 0
