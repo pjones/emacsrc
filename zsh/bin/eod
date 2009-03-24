@@ -86,6 +86,13 @@ eod_each_repo ()
 }
 
 ################################################################################
+stash_ip_address ()
+{
+  host=`hostname`
+  ssh -t pmade.com "who -m|sed -E 's/^[^\(]+\(([^\)]+)\)/\1/' > etc/hosts/$host" > /dev/null 2>&1
+}
+
+################################################################################
 die ()
 {
   echo "ERROR: $1" > /dev/stderr
@@ -104,3 +111,6 @@ eod_comm_sync || die "eod_comm_sync"
 
 echo "==> install rc"
 eod_install_rc || die "eod_install_rc"
+
+echo "==> stash IP"
+stash_ip_address
