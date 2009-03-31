@@ -30,7 +30,8 @@
 ;; Tramp kicks ass
 (setq tramp-default-method "ssh"
       tramp-verbose 3                   ; For reference if I need to
-      tramp-debug-buffer nil)           ; debug Tramp
+      tramp-debug-buffer nil            ; debug Tramp
+      tramp-auto-save-directory "~/.emacs.d/autosave")
 (require 'tramp)
 
 ;; Save your place in files you edit
