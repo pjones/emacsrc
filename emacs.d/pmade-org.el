@@ -19,6 +19,7 @@
  org-reverse-note-order t
  org-deadline-warning-days 14
  org-hide-leading-stars t
+ org-blank-before-new-entry '((heading . nil) (plain-list-item . nil))
  org-use-fast-todo-selection t
  org-use-fast-tag-selection 'auto
  org-fast-tag-selection-single-key t
@@ -75,7 +76,12 @@
      (todo "PENDING"
            ((org-agenda-todo-keyword-format "")))
      (stuck ""
-            ((org-agenda-remove-tags t))))))
+            ((org-agenda-remove-tags t)))))
+   ("e" "Next Item Effort"
+    ((todo "NEXT"
+           ((org-agenda-sorting-strategy '(effort-up))
+            (org-agenda-show-inherited-tags nil)
+            (org-agenda-todo-keyword-format ""))))))
  
  ;; Faces
  org-todo-keyword-faces
