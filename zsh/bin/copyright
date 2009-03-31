@@ -1,94 +1,118 @@
 #!/usr/bin/env ruby
 
-FILE_MAPPING = {
-  /ruby|shell\s+script|perl/  => :shell,
-}
-
-EXT_MAPPING = {
-  /\.(?:rb|pl|sh)$/ => :shell,
-}
-
-$prepared_notices = {}
-
 ################################################################################
-def prepare_notice (style)
-  return $prepared_notices[style] if $prepared_notices.has_key?(style)
+class Copyrighting
 
-  data = DATA.readlines.map{|line| line.chomp}
+  ##############################################################################
+  FILE_MAPPING = {
+    /ruby|shell\s+script|perl/  => :shell,
+  }
 
-  case style
-  when :shell
-    data.map {|line| line.insert(0, '# ')}
-    data.insert(0, '#' * 80, '#', "# Copyright (C) #{Time.now.year} Peter J Jones (pjones@pmade.com)", "#")
-    data << "#"
-    data << "#" * 80
+  ##############################################################################
+  EXT_MAPPING = {
+    /\.(?:rb|pl|sh)$/ => :shell,
+  }
+
+  ##############################################################################
+  def initialize
+    @prepared_notices = {}
   end
-
-  $prepared_notices[style] = data
-end
-
-################################################################################
-def update_file (file, style)
-  puts "processing file #{file} as #{style} style"
-  copyright = prepare_notice(style)
   
-  data = File.open(file) do |f|
-    f.readlines.map{|line| line.chomp}
-  end
+  ################################################################################
+  def process_file (file)
+    type = `file #{file}`
 
-  # FIXME
-  return if data.join("\n").match(/Copyright\s+\(C\)/m)
+    FILE_MAPPING.each do |k,v|
+      if type.match(k)
+        update_file(file, v)
+        return
+      end
+    end
 
-  case style
-  when :shell
-    data.insert((data[0].match(/^#!/) ? 1 : 0), *copyright)
-  end
-
-  File.open(file, 'w') do |f|
-    f << data.join("\n")
-    f << "\n"
-  end
-end
-################################################################################
-def process_file (file)
-  type = `file #{file}`
-
-  FILE_MAPPING.each do |k,v|
-    if type.match(k)
-      update_file(file, v)
-      return
+    EXT_MAPPING.each do |k,v|
+      if file.match(k)
+        update_file(file, v)
+        return
+      end
     end
   end
 
-  EXT_MAPPING.each do |k,v|
-    if file.match(k)
-      update_file(file, v)
-      return
+  ################################################################################
+  def process_directory (dir)
+    Dir.foreach(dir) do |file|
+      next if file.match(/^\./)
+
+      full_name = File.join(dir, file)
+
+      if File.directory?(full_name)
+        process_directory(full_name)
+      else
+        process_file(full_name)
+      end
     end
   end
-end
 
-################################################################################
-def process_directory (dir)
-  Dir.foreach(dir) do |file|
-    next if file.match(/^\./)
+  ##############################################################################
+  private
 
-    full_name = File.join(dir, file)
+  ##############################################################################
+  def copyright_line (current="")
+    prefix = ""
+    
+    if m = current.match(/\(C\)\s+(\d+)/)
+      prefix = "#{m[1]}-"
+    end
 
-    if File.directory?(full_name)
-      process_directory(full_name)
+    "Copyright (C) #{prefix}#{Time.now.year} pmade inc. (Peter Jones pjones@pmade.com)"
+  end
+
+  ################################################################################
+  def prepare_notice (style)
+    return @prepared_notices[style] if @prepared_notices.has_key?(style)
+
+    data = DATA.readlines.map{|line| line.chomp}
+
+    case style
+    when :shell
+      data.map {|line| line.insert(0, '# ')}
+      data.insert(0, '#' * 80, '#', "# #{copyright_line}", "#")
+      data << "#"
+      data << "#" * 80
+    end
+
+    @prepared_notices[style] = data
+  end
+
+  ################################################################################
+  def update_file (file, style)
+    puts "processing file #{file} as #{style} style"
+    data = File.read(file)
+
+    if m = data.match(/Copyright\s+\(C\)[^\n]+/m)
+      data.sub!(/Copyright\s+\(C\)[^\n]+/m, copyright_line(m[0]))
     else
-      process_file(full_name)
+      copyright = prepare_notice(style)
+
+      case style
+      when :shell
+        data = data.split(/\n/)
+        data.insert((data[0].match(/^#!/) ? 1 : 0), *copyright)
+        data = data.join("\n") + "\n"
+      end
     end
+      
+    File.open(file, 'w') {|f| f << data}
   end
 end
 
 ################################################################################
+c = Copyrighting.new
+
 if ARGV.empty?
-  process_directory('.')
+  c.process_directory('.')
 else
   ARGV.each do |clo|
-    File.directory?(clo) ? process_directory(clo) : process_file(clo)
+    File.directory?(clo) ? c.process_directory(clo) : c.process_file(clo)
   end
 end
 
