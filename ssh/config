@@ -1,0 +1,4 @@
+################################################################################
+# Default Settings For All Connections
+Host *
+    ForwardAgent yes
