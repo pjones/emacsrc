@@ -49,9 +49,7 @@
 (defun pmade-term-yank ()
   "Allow yank to work in raw char mode"
   (interactive)
-  (term-line-mode)
-  (yank)
-  (term-char-mode))
+  (term-send-raw-string (current-kill 0))) 
 
 (add-hook 'term-mode-hook 'pmade-term-mode-hook)
 
