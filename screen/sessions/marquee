@@ -1,0 +1,11 @@
+screen -t ideanode
+stuff "cd ~/Develop/ideanode"
+screen -t marquee
+stuff "ssh marqueecd develop/ideanode/marquee"
+screen -t server
+stuff "ssh marqueecd develop/ideanode/marquee./script/server"
+screen -t solr
+stuff "ssh marqueecd develop/ideanode/marquee/apache-solr-1.2.0/examplejava -jar start.jar"
+screen -t tests
+stuff "cd ~/Develop/clients/ideanode/scripts/testing"
+select 1
