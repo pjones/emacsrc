@@ -31,4 +31,11 @@ fi
 
 ##############################################################################
 SCP_OPTIONS="-pq"
-RSYNC_OPTIONS="-qrulptz --delete"
+RSYNC_OPTIONS="-rulptz --delete"
+
+##############################################################################
+if [ -t 0 ]; then
+  RSYNC_OPTIONS="$RSYNC_OPTIONS --verbose"
+else
+  RSYNC_OPTIONS="$RSYNC_OPTIONS -q"
+fi
