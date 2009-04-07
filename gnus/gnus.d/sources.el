@@ -1,9 +1,5 @@
 ;;; Mail and News Servers
 
-;; News via NNTP
-(setq nntp-authinfo-file pmade-authinfo
-      gnus-select-method '(nntp "news.gmane.org"))
-
 ;; IMAP (incoming mail)
 (setq pmade-mail-server "mail.pmade.com"
       nnimap-authinfo-file pmade-authinfo)
@@ -19,19 +15,23 @@
         pmade-smtp-port 2525
         starttls-extra-arguments '("--insecure")))
 
-(setq message-send-mail-function 'smtpmail-send-it
+(setq nntp-authinfo-file pmade-authinfo
+      message-send-mail-function 'smtpmail-send-it
       smtpmail-smtp-server pmade-smtp-host
       smtpmail-smtp-service pmade-smtp-port
       smtpmail-auth-credentials pmade-authinfo
       smtpmail-starttls-credentials `((,pmade-smtp-host ,pmade-smtp-port nil nil))
       smtpmail-local-domain "pmade.com"
-      starttls-use-gnutls t)
+      starttls-use-gnutls t
+      gnus-message-archive-group "nnimap+mail.pmade.com:INBOX.Sent")
 
-(setq gnus-secondary-select-methods
-      `((nnimap ,pmade-mail-server (nnimap-stream ssl))))
-
-;; Place sent mail on the server
-(setq gnus-message-archive-group "nnimap+mail.pmade.com:INBOX.Sent")
+(setq gnus-select-method `(nnimap ,pmade-mail-server (nnimap-stream ssl))
+      gnus-secondary-select-methods
+      '((nntp "news.gmane.org")
+        (nntp "news.motzarella.org"
+              (nntp-open-connection-function nntp-open-tls-stream)
+              (nntp-port-number 563)
+              (nntp-address "news.motzarella.org"))))
 
 ;; Use the correct value for the Message-ID header
 (defun message-make-message-id ()
