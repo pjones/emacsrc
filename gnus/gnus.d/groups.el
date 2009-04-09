@@ -60,7 +60,17 @@
                                 "%8{%-30,30G%}" pmade-group-sep "%1L" pmade-group-sep
                                 "%6{%-22,22ud%}" pmade-group-sep "\n"))
 
+;; Key Bindings
+(defun pmade-gnus-goto-inbox ()
+  (interactive)
+  (goto-char (point-min))
+  (search-forward "INBOX"))
+
 ;; Various Settings
-(add-hook 'gnus-group-mode-hook   'gnus-topic-mode)
 (add-hook 'gnus-select-group-hook 'gnus-group-set-timestamp)
 (setq gnus-newsgroup-variables '(gnus-thread-sort-functions))
+
+(add-hook 'gnus-group-mode-hook
+  (lambda ()
+    (gnus-topic-mode)
+    (local-set-key "i" 'pmade-gnus-goto-inbox)))
