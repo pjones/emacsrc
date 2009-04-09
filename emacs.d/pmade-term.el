@@ -25,6 +25,7 @@
   (define-key term-raw-map "\C-x\C-f" 'ido-find-file-other-window)
   
   ;; Some other nice bindings
+  (define-key term-raw-map [escape] (lambda () (interactive) (term-send-raw-string "")))
   (define-key term-raw-map "\C-y" 'pmade-term-yank)
   (define-key term-raw-map "\M-y" 'yank-pop)
   (define-key term-raw-map "\M-w" 'kill-ring-save)
