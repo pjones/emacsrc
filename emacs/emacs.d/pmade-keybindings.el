@@ -68,6 +68,7 @@
 (setq mac-command-modifier 'meta)
 
 ;; Global Key Bindings
+(define-key global-map [escape]   'keyboard-escape-quit)
 (define-key global-map "\C-x\C-m" 'execute-extended-command)
 (define-key global-map "\C-x\C-b" 'ibuffer)
 (define-key global-map "\C-o"     'open-line-below-like-vim)
