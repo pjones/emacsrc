@@ -25,7 +25,7 @@ fi
 cd $BACKUP_BASE/$BACKUP_DIR || die "failed to cd into backup dir"
 
 ##############################################################################
-if [ x$SSH_AUTH_SOCK = x -o ! -r $SSH_AUTH_SOCK ]; then
+if [ x$SSH_AUTH_SOCK = x -o ! -r "$SSH_AUTH_SOCK" ]; then
   export SSH_AUTH_SOCK=`find /tmp/launch-*/Listeners -user $USER -type s|head -1`
 fi
 
