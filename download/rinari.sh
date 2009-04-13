@@ -17,5 +17,3 @@ fi
 DEST=${PREFIX}/share/emacs/site-lisp/rinari
 rm -rf $DEST
 cp -rp $dir $DEST
-rm $DEST/util/ruby-mode.el
-cp `dirname $0`/../packages/ruby-mode.el $DEST/util/
