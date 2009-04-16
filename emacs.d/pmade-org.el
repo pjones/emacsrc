@@ -20,6 +20,7 @@
  org-deadline-warning-days 14
  org-hide-leading-stars t
  org-blank-before-new-entry '((heading . nil) (plain-list-item . nil))
+ org-empty-line-terminates-plain-lists t
  org-use-fast-todo-selection t
  org-use-fast-tag-selection 'auto
  org-fast-tag-selection-single-key t
