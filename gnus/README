@@ -1,0 +1,8 @@
+* Group Parameters
+
+Access parameters with: G p
+
+((timestamp 18964 19089)
+ (uidvalidity . "1172874899")
+ (visible . t)
+ (gnus-show-threads nil))
