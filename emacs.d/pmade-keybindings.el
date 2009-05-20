@@ -20,11 +20,15 @@
   (switch-to-buffer (other-buffer)))
 
 (defun kill-region-or-backward-kill-word (arg)
-  "If there is a region, kill it.  Otherwise kill the word before point"
-  (interactive "*p")
-  (if (and transient-mark-mode mark-active)
+  "Replacement for `kill-region'.  If there is a region with
+`transient-mark-mode' active, it will be removed and placed in
+the kill ring in a similar manner to `kill-region'.  If there
+isn't a region, the word before point will be deleted (without
+placing it in the kill ring)."
+  (interactive "p")
+  (if (or (not transient-mark-mode) (and transient-mark-mode mark-active))
       (kill-region (region-beginning) (region-end))
-    (backward-kill-word arg)))
+    (delete-region (point) (progn (forward-word (- arg)) (point)))))
 
 (defun save-to-kill-ring-and-normalize-whitespace ()
   (interactive)
