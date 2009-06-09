@@ -10,10 +10,10 @@
 
 ;; When I'm on my laptop, do SMTP through a SSH tunnel (because port
 ;; 25 is blocked by my ISP and at most coffee shops I frequent)
-(when (string= "skinny.local" system-name)
+;;(when (string= "skinny.local" system-name)
   (setq pmade-smtp-host "127.0.0.1"
         pmade-smtp-port 2525
-        starttls-extra-arguments '("--insecure")))
+        starttls-extra-arguments '("--insecure"));;)
 
 (setq nntp-authinfo-file pmade-authinfo
       message-send-mail-function 'smtpmail-send-it
