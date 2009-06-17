@@ -7,4 +7,6 @@ screen -t docs
 stuff "cd ~/Documents/pmade/documents"
 screen -t comm
 stuff "cd ~/.comm-sync"
+screen -t tunnel
+stuff "ssh -L 2525:localhost:25 -L 8030:localhost:8030 -N pmade.com"
 select 0
