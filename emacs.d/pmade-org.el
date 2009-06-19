@@ -10,8 +10,8 @@
      (when (file-exists-p eva-conf) (load-file eva-conf))))
 
 ;; Org Crypt
-(autoload 'org-encrypt-entries "org-crypt" nil t)
-(autoload 'org-decrypt-entry "org-crypt" nil t)
+(require 'org-crypt)
+(org-crypt-use-before-save-magic)
 
 (setq
  ;; General Org Settings

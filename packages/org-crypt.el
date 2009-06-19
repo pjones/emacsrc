@@ -1,13 +1,14 @@
 ;;; org-crypt.el --- Public key encryption for org-mode entries
 
+;; Copyright (C) 2009 Peter Jones <pjones@pmade.com>
 ;; Copyright (C) 2007 John Wiegley <johnw@gnu.org>
 
 ;; Emacs Lisp Archive Entry
 ;; Filename: org-crypt.el
-;; Version: 0.1
+;; Version: 0.4
 ;; Keywords: org-mode
 ;; Author: John Wiegley <johnw@gnu.org>
-;; Maintainer: John Wiegley <johnw@gnu.org>
+;; Maintainer: Peter Jones <pjones@pmade.com>
 ;; Description: Adds public key encryption to org-mode buffers
 ;; URL: http://www.newartisans.com/software/emacs.html
 ;; Compatibility: Emacs22
@@ -31,96 +32,135 @@
 
 ;;; Commentary:
 
-;; Right now this is just a set of functions to play with.  It depends on the
-;; epg library.  Here's how you would use it:
+;; Right now this is just a set of functions to play with.  It depends
+;; on the epg library.  Here's how you would use it:
 ;;
-;; 1. To mark an entry for encryption, use `M-x org-set-property' to set the
-;;    property CRYPTKEY to any address in your public keyring.  The text of
-;;    the entry (but not its properties or headline) will be encrypted for
-;;    this user.  For them to read it, the corresponding secret key must be
-;;    located in the secret key ring of the account where you try to decrypt
-;;    it.  This makes it possible to leave secure notes that only the intended
-;;    recipient can read in a shared-org-mode-files scenario.
+;; 1. To mark an entry for encryption, tag the heading with "crypt".
+;;    You can change the tag to any complex tag matching string by
+;;    setting the `org-crypt-tag-matcher' variable.
 ;;
-;; 2. Next, at the top of your org-mode buffer, add this line:
+;; 2. Set the encryption key to use in the `org-crypt-key' variable,
+;;    or use `M-x org-set-property' to set the property CRYPTKEY to
+;;    any address in your public keyring.  The text of the entry (but
+;;    not its properties or headline) will be encrypted for this user.
+;;    For them to read it, the corresponding secret key must be
+;;    located in the secret key ring of the account where you try to
+;;    decrypt it.  This makes it possible to leave secure notes that
+;;    only the intended recipient can read in a shared-org-mode-files
+;;    scenario.
 ;;
-;;      -*- mode: org; after-save-hook: (org-encrypt-entries) -*-
+;; 3. To later decrypt an entry, use `org-decrypt-entries' or
+;;    `org-decrypt-entry'.  It might be useful to bind this to a key,
+;;    like C-c C-/.  I hope that in the future, C-c C-r can be might
+;;    overloaded to also decrypt an entry if it's encrypted, since
+;;    that fits nicely with the meaning of "reveal".
 ;;
-;;    This ensures that entries marked for encryption are encrypted whenever
-;;    the file is saved.  If you want encryption to be manual, use `M-x
-;;    org-encrypt-entries'.  Note that in this version -- mainly because I
-;;    don't know epg.el better -- you will be asked for your password for
-;;    every entry that needs encryption.
+;; 4. To automatically encrypt all necessary entries when saving a
+;;    file, call `org-crypt-use-before-save-magic' after loading
+;;    org-crypt.el.
 ;;
-;; 3. To later decrypt an entry, use `M-x org-decrypt-entry'.  It might be
-;;    useful to bind this to a key, like C-c C-/.  I hope that in the future,
-;;    C-c C-r can be might overloaded to also decrypt an entry if it's
-;;    encrypted, since that fits nicely with the meaning of "reveal".
+;; TODO:
+;;   - Allow symmetric encryption as well
 
+;;; Thanks:
+
+;; - Carsten Dominik
+;; - Vitaly Ostanin
 (require 'epg)
 
-(defun org-apply-to-entry-contents (function property &optional content-re)
-  "Apply the given FUNCTION to applicable entry contents.
-Matching entries are those having a value for PROPERTY.  If the
-optional CONTENT-RE is nil, then only the presence of the
-PROPERTY is tested for.  Otherwise, the contents of the property
-must match the regular expression CONTENT-RE.  If either
-condition is met, FUNCTION will be called with four arguments:
-the beginning and ending of the entry content's range (with point
-always at the beginning), the property, and its value."
+(defgroup org-crypt nil
+  "Org Crypt"
+  :tag "Org Crypt" :group 'org)
+
+(defcustom org-crypt-tag-matcher "crypt"
+  "The tag matcher used to find headings whose contents should be
+encrypted.  See the \"Match syntax\" section of the org manual
+for more details."
+  :type 'string :group 'org-crypt)
+
+(defcustom org-crypt-key nil
+  "The default key to use when encrypting the contents of a
+heading.  This can also be overridden in the CRYPTKEY property."
+  :type 'string :group 'org-crypt)
+
+(defun org-crypt-key-for-heading ()
+  "Returns the encryption key for the current heading."
   (save-excursion
-    (goto-char (point-min))
-    (while (not (eobp))
-      (outline-next-heading)
-      (let* ((props (org-entry-properties))
-	     (prop-value (and props (cdr (assoc property props)))))
-	(when (and prop-value (stringp prop-value)
-		   (or (null content-re)
-		       (string-match content-re prop-value)))
-	  (forward-line)
-	  (let* ((begin (point))
-		 (end (save-excursion
-			(goto-char (car (org-get-property-block begin)))
-			(forward-line -1)
-			(point))))
-	    (funcall function begin end property prop-value)))))))
+    (org-back-to-heading t)
+    (or (org-entry-get nil "CRYPTKEY" 'selective) 
+        org-crypt-key
+        (and (boundp 'epa-file-encrypt-to) epa-file-encrypt-to)
+        (error "No crypt key set"))))
 
-(defun org-encrypt-entry-content (beg end prop-name prop-value)
-  (unless (looking-at "-----BEGIN PGP MESSAGE-----")
-    (let* ((epg-context (epg-make-context nil t t))
-	   (encrypted-text
-	    (epg-encrypt-string
-	     epg-context (buffer-substring-no-properties beg end)
-	     (epg-list-keys epg-context prop-value) t)))
-      (delete-region beg end)
-      (insert encrypted-text))))
-
-(defun org-encrypt-entries ()
+(defun org-encrypt-entry ()
+  "Encrypt the content of the current headline."
   (interactive)
-  (org-apply-to-entry-contents #'org-encrypt-entry-content "CRYPTKEY"))
+  (save-excursion
+    (org-back-to-heading t)
+    (forward-line)
+    (when (not (looking-at "-----BEGIN PGP MESSAGE-----"))
+      (let ((folded (org-invisible-p))
+	    (epg-context (epg-make-context nil t t))
+	    (crypt-key (org-crypt-key-for-heading))
+	    (beg (point))
+	    end encrypted-text)
+	(org-end-of-subtree t t)
+	(org-back-over-empty-lines)
+        (setq end (point)
+              encrypted-text
+              (epg-encrypt-string 
+               epg-context
+               (buffer-substring-no-properties beg end)
+               (epg-list-keys epg-context crypt-key)))
+        (delete-region beg end)
+        (insert encrypted-text)
+	(when folded
+	  (save-excursion
+	    (org-back-to-heading t)
+	    (hide-subtree)))
+        nil))))
 
 (defun org-decrypt-entry ()
   (interactive)
   (save-excursion
-    (let* ((props (org-entry-properties))
-	   (crypt-key (and props (cdr (assoc "CRYPTKEY" props)))))
-      (when (and crypt-key (stringp crypt-key))
-	(org-back-to-heading t)
-	(forward-line)
-	(when (looking-at "-----BEGIN PGP MESSAGE-----")
-	  (let* ((begin (point))
-		 (end (save-excursion
-			(goto-char (car (org-get-property-block begin)))
-			(forward-line -1)
-			(point)))
-		 (epg-context (epg-make-context nil t t))
-		 (decrypted-text
-		  (epg-decrypt-string
-		   epg-context
-		   (buffer-substring-no-properties begin end))))
-	    (delete-region begin end)
-	    (insert decrypted-text)))))))
+    (org-back-to-heading t)
+    (forward-line)
+    (when (looking-at "-----BEGIN PGP MESSAGE-----")
+      (let* ((beg (point))
+             (end (save-excursion 
+                    (search-forward "-----END PGP MESSAGE-----")
+                    (forward-line)
+                    (point)))
+             (epg-context (epg-make-context nil t t))
+             (decrypted-text 
+	      (decode-coding-string
+	       (epg-decrypt-string
+		epg-context
+		(buffer-substring-no-properties beg end))
+	       'utf-8)))
+        (delete-region beg end)
+        (insert decrypted-text)
+        nil))))
 
+(defun org-encrypt-entries ()
+  (interactive)
+  (org-scan-tags
+   'org-encrypt-entry
+   (cdr (org-make-tags-matcher org-crypt-tag-matcher))))
+
+(defun org-decrypt-entries ()
+  (interactive)
+  (org-scan-tags 
+   'org-decrypt-entry
+   (cdr (org-make-tags-matcher org-crypt-tag-matcher))))
+
+(defun org-crypt-use-before-save-magic ()
+  "Adds a hook that will automatically encrypt entries before a
+file is saved to disk."
+  (add-hook 
+   'org-mode-hook 
+   (lambda () (add-hook 'before-save-hook 'org-encrypt-entries nil t))))
+  
 (provide 'org-crypt)
 
 ;;; org-crypt.el ends here
