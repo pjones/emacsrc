@@ -17,6 +17,12 @@ to account for a missing Mac OS X menu bar."
          (top  (- (/ display-h 2) (/ frame-h 2))))
     (set-frame-position frame left top)))
 
+(defun pmade-full-screen ()
+  (interactive)
+  (set-frame-parameter 
+   nil 'fullscreen
+   (if (frame-parameter nil 'fullscreen) nil 'fullboth)))
+                               
 (defun pmade-local:skinny ()
   "Settings for my MacBook Pro"
   (let ((frame (selected-frame)))
