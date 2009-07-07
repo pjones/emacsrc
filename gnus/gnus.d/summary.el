@@ -25,20 +25,15 @@
    gnus-sum-thread-tree-single-leaf     "└─> "))
 
 ;; Functions for Key Bindings
-(defun pmade-summary-move-to-archive ()
-  "Move the current message to the archive group."
-  (interactive)
-  (gnus-summary-move-article nil pmade-archive-group nil 'move)
-  (message (concat "Archived to " pmade-archive-group)))
-
-(defun pmade-summary-mode-to-review ()
-  "Move the current message to the review group."
-  (interactive)
-  (gnus-summary-move-article nil pmade-review-group nil 'move)
-  (message (concat "Moved to review group: " pmade-review-group)))
+(defun pmade-move-to-mail-group (group)
+  "Move the marked messages (or the current message) to the given
+IMAP mail group."
+  (gnus-summary-move-article nil group nil 'move)
+  (message (concat "Moved to group: " group)))
 
 (defun pmade-summary-hook ()
-  (local-set-key "a" 'pmade-summary-move-to-archive)
-  (local-set-key "r" 'pmade-summary-mode-to-review))
+  (local-set-key "a" (lambda () (interactive) (pmade-move-to-mail-group pmade-archive-group)))
+  (local-set-key "r" (lambda () (interactive) (pmade-move-to-mail-group pmade-review-group)))
+  (local-set-key "s" (lambda () (interactive) (pmade-move-to-mail-group pmade-spam-group))))
 
 (add-hook 'gnus-summary-mode-hook 'pmade-summary-hook)

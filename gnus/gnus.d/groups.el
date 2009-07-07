@@ -50,7 +50,8 @@
 ;; Specific Groups
 (setq
  pmade-archive-group "nnimap+mail.pmade.com:INBOX.Archive"
- pmade-review-group  "nnimap+mail.pmade.com:INBOX.Review")
+ pmade-review-group  "nnimap+mail.pmade.com:INBOX.Review"
+ pmade-spam-group  "nnimap+mail.pmade.com:INBOX.spam")
 
 ;; Group List
 (setq
