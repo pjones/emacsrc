@@ -7,6 +7,7 @@
 (load "~/.emacs.d/pmade/pmade-loadpath")
 (load "~/.emacs.d/pmade/pmade-options")
 (load "~/.emacs.d/pmade/pmade-packages")
+(load "~/.emacs.d/pmade/pmade-functions")
 (load "~/.emacs.d/pmade/pmade-keybindings")
 (load "~/.emacs.d/pmade/pmade-programming")
 (load "~/.emacs.d/pmade/pmade-colors")
