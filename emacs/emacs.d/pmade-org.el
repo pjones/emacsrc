@@ -101,6 +101,7 @@
     (org-defkey org-mode-map "\C-\M-p"   'org-metaup)
     (org-defkey org-mode-map "\C-\M-n"   'org-metadown)
 
+    (org-defkey org-mode-map "\C-c\C-r"            'pmade:org-reveal)
     (org-defkey org-mode-map "\C-j"                'pmade:org-list-append)
     (org-defkey org-mode-map [(meta return)]       'pmade:org-list-append)
     (org-defkey org-mode-map [(shift meta return)] 'pmade:org-list-append-with-checkbox)
@@ -133,27 +134,11 @@
   (shell-command "sed -E 's/T:([0-9+-]+)/T:<a href=\"tel:\\1\">\\1<\\/a>/' < ~/agenda.html | ssh -q pmade.com 'cat > /opt/sites/pmade.com/www/private/agenda.html'")
   (delete-file "~/agenda.html"))
 
-;; (defun pmade:org-remove-redundant-heading-markers ()
-;;   "Called from an export buffer, removes leading stars so that
-;; the first heading in the export has only one star."
-;;   (condition-case nil
-;;       (let ((reduce-by 0)
-;;             (remove-regex "^"))
-;;         (save-excursion
-;;           (goto-char (point-min))
-;;           (save-match-data
-;;             (search-forward-regexp "^\\*")
-;;             (beginning-of-line)
-;;             (setq reduce-by (- (org-outline-level) 1))
-;;             (when (> reduce-by 0)
-;;               (setq remove-regex (concat remove-regex (regexp-quote (make-string reduce-by ?*))))
-;;               (while (re-search-forward remove-regex nil t)
-;;                 (replace-match "" nil nil)
-;;                 (forward-line))))))
-;;     (error nil)))
-
-;; (add-hook 'org-export-preprocess-hook 'pmade:org-remove-redundant-heading-markers)
-
+(defun pmade:org-reveal (&optional siblings)
+  (interactive "P")
+  (org-decrypt-entry)
+  (org-reveal siblings))
+  
 (defun pmade:org-list-append (&optional checkbox)
   "Append a plain list item to the current heading.  If the
 current heading already has plain list items, a new one will be
