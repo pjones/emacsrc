@@ -32,7 +32,7 @@ to account for a missing Mac OS X menu bar."
 (defun pmade-local:beefy ()
   "Settings for my Mac Pro"
   (let ((frame (selected-frame)))
-    (set-frame-size frame 199 63)
+    (set-frame-size frame 200 73)
     (pmade-center-frame frame)))
 
 (defun pmade-local:gui-specific ()
