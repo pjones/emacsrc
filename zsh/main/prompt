@@ -14,9 +14,7 @@ if [[ "x$INSIDE_SCRIPT" = "x" ]]; then
         lc=`fc -lnD -1|awk '{print $1}'`
         PS1="%{$fg[cyan]%}.----(%{$fg[blue]%} %n%{$fg[red]%}@%{$fg[green]%}%m %{$fg[cyan]%})----(%{$fg[magenta]%} %?/$lc %{$fg[cyan]%})----%{$fg[cyan]%}(%{$fg[yellow]%} %2~ %{$fg[cyan]%})${prompt_newline}${prompt_backtick}--%{$reset_color%}> "
 
-        if [ "x$INSIDE_EMACS" = "x" ]; then
-          print -Pn "\e]0;%n@%m: %~\a"
-        else
+        if [ "x$INSIDE_EMACS" != "x" ]; then
           emacs_prompt_magic
         fi
     }
