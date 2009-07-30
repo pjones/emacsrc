@@ -162,3 +162,16 @@ is set, add a plain list item with a checkbox."
   "Calls `pmade:org-list-append' with checkbox set."
   (interactive)
   (pmade:org-list-append t))
+
+(defun pmade:org-library-list ()
+  "Pulls down the current list of library books"
+  (interactive)
+  (when (not (looking-at "^\\* Current Library Items"))
+    (error "Please start at the Current Library Items heading"))
+  (org-reveal t)
+  (delete-region (point) (save-excursion (org-end-of-subtree) (+ 1 (point))))
+  (let ((heading (point)))
+    (insert "* Current Library Items\n")
+    (insert (shell-command-to-string "sh ~/.comm-sync/bin/library-dates.sh"))
+    (goto-char heading)
+    (org-reveal t)))
