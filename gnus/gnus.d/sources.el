@@ -28,10 +28,10 @@
 (setq gnus-select-method `(nnimap ,pmade-mail-server (nnimap-stream ssl))
       gnus-secondary-select-methods
       '((nntp "news.gmane.org")
-        (nntp "news.motzarella.org"
+        (nntp "news.eternal-september.org"
               (nntp-open-connection-function nntp-open-tls-stream)
               (nntp-port-number 563)
-              (nntp-address "news.motzarella.org"))))
+              (nntp-address "news.eternal-september.org"))))
 
 ;; Use the correct value for the Message-ID header
 (defun message-make-message-id ()
