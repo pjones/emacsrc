@@ -16,6 +16,13 @@
   (newline)
   (indent-according-to-mode))
 
+(defun pmade-pound-comment-bar (&optional without-newline)
+  "Create 80 pound signs"
+  (interactive "P")
+  (insert-char ?# (- 80 (current-column)))
+  (if without-newline (beginning-of-line) (newline))
+  (indent-according-to-mode))
+
 ;; Code that should be called for each programming mode
 (defun pmade-programming-mode-hook ()
   (setq show-trailing-whitespace nil
@@ -67,7 +74,10 @@
 
 ;; Shell scripting
 (setq sh-basic-offset 2)
-(add-hook 'sh-mode-hook 'pmade-programming-mode-hook)
+(add-hook 'sh-mode-hook (lambda ()
+  (pmade-programming-mode-hook)
+  (local-set-key "\C-c\t" 'pmade-pound-comment-bar)))
+
 
 ;; SQL Files
 (add-hook 'sql-mode-hook 'pmade-programming-mode-hook)
