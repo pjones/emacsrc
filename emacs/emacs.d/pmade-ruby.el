@@ -8,7 +8,7 @@
   (ruby-electric-mode t)
   (inf-ruby-keys)
   (pmade-programming-mode-hook)
-  (define-key ruby-mode-map "\C-c\t" 'pmade-ruby-comment-bar)
+  (define-key ruby-mode-map "\C-c\t" 'pmade-pound-comment-bar)
   (require 'align)
   (setq align-mode-rules-list
         '((ruby-comma
@@ -19,13 +19,6 @@
            (regexp . "\\(\\s-*\\)=>")
            (group  . 1)
            (repeat . t)))))
-
-(defun pmade-ruby-comment-bar (&optional without-newline)
-  "Create 80 pound signs"
-  (interactive "P")
-  (insert-char ?# (- 80 (current-column)))
-  (if without-newline (beginning-of-line) (newline))
-  (indent-according-to-mode))
 
 ;; Trigger ruby-mode
 (add-to-list 'load-path "~/.emacs.d/packages/ruby")
