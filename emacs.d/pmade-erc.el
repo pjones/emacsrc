@@ -23,11 +23,12 @@
 ;; Ignore messages from the server that are not channel activity
 (setq erc-track-exclude-types '("JOIN" "NICK" "PART" "QUIT" "MODE"
                                 "324" "329" "332" "333" "353" "477"))
-(setq erc-track-exclude '("&bitlbee" "#emacs" "#ruby" "#applescript"))
+(setq erc-track-exclude '("&bitlbee" "#emacs" "#chef" 
+                          "#latex" "#ruby" "#applescript"))
 
 ;; Auto join the given channels
 (setq erc-autojoin-channels-alist
-      '(("freenode" "#boulder.rb" "#emacs")
+      '(("freenode" "#boulder.rb" "#chef" "#latex" "#emacs")
         ("macrumors" "#macrumors")))
 
 ;; Logging
