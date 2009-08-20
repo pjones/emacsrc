@@ -30,14 +30,16 @@
  org-time-clocksum-format "%02d:%02d"
  org-clock-into-drawer "CLOCK"
  org-log-into-drawer "LOGBOOK"
- org-completion-use-ido t
  org-tags-exclude-from-inheritance nil
+ org-completion-use-ido t
  org-goto-interface 'outline-path-completion
+ org-outline-path-complete-in-steps nil
  
  ;; Showing context
  org-show-hierarchy-above '((default . t))
  org-show-following-heading '((default . t))
  org-show-siblings '((default . t))
+ org-show-entry-below '((default . t))
 
  ;; The notes file and options
  org-directory "~/Documents/pmade/pmade-inc/planning"
@@ -125,6 +127,8 @@
     (hl-line-mode 1)
     
     ;; Keys
+    (define-key org-agenda-keymap " " 'org-agenda-cycle-show)
+    (define-key org-agenda-mode-map " " 'org-agenda-cycle-show)
     (local-set-key "\C-x\C-w" 'pmade:org-write-agenda)))
 
 (defun pmade:org-write-agenda ()
