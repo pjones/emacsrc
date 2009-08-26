@@ -103,6 +103,7 @@
     (org-defkey org-mode-map "\C-\M-p"   'org-metaup)
     (org-defkey org-mode-map "\C-\M-n"   'org-metadown)
 
+    (org-defkey org-mode-map "\C-c1"               'pmade:org-hide-others)
     (org-defkey org-mode-map "\C-c\C-r"            'pmade:org-reveal)
     (org-defkey org-mode-map "\C-j"                'pmade:org-list-append)
     (org-defkey org-mode-map [(meta return)]       'pmade:org-list-append)
@@ -142,7 +143,13 @@
   (interactive "P")
   (org-decrypt-entry)
   (org-reveal siblings))
-  
+
+(defun pmade:org-hide-others ()
+  "Close all headings except the heading at point."
+  (interactive)
+  (org-overview)
+  (org-reveal))
+
 (defun pmade:org-list-append (&optional checkbox)
   "Append a plain list item to the current heading.  If the
 current heading already has plain list items, a new one will be
