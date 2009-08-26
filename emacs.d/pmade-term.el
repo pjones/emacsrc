@@ -55,8 +55,8 @@
 (defun pmade-term-find-file ()
   "Figure out what server a file is on, then open it."
   (interactive)
-  (term-send-raw-string "emacs_prompt_magic\n")
-  (accept-process-output (get-buffer-process (current-buffer)) 0.5)
+;  (term-send-raw-string "emacs_prompt_magic\n")
+;  (accept-process-output (get-buffer-process (current-buffer)) 0.5)
   (ido-find-file-other-window))
 
 (add-hook 'term-mode-hook 'pmade-term-mode-hook)
