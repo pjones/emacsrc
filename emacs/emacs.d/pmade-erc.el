@@ -23,7 +23,7 @@
 ;; Ignore messages from the server that are not channel activity
 (setq erc-track-exclude-types '("JOIN" "NICK" "PART" "QUIT" "MODE"
                                 "324" "329" "332" "333" "353" "477"))
-(setq erc-track-exclude '("&bitlbee" "#emacs" "#chef" 
+(setq erc-track-exclude '("&bitlbee" "#emacs" "#chef"  "#puppet"
                           "#latex" "#ruby" "#applescript"))
 
 ;; Auto join the given channels
@@ -44,6 +44,7 @@
 (setq erc-prompt 'pmade-erc-prompt)
 (setq erc-max-buffer-size 20000)
 (setq erc-track-showcount t)
+(setq erc-track-switch-from-erc nil)
 (setq erc-join-buffer 'buffer)
 (setq erc-auto-query 'bury)             ; Private messages go to a hidden buffer
 (setq erc-query-display 'buffer)        ; Reuse current buffer when sending private messages
