@@ -1,16 +1,5 @@
 -- Original script from Murphy Mac at http://murphymac.com/itunes-alarm-clock/
 -- Start iTunes from cron and slowly bring volume up
-tell application "System Events"
-  tell process "iTunes"
-     -- Switch to the speakers in my bedroom
-     set frontmost to true
-     click button 15 of window 1 -- Remote Speakers Menu
-     key code 115                -- Home Key
-     key code 125                -- Down Arrow
-     key code 125                -- Down Arrow
-     key code 36                 -- Return Key
-  end tell
-end tell
 
 tell application "iTunes"
   set volume 1

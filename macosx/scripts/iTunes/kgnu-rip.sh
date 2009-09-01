@@ -1,6 +1,6 @@
 #!/bin/sh
 
-SECONDS=900
+SECONDS=600
 URL=http://stream.kgnu.net:8000/KGNU_live_med.mp3.m3u
 
 if [ $# -ge 1 ]; then
@@ -17,4 +17,9 @@ rm -f KGNU.mp3
 rm -rf KGNU.cue incomplete
 
 # now play the stream we just ripped
-echo 'tell application "iTunes" to play playlist "Morning News"' | osascript
+cat <<EOF | osascript
+tell application "iTunes"
+  set sound volume to 70
+  play playlist "Morning News"
+end tell
+EOF
