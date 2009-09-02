@@ -49,11 +49,11 @@
    '(pmade-org-reading-face ((t (:background "#68527a" :foreground "white" :box (:line-width 1 :style released-button)))))
 
    ;; Muse Mode
-   '(muse-header-1 ((t (:foreground "#D6B163" :height 1.5 :inherit variable-pitch))))
-   '(muse-header-2 ((t (:foreground "#A5F26E" :height 1.4 :inherit variable-pitch))))
-   '(muse-header-3 ((t (:foreground "#4A77DE" :height 1.3 :inherit variable-pitch))))
-   '(muse-header-4 ((t (:foreground "#529DB0" :height 1.2 :inherit variable-pitch))))
-   '(muse-header-5 ((t (:foreground "#CC7832" :height 1.1 :inherit variable-pitch))))
+   '(muse-header-1 ((t (:inherit outline-1))))
+   '(muse-header-2 ((t (:inherit outline-2))))
+   '(muse-header-3 ((t (:inherit outline-3))))
+   '(muse-header-4 ((t (:inherit outline-4))))
+   '(muse-header-5 ((t (:inherit outline-5))))
    '(muse-verbatim ((t (:foreground "#B150E7"))))
    '(muse-link     ((t (:foreground "#5DA8F6"))))
    '(muse-bad-link ((t (:foreground "#FF8882"))))

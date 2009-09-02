@@ -1,9 +1,27 @@
+% Set some variables that get expanded later in the document
+% <lisp>(setq pmade-export-title  (muse-publish-escape-specials-in-string (muse-publishing-directive "title") 'document))</lisp>
+% <lisp>(setq pmade-export-date   (muse-publish-escape-specials-in-string (muse-barecms-formatted-date) 'document))</lisp>
+% <lisp>(setq pmade-export-author (muse-publish-escape-specials-in-string (muse-publishing-directive "author") 'document))</lisp>
+% <lisp>(setq pmade-export-email  (muse-publish-escape-specials-in-string (muse-publishing-directive "email") 'document))</lisp>
+% <lisp>(setq pmade-export-url    (muse-publish-escape-specials-in-string (muse-publishing-directive "url") 'document))</lisp>
+% <lisp>(setq pmade-export-phone  (muse-publish-escape-specials-in-string (muse-publishing-directive "phone") 'document))</lisp>
+%
 \documentclass[12pt,titlepage]{article}
 
 \usepackage[T1]{fontenc}
 \usepackage{lmodern}
 \usepackage[pdftex]{graphicx}
-\usepackage[colorlinks,hyperindex,plainpages=false]{hyperref}
+\usepackage{hyperref}
+
+% http://en.wikibooks.org/wiki/LaTeX/Hyperlinks
+\hypersetup{
+  hyperindex=true,
+  plainpages=false,
+  colorlinks=true,
+  linkcolor=black,
+  pdftitle={<lisp>pmade-export-title</lisp>},
+  pdfauthor={<lisp>pmade-export-author</lisp>}
+}
 
 \pagestyle{headings}
 \begin{document}
@@ -16,8 +34,7 @@
 
 \begin{huge}
 %\begin{textsf}
-<lisp>(muse-publish-escape-specials-in-string 
-  (muse-publishing-directive "title") 'document)</lisp>
+<lisp>pmade-export-title</lisp>
 \par
 %\end{textsf}
 \end{huge}
@@ -27,19 +44,19 @@
 % Author and Version
 \begin{minipage}{0.4\textwidth}
 \begin{flushleft} \large
-\emph{Author:}\\
-<lisp>(muse-publishing-directive "author")</lisp>
+<lisp>pmade-export-author</lisp>\\
+\href{mailto:<lisp>pmade-export-email</lisp>}{<lisp>pmade-export-email</lisp>}
 \end{flushleft}
 \end{minipage}
 \begin{minipage}{0.4\textwidth}
 \begin{flushright} \large
-\emph{Version:}\\
-<lisp>(muse-publishing-directive "version")</lisp>
+<lisp>pmade-export-phone</lisp>\\
+\url{<lisp>pmade-export-url</lisp>}
 \end{flushright}
 \end{minipage}
 
 \vfill
-{\large <lisp>(muse-barecms-formatted-date)</lisp>}
+{\large <lisp>pmade-export-date</lisp>}
 
 \end{center}
 \end{titlepage}

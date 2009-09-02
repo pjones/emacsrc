@@ -9,6 +9,7 @@ install gnupg
 install pwgen
 install screen
 install zsh-devel
+install gnuplot +no_x11
 
 install postgresql83-server
 install mysql5 +server
