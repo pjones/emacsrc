@@ -31,7 +31,6 @@
    '(org-level-3 ((t (:inherit outline-3))))
    '(org-level-4 ((t (:inherit outline-4))))
    '(org-level-5 ((t (:inherit outline-5))))
-   '(org-mode-line-clock ((t :foreground "#000" :height 0.8)))
    '(org-agenda-date ((t (:inherit font-lock-type-face))))
    '(org-agenda-date-weekend ((t (:inherit org-agenda-date))))
    '(org-scheduled-today ((t (:foreground "#ff6ab9" :italic t))))
@@ -130,8 +129,8 @@
    '(minibuffer-noticeable-prompt ((t (:inherit 'font-lock-builtin-face :bold t))))
 
    ;; Modeline and Things in the Modeline
-   '(modeline ((t (:background "DarkRed" :foreground "white" :box (:line-width 1 :style released-button)))))
-   '(mode-line-inactive ((t (:background "#4D4D4D" :foreground "#FFFFFF" :box (:line-width 1 :style released-button)))))
+   '(modeline ((t (:height 0.8 :background "DarkRed" :foreground "white" :box (:line-width 1 :style released-button)))))
+   '(mode-line-inactive ((t (:height 0.8 :background "#4D4D4D" :foreground "#FFFFFF" :box (:line-width 1 :style released-button)))))
    '(modeline-buffer-id ((t (:background "DarkRed" :foreground "white"))))
    '(modeline-mousable ((t (:background "DarkRed" :foreground "white"))))
    '(modeline-mousable-minor-mode ((t (:background "DarkRed" :foreground "white"))))
