@@ -1,0 +1,12 @@
+# Backup Jobs
+# min hour dom mon dow cmd
+#  20  03   *   *    *  sh $HOME/Develop/pmade/rc/backup/slim.pmade.com/postgresql.sh
+#  30  04   *   *    *  sh $HOME/Develop/pmade/rc/backup/slim.pmade.com/subversion.sh
+
+# Morning Wake-Up Schedule
+# min hour dom mon dow cmd
+   00  06   *   *    *  sh $HOME/Develop/pmade/rc/macosx/scripts/iTunes/kgnu-rip.sh
+   00  06   *   *    *  osascript $HOME/Develop/pmade/rc/macosx/scripts/iTunes/wake-up.applescript
+   20  06   *   *    *  sh $HOME/Develop/pmade/rc/macosx/scripts/iTunes/morning-energy.sh
+   30  06   *   *    *  sh $HOME/Develop/pmade/rc/macosx/scripts/iTunes/morning-energy.sh time
+   45  06   *   *    *  sh $HOME/Develop/pmade/rc/macosx/scripts/iTunes/morning-energy.sh time
