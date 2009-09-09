@@ -2,10 +2,26 @@
 
 cd '/Volumes/Media/Music/iTunes/iTunes Music/Morning Automation/Morning Automation'
 
-TIME=`date +%H:%M`
-DATE=`date +'%A %B %d, %Y'`
+long_speach ()
+{
+  TIME=`date +%H:%M`
+  DATE=`date +'%A %B %d, %Y'`
+  echo "Good morning, time to wake up! It's $TIME on $DATE" > script.txt
+}
 
-say -o 'Morning Time.aiff' "Good morning, time to wake up! It's $TIME on $DATE"
+short_speach ()
+{
+  TIME=`date +%H:%M`
+  echo "The time is now $TIME" > script.txt
+}
+
+if [ x$1 = xtime ]; then
+  short_speach
+else
+  long_speach
+fi
+
+say -f script.txt -o 'Morning Time.aiff'
 osascript ~/Develop/pmade/rc/macosx/scripts/iTunes/mobile-speakers.applescript
 cat <<EOF | osascript
 tell application "iTunes"
