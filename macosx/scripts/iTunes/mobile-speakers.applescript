@@ -37,5 +37,8 @@ tell application "System Events"
      key code 125                -- Down Arrow
      key code 125                -- Down Arrow
      key code 36                 -- Return Key
+
+     -- Wait for iTunes to connect to the speakers
+     delay 5
   end tell
 end tell
