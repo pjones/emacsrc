@@ -45,6 +45,7 @@
    '(org-column ((t (:background "#222222"))))
    '(org-column-title ((t (:background "DarkGreen" :foreground "white" :bold t :box (:line-width 1 :style released-button)))))
    '(org-checkbox ((t (:background "#444444" :foreground "#DDDDDD" :bold t))))
+   '(org-mode-line-clock ((t (:height 1.1))))
    '(pmade-org-next-face ((t (:background "#4f97e9" :foreground "white" :box (:line-width 1 :style released-button)))))
    '(pmade-org-pending-face ((t (:background "#d85b00" :foreground "white" :box (:line-width 1 :style released-button)))))
    '(pmade-org-reading-face ((t (:background "#68527a" :foreground "white" :box (:line-width 1 :style released-button)))))
@@ -132,10 +133,10 @@
    ;; Modeline and Things in the Modeline
    '(modeline ((t (:height 0.8 :background "DarkRed" :foreground "white" :box (:line-width 1 :style released-button)))))
    '(mode-line-inactive ((t (:height 0.8 :background "#4D4D4D" :foreground "#FFFFFF" :box (:line-width 1 :style released-button)))))
-   '(modeline-buffer-id ((t (:background "DarkRed" :foreground "white"))))
+   ; '(modeline-buffer-id ((t ())))
    '(modeline-mousable ((t (:background "DarkRed" :foreground "white"))))
    '(modeline-mousable-minor-mode ((t (:background "DarkRed" :foreground "white"))))
-   '(window-number-face ((t (:foreground "#FF7777"))))
+   '(window-number-face ((t (:foreground "#FF8E43"))))
 
    ;; Bookmarks
    '(bm-fringe-face ((t (:foreground "#ff8e43"))))
