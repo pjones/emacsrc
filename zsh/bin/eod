@@ -90,7 +90,7 @@ eod_all_repos_check ()
   cache_for=432000
   
   now=`date +%s`
-  mtime=`stat -f %Dm $repo_list`
+  [ -r $repo_list ] && mtime=`stat -f %Dm $repo_list`
   age=`expr $now - ${mtime:-0}`
 
   if [ \( ! -r $repo_list \) -o \( ${age:-0} -ge $cache_for \) ]; then
