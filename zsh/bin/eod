@@ -100,7 +100,7 @@ eod_all_repos_check ()
   for repo in `cat $repo_list`; do
     dir=`dirname $repo`
     
-    if -d $dir; then
+    if [ -d $dir ]; then
       cd $dir
       
       if git_repo_has_changes; then
