@@ -2,5 +2,5 @@
 
 (defun rebekah-journal ()
   (interactive)
-  (find-file "~/Documents/pmade/documents/people/rebekah/journal/2009.org")
+  (find-file "~/Documents/people/rebekah/journal/2009.org")
   (goto-char (point-max)))
