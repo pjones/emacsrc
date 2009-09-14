@@ -7,12 +7,9 @@
 
 # repositories to push
 git_repositories="
-    ~/Develop/clients
     ~/Develop/pmade/rc
-    ~/Documents/pmade/documents
     ~/Documents/pmade/pmade-inc
-    ~/Documents/pmade/pmade.com
-    ~/Documents/pmade/pmade.org"
+    ~/Documents/pmade/pmade.com"
 
 ################################################################################
 # Check each repo to ensure there are no uncomitted changes.
@@ -87,6 +84,35 @@ stash_ip_address ()
 }
 
 ################################################################################
+eod_all_repos_check ()
+{
+  repo_list=$HOME/Develop/.repo-list
+  cache_for=432000
+  
+  now=`date +%s`
+  mtime=`stat -f %Dm $repo_list`
+  age=`expr $now - ${mtime:-0}`
+
+  if [ \( ! -r $repo_list \) -o \( ${age:-0} -ge $cache_for \) ]; then
+    find $HOME/Develop -name .git -type d > $repo_list
+  fi
+  
+  for repo in `cat $repo_list`; do
+    cd `dirname $repo`
+    
+    if git_repo_has_changes; then
+      echo "WARN: git repo with changes: "`pwd`
+      return
+    fi
+    
+    if git_repo_needs_push; then
+      echo "WARN: git repo needs to be pushed: "`pwd`
+      return
+    fi
+  done
+}
+
+################################################################################
 die ()
 {
   echo "ERROR: $1" > /dev/stderr
@@ -105,5 +131,5 @@ eod_comm_sync || die "eod_comm_sync"
 echo "==> install rc"
 eod_install_rc || die "eod_install_rc"
 
-echo "==> stash IP"
-stash_ip_address
+# echo "==> stash IP"
+# stash_ip_address

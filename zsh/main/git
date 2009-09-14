@@ -45,6 +45,17 @@ git_repo_has_changes ()
 }
 
 ################################################################################
+# Find out if a repo has changes that haven't been pushed
+git_repo_needs_push ()
+{
+  if git status|head -2|grep -q 'ahead of'; then
+    return 0
+  else
+    return 1
+  fi
+}
+
+################################################################################
 # Track a remote branch
 git_track ()
 {
