@@ -1,6 +1,10 @@
 #!/bin/sh
 
 ################################################################################
+# This script uses the Weather Underground API:
+# http://wiki.wunderground.com/index.php/API_-_XML
+
+################################################################################
 if [ $# -ne 0 ]; then
   ZIP=$1
   shift

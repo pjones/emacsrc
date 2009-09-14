@@ -9,4 +9,4 @@
    00  06   *   *    *  osascript $HOME/Develop/pmade/rc/macosx/scripts/iTunes/wake-up.applescript
    20  06   *   *    *  sh $HOME/Develop/pmade/rc/macosx/scripts/iTunes/morning-energy.sh
    30  06   *   *    *  sh $HOME/Develop/pmade/rc/macosx/scripts/iTunes/morning-energy.sh time
-   45  06   *   *    *  sh $HOME/Develop/pmade/rc/macosx/scripts/iTunes/morning-energy.sh time
+   45  06   *   *    *  sh $HOME/Develop/pmade/rc/macosx/scripts/iTunes/morning-energy.sh
