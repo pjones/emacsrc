@@ -98,16 +98,20 @@ eod_all_repos_check ()
   fi
   
   for repo in `cat $repo_list`; do
-    cd `dirname $repo`
+    dir=`dirname $repo`
     
-    if git_repo_has_changes; then
-      echo "WARN: git repo with changes: "`pwd`
-      return
-    fi
-    
-    if git_repo_needs_push; then
-      echo "WARN: git repo needs to be pushed: "`pwd`
-      return
+    if -d $dir; then
+      cd $dir
+      
+      if git_repo_has_changes; then
+        echo "WARN: git repo with changes: "`pwd`
+        return
+      fi
+      
+      if git_repo_needs_push; then
+        echo "WARN: git repo needs to be pushed: "`pwd`
+        return
+      fi
     fi
   done
 }
