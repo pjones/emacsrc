@@ -105,12 +105,8 @@ eod_all_repos_check ()
       
       if git_repo_has_changes; then
         echo "WARN: git repo with changes: "`pwd`
-        return
-      fi
-      
-      if git_repo_needs_push; then
+      elif git_repo_needs_push; then
         echo "WARN: git repo needs to be pushed: "`pwd`
-        return
       fi
     fi
   done
