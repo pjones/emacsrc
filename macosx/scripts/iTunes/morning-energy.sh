@@ -6,7 +6,11 @@ long_speach ()
 {
   TIME=`date +%H:%M`
   DATE=`date +'%A %B %d, %Y'`
-  echo "Good morning, time to wake up! It's $TIME on $DATE" > script.txt
+  echo "Good morning, time to wake up! It's $TIME on $DATE." > script.txt
+  echo >> script.txt
+  echo "Your custom weather forecast for Lafayette Colorado." >> script.txt
+  echo >> script.txt
+  sh ~/Develop/pmade/rc/macosx/scripts/weather/weather.sh >> script.txt
 }
 
 short_speach ()
