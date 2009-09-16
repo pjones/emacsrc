@@ -20,6 +20,17 @@
    '(ecb-default-highlight-face ((t (:background "#A5F26E" :foreground "#000000"))))
    '(show-paren-match ((t (:background "#DA44FF" :foreground "#F6CCFF" :bold t))))
 
+   ;; Minibuffer
+   '(minibuffer-noticeable-prompt ((t (:inherit 'font-lock-builtin-face :bold t))))
+
+   ;; Modeline and Things in the Modeline
+   '(modeline ((t (:height 0.8 :background "DarkRed" :foreground "white" :box (:line-width 1 :style released-button)))))
+   '(mode-line-inactive ((t (:height 0.8 :background "#4D4D4D" :foreground "#FFFFFF" :box (:line-width 1 :style released-button)))))
+   ; '(modeline-buffer-id ((t ())))
+   '(modeline-mousable ((t (:background "DarkRed" :foreground "white"))))
+   '(modeline-mousable-minor-mode ((t (:background "DarkRed" :foreground "white"))))
+   '(window-number-face ((t (:foreground "#FF8E43"))))
+
    ;; Outline Mode and Org-Mode
    '(outline-1 ((t (:foreground "#D6B163" :bold t))))
    '(outline-2 ((t (:foreground "#A5F26E" :bold t))))
@@ -126,17 +137,6 @@
    '(erc-input-face ((t (:foreground "#A6E2DC"))))
    '(erc-timestamp-face ((t (:foreground "#2d412b"))))
    '(erc-prompt-face ((t (:background "#223c63" :foreground "white" :box (:line-width 1 :style released-button)))))
-
-   ;; Minibuffer
-   '(minibuffer-noticeable-prompt ((t (:inherit 'font-lock-builtin-face :bold t))))
-
-   ;; Modeline and Things in the Modeline
-   '(modeline ((t (:height 0.8 :background "DarkRed" :foreground "white" :box (:line-width 1 :style released-button)))))
-   '(mode-line-inactive ((t (:height 0.8 :background "#4D4D4D" :foreground "#FFFFFF" :box (:line-width 1 :style released-button)))))
-   ; '(modeline-buffer-id ((t ())))
-   '(modeline-mousable ((t (:background "DarkRed" :foreground "white"))))
-   '(modeline-mousable-minor-mode ((t (:background "DarkRed" :foreground "white"))))
-   '(window-number-face ((t (:foreground "#FF8E43"))))
 
    ;; Bookmarks
    '(bm-fringe-face ((t (:foreground "#ff8e43"))))
