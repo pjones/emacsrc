@@ -112,27 +112,6 @@
     ;; Buffer Settings
     (setq save-place nil)
     
-    (setq org-export-latex-classes
-          '(("article"
-             "\\documentclass[11pt]{article}
-\\usepackage[utf8]{inputenc}
-\\usepackage[T1]{fontenc}
-\\usepackage{graphicx}
-\\usepackage{longtable}
-\\usepackage{soul}
-\\usepackage{hyperref}
-\\hypersetup{
-  hyperindex=true,
-  plainpages=false,
-  colorlinks=true,
-  linkcolor=black
-}"
-             ("\\section{%s}" . "\\section*{%s}")
-             ("\\subsection{%s}" . "\\subsection*{%s}")
-             ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
-             ("\\paragraph{%s}" . "\\paragraph*{%s}")
-             ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
-
     ;; Exporting
     (setq 
      org-export-html-auto-postamble nil
