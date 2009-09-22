@@ -11,6 +11,8 @@ long_speach ()
   echo "Your custom weather forecast for Lafayette Colorado." >> script.txt
   echo >> script.txt
   sh ~/Develop/pmade/rc/macosx/scripts/weather/weather.sh >> script.txt
+  echo >> script.txt
+  echo "Shanna, if you can hear me, Peter wanted me to tell you that he loves you." >> script.txt
 }
 
 short_speach ()
