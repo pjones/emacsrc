@@ -1,0 +1,47 @@
+\ProvidesPackage{pmadelogotitle}
+
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[pdftex]{graphicx}
+\usepackage{hyperref}
+
+% http://en.wikibooks.org/wiki/LaTeX/Hyperlinks
+\hypersetup{
+  hyperindex=true,
+  plainpages=false,
+  colorlinks=true,
+  linkcolor=black,
+  pdftitle={<lisp>pmade-export-title</lisp>},
+  pdfauthor={<lisp>pmade-export-author</lisp>}
+}
+
+
+\renewcommand\maketitle{%
+  \begin{titlepage}
+    \begin{center}
+      \includegraphics[width=0.75\textwidth]{/Users/pjones/Documents/pmade/pmade-inc/artwork/logo/PNG/Trademark_Bright.png}\\[1cm]
+
+      \begin{huge}
+        \@title
+      \end{huge}
+
+      \rule{\linewidth}{0.5mm} \\[1.5cm]
+
+      \begin{minipage}{0.4\textwidth}
+        \begin{flushleft} \large
+          \@author \\
+          \href{mailto:pjones@pmade.com}{pjones@pmade.com}
+        \end{flushleft}
+      \end{minipage}
+      \begin{minipage}{0.4\textwidth}
+        \begin{flushright} \large
+          303-219-0226 \\
+          \url{http://pmade.com}
+        \end{flushright}
+      \end{minipage}
+
+      \vfill
+      \large \@date
+    \end{center}
+  \end{titlepage}%
+}

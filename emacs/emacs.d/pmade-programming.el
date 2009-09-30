@@ -88,6 +88,9 @@
 ;; I keep Ruby programming stuff in a separate file
 (load "~/.emacs.d/pmade/pmade-ruby")
 
+;; LaTeX
+(load "auctex.el" nil t t)
+
 ;; Great Subversion Integration
 (setq svn-restore-windows t) ;; needed only for dsvn
 (setq svn-status-verbose nil)
