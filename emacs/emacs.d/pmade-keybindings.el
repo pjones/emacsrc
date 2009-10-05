@@ -108,7 +108,12 @@ placing it in the kill ring)."
 (define-key global-map [(meta left)]     'shrink-window-horizontally) ; Make window smaller
 (define-key global-map [(meta right)]    'enlarge-window-horizontally); Make window bigger
 
-;; I freaking hate C-z (unless I'm using ElScreen)
-(if (fboundp 'elscreen-create) 
-    (define-key global-map "\C-z\C-z" 'elscreen-toggle)
+;; I freaking hate C-z (unless I'm using escreen)
+(if (fboundp 'escreen-create-screen) 
+    (progn
+      (setq escreen-prefix-char "\C-z")
+      (global-set-key escreen-prefix-char 'escreen-prefix)
+      (global-set-key "\C-z\C-z" 'escreen-goto-last-screen)
+      (global-set-key "\C-\zl" 'pmade:escreen-get-active-screen-numbers-with-emphasis))
   (define-key global-map "\C-z" nil))
+

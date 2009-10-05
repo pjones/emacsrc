@@ -17,9 +17,9 @@
   (define-key term-raw-escape-map "\C-j" 'pmade-term-toggle-mode)
   (define-key term-mode-map "\C-x\C-j" 'pmade-term-toggle-mode)
   
-  ;; C-z is used for elscreen, C-x C-z send C-z to terminal
+  ;; C-z is used for escreen, C-x C-z send C-z to terminal
   (define-key term-raw-escape-map "\C-z" 'term-send-raw)
-  (when (fboundp 'elscreen-create) (define-key term-raw-map "\C-z" elscreen-map))
+  (when (fboundp 'escreen-create-screen) (define-key term-raw-map "\C-z" escreen-map))
 
   ;; C-x C-f opens a file in other-window
   (define-key term-raw-map "\C-x\C-f" 'pmade-term-find-file)

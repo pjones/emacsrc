@@ -56,13 +56,31 @@
 (setq display-time-format "%A, %B %d, %Y  %H:%M")
 (require 'title-time)
 
-;; ElScreen
-(setq
- elscreen-display-screen-number t
- elscreen-display-tab nil
- elscreen-tab-display-kill-screen t
- elscreen-tab-display-control nil)
-(require 'elscreen)
+;; ;; ElScreen
+;; (setq
+;;  elscreen-display-screen-number t
+;;  elscreen-display-tab nil
+;;  elscreen-tab-display-kill-screen t
+;;  elscreen-tab-display-control nil)
+;; (require 'elscreen)
+
+;; escreen
+(load "escreen")
+(escreen-install)
+
+(defun pmade:escreen-get-active-screen-numbers-with-emphasis ()
+  "List the screen numbers in the mode line"
+  (interactive)
+  (let ((escreens (escreen-get-active-screen-numbers))
+        (emphased "")
+        (screen ""))
+    (dolist (s escreens)
+      (setq screen (number-to-string s))
+      (setq emphased (concat emphased 
+        (if (= escreen-current-screen-number s)
+            (propertize (concat "[" screen "]") 'face 'highlight)
+          screen) " ")))
+    (message "active escreens: %s" emphased)))
 
 ;; Go-to Last Change
 (autoload 'goto-last-change "goto-chg" nil t)

@@ -37,8 +37,8 @@ to account for a missing Mac OS X menu bar."
 
 (defun pmade-local:gui-specific ()
   "Settings for the GUI Emacs."
-  (dotimes (i 4) (elscreen-create))
-  (elscreen-goto 0))
+  (dotimes (i 4) (escreen-create-screen))
+  (escreen-goto-screen-0))
 
 ;; These settings only take affect if we're running the GUI.
 (when window-system
