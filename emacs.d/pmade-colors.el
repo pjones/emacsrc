@@ -137,6 +137,14 @@
    '(erc-timestamp-face ((t (:foreground "#2d412b"))))
    '(erc-prompt-face ((t (:background "#223c63" :foreground "white" :box (:line-width 1 :style released-button)))))
 
+   ;; LaTeX
+   '(font-latex-sectioning-0-face ((t (:foreground "yellow" :height 1.0))))
+   '(font-latex-sectioning-1-face ((t (:foreground "yellow" :height 1.0))))
+   '(font-latex-sectioning-2-face ((t (:foreground "yellow" :height 1.0))))
+   '(font-latex-sectioning-3-face ((t (:foreground "yellow" :height 1.0))))
+   '(font-latex-sectioning-4-face ((t (:foreground "yellow" :height 1.0))))
+   '(font-latex-sectioning-5-face ((t (:foreground "yellow" :height 1.0))))
+   
    ;; Bookmarks
    '(bm-fringe-face ((t (:foreground "#ff8e43"))))
    
