@@ -22,13 +22,11 @@
       `((".*"
          (signature-file ,(concat pmade-sigs-dir "/default")))
         (".*mlists"
-         (From "Peter Jones <mlists@pmade.com>")
-         (signature-file ,(concat pmade-sigs-dir "/mlists")))
+         (From "Peter Jones <mlists@pmade.com>"))
         ((header "to" ".*@googlegroups\\.com")
          (From "Peter Jones <pjones@pmade.com>"))
         (message-news-p
-         (From "Peter Jones <mlists@pmade.com>")
-         (signature-file ,(concat pmade-sigs-dir "/mlists")))))
+         (From "Peter Jones <mlists@pmade.com>"))))
 
 ;; Mailing Lists
 (setq message-subscribed-addresses

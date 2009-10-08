@@ -4,7 +4,7 @@
 ;; Personal Settings
 (setq
  user-full-name "Peter Jones"
- user-mail-address "pjones@pmade.com"
+ user-mail-address "pjones@contextualdevelopment.com"
  pmade-com-src "~/Documents/pmade/pmade.com"
  pmade-com-dst (concat pmade-com-src "/published")
  pmade-print-css "http://pmade.com/static/stylesheets/print.css")
