@@ -81,6 +81,10 @@ a file to a sub-directory on the BareCMS site, you'll need to
 adjust this."
   :type 'string :group 'muse-barecms)
 
+(defcustom muse-barecms-test-url "http://localhost:3000"
+  "The protocol, hostname, and port number for the test server."
+  :type 'string :group 'muse-barecms)
+  
 (defcustom muse-barecms-url "http://localhost:3000"
   "The protocol, hostname, and port number parts of the URL to use."
   :type 'string :group 'muse-barecms)
@@ -93,6 +97,11 @@ adjust this."
   "Extra command line arguments to pass to cURL."
   :type 'string :group 'muse-barecms)
 
+(defcustom muse-barecms-use-test-server nil
+  "Set to non-nil to use the test server instead of the
+configured production server."
+  :type 'boolean :group 'muse-barecms)
+
 ;; END of customizations
 
 (defvar muse-barecms-curl-command-line nil
@@ -104,6 +113,7 @@ adjust this."
     (cond
      ((and value (string= value "nil")) missing-directive)
      ((not value) missing-directive)
+     ((= 0 (length value)) missing-directive)
      (t value))))
 
 (defun muse-barecms-calculate-remote-path (source-file)
@@ -123,7 +133,8 @@ adjust this."
 
 (defun muse-barecms-full-url ()
   "Calculate the full URL needed to post a page."
-  (concat muse-barecms-url muse-barecms-admin-path))
+  (let ((url (if muse-barecms-use-test-server muse-barecms-test-url muse-barecms-url)))
+    (concat url muse-barecms-admin-path)))
 
 (defun muse-barecms-upload (source-file published-file)
   "Upload the given file."
@@ -132,11 +143,12 @@ adjust this."
 (defun muse-barecms-curl-cmd (source-file published-file)
   "Calculate the cURL command line."
   (concat "curl " muse-barecms-curl-extra " "
-          "-F 'page[published_at]='" (shell-quote-argument (muse-barecms-publishing-directive "date" ""))    " "
-          "-F 'page[author_name]='"  (shell-quote-argument (muse-barecms-publishing-directive "author" ""))  " "
-          "-F 'page[title]='"        (shell-quote-argument (muse-barecms-publishing-directive "title" ""))   " "
-          "-F 'page[tags]='"         (shell-quote-argument (muse-barecms-publishing-directive "tags" ""))    " "
-          "-F 'page[path]='"         (shell-quote-argument (muse-barecms-calculate-remote-path source-file)) " "
+          "-F 'page[published_at]='" (shell-quote-argument (muse-barecms-publishing-directive "date" ""))     " "
+          "-F 'page[author_name]='"  (shell-quote-argument (muse-barecms-publishing-directive "author" ""))   " "
+          "-F 'page[title]='"        (shell-quote-argument (muse-barecms-publishing-directive "title" ""))    " "
+          "-F 'page[tags]='"         (shell-quote-argument (muse-barecms-publishing-directive "tags" ""))     " "
+          "-F 'page[featured]='"     (shell-quote-argument (muse-barecms-publishing-directive "featured" "")) " "
+          "-F 'page[path]='"         (shell-quote-argument (muse-barecms-calculate-remote-path source-file))  " "
           "-F 'page[stage]='"        (shell-quote-argument muse-barecms-stage) " "
           "-F 'page[body]=<'"        (shell-quote-argument published-file)     " "
           (muse-barecms-full-url)))

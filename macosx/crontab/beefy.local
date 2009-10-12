@@ -9,3 +9,8 @@
    30  06   *   *    *  osascript $HOME/Develop/pmade/rc/macosx/scripts/iTunes/wake-up.applescript
    35  06   *   *    *  sh $HOME/Develop/pmade/rc/macosx/scripts/iTunes/morning-news.sh
    45  06   *   *    *  sh $HOME/Develop/pmade/rc/macosx/scripts/iTunes/morning-energy.sh
+
+# Generate Org Files for Appointments
+# min hour dom mon dow cmd
+   10   07   *   *   * sh $HOME/.comm-sync/bin/crum-org.sh
+   12   07   *   *   * sh $HOME/.comm-sync/bin/library-dates.sh
