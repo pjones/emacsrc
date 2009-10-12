@@ -46,6 +46,7 @@
  org-default-notes-file (concat org-directory "/general/business.org")
  pmade-org-active-clients (concat (expand-file-name org-directory) "/clients/active")
  pmade-org-general-files (concat (expand-file-name org-directory) "/general")
+ pmade-org-misc-files (expand-file-name "~/.emacs.d/orgfiles")
 
  ;; Agenda Files and Agenda Settings
  org-agenda-window-setup 'current-window
@@ -60,7 +61,8 @@
  org-agenda-files 
    (append
     (directory-files pmade-org-active-clients t "\\.org$")
-    (directory-files pmade-org-general-files  t "\\.org$"))
+    (directory-files pmade-org-general-files  t "\\.org$")
+    (directory-files pmade-org-misc-files     t "\\.org$"))
 
  ;; Custom Agenda Views
  org-agenda-custom-commands
