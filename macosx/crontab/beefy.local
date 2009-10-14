@@ -1,3 +1,5 @@
+PATH=/opt/local/bin:/opt/local/lib/postgresql/bin:/Users/pjones/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
+
 # Backup Jobs
 # min hour dom mon dow cmd
 #  20  03   *   *    *  sh $HOME/Develop/pmade/rc/backup/slim.pmade.com/postgresql.sh
