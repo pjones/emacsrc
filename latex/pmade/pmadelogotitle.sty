@@ -3,18 +3,20 @@
 \usepackage[T1]{fontenc}
 \usepackage{lmodern}
 \usepackage[pdftex]{graphicx}
+\usepackage{xcolor}
 \usepackage{hyperref}
 
-% http://en.wikibooks.org/wiki/LaTeX/Hyperlinks
+\definecolor{bluelink}{HTML}{4F6E90}
+
 \hypersetup{
-  hyperindex=true,
   plainpages=false,
   colorlinks=true,
   linkcolor=black,
-  pdftitle={<lisp>pmade-export-title</lisp>},
-  pdfauthor={<lisp>pmade-export-author</lisp>}
+  filecolor=bluelink,
+  urlcolor=bluelink,
+  pdftitle={\@title},
+  pdfauthor={\@author}
 }
-
 
 \renewcommand\maketitle{%
   \begin{titlepage}
