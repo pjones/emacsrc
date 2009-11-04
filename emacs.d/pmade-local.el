@@ -25,15 +25,11 @@ to account for a missing Mac OS X menu bar."
                                
 (defun pmade-local:skinny ()
   "Settings for my MacBook Pro"
-  (let ((frame (selected-frame)))
-    (set-frame-size frame 199 54)
-    (pmade-center-frame frame)))
+  (pmade-full-screen))
 
 (defun pmade-local:beefy ()
   "Settings for my Mac Pro"
-  (let ((frame (selected-frame)))
-    (set-frame-size frame 200 73)
-    (pmade-center-frame frame)))
+  (pmade-full-screen))
 
 (defun pmade-local:gui-specific ()
   "Settings for the GUI Emacs."
