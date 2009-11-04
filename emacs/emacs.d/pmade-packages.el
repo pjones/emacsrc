@@ -52,18 +52,6 @@
 (autoload 'pastie-buffer "pastie" nil t)
 (autoload 'pastie-get    "pastie" nil t)
 
-;; Place the time in the title bar
-(setq display-time-format "%A, %B %d, %Y  %H:%M")
-(require 'title-time)
-
-;; ;; ElScreen
-;; (setq
-;;  elscreen-display-screen-number t
-;;  elscreen-display-tab nil
-;;  elscreen-tab-display-kill-screen t
-;;  elscreen-tab-display-control nil)
-;; (require 'elscreen)
-
 ;; escreen
 (load "escreen")
 (escreen-install)

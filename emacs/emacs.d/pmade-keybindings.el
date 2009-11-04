@@ -67,6 +67,12 @@ placing it in the kill ring)."
   (erc-tls :server "irc.pmade.com" :port 6697 :password pmade-irc-password)
   (unless bitlbee-only (erc :server "irc.freenode.net")))
 
+(defun pmade-3-windows ()
+  (interactive)
+  (split-window-horizontally)
+  (split-window-horizontally)
+  (balance-windows))
+
 ;; For Macintosh Emacs only
 (setq mac-option-modifier  'hyper)
 (setq mac-command-modifier 'meta)
@@ -95,6 +101,7 @@ placing it in the kill ring)."
 (define-key global-map "\C-cr"    'revert-buffer)
 (define-key global-map "\C-cu"    'goto-last-change)
 (define-key global-map "\C-c\M-w" 'save-to-kill-ring-and-normalize-whitespace)
+(define-key global-map "\C-c3"    'pmade-3-windows)
 
 ;; Hyper Keys
 (define-key global-map (kbd "H-m") 'bm-toggle)

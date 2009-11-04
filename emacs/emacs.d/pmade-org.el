@@ -92,7 +92,11 @@
  org-todo-keyword-faces
    '(("NEXT"    . pmade-org-next-face)
      ("PENDING" . pmade-org-pending-face)
-     ("READING" . pmade-org-reading-face)))
+     ("READING" . pmade-org-reading-face))
+   
+ ;; MobileOrg
+ org-mobile-directory "/Volumes/pmade/org"
+ org-mobile-inbox-for-pull (concat pmade-org-general-files "/from-mobile.org"))
 
 (add-hook 'org-mode-hook
   (lambda ()
