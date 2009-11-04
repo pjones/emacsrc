@@ -72,5 +72,5 @@ group and summary buffers)"
         "^Newsgroups:" "^Posted-To:" "^Gnus-Warning:"))
 
 ;; Window Layout
-(gnus-add-configuration '(summary (horizontal 1.0 (group 0.5 point) (summary 1.0))))
-(gnus-add-configuration '(article (horizontal 1.0 (group 0.33 point) (summary 0.33 point) (article 1.0))))
+(gnus-add-configuration '(summary (horizontal 1.0 (group 0.5) (summary 1.0 point))))
+(gnus-add-configuration '(article (horizontal 1.0 (group 0.33) (summary 0.33 point) (article 1.0))))
