@@ -1,7 +1,7 @@
 ;; Things to do when editing text files
 (setq default-major-mode  'text-mode)
 (add-hook 'text-mode-hook 'turn-on-auto-fill)
-(add-hook 'text-mode-hook 'flyspell-mode)
+(add-hook 'text-mode-hook 'turn-on-flyspell)
 
 ;; Load pmade Custom Files
 (load "~/.emacs.d/pmade/pmade-loadpath")
