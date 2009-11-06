@@ -1,3 +1,6 @@
+;; Help flyspell out (something is busted with MacPorts aspell)
+(setq ispell-cmd-args "--rem-filter=nroff")
+
 ;; Things to do when editing text files
 (setq default-major-mode  'text-mode)
 (add-hook 'text-mode-hook 'turn-on-auto-fill)
