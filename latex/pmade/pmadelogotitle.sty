@@ -1,11 +1,26 @@
+% ============================================================================
 \ProvidesPackage{pmadelogotitle}
 
-\usepackage[T1]{fontenc}
+% ============================================================================
+\usepackage{fontenc}
 \usepackage{lmodern}
-\usepackage[pdftex]{graphicx}
+\usepackage{graphicx}
 \usepackage{xcolor}
 \usepackage{hyperref}
+\usepackage{xunicode,xltxtra}
 
+% ============================================================================
+\newcommand\pmadefont{Baskerville}
+\defaultfontfeatures{Scale=MatchLowercase}
+\setmainfont[Mapping=tex-text]{\pmadefont}%{Century Gothic}
+\setsansfont[Mapping=tex-text]{Tahoma}
+\setmonofont{Monaco}
+
+% ============================================================================
+\usepackage{manfnt}
+\renewcommand\labelitemi{\mantriangleright}
+
+% ============================================================================
 \definecolor{bluelink}{HTML}{4F6E90}
 
 \hypersetup{
@@ -18,7 +33,10 @@
   pdfauthor={\@author}
 }
 
+% ============================================================================
 \renewcommand\maketitle{%
+  \setmainfont[Mapping=tex-text]{Futura}
+
   \begin{titlepage}
     \begin{center}
       \includegraphics[width=0.75\textwidth]{/Users/pjones/Documents/pmade/pmade-inc/artwork/logo/PNG/Trademark_Bright.png}\\[1cm]
@@ -32,7 +50,7 @@
       \begin{minipage}{0.4\textwidth}
         \begin{flushleft} \large
           \@author \\
-          \href{mailto:pjones@pmade.com}{pjones@pmade.com}
+          \href{mailto:pjones@pmade.com}{\texttt{pjones@pmade.com}}
         \end{flushleft}
       \end{minipage}
       \begin{minipage}{0.4\textwidth}
@@ -45,5 +63,6 @@
       \vfill
       \large \@date
     \end{center}
-  \end{titlepage}%
-}
+  \end{titlepage}
+
+  \setmainfont[Mapping=tex-text]{\pmadefont}}
