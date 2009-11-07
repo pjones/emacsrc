@@ -9,7 +9,10 @@
   (require 'gnus-load))
 
 ;; Use Aspell
-(setq ispell-program-name "aspell")
+(setq ispell-extra-args '("--rem-filter=nroff")
+      ispell-program-name "/opt/local/bin/aspell")
+(setenv "ASPELL_CONF" nil)
+(add-hook 'text-mode-hook 'turn-on-flyspell)
 
 ;; Better buffer switching and file finding
 (require 'ido)
