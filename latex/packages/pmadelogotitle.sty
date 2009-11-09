@@ -35,6 +35,17 @@
 }
 
 % ============================================================================
+\usepackage{lastpage}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+
+\fancyhead{}
+\rhead{\small \rightmark}
+\fancyfoot{}
+\lfoot{\small \textsf{\@date}}
+\rfoot{\small \textsf{\thepage{} of \pageref{LastPage}}}
+
+% ============================================================================
 \renewcommand\maketitle{%
   \setmainfont[Mapping=tex-text]{Futura}
 
