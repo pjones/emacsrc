@@ -74,3 +74,6 @@ group and summary buffers)"
 ;; Window Layout
 (gnus-add-configuration '(summary (horizontal 1.0 (group 0.5) (summary 1.0 point))))
 (gnus-add-configuration '(article (horizontal 1.0 (group 0.33) (summary 0.33 point) (article 1.0))))
+
+(when (string= "skinny.local" system-name)
+  (gnus-add-configuration '(article (horizontal 1.0 (summary 0.5 point) (article 1.0)))))

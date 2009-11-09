@@ -2,14 +2,12 @@
 \ProvidesPackage{pmadelogotitle}
 
 % ============================================================================
-\usepackage{fontenc}
-\usepackage{lmodern}
 \usepackage{graphicx}
-\usepackage{xcolor}
-\usepackage{hyperref}
-\usepackage{xunicode,xltxtra}
 
 % ============================================================================
+\usepackage{fontspec}
+\usepackage{xunicode}
+\usepackage{xltxtra}
 \newcommand\pmadefont{Baskerville}
 \defaultfontfeatures{Scale=MatchLowercase}
 \setmainfont[Mapping=tex-text]{\pmadefont}%{Century Gothic}
@@ -21,6 +19,9 @@
 \renewcommand\labelitemi{\mantriangleright}
 
 % ============================================================================
+\usepackage{xcolor}
+\usepackage{hyperref}
+
 \definecolor{bluelink}{HTML}{4F6E90}
 
 \hypersetup{
