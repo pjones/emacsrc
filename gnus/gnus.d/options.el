@@ -1,6 +1,7 @@
 (eval-when-compile
   (require 'gnus)
-  (require 'nnheader))
+  (require 'nnheader)
+  (require 'cl))
 
 ;; Personal Settings
 (setq gnus-ignored-from-addresses
@@ -72,8 +73,31 @@ group and summary buffers)"
         "^Newsgroups:" "^Posted-To:" "^Gnus-Warning:"))
 
 ;; Window Layout
+(gnus-add-configuration '(group (horizontal 1.0 (group 1.0 point) (calendar 0.5))))
 (gnus-add-configuration '(summary (horizontal 1.0 (group 0.5) (summary 1.0 point))))
 (gnus-add-configuration '(article (horizontal 1.0 (group 0.33) (summary 0.33 point) (article 1.0))))
+(gnus-add-configuration '(reply-yank (horizontal 1.0 (group 0.33) (summary 0.33) (reply 1.0 point))))
+(gnus-add-configuration '(message (horizontal 1.0 (group 0.33) (calendar 0.33) (message 1.0 point))))
 
 (when (string= "skinny.local" system-name)
-  (gnus-add-configuration '(article (horizontal 1.0 (summary 0.5 point) (article 1.0)))))
+  (gnus-add-configuration '(article (horizontal 1.0 (summary 0.5 point) (article 1.0))))
+  (gnus-add-configuration '(reply-yank (horizontal 1.0 (summary 0.5) (reply 1.0 point))))
+  (gnus-add-configuration '(message (horizontal 1.0 (group 0.5) (message 1.0 point)))))
+
+;; Window Layout Helpers
+(defun pmade:gnus-reply-buffer ()
+  (let (replies)
+    (dolist (buffer (buffer-list))
+      (when (string-match "^\\*\\(wide \\)?reply" (buffer-name buffer))
+        (push (buffer-name buffer) replies)))
+    (car replies)))
+
+(defun pmade:gnus-calendar-buffer()
+  (save-window-excursion (calendar))
+  "*Calendar*")
+
+(setq gnus-window-to-buffer (assq-delete-all 'reply gnus-window-to-buffer))
+(push (cons 'reply 'pmade:gnus-reply-buffer) gnus-window-to-buffer)
+
+(setq gnus-window-to-buffer (assq-delete-all 'calendar gnus-window-to-buffer))
+(push (cons 'calendar 'pmade:gnus-calendar-buffer) gnus-window-to-buffer)
