@@ -30,8 +30,9 @@
   linkcolor=black,
   filecolor=bluelink,
   urlcolor=bluelink,
-  pdftitle={\@title},
-  pdfauthor={\@author}
+  pdfdisplaydoctitle=true,
+  pdftoolbar=false,
+  bookmarksopen=true
 }
 
 % ============================================================================
@@ -47,6 +48,7 @@
 
 % ============================================================================
 \renewcommand\maketitle{%
+  \hypersetup{pdftitle={\@title}, pdfauthor={\@author}}
   \setmainfont[Mapping=tex-text]{Futura}
 
   \begin{titlepage}
