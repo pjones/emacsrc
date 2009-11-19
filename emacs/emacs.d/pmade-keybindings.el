@@ -1,84 +1,9 @@
-;; Functions for keybindings
-(defun open-line-below-like-vim ()
-  "Open a line below the point, and move there"
-  (interactive)
-  (move-end-of-line 1)
-  (newline)
-  (indent-according-to-mode))
-
-(defun open-line-above-like-vim ()
-  "Open a line above the point, and move there"
-  (interactive)
-  (move-beginning-of-line 1)
-  (newline)
-  (previous-line)
-  (indent-according-to-mode))
-
-(defun switch-to-previous-buffer ()
-  "Switch back to the previous buffer"
-  (interactive)
-  (switch-to-buffer (other-buffer)))
-
-(defun kill-region-or-backward-kill-word (arg)
-  "Replacement for `kill-region'.  If there is a region with
-`transient-mark-mode' active, it will be removed and placed in
-the kill ring in a similar manner to `kill-region'.  If there
-isn't a region, the word before point will be deleted (without
-placing it in the kill ring)."
-  (interactive "p")
-  (if (or (not transient-mark-mode) (and transient-mark-mode mark-active))
-      (kill-region (region-beginning) (region-end))
-    (delete-region (point) (progn (forward-word (- arg)) (point)))))
-
-(defun save-to-kill-ring-and-normalize-whitespace ()
-  (interactive)
-  (let ((text (buffer-substring (region-beginning) (region-end))))
-    (kill-new
-     (replace-regexp-in-string "^\s+" "" (replace-regexp-in-string "\n\s*" " " text))))
-  (deactivate-mark))
-
-;; Based on smart tab: http://www.emacswiki.org/cgi-bin/emacs-en/TabCompletion
-(defvar pmade-inside-smart-tab nil)
-
-(defun pmade-smart-org-cycle ()
-  "Prevent recursion with org-mode"
-  (if (not pmade-inside-smart-tab)
-      (let ((pmade-inside-smart-tab t)) (org-cycle))
-    (indent-for-tab-command)))
-
-(defun pmade-smart-tab ()
-  "Context based tab key.  If there is a region, indent the
-  region.  Otherwise attempt to perform tab completion or
-  indentation."
-  (interactive)
-  (cond
-   ((minibufferp) (minibuffer-complete))
-   ((string= major-mode "org-mode") (pmade-smart-org-cycle))
-   (mark-active (indent-region (region-beginning) (region-end)))
-   ((looking-at "\\_>") (hippie-expand nil))
-   (t (indent-for-tab-command))))
-
-;; Help start ERC
-(defun pmade-erc-start (&optional bitlbee-only)
-  "Load and start ERC.  With prefix key, only connect to bitlbee."
-  (interactive "P")
-  (load "~/.emacs.d/pmade/pmade-erc")
-  (erc :server "127.0.0.1")
-  (erc-tls :server "irc.pmade.com" :port 6697 :password pmade-irc-password)
-  (unless bitlbee-only (erc :server "irc.freenode.net")))
-
-(defun pmade-3-windows ()
-  (interactive)
-  (split-window-horizontally)
-  (split-window-horizontally)
-  (balance-windows))
-
 ;; For Macintosh Emacs only
 (setq mac-option-modifier  'hyper)
 (setq mac-command-modifier 'meta)
 
 ;; Global Key Bindings
-(define-key global-map [escape]   'keyboard-escape-quit)
+(define-key global-map [escape]   (lambda () (interactive) (message "WTF: ESC")))
 (define-key global-map "\C-x\C-m" 'execute-extended-command)
 (define-key global-map "\C-x\C-b" 'ibuffer)
 (define-key global-map "\C-o"     'open-line-below-like-vim)
@@ -99,6 +24,7 @@ placing it in the kill ring)."
 (define-key global-map "\C-cl"    'org-store-link)
 (define-key global-map "\C-cm"    'magit-status)
 (define-key global-map "\C-cr"    'revert-buffer)
+(define-key global-map "\C-ct"    'pmade-transpose-windows)
 (define-key global-map "\C-cu"    'goto-last-change)
 (define-key global-map "\C-c\M-w" 'save-to-kill-ring-and-normalize-whitespace)
 (define-key global-map "\C-c3"    'pmade-3-windows)

@@ -22,14 +22,16 @@
 \usepackage{xcolor}
 \usepackage{hyperref}
 
-\definecolor{bluelink}{HTML}{4F6E90}
+\definecolor{externallinkcolor}{HTML}{003399}
+\definecolor{citelinkcolor}{HTML}{36823D}
 
 \hypersetup{
   plainpages=false,
   colorlinks=true,
   linkcolor=black,
-  filecolor=bluelink,
-  urlcolor=bluelink,
+  filecolor=externallinkcolor,
+  urlcolor=externallinkcolor,
+  citecolor=citelinkcolor,
   pdfdisplaydoctitle=true,
   pdftoolbar=false,
   bookmarksopen=true
@@ -43,8 +45,7 @@
 \fancyhead{}
 \rhead{\small \rightmark}
 \fancyfoot{}
-\lfoot{\small \textsf{\@date}}
-\rfoot{\small \textsf{\thepage{} of \pageref{LastPage}}}
+\rfoot{\small \thepage{} of \pageref{LastPage}}
 
 % ============================================================================
 \renewcommand\maketitle{%
@@ -69,7 +70,7 @@
       \end{minipage}
       \begin{minipage}{0.4\textwidth}
         \begin{flushright} \large
-          303-219-0226 \\
+          (303) 219-0226 \\
           \url{http://pmade.com}
         \end{flushright}
       \end{minipage}
