@@ -147,7 +147,13 @@
    
    ;; Bookmarks
    '(bm-fringe-face ((t (:foreground "#ff8e43"))))
-   
+
+   ;; Twitter
+   '(twit-message-face ((t (:inherit 'default :height 0.8))))
+   '(twit-author-face ((t (:inherit 'default :height 0.8))))
+   '(twit-title-face ((t (:inherit 'org-column-title))))
+   '(twit-logo-face ((t (:inherit 'default))))
+
    ;; Non-Standard Faces
    '(pmade-fixme-face ((t (:background "#670000" :foreground "#ffffff" :bold t :box (:line-width 1 :color "#ff8e43")))))
    

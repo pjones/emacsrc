@@ -45,8 +45,8 @@
 
 ;; Checking for New Mail
 (defun pmade-new-level-one-mail () (gnus-group-get-new-news 1))
-(gnus-demon-add-handler 'pmade-new-level-one-mail 20 t)
-(gnus-demon-init)
+;; (gnus-demon-add-handler 'pmade-new-level-one-mail 20 t)
+;; (gnus-demon-init)
 
 ;; Highlight the current line in the groups and summary buffers
 (defun pmade-gnus-index-hook ()
@@ -73,13 +73,15 @@ group and summary buffers)"
         "^Newsgroups:" "^Posted-To:" "^Gnus-Warning:"))
 
 ;; Window Layout
-(gnus-add-configuration '(group (horizontal 1.0 (group 1.0 point) (calendar 0.5))))
-(gnus-add-configuration '(summary (horizontal 1.0 (group 0.5) (summary 1.0 point))))
-(gnus-add-configuration '(article (horizontal 1.0 (group 0.33) (summary 0.33 point) (article 1.0))))
-(gnus-add-configuration '(reply-yank (horizontal 1.0 (group 0.33) (summary 0.33) (reply 1.0 point))))
+(gnus-add-configuration '(group (horizontal 1.0 (calendar 0.33) (group 1.0 point) (twitter 0.33))))
+(gnus-add-configuration '(summary (horizontal 1.0 (group 0.33) (summary 1.0 point) (twitter 0.33))))
+(gnus-add-configuration '(article (horizontal 1.0 (summary 0.33 point) (article 1.0) (twitter 0.33))))
+(gnus-add-configuration '(reply-yank (horizontal 1.0 (summary 0.33) (reply 1.0 point) (twitter 0.33))))
 (gnus-add-configuration '(message (horizontal 1.0 (group 0.33) (calendar 0.33) (message 1.0 point))))
 
 (when (string= "skinny.local" system-name)
+  (gnus-add-configuration '(group (horizontal 1.0 (group 1.0 point) (twitter 0.5))))
+  (gnus-add-configuration '(summary (horizontal 1.0 (group 0.5) (summary 1.0 point))))
   (gnus-add-configuration '(article (horizontal 1.0 (summary 0.5 point) (article 1.0))))
   (gnus-add-configuration '(reply-yank (horizontal 1.0 (summary 0.5) (reply 1.0 point))))
   (gnus-add-configuration '(message (horizontal 1.0 (group 0.5) (message 1.0 point)))))
@@ -92,12 +94,20 @@ group and summary buffers)"
         (push (buffer-name buffer) replies)))
     (car replies)))
 
-(defun pmade:gnus-calendar-buffer()
+(defun pmade:gnus-calendar-buffer ()
   (save-window-excursion (calendar))
   "*Calendar*")
+
+(defun pmade:gnus-twitter-buffer ()
+  (unless (get-buffer "*Twit-recent*")
+    (save-window-excursion (twit-show-recent-tweets)))
+  "*Twit-recent*")
 
 (setq gnus-window-to-buffer (assq-delete-all 'reply gnus-window-to-buffer))
 (push (cons 'reply 'pmade:gnus-reply-buffer) gnus-window-to-buffer)
 
 (setq gnus-window-to-buffer (assq-delete-all 'calendar gnus-window-to-buffer))
 (push (cons 'calendar 'pmade:gnus-calendar-buffer) gnus-window-to-buffer)
+
+(setq gnus-window-to-buffer (assq-delete-all 'twitter gnus-window-to-buffer))
+(push (cons 'twitter 'pmade:gnus-twitter-buffer) gnus-window-to-buffer)
