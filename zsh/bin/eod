@@ -128,11 +128,11 @@ eod_each_repo eod_git_push_all_repositories $git_repositories || die "eod_git_pu
 echo "==> comm sync"
 eod_comm_sync || die "eod_comm_sync"
 
-echo "==> repo check"
-eod_all_repos_check
-
 echo "==> install rc"
 eod_install_rc || die "eod_install_rc"
+
+echo "==> repo check"
+eod_all_repos_check
 
 # echo "==> stash IP"
 # stash_ip_address
