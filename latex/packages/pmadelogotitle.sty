@@ -42,10 +42,11 @@
 \usepackage{fancyhdr}
 \pagestyle{fancy}
 
+\fancyheadoffset{\marginparsep+\marginparwidth}
 \fancyhead{}
-\rhead{\small \rightmark}
+\lhead{\leftmark}
+\rhead{Page \thepage{} of \pageref{LastPage}}
 \fancyfoot{}
-\rfoot{\small \thepage{} of \pageref{LastPage}}
 
 % ============================================================================
 \renewcommand\maketitle{%
