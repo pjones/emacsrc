@@ -120,6 +120,7 @@
     
     ;; Exporting
     (setq 
+     org-latex-to-pdf-process (list "latexmk -pdf %s")
      org-export-html-auto-postamble nil
      org-export-with-sub-superscripts nil
      org-export-with-emphasize nil
