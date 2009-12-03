@@ -99,18 +99,6 @@
  type-break-file-name (expand-file-name "~/.emacs.d/type-break"))
 (type-break-mode)
 
-;; Twitter
-(let ((twit-conf "~/.comm-sync/etc/twitter/twit.el"))
-  (when (file-exists-p twit-conf) (load twit-conf)))
-(setq twit-protocol "https"
-      twit-show-user-images t
-      twit-user-image-dir "~/.emacs.d/twitter/images"
-      twit-follow-idle-interval 300
-      twit-filter-diarrhea 10)
-(autoload 'twit-follow-recent-tweets "twit" "" t)
-(autoload 'twit-show-recent-tweets "twit" "" t)
-(autoload 'twit-post "twit" "" t)
-
 ;; Editing the Emacs Wiki
 (defun pmade-oddmuse-hook ()
   "Hook is run after oddmuse is started"
