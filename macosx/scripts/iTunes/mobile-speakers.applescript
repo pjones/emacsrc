@@ -25,8 +25,16 @@ end script
 (*
   Tell iTunes to use the "Mobile" set of remote speakers.
 *)
+tell application "iTunes"
+  set the_bwindow to (get first browser window)
+  set the_state to (get minimized of the_bwindow)
+  set visible of the_bwindow to true
+  set minimized of the_bwindow to false
+end tell
+
 tell application "System Events"
   tell process "iTunes"
+        
      set the_buttons to (get buttons of window 1)
      set the_speaker_button to (remoteSpeakerFinder's findCorrectButton(the_buttons))
 
@@ -41,4 +49,9 @@ tell application "System Events"
      -- Wait for iTunes to connect to the speakers
      delay 5
   end tell
+end tell
+
+tell application "iTunes"
+  -- Return window to previous state
+  set minimized of the_bwindow to the_state
 end tell
