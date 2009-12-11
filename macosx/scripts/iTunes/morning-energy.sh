@@ -1,6 +1,6 @@
 #!/bin/sh
 
-cd '/Volumes/Media/Music/iTunes/iTunes Music/Morning Automation/Morning Automation'
+cd '/Volumes/Media/iTunes/Music/Morning Automation/Morning Automation'
 
 long_speach ()
 {
