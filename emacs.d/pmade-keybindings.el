@@ -21,6 +21,8 @@
 ;; User Key Bindings (using the C-c prefix)
 (define-key global-map "\C-ca"    'org-agenda)
 (define-key global-map "\C-cd"    'delete-trailing-whitespace)
+;                       C-c f     Toggle hide/show code
+;                       C-c h     Toggle header/source
 (define-key global-map "\C-cl"    'org-store-link)
 (define-key global-map "\C-cm"    'magit-status)
 (define-key global-map "\C-cr"    'revert-buffer)
@@ -28,6 +30,7 @@
 (define-key global-map "\C-cu"    'goto-last-change)
 (define-key global-map "\C-c\M-w" 'save-to-kill-ring-and-normalize-whitespace)
 (define-key global-map "\C-c3"    'pmade-3-windows)
+;                       C-c \t    Insert comment bar in source code file
 
 ;; Hyper Keys
 (define-key global-map (kbd "H-m") 'bm-toggle)

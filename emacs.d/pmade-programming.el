@@ -23,16 +23,25 @@
   (if without-newline (beginning-of-line) (newline))
   (indent-according-to-mode))
 
+(defun pmade-c-comment-bar (&optional without-newline)
+  "Create a comment separator bar"
+  (interactive "P")
+  (insert-char ?/ 2)
+  (insert-char ?= (- 78 (current-column)))
+  (if without-newline (beginning-of-line) (newline))
+  (indent-according-to-mode))
+
 ;; Code that should be called for each programming mode
 (defun pmade-programming-mode-hook ()
-  (setq show-trailing-whitespace nil
-        save-place t)
+  (setq show-trailing-whitespace nil save-place t)
   (set (make-local-variable 'comment-auto-fill-only-comments) t)
   (turn-on-auto-fill)
   (flyspell-prog-mode)
+  (hs-minor-mode)
   (font-lock-add-keywords nil '(("\\<\\(FIXME:\\|TODO:\\)" 1 pmade-fixme-face t)))
-  (local-set-key "\C-m" 'pmade-newline)
-  (local-set-key "\t"   'pmade-smart-tab))
+  (local-set-key "\C-cf"  'hs-toggle-hiding)
+  (local-set-key "\C-m"   'pmade-newline)
+  (local-set-key "\t"     'pmade-smart-tab))
 
 (defun create-and-use-tags ()
   (interactive)
@@ -55,6 +64,18 @@
     (setq c-basic-offset 4)
     (pmade-programming-mode-hook)))
 
+;; Objective-C
+(add-hook 'objc-mode-hook
+  (lambda ()
+    (pmade-programming-mode-hook)
+    (load "emacs-xcode")
+    (add-to-list 'hs-special-modes-alist 
+      '(objc-mode "{" "}" "/[*/]" nil hs-c-like-adjust-block-beginning))
+    (hs-hide-all)
+    (local-set-key "\C-c\t" 'pmade-c-comment-bar)
+    (local-set-key "\C-ch" 'xcode/toggle-header-and-source)
+    (local-set-key "\C-c\C-c" 'xcode/build-compile)))
+
 ;; CSS, HTML
 (autoload 'css-mode "css-mode" "CSS" t)
 (add-hook 'css-mode-hook 'pmade-programming-mode-hook)
@@ -62,15 +83,7 @@
 (add-to-list 'auto-mode-alist '("\\.css$" . css-mode))
 (setq css-indent-offset 2 sgml-basic-offset 2)
 
-;; Javascript
-;; (autoload 'js2-mode "js2" nil t)
-;; (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
-;; (add-hook 'js2-mode-hook 'pmade-programming-mode-hook)
-;; (setq js2-auto-indent-flag nil
-;;       js2-bounce-indent-flag nil
-;;       js2-rebind-eol-bol-keys nil
-;;       js2-mode-escape-quotes nil
-;;       js2-basic-offset 2)
+;; JavaScript
 (autoload 'espresso-mode "espresso" "Start espresso-mode" t)
 (add-to-list 'auto-mode-alist '("\\.js$" . espresso-mode))
 (add-to-list 'auto-mode-alist '("\\.json$" . espresso-mode))
@@ -82,7 +95,6 @@
 (add-hook 'sh-mode-hook (lambda ()
   (pmade-programming-mode-hook)
   (local-set-key "\C-c\t" 'pmade-pound-comment-bar)))
-
 
 ;; SQL Files
 (add-hook 'sql-mode-hook 'pmade-programming-mode-hook)
