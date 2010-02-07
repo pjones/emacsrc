@@ -25,7 +25,7 @@
                                 "324" "329" "332" "333" "353" "477"))
 (setq erc-track-exclude '("&bitlbee" "#emacs" "#chef"  "#puppet"
                           "#latex" "#ruby" "#applescript" "#sproutcore"
-                          "#photogeeks"))
+                          "#photogeeks" "#macrumors"))
 
 ;; Auto join the given channels
 (setq erc-autojoin-channels-alist
