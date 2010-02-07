@@ -74,7 +74,7 @@ group and summary buffers)"
 
 ;; Window Layout
 (gnus-add-configuration '(group (horizontal 1.0 (calendar 0.33) (group 1.0 point) (scratch 0.33))))
-(gnus-add-configuration '(summary (horizontal 1.0 (group 0.33) (summary 1.0 point) (scratch 0.33))))
+(gnus-add-configuration '(summary (horizontal 1.0 (group 0.33) (summary 1.0 point))))
 (gnus-add-configuration '(article (horizontal 1.0 (summary 0.33 point) (article 1.0) (scratch 0.33))))
 (gnus-add-configuration '(reply-yank (horizontal 1.0 (summary 0.33) (reply 1.0 point) (scratch 0.33))))
 (gnus-add-configuration '(message (horizontal 1.0 (group 0.33) (message 1.0 point) (calendar 0.33))))
