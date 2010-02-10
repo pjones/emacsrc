@@ -1,6 +1,66 @@
 (eval-when-compile
   (require 'term))
 
+;; Fix a bug in term.el
+(eval-after-load "term"
+  '(defun term-handle-ansi-terminal-messages (message)
+    (if (null term-ansi-at-dir) (setq term-ansi-at-dir default-directory))
+    (if (null term-ansi-at-host) (setq term-ansi-at-host (system-name)))
+    (if (null term-ansi-at-user) (setq term-ansi-at-user (user-real-login-name)))
+    
+    (let ((updated))
+      ;; Is there a command here?
+      (while (string-match "\eAnSiT.+\n" message)
+        ;; Extract the command code and the argument.
+        (let* ((start (match-beginning 0))
+               (command-code (aref message (+ start 6)))
+               (argument
+                (save-match-data
+                  (substring message
+                             (+ start 8)
+                             (string-match "\r?\n" message
+                                           (+ start 8))))))
+          ;; Delete this command from MESSAGE.
+          (setq message (replace-match "" t t message))
+
+          ;; If we recognize the type of command, set the appropriate variable.
+          (cond ((= command-code ?c)
+                 (setq term-ansi-at-dir argument
+                       updated t))
+                ((= command-code ?h)
+                 (setq term-ansi-at-host argument
+                       updated t))
+                ((= command-code ?u)
+                 (setq term-ansi-at-user argument
+                       updated t)))))
+
+      ;; Update default-directory based on the changes this command made.
+      (if updated
+          (setq default-directory
+                (file-name-as-directory
+                 (if (and (string= term-ansi-at-host (system-name))
+                          (string= term-ansi-at-user (user-real-login-name)))
+                     (expand-file-name term-ansi-at-dir)
+                   (if (string= term-ansi-at-user (user-real-login-name))
+                       (concat "/" term-ansi-at-host ":" term-ansi-at-dir)
+                     (concat "/" term-ansi-at-user "@" term-ansi-at-host ":"
+                             term-ansi-at-dir))))))
+
+      ;; I'm not sure this is necessary,
+      ;; but it's best to be on the safe side.
+      (if (string= term-ansi-at-host (system-name))
+          (progn
+            (setq ange-ftp-default-user term-ansi-at-save-user)
+            (setq ange-ftp-default-password term-ansi-at-save-pwd)
+            (setq ange-ftp-generate-anonymous-password term-ansi-at-save-anon))
+        (setq term-ansi-at-save-user ange-ftp-default-user)
+        (setq term-ansi-at-save-pwd ange-ftp-default-password)
+        (setq term-ansi-at-save-anon ange-ftp-generate-anonymous-password)
+        (setq ange-ftp-default-user nil)
+        (setq ange-ftp-default-password nil)
+        (setq ange-ftp-generate-anonymous-password nil))
+      message)))
+  
 ;; Settings for Terminal mode
 (defun pmade-term-mode-hook ()
   ;; Window Number Mode F**ks up C-x C-j
