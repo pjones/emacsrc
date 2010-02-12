@@ -31,6 +31,7 @@
 (define-key global-map "\C-c\M-w" 'save-to-kill-ring-and-normalize-whitespace)
 (define-key global-map "\C-c3"    'pmade-3-windows)
 ;                       C-c \t    Insert comment bar in source code file
+(define-key global-map "\C-c`"    'pmade-goto-terminal)
 
 ;; Hyper Keys
 (define-key global-map (kbd "H-m") 'bm-toggle)
