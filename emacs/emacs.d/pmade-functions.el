@@ -74,7 +74,7 @@ placing it in the kill ring)."
 
 (defun rebekah-journal ()
   (interactive)
-  (find-file "~/Documents/people/rebekah/journal/2009.org")
+  (find-file "~/Documents/people/rebekah/journal/2010.org")
   (goto-char (point-max)))
 
 (defun pmade-transpose-windows (arg)
@@ -88,3 +88,11 @@ placing it in the kill ring)."
          (set-window-buffer (funcall selector) this-win)
          (select-window (funcall selector)))
        (setq arg (if (plusp arg) (1- arg) (1+ arg))))))
+
+(defun pmade-goto-terminal nil
+  "Jump to the screen and window with the terminal"
+  (interactive)
+  (escreen-goto-screen-3)
+  (dolist (window (window-number-list))
+    (when (string= "*terminal*" (buffer-name (window-buffer window)))
+      (select-window window))))
