@@ -31,13 +31,14 @@
 (define-key global-map "\C-c\M-w" 'save-to-kill-ring-and-normalize-whitespace)
 (define-key global-map "\C-c3"    'pmade-3-windows)
 ;                       C-c \t    Insert comment bar in source code file
-(define-key global-map "\C-c`"    'pmade-goto-terminal)
 
 ;; Hyper Keys
 (define-key global-map (kbd "H-m") 'bm-toggle)
 (define-key global-map (kbd "H-p") 'bm-previous)
 (define-key global-map (kbd "H-n") 'bm-next)
 (define-key global-map (kbd "H-a") 'align)
+(define-key global-map (kbd "H-s") 'pmade-split-frame)
+(define-key global-map (kbd "H-t") 'pmade-goto-terminal)
 
 ;; Key Bindings for Working with Windows
 (define-key global-map [(meta down)]     'shrink-window)              ; Make window smaller (vertical)

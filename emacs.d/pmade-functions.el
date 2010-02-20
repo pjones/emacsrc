@@ -96,3 +96,17 @@ placing it in the kill ring)."
   (dolist (window (window-number-list))
     (when (string= "*terminal*" (buffer-name (window-buffer window)))
       (select-window window))))
+
+(defun pmade-split-frame nil
+  "Split the frame based on the current escreen"
+  (interactive)
+  (let ((s (escreen-get-current-screen-number)))
+    (cond 
+     ((= s 3)
+      (pmade-3-windows)
+      (window-number-select 3)
+      (split-window-vertically)
+      (window-number-select 4)
+      (term "/opt/local/bin/zsh")))))
+      
+           
