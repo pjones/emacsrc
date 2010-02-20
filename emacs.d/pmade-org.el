@@ -4,6 +4,7 @@
 (autoload 'org-invoice-report "org-invoice" nil t)
 (autoload 'org-dblock-write:invoice "org-invoice" nil t)
 (autoload 'org-eva-submit "org-eva" nil t)
+(autoload 'org-export-as-mindmap "org-mindmap" nil t)
 
 (eval-after-load "org-eva"
   '(let ((eva-conf "~/.comm-sync/etc/eva.el"))
@@ -12,6 +13,9 @@
 ;; Org Crypt
 (require 'org-crypt)
 (org-crypt-use-before-save-magic)
+
+;; Org Depend
+(require 'org-depend)
 
 (setq
  ;; General Org Settings
@@ -51,7 +55,7 @@
  ;; Agenda Files and Agenda Settings
  org-agenda-window-setup 'current-window
  org-agenda-restore-windows-after-quit nil
- org-stuck-projects '("+LEVEL=2+project|+LEVEL=3+subproject" ("NEXT" "PENDING") ("single") "")
+ org-stuck-projects '("+LEVEL=2+project" ("NEXT" "PENDING" "BLOCKED") ("single") "")
  org-agenda-ndays 1
  org-agenda-skip-deadline-if-done t
  org-agenda-skip-scheduled-if-done t
@@ -68,25 +72,27 @@
  org-agenda-custom-commands
  '(("d" "Daily Agenda"
     ((agenda ""
-             ((org-agenda-todo-keyword-format "")
-              (org-agenda-remove-tags t)))
+       ((org-agenda-todo-keyword-format "")
+        (org-agenda-remove-tags t)))
      (tags "LEVEL=2+goals"
-           ((org-agenda-remove-tags t)
-            (org-agenda-prefix-format "  ")
-           (org-agenda-todo-keyword-format "")))
+       ((org-agenda-remove-tags t)
+        (org-agenda-prefix-format "  ")
+        (org-agenda-todo-keyword-format "")))
      (todo "NEXT" 
-           ((org-agenda-sorting-strategy '(tag-up))
-            (org-agenda-show-inherited-tags nil)
-            (org-agenda-todo-keyword-format "")))
+       ((org-agenda-sorting-strategy '(tag-up))
+        (org-agenda-show-inherited-tags nil)
+        (org-agenda-todo-keyword-format "")))
      (todo "PENDING"
-           ((org-agenda-todo-keyword-format "")))
+       ((org-agenda-todo-keyword-format "")))
      (stuck ""
-            ((org-agenda-remove-tags t)))))
+       ((org-agenda-remove-tags t)))))
+   ("b" "Blocked Items"
+    ((todo "BLOCKED")))
    ("e" "Next Item Effort"
     ((todo "NEXT"
-           ((org-agenda-sorting-strategy '(effort-up))
-            (org-agenda-show-inherited-tags nil)
-            (org-agenda-todo-keyword-format ""))))))
+       ((org-agenda-sorting-strategy '(effort-up))
+        (org-agenda-show-inherited-tags nil)
+        (org-agenda-todo-keyword-format ""))))))
  
  ;; Faces
  org-todo-keyword-faces
