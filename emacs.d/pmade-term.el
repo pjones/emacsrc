@@ -82,7 +82,7 @@
   (when (fboundp 'escreen-create-screen) (define-key term-raw-map "\C-z" escreen-map))
 
   ;; C-x C-f opens a file in other-window
-  (define-key term-raw-map "\C-x\C-f" 'pmade-term-find-file)
+  (define-key term-raw-map "\C-x\C-f" 'pmade-find-file-window-2)
   
   ;; Some other nice bindings
   (define-key term-raw-map [escape] (lambda () (interactive) (term-send-raw-string "")))
@@ -111,13 +111,6 @@
   "Allow yank to work in raw char mode"
   (interactive)
   (term-send-raw-string (current-kill 0))) 
-
-(defun pmade-term-find-file ()
-  "Figure out what server a file is on, then open it."
-  (interactive)
-;  (term-send-raw-string "emacs_prompt_magic\n")
-;  (accept-process-output (get-buffer-process (current-buffer)) 0.5)
-  (ido-find-file-other-window))
 
 (add-hook 'term-mode-hook 'pmade-term-mode-hook)
 

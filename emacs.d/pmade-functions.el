@@ -58,6 +58,15 @@ placing it in the kill ring)."
    ((looking-at "\\_>") (hippie-expand nil))
    (t (indent-for-tab-command))))
 
+(defun pmade-find-file-window-2 ()
+  "Open a file in window number 2."
+  (interactive)
+  (let ((buf (save-window-excursion
+               (ido-find-file)
+               (current-buffer))))
+    (window-number-select 2)
+    (switch-to-buffer buf)))
+
 ;; Help start ERC
 (defun pmade-erc-start (&optional bitlbee-only)
   "Load and start ERC.  With prefix key, only connect to bitlbee."
@@ -97,16 +106,87 @@ placing it in the kill ring)."
     (when (string= "*terminal*" (buffer-name (window-buffer window)))
       (select-window window))))
 
-(defun pmade-split-frame nil
+(defun pmade-split-frame (&optional arg)
   "Split the frame based on the current escreen"
-  (interactive)
-  (let ((s (escreen-get-current-screen-number)))
+  (interactive "P")
+  (let ((screen (escreen-get-current-screen-number)))
     (cond 
-     ((= s 3)
+     ((= screen 1) (pmade-split-frame:screen-1 arg))
+     ((= screen 2) (pmade-split-frame:screen-2 arg))
+     ((= screen 3) (pmade-split-frame:screen-3 arg)))))
+
+(defun pmade-split-frame:screen-1 (&optional arg)
+  (delete-other-windows)
+  (switch-to-buffer "*scratch*")
+  (pmade-3-windows)
+  (window-number-select 1)
+  (split-window-vertically)
+  (switch-to-buffer "#emacs")
+  (window-number-select 2)
+  (switch-to-buffer "#photogeeks")
+  (window-number-select 3)
+  (split-window-vertically)
+  (switch-to-buffer "&bitlbee")
+  (window-number-select 4)
+  (switch-to-buffer "*scratch*")
+  (window-number-select 5)
+  (split-window-vertically)
+  (switch-to-buffer "#latex")
+  (window-number-select 6)
+  (switch-to-buffer "#sproutcore")
+  (window-number-select 3))
+
+(defun pmade-split-frame:screen-2 (&optional arg)
+  (delete-other-windows)
+  (switch-to-buffer "*scratch*")
+  (pmade-3-windows)
+  (window-number-select 2)
+  (if (get-buffer "*Org Agenda*")
+      (switch-to-buffer "*Org Agenda*")
+    (org-agenda nil "d"))
+  (window-number-select 1)
+  (switch-to-buffer "review.org")
+  (window-number-select 3)
+  (switch-to-buffer "sevendesign.org")
+  (window-number-select 2))
+
+(defun pmade-split-frame:screen-3 (&optional arg)
+  (let ((win (window-number))
+        main-buf alt-buf)
+    (cond
+     ((= win 2)
+      (setq main-buf (current-buffer))
+      (setq alt-buf (save-window-excursion 
+                      (window-number-select 1)
+                      (current-buffer))))
+     ((= win 1)
+      (setq main-buf (current-buffer))
+      (setq alt-buf (save-window-excursion
+                      (window-number-select 2)
+                      (current-buffer))))
+     (t
+      (setq main-buf (save-window-excursion
+                       (window-number-select 2)
+                       (current-buffer)))
+      (setq alt-buf (current-buffer))))
+    (delete-other-windows)
+    (switch-to-buffer "*scratch*")
+    (cond
+     (arg ;; Alt behavior
+      (split-window-horizontally 80)
+      (if alt-buf (switch-to-buffer alt-buf))
+      (window-number-select 2)
+      (switch-to-buffer main-buf))
+     (t ;; Default behavior
       (pmade-3-windows)
       (window-number-select 3)
       (split-window-vertically)
       (window-number-select 4)
-      (term "/opt/local/bin/zsh")))))
-      
-           
+      (if (get-buffer "*terminal*")
+          (switch-to-buffer "*terminal*")
+        (term "/opt/local/bin/zsh"))
+      (window-number-select 1)
+      (if alt-buf (switch-to-buffer alt-buf))
+      (window-number-select 2)
+      (switch-to-buffer main-buf)))))
+
