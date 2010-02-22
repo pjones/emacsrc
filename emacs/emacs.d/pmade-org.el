@@ -144,6 +144,7 @@
     ;; Keys
     (define-key org-agenda-keymap " " 'org-agenda-cycle-show)
     (define-key org-agenda-mode-map " " 'org-agenda-cycle-show)
+    (define-key org-agenda-mode-map "g" 'pmade:org-agenda-redo)
     (local-set-key "\C-x\C-w" 'pmade:org-write-agenda)))
 
 (defun pmade:org-write-agenda ()
@@ -187,6 +188,14 @@ is set, add a plain list item with a checkbox."
   "Calls `pmade:org-list-append' with checkbox set."
   (interactive)
   (pmade:org-list-append t))
+
+(defun pmade:org-agenda-redo ()
+  "Update the agenda view after reverting buffers that were auto
+generated from external processes."
+  (interactive)
+  (with-current-buffer "crum.org" (revert-buffer t t))
+  (with-current-buffer "library.org" (revert-buffer t t))
+  (org-agenda-redo))
 
 (defun pmade:org-library-list ()
   "Pulls down the current list of library books"
