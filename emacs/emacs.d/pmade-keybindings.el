@@ -39,6 +39,7 @@
 (define-key global-map (kbd "H-a") 'align)
 (define-key global-map (kbd "H-s") 'pmade-split-frame)
 (define-key global-map (kbd "H-t") 'pmade-goto-terminal)
+(define-key global-map (kbd "H-x") 'switch-to-previous-buffer)
 
 ;; Key Bindings for Working with Windows
 (define-key global-map [(meta down)]     'shrink-window)              ; Make window smaller (vertical)
