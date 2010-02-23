@@ -152,6 +152,10 @@ placing it in the kill ring)."
 
 (defun pmade-split-frame:screen-3 (&optional arg)
   (let ((win (window-number))
+        (buf2 (and (> 1 (length (window-number-list)))
+                   (save-window-excursion
+                     (window-number-select 2)
+                     (current-buffer))))
         main-buf alt-buf)
     (cond
      ((= win 2)
@@ -161,13 +165,9 @@ placing it in the kill ring)."
                       (current-buffer))))
      ((= win 1)
       (setq main-buf (current-buffer))
-      (setq alt-buf (save-window-excursion
-                      (window-number-select 2)
-                      (current-buffer))))
+      (setq alt-buf buf2))
      (t
-      (setq main-buf (save-window-excursion
-                       (window-number-select 2)
-                       (current-buffer)))
+      (setq main-buf buf2)
       (setq alt-buf (current-buffer))))
     (delete-other-windows)
     (switch-to-buffer "*scratch*")
@@ -189,4 +189,3 @@ placing it in the kill ring)."
       (if alt-buf (switch-to-buffer alt-buf))
       (window-number-select 2)
       (switch-to-buffer main-buf)))))
-
