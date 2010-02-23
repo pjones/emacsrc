@@ -151,41 +151,53 @@ placing it in the kill ring)."
   (window-number-select 2))
 
 (defun pmade-split-frame:screen-3 (&optional arg)
-  (let ((win (window-number))
-        (buf2 (and (> 1 (length (window-number-list)))
-                   (save-window-excursion
-                     (window-number-select 2)
-                     (current-buffer))))
-        main-buf alt-buf)
-    (cond
-     ((= win 2)
-      (setq main-buf (current-buffer))
-      (setq alt-buf (save-window-excursion 
-                      (window-number-select 1)
-                      (current-buffer))))
-     ((= win 1)
-      (setq main-buf (current-buffer))
-      (setq alt-buf buf2))
-     (t
-      (setq main-buf buf2)
-      (setq alt-buf (current-buffer))))
+  (let* ((win (window-number))
+         (win-count (- (length (window-number-list)) 1))
+         (main-win 2) (alt-win 1) main-buf alt-buf)
+    (if (string= "skinny.local" system-name)
+        (setq main-win 1 alt-win 2))
+    (setq main-buf (current-buffer))
+    (when (> win-count 1)
+      (cond
+       ((= win main-win)
+        (setq main-buf (current-buffer)
+              alt-buf (save-window-excursion
+                        (window-number-select alt-win)
+                        (current-buffer))))
+       ((= win alt-win)
+        (setq main-buf (current-buffer)
+              alt-buf (save-window-excursion
+                        (window-number-select main-win)
+                        (current-buffer))))
+       (t
+        (setq alt-buf (current-buffer)
+              main-buf (save-window-excursion
+                         (window-number-select main-win)
+                         (current-buffer))))))
     (delete-other-windows)
     (switch-to-buffer "*scratch*")
     (cond
-     (arg ;; Alt behavior
+     ;; Alt behavior
+     (arg
       (split-window-horizontally 80)
-      (if alt-buf (switch-to-buffer alt-buf))
+      (setq main-win 2 alt-win 1))
+     ;; On my laptop
+     ((string= "skinny.local" system-name)
+      (split-window-horizontally)
       (window-number-select 2)
-      (switch-to-buffer main-buf))
-     (t ;; Default behavior
+      (split-window-vertically))
+     ;; Default behavior
+     (t
       (pmade-3-windows)
       (window-number-select 3)
-      (split-window-vertically)
-      (window-number-select 4)
+      (split-window-vertically)))
+    (setq win-count (- (length (window-number-list)) 1))
+    (when (> win-count 2)
+      (window-number-select win-count)
       (if (get-buffer "*terminal*")
           (switch-to-buffer "*terminal*")
-        (term "/opt/local/bin/zsh"))
-      (window-number-select 1)
-      (if alt-buf (switch-to-buffer alt-buf))
-      (window-number-select 2)
-      (switch-to-buffer main-buf)))))
+        (term "/opt/local/bin/zsh")))
+    (window-number-select alt-win)
+    (if alt-buf (switch-to-buffer alt-buf))
+    (window-number-select main-win)
+    (switch-to-buffer main-buf)))
