@@ -21,10 +21,17 @@
 (setq gnus-posting-styles
       `((".*"
          (signature-file ,(concat pmade-sigs-dir "/default")))
+        ;; Misc Mailing Lists
         (".*mlists"
          (From "Peter Jones <mlists@pmade.com>"))
+        ;; Google Mailing Lists
         ((header "to" ".*@googlegroups\\.com")
          (From "Peter Jones <pjones@pmade.com>"))
+        ;; Messages going to the pmade.com domain
+        ((header "to" "pjones@pmade\\.com")
+         (signature-file ,(concat pmade-sigs-dir "/pmade"))
+         (From "Peter Jones <pjones@pmade.com>"))
+        ;; News groups
         (message-news-p
          (From "Peter Jones <mlists@pmade.com>"))))
 
