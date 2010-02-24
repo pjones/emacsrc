@@ -17,25 +17,25 @@
 ;; Better buffer switching and file finding
 (require 'ido)
 (add-hook 'ido-setup-hook 
-          (lambda ()
-            (define-key ido-file-dir-completion-map "\C-n" 'ido-next-work-directory)
-            (define-key ido-file-dir-completion-map "\C-p" 'ido-prev-work-directory)
-            (define-key ido-file-completion-map     "\C-w" 'ido-delete-backward-word-updir)))
+  (lambda ()
+    (define-key ido-file-dir-completion-map "\C-n" 'ido-next-work-directory)
+    (define-key ido-file-dir-completion-map "\C-p" 'ido-prev-work-directory)
+    (define-key ido-file-completion-map     "\C-w" 'ido-delete-backward-word-updir)))
 (setq
  ido-enable-prefix nil
  ido-enable-flex-matching t
- ido-use-filename-at-point t
+ ido-use-filename-at-point 'guess
  ido-completion-buffer-all-completions t
  ido-max-prospects 10
  ido-auto-merge-work-directories-length 0)
 (ido-mode t)
 
 ;; Tramp kicks ass
-(setq tramp-default-method "ssh"
-      tramp-verbose 3                   ; For reference if I need to
-      tramp-debug-buffer nil            ; debug Tramp
-      tramp-auto-save-directory "~/.emacs.d/autosave")
-(require 'tramp)
+;; (setq tramp-default-method "ssh"
+;;       tramp-verbose 3                   ; For reference if I need to
+;;       tramp-debug-buffer nil            ; debug Tramp
+;;       tramp-auto-save-directory "~/.emacs.d/autosave")
+;; (require 'tramp)
 
 ;; Save your place in files you edit
 (setq save-place-file "~/.emacs.d/places.el")
@@ -115,6 +115,10 @@
   (add-hook 'oddmuse-mode-hook 'pmade-oddmuse-hook)
   (oddmuse-mode-initialize)
   (call-interactively 'oddmuse-edit))
+
+;; Ediff
+(setq ediff-window-setup-function 'ediff-setup-windows-plain
+      ediff-split-window-function 'split-window-horizontally)
 
 ;; Magit (Git Interface for Emacs)
 (autoload 'magit-status "magit" "Magit Status" t)
