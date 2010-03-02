@@ -21,7 +21,8 @@ to account for a missing Mac OS X menu bar."
   (interactive)
   (set-frame-parameter 
    nil 'fullscreen
-   (if (frame-parameter nil 'fullscreen) nil 'fullboth)))
+   (if (frame-parameter nil 'fullscreen) nil 'fullboth))
+  (if (fboundp 'ns-toggle-fullscreen) (ns-toggle-fullscreen)))
                                
 (defun pmade-local:skinny ()
   "Settings for my MacBook Pro"
