@@ -5,7 +5,8 @@
 (autoload 'zap-up-to-char "misc" nil t)
 
 ;; Gnus CVS
-(when (= 22 emacs-major-version)
+(when (and (= 22 emacs-major-version)
+           (file-exists-p (concat pmade-site-lisp "/gnus")))
   (require 'gnus-load))
 
 ;; Use Aspell

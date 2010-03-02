@@ -78,9 +78,15 @@
        ((org-agenda-remove-tags t)
         (org-agenda-prefix-format "  ")
         (org-agenda-todo-keyword-format "")))
-     (todo "NEXT" 
-       ((org-agenda-sorting-strategy '(tag-up))
+     (tags "TODO=\"NEXT\"-client-SCHEDULED>=\"<today>\"" 
+       ((org-agenda-overriding-header "Non-Client Tasks Marked NEXT and Not Scheduled")
+        (org-agenda-sorting-strategy '(tag-up))
         (org-agenda-show-inherited-tags nil)
+        (org-agenda-todo-keyword-format "")))
+     (tags "TODO=\"NEXT\"+client" 
+       ((org-agenda-overriding-header "Client Tasks")
+        (org-agenda-sorting-strategy '(category-up))
+        (org-agenda-show-inherited-tags t)
         (org-agenda-todo-keyword-format "")))
      (todo "PENDING"
        ((org-agenda-todo-keyword-format "")))

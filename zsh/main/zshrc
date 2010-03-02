@@ -60,7 +60,7 @@ setopt no_check_jobs
 
 if [[ "$TERM" = "eterm-color" ]]; then
   # Looks like a bad termcap on Mac OS X
-  TERM=xterm-color
+  TERM=screen
 fi
 
 # autoload my functions
