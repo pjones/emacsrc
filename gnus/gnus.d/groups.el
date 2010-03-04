@@ -20,7 +20,8 @@
 ;; Posting Styles
 (setq gnus-posting-styles
       `((".*"
-         (signature-file ,(concat pmade-sigs-dir "/default")))
+         (signature-file ,(concat pmade-sigs-dir "/pmade")
+         (From "Peter Jones <pjones@pmade.com>")))
         ;; Misc Mailing Lists
         (".*mlists"
          (From "Peter Jones <mlists@pmade.com>"))
@@ -31,6 +32,10 @@
         ((header "to" "pjones@pmade\\.com")
          (signature-file ,(concat pmade-sigs-dir "/pmade"))
          (From "Peter Jones <pjones@pmade.com>"))
+        ;; Messages going to the contextualdevlopment.com domain
+        ((header "to" "pjones@contextualdevelopment\\.com")
+         (signature-file ,(concat pmade-sigs-dir "/contextual"))
+         (From "Peter Jones <pjones@contextualdevelopment.com>"))
         ;; News groups
         (message-news-p
          (From "Peter Jones <mlists@pmade.com>"))))

@@ -7,7 +7,7 @@
 
 ;; Basic IRC Settings
 (setq erc-user-full-name "Peter Jones")
-(setq erc-email-userid "pjones@contextualdevelopment.com")
+(setq erc-email-userid "pjones@pmade.com")
 (setq erc-nick "pmade")
 
 ;; ERC Time stamps
