@@ -13,6 +13,7 @@
 (define-key global-map "\C-\M-s"  'isearch-forward)
 (define-key global-map "\C-\M-r"  'isearch-backward)
 (define-key global-map "\C-xx"    'switch-to-previous-buffer)
+(define-key global-map "\C-xw"    'pmade-select-window)
 (define-key global-map "\C-w"     'kill-region-or-backward-kill-word)
 (define-key global-map "\M-z"     'zap-up-to-char)
 (define-key global-map "\M-\S-z"  'zap-to-char)

@@ -102,10 +102,22 @@ placing it in the kill ring)."
   "Jump to the screen and window with the terminal"
   (interactive)
   (escreen-goto-screen-3)
-  (dolist (window (window-number-list))
-    (when (string= "*terminal*" (buffer-name (window-buffer window)))
-      (select-window window))))
-
+  (let* ((buf (get-buffer "*terminal*"))
+         (max (- (length (window-number-list)) 1))
+         (win (car (member buf (mapcar 'window-buffer (window-number-list))))))
+    (if win (select-window (get-buffer-window win))
+      (window-number-select max)
+      (if buf (switch-to-buffer buf)
+        (term "/opt/local/bin/zsh")))))
+        
+(defun pmade-select-window nil
+  "Use ido completion to select a window based on its buffer name"
+  (interactive)
+  (let* ((bufs (mapcar 'window-buffer (window-list nil nil)))
+         (sel (ido-completing-read "Window: " (mapcar 'buffer-name bufs)))
+         (win (get-buffer-window (get-buffer sel))))
+    (select-window win)))
+    
 (defun pmade-split-frame (&optional arg)
   "Split the frame based on the current escreen"
   (interactive "P")

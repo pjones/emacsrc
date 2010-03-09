@@ -25,7 +25,7 @@
 (setq
  ido-enable-prefix nil
  ido-enable-flex-matching t
- ido-use-filename-at-point 'guess
+ ido-use-filename-at-point nil
  ido-completion-buffer-all-completions t
  ido-max-prospects 10
  ido-auto-merge-work-directories-length 0)
