@@ -203,15 +203,9 @@ generated from external processes."
   (with-current-buffer "library.org" (revert-buffer t t))
   (org-agenda-redo))
 
-(defun pmade:org-library-list ()
-  "Pulls down the current list of library books"
-  (interactive)
-  (when (not (looking-at "^\\* Current Library Items"))
-    (error "Please start at the Current Library Items heading"))
-  (org-reveal t)
-  (delete-region (point) (save-excursion (org-end-of-subtree) (+ 1 (point))))
-  (let ((heading (point)))
-    (insert "* Current Library Items\n")
-    (insert (shell-command-to-string "sh ~/.comm-sync/bin/library-dates.sh"))
-    (goto-char heading)
-    (org-reveal t)))
+(defun pmade:org-time-diff (t1 t2)
+  "Returns the difference between t1 and t2.  Expects that times
+are formatted as HH:MM and returns them in that format"
+  (org-minutes-to-hh:mm-string 
+   (- (org-hh:mm-string-to-minutes t1)
+      (org-hh:mm-string-to-minutes t2))))
