@@ -18,7 +18,11 @@
           (ruby-hash
            (regexp . "\\(\\s-*\\)=>")
            (group  . 1)
-           (repeat . t)))))
+           (repeat . t))
+          (ruby-eq
+           (regexp . "\\(\\s-*\\)=")
+           (group  . 1)
+           (repeat . nil)))))
 
 ;; Trigger ruby-mode
 (add-to-list 'load-path "~/.emacs.d/packages/ruby")
