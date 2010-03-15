@@ -58,13 +58,15 @@ placing it in the kill ring)."
    ((looking-at "\\_>") (hippie-expand nil))
    (t (indent-for-tab-command))))
 
-(defun pmade-find-file-window-2 ()
-  "Open a file in window number 2."
+(defun pmade-find-file-code-window nil
+  "Open a file in the window I normally write code in."
   (interactive)
-  (let ((buf (save-window-excursion
-               (ido-find-file)
-               (current-buffer))))
-    (window-number-select 2)
+  (let* ((max (length (window-list)))
+         (win (if (> max 3) 2 1))
+         (buf (save-window-excursion
+                (ido-find-file)
+                (current-buffer))))
+    (window-number-select win)
     (switch-to-buffer buf)))
 
 ;; Help start ERC
