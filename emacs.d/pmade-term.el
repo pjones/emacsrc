@@ -82,7 +82,7 @@
   (when (fboundp 'escreen-create-screen) (define-key term-raw-map "\C-z" escreen-map))
 
   ;; C-x C-f opens a file in other-window
-  (define-key term-raw-map "\C-x\C-f" 'pmade-find-file-window-2)
+  (define-key term-raw-map "\C-x\C-f" 'pmade-find-file-code-window)
   
   ;; Some other nice bindings
   (define-key term-raw-map [escape] (lambda () (interactive) (term-send-raw-string "")))
