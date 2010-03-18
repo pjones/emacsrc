@@ -51,6 +51,10 @@
 (require 'window-number)
 (window-number-mode 1)
 
+;; Also try windmove
+(windmove-default-keybindings 'hyper)
+(setq windmove-wrap-around t)
+
 ;; Getting and fetching pastie.caboo.se
 (autoload 'pastie-region "pastie" nil t)
 (autoload 'pastie-buffer "pastie" nil t)

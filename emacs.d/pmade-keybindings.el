@@ -35,8 +35,12 @@
 
 ;; Hyper Keys
 (define-key global-map (kbd "H-m") 'bm-toggle)
-(define-key global-map (kbd "H-p") 'bm-previous)
-(define-key global-map (kbd "H-n") 'bm-next)
+;; (define-key global-map (kbd "H-p") 'bm-previous)
+;; (define-key global-map (kbd "H-n") 'bm-next)
+(define-key global-map (kbd "H-b") 'windmove-left)
+(define-key global-map (kbd "H-f") 'windmove-right)
+(define-key global-map (kbd "H-p") 'windmove-up)
+(define-key global-map (kbd "H-n") 'windmove-down)
 (define-key global-map (kbd "H-a") 'align)
 (define-key global-map (kbd "H-s") 'pmade-split-frame)
 (define-key global-map (kbd "H-t") 'pmade-goto-terminal)
