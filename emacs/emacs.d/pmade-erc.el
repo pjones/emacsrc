@@ -23,13 +23,14 @@
 ;; Ignore messages from the server that are not channel activity
 (setq erc-track-exclude-types '("JOIN" "NICK" "PART" "QUIT" "MODE"
                                 "324" "329" "332" "333" "353" "477"))
+
 (setq erc-track-exclude '("&bitlbee" "#emacs" "#chef"  "#puppet"
                           "#latex" "#ruby" "#applescript" "#sproutcore"
-                          "#photogeeks" "#macrumors"))
+                          "#photogeeks" "#org-mode" "#macrumors"))
 
 ;; Auto join the given channels
 (setq erc-autojoin-channels-alist
-      '(("freenode" "#sproutcore" "#latex" "#photogeeks" "#emacs")
+      '(("freenode" "#org-mode" "#latex" "#photogeeks" "#emacs")
         ("macrumors" "#macrumors")))
 
 ;; Logging
