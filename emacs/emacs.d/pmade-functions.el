@@ -147,7 +147,7 @@ placing it in the kill ring)."
   (split-window-vertically)
   (switch-to-buffer "#latex")
   (window-number-select 6)
-  (switch-to-buffer "#sproutcore")
+  (switch-to-buffer "#org-mode")
   (window-number-select 3))
 
 (defun pmade-split-frame:screen-2 (&optional arg)
