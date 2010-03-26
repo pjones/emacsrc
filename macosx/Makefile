@@ -3,6 +3,8 @@ HOST = $(shell hostname)
 all:
 
 ifneq (,$(wildcard crontab/$(HOST)))
-all:
+all: $(HOME)/.crontab-stamp
+$(HOME)/.crontab-stamp: crontab/$(HOST)
 	crontab crontab/$(HOST)
+	touch $@
 endif
