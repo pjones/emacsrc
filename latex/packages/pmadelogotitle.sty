@@ -40,13 +40,17 @@
 % ============================================================================
 \usepackage{lastpage}
 \usepackage{fancyhdr}
-\pagestyle{fancy}
 
-\fancyheadoffset{\marginparsep+\marginparwidth}
-\fancyhead{}
-\lhead{\leftmark}
-\rhead{Page \thepage{} of \pageref{LastPage}}
-\fancyfoot{}
+\let\OrigTableOfContents\tableofcontents
+\renewcommand\tableofcontents{%
+  \thispagestyle{empty}
+  \OrigTableOfContents
+  \newpage
+  \pagestyle{fancy}
+  \fancyheadoffset{\marginparsep+\marginparwidth}
+  \fancyhf{}
+  \fancyhead[L]{\leftmark}
+  \fancyhead[R]{Page \thepage{} of \pageref{LastPage}}}
 
 % ============================================================================
 \renewcommand\maketitle{%
