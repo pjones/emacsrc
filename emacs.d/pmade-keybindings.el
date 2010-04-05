@@ -34,9 +34,9 @@
 ;                       C-c \t    Insert comment bar in source code file
 
 ;; Hyper Keys
-(define-key global-map (kbd "H-m") 'bm-toggle)
-;; (define-key global-map (kbd "H-p") 'bm-previous)
-;; (define-key global-map (kbd "H-n") 'bm-next)
+(define-key global-map (kbd "H-m m") 'bm-toggle)
+(define-key global-map (kbd "H-m p") 'bm-previous)
+(define-key global-map (kbd "H-m n") 'bm-next)
 (define-key global-map (kbd "H-b") 'windmove-left)
 (define-key global-map (kbd "H-f") 'windmove-right)
 (define-key global-map (kbd "H-p") 'windmove-up)
