@@ -8,5 +8,5 @@ stuff "cd ~/Documents/pmade/documents"
 screen -t comm
 stuff "cd ~/.comm-sync"
 screen -t tunnel
-stuff "ssh -L 2525:localhost:25 -L 8030:localhost:8030 pmade.com 'while :; do printf .; sleep 300; done'"
+stuff "ssh -L 2525:localhost:25 -L 8030:localhost:8030 dracula.pmade.com 'while :; do printf .; sleep 300; done'"
 select 0
