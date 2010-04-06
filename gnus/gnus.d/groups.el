@@ -61,7 +61,7 @@
 (setq
  pmade-archive-group "nnimap+mail.pmade.com:Archive"
  pmade-review-group  "nnimap+mail.pmade.com:Review"
- pmade-spam-group  "nnimap+mail.pmade.com:INBOX.spam")
+ pmade-spam-group  "nnimap+mail.pmade.com:spam")
 
 ;; Group List
 (setq
