@@ -2,12 +2,12 @@ PATH=/opt/local/bin:/opt/local/lib/postgresql/bin:/Users/pjones/bin:/usr/local/b
 
 # Backup Jobs
 # min hour dom mon dow cmd
-#  20  03   *   *    *  sh $HOME/Develop/pmade/rc/backup/slim.pmade.com/postgresql.sh
-#  30  04   *   *    *  sh $HOME/Develop/pmade/rc/backup/slim.pmade.com/subversion.sh
+# 20  03   *   *    *  sh $HOME/Develop/pmade/rc/backup/slim.pmade.com/postgresql.sh
+  15  19   *   *    *  rsync -au --delete dracula.pmade.com:git/ $HOME/Backup/slim/git/
 
 # Morning Wake-Up Schedule
 # min hour dom mon dow cmd
-   00  06   *   *    *  sh $HOME/Develop/pmade/rc/macosx/scripts/iTunes/kgnu-rip.sh
+#  00  06   *   *    *  sh $HOME/Develop/pmade/rc/macosx/scripts/iTunes/kgnu-rip.sh
    30  06   *   *    *  osascript $HOME/Develop/pmade/rc/macosx/scripts/iTunes/wake-up.applescript
 #  35  06   *   *    *  sh $HOME/Develop/pmade/rc/macosx/scripts/iTunes/morning-news.sh
    45  06   *   *    *  sh $HOME/Develop/pmade/rc/macosx/scripts/iTunes/morning-energy.sh
