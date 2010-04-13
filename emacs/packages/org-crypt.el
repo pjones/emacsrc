@@ -1,11 +1,10 @@
 ;;; org-crypt.el --- Public key encryption for org-mode entries
 
-;; Copyright (C) 2009 Peter Jones <pjones@pmade.com>
-;; Copyright (C) 2007 John Wiegley <johnw@gnu.org>
+;; Copyright (C) 2007, 2009, 2010  Free Software Foundation, Inc.
 
 ;; Emacs Lisp Archive Entry
 ;; Filename: org-crypt.el
-;; Version: 0.4
+;; Version: 6.35g
 ;; Keywords: org-mode
 ;; Author: John Wiegley <johnw@gnu.org>
 ;; Maintainer: Peter Jones <pjones@pmade.com>
@@ -13,22 +12,20 @@
 ;; URL: http://www.newartisans.com/software/emacs.html
 ;; Compatibility: Emacs22
 
-;; This file is not part of GNU Emacs.
+;; This file is part of GNU Emacs.
+;;
+;; GNU Emacs is free software: you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation, either version 3 of the License, or
+;; (at your option) any later version.
 
-;; This is free software; you can redistribute it and/or modify it under
-;; the terms of the GNU General Public License as published by the Free
-;; Software Foundation; either version 2, or (at your option) any later
-;; version.
-;;
-;; This is distributed in the hope that it will be useful, but WITHOUT
-;; ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-;; FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
-;; for more details.
-;;
+;; GNU Emacs is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+
 ;; You should have received a copy of the GNU General Public License
-;; along with GNU Emacs; see the file COPYING.  If not, write to the
-;; Free Software Foundation, Inc., 59 Temple Place - Suite 330, Boston,
-;; MA 02111-1307, USA.
+;; along with GNU Emacs.  If not, see <http://www.gnu.org/licenses/>.
 
 ;;; Commentary:
 
@@ -66,7 +63,17 @@
 
 ;; - Carsten Dominik
 ;; - Vitaly Ostanin
-(require 'epg)
+
+(require 'org)
+
+(declare-function epg-decrypt-string "epg" (context cipher))
+(declare-function epg-list-keys "epg" (context &optional name mode))
+(declare-function epg-make-context "epg"
+		  (&optional protocol armor textmode include-certs
+			     cipher-algorithm digest-algorithm
+			     compress-algorithm))
+(declare-function epg-encrypt-string "epg"
+		  (context plain recipients &optional sign always-trust))
 
 (defgroup org-crypt nil
   "Org Crypt"
@@ -87,7 +94,7 @@ heading.  This can also be overridden in the CRYPTKEY property."
   "Returns the encryption key for the current heading."
   (save-excursion
     (org-back-to-heading t)
-    (or (org-entry-get nil "CRYPTKEY" 'selective) 
+    (or (org-entry-get nil "CRYPTKEY" 'selective)
         org-crypt-key
         (and (boundp 'epa-file-encrypt-to) epa-file-encrypt-to)
         (error "No crypt key set"))))
@@ -95,44 +102,48 @@ heading.  This can also be overridden in the CRYPTKEY property."
 (defun org-encrypt-entry ()
   "Encrypt the content of the current headline."
   (interactive)
+  (require 'epg)
   (save-excursion
     (org-back-to-heading t)
-    (forward-line)
-    (when (not (looking-at "-----BEGIN PGP MESSAGE-----"))
-      (let ((folded (org-invisible-p))
-	    (epg-context (epg-make-context nil t t))
-	    (crypt-key (org-crypt-key-for-heading))
-	    (beg (point))
-	    end encrypted-text)
-	(org-end-of-subtree t t)
-	(org-back-over-empty-lines)
-        (setq end (point)
-              encrypted-text
-              (epg-encrypt-string 
-               epg-context
-               (buffer-substring-no-properties beg end)
-               (epg-list-keys epg-context crypt-key)))
-        (delete-region beg end)
-        (insert encrypted-text)
-	(when folded
-	  (save-excursion
-	    (org-back-to-heading t)
-	    (hide-subtree)))
-        nil))))
+    (let ((start-heading (point)))
+      (forward-line)
+      (when (not (looking-at "-----BEGIN PGP MESSAGE-----"))
+        (let ((folded (org-invisible-p))
+              (epg-context (epg-make-context nil t t))
+              (crypt-key (org-crypt-key-for-heading))
+              (beg (point))
+              end encrypted-text)
+          (goto-char start-heading)
+          (org-end-of-subtree t t)
+          (org-back-over-empty-lines)
+          (setq end (point)
+                encrypted-text
+                (epg-encrypt-string
+                 epg-context
+                 (buffer-substring-no-properties beg end)
+                 (epg-list-keys epg-context crypt-key)))
+          (delete-region beg end)
+          (insert encrypted-text)
+          (when folded
+            (goto-char start-heading)
+            (hide-subtree))
+          nil)))))
 
 (defun org-decrypt-entry ()
+  "Decrypt the content of the current headline."
   (interactive)
+  (require 'epg)
   (save-excursion
     (org-back-to-heading t)
     (forward-line)
     (when (looking-at "-----BEGIN PGP MESSAGE-----")
       (let* ((beg (point))
-             (end (save-excursion 
+             (end (save-excursion
                     (search-forward "-----END PGP MESSAGE-----")
                     (forward-line)
                     (point)))
              (epg-context (epg-make-context nil t t))
-             (decrypted-text 
+             (decrypted-text
 	      (decode-coding-string
 	       (epg-decrypt-string
 		epg-context
@@ -143,24 +154,30 @@ heading.  This can also be overridden in the CRYPTKEY property."
         nil))))
 
 (defun org-encrypt-entries ()
+  "Encrypt all top-level entries in the current buffer."
   (interactive)
   (org-scan-tags
    'org-encrypt-entry
    (cdr (org-make-tags-matcher org-crypt-tag-matcher))))
 
 (defun org-decrypt-entries ()
+  "Decrypt all entries in the current buffer."
   (interactive)
-  (org-scan-tags 
+  (org-scan-tags
    'org-decrypt-entry
    (cdr (org-make-tags-matcher org-crypt-tag-matcher))))
 
 (defun org-crypt-use-before-save-magic ()
   "Adds a hook that will automatically encrypt entries before a
 file is saved to disk."
-  (add-hook 
-   'org-mode-hook 
+  (add-hook
+   'org-mode-hook
    (lambda () (add-hook 'before-save-hook 'org-encrypt-entries nil t))))
-  
+
+(add-hook 'org-reveal-start-hook 'org-decrypt-entry)
+
 (provide 'org-crypt)
+
+;; arch-tag: 8202ed2c-221e-4001-9e4b-54674a7e846e
 
 ;;; org-crypt.el ends here
