@@ -133,6 +133,9 @@
 (setq epa-file-encrypt-to "61C4F407C4EB56B7"
       epa-popup-info-window nil)
 
+;; ESS for R
+(load (concat pmade-site-lisp "/ess/lisp/ess-site"))
+
 ;; I love Org Mode!
 (require 'org-install)
 (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
