@@ -1,13 +1,21 @@
 #!/usr/bin/env Rscript
 
 ##############################################################################
+.libPaths(path.expand("~/.R/lib"))
+all.packages <- installed.packages()
+
+##############################################################################
 package <- function (name, ...) {
-  ## TODO: skip packages that are already installed
-  mirror <- "http://cran.cnr.Berkeley.edu"
-  lib <- path.expand("~/.R/lib")
-  install.packages(name, repos=mirror, lib=lib, dependencies=TRUE, ...)  
+  installed <- as.character(all.packages[,1][name])
+  
+  if (identical(installed, as.character(NA))) {
+    mirror <- "http://cran.cnr.Berkeley.edu"
+    install.packages(name, repos=mirror, dependencies=TRUE, ...)
+  }
 }
 
 ##############################################################################
 package("financial")
 package("portfolio")
+package("zoo")
+package("ggplot2")
