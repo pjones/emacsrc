@@ -10,7 +10,8 @@ package <- function (name, ...) {
   
   if (identical(installed, as.character(NA))) {
     mirror <- "http://cran.cnr.Berkeley.edu"
-    install.packages(name, repos=mirror, dependencies=TRUE, ...)
+    lib <- .libPaths()[1]
+    install.packages(name, lib=lib, repos=mirror, dependencies=TRUE, ...)
   }
 }
 
