@@ -18,12 +18,6 @@ endef
 $(eval $(call DIR_template,$(DEST)))
 $(foreach f,$(wildcard rc/*),$(eval $(call COPY_template,$(DEST)/$(notdir $(f)),$(f))))
 
-# Files in bin
-BIN_DEST  = $(HOME)/bin
-BIN_FILES = $(wildcard bin/*)
-$(eval $(call DIR_template,$(BIN_DEST)))
-$(foreach f,$(BIN_FILES),$(eval $(call COPY_template,$(BIN_DEST)/$(notdir $(f)),$(f))))
-
 # Function files
 FUNC_DEST  = $(DEST)/func
 FUNC_FILES = $(wildcard func/*)
