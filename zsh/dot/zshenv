@@ -1,0 +1,11 @@
+#!/usr/bin/env zsh
+
+# Set default path
+typeset -U path
+path=(~/bin /usr/local/bin $path)
+
+# Load in optional operating system override
+[ -r ~/.zsh/os ] && . ~/.zsh/os
+
+# Load in optional local override file
+[ -r ~/.zsh/local ] && . ~/.zsh/local

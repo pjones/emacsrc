@@ -1,7 +1,7 @@
 #!/usr/bin/env zsh
 
 # Correct path for Mac OS X
-path=(/opt/local/bin /opt/local/lib/postgresql/bin /usr/texbin $path)
+path=(/usr/texbin /opt/local/bin /opt/local/lib/postgresql/bin $path)
 
 # Update MANPATH for MacPorts
 manpath=(/opt/local/man $manpath)

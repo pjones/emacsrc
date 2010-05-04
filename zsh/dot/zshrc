@@ -1,7 +1,6 @@
 #!/usr/local/bin/zsh
 
 # keep some arrays unique
-typeset -U path
 typeset -U fpath
 typeset -U cdpath
 typeset -U manpath
@@ -13,9 +12,6 @@ export OSNAME=`uname -s`
 functions_directory=~/.zsh/func
 widgets_directory=~/.zsh/wids
 fpath=($functions_directory $widgets_directory $fpath)
-
-# add some path directories
-path=(~/bin /usr/local/bin $path)
 
 # history stuff
 HISTSIZE=100
@@ -76,12 +72,6 @@ zmodload zsh/datetime
 . ~/.zsh/completion
 . ~/.zsh/emacs
 . ~/.zsh/git
-
-# load in optional local override file
-[ -r ~/.zsh/local ] && . ~/.zsh/local
-
-# load in optional operating system override
-[ -r ~/.zsh/os ] && . ~/.zsh/os
 
 # finally configure the prompt
 . ~/.zsh/prompt

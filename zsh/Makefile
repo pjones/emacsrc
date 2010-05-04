@@ -11,12 +11,12 @@ endef
 define COPY_template
 all: $(1)
 $(1): $(2)
-	cp -p $(2) $(1)
+	install -m 0640 $(2) $(1)
 endef
 
 # Top level directory
 $(eval $(call DIR_template,$(DEST)))
-$(foreach f,$(wildcard main/*),$(eval $(call COPY_template,$(DEST)/$(notdir $(f)),$(f))))
+$(foreach f,$(wildcard rc/*),$(eval $(call COPY_template,$(DEST)/$(notdir $(f)),$(f))))
 
 # Files in bin
 BIN_DEST  = $(HOME)/bin
@@ -50,8 +50,11 @@ $(DEST)/os: os/$(OS)
 	cp -p $< $@
 endif
 
-# The main startup file
+# The main startup files
 all: $(HOME)/.zshrc
-$(HOME)/.zshrc:
-	echo "source $(HOME)/.zsh/zshrc" > $@
+$(HOME)/.zshrc: dot/zshrc
+	install -m 0640 $< $@
 
+all: $(HOME)/.zshenv
+$(HOME)/.zshenv: dot/zshenv
+	install -m 0640 $< $@
