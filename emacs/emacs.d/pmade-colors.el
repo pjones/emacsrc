@@ -5,7 +5,7 @@
    '(text-cursor ((t (:background "yellow" :foreground "black"))))
    '(match ((t :background "#4A6152")))
    '(region ((t :background "#505C74")))
-   '(hl-line ((t :background "#000000" :underline "#444444" :bold t)))
+   '(hl-line ((t :background "#453232")))
    '(font-lock-comment-face ((t (:italic t :foreground "#B150E7"))))
    '(font-lock-comment-delimiter-face ((t (:foreground "#888888"))))
    '(font-lock-string-face ((t (:foreground "#A5F26E"))))
