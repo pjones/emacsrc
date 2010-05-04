@@ -1,2 +1,0 @@
-#!/usr/bin/env zsh
-path=($HOME/Local/bin /opt/local/bin /opt/local/pgbin $path)
