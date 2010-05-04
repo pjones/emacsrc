@@ -129,9 +129,12 @@
 (autoload 'magit-status "magit" "Magit Status" t)
 
 ;; EasyPG http://www.easypg.org/
-(require 'epa-setup)
+(require 'epa)
 (setq epa-file-encrypt-to "61C4F407C4EB56B7"
       epa-popup-info-window nil)
+
+;; Graphviz Dot Files
+(setq graphviz-dot-indent-width 2)
 
 ;; ESS for R
 (load (concat pmade-site-lisp "/ess/lisp/ess-site"))
