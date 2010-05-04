@@ -1,5 +1,5 @@
 #!/usr/bin/env zsh
 
-if [ -d /var/lib/gem/1.8/bin ]; then
-  path=(/var/lib/gem/1.8/bin $path)
+if [ -d /var/lib/gems/1.8/bin ]; then
+  path=(/var/lib/gems/1.8/bin $path)
 fi
