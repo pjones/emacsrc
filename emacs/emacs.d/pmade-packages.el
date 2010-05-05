@@ -163,8 +163,8 @@
               (replace-match ".tsv" nil nil fname)
             (concat fname ".tsv")))
     (ses-export-tab nil)
-    (with-temp-file fname (insert (car kill-ring)))))
+    (with-temp-file fname (insert (concat (car kill-ring) "\n")))))
   
 (add-hook 'ses-mode-hook
   (lambda () 
-    (add-hook 'after-save-hook 'pmade:ses-export-buffer-to-tsv)))
+    (add-hook 'after-save-hook 'pmade:ses-export-buffer-to-tsv t t)))
