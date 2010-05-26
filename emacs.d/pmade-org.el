@@ -157,7 +157,7 @@
   "Write the agenda buffer to a file, and send to pmade.com."
   (interactive)
   (org-write-agenda "~/agenda.html")
-  (shell-command "sed -E 's/T:([0-9+-]+)/T:<a href=\"tel:\\1\">\\1<\\/a>/' < ~/agenda.html | ssh -q pmade.com 'cat > /opt/sites/pmade.com/www/private/agenda.html'")
+  (shell-command "sed -E 's/T:([0-9+-]+)/T:<a href=\"tel:\\1\">\\1<\\/a>/' < ~/agenda.html | ssh -q dracula.pmade.com 'cat > websites/pmade.com/www/private/agenda.html'")
   (delete-file "~/agenda.html"))
 
 (defun pmade:org-reveal (&optional siblings)
