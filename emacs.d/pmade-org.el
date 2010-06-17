@@ -209,3 +209,23 @@ are formatted as HH:MM and returns them in that format"
   (org-minutes-to-hh:mm-string 
    (- (org-hh:mm-string-to-minutes t1)
       (org-hh:mm-string-to-minutes t2))))
+
+;; Override the default mode line to use Growl instead
+(defun pmade:org-clock-growl (msg)
+  (let ((fname "/tmp/org-clock.txt"))
+    (with-temp-file fname (insert msg))
+    (call-process "/opt/local/bin/growlnotify"
+                  fname nil nil "-n" "Org" "-s" 
+                  "-a" "Emacs" "-d" "modeline"
+                  "OrgMode Clock")))
+    
+(defun org-clock-update-mode-line ()
+  (if org-clock-effort (org-clock-notify-once-if-expired)
+    (setq org-task-overrun nil))
+  (setq global-mode-string (delq 'org-mode-line-string global-mode-string))
+  (pmade:org-clock-growl (org-no-properties (org-clock-get-clock-string))))
+
+(defun pmade:org-clock-out-with-growl ()
+  (pmade:org-clock-growl "Stopped"))
+
+(add-hook 'org-clock-out-hook 'pmade:org-clock-out-with-growl)
