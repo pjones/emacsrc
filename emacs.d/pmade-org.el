@@ -78,8 +78,8 @@
        ((org-agenda-remove-tags t)
         (org-agenda-prefix-format "  ")
         (org-agenda-todo-keyword-format "")))
-     (tags "TODO=\"NEXT\"-client-SCHEDULED>=\"<today>\"" 
-       ((org-agenda-overriding-header "Non-Client Tasks Marked NEXT and Not Scheduled")
+     (tags "TODO=\"NEXT\"-client"
+       ((org-agenda-overriding-header "Non-Client Tasks Marked NEXT")
         (org-agenda-sorting-strategy '(tag-up))
         (org-agenda-show-inherited-tags nil)
         (org-agenda-todo-keyword-format "")))
@@ -121,6 +121,7 @@
     (org-defkey org-mode-map "\C-\M-p"   'org-metaup)
     (org-defkey org-mode-map "\C-\M-n"   'org-metadown)
 
+    (org-defkey org-mode-map "\C-c0"               'pmade:org-hide-all)
     (org-defkey org-mode-map "\C-c1"               'pmade:org-hide-others)
     (org-defkey org-mode-map "\C-c\C-r"            'pmade:org-reveal)
     (org-defkey org-mode-map "\C-j"                'pmade:org-list-append)
@@ -171,6 +172,12 @@
   (org-overview)
   (org-reveal))
 
+(defun pmade:org-hide-all ()
+  "Close all headings, move to bob."
+  (interactive)
+  (goto-char (point-min))
+  (org-cycle '(4)))
+
 (defun pmade:org-list-append (&optional checkbox)
   "Append a plain list item to the current heading.  If the
 current heading already has plain list items, a new one will be
@@ -219,13 +226,13 @@ are formatted as HH:MM and returns them in that format"
                   "-a" "Emacs" "-d" "modeline"
                   "OrgMode Clock")))
     
-(defun org-clock-update-mode-line ()
-  (if org-clock-effort (org-clock-notify-once-if-expired)
-    (setq org-task-overrun nil))
-  (setq global-mode-string (delq 'org-mode-line-string global-mode-string))
-  (pmade:org-clock-growl (org-no-properties (org-clock-get-clock-string))))
-
-(defun pmade:org-clock-out-with-growl ()
-  (pmade:org-clock-growl "Stopped"))
-
-(add-hook 'org-clock-out-hook 'pmade:org-clock-out-with-growl)
+(eval-after-load 'org-clock
+  '(progn
+     (defun org-clock-update-mode-line ()
+       (if org-clock-effort (org-clock-notify-once-if-expired)
+         (setq org-task-overrun nil))
+       (setq global-mode-string (delq 'org-mode-line-string global-mode-string))
+       (pmade:org-clock-growl (org-no-properties (org-clock-get-clock-string))))
+     (defun pmade:org-clock-out-with-growl ()
+       (pmade:org-clock-growl "Stopped"))
+     (add-hook 'org-clock-out-hook 'pmade:org-clock-out-with-growl)))
