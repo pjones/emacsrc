@@ -1,5 +1,5 @@
 (eval-when-compile
-    (load "pmade-loadpath"))
+  (load "pmade-loadpath"))
 
 ;; Emacs nonstandard editing commands
 (autoload 'zap-up-to-char "misc" nil t)
@@ -31,7 +31,7 @@
  ido-auto-merge-work-directories-length 0)
 (ido-mode t)
 
-;; Tramp kicks ass
+;; Tramp is a pain in the ass
 ;; (setq tramp-default-method "ssh"
 ;;       tramp-verbose 3                   ; For reference if I need to
 ;;       tramp-debug-buffer nil            ; debug Tramp
@@ -92,17 +92,7 @@
 (autoload 'bm-previous "bm" "Goto previous bookmark."            t)
 (setq
  bm-highlight-style 'bm-highlight-only-fringe
- bm-repository-file "~/.comm-sync/etc/bm-repo"
- bm-restore-repository-on-load t)
-
-;; Typing Breaks
-(setq 
- type-break-query-mode t
- type-break-mode-line-message-mode t
- type-break-demo-functions '(type-break-demo-boring)
- type-break-demo-boring-stats t
- type-break-file-name (expand-file-name "~/.emacs.d/type-break"))
-(type-break-mode)
+ bm-restore-repository-on-load nil)
 
 ;; Editing the Emacs Wiki
 (defun pmade-oddmuse-hook ()
@@ -137,7 +127,9 @@
 (setq graphviz-dot-indent-width 2)
 
 ;; ESS for R
-(load (concat pmade-site-lisp "/ess/lisp/ess-site"))
+(add-to-list 'load-path (concat pmade-site-lisp "/ess/lisp"))
+(autoload 'R-mode "ess-site" "ESS R Mode" t)
+(add-to-list 'auto-mode-alist '("\\.R$" . R-mode))
 
 ;; I love Org Mode!
 (require 'org-install)
