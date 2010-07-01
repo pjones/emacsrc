@@ -7,7 +7,7 @@
  user-mail-address "pjones@pmade.com"
  pmade-com-src "~/Documents/pmade/pmade.com"
  pmade-com-dst (concat pmade-com-src "/published")
- pmade-print-css "http://pmade.com/static/stylesheets/print.css")
+ pmade-print-css "http://www.contextualdevelopment.com/static/stylesheets/print.css")
 
 ;; Interface Options (remove some interface elements, such as the toolbar, scroll bar, and menu bar.
 ;; The menu bar is only removed from non-GUI versions of emacs
