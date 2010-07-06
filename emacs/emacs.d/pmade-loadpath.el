@@ -9,9 +9,5 @@
        ((file-exists-p "/usr/local/share/emacs/site-lisp") "/usr/local/share/emacs/site-lisp")))
 
 (add-to-list 'load-path pmade-site-lisp)
-(add-to-list 'load-path (concat pmade-site-lisp "/apel"))
-(add-to-list 'load-path (concat pmade-site-lisp "/emu"))
-(add-to-list 'load-path (concat pmade-site-lisp "/epg"))
 (add-to-list 'load-path (concat pmade-site-lisp "/muse"))
 (add-to-list 'load-path (concat pmade-site-lisp "/rinari"))
-(add-to-list 'load-path (concat pmade-site-lisp "/gnus/lisp"))

@@ -1,4 +1,6 @@
 ;; This file contains my customizations for the awesome Org-Mode
+(eval-when-compile
+  (load "pmade-loadpath"))
 
 ;; Org Invoice
 (autoload 'org-invoice-report "org-invoice" nil t)
