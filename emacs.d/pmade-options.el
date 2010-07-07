@@ -18,6 +18,7 @@
 ;; General options
 (setq
  inhibit-startup-message t        ; I've seen it already
+ initial-scratch-message nil      ; Ditto
  ring-bell-function (lambda ())   ; kill those damn bells
  visible-bell nil                 ; no visual bell
  column-number-mode t             ; display column number in mode line
