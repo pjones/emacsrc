@@ -1,5 +1,12 @@
 ;;; Configuration for Subscribed Groups
 
+;; Specific Groups
+(setq
+ pmade-archive-group "nnimap+mail.pmade.com:Archive"
+ pmade-review-group  "nnimap+mail.pmade.com:Review"
+ pmade-spam-group  "nnimap+mail.pmade.com:spam"
+ pmade-rebekah-group "nnimap+mail.pmade.com:Rebekah")
+
 ;; Settings by Group
 (setq gnus-parameters
       '(
@@ -27,6 +34,10 @@
          (From "Peter Jones <mlists@pmade.com>"))
         ;; Google Mailing Lists
         ((header "to" ".*@googlegroups\\.com")
+         (From "Peter Jones <pjones@pmade.com>"))
+        ;; Message from Rebekah
+        ((header "from" ".*dontpatroneyesme.*")
+         (gcc ,pmade-rebekah-group)
          (From "Peter Jones <pjones@pmade.com>"))
         ;; Messages going to the pmade.com domain
         ((header "to" "pjones@pmade\\.com")
@@ -57,15 +68,9 @@
         "emacs-orgmode@gnu.org"
         "emacs-on-rails@googlegroups.com"))
 
-;; Specific Groups
-(setq
- pmade-archive-group "nnimap+mail.pmade.com:Archive"
- pmade-review-group  "nnimap+mail.pmade.com:Review"
- pmade-spam-group  "nnimap+mail.pmade.com:spam")
-
 ;; Group List
 (setq
- pmade-group-sep "%9{ ┆ %}"
+ pmade-group-sep "%9{ ⎮ %}"
  gnus-group-mode-line-format "Gnus: %%b"
  gnus-group-line-format (concat "%P" "%5{%M%S%}" pmade-group-sep "%6{%4y%}" pmade-group-sep "%*"
                                 "%8{%-30,30G%}" pmade-group-sep "%1L" pmade-group-sep
@@ -83,5 +88,5 @@
 
 (add-hook 'gnus-group-mode-hook
   (lambda ()
-    (gnus-topic-mode)
+    (gnus-topic-mode 1)
     (local-set-key "i" 'pmade-gnus-goto-inbox)))

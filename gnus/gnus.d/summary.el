@@ -33,6 +33,7 @@ IMAP mail group."
 
 (defun pmade-summary-hook ()
   (local-set-key "a" (lambda () (interactive) (pmade-move-to-mail-group pmade-archive-group)))
+  (local-set-key "l" (lambda () (interactive) (pmade-move-to-mail-group pmade-rebekah-group)))
   (local-set-key "r" (lambda () (interactive) (pmade-move-to-mail-group pmade-review-group)))
   (local-set-key "s" (lambda () (interactive) (pmade-move-to-mail-group pmade-spam-group))))
 
