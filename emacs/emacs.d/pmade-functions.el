@@ -107,10 +107,11 @@ placing it in the kill ring)."
   (let* ((buf (get-buffer "*terminal*"))
          (max (- (length (window-number-list)) 1))
          (win (car (member buf (mapcar 'window-buffer (window-number-list))))))
-    (if win (select-window (get-buffer-window win))
-      (window-number-select max)
-      (if buf (switch-to-buffer buf)
-        (term "/opt/local/bin/zsh")))))
+    (if (eq win (current-buffer)) (window-number-select 2)
+      (if win (select-window (get-buffer-window win))
+        (window-number-select max)
+        (if buf (switch-to-buffer buf)
+          (term "/opt/local/bin/zsh"))))))
         
 (defun pmade-select-window nil
   "Use ido completion to select a window based on its buffer name"
