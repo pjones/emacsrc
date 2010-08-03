@@ -1,18 +1,19 @@
 #!/bin/sh
 
 cd '/Volumes/Media/iTunes/Music/Morning Automation/Morning Automation'
+AUX_FILE=/tmp/speech-script.txt
 
 long_speach ()
 {
-  TIME=`date +%H:%M`
-  DATE=`date +'%A %B %d, %Y'`
+  TIME=`date +%k:%M`
+  DATE=`date +'%A %B %e, %Y'`
   echo "Good morning, time to wake up! It's $TIME on $DATE." > script.txt
   echo >> script.txt
   echo "Your custom weather forecast for Lafayette Colorado." >> script.txt
   echo >> script.txt
   sh ~/Develop/pmade/rc/macosx/scripts/weather/weather.sh >> script.txt
   echo >> script.txt
-  #echo "Shanna, if you can hear me, Peter wanted me to tell you that he loves you." >> script.txt
+  [ -r $AUX_FILE ] && cat $AUX_FILE >> script.txt
 }
 
 short_speach ()
