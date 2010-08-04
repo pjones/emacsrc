@@ -13,12 +13,16 @@ long_speach ()
   echo >> script.txt
   sh ~/Develop/pmade/rc/macosx/scripts/weather/weather.sh >> script.txt
   echo >> script.txt
-  [ -r $AUX_FILE ] && cat $AUX_FILE >> script.txt
+  
+  if [ -r $AUX_FILE ]; then
+    cat $AUX_FILE >> script.txt
+    cat /dev/null > $AUX_FILE
+  fi
 }
 
 short_speach ()
 {
-  TIME=`date +%H:%M`
+  TIME=`date +%k:%M`
   echo "The time is now $TIME" > script.txt
 }
 
