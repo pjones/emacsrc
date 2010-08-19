@@ -11,7 +11,7 @@ PATH=/opt/local/bin:/opt/local/lib/postgresql/bin:/Users/pjones/bin:/usr/local/b
 #  35  06   *   *  1-5  sh $HOME/Develop/pmade/rc/macosx/scripts/iTunes/morning-news.sh
    30  06   *   *  1-5  osascript $HOME/Develop/pmade/rc/macosx/scripts/iTunes/wake-up.applescript
    45  06   *   *  1-5  sh $HOME/Develop/pmade/rc/macosx/scripts/iTunes/morning-energy.sh
-   15  07   *   *  1-5  sh $HOME/Develop/pmade/rc/macosx/scripts/iTunes/morning-energy.sh time
+   05  07   *   *  1-5  sh $HOME/Develop/pmade/rc/macosx/scripts/iTunes/morning-energy.sh time
 
 # Generate Org Files for Appointments
 # min hour dom mon dow cmd
