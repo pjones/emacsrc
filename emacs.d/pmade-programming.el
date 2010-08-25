@@ -33,11 +33,13 @@
 
 ;; Code that should be called for each programming mode
 (defun pmade-programming-mode-hook ()
+  ;;(require 'idea)
+  ;;(idea-complement-mode 1)
   (setq show-trailing-whitespace nil save-place t)
   (set (make-local-variable 'comment-auto-fill-only-comments) t)
   (turn-on-auto-fill)
   (flyspell-prog-mode)
-  (hs-minor-mode)
+  (hs-minor-mode 1)
   (font-lock-add-keywords nil '(("\\<\\(FIXME:\\|TODO:\\)" 1 pmade-fixme-face t)))
   (local-set-key "\C-cf"  'hs-toggle-hiding)
   (local-set-key "\C-m"   'pmade-newline)

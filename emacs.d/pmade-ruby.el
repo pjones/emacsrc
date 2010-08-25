@@ -26,9 +26,10 @@
 
 ;; Trigger ruby-mode
 (add-to-list 'load-path "~/.emacs.d/packages/ruby")
-(add-to-list 'auto-mode-alist '("\\.rjs$"   . ruby-mode))
-(add-to-list 'auto-mode-alist '("\\.rake$"  . ruby-mode))
-(add-to-list 'auto-mode-alist '("\\.irbrc$" . ruby-mode))
+(add-to-list 'auto-mode-alist '("\\.rjs$"    . ruby-mode))
+(add-to-list 'auto-mode-alist '("\\.rake$"   . ruby-mode))
+(add-to-list 'auto-mode-alist '("\\.irbrc$"  . ruby-mode))
+(add-to-list 'auto-mode-alist '("^Rakefile$" . ruby-mode))
 (setq ruby-deep-indent-paren '(?\( t))
 
 ;; manually set some keys because for some reason, local-set-key
@@ -71,10 +72,6 @@ the region with the output.  Requires the rcodetools Ruby gem."
   "Send the entire buffer through Ruby's xmp utility"
   (interactive)
   (ruby-xmp-region (point-min) (point-max)))
-
-;; Ruby on Rails
-(add-to-list 'load-path (concat pmade-site-lisp "/rinari"))
-(require 'rinari)
 
 (defun pmade-rhtml-mode-hook ()
   "Stuff common across all RHTML buffers"
