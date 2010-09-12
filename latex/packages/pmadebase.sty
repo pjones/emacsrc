@@ -1,0 +1,75 @@
+% ============================================================================
+\ProvidesPackage{pmadebase}
+
+% ============================================================================
+% \PhoneNumber -- Set the phone number used in title pages, etc.
+\def\PhoneNumber#1{\gdef\@PhoneNumber{#1}}
+\def\@PhoneNumber{(303) 219-0226}
+
+% ============================================================================
+% \EmailAddress -- Set the email address used in title pages, etc.
+\def\EmailAddress#1{\gdef\@EmailAddress{#1}}
+\def\@EmailAddress{pjones@pmade.com}
+
+% ============================================================================
+% \WebSite -- Set the URL of a website used in title pages, etc.
+\def\WebSite#1{\gdef\@WebSite{#1}}
+\def\@WebSite{http://pmade.com}
+
+% ============================================================================
+\usepackage{graphicx}
+
+% ============================================================================
+\usepackage{fontspec}
+\usepackage{xunicode}
+\usepackage{xltxtra}
+\newcommand\pmadefont{Baskerville}
+\defaultfontfeatures{Scale=MatchLowercase}
+\setmainfont[Mapping=tex-text]{\pmadefont}%{Century Gothic}
+\setsansfont[Mapping=tex-text]{Tahoma}
+\setmonofont{Monaco}
+
+% ============================================================================
+\usepackage{manfnt}
+\renewcommand\labelitemi{\mantriangleright}
+
+% ============================================================================
+\usepackage{xcolor}
+\usepackage{hyperref}
+
+\definecolor{externallinkcolor}{HTML}{003399}
+\definecolor{citelinkcolor}{HTML}{36823D}
+
+\hypersetup{
+  plainpages=false,
+  colorlinks=true,
+  linkcolor=black,
+  filecolor=externallinkcolor,
+  urlcolor=externallinkcolor,
+  citecolor=citelinkcolor,
+  pdfdisplaydoctitle=true,
+  pdftoolbar=false,
+  bookmarksopen=true
+}
+
+% ============================================================================
+\usepackage{lastpage}
+\usepackage{fancyhdr}
+
+\let\OrigTableOfContents\tableofcontents
+\renewcommand\tableofcontents{%
+  \thispagestyle{empty}
+  \OrigTableOfContents
+  \newpage
+  \pagestyle{fancy}
+  \fancyheadoffset{\marginparsep+\marginparwidth}
+  \fancyhf{}
+  \fancyhead[L]{\leftmark}
+  \fancyhead[R]{Page \thepage{} of \pageref{LastPage}}}
+
+% ============================================================================
+\let\OrigMakeTitle\maketitle
+\renewcommand\maketitle{%
+  \hypersetup{pdftitle={\@title}, pdfauthor={\@author}}
+  \setmainfont[Mapping=tex-text]{Futura}
+  \OrigMakeTitle}
