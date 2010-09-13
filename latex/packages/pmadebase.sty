@@ -20,12 +20,16 @@
 \usepackage{graphicx}
 
 % ============================================================================
+% Other nice fonts: Baskerville, Century Gothic, Cochin
+\def\SetMainFont#1{\gdef\@MainFont{#1}}
+\def\@MainFont{Didot}
+
+% ============================================================================
 \usepackage{fontspec}
 \usepackage{xunicode}
 \usepackage{xltxtra}
-\newcommand\pmadefont{Baskerville}
 \defaultfontfeatures{Scale=MatchLowercase}
-\setmainfont[Mapping=tex-text]{\pmadefont}%{Century Gothic}
+\setmainfont[Mapping=tex-text]{\@MainFont}
 \setsansfont[Mapping=tex-text]{Tahoma}
 \setmonofont{Monaco}
 
