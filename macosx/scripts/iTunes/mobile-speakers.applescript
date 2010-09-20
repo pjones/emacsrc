@@ -5,34 +5,31 @@
 script remoteSpeakerFinder
 	global the_bwindow, the_state
 	
-	-- Given a list of buttons, find the remote speakers button
-	-- by finding the first button with a name that isn't in a 
-	-- rejection list.
-	on findCorrectButton(in_buttons)
-		set buttons_to_skip to {"Burn Disc"}
-		
-		repeat with a_button in in_buttons
-			try -- some buttons don't have names
-				set the_name to name of a_button
-				if buttons_to_skip does not contain {the_name} then
-					return the_name
-				end if
-			end try
-		end repeat
-		
-		return 16 -- default response
+	-- Find the remote speakers button
+	on findCorrectButton()
+		tell application "System Events"
+			tell process "iTunes"
+				set in_buttons to (get buttons of window 1)
+				
+				repeat with a_button in in_buttons
+					set the_desc to (get description of a_button)
+					if the_desc is equal to "remote speakers" then
+						return a_button
+					end if
+				end repeat
+			end tell
+		end tell
 	end findCorrectButton
 	
 	on setRemoteSpeakersTo(item_index)
 		tell application "System Events"
 			tell process "iTunes"
 				
-				set the_buttons to (get buttons of window 1)
-				set the_speaker_button to (remoteSpeakerFinder's findCorrectButton(the_buttons))
+				set the_speaker_button to (remoteSpeakerFinder's findCorrectButton())
 				
 				-- Switch to the speakers in my bedroom
 				set frontmost to true
-				click button the_speaker_button of window 1
+				click the_speaker_button
 				key code 115 -- Home Key (first speaker in list)
 				
 				repeat item_index times
@@ -65,13 +62,12 @@ script remoteSpeakerFinder
 end script
 
 on handle_string(s)
+	tell application "iTunes" to stop
 	remoteSpeakerFinder's prepareWindow()
 	remoteSpeakerFinder's setRemoteSpeakersTo(s)
 	remoteSpeakerFinder's resetWindow()
 	set volume 1
-	tell application "iTunes"
-		play (get the first item of (get every track where database ID is 24759))
-	end tell
+	tell application "iTunes" to play (get the first item of (get every track where database ID is 24759))
 end handle_string
 
 on run
