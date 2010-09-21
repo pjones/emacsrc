@@ -13,10 +13,13 @@ script remoteSpeakerFinder
 				
 				repeat with a_button in in_buttons
 					set the_desc to (get description of a_button)
-					if the_desc is equal to "remote speakers" then
+					if the_desc contains "remote speakers" then
 						return a_button
 					end if
 				end repeat
+				
+				-- Still can't find the damn button
+				-- return (get button 8 of window 1)
 			end tell
 		end tell
 	end findCorrectButton
@@ -61,13 +64,28 @@ script remoteSpeakerFinder
 	end resetWindow
 end script
 
+-- When called from Launchbar with a string value.
 on handle_string(s)
 	tell application "iTunes" to stop
 	remoteSpeakerFinder's prepareWindow()
-	remoteSpeakerFinder's setRemoteSpeakersTo(s)
+	set the_speaker_button to (remoteSpeakerFinder's findCorrectButton())
+	
+	tell application "System Events"
+		set the_desc to (get description of the_speaker_button)
+	end tell
+
+	if the_desc is not equal to "remote speakers" then
+		-- Don't bother switching if it's already on "Computer"
+		remoteSpeakerFinder's setRemoteSpeakersTo(s)
+	end if
+	
 	remoteSpeakerFinder's resetWindow()
 	set volume 1
-	tell application "iTunes" to play (get the first item of (get every track where database ID is 24759))
+	
+	tell application "iTunes"
+		set the_track to (get the first item of (get every track where database ID is 24778))
+		play the_track
+	end tell
 end handle_string
 
 on run
