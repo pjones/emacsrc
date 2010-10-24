@@ -12,6 +12,9 @@
   '(let ((eva-conf "~/.comm-sync/etc/eva.el"))
      (when (file-exists-p eva-conf) (load-file eva-conf))))
 
+;; Org Basecamp
+(setq org-basecamp-mark-todo nil)
+
 ;; Org Crypt
 (require 'org-crypt)
 (org-crypt-use-before-save-magic)
