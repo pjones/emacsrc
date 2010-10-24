@@ -1,6 +1,6 @@
 ;;; org-invoice.el --- Help manage client invoices in OrgMode
 ;;
-;; Copyright (C) 2008 pmade inc. (Peter Jones pjones@pmade.com)
+;; Copyright (C) 2008-2010 pmade inc. (Peter Jones pjones@pmade.com)
 ;;
 ;; Permission is hereby granted, free of charge, to any person obtaining
 ;; a copy of this software and associated documentation files (the
@@ -31,9 +31,6 @@
 ;; It also provides a library of functions that can be used to collect
 ;; this invoice information and use it in other ways, such as
 ;; submitting it to on-line invoicing tools.
-;;
-;; I'm already working on an elisp package to submit this invoice data
-;; to the FreshBooks on-line accounting tool.
 ;;
 ;; Usage:
 ;;
@@ -119,7 +116,7 @@ This hook is called repeatedly for each invoice item processed."
 (defvar org-invoice-total-price nil
   "The total invoice price for the summary line.")
 
-(defconst org-invoice-version "1.0.0"
+(defconst org-invoice-version "1.0.1"
   "The org-invoice version number.")
 
 (defun org-invoice-goto-tree (&optional tree)
@@ -146,8 +143,10 @@ looks like tree2, where the level is 2."
     (unless date (setq date (org-entry-get nil "TIMESTAMP_IA" 'selective)))
     (unless date (setq date (org-entry-get nil "TIMESTAMP" t)))
     (unless date (setq date (org-entry-get nil "TIMESTAMP_IA" t)))
-    (unless work (setq work (org-entry-get nil "CLOCKSUM" nil)))
-    (unless work (setq work "00:00"))
+    (unless work 
+      (setq work 
+            (org-minutes-to-hh:mm-string 
+             (or (get-text-property (point) :org-clock-minutes) 0))))
     (when date
       (setq raw-date (apply 'encode-time (org-parse-time-string date)))
       (setq long-date (format-time-string org-invoice-long-date-format raw-date)))
@@ -227,12 +226,12 @@ looks like tree2, where the level is 2."
     (setq total (and total (org-minutes-to-hh:mm-string total)))
     (setq work  (and work  (org-minutes-to-hh:mm-string work)))
     (insert-before-markers 
-     (concat "|" title
+     (concat "\n|" title
              (cond
               (total (concat "|" total))
               (work  (concat "|" work)))
              (and with-price price (concat "|" (format "%.2f" price)))
-             "|" "\n"))))
+             "|"))))
   
 (defun org-invoice-list-to-table (ls)
   "Convert a list of heading info to an org table"
@@ -242,16 +241,16 @@ looks like tree2, where the level is 2."
         (org-invoice-total-time 0)
         (org-invoice-total-price 0))
     (insert-before-markers 
-     (concat "| Task / Date | Time" (and with-price "| Price") "|\n"))
+     (concat "| Task / Date | Time" (and with-price "| Price") "|"))
     (dolist (info ls)
-      (insert-before-markers "|-\n")
+      (insert-before-markers "\n|-")
       (mapc 'org-invoice-info-to-table (if with-header (cdr info) (cdr (cdr info)))))
     (when with-summary
       (insert-before-markers
-       (concat "|-\n|Total:|"
+       (concat "\n|-\n|Total:|"
                (org-minutes-to-hh:mm-string org-invoice-total-time)
                (and with-price (concat "|" (format "%.2f" org-invoice-total-price)))
-               "|\n")))))
+               "|")))))
 
 (defun org-invoice-collect-invoice-data ()
   "Collect all the invoice data from the current OrgMode tree and
