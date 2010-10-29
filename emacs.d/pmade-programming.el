@@ -31,15 +31,29 @@
   (if without-newline (beginning-of-line) (newline))
   (indent-according-to-mode))
 
+(defun pmade-latex-comment-bar (&optional without-newline)
+  "Create a comment separator bar for LaTeX"
+  (interactive "P")
+  (insert-char ?% 1)
+  (insert " ")
+  (insert-char ?= (- 78 (current-column)))
+  (if without-newline (beginning-of-line) (newline))
+  (indent-according-to-mode))
+
 ;; Code that should be called for each programming mode
 (defun pmade-programming-mode-hook ()
   ;;(require 'idea)
   ;;(idea-complement-mode 1)
+  (require 'align)
+  (require 'enclose)
+  (require 'wrap-region)
   (setq show-trailing-whitespace nil save-place t)
   (set (make-local-variable 'comment-auto-fill-only-comments) t)
   (turn-on-auto-fill)
   (flyspell-prog-mode)
   (hs-minor-mode 1)
+  (enclose-mode t)
+  (wrap-region-mode t)
   (font-lock-add-keywords nil '(("\\<\\(FIXME:\\|TODO:\\)" 1 pmade-fixme-face t)))
   (local-set-key "\C-cf"  'hs-toggle-hiding)
   (local-set-key "\C-m"   'pmade-newline)
@@ -110,6 +124,10 @@
 
 ;; LaTeX
 (load "auctex.el" nil t t)
+
+(add-hook 'LaTeX-mode-hook
+  (lambda ()
+    (local-set-key "\C-c\t" 'pmade-latex-comment-bar)))
 
 ;; Great Subversion Integration
 (setq svn-restore-windows t) ;; needed only for dsvn
