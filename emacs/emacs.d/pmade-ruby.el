@@ -4,12 +4,11 @@
 
 (defun pmade-ruby-mode-hook ()
   "Correctly setup a Ruby buffer"
-  (require 'ruby-electric)
-  (ruby-electric-mode t)
+  (require 'ruby-end)
+  (ruby-end-mode t)
   (inf-ruby-keys)
   (pmade-programming-mode-hook)
   (define-key ruby-mode-map "\C-c\t" 'pmade-pound-comment-bar)
-  (require 'align)
   (setq align-mode-rules-list
         '((ruby-comma
            (regexp . ",\\(\\s-*\\)")
