@@ -16,7 +16,7 @@ PATH=/opt/local/bin:/opt/local/lib/postgresql/bin:/Users/pjones/bin:/usr/local/b
 
 # Generate Org Files for Appointments
 # min hour dom mon dow cmd
-   10   07   *   *   * sh $HOME/.comm-sync/bin/crum-org.sh
+#  10   07   *   *   * sh $HOME/.comm-sync/bin/crum-org.sh
    12   07   *   *   * sh $HOME/.comm-sync/bin/library-dates.sh
 
 # Reminders
