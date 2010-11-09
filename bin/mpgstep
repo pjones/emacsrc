@@ -1,0 +1,162 @@
+#!/usr/bin/env ruby
+
+################################################################################
+require('curses')
+
+################################################################################
+class Stepper
+  
+  ##############################################################################
+  DISPATCH_TABLE = {
+    ?p => :pause,
+    ?q => :quit,
+    ?m => :mark,
+    ?b => :play_back,
+    ?c => :copy_last_mark,
+  }
+  
+  ##############################################################################
+  def initialize
+    @file = ARGV[0]
+    
+    if @file.nil? or !File.exist?(@file)
+      raise("no such file: #{@file.inspect}")
+    end
+    
+    Curses.init_screen
+    Curses.noecho
+    
+    @playing = false
+    @running = true
+    @frames  = nil
+    @current_frame = nil
+    @current_sec = nil
+    @remain_sec = nil
+    @last_message = ''
+    @mark = [[0, "00:00.00"]]
+  end
+  
+  ##############################################################################
+  def run
+    @mpg123 = open("|mpg123 -R 2> /dev/null", 'w+')
+    @mpg123.write("lp #{@file}\n")
+    playing_status
+    event_loop while @running
+  ensure
+    @mpg123.close
+    Curses.close_screen
+  end
+
+  ##############################################################################
+  private
+  
+  ##############################################################################
+  def event_loop
+    process_mpg123_input
+    
+    if char = Curses::getch
+      send(DISPATCH_TABLE[char]) if DISPATCH_TABLE.has_key?(char)
+    end
+  end
+
+  ##############################################################################
+  def process_mpg123_input
+    while select([@mpg123], nil, nil, 0.1)
+      line = @mpg123.gets
+      code = line[0, 2]
+      
+      case code
+      when "@E" then raise(line)
+      when "@F" then @frames = line
+      end
+    end
+  end
+  
+  ##############################################################################
+  def status (string, append=false)
+    if append
+      @last_message += string
+      Curses.addstr(string)
+    else
+      Curses.setpos(0, 0)
+      Curses.addstr(' ' * @last_message.size)
+      Curses.setpos(0, 0)
+      Curses.addstr(string)
+      @last_message = string
+    end
+
+    Curses.refresh
+  end
+  
+  ##############################################################################
+  def playing_status
+    status(@playing ? 'Playing.' : 'Paused.')
+    
+    if !@playing and @frames
+      parse_last_frame
+      status(" #{@current_sec} / #{@remain_sec}", true)
+    end
+  end
+
+  ##############################################################################
+  def parse_last_frame
+    parts = @frames.split(' ')
+    @current_frame = parts[1].to_i
+    @current_sec = parse_seconds(parts[3].to_f)
+    @remain_sec = parse_seconds(parts[4].to_f)
+  end
+  
+  ##############################################################################
+  def parse_seconds (seconds)
+    minutes = (seconds / 60.0).floor
+    seconds -= (minutes.to_f * 60.0)
+    "%02d:%02d.%02d" % [minutes, seconds, (seconds * 100.0) % 100]
+  end
+
+  ##############################################################################
+  def pause
+    @mpg123.write("p\n")
+    @playing = !@playing
+    process_mpg123_input
+    playing_status
+  end
+  
+  ##############################################################################
+  def mark
+    @mark << [@current_frame, @current_sec] if !@playing
+    status(' - Marked', true)
+  end
+  
+  ##############################################################################
+  def play_back
+    return if @playing
+    return unless @mark.size > 1
+    start_pos = @mark[@mark.size - 2]
+    end_pos   = @mark[-1]
+    status("Playback #{start_pos.last} - #{end_pos.last}")
+    @mpg123.write("jump #{start_pos.first}\n")
+    pause
+  end
+  
+  ##############################################################################
+  def copy_last_mark
+    open("|pbcopy", 'w') do |pbcopy|
+      pbcopy.write(@mark[-1].last)
+    end
+    
+    status(" - Clipboard Upated.", true)
+  end
+  
+  ##############################################################################
+  def quit
+    @running = false
+  end
+end
+
+################################################################################
+begin
+  Stepper.new.run
+rescue RuntimeError => e
+  $stderr.puts(File.basename($0) + ": ERROR: #{e}")
+  exit(1)
+end
