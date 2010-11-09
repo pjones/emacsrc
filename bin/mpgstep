@@ -3,6 +3,7 @@
 ################################################################################
 require('curses')
 require('ostruct')
+require('yaml')
 
 ################################################################################
 class Stepper
@@ -16,6 +17,10 @@ class Stepper
     ?p => :pause,
     ?q => :quit,
     ?r => :play_back,
+    ?w => :write_marks,
+    ?- => :up_a_mark,
+    ?= => :down_a_mark,
+    ?+ => :down_a_mark,
   }
   
   ##############################################################################
@@ -23,14 +28,12 @@ class Stepper
   
   ##############################################################################
   def initialize
-    @file = ARGV[0]
+    @mp3_file  = ARGV[0]
+    @save_file = ARGV[1]
     
-    if @file.nil? or !File.exist?(@file)
-      raise("no such mp3 file: #{@file.inspect}")
+    if @mp3_file.nil? or !File.exist?(@mp3_file)
+      raise("no such mp3 file: #{@mp3_file.inspect}")
     end
-    
-    Curses.init_screen
-    Curses.noecho
     
     @playing = false
     @running = true
@@ -38,17 +41,32 @@ class Stepper
     @last_frame_line  = nil
     @current_frame = nil
     @current_sec = nil
+    @current_split_code = nil
     @remain_sec = nil
 
     @last_status_message = ''
-    @marks = [OpenStruct.new(:frame => 0, :sec => '00:00.00', :copy => false)]
+    @marks = [OpenStruct.new(:frame => 0, :sec => '00:00.00', :remain => '00:00.00', :split => '0.0.0')]
+
+    if @save_file and File.exist?(@save_file)
+      @marks.clear
+
+      YAML.load_file(@save_file).each do |mark|
+        @marks << OpenStruct.new(mark)
+      end
+    end
+    
+    @current_mark_index = @marks.size - 1
+
+    Curses.init_screen
+    Curses.noecho
   end
   
   ##############################################################################
   def run
     @mpg123 = open("|mpg123 -R 2> /dev/null", 'w+')
-    @mpg123.write("lp #{@file}\n")
+    @mpg123.write("lp #{@mp3_file}\n")
     @mpg123.write("scan\n")
+    switched_mark
     process_mpg123_input
     playing_status
     event_loop while @running
@@ -116,17 +134,42 @@ class Stepper
   ##############################################################################
   def display_mark_list
     lines = Curses.lines - 4
-    cols = Curses.cols
-    start_index = @marks.size > lines ? @marks.size - lines : 0
+    cols = (Curses.cols / 15).floor
+    total = lines * cols
+    index = 0
 
-    line = 2
+    last_x = Curses.lines - 3
+    x = 2
+    y = 0
     
-    @marks.each_with_index do |mark, index|
-      next if index < start_index
-      Curses.setpos(line, 0)
-      Curses.addstr("%s %02d: %-#{cols - 8}s" % [mark.copy ? '*' : ' ', index+1, mark.sec])
-      line += 1
+    if @marks.size > total
+      index = @marks.size - total
     end
+    
+    while index < @marks.size
+      current = (index == @current_mark_index ? '*' : ' ')
+
+      Curses.setpos(x, y)
+      Curses.addstr("%s %02d: %s" % [current, index, @marks[index].sec])
+      
+      if x == last_x
+        x = 2
+        y += 15
+      else
+        x += 1
+      end
+
+      index += 1
+    end
+  end
+  
+  ##############################################################################
+  def switched_mark
+    mark = @marks[@current_mark_index]
+    @mpg123.write("j #{mark.frame}\n")
+    @current_sec = mark.sec
+    @remain_sec = mark.remain
+    status(nil)
   end
   
   ##############################################################################
@@ -141,13 +184,22 @@ class Stepper
     @current_frame = parts[1].to_i
     @current_sec = parse_seconds(parts[3].to_f)
     @remain_sec = parse_seconds(parts[4].to_f)
+    
+    min, sec = minutes_and_fractional_seconds(parts[3].to_f)
+    @current_split_code = "%d.%.2f" % [min, sec]
   end
   
   ##############################################################################
   def parse_seconds (seconds)
+    minutes, seconds = minutes_and_fractional_seconds(seconds)
+    "%02d:%02d.%02d" % [minutes, seconds, (seconds * 100.0) % 100]
+  end
+  
+  ##############################################################################
+  def minutes_and_fractional_seconds (seconds)
     minutes = (seconds / 60.0).floor
     seconds -= (minutes.to_f * 60.0)
-    "%02d:%02d.%02d" % [minutes, seconds, (seconds * 100.0) % 100]
+    [minutes, seconds]
   end
   
   ##############################################################################
@@ -167,18 +219,27 @@ class Stepper
   
   ##############################################################################
   def mark
-    if !@playing and @current_sec and @current_sec != @marks[-1].sec
-      @marks << OpenStruct.new(:frame => @current_frame, :sec => @current_sec, :copy => false)
+    if !@playing and 
+       @current_sec and 
+       @current_sec != @marks[-1].sec and
+       @current_mark_index == (@marks.size - 1)
+    then
+      @marks << OpenStruct.new(:frame => @current_frame, 
+                               :sec => @current_sec, 
+                               :remain => @remain_sec,
+                               :split => @current_split_code)
+      write_marks
+      @current_mark_index = @marks.size - 1
       status(nil, :alt => 'Marked')
     end
   end
   
   ##############################################################################
   def play_back
-    return if @playing
-    mark if @marks.size < 2
-    start_pos = @marks[@marks.size - 2]
-    end_pos   = @marks[-1]
+    return if @playing or @current_mark_index.zero?
+    
+    start_pos = @marks[@current_mark_index - 1]
+    end_pos   = @marks[@current_mark_index]
     status("Replay")
 
     @playing = true
@@ -196,9 +257,7 @@ class Stepper
   
   ##############################################################################
   def copy_last_mark
-    @marks.each {|m| m.copy = false}
     mark = @marks.last
-    mark.copy = true
 
     open("|pbcopy", 'w') do |pbcopy|
       pbcopy.write(mark.sec)
@@ -211,6 +270,7 @@ class Stepper
   def delete_last_mark
     if @marks.size > 1
       @marks.pop
+      write_marks
       Curses.clear
       status(nil, :alt => 'Deleted')
     end
@@ -228,6 +288,29 @@ class Stepper
   ##############################################################################
   def quit
     @running = false
+  end
+  
+  ##############################################################################
+  def write_marks
+    File.open(@save_file, 'w') do |file|
+      file.write(@marks.map {|m| m.send(:table)}.to_yaml)
+    end
+  end
+  
+  ##############################################################################
+  def up_a_mark
+    if @current_mark_index != 0
+      @current_mark_index -= 1
+      switched_mark
+    end
+  end
+  
+  ##############################################################################
+  def down_a_mark
+    if @current_mark_index != (@marks.size - 1)
+      @current_mark_index += 1
+      switched_mark
+    end
   end
 end
 
