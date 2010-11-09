@@ -83,7 +83,7 @@ on handle_string(s)
 	set volume 1
 	
 	tell application "iTunes"
-		set the_track to (get the first item of (get every track where database ID is 24778))
+		set the_track to (get the first item of (get every URL track whose name starts with "Groove Salad"))
 		play the_track
 	end tell
 end handle_string
