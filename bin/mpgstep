@@ -1,0 +1,240 @@
+#!/usr/bin/env ruby
+
+################################################################################
+require('curses')
+require('ostruct')
+
+################################################################################
+class Stepper
+  
+  ##############################################################################
+  DISPATCH_TABLE = {
+    ?b => :jump_back,
+    ?c => :copy_last_mark,
+    ?d => :delete_last_mark,
+    ?m => :mark,
+    ?p => :pause,
+    ?q => :quit,
+    ?r => :play_back,
+  }
+  
+  ##############################################################################
+  SMALL_SEEK = "2s"
+  
+  ##############################################################################
+  def initialize
+    @file = ARGV[0]
+    
+    if @file.nil? or !File.exist?(@file)
+      raise("no such mp3 file: #{@file.inspect}")
+    end
+    
+    Curses.init_screen
+    Curses.noecho
+    
+    @playing = false
+    @running = true
+    @title = ''
+    @last_frame_line  = nil
+    @current_frame = nil
+    @current_sec = nil
+    @remain_sec = nil
+
+    @last_status_message = ''
+    @marks = [OpenStruct.new(:frame => 0, :sec => '00:00.00', :copy => false)]
+  end
+  
+  ##############################################################################
+  def run
+    @mpg123 = open("|mpg123 -R 2> /dev/null", 'w+')
+    @mpg123.write("lp #{@file}\n")
+    @mpg123.write("scan\n")
+    process_mpg123_input
+    playing_status
+    event_loop while @running
+  ensure
+    @mpg123.close
+    Curses.close_screen
+  end
+
+  ##############################################################################
+  private
+  
+  ##############################################################################
+  def event_loop
+    process_mpg123_input
+    
+    if char = Curses::getch
+      send(DISPATCH_TABLE[char]) if DISPATCH_TABLE.has_key?(char)
+    end
+  end
+
+  ##############################################################################
+  def process_mpg123_input
+    while select([@mpg123], nil, nil, 0.1)
+      line = @mpg123.gets
+      code = line[0, 2]
+      
+      case code
+      when "@E" then raise(line)
+      when "@F" then @last_frame_line = line
+      when "@I" then look_for_title(line)
+      end
+    end
+  end
+  
+  ##############################################################################
+  def status (main, options={})
+    ops = {
+      :alt => nil,
+    }.merge(options)
+
+    Curses.setpos(0, 0)
+    Curses.addstr("%-#{Curses.cols - 1}s" % @title)
+    
+    if ops[:alt]
+      y = Curses.cols - ops[:alt].size - 1
+      Curses.setpos(0, y)
+      Curses.addstr(ops[:alt])
+    end
+
+    @last_status_message = main if main
+    Curses.setpos(Curses.lines - 1, 0)
+    Curses.addstr("%-#{Curses.cols - 1}s" % @last_status_message)
+
+    if @current_sec and @remain_sec
+      position = "[#{@current_sec} / #{@remain_sec}]"
+      Curses.setpos(Curses.lines - 1, Curses.cols - position.size - 1)
+      Curses.addstr(position)
+    end
+
+    display_mark_list
+    Curses.setpos(0, 0)
+    Curses.refresh
+  end
+  
+  ##############################################################################
+  def display_mark_list
+    lines = Curses.lines - 4
+    cols = Curses.cols
+    start_index = @marks.size > lines ? @marks.size - lines : 0
+
+    line = 2
+    
+    @marks.each_with_index do |mark, index|
+      next if index < start_index
+      Curses.setpos(line, 0)
+      Curses.addstr("%s %02d: %-#{cols - 8}s" % [mark.copy ? '*' : ' ', index+1, mark.sec])
+      line += 1
+    end
+  end
+  
+  ##############################################################################
+  def playing_status
+    parse_last_frame if @last_frame_line
+    status(@playing ? 'Playing' : 'Paused')
+  end
+
+  ##############################################################################
+  def parse_last_frame
+    parts = @last_frame_line.split(' ')
+    @current_frame = parts[1].to_i
+    @current_sec = parse_seconds(parts[3].to_f)
+    @remain_sec = parse_seconds(parts[4].to_f)
+  end
+  
+  ##############################################################################
+  def parse_seconds (seconds)
+    minutes = (seconds / 60.0).floor
+    seconds -= (minutes.to_f * 60.0)
+    "%02d:%02d.%02d" % [minutes, seconds, (seconds * 100.0) % 100]
+  end
+  
+  ##############################################################################
+  def look_for_title (line)
+    if m = line.match(/ID3v2.title:(.*)$/)
+      @title = m[1]
+    end
+  end
+
+  ##############################################################################
+  def pause
+    @mpg123.write("p\n")
+    @playing = !@playing
+    process_mpg123_input
+    playing_status
+  end
+  
+  ##############################################################################
+  def mark
+    if !@playing and @current_sec and @current_sec != @marks[-1].sec
+      @marks << OpenStruct.new(:frame => @current_frame, :sec => @current_sec, :copy => false)
+      status(nil, :alt => 'Marked')
+    end
+  end
+  
+  ##############################################################################
+  def play_back
+    return if @playing
+    mark if @marks.size < 2
+    start_pos = @marks[@marks.size - 2]
+    end_pos   = @marks[-1]
+    status("Replay")
+
+    @playing = true
+    @mpg123.write("j #{start_pos.frame}\np\n")
+    
+    while true
+      if (line = @mpg123.gets)[0, 2] == '@F'
+        parts = line.split(' ')
+        break if parts[1].to_i >= end_pos.frame
+      end
+    end
+    
+    pause
+  end
+  
+  ##############################################################################
+  def copy_last_mark
+    @marks.each {|m| m.copy = false}
+    mark = @marks.last
+    mark.copy = true
+
+    open("|pbcopy", 'w') do |pbcopy|
+      pbcopy.write(mark.sec)
+    end
+    
+    status(nil, :alt => 'Copy')
+  end
+  
+  ##############################################################################
+  def delete_last_mark
+    if @marks.size > 1
+      @marks.pop
+      Curses.clear
+      status(nil, :alt => 'Deleted')
+    end
+  end
+  
+  ##############################################################################
+  def jump_back
+    cmd = "j -#{SMALL_SEEK}\n"
+    cmd = "p\n#{cmd}p\n" if !@playing
+    @mpg123.write(cmd)
+    process_mpg123_input
+    status(nil, :alt => 'Jump')
+  end
+  
+  ##############################################################################
+  def quit
+    @running = false
+  end
+end
+
+################################################################################
+begin
+  Stepper.new.run
+rescue RuntimeError => e
+  $stderr.puts(File.basename($0) + ": ERROR: #{e}")
+  exit(1)
+end
