@@ -4,9 +4,9 @@ stuff "cd ~/Documents/pmade/pmade-inc"
 screen -t www
 stuff "cd ~/Documents/pmade/pmade.com"
 screen -t docs
-stuff "cd ~/Documents/pmade/documents"
+stuff "cd ~/Documents/"
 screen -t comm
 stuff "cd ~/.comm-sync"
 screen -t tunnel
-stuff "ssh -L 2525:localhost:25 -L 8030:localhost:80 dracula.pmade.com 'while :; do printf .; sleep 300; done'"
+stuff "autossh -M 0 -N tunnel.dracula.pmade.com"
 select 0

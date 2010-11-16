@@ -1,6 +1,9 @@
 ;;; babel.el --- interface to web translation services such as Babelfish
 ;; $Id: babel.el,v 1.22 2008/11/09 19:49:35 juergen Exp $
 ;;;
+;;;Note, the following program will produce error
+;;;"Babelfish HTML has changed ; please look for a new version of babel.el" as of 4/2010
+;;;
 ;;; Author: Eric Marsden <emarsden@laas.fr>
 ;;;         Juergen Hoetzel <juergen@hoetzel.info> 
 ;;; Keywords: translation, web
@@ -126,7 +129,7 @@
 ;; `babel-preferred-to-language'. David Masterson suggested adding a
 ;; menu item.
 ;;
-;; User quotes: Dieses ist die größte Sache seit geschnittenem Brot.
+;; User quotes: Dieses ist die grÃ¶ÃŸte Sache seit geschnittenem Brot.
 ;;                 -- Stainless Steel Rat <ratinox@peorth.gweep.net> 
 
 ;;; History
