@@ -47,6 +47,9 @@
  bookmark-save-flag 1
  bookmark-default-file "~/.comm-sync/var/emacs/bookmarks.el")
 
+;; Dired-X
+(require 'dired-x)
+
 ;; Add window numbers
 (require 'window-number)
 (window-number-mode 1)
