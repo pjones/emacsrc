@@ -1,6 +1,7 @@
 -- Original script from Murphy Mac at http://murphymac.com/itunes-alarm-clock/
 -- Start iTunes from cron and slowly bring volume up
-run script POSIX file "/Users/pjones/Develop/pmade/rc/macosx/scripts/iTunes/mobile-speakers.applescript"
+set speaker_args to {"Mobile Audio"}
+run script POSIX file "/Users/pjones/Develop/pmade/rc/macosx/scripts/iTunes/mobile-speakers.applescript" with parameters speaker_args
 
 tell application "iTunes"
   set volume 1

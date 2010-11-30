@@ -33,7 +33,6 @@ else
 fi
 
 say -f script.txt -o 'Morning Time.aiff'
-osascript ~/Develop/pmade/rc/macosx/scripts/iTunes/mobile-speakers.applescript
 cat <<EOF | osascript
 tell application "iTunes"
   set the_volume to (get sound volume)
