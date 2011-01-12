@@ -9,10 +9,10 @@ PATH=/opt/local/bin:/opt/local/lib/postgresql/bin:/Users/pjones/bin:/usr/local/b
 # min hour dom mon dow  cmd
 #  00  06   *   *  1-5  sh $HOME/Develop/pmade/rc/macosx/scripts/iTunes/kgnu-rip.sh
 #  35  06   *   *  1-5  sh $HOME/Develop/pmade/rc/macosx/scripts/iTunes/morning-news.sh
-   35  06   *   *  1-5  osascript $HOME/Develop/pmade/rc/macosx/scripts/iTunes/wake-up.applescript
-   40  06   *   *  1-5  sh $HOME/Develop/pmade/rc/macosx/scripts/iTunes/morning-energy.sh
-   45  06   *   *  1-5  sh $HOME/Develop/pmade/rc/macosx/scripts/iTunes/morning-energy.sh time
-   05  07   *   *  1-5  sh $HOME/Develop/pmade/rc/macosx/scripts/iTunes/morning-energy.sh time
+   30  06   *   *  1-5  osascript $HOME/Develop/pmade/rc/macosx/scripts/iTunes/wake-up.applescript
+   35  06   *   *  1-5  sh $HOME/Develop/pmade/rc/macosx/scripts/iTunes/morning-energy.sh
+   40  06   *   *  1-5  sh $HOME/Develop/pmade/rc/macosx/scripts/iTunes/morning-energy.sh time
+   00  07   *   *  1-5  sh $HOME/Develop/pmade/rc/macosx/scripts/iTunes/computer-speaker.sh
 
 # Generate Org Files for Appointments
 # min hour dom mon dow cmd
