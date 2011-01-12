@@ -25,3 +25,5 @@ install rb-mysql
 install rb-sqlite3
 deactivate ruby
 install ruby186
+
+install p5-app-ack
