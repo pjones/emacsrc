@@ -1,6 +1,6 @@
 #!/bin/sh
 
-cd '/Volumes/Media/iTunes/Music/Morning Automation/Morning Automation'
+cd '/Volumes/AV RAID/iTunes/Music/Morning Automation/Morning Automation'
 AUX_FILE=/tmp/speech-script.txt
 
 long_speach ()
