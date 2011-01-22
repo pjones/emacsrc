@@ -19,6 +19,10 @@ PATH=/opt/local/bin:/opt/local/lib/postgresql/bin:/Users/pjones/bin:/usr/local/b
 #  10   07   *   *   * sh $HOME/.comm-sync/bin/crum-org.sh
    12   07   *   *   * sh $HOME/.comm-sync/bin/library-dates.sh
 
+# Record internet radio stations
+# min hour dom mon dow cmd
+   55  12   *   *    0 sh $HOME/Develop/pmade/rc/macosx/scripts/iTunes/ripany.sh radio1cz
+
 # Reminders
 # min hour dom mon dow cmd
 #   1 9-16   *   * 1-5 say "Are you being productive?"
