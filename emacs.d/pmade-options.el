@@ -69,3 +69,7 @@
 (setq kept-old-versions 2)
 (setq version-control t)
 (setq backup-by-copying t)
+
+;; URL browsing
+;; (setq browse-url-browser-function 'browse-url-generic
+;;       browse-url-generic-program "")

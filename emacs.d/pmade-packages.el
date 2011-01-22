@@ -134,6 +134,11 @@
 (autoload 'R-mode "ess-site" "ESS R Mode" t)
 (add-to-list 'auto-mode-alist '("\\.R$" . R-mode))
 
+;; Calendar/Diary
+(setq 
+ diary-file "~/Documents/pmade/pmade-inc/planning/schedule/diary"
+ calendar-date-style 'iso)
+
 ;; I love Org Mode!
 (require 'org-install)
 (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
@@ -163,3 +168,6 @@
 (add-hook 'ses-mode-hook
   (lambda () 
     (add-hook 'after-save-hook 'pmade:ses-export-buffer-to-tsv t t)))
+
+;; Idea (awesome for coding and window management)
+(require 'idea nil t)
