@@ -13,6 +13,7 @@
      (when (file-exists-p eva-conf) (load-file eva-conf))))
 
 ;; Org Basecamp
+(require 'org-basecamp)
 (setq org-basecamp-mark-todo nil)
 
 ;; Org Crypt
@@ -67,6 +68,9 @@
  org-agenda-show-all-dates t
  org-agenda-start-on-weekday 1
  org-agenda-todo-ignore-with-date t
+ org-agenda-include-diary nil
+ org-agenda-time-grid
+   '((today) "--------------------" (730 900 1030 1400 1600 1700))
  org-agenda-files 
    (append
     (directory-files pmade-org-active-clients t "\\.org$")

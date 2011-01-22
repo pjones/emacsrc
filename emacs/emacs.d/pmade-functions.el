@@ -62,12 +62,21 @@ placing it in the kill ring)."
   "Open a file in the window I normally write code in."
   (interactive)
   (let* ((max (length (window-list)))
-         (win (if (> max 3) 2 1))
+         (win (if (> max 2) 2 1))
          (buf (save-window-excursion
                 (ido-find-file)
                 (current-buffer))))
     (window-number-select win)
     (switch-to-buffer buf)))
+
+(defun pmade-find-file-window-1 ()
+  (interactive)
+  (let ((new-buf
+         (save-window-excursion
+           (ido-find-file)
+           (current-buffer))))
+    (window-number-select 1)
+    (switch-to-buffer new-buf)))
 
 ;; Help start ERC
 (defun pmade-erc-start (&optional bitlbee-only)
@@ -103,13 +112,14 @@ placing it in the kill ring)."
 (defun pmade-goto-terminal nil
   "Jump to the screen and window with the terminal"
   (interactive)
-  (escreen-goto-screen-3)
-  (let* ((buf (get-buffer "*terminal*"))
-         (max (- (length (window-number-list)) 1))
+  (let* ((before (escreen-get-current-screen-number))
+         (fake (escreen-goto-screen 3))
+         (buf (get-buffer "*terminal*"))
+         (max (idea-number-of-windows))
          (win (car (member buf (mapcar 'window-buffer (window-number-list))))))
-    (if (eq win (current-buffer)) (window-number-select 2)
+    (if (and (= before 3) (eq win (current-buffer))) (idea-select-window 2)
       (if win (select-window (get-buffer-window win))
-        (window-number-select max)
+        (idea-select-window max)
         (if buf (switch-to-buffer buf)
           (term "/opt/local/bin/zsh"))))))
         
@@ -203,9 +213,7 @@ placing it in the kill ring)."
       (split-window-vertically))
      ;; Default behavior
      (t
-      (pmade-3-windows)
-      (window-number-select 3)
-      (split-window-vertically)))
+      (pmade-3-windows)))
     (setq win-count (- (length (window-number-list)) 1))
     (when (> win-count 2)
       (window-number-select win-count)
@@ -227,3 +235,26 @@ placing it in the kill ring)."
     (scroll-bar-mode -1)
     (full-calc)
     (select-frame old)))
+
+(defun pmade-toggle-dictionary ()
+  (interactive)
+  (ispell-change-dictionary
+   (if (string= ispell-current-dictionary "italian") "english" "italian")))
+
+;; Placing buffers into windows in my coding escreen
+(defun pmade:display-buffer-function (buffer &optional not-this-window)
+  (let ((display-buffer-function nil)
+        (screen (escreen-get-current-screen-number)) 
+        (count (idea-number-of-windows))
+        (file (buffer-file-name buffer))
+        (window))
+    (cond
+     ((and (= screen 3) (> count 2))
+      (setq window (idea-window-numbered (if file 2 3)))
+      (set-window-buffer window buffer)
+      window)
+     (t
+      (setq window (display-buffer buffer not-this-window))))))
+
+;; Force emacs to use my cool display-buffer function
+(setq display-buffer-function 'pmade:display-buffer-function)

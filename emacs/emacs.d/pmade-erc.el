@@ -26,7 +26,7 @@
 
 (setq erc-track-exclude '("&bitlbee" "#emacs" "#chef"  "#puppet"
                           "#latex" "#ruby" "#applescript" "#sproutcore"
-                          "#photogeeks" "#org-mode" "#macrumors"))
+                          "#photogeeks" "#org-mode" "#macrumors" "#conkeror"))
 
 ;; Auto join the given channels
 (setq erc-autojoin-channels-alist

@@ -42,8 +42,6 @@
 
 ;; Code that should be called for each programming mode
 (defun pmade-programming-mode-hook ()
-  ;;(require 'idea)
-  ;;(idea-complement-mode 1)
   (require 'align)
   (require 'enclose)
   (require 'wrap-region)
@@ -54,7 +52,8 @@
   (hs-minor-mode 1)
   (enclose-mode t)
   (wrap-region-mode t)
-  (font-lock-add-keywords nil '(("\\<\\(FIXME:\\|TODO:\\)" 1 pmade-fixme-face t)))
+  ;(idea-complement-mode 1)
+  (font-lock-add-keywords nil '(("\\<\\(FIXME:\\|TODO:\\|NOTE:\\)" 1 pmade-fixme-face t)))
   (local-set-key "\C-cf"  'hs-toggle-hiding)
   (local-set-key "\C-m"   'pmade-newline)
   (local-set-key "\t"     'pmade-smart-tab))

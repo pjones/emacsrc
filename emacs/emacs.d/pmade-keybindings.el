@@ -4,6 +4,7 @@
 
 ;; Global Key Bindings
 (define-key global-map [escape]   (lambda () (interactive) (message "WTF: ESC")))
+(define-key global-map "\C-x4f"   'pmade-find-file-window-1)
 (define-key global-map "\C-x\C-m" 'execute-extended-command)
 (define-key global-map "\C-x\C-b" 'ibuffer)
 (define-key global-map "\C-o"     'open-line-below-like-vim)
@@ -22,6 +23,7 @@
 ;; User Key Bindings (using the C-c prefix)
 (define-key global-map "\C-ca"    'org-agenda)
 (define-key global-map "\C-cd"    'delete-trailing-whitespace)
+(define-key global-map "\C-cD"    'pmade-toggle-dictionary)
 ;                       C-c f     Toggle hide/show code
 ;                       C-c h     Toggle header/source
 (define-key global-map "\C-cl"    'org-store-link)

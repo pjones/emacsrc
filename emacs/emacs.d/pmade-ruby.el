@@ -29,6 +29,7 @@
 (add-to-list 'auto-mode-alist '("\\.rake$"   . ruby-mode))
 (add-to-list 'auto-mode-alist '("\\.irbrc$"  . ruby-mode))
 (add-to-list 'auto-mode-alist '("^Rakefile$" . ruby-mode))
+(add-to-list 'auto-mode-alist '("^Gemfile$"  . ruby-mode))
 (setq ruby-deep-indent-paren '(?\( t))
 
 ;; manually set some keys because for some reason, local-set-key
