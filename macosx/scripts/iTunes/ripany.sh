@@ -15,7 +15,9 @@ fi
 case $1 in
   radio1cz)
     URL="http://netshow.play.cz:8000/radio1.mp3"
-    SECONDS=4200
+    SECONDS=7800
+    STATION="Prague Radio 1"
+    SHOW="News Of Alternative Scene by DJ Josef Sedlon"
     ;;
   -h)
     usage
@@ -36,4 +38,6 @@ MP3_FILE="$1-"`date +%Y%m%d-%H%M`
 mkdir -p $DEST
 echo "http://localhost:8000/" >> $M3U_FILE
 streamripper $URL -s --quiet -d $DEST -a $MP3_FILE -l $SECONDS -o never -r
-rm $M3U_FILE
+rm $DEST/$MP3_FILE.cue $M3U_FILE
+
+# TODO: add to iTunes and correctly tag items
