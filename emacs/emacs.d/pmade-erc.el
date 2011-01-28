@@ -52,6 +52,7 @@
 (setq erc-query-display 'buffer)        ; Reuse current buffer when sending private messages
 (setq erc-keywords '("pmade" "peter"))
 (setq erc-kill-queries-on-quit nil)
+(setq erc-server-auto-reconnect nil)
 
 ;; Identify with IRC servers
 (defun pmade-erc-after-connect (server nick)
