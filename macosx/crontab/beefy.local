@@ -11,7 +11,7 @@ PATH=/opt/local/bin:/opt/local/lib/postgresql/bin:/Users/pjones/bin:/usr/local/b
 #  35  06   *   *  1-5  sh $HOME/Develop/pmade/rc/macosx/scripts/iTunes/morning-news.sh
    30  06   *   *  1-5  osascript $HOME/Develop/pmade/rc/macosx/scripts/iTunes/wake-up.applescript
    35  06   *   *  1-5  sh $HOME/Develop/pmade/rc/macosx/scripts/iTunes/morning-energy.sh
-   40  06   *   *  1-5  sh $HOME/Develop/pmade/rc/macosx/scripts/iTunes/morning-energy.sh time
+   45  06   *   *  1-5  sh $HOME/Develop/pmade/rc/macosx/scripts/iTunes/morning-energy.sh time
    00  07   *   *  1-5  sh $HOME/Develop/pmade/rc/macosx/scripts/iTunes/computer-speaker.sh
 
 # Generate Org Files for Appointments
@@ -22,6 +22,10 @@ PATH=/opt/local/bin:/opt/local/lib/postgresql/bin:/Users/pjones/bin:/usr/local/b
 # Record internet radio stations
 # min hour dom mon dow cmd
    55  12   *   *    0 sh $HOME/Develop/pmade/rc/macosx/scripts/iTunes/ripany.sh radio1cz
+
+# Download PDF periodicals and add them to iTunes
+# min hour dom mon dow cmd
+   15  03    *   *   0 ruby $HOME/Develop/pmade/rc/macosx/scripts/iTunes/pigmagrss.rb
 
 # Reminders
 # min hour dom mon dow cmd
