@@ -71,5 +71,5 @@
 (setq backup-by-copying t)
 
 ;; URL browsing
-;; (setq browse-url-browser-function 'browse-url-generic
-;;       browse-url-generic-program "")
+(setq browse-url-browser-function 'browse-url-generic
+      browse-url-generic-program "conkopen.sh")

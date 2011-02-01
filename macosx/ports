@@ -11,8 +11,11 @@ install gnuplot +no_x11
 install libxslt
 install pwgen
 install streamripper
+install mp3splt
+install mp3wrap
 install w3m
 install wget
+install netcat
 install R
 
 install postgresql84-server
