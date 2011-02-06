@@ -132,21 +132,27 @@ class Driver
     end
     
     argv = parser.permute!(ARGV)
-    raise("give file and name") unless argv.size == 2
+    raise("must at least give a file name") if argv.size.zero?
+    
+    if argv.size != 2 and !options.names
+      raise("give file and name")
+    end
     
     @file, @name = argv
     parse_file
-    raise("no such schedule: #{@name}") unless @schedules.has_key?(@name)
-    
-    @active = @schedules[@name]
+
+    if !options.names
+      raise("no such schedule: #{@name}") unless @schedules.has_key?(@name)
+      @active = @schedules[@name]
+    end
   end
   
   ##############################################################################
   def run
-    if options.orgout
-      $stdout.puts(@active.to_org)
-     elsif options.names
+    if options.names
       $stdout.puts(@schedules.keys.sort.join(' '))
+    elsif options.orgout
+      $stdout.puts(@active.to_org)
     elsif options.next
       $stdout.puts(@active.periods[@active.next_period].to_org)
     elsif options.alert

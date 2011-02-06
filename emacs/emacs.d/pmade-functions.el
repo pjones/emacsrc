@@ -241,6 +241,25 @@ placing it in the kill ring)."
   (ispell-change-dictionary
    (if (string= ispell-current-dictionary "italian") "english" "italian")))
 
+(defun pmade-schedule ()
+  "Load the daily schedule into a buffer."
+  (interactive)
+  (let* ((file "~/Documents/pmade/pmade-inc/planning/schedule/schedule.yml")
+         (rawnames (shell-command-to-string (concat "schedule.rb --names " file)))
+         (names (split-string rawnames nil t))
+         (pick (ido-completing-read "Schedule: " names))
+         (buf (get-buffer-create "*schedule*")))
+    (with-current-buffer buf
+      (setq buffer-read-only t)
+      (let ((buffer-read-only nil))
+        (erase-buffer)
+        (insert (shell-command-to-string (concat "schedule.rb --orgout " file " " pick)))
+        (org-mode)
+        (hl-line-mode t)
+        (goto-char (point-min))
+        (show-all)))
+    (switch-to-buffer buf)))
+
 ;; Placing buffers into windows in my coding escreen
 (defun pmade:display-buffer-function (buffer &optional not-this-window)
   (let ((display-buffer-function nil)
