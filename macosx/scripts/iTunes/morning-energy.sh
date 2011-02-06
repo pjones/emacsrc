@@ -1,7 +1,10 @@
 #!/bin/sh
 
-cd '/Volumes/AV RAID/iTunes/Music/Morning Automation/Morning Automation'
 AUX_FILE=/tmp/speech-script.txt
+BASE=`dirname $0`
+BASE=`realpath $BASE`
+
+cd '/Volumes/AV RAID/iTunes/Music/Morning Automation/Morning Automation'
 
 long_speach ()
 {
@@ -11,7 +14,7 @@ long_speach ()
   echo >> script.txt
   echo "Your custom weather forecast for Lafayette Colorado." >> script.txt
   echo >> script.txt
-  sh ~/Develop/pmade/rc/macosx/scripts/weather/weather.sh >> script.txt
+  sh $BASE/../weather/weather.sh >> script.txt
   echo >> script.txt
   
   if [ -r $AUX_FILE ]; then
@@ -33,19 +36,9 @@ else
 fi
 
 say -f script.txt -o 'Morning Time.aiff'
+osascript $BASE/fade-and-stop.applescript
 cat <<EOF | osascript
 tell application "iTunes"
-  set the_volume to (get sound volume)
-
-  repeat while the_volume > 0
-    set i to the_volume - 5
-    if i < 0 then set i to 0
-    set sound volume to i
-    set the_volume to i
-    delay 1
-  end repeat
-
-  stop
   set sound volume to 70
   play playlist "Morning Energy"
 end tell

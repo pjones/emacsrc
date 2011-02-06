@@ -1,6 +1,7 @@
 #!/bin/sh
 
 cd `dirname $0`
+osascript fade-and-stop.applescript
 osascript mobile-speakers.applescript "Computer"
 
 cat <<EOF | osascript
