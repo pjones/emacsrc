@@ -32,4 +32,4 @@ fi
 
 ################################################################################
 XSL_FILE=`dirname $0`/weather.xsl
-xsltproc $XSL_FILE $XML
+xsltproc $XSL_FILE $XML | sed 's/[Mm][Pp][Hh]/miles per hour/g'
