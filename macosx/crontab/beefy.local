@@ -1,9 +1,10 @@
 PATH=/opt/local/bin:/opt/local/lib/postgresql/bin:/Users/pjones/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
 
-# Backup Jobs
+# Backup Jobs and other remote junk
 # min hour dom mon dow cmd
 # 20  03   *   *    *  sh $HOME/Develop/pmade/rc/backup/slim.pmade.com/postgresql.sh
   15  19   *   *    *  rsync -au --delete dracula.pmade.com:git/ $HOME/Backup/slim/git/
+  10  02   *   *    *  sh -c '(cd ~/Develop/pmade/mail/filter && sh script/mkwhitelist.sh push)' > /dev/null
 
 # Morning Wake-Up Schedule
 # min hour dom mon dow  cmd
