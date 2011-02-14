@@ -10,4 +10,5 @@ tell application "iTunes"
   end repeat
 
   stop
+  set sound volume to 90
 end tell
