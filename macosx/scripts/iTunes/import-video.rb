@@ -135,6 +135,7 @@ class Driver
     end
 
     details = TMDb.new.search(options.search)
+    $stdout.puts("Title: #{details.name}")
 
     if options.itunes_sel
       update_track(details, @itunes.selection.get.first)
@@ -162,6 +163,7 @@ class Driver
     track.description.set(movie.description || '')
     
     if poster_url = Array(movie.posters).detect {|u| u.match(/\.jpg$/i)}
+      $stdout.puts("Poster: #{poster_url}")
       data = open(poster_url) {|s| AE::AEDesc.new(KAE::TypeJPEG, s.read)}
       track.artworks[1].data_.set(data)
     end
