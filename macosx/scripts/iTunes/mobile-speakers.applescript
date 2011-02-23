@@ -10,7 +10,7 @@ script remoteSpeakerFinder
 				
 				repeat with a_button in in_buttons
 					set the_desc to (get description of a_button)
-					if the_desc contains "remote speakers" then
+					if the_desc contains "AirPlay" then
 						return a_button
 					end if
 				end repeat
