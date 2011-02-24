@@ -77,7 +77,8 @@
   (lambda ()
     (c-set-style "bsd")
     (setq c-basic-offset 4)
-    (pmade-programming-mode-hook)))
+    (pmade-programming-mode-hook)
+    (local-set-key "\C-c\t" 'pmade-c-comment-bar)))
 
 ;; Objective-C
 (add-hook 'objc-mode-hook
@@ -88,7 +89,6 @@
     (pmade-programming-mode-hook)
     (when (string-match "\\.m$" buffer-file-name) (hs-hide-all))
     (load "emacs-xcode")
-    (local-set-key "\C-c\t" 'pmade-c-comment-bar)
     (local-set-key "\C-ch" 'xcode/toggle-header-and-source)
     (local-set-key "\C-c\C-c" 'xcode/build-compile)))
 
