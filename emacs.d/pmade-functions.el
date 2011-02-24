@@ -79,12 +79,25 @@ placing it in the kill ring)."
     (switch-to-buffer new-buf)))
 
 ;; Help start ERC
+(defun pmade-bitlbee-start ()
+  (require 'bitlbee)
+  (setq bitlbee-user-directory "~/.comm-sync/etc/bitlbee"
+        bitlbee-executable "/opt/local/sbin/bitlbee")
+  (bitlbee-start)
+  (sleep-for 1)) ;; Give bitlbee a chance to bind to the local port
+
 (defun pmade-erc-start (&optional bitlbee-only)
   "Load and start ERC.  With prefix key, only connect to bitlbee."
   (interactive "P")
   (load "~/.emacs.d/pmade/pmade-erc")
   (erc :server "127.0.0.1")
   (unless bitlbee-only (erc :server "irc.freenode.net")))
+
+(defun pmade-rcirc-start (&optional bitlbee-only)
+  (interactive "P")
+  (load "~/.emacs.d/pmade/pmade-rcirc")
+  (pmade-bitlbee-start)
+  (if bitlbee-only (rcirc-connect "localhost") (irc)))
 
 (defun pmade-3-windows ()
   (interactive)
@@ -146,19 +159,19 @@ placing it in the kill ring)."
   (pmade-3-windows)
   (window-number-select 1)
   (split-window-vertically)
-  (switch-to-buffer "#emacs")
+  (switch-to-buffer "#emacs@irc.freenode.net")
   (window-number-select 2)
-  (switch-to-buffer "#photogeeks")
+  (switch-to-buffer "#photogeeks@irc.freenode.net")
   (window-number-select 3)
   (split-window-vertically)
-  (switch-to-buffer "&bitlbee")
+  (switch-to-buffer "&bitlbee@localhost")
   (window-number-select 4)
   (switch-to-buffer "*scratch*")
   (window-number-select 5)
   (split-window-vertically)
-  (switch-to-buffer "#latex")
+  (switch-to-buffer "#latex@irc.freenode.net")
   (window-number-select 6)
-  (switch-to-buffer "#org-mode")
+  (switch-to-buffer "#org-mode@irc.freenode.net")
   (window-number-select 3))
 
 (defun pmade-split-frame:screen-2 (&optional arg)
@@ -238,8 +251,11 @@ placing it in the kill ring)."
 
 (defun pmade-toggle-dictionary ()
   (interactive)
-  (ispell-change-dictionary
-   (if (string= ispell-current-dictionary "italian") "english" "italian")))
+  (let ((dict ispell-current-dictionary))
+    (ispell-change-dictionary
+     (if (string= dict "italian") "english" "italian"))
+    (activate-input-method
+     (if (string= dict "italian") nil "italian-postfix"))))
 
 (defun pmade-schedule ()
   "Load the daily schedule into a buffer."

@@ -136,7 +136,18 @@
    '(erc-input-face ((t (:foreground "#A6E2DC"))))
    '(erc-timestamp-face ((t (:foreground "#2d412b"))))
    '(erc-prompt-face ((t (:background "#223c63" :foreground "white" :box (:line-width 1 :style released-button)))))
-
+   
+   ;; rcIRC
+   '(rcirc-track-nick ((t (:foreground "#FFFFFF" :inverse-video nil :bold t))))
+   '(rcirc-track-keyword ((t (:inherit 'rcirc-track-nick))))
+   '(rcirc-server ((t (:foreground "#444444"))))
+   '(rcirc-timestamp ((t (:foreground "#444444"))))
+   '(rcirc-my-nick ((t (:foreground "#888888"))))
+   '(rcirc-url ((t (:foreground "#B150E7" :bold t))))
+   
+   ;; Message mode (mail)
+   '(message-header-subject ((t (:foreground "white" :bold t))))
+   
    ;; LaTeX
    '(font-latex-sectioning-0-face ((t (:foreground "yellow" :height 1.0))))
    '(font-latex-sectioning-1-face ((t (:foreground "yellow" :height 1.0))))
