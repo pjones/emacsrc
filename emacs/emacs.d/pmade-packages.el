@@ -4,9 +4,9 @@
 ;; Emacs nonstandard editing commands
 (autoload 'zap-up-to-char "misc" nil t)
 
-;; Gnus CVS
-(when (and (= 22 emacs-major-version)
-           (file-exists-p (concat pmade-site-lisp "/gnus")))
+;; No Gnus (bleeding edge)
+(when (file-exists-p (concat pmade-site-lisp "/gnus"))
+  (add-to-list 'load-path (concat pmade-site-lisp "/gnus/lisp"))
   (require 'gnus-load))
 
 ;; Use Aspell
