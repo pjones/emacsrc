@@ -1,5 +1,4 @@
 (require 'rcirc)
-(eval-after-load 'rcirc (require 'rcirc-color))
 
 ;; Load passwords from a private file
 (setq pmade-comm-sync "~/.comm-sync")
@@ -34,9 +33,11 @@ Example use: /all away food or /all quit zzzz."
 
 (defun pmade:rcirc-macrumors ()
   "Connect to the macrumors IRC server."
+  (interactive)
   (rcirc-connect "irc.macrumorslive.com" nil nil nil nil "#macrumors"))
 
 (defun pmade:rcirc-hook ()
+  (require 'rcirc-color)
   (unless (string-match "localhost" (buffer-name))
     (setq rcirc-ignore-buffer-activity-flag t)
     (rcirc-omit-mode))
