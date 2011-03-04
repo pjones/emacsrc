@@ -91,11 +91,12 @@ class XPathTool
   
   ##############################################################################
   def sendmail
-    open('|/usr/sbin/sendmail -t') do |sm|
+    IO.popen('/usr/sbin/sendmail -t', 'w+') do |sm|
       sm.puts("To: #{options.mail_to}")
       sm.puts("From: #{options.mail_to}")
       sm.puts("Subject: #{make_message(options.mail_subject)}")
       sm.puts
+      sm.flush
     end
   end
 end
