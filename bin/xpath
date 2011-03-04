@@ -37,7 +37,7 @@ class XPathTool
       p.on('-P', '--nprint=MSG', 'Print a message when not successful') {|n| options.nprint = n}
       p.on('-e', '--exit0', 'Always exit with code 0') {|e| options.noexit = e}
       p.on('--mail-to=ADDR', 'Send email to ADDR') {|m| options.mail_to = m}
-      p.on('--mail-subject=SUBJECT', 'Set the email subject') {|s| option.mail_subject = s}
+      p.on('--mail-subject=SUBJECT', 'Set the email subject') {|s| options.mail_subject = s}
     end.permute!(ARGV)
     
     raise("must give url and xpath") unless ARGV.size == 2
