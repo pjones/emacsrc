@@ -49,7 +49,11 @@ class XPathTool
   def run
     @doc = Nokogiri::HTML(open(@url))
     @elements = Array(@doc.xpath(@xpath))
-    run_actions if @elements.empty?
+
+    if @elements.empty?
+      run_actions
+      return
+    end
     
     if options.match and @elements.any? {|e| e.content.to_s.match(options.match)}
       @status = true
