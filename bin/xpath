@@ -1,0 +1,112 @@
+#!/usr/bin/env ruby
+
+################################################################################
+require('rubygems')
+require('nokogiri')
+require('ostruct')
+require('optparse')
+require('open-uri')
+
+################################################################################
+class XPathTool
+  
+  ##############################################################################
+  DEFAULT_OPTIONS = {
+    :match        => nil,   
+    :negate       => false, 
+    :print        => nil,   
+    :nprint       => nil,   
+    :noexit       => false, 
+    :mail_to      => nil,  
+    :mail_subject => 'XPath %x matches!'
+  }
+  
+  ##############################################################################
+  attr_reader(:options)
+  
+  ##############################################################################
+  def initialize
+    @options = OpenStruct.new(DEFAULT_OPTIONS)
+    
+    OptionParser.new do |p|
+      p.banner = 'Usage: xpath [options] url xpath'
+      p.on('-h', '--help', 'This message') {$stdout.puts(p); exit}
+      p.on('-m', '--match=RE', 'Text at xpath should match RE') {|m| options.match = m}
+      p.on('-n', '--negate', 'Negate the exit status and actions') {|n| options.negate = n}
+      p.on('-p', '--print=MSG', 'Print a message when successful') {|p| options.print = p}
+      p.on('-P', '--nprint=MSG', 'Print a message when not successful') {|n| options.nprint = n}
+      p.on('-e', '--exit0', 'Always exit with code 0') {|e| options.noexit = e}
+      p.on('--mail-to=ADDR', 'Send email to ADDR') {|m| options.mail_to = m}
+      p.on('--mail-subject=SUBJECT', 'Set the email subject') {|s| option.mail_subject = s}
+    end.permute!(ARGV)
+    
+    raise("must give url and xpath") unless ARGV.size == 2
+    @url, @xpath = ARGV
+    @status = false
+  end
+  
+  ##############################################################################
+  def run
+    @doc = Nokogiri::HTML(open(@url))
+    @elements = Array(@doc.xpath(@xpath))
+    run_actions if @elements.empty?
+    
+    if options.match and @elements.any? {|e| e.content.to_s.match(options.match)}
+      @status = true
+    else
+      @status = true
+    end
+    
+    run_actions
+  rescue RuntimeError => e
+    @status = false
+    @error  = e.msg
+    run_actions
+  ensure
+    $stdout.puts(make_message(options.nprint)) if !@status and options.nprint
+    exit((@status || options.noexit) ? 0 : 1)
+  end
+  
+  ##############################################################################
+  private
+  
+  ##############################################################################
+  def run_actions
+    @status = !@status if options.negate
+    return unless @status
+    
+    if options.print
+      message = make_message(options.print)
+      $stdout.puts(message)
+    end
+    
+    sendmail if options.mail_to
+  end
+  
+  ##############################################################################
+  def make_message (input)
+    input.sub('%u', @url).
+          sub('%x', @xpath)
+  end
+  
+  ##############################################################################
+  def sendmail
+    open('|/usr/sbin/sendmail -t') do |sm|
+      sm.puts("To: #{options.mail_to}")
+      sm.puts("From: #{options.mail_to}")
+      sm.puts("Subject: #{make_message(options.mail_subject)}")
+      sm.puts
+    end
+  end
+end
+
+################################################################################
+XPathTool.new.run
+
+################################################################################
+#
+# Check to see when the iPad 2 goes on sale.
+#
+# xpath -enm soon \
+#    'http://store.apple.com/us/browse/home/shop_ipad/family/ipad/start/select?mco=MjEzNTIwNzE'
+#    '//span[@class="customer_commit_display"]'
