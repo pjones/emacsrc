@@ -17,7 +17,7 @@ all: $(DEST)
 
 define PKG_template
 $(DEST)/$(subst /,-,$(1)):
-	sh $(subst /,,$(dir $(1))).sh $(notdir $(1)) > /dev/null 2>&1
+	sh -x $(subst /,,$(dir $(1))).sh $(notdir $(1)) $(if $(VERBOSE),,> /dev/null 2>&1)
 	date > $$@
 endef
 

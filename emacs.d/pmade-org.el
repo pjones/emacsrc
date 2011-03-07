@@ -230,7 +230,7 @@ are formatted as HH:MM and returns them in that format"
 (defun pmade:org-clock-growl (msg)
   (let ((fname "/tmp/org-clock.txt"))
     (with-temp-file fname (insert msg))
-    (call-process "/opt/local/bin/growlnotify"
+    (call-process "growlnotify"
                   fname nil nil "-n" "Org" "-s" 
                   "-a" "Emacs" "-d" "modeline"
                   "OrgMode Clock")))
