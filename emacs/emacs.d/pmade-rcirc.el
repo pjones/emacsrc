@@ -52,7 +52,7 @@ Example use: /all away food or /all quit zzzz."
 
 (defun pmade:rcirc-notify (sender text)
   "Display a notification using growlnotify."
-  (call-process "/opt/local/bin/growlnotify"
+  (call-process "growlnotify"
                 nil nil nil "-n" "Chat"
                 "-a" "iChat" "-d" (concat "rcirc-" sender)
                 "-m" text (concat "Message from " sender)))
