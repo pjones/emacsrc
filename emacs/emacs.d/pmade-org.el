@@ -163,6 +163,23 @@
     (define-key org-agenda-mode-map "g" 'pmade:org-agenda-redo)
     (local-set-key "\C-x\C-w" 'pmade:org-write-agenda)))
 
+;; Publishing
+(setq org-publish-project-alist
+  '(("knowledge-base"
+     :style "<link rel=\"stylesheet\" href=\"/stylesheets/basic.css\" type=\"text/css\"/>"
+     :base-directory "~/Documents/pmade/knowledge-base"
+     :publishing-directory "~/Sites/knowledge-base"
+     :recursive t
+     :author-info t
+     :email-info t
+     :creator-info t
+     :timestamp t
+     :auto-preamble t
+     :auto-postamble t
+     :auto-sitemap t
+     :sitemap-title "Sitemap"
+     :sitemap-sort-folders 'last)))
+
 (defun pmade:org-write-agenda ()
   "Write the agenda buffer to a file, and send to pmade.com."
   (interactive)
