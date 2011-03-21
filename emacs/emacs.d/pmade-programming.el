@@ -90,7 +90,8 @@
     (when (string-match "\\.m$" buffer-file-name) (hs-hide-all))
     (load "emacs-xcode")
     (local-set-key "\C-ch" 'xcode/toggle-header-and-source)
-    (local-set-key "\C-c\C-c" 'xcode/build-compile)))
+    (local-set-key "\C-c\C-c" 'xcode/build-compile)
+    (local-set-key "\C-c\t" 'pmade-c-comment-bar)))
 
 ;; CSS, HTML
 (autoload 'css-mode "css-mode" "CSS" t)
@@ -133,3 +134,6 @@
 (setq svn-status-verbose nil)
 (autoload 'svn-status "psvn" "Run `svn status'." t)
 (autoload 'svn-update "psvn" "Run `svn update'." t)
+
+;; Other file name to mode mappings
+(add-to-list 'auto-mode-alist '("errors\\.out$" . compilation-mode))
