@@ -57,11 +57,4 @@ fi
 rm -r $DEST/$MP3_DIR
 
 if [ x$PLAYLIST != x ]; then
-  $ADD_SCRIPT \
-    --file     "$DEST/$MP3_DIR.mp3" \
-    --playlist "$PLAYLIST" \
-    --year     "$ITUNES_YEAR"
-    # --name     "$STATION $ITUNES_NAME" \
-    # --artist   "$STATION" \
-    # --album    "$SHOW" \
 fi
