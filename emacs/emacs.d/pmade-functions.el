@@ -97,7 +97,7 @@ placing it in the kill ring)."
   (interactive "P")
   (load "~/.emacs.d/pmade/pmade-rcirc")
   (pmade-bitlbee-start)
-  (if bitlbee-only (rcirc-connect "localhost") (irc)))
+  (if bitlbee-only (rcirc-connect "localhost") (rcirc nil)))
 
 (defun pmade-3-windows ()
   (interactive)
