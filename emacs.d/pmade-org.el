@@ -174,6 +174,11 @@
      :email-info t
      :creator-info t
      :timestamp t
+     :emphasize t
+     :sub-superscript t
+     :special-strings t
+     :tags t
+     :todo-keywords t
      :auto-preamble t
      :auto-postamble t
      :auto-sitemap t
