@@ -1,4 +1,5 @@
 PATH=/opt/local/bin:/opt/local/lib/postgresql/bin:/Users/pjones/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
+SHELL=/bin/sh
 
 # Backup Jobs and other remote junk
 # min hour dom mon dow cmd
@@ -35,3 +36,4 @@ PATH=/opt/local/bin:/opt/local/lib/postgresql/bin:/Users/pjones/bin:/usr/local/b
 # Clean things up
 # min hour dom mon dow cmd
    32    4   *   *   * find $HOME/Downloads -type f -mtime +14 -delete
+   32    5   *   *   * find $HOME/Downloads -depth -empty -type d -exec rmdir {} \;
