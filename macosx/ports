@@ -17,6 +17,7 @@ install w3m
 install wget
 install netcat
 install R
+install Platypus
 
 install postgresql84-server
 install mysql5 +server
