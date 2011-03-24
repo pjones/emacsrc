@@ -19,7 +19,6 @@ case $1 in
     SECONDS=7800
     STATION="Prague Radio 1"
     SHOW="News Of Alternative Scene by DJ Josef Sedlon"
-    PLAYLIST="Incoming"
     ;;
   -h)
     usage
@@ -34,6 +33,7 @@ if [ $# -eq 2 ]; then
   SECONDS=$2
 fi
 
+DEST=$DEST/$1
 FILE_NAME_DATE=`date +%Y%m%d-%H%M`
 ITUNES_NAME=`date +'%F %R'`
 ITUNES_YEAR=`date +%Y`
@@ -56,5 +56,11 @@ fi
 
 rm -r $DEST/$MP3_DIR
 
-if [ x$PLAYLIST != x ]; then
+if [ x"$STATION" != x ]; then
+  ruby $HOME/bin/rss \
+    --author "$STATION" \
+    --title  "$STATION" \
+    --description "$SHOW" \
+    --link "http://beefy.local/streams/$1" \
+    > $DEST/$1.rss
 fi

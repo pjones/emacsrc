@@ -1,0 +1,114 @@
+#!/usr/bin/env ruby
+
+################################################################################
+require('ostruct')
+require('optparse')
+require('time')
+require('erb')
+
+################################################################################
+class RSS
+  
+  ##############################################################################
+  TIME_F = '%a, %d %b %Y %H:%M:%S %Z'
+  
+  ##############################################################################
+  MIME = {
+    '.mp3' => 'audio/mpeg',
+  }
+  
+  ##############################################################################
+  DEFAULT_OPTIONS = {
+    :author      => 'None',               
+    :title       => 'RSS Feed',            
+    :link        => 'http://beefy.local/', 
+    :description => 'RSS Feed',      
+    :language    => 'en-us',               
+    :copyright   => 'Peter Jones',
+  }
+  
+  ##############################################################################
+  attr_reader(:options)
+  attr_reader(:files)
+  
+  ##############################################################################
+  def initialize
+    @files   = []
+    @options = OpenStruct.new(DEFAULT_OPTIONS)
+    
+    OptionParser.new do |p|
+      p.on('-h', '--help', 'This message') {$stdout.puts(p); exit}
+      
+      DEFAULT_OPTIONS.keys.each do |key|
+        p.on("--#{key}=VAL", key.to_s.capitalize) {|v| options.send("#{key}=", v)}
+      end
+    end.permute!(ARGV)
+  end
+  
+  ##############################################################################
+  def rss
+    Dir.foreach('.') do |file|
+      next unless file.match(/\.mp3$/)
+      rec = OpenStruct.new(:name => file,
+                           :title => parse_filename(file),
+                           :url => File.join(options.link, file),
+                           :size => File.size(file),
+                           :mime => MIME[File.extname(file)],
+                           :date => File.mtime(file).strftime(TIME_F))
+      @files << rec
+    end
+    
+    @files.sort! {|a,b| a.name <=> b.name}
+    ERB.new(DATA.read, 0, '<>').result(binding)
+  end
+  
+  ##############################################################################
+  private
+  
+  ##############################################################################
+  def parse_filename (file)
+    if m = file.match(/^.*-(\d{4})(\d{2})(\d{2})-(\d{2})(\d{2})\./)
+      t = Time.parse(m[1,3].join('/') + ' ' + m[4,2].join(':'))
+      t.strftime('%B %d, %Y %H:%M')
+    else
+      file
+    end
+  end
+end
+
+################################################################################
+begin
+  $stdout.puts(RSS.new.rss)
+rescue RuntimeError => e
+  $stderr.puts(File.basename($0) + ": ERROR: #{e}")
+  exit(1)
+end
+
+################################################################################
+__END__
+<?xml version="1.0" encoding="UTF-8"?>
+<rss xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" version="2.0">
+  <channel>
+    <title><%= options.title %></title>
+    <link><%= options.link %></link>
+    <copyright><%= options.copyright %></copyright>
+    <description><%= options.description %></description>
+    <language><%= options.language %></language>
+    <itunes:subtitle><%= options.description %></itunes:subtitle>
+    <itunes:author><%= options.author %></itunes:author>
+    <itunes:summary><%= options.description %></itunes:summary>
+    <generator>git://pmade.com/rc/bin/rss</generator>
+
+    <% files.each do |file| %>
+      <item>
+        <title><%= file.title %></title>
+        <link><%= file.url %></link>
+        <guid><%= file.url %></guid>
+        <pubDate><%= file.date %></pubDate>
+        <description><%= file.title %></description>
+        <itunes:author><%= options.author %></itunes:author>
+        <enclosure url="<%= file.url %>" length="<%= file.size %>" type="<%= file.mime %>"/>
+      </item>
+    <% end %>
+  </channel>
+</rss>
