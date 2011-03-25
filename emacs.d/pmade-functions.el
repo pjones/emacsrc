@@ -99,6 +99,14 @@ placing it in the kill ring)."
   (pmade-bitlbee-start)
   (if bitlbee-only (rcirc-connect "localhost") (rcirc nil)))
 
+(defun pmade-pwgen ()
+  "Generate and insert a password."
+  (interactive)
+  (let ((pw (replace-regexp-in-string "\n" ""
+              (shell-command-to-string "pwgen -cnB 12 1"))))
+    (kill-new pw)
+    (insert pw)))
+
 (defun pmade-3-windows ()
   (interactive)
   (split-window-horizontally)
