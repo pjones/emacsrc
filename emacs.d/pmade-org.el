@@ -119,38 +119,39 @@
  org-mobile-directory "/Volumes/pmade/org"
  org-mobile-inbox-for-pull (concat pmade-org-general-files "/from-mobile.org"))
 
-(add-hook 'org-mode-hook
-  (lambda ()
-    ;; Extra Bindings
-    (org-defkey org-mode-map "\C-ci"     'org-invoice-report)
-    (org-defkey org-mode-map "\C-\M-f"   'org-metaright)
-    (org-defkey org-mode-map "\C-\M-b"   'org-metaleft)
-    (org-defkey org-mode-map "\C-\M-S-f" 'org-shiftmetaright)
-    (org-defkey org-mode-map "\C-\M-S-b" 'org-shiftmetaleft)
-    (org-defkey org-mode-map "\C-\M-p"   'org-metaup)
-    (org-defkey org-mode-map "\C-\M-n"   'org-metadown)
+(defun pmade:org-mode-hook ()
+  ;; Extra Bindings
+  (org-defkey org-mode-map "\C-ci"     'org-invoice-report)
+  (org-defkey org-mode-map "\C-\M-f"   'org-metaright)
+  (org-defkey org-mode-map "\C-\M-b"   'org-metaleft)
+  (org-defkey org-mode-map "\C-\M-S-f" 'org-shiftmetaright)
+  (org-defkey org-mode-map "\C-\M-S-b" 'org-shiftmetaleft)
+  (org-defkey org-mode-map "\C-\M-p"   'org-metaup)
+  (org-defkey org-mode-map "\C-\M-n"   'org-metadown)
 
-    (org-defkey org-mode-map "\C-c0"               'pmade:org-hide-all)
-    (org-defkey org-mode-map "\C-c1"               'pmade:org-hide-others)
-    (org-defkey org-mode-map "\C-c\C-r"            'pmade:org-reveal)
-    (org-defkey org-mode-map "\C-j"                'pmade:org-list-append)
-    (org-defkey org-mode-map [(meta return)]       'pmade:org-list-append)
-    (org-defkey org-mode-map [(shift meta return)] 'pmade:org-list-append-with-checkbox)
+  (org-defkey org-mode-map "\C-c0"               'pmade:org-hide-all)
+  (org-defkey org-mode-map "\C-c1"               'pmade:org-hide-others)
+  (org-defkey org-mode-map "\C-c\C-r"            'pmade:org-reveal)
+  (org-defkey org-mode-map "\C-j"                'pmade:org-list-append)
+  (org-defkey org-mode-map [(meta return)]       'pmade:org-list-append)
+  (org-defkey org-mode-map [(shift meta return)] 'pmade:org-list-append-with-checkbox)
 
-    ;; Buffer Settings
-    (setq save-place nil)
-    
-    ;; Exporting
-    (setq 
-     org-latex-to-pdf-process (list "latexmk -pdf %s")
-     org-export-html-auto-postamble nil
-     org-export-with-sub-superscripts nil
-     org-export-with-emphasize nil
-     org-icalendar-include-todo nil
-     org-icalendar-store-UID t
-     org-export-html-style-default ""
-     org-export-html-style-extra ""
-     org-export-html-style (concat "<link rel=\"stylesheet\" type=\"text/css\" href=\"" pmade-print-css "\"/>"))))
+  ;; Buffer Settings
+  (setq save-place nil)
+  
+  ;; Exporting
+  (setq 
+   org-latex-to-pdf-process (list "latexmk -pdf %f")
+   org-export-html-auto-postamble nil
+   org-export-with-sub-superscripts nil
+   org-export-with-emphasize nil
+   org-icalendar-include-todo nil
+   org-icalendar-store-UID t
+   org-export-html-style-default ""
+   org-export-html-style-extra ""
+   org-export-html-style (concat "<link rel=\"stylesheet\" type=\"text/css\" href=\"" pmade-print-css "\"/>")))
+
+(add-hook 'org-mode-hook 'pmade:org-mode-hook)
 
 (add-hook 'org-agenda-mode-hook 
   (lambda () 
