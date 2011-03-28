@@ -57,10 +57,13 @@ fi
 rm -r $DEST/$MP3_DIR
 
 if [ x"$STATION" != x ]; then
-  ruby $HOME/bin/rss \
-    --author "$STATION" \
-    --title  "$STATION" \
-    --description "$SHOW" \
-    --link "http://beefy.local/streams/$1" \
-    > $DEST/$1.rss
+  find $DEST -type f -name '*.mp3' -mtime +30 -delete
+
+  (cd $DEST && \
+    ruby $HOME/bin/rss \
+      --author "$STATION" \
+      --title  "$STATION" \
+      --description "$SHOW" \
+      --link "http://beefy.local/streams/$1" \
+      > /$1.rss)
 fi
