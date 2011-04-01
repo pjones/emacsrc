@@ -36,7 +36,7 @@ autodetach on
 defscrollback 5000
 maptimeout 100
 hardstatus lastline
-caption always "%{= Kw}%?%F%{= bw}%?%-Lw%50>%{r.}[ %n %t ]%{= bw}%+Lw %= $SCREEN_SESSION_NAME"
+caption always "%{= Kw}%?%F%{= bk}%?%-Lw%50>%{gk}[ %n %t ]%{= bk}%+Lw %= $SCREEN_SESSION_NAME"
 bufferfile $HOME/.screen-exchange
 
 # Load a Screen File
