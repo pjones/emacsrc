@@ -6,7 +6,7 @@ $(HOME)/bin:
 	mkdir -p $@
 
 define COPY_template
-$(HOME)/bin/$(1): $(1) $(HOME)/bin
+$(HOME)/bin/$(1): $(1)
 	install -m 0770 $(1) $(HOME)/bin/$(1)
 endef
 
