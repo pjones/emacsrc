@@ -1,4 +1,5 @@
 ;;; Gnus Configuration (http://gnus.org/)
+(require 'nnir)
 
 ;; Load the rest of my Gnus config files
 (load "~/.gnus.d/options")
