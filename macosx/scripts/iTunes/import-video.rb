@@ -7,6 +7,7 @@ require('appscript')
 require('nokogiri')
 require('open-uri')
 require('ostruct')
+require('yaml')
 require('cgi')
 
 ################################################################################
@@ -84,6 +85,7 @@ class Driver
   ##############################################################################
   DEFAULT_OPTIONS = {
     :search     => nil,       
+    :info_file  => nil,
     :itunes_sel => false, 
   }
 
@@ -106,6 +108,11 @@ class Driver
         @mode = :search
       end
       
+      p.on('-f', '--file=NAME', 'Import tracks using a YAML file') do |f|
+        options.info_file = f
+        @mode = :file
+      end
+      
       p.on('-S', '--selection', 'Operate on the first iTunes selected item') do |s|
         options.itunes_sel = s
       end
@@ -118,6 +125,7 @@ class Driver
 
     case @mode
       when :search then search
+      when :file   then load_from_file
       else raise("WTF: you picked an invalid mode")
     end
   end
@@ -140,29 +148,53 @@ class Driver
     if options.itunes_sel
       update_track(details, @itunes.selection.get.first)
     else
-      import_movie(details, ARGV.first)
+      import_track(details, ARGV.first)
     end
   end
   
   ##############################################################################
-  def import_movie (movie, file)
-    file_ref = MacTypes::FileURL.path(File.expand_path(file))
-    track = @itunes.add(file_ref)
-    update_track(movie, track)
+  def load_from_file
+    data = YAML.load_file(options.info_file)
+    raise("missing 'basic' key") unless data.has_key?('basic')
+    raise("missing 'files' key") unless data.has_key?('files')
+    
+    base = File.dirname(options.info_file)
+
+    data['files'].each do |file|
+      file['file'] = File.expand_path(file['file'], base)
+      raise("no such file: #{file['file']}") unless File.exist?(file['file'])
+    end
+    
+    data['files'].each do |file|
+      info = OpenStruct.new(data['basic'].merge(file))
+      $stdout.puts(info.file)
+      import_track(info, info.file)
+    end
   end
   
   ##############################################################################
-  def update_track (movie, track)
-    track.name.set(movie.name)
-    track.show.set(movie.name)
-    track.album.set(movie.album || movie.name)
-    track.artist.set(movie.artist || '')
-    track.composer.set(movie.director || '')
-    track.genre.set(movie.genres.first)
-    track.year.set(movie.year)
-    track.description.set(movie.description || '')
-    
-    if poster_url = Array(movie.posters).detect {|u| u.match(/\.jpg$/i)}
+  def import_track (info, file)
+    file_ref = MacTypes::FileURL.path(File.expand_path(file))
+    track = @itunes.add(file_ref)
+    update_track(info, track)
+  end
+  
+  ##############################################################################
+  def update_track (info, track)
+    track.name.set(info.name)
+    track.show.set(info.show || info.name)
+    track.album.set(info.album || info.name)
+    track.artist.set(info.artist || '')
+    track.composer.set(info.director || '')
+    track.year.set(info.year)
+    track.genre.set(info.genres.first) if info.genres
+    track.genre.set(info.genre) if info.genre
+    track.description.set(info.description || '')
+    track.season_number.set(info.season.to_i) if info.season
+    track.episode_number.set(info.episode.to_i) if info.episode
+    track.video_kind.set(info.video_kind.to_sym) if info.video_kind
+
+    if poster_url = Array(info.posters).detect {|u| u.match(/\.jpg$/i)}
       $stdout.puts("Poster: #{poster_url}")
       data = open(poster_url) {|s| AE::AEDesc.new(KAE::TypeJPEG, s.read)}
       track.artworks[1].data_.set(data)
