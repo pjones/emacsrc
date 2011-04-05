@@ -25,9 +25,10 @@ SHELL=/bin/sh
 # min hour dom mon dow cmd
    55  12   *   *    0 sh $HOME/Develop/pmade/rc/macosx/scripts/iTunes/ripany.sh radio1cz
 
-# Download PDF periodicals and add them to iTunes
+# Download periodicals and add them to iTunes
 # min hour dom mon dow cmd
    15  03    *   *   0 ruby $HOME/Develop/pmade/rc/macosx/scripts/iTunes/pigmagrss.rb
+   15  05    *   *   * ruby $HOME/Develop/pmade/rc/macosx/scripts/iTunes/update-podcasts.rb
 
 # Reminders
 # min hour dom mon dow cmd
