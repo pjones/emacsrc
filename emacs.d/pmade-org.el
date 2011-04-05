@@ -183,9 +183,9 @@
      :auto-preamble t
      :auto-postamble t
      :auto-sitemap t
-     :inline-images t
-     :link-up t
-     :link-home t
+;;     :inline-images t
+;;     :link-up t
+;;     :link-home t
      :sitemap-title "Sitemap"
      :sitemap-sort-folders last)
     ("journal"
@@ -193,6 +193,7 @@
      :base-extension "org\\|jpg"
      :publishing-directory "~/Sites/journal"
      :publishing-function pmade:org-publish-html-or-image
+     :style "<link rel=\"stylesheet\" href=\"/stylesheets/basic.css\" type=\"text/css\"/>"
      :exclude "setup\\.org"
      :recursive t
      :author-info t
