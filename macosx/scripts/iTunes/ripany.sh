@@ -40,21 +40,23 @@ ITUNES_YEAR=`date +%Y`
 M3U_FILE=$DEST/$1.m3u
 MP3_DIR=$1-$FILE_NAME_DATE
 
-mkdir -p $DEST/$MP3_DIR
-echo "http://localhost:8000/" >> $M3U_FILE
-streamripper $URL --quiet -r -d $DEST/$MP3_DIR -a %q -l $SECONDS -o never -s
-rm $M3U_FILE
+if [ $SECONDS -ne 0 ]; then
+  mkdir -p $DEST/$MP3_DIR
+  echo "http://localhost:8000/" >> $M3U_FILE
+  streamripper $URL --quiet -r -d $DEST/$MP3_DIR -a %q -l $SECONDS -o never -s
+  rm $M3U_FILE
 
-COUNT=`ls $DEST/$MP3_DIR/*.mp3|wc -l`
+  COUNT=`ls $DEST/$MP3_DIR/*.mp3|wc -l`
 
-if [ $COUNT -gt 1 ]; then
-  (cd $DEST && mp3wrap $MP3_DIR.mp3 `ls $MP3_DIR/*.mp3|sort`) > /dev/null
-  mv $DEST/${MP3_DIR}_MP3WRAP.mp3 $DEST/$MP3_DIR.mp3
-else
-  cp $DEST/$MP3_DIR/0000.mp3 $DEST/$MP3_DIR.mp3
+  if [ $COUNT -gt 1 ]; then
+    (cd $DEST && mp3wrap $MP3_DIR.mp3 `ls $MP3_DIR/*.mp3|sort`) > /dev/null
+    mv $DEST/${MP3_DIR}_MP3WRAP.mp3 $DEST/$MP3_DIR.mp3
+  else
+    cp $DEST/$MP3_DIR/0000.mp3 $DEST/$MP3_DIR.mp3
+  fi
+
+  rm -r $DEST/$MP3_DIR
 fi
-
-rm -r $DEST/$MP3_DIR
 
 if [ x"$STATION" != x ]; then
   find $DEST -type f -name '*.mp3' -mtime +30 -delete
@@ -65,5 +67,5 @@ if [ x"$STATION" != x ]; then
       --title  "$STATION" \
       --description "$SHOW" \
       --link "http://beefy.local/streams/$1" \
-      > /$1.rss)
+      > $1.rss)
 fi
