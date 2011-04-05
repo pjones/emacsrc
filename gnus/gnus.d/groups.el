@@ -24,17 +24,11 @@
          (expiry-wait . 14)
          (gnus-thread-sort-functions '(gnus-thread-sort-by-number (not gnus-thread-sort-by-date))))))
         
-;; Posting Styles
+;; Posting Styles (least specific to most specific)
 (setq gnus-posting-styles
       `((".*"
          (signature-file ,(concat pmade-sigs-dir "/pmade")
          (From "Peter Jones <pjones@pmade.com>")))
-        ;; Misc Mailing Lists
-        (".*mlists"
-         (From "Peter Jones <mlists@pmade.com>"))
-        ;; Google Mailing Lists
-        ((header "to" ".*@googlegroups\\.com")
-         (From "Peter Jones <pjones@pmade.com>"))
         ;; Message from Rebekah
         ((header "from" ".*dontpatroneyesme.*")
          (gcc ,pmade-rebekah-group)
@@ -53,12 +47,26 @@
          (From "Peter Jones <pjones@contextualdevelopment.com>"))
         ;; News groups
         (message-news-p
-         (From "Peter Jones <mlists@pmade.com>"))))
+         (From "Peter Jones <mlists@pmade.com>"))
+        ;; Mailing Lists
+        (".*mlists"
+         (From "Peter Jones <mlists@pmade.com>"))
+        (".*rb-appscript"
+         (To "rb-appscript-discuss@rubyforge.org")
+         (From "Peter Jones <mlists@pmade.com>"))
+        (".*lcml"
+         (To "lcml@tlca.org")
+         (From "Peter Jones <suv8@pmade.org>")
+         (signature-file ,(concat pmade-sigs-dir "/fj40")))
+        ;; Google Mailing Lists
+        ((header "to" ".*@googlegroups\\.com")
+         (From "Peter Jones <pjones@pmade.com>"))))
 
 ;; Mailing Lists
 (setq message-subscribed-addresses
       '("landcruisers@tlca.org"
         "rubyosa-discuss@rubyforge.org"
+        "rb-appscript-discuss@rubyforge.org"
         "bdrg-members@rubyforge.org"
         "emacs-app-dev-@lists.sourceforge.net"
         "derailed@googlegroups.com"
