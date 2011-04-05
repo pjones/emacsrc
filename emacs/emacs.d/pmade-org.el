@@ -183,8 +183,37 @@
      :auto-preamble t
      :auto-postamble t
      :auto-sitemap t
+     :inline-images t
+     :link-up t
+     :link-home t
      :sitemap-title "Sitemap"
-     :sitemap-sort-folders 'last)))
+     :sitemap-sort-folders last)
+    ("journal"
+     :base-directory "~/Documents/journal"
+     :base-extension "org\\|jpg"
+     :publishing-directory "~/Sites/journal"
+     :publishing-function pmade:org-publish-html-or-image
+     :exclude "setup\\.org"
+     :recursive t
+     :author-info t
+     :email-info t
+     :creator-info t
+     :timestamp t
+     :emphasize t
+     :sub-superscript t
+     :special-strings t
+     :tags t
+     :todo-keywords t
+     :auto-preamble t
+     :auto-postamble t
+     :auto-sitemap t
+     :sitemap-title "Sitemap"
+     :sitemap-sort-folders last)))
+
+(defun pmade:org-publish-html-or-image (plist filename pub-dir)
+  (if (string-match "\\.org$" filename)
+      (org-publish-org-to-html plist filename pub-dir)
+    (org-publish-attachment plist filename pub-dir)))
 
 (defun pmade:org-write-agenda ()
   "Write the agenda buffer to a file, and send to pmade.com."
