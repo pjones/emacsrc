@@ -119,6 +119,16 @@
  org-mobile-directory "/Volumes/pmade/org"
  org-mobile-inbox-for-pull (concat pmade-org-general-files "/from-mobile.org"))
 
+(defun pmade:org-tex-to-pdf (file)
+  (let* ((dir (file-name-directory file))
+         (base (file-name-nondirectory file))
+         (pdf (concat (file-name-sans-extension base) ".pdf")))
+    (shell-command (concat "cd " dir " && latexmk -pdf " base))
+    (shell-command (concat "cd " dir " && mv " pdf " __" pdf))
+    (shell-command (concat "cd " dir " && latexmk -CA " base))
+    (shell-command (concat "cd " dir " && mv __" pdf " " pdf))
+    (delete-file file)))
+
 (defun pmade:org-mode-hook ()
   ;; Extra Bindings
   (org-defkey org-mode-map "\C-ci"     'org-invoice-report)
@@ -141,7 +151,7 @@
   
   ;; Exporting
   (setq 
-   org-latex-to-pdf-process (list "latexmk -pdf %f")
+   org-latex-to-pdf-process 'pmade:org-tex-to-pdf
    org-export-html-auto-postamble nil
    org-export-with-sub-superscripts nil
    org-export-with-emphasize nil
