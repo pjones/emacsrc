@@ -4,7 +4,7 @@
 LATEX_FILES ?= $(wildcard *.tex)
 DOT_FILES   ?= $(wildcard *.dot)
 LATEST_TEX  ?= $(shell ls -rt *.tex|tail -1)
-ALSO_REMOVE  = aux glg glo gls ist xdy 4ct 4tc idv lg
+ALSO_REMOVE  = aux glg glo gls ist xdy 4ct 4tc idv lg nav snm vrb
 # SINGLE_PDF = Set to YES for generating a single PDF file
 
 ############################################################################
@@ -12,7 +12,7 @@ all: $(DOT_FILES:.dot=.pdf) $(LATEX_FILES:.tex=.pdf)
 
 ############################################################################
 clean:
-	@for f in $(LATEX_FILES); do latexmk -C $$f; done
+	@for f in $(LATEX_FILES); do latexmk -CA $$f > /dev/null 2>&1; done
 	@for f in $(DOT_FILES:.dot=.pdf); do rm -f $$f; done
 	@rm -f $(foreach f,$(ALSO_REMOVE),*.$(f))
 	@rm -f $(LATEX_FILES:.tex=.tmp) $(LATEX_FILES:.tex=.html) \
