@@ -11,7 +11,7 @@
         (green      "#859900")
         (bg-normal  "#002b36")
         (bg-high    "#073642")
-        (bg-low     "#002029f")
+        (bg-low     "#002029")
         (bg-inverse "#fdf6e3")
         (fg-normal  "#839496")
         (fg-low     "#586e75")
