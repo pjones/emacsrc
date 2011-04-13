@@ -155,7 +155,7 @@
      `(ido-subdir      ((t (:inherit 'font-lock-function-name-face))))
 
      ;; rcIRC
-     `(rcirc-track-nick    ((t (:foreground ,fg-high :bold t))))
+     `(rcirc-track-nick    ((t (:foreground ,fg-low :bold t))))
      `(rcirc-track-keyword ((t (:inherit 'rcirc-track-nick))))
      `(rcirc-server        ((t (:foreground ,fg-high))))
      `(rcirc-timestamp     ((t (:inherit 'rcirc-server))))
