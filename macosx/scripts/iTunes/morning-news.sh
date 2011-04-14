@@ -1,6 +1,6 @@
 #!/bin/sh
 
-osascript ~/Develop/pmade/rc/macosx/scripts/iTunes/mobile-speakers.applescript
+osascript ~/Develop/pmade/rc/macosx/scripts/iTunes/mobile-speakers.applescript "Mobile Audio"
 
 cat <<EOF | osascript
 tell application "iTunes"
