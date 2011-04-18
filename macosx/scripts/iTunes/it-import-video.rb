@@ -189,6 +189,7 @@ class Driver
     track.year.set(info.year)
     track.genre.set(info.genres.first) if info.genres
     track.genre.set(info.genre) if info.genre
+    track.comment.set(info.comment || '')
     track.description.set(info.description || '')
     track.season_number.set(info.season.to_i) if info.season
     track.episode_number.set(info.episode.to_i) if info.episode
