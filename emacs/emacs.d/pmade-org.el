@@ -61,7 +61,7 @@
  ;; Agenda Files and Agenda Settings
  org-agenda-window-setup 'current-window
  org-agenda-restore-windows-after-quit nil
- org-stuck-projects '("+LEVEL=2+project" ("NEXT" "PENDING" "BLOCKED") ("single") nil)
+ org-stuck-projects '("+LEVEL=2+project-90octane" ("NEXT" "PENDING") ("single") nil)
  org-agenda-ndays 1
  org-agenda-skip-deadline-if-done t
  org-agenda-skip-scheduled-if-done t
