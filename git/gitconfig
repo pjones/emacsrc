@@ -10,5 +10,6 @@
         st = status
         ci = commit
         co = checkout
+        sb = submodule
 [core]
 	excludesfile = /Users/pjones/.gitignore
