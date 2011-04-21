@@ -62,13 +62,14 @@
 (show-paren-mode t)
 (transient-mark-mode t)
 
-;; Use numbered backups, but keep them from cluttering up working directories
-(setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
-(setq delete-old-versions t)
-(setq kept-new-versions 6)
-(setq kept-old-versions 2)
-(setq version-control t)
-(setq backup-by-copying t)
+;; Auto-save, backups, and version control
+(setq backup-directory-alist '(("." . "~/.emacs.d/backups"))
+      delete-old-versions t
+      kept-new-versions 6
+      kept-old-versions 2
+      version-control 'never            ; version numbers on backups
+      backup-by-copying t
+      vc-handled-backends nil)          ; disable SCCS integration
 
 ;; URL browsing
 ;; (setq browse-url-browser-function 'browse-url-generic
