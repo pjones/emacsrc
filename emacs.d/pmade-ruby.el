@@ -4,8 +4,6 @@
 
 (defun pmade-ruby-mode-hook ()
   "Correctly setup a Ruby buffer"
-  (require 'ruby-end)
-  (ruby-end-mode t)
   (inf-ruby-keys)
   (pmade-programming-mode-hook)
   (define-key ruby-mode-map "\C-c\t" 'pmade-pound-comment-bar)
