@@ -1,6 +1,6 @@
 ;;; org-basecamp.el --- Basecamp (http://basecamphq.com) to-do lists in org
 ;;
-;; Copyright (C) 2010 pmade inc. (Peter Jones pjones@pmade.com)
+;; Copyright (C) 2010-2011 pmade inc. (Peter Jones pjones@pmade.com)
 ;;
 ;; Permission is hereby granted, free of charge, to any person obtaining
 ;; a copy of this software and associated documentation files (the
@@ -144,6 +144,19 @@ current heading doesn't have a Basecamp ID an error is raised."
       (org-insert-heading-respect-content)
       (org-demote-subtree))))
 
+(defun org-basecamp-find-heading (id)
+  "Return the heading with the given ID, as long as it's not in
+the ARCHIVE.  If it is in the ARCHIVE change its ID and return
+nil."
+  (let ((heading (org-find-entry-with-id id)))
+    (when (and heading (member "ARCHIVE" (org-get-tags-at heading)))
+      (save-excursion 
+        (goto-char heading)
+        (org-set-property "ID" "")
+        (org-set-property "BASECAMP-ARCHIVED-FROM-ID" id)
+        (setq heading nil)))
+    heading))
+      
 (defun org-basecamp-pull-todo-cb (status orgbuf point)
   (let ((doc (org-basecamp-parse-results status))
         (org-basecamp-updating t)
@@ -158,7 +171,7 @@ current heading doesn't have a Basecamp ID an error is raised."
           (when (not (= 0 (length (xml-get-children items 'todo-item))))
             (setq rawid (org-basecamp:xml-child-content todo-list 'id))
             (setq id (concat org-basecamp-todo-list-id-prefix rawid))
-            (setq tl-heading (org-find-entry-with-id id))
+            (setq tl-heading (org-basecamp-find-heading id))
             (when (not tl-heading)
               (setq name (org-basecamp:xml-child-content todo-list 'name))
               (if last-tl
@@ -176,7 +189,7 @@ current heading doesn't have a Basecamp ID an error is raised."
             (dolist (todo-item (xml-get-children items 'todo-item))
               (setq rawid (org-basecamp:xml-child-content todo-item 'id))
               (setq id (concat org-basecamp-todo-item-id-prefix rawid))
-              (setq ti-heading (org-find-entry-with-id id))
+              (setq ti-heading (org-basecamp-find-heading id))
               (when (not ti-heading)
                 (setq name (org-basecamp:xml-child-content todo-item 'content))
                 (setq ti-state (org-basecamp:xml-child-content todo-item 'completed))
