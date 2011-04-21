@@ -50,11 +50,7 @@
 ;; Dired-X
 (require 'dired-x)
 
-;; Add window numbers
-(require 'window-number)
-(window-number-mode 1)
-
-;; Also try windmove
+;; Winmove is awesome
 (windmove-default-keybindings 'hyper)
 (setq windmove-wrap-around t)
 

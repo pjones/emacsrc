@@ -63,13 +63,6 @@
   
 ;; Settings for Terminal mode
 (defun pmade-term-mode-hook ()
-  ;; Window Number Mode F**ks up C-x C-j
-  (when (fboundp 'window-number-select)
-    (dotimes (i 10)
-      (define-key window-number-mode-map 
-        (concat "\C-x\C-j" (number-to-string i)) nil))
-    (define-key window-number-mode-map "\C-x\C-j" nil))
-  
   ;; Key Bindings (C-x is the prefix command)
   (term-set-escape-char ?\C-x)
   
