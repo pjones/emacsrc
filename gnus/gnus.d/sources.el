@@ -23,7 +23,8 @@
       smtpmail-starttls-credentials `((,pmade-smtp-host ,pmade-smtp-port nil nil))
       smtpmail-local-domain "pmade.com"
       starttls-use-gnutls t
-      gnus-message-archive-group "nnimap+mail.pmade.com:INBOX.Sent")
+      gnus-message-archive-group "nnimap+mail.pmade.com:INBOX.Sent"
+      gnus-gcc-mark-as-read t)
 
 (setq 
    gnus-select-method 
