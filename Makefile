@@ -25,6 +25,11 @@ DIRS += screen
 endif
 
 ################################################################################
+ifeq (sa-learn,$(notdir $(shell which sa-learn)))
+DIRS += spamassassin
+endif
+
+################################################################################
 ifeq (git,$(notdir $(shell which git)))
 DIRS += git
 endif

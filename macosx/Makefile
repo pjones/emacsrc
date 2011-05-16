@@ -1,7 +1,7 @@
 HOST = $(shell hostname)
 
 all:
-	$(MAKE) -C scripts/iTunes all
+	@ $(MAKE) -C scripts/iTunes all
 
 ifneq (,$(wildcard crontab/$(HOST)))
 all: $(HOME)/.crontab-stamp
