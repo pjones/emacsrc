@@ -5,4 +5,6 @@ required_score 4
 # read from the installed spamassassin rules files, but you can override them
 # here.  To see the list of tests and their default scores, go to
 # http://spamassassin.apache.org/tests.html .
-score MICROSOFT_EXECUTABLE 3
+score MICROSOFT_EXECUTABLE 3.0
+score URIBL_BLACK 2.0
+score URIBL_RHS_URIBL_BLACK 2.0
