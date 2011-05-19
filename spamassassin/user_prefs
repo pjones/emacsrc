@@ -25,3 +25,7 @@ score BAYES_99  9
 # Personal rules
 header PMADE_SOMEONE_SEARCHED_FOR_YOU Subject =~ /an old friend searched for you at/i
 score  PMADE_SOMEONE_SEARCHED_FOR_YOU 5.0
+
+# Blacklists
+blacklist_from *@pmade.org
+blacklist_from *@blueredgolds.info
