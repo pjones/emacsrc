@@ -84,9 +84,10 @@ class Driver
 
   ##############################################################################
   DEFAULT_OPTIONS = {
-    :search     => nil,       
-    :info_file  => nil,
-    :itunes_sel => false, 
+    :search      => nil,   
+    :info_file   => nil,   
+    :itunes_sel  => false, 
+    :gen_episode => nil,  
   }
 
   ##############################################################################
@@ -116,6 +117,14 @@ class Driver
       p.on('-S', '--selection', 'Operate on the first iTunes selected item') do |s|
         options.itunes_sel = s
       end
+      
+      p.on('-g', '--generate', 'Generate a YAML import file') do
+        @mode = :generate
+      end
+      
+      p.on('--episode=NUM', 'Start episode at NUM when using -g') do |e|
+        options.gen_episode = e.to_i
+      end
     end.permute!(ARGV)
   end
 
@@ -124,8 +133,9 @@ class Driver
     @itunes = Appscript.app('iTunes.app')
 
     case @mode
-      when :search then search
-      when :file   then load_from_file
+      when :search   then search
+      when :file     then load_from_file
+      when :generate then generate_load_file
       else raise("WTF: you picked an invalid mode")
     end
   end
@@ -170,6 +180,43 @@ class Driver
       $stdout.puts(info.file)
       import_track(info, info.file)
     end
+  end
+  
+  ##############################################################################
+  def generate_load_file
+    info = {
+      'basic' => {
+        'show'       => 'Show Name',         
+        'album'      => 'Show With Season', 
+        'genre'      => 'Comedy',           
+        'year'       => 1990,               
+        'season'     => 1,                 
+        'posters'    => 'artwork.jpg',    
+        'video_kind' => 'TV_show',     
+      }
+    }
+    
+    files = []
+    episode = options.gen_episode
+    
+    ARGV.each do |name|
+      file = {
+        'file'        => name,           
+        'name'        => 'Track_Name', 
+        'comment'     => nil,         
+        'description' => nil,     
+      }
+      
+      if episode
+        file['episode'] = episode
+        episode += 1
+      end
+      
+      files << file
+    end
+    
+    info['files'] = files
+    $stdout.puts(info.to_yaml)
   end
   
   ##############################################################################
