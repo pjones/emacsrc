@@ -9,10 +9,11 @@ use_auto_whitelist 1
 # read from the installed spamassassin rules files, but you can override them
 # here.  To see the list of tests and their default scores, go to
 # http://spamassassin.apache.org/tests.html .
-score MIME_HTML_ONLY         2.5
+score MIME_HTML_ONLY         3.0
 score MICROSOFT_EXECUTABLE   3.0
 score URIBL_BLACK            3.0
 score URIBL_RHS_URIBL_BLACK  3.0
+score URIBL_JP_SURBL         3.0
 
 # Use the local bayes database to help score spam
 # http://wiki.apache.org/spamassassin/BasicConfiguration
