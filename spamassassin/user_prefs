@@ -1,11 +1,22 @@
 # How many points before a mail is considered spam.
 required_score 3
 
+# Enable auto white listing
+# http://wiki.apache.org/spamassassin/AutoWhitelist
+use_auto_whitelist 1
+
 # Add your own customised scores for some tests below.  The default scores are
 # read from the installed spamassassin rules files, but you can override them
 # here.  To see the list of tests and their default scores, go to
 # http://spamassassin.apache.org/tests.html .
-score MIME_HTML_ONLY         2.5 2.5 2.5 2.5
-score MICROSOFT_EXECUTABLE   3.0 3.0 3.0 3.0
-score URIBL_BLACK            3.0 3.0 3.0 3.0
-score URIBL_RHS_URIBL_BLACK  3.0 3.0 3.0 3.0
+score MIME_HTML_ONLY         2.5
+score MICROSOFT_EXECUTABLE   3.0
+score URIBL_BLACK            3.0
+score URIBL_RHS_URIBL_BLACK  3.0
+
+# Use the local bayes database to help score spam
+# http://wiki.apache.org/spamassassin/BasicConfiguration
+score BAYES_00 -4
+score BAYES_05 -2
+score BAYES_95  6
+score BAYES_99  9
