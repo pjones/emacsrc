@@ -36,14 +36,14 @@
  org-fast-tag-selection-single-key t
  org-special-ctrl-a/e t
  org-special-ctrl-k t
- org-M-RET-may-split-line nil
+ org-M-RET-may-split-line t
  org-time-clocksum-format "%02d:%02d"
  org-clock-into-drawer "CLOCK"
  org-log-into-drawer "LOGBOOK"
  org-tags-exclude-from-inheritance nil
  org-completion-use-ido t
  org-goto-interface 'outline-path-completion
- org-outline-path-complete-in-steps nil
+ org-outline-path-complete-in-steps t
  
  ;; Showing context
  org-show-hierarchy-above '((default . t))
