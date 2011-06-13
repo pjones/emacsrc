@@ -45,6 +45,10 @@
         ((header "to" "pjones@contextualdevelopment\\.com")
          (signature-file ,(concat pmade-sigs-dir "/contextual"))
          (From "Peter Jones <pjones@contextualdevelopment.com>"))
+        ;; Messages to my Land Cruiser Aliases
+        ((header "to" "suv8@pmade\\.org")
+         (From "Peter Jones <suv8@pmade.org>")
+         (signature-file ,(concat pmade-sigs-dir "/fj40")))
         ;; News groups
         (message-news-p
          (From "Peter Jones <mlists@pmade.com>"))
