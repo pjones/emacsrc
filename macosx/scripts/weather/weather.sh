@@ -17,7 +17,7 @@ CACHE_FOR=3600
 
 ################################################################################
 NOW=`date +%s`
-MTIME=`stat -f %Dm $XML`
+MTIME=`stat -f %Dm $XML 2> /dev/null`
 AGE=`expr $NOW - ${MTIME:-0}`
 
 if [ \( ! -r $XML \) -o \( ${AGE:-0} -ge $CACHE_FOR \) ]; then
