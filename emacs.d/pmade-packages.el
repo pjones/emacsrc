@@ -11,7 +11,7 @@
 
 ;; Use Aspell
 (setq ispell-extra-args '("--rem-filter=nroff")
-      ispell-program-name "/opt/local/bin/aspell")
+      ispell-program-name "aspell")
 (setenv "ASPELL_CONF" nil)
 (add-hook 'text-mode-hook 'turn-on-flyspell)
 
