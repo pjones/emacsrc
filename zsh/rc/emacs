@@ -12,7 +12,6 @@ fi
 # Load a file in emacs via emacsclient, and then raise emacs
 e () 
 {
-  remote-emacs-session.sh --eval '(elscreen-goto 3)' > /dev/null
   remote-emacs-session.sh -n $1
 }
 

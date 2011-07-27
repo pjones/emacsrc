@@ -5,12 +5,20 @@
 #
 if [ $# != 1 ]; then
     echo "Usage: $0 <host>"
-    return
+    return 1
 fi
 
 to_host=$1
-src=~/.ssh/id_dsa.pub
 tmp=newkey
+
+if [ -r ~/.ssh/id_dsa.pub ]; then
+  src=~/.ssh/id_dsa.pub
+elif [ -r ~/.ssh/id_rsa.pub ]; then
+  src=~/.ssh/id_rsa.pub
+else
+  echo "ERROR: no public key found"
+  return 1
+fi
 
 cat $src | ssh $to_host "
     mkdir -p ~/.ssh;
