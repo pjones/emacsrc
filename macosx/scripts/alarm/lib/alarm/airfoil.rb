@@ -2,6 +2,7 @@ class Alarm::Airfoil
   
   ##############################################################################
   attr_accessor(:default_speaker)
+  attr_accessor(:controlling)
   
   ##############################################################################
   def initialize
@@ -11,14 +12,18 @@ class Alarm::Airfoil
 
     @default_speaker = 'Mobile Audio'
     @verbose = true
-    
-    disconnect_all_speakers
+    @controlling = []
   end
   
   ##############################################################################
   def get_audio_from (source="iTunes")
-    Appscript.app("#{source}.app").quit
-    sleep(5)
+    if !@controlling.include?(source)
+      Appscript.app("#{source}.app").quit
+      sleep(5)
+      @controlling << source
+    end
+
+    disconnect_all_speakers
     src = @app.application_sources[source].get
     @app.current_audio_source.set(src)
     connect_to_speaker(@default_speaker)
@@ -80,6 +85,7 @@ class Alarm::Airfoil
     sleep(doc.duration.get + 10) # compensate for playback delay
     doc.close
     qt.quit
+    @controlling.delete('QuickTime Player')
   ensure
     File.unlink(audio_file) if audio_file and File.exist?(audio_file)
   end

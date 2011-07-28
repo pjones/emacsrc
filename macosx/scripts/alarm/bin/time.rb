@@ -1,0 +1,53 @@
+#!/usr/bin/env ruby
+
+################################################################################
+$:.unshift(File.expand_path('../lib', File.dirname(__FILE__)))
+require('alarm')
+require('ostruct')
+require('optparse')
+
+################################################################################
+class AnnounceTime
+  
+  ##############################################################################
+  DEFAULT_OPTIONS = {
+    :stop => false,
+  }
+  
+  ##############################################################################
+  attr_reader(:options)
+  
+  ##############################################################################
+  def initialize
+    @options = OpenStruct.new(DEFAULT_OPTIONS)
+    
+    OptionParser.new do |o|
+      o.on('-h', '--help', 'This message') {$stderr.puts(o); exit}
+      o.on('-s', '--stop', 'Stop iTunes after announcement') {|s| options.stop = s}
+    end.parse!(ARGV)
+  end
+  
+  ##############################################################################
+  def run
+    itunes = Alarm::ITunes.new
+    itunes.fade_out_and_stop
+    
+    airfoil = Alarm::Airfoil.new
+    airfoil.speak_string("The time is now #{Time.now.strftime("%H:%M")}")
+    
+    if !options.stop
+      airfoil.controlling << 'iTunes'
+      airfoil.get_audio_from('iTunes')
+      itunes.fade_in_playlist("Morning Energy", :speed => :fast)
+    end
+  end
+end
+
+################################################################################
+begin
+  AnnounceTime.new.run
+rescue RuntimeError => e
+  $stderr.puts($0 + "ERROR: #{e}")
+  exit(1)
+end
+

@@ -1,9 +1,6 @@
 class Alarm::ITunes
   
   ##############################################################################
-  MAX_VOL = 70
-  
-  ##############################################################################
   def initialize
     @app = Appscript.app('iTunes.app')
     @app.activate
@@ -21,17 +18,37 @@ class Alarm::ITunes
   end
   
   ##############################################################################
-  def fade_in
-    (1..MAX_VOL).each do |level|
+  def fade_in (options={})
+    options = {
+      :speed => :slow,
+    }.merge(options)
+
+    delay = options[:speed] == :slow ? 3 : 0.1
+
+    (1..Alarm::MAX_VOL).each do |level|
       self.volume = level
-      sleep(3)
+      sleep(delay)
     end
   end
   
   ##############################################################################
-  def fade_in_playlist (name)
+  def fade_in_playlist (name, options={})
     self.volume = 1
     start_playlist(name)
-    fade_in
+    fade_in(options)
+  end
+
+  ##############################################################################
+  def fade_out
+    (0..@app.sound_volume.get).to_a.reverse.each do |level|
+      self.volume = level
+      sleep(0.1)
+    end
+  end
+  
+  ##############################################################################
+  def fade_out_and_stop
+    fade_out
+    @app.stop
   end
 end
