@@ -33,7 +33,7 @@ class MorningAlarm
     EOD
 
     @airfoil.speak_string(greeting.gsub(/\s*\n\s*/, ' '))
-    @airfoil.speak_weather(80026)
+    @airfoil.speak_weather(80026, :voice => 'Serena')
   end
 end
 

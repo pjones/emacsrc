@@ -45,21 +45,25 @@ class Alarm::Airfoil
   end
   
   ##############################################################################
-  def speak_weather (zipcode)
+  def speak_weather (zipcode, options={})
     FileUtils.mkdir_p(Alarm::TEMP_DIR)
     text_file = File.join(Alarm::TEMP_DIR, 'weather.txt')
     system("#{Alarm::WEATHER_SCRIPT} #{zipcode.to_i} > #{text_file}")
-    speak_file(text_file)
+    speak_file(text_file, options)
   ensure
     File.unlink(text_file) if text_file and File.exist?(text_file)
   end
   
   ##############################################################################
   # Can't use Tempfile here because QuickTime refuses to open such files.
-  def speak_file (name)
+  def speak_file (name, options={})
+    options = {
+      :voice => Alarm::DEFAULT_VOICE,
+    }.merge(options)
+
     FileUtils.mkdir_p(Alarm::TEMP_DIR)
     audio_file = File.join(Alarm::TEMP_DIR, 'alarm_speak_file.aiff')
-    system(*%W(say -f #{name} -o #{audio_file}))
+    system('say', '-v', options[:voice], '-f', name, '-o', audio_file)
       
     get_audio_from('QuickTime Player')
     qt = Appscript.app('QuickTime Player.app')
@@ -81,11 +85,11 @@ class Alarm::Airfoil
   end
   
   ##############################################################################
-  def speak_string (str)
+  def speak_string (str, options={})
     Tempfile.open('alarm_say_txt') do |file|
       file.puts(str)
       file.close
-      speak_file(file.path)
+      speak_file(file.path, options)
     end
   end
   
