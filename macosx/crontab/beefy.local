@@ -9,12 +9,10 @@ SHELL=/bin/sh
 
 # Morning Wake-Up Schedule
 # min hour dom mon dow  cmd
-#  00  06   *   *  1-5  sh $HOME/Develop/pmade/rc/macosx/scripts/iTunes/kgnu-rip.sh
-#  35  06   *   *  1-5  sh $HOME/Develop/pmade/rc/macosx/scripts/iTunes/morning-news.sh
-   30  06   *   *  1-5  osascript $HOME/Develop/pmade/rc/macosx/scripts/iTunes/wake-up.applescript
-   35  06   *   *  1-5  sh $HOME/Develop/pmade/rc/macosx/scripts/iTunes/morning-energy.sh
-   45  06   *   *  1-5  sh $HOME/Develop/pmade/rc/macosx/scripts/iTunes/morning-energy.sh time
-   00  07   *   *  1-5  sh $HOME/Develop/pmade/rc/macosx/scripts/iTunes/computer-speaker.sh
+   30  06   *   *  1-5  ruby $HOME/Develop/pmade/rc/macosx/scripts/alarm/bin/wakeup.rb
+   35  06   *   *  1-5  ruby $HOME/Develop/pmade/rc/macosx/scripts/alarm/bin/weather.rb
+   45  06   *   *  1-5  ruby $HOME/Develop/pmade/rc/macosx/scripts/alarm/bin/time.rb
+   00  07   *   *  1-5  ruby $HOME/Develop/pmade/rc/macosx/scripts/alarm/bin/stopall.rb
 
 # Generate Org Files for Appointments
 # min hour dom mon dow cmd
