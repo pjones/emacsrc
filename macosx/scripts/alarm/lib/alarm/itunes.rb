@@ -18,6 +18,11 @@ class Alarm::ITunes
   end
   
   ##############################################################################
+  def playing?
+    @app.player_state.get == :playing
+  end
+  
+  ##############################################################################
   def fade_in (options={})
     options = {
       :speed => :slow,

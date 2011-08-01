@@ -25,20 +25,20 @@ class AnnounceTime
       o.on('-h', '--help', 'This message') {$stderr.puts(o); exit}
       o.on('-s', '--stop', 'Stop iTunes after announcement') {|s| options.stop = s}
     end.parse!(ARGV)
+
+    @airfoil = Alarm::Airfoil.new
+    @itunes  = Alarm::ITunes.new
+    @playing = @itunes.playing?
   end
   
   ##############################################################################
   def run
-    itunes = Alarm::ITunes.new
-    itunes.fade_out_and_stop
-    
-    airfoil = Alarm::Airfoil.new
+    @itunes.fade_out_and_stop if @playing
     airfoil.speak_string("The time is now #{Time.now.strftime("%H:%M")}")
     
-    if !options.stop
-      airfoil.controlling << 'iTunes'
-      airfoil.get_audio_from('iTunes')
-      itunes.fade_in_playlist("Morning Energy", :speed => :fast)
+    if @playing and !options.stop
+      @airfoil.get_audio_from('iTunes')
+      @itunes.fade_in_playlist("Morning Energy", :speed => :fast)
     end
   end
 end

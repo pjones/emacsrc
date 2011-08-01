@@ -12,17 +12,10 @@ class Alarm::Airfoil
 
     @default_speaker = 'Mobile Audio'
     @verbose = true
-    @controlling = []
   end
   
   ##############################################################################
   def get_audio_from (source="iTunes")
-    if !@controlling.include?(source)
-      Appscript.app("#{source}.app").quit
-      sleep(5)
-      @controlling << source
-    end
-
     disconnect_all_speakers
     src = @app.application_sources[source].get
     @app.current_audio_source.set(src)

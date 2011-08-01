@@ -9,20 +9,20 @@ class WeatherAlarm
   
   ##############################################################################
   def initialize
-    itunes = Alarm::ITunes.new
-    itunes.fade_out_and_stop
-
     @airfoil = Alarm::Airfoil.new
-    @airfoil.controlling << 'iTunes'
+    @itunes = Alarm::ITunes.new
+    @playing = @itunes.playing?
+    @itunes.fade_out_and_stop if @playing
   end
   
   ##############################################################################
   def run
     good_morning_and_weather
 
-    @airfoil.get_audio_from('iTunes')
-    itunes = Alarm::ITunes.new
-    itunes.fade_in_playlist("Morning Energy", :speed => :fast)
+    if @playing
+      @airfoil.get_audio_from('iTunes')
+      @itunes.fade_in_playlist("Morning Energy", :speed => :fast)
+    end
   end
   
   ##############################################################################
