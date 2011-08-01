@@ -245,7 +245,7 @@ class Driver
     if poster_url = Array(info.posters).detect {|u| u.match(/\.jpg$/i)}
       $stdout.puts("Poster: #{poster_url}")
       data = open(poster_url) {|s| AE::AEDesc.new(KAE::TypeJPEG, s.read)}
-      track.artworks[1].data_.set(data)
+      track.artworks[1].raw_data.set(data)
     end
   end
 end
