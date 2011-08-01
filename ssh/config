@@ -2,3 +2,5 @@
 # Default Settings For All Connections
 Host *
     ForwardAgent yes
+    ControlMaster auto
+    ControlPath ~/.ssh/master/%r@%h:%p
