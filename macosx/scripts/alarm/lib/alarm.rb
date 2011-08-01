@@ -15,3 +15,4 @@ end
 ################################################################################
 require('alarm/airfoil')
 require('alarm/itunes')
+require('alarm/say')

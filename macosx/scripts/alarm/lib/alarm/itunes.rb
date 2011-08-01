@@ -3,7 +3,11 @@ class Alarm::ITunes
   ##############################################################################
   def initialize
     @app = Appscript.app('iTunes.app')
-    @app.activate
+    
+    if !@app.is_running?
+      @app.activate
+      sleep(10)
+    end
   end
   
   ##############################################################################

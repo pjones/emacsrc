@@ -5,8 +5,8 @@ $:.unshift(File.expand_path('../lib', File.dirname(__FILE__)))
 require('alarm')
 
 ################################################################################
-class WakeupAlarm
-
+class StopAllAlarm
+  
   ##############################################################################
   def initialize
     @airfoil = Alarm::Airfoil.new
@@ -16,14 +16,15 @@ class WakeupAlarm
   ##############################################################################
   def run
     @itunes.fade_out_and_stop if @itunes.playing?
-    @airfoil.get_audio_from('iTunes')
-    @itunes.fade_in_playlist("Wake-Up")
+    @airfoil.disconnect_all_speakers
+    @airfoil.quit
+    @itunes.volume = Alarm::MAX_VOL
   end
 end
 
 ################################################################################
 begin
-  WakeupAlarm.new.run
+  StopAllAlarm.new.run
 rescue RuntimeError => e
   $stderr.puts($0 + "ERROR: #{e}")
   exit(1)

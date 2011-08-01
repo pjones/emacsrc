@@ -28,13 +28,14 @@ class AnnounceTime
 
     @airfoil = Alarm::Airfoil.new
     @itunes  = Alarm::ITunes.new
+    @say     = Alarm::Say.new(@airfoil)
     @playing = @itunes.playing?
   end
   
   ##############################################################################
   def run
     @itunes.fade_out_and_stop if @playing
-    airfoil.speak_string("The time is now #{Time.now.strftime("%H:%M")}")
+    @say.speak_string("The time is now #{Time.now.strftime("%H:%M")}")
     
     if @playing and !options.stop
       @airfoil.get_audio_from('iTunes')

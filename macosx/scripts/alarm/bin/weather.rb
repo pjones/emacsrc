@@ -36,8 +36,9 @@ class WeatherAlarm
       is being downloaded.
     EOD
 
-    @airfoil.speak_string(greeting.gsub(/\s*\n\s*/, ' '))
-    @airfoil.speak_weather(80026, :voice => 'Serena')
+    say = Alarm::Say.new(@airfoil)
+    say.speak_string(greeting.gsub(/\s*\n\s*/, ' '))
+    say.speak_weather(80026, :voice => 'Serena')
   end
 end
 
