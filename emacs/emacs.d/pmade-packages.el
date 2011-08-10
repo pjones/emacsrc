@@ -4,11 +4,6 @@
 ;; Emacs nonstandard editing commands
 (autoload 'zap-up-to-char "misc" nil t)
 
-;; No Gnus (bleeding edge)
-(when (file-exists-p (concat pmade-site-lisp "/gnus"))
-  (add-to-list 'load-path (concat pmade-site-lisp "/gnus/lisp"))
-  (require 'gnus-load))
-
 ;; Use Aspell
 (setq ispell-extra-args '("--rem-filter=nroff")
       ispell-program-name "aspell")
@@ -31,13 +26,6 @@
  ido-auto-merge-work-directories-length 0)
 (ido-mode t)
 
-;; Tramp is a pain in the ass
-;; (setq tramp-default-method "ssh"
-;;       tramp-verbose 3                   ; For reference if I need to
-;;       tramp-debug-buffer nil            ; debug Tramp
-;;       tramp-auto-save-directory "~/.emacs.d/autosave")
-;; (require 'tramp)
-
 ;; Save your place in files you edit
 (setq save-place-file "~/.emacs.d/places.el")
 (require 'saveplace)
@@ -58,24 +46,6 @@
 (autoload 'pastie-region "pastie" nil t)
 (autoload 'pastie-buffer "pastie" nil t)
 (autoload 'pastie-get    "pastie" nil t)
-
-;; escreen
-(load "escreen")
-(escreen-install)
-
-(defun pmade:escreen-get-active-screen-numbers-with-emphasis ()
-  "List the screen numbers in the mode line"
-  (interactive)
-  (let ((escreens (escreen-get-active-screen-numbers))
-        (emphased "")
-        (screen ""))
-    (dolist (s escreens)
-      (setq screen (number-to-string s))
-      (setq emphased (concat emphased 
-        (if (= escreen-current-screen-number s)
-            (propertize (concat "[" screen "]") 'face 'highlight)
-          screen) " ")))
-    (message "active escreens: %s" emphased)))
 
 ;; Go-to Last Change
 (autoload 'goto-last-change "goto-chg" nil t)
@@ -144,26 +114,6 @@
 (autoload 'muse-mode-choose-mode "muse-mode" "Emacs Muse" t)
 (add-to-list 'auto-mode-alist '("\\.muse$" . muse-mode-choose-mode))
 (eval-after-load "muse-mode" '(load "~/.emacs.d/pmade/pmade-muse"))
-
-;; Simple Emacs Spreadsheet
-(defun pmade:ses-export-buffer-to-tsv nil
-  "Export the current SES buffer to a TSV file.  The file name
-  will be derived from the current buffer name."
-  (interactive)
-  (let* ((fname (or (buffer-file-name) "export"))
-         (bcell (get-text-property (point-min) 'intangible))
-         (ecell (get-text-property (- (point-max) 2) 'intangible))
-         (ses--curcell (cons bcell ecell)))
-    (setq fname
-          (if (string-match "\\..*$" fname)
-              (replace-match ".tsv" nil nil fname)
-            (concat fname ".tsv")))
-    (ses-export-tab nil)
-    (with-temp-file fname (insert (concat (car kill-ring) "\n")))))
-  
-(add-hook 'ses-mode-hook
-  (lambda () 
-    (add-hook 'after-save-hook 'pmade:ses-export-buffer-to-tsv t t)))
 
 ;; Idea (awesome for coding and window management)
 (require 'idea nil t)
