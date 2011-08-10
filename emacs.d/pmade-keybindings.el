@@ -33,7 +33,6 @@
 (global-set-key "\C-ct"    'pmade-transpose-windows)
 (global-set-key "\C-cu"    'goto-last-change)
 (global-set-key "\C-c\M-w" 'save-to-kill-ring-and-normalize-whitespace)
-(global-set-key "\C-c3"    'pmade-3-windows)
 ;                       C-c \t    Insert comment bar in source code file
 
 ;; Hyper Keys
@@ -45,7 +44,6 @@
 (global-set-key (kbd "H-p") 'windmove-up)
 (global-set-key (kbd "H-n") 'windmove-down)
 (global-set-key (kbd "H-a") 'align)
-(global-set-key (kbd "H-s") 'pmade-split-frame)
 (global-set-key (kbd "H-t") 'pmade-goto-terminal)
 (global-set-key (kbd "H-x") 'switch-to-previous-buffer)
 
@@ -54,13 +52,4 @@
 (global-set-key [(meta up)]       'enlarge-window)             ; Make window bigger (vertical)
 (global-set-key [(meta left)]     'shrink-window-horizontally) ; Make window smaller
 (global-set-key [(meta right)]    'enlarge-window-horizontally); Make window bigger
-
-;; I freaking hate C-z (unless I'm using escreen)
-(if (fboundp 'escreen-create-screen) 
-    (progn
-      (setq escreen-prefix-char "\C-z")
-      (global-set-key escreen-prefix-char 'escreen-prefix)
-      (global-set-key "\C-z\C-z" 'escreen-goto-last-screen)
-      (global-set-key "\C-\zl" 'pmade:escreen-get-active-screen-numbers-with-emphasis))
-  (global-set-key "\C-z" nil))
-
+(global-set-key "\C-z"            nil)                         ; Not using C-z right now

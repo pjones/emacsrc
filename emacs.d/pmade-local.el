@@ -5,40 +5,14 @@
    ((string= "skinny.local" system-name) (pmade-local:skinny))
    ((string= "beefy.local"  system-name) (pmade-local:beefy))))
 
-(defun pmade-center-frame (frame)
-  "Move the frame to the center of the screen.  The screen space
-reported by the `display-pixel-height' function will be adjusted
-to account for a missing Mac OS X menu bar."
-  (let* ((display-w (display-pixel-width))
-         (display-h (- (display-pixel-height) 20)) ; remove menu bar
-         (frame-w (frame-pixel-width frame))
-         (frame-h (frame-pixel-height frame))
-         (left (- (/ display-w 2) (/ frame-w 2)))
-         (top  (- (/ display-h 2) (/ frame-h 2))))
-    (set-frame-position frame left top)))
-
-(defun pmade-full-screen ()
-  (interactive)
-  (set-frame-parameter 
-   nil 'fullscreen
-   (if (frame-parameter nil 'fullscreen) nil 'fullboth))
-  (if (fboundp 'ns-toggle-fullscreen) (ns-toggle-fullscreen)))
-                               
 (defun pmade-local:skinny ()
   "Settings for my MacBook Pro"
-  (pmade-full-screen))
+  (set-frame-position (selected-frame) 674 22)
+  (set-frame-size (selected-frame) 106 56))
 
 (defun pmade-local:beefy ()
-  "Settings for my Mac Pro"
-  (pmade-full-screen))
-
-(defun pmade-local:gui-specific ()
-  "Settings for the GUI Emacs."
-  (dotimes (i 4) (escreen-create-screen))
-  (escreen-goto-screen-0))
+  "Settings for my Mac Pro")
 
 ;; These settings only take affect if we're running the GUI.
-(when window-system
-  (add-hook 'window-setup-hook 'pmade-local-settings t)
-  (add-hook 'window-setup-hook 'pmade-local:gui-specific t))
-
+(if window-system
+    (add-hook 'window-setup-hook 'pmade-local-settings t))
