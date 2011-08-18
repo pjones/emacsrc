@@ -13,3 +13,5 @@
         sb = submodule
 [core]
 	excludesfile = /Users/pjones/.gitignore
+[url "dracula.pmade.com:git/oss/"]
+        pushInsteadOf = git://pmade.com/
