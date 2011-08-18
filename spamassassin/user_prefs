@@ -31,3 +31,6 @@ score  PMADE_SOMEONE_SEARCHED_FOR_YOU 5.0
 blacklist_from *@pmade.org
 blacklist_from *@blueredgolds.info
 blacklist_from *musiciansfriend.com
+
+# Manual whitelists
+whitelist_from *@bvsd.org
