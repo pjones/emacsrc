@@ -80,6 +80,12 @@
     (pmade-programming-mode-hook)
     (local-set-key "\C-c\t" 'pmade-c-comment-bar)))
 
+;; C++ Programming
+(add-hook 'c++-mode-hook
+  (lambda ()
+    (pmade-programming-mode-hook)
+    (local-set-key "\C-c\t" 'pmade-c-comment-bar)))
+
 ;; Objective-C
 (add-hook 'objc-mode-hook
   (lambda ()
