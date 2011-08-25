@@ -5,9 +5,8 @@
 (autoload 'zap-up-to-char "misc" nil t)
 
 ;; Use Aspell
-(setq ispell-extra-args '("--rem-filter=nroff")
-      ispell-program-name "aspell")
-(setenv "ASPELL_CONF" nil)
+(setq ispell-program-name "aspell")
+;;(setenv "ASPELL_CONF" nil)
 (add-hook 'text-mode-hook 'turn-on-flyspell)
 
 ;; Better buffer switching and file finding
@@ -88,7 +87,7 @@
 (autoload 'magit-status "magit" "Magit Status" t)
 
 ;; EasyPG http://www.easypg.org/
-(require 'epa)
+;; (require 'epa)
 (setq epa-file-encrypt-to "61C4F407C4EB56B7"
       epa-popup-info-window nil)
 
@@ -109,11 +108,6 @@
 (require 'org-install)
 (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
 (eval-after-load 'org '(load "~/.emacs.d/pmade/pmade-org"))
-
-;; Muse is great for writing documents and articles
-(autoload 'muse-mode-choose-mode "muse-mode" "Emacs Muse" t)
-(add-to-list 'auto-mode-alist '("\\.muse$" . muse-mode-choose-mode))
-(eval-after-load "muse-mode" '(load "~/.emacs.d/pmade/pmade-muse"))
 
 ;; Idea (awesome for coding and window management)
 (require 'idea nil t)
