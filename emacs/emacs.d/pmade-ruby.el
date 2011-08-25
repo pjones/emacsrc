@@ -4,7 +4,6 @@
 
 (defun pmade-ruby-mode-hook ()
   "Correctly setup a Ruby buffer"
-  (inf-ruby-keys)
   (pmade-programming-mode-hook)
   (define-key ruby-mode-map "\C-c\t" 'pmade-pound-comment-bar)
   (setq align-mode-rules-list
@@ -41,23 +40,6 @@
 ;; Getting Ruby Documentation via RI
 (setq ri-ruby-script (concat (getenv "HOME") "/.emacs.d/packages/ri-emacs.rb"))
 (autoload 'ri "ri-ruby" nil t)
-
-;; Running IRB inside Emacs
-(add-to-list 'interpreter-mode-alist '(("ruby" . ruby-mode)) t)
-(setq inferior-ruby-first-prompt-pattern "^>>")
-(autoload 'run-ruby "inf-ruby" "Run an inferior Ruby process")
-(autoload 'inf-ruby-keys "inf-ruby" "Set local key defs for inf-ruby in ruby-mode")
-
-;; Send Ruby code through the interpreter
-(defun ruby-eval-region (start end)
-  "Send the region through the Ruby interpreter"
-  (interactive "r")
-  (shell-command-on-region start end "ruby"))
-
-(defun ruby-eval-buffer ()
-  "Send the entire buffer through the Ruby interpreter"
-  (interactive)
-  (ruby-eval-region (point-min) (point-max)))
 
 ;; Use the XMP filter
 (defun ruby-xmp-region (start end)
