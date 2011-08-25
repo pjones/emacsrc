@@ -2,7 +2,7 @@
 
 # Set default path
 typeset -U path
-path=(~/bin /usr/local/bin $path)
+path=(~/bin $path)
 
 # Load in optional operating system override
 [ -r ~/.zsh/os ] && . ~/.zsh/os
