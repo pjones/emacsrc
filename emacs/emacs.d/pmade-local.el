@@ -1,4 +1,9 @@
 ;;; Local settings based on host name
+;; 
+;; Some helpful functions:
+;; 
+;;   (frame-parameter (selected-frame) 'top)
+;;   (frame-parameter (selected-frame) 'left)
 
 (defun pmade-local-settings ()
   (cond
@@ -11,7 +16,9 @@
   (set-frame-size (selected-frame) 106 56))
 
 (defun pmade-local:beefy ()
-  "Settings for my Mac Pro")
+  "Settings for my Mac Pro"
+  (set-frame-position (selected-frame) 874 38)
+  (set-frame-size (selected-frame) 126 75))
 
 ;; These settings only take affect if we're running the GUI.
 (if window-system
