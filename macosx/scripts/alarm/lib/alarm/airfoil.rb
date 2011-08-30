@@ -42,6 +42,6 @@ class Alarm::Airfoil
   
   ##############################################################################
   def quit
-    @app.quit
+    # @app.quit
   end
 end

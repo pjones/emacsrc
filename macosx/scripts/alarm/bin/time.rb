@@ -35,7 +35,7 @@ class AnnounceTime
   ##############################################################################
   def run
     @itunes.fade_out_and_stop if @playing
-    @say.speak_string("The time is now #{Time.now.strftime("%H:%M")}")
+    @say.speak_string("The time is now #{Time.now.strftime("%H:%M").sub(/^0/, '')}")
     
     if @playing and !options.stop
       @airfoil.get_audio_from('iTunes')

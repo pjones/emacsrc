@@ -37,7 +37,7 @@ class WeatherAlarm
     EOD
 
     say = Alarm::Say.new(@airfoil)
-    say.speak_string(greeting.gsub(/\s*\n\s*/, ' '))
+    say.speak_string(greeting.gsub(/\s*\n\s*/, ' '), :voice => 'Fiona')
     say.speak_weather(80026, :voice => 'Serena')
   end
 end

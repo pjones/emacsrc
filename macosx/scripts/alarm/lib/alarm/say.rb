@@ -14,11 +14,7 @@ class Alarm::Say
 
     FileUtils.mkdir_p(Alarm::TEMP_DIR)
     audio_file = File.join(Alarm::TEMP_DIR, 'alarm_speak_file.aiff')
-    
-    # Wait until Lion update
-    #system('say', '-v', options[:voice], '-f', name, '-o', audio_file)
-    system('say', '-f', name, '-o', audio_file)
-      
+    system('say', '-v', options[:voice], '-f', name, '-o', audio_file)
 
     qt = Appscript.app('QuickTime Player.app')
     qt_running = qt.is_running?
@@ -41,7 +37,7 @@ class Alarm::Say
     sleep(doc.duration.get + 10) # compensate for playback delay
     doc.close
   ensure
-    qt.quit if qt and !qt_running
+    # qt.quit if qt and !qt_running
     File.unlink(audio_file) if audio_file and File.exist?(audio_file)
   end
   
