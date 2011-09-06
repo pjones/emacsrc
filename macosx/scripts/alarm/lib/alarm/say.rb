@@ -1,7 +1,11 @@
 class Alarm::Say
   
   ##############################################################################
+  VOICES = %w(Daniel Emily Fiona Karen Lee Moira Sangeeta Serena Tessa Alex)
+
+  ##############################################################################
   def initialize (airfoil)
+    srand
     @airfoil = airfoil
   end
 
@@ -9,8 +13,12 @@ class Alarm::Say
   # Can't use Tempfile here because QuickTime refuses to open such files.
   def speak_file (name, options={})
     options = {
-      :voice => Alarm::DEFAULT_VOICE,
+      :voice => :random,
     }.merge(options)
+
+    if options[:voice] == :random
+      options[:voice] = VOICES[rand(VOICES.size)]
+    end
 
     FileUtils.mkdir_p(Alarm::TEMP_DIR)
     audio_file = File.join(Alarm::TEMP_DIR, 'alarm_speak_file.aiff')
@@ -37,7 +45,7 @@ class Alarm::Say
     sleep(doc.duration.get + 10) # compensate for playback delay
     doc.close
   ensure
-    # qt.quit if qt and !qt_running
+    qt.quit if qt and !qt_running
     File.unlink(audio_file) if audio_file and File.exist?(audio_file)
   end
   

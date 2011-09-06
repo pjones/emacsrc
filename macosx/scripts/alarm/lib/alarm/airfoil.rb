@@ -14,7 +14,7 @@ class Alarm::Airfoil
     end
 
     @app.linked_volume.set(false)
-    @default_speaker = 'Mobile Audio'
+    @default_speaker = Alarm::DEFAULT_SPEAKER
   end
   
   ##############################################################################
@@ -42,6 +42,6 @@ class Alarm::Airfoil
   
   ##############################################################################
   def quit
-    # @app.quit
+    @app.quit
   end
 end

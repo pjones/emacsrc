@@ -11,7 +11,8 @@ class AnnounceTime
   
   ##############################################################################
   DEFAULT_OPTIONS = {
-    :stop => false,
+    :stop    => false,                     
+    :speaker => Alarm::DEFAULT_SPEAKER, 
   }
   
   ##############################################################################
@@ -24,6 +25,7 @@ class AnnounceTime
     OptionParser.new do |o|
       o.on('-h', '--help', 'This message') {$stderr.puts(o); exit}
       o.on('-s', '--stop', 'Stop iTunes after announcement') {|s| options.stop = s}
+      o.on('--speaker=NAME', 'Set the speaker') {|s| options.speaker = s}
     end.parse!(ARGV)
 
     @airfoil = Alarm::Airfoil.new
@@ -34,6 +36,7 @@ class AnnounceTime
   
   ##############################################################################
   def run
+    @airfoil.default_speaker = options.speaker
     @itunes.fade_out_and_stop if @playing
     @say.speak_string("The time is now #{Time.now.strftime("%H:%M").sub(/^0/, '')}")
     
