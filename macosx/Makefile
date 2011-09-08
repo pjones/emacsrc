@@ -1,11 +1,8 @@
-HOST = $(shell hostname)
+BINDINGS_FILE = $(HOME)/Library/KeyBindings/DefaultKeyBinding.dict
 
-all:
+all: $(BINDINGS_FILE)
 	@ $(MAKE) -C scripts/iTunes all
 
-ifneq (,$(wildcard crontab/$(HOST)))
-all: $(HOME)/.crontab-stamp
-$(HOME)/.crontab-stamp: crontab/$(HOST)
-	crontab crontab/$(HOST)
-	touch $@
-endif
+$(BINDINGS_FILE): bindings.dict
+	@ mkdir -p `dirname $@`
+	install -m 644 -o $(USER) $< $@
