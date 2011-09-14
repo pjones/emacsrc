@@ -125,9 +125,6 @@ echo "==> git sync"
 eod_each_repo eod_git_check_uncommitted     $git_repositories || die "eod_git_check_uncommitted"
 eod_each_repo eod_git_push_all_repositories $git_repositories || die "eod_git_push_all_repositories"
 
-echo "==> comm sync"
-eod_comm_sync || die "eod_comm_sync"
-
 echo "==> install rc"
 eod_install_rc || die "eod_install_rc"
 
