@@ -45,6 +45,11 @@ DIRS += ruby
 endif
 
 ################################################################################
+ifeq (tmux,$(notdir $(shell which tmux)))
+DIRS += tmux
+endif
+
+################################################################################
 ifeq (Darwin,$(shell uname))
 DIRS += macosx
 endif
