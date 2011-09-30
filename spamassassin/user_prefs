@@ -34,3 +34,4 @@ blacklist_from *musiciansfriend.com
 
 # Manual whitelists
 whitelist_from *@bvsd.org
+whitelist_from *@premiermembers.org
