@@ -178,8 +178,12 @@ looks like tree2, where the level is 2."
         (when (or (not min) (< level min)) (setq min level))
         (when (> level max) (setq max level))))
     (cons (or min 0) max)))
-  
-(defun org-invoice-collapse-list (ls)
+
+(defun org-invoice-sort-list (ls)
+  "Sort the give list by date."
+  (sort ls (lambda (a b) (string< (car a) (car b)))))
+
+  (defun org-invoice-collapse-list (ls)
   "Reorganize the given list by dates."
   (let ((min-max (org-invoice-level-min-max ls)) new)
     (dolist (info ls)
@@ -210,7 +214,7 @@ looks like tree2, where the level is 2."
             (setcdr (assoc 'price (car bucket))
                     (+ price (cdr (assoc 'price (car bucket)))))
             (nconc bucket (list info))))))
-    (nreverse new)))
+    (org-invoice-sort-list new)))
   
 (defun org-invoice-info-to-table (info)
   "Create a single org table row from the given info alist."
