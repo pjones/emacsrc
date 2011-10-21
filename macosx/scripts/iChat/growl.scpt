@@ -2,21 +2,12 @@ using terms from application "iChat"
   on message received message from theBuddy for textChat
     set whoDidIt to full name of theBuddy
     set buddyIcon to image of theBuddy
-    set window_name to "Not iChat"
     
     tell application "System Events"
       set frontApp to name of first application process whose frontmost is true
     end tell
 
-    if frontApp is equal to "iChat"
-      tell application frontApp
-        if the (count of documents) is not 0 then
-          set window_name to name of front window
-        end if
-      end tell
-    end if
-    
-    if window_name is not equal to "Chat with " & whoDidIt then
+    if frontApp is not equal to "iChat" then
       tell application "GrowlHelperApp" -- ** the daemon that is behind the scenes
         -- Make a list of all the notification types that this script will ever send:
         set the allNotificationsList to {"IM Received"}
@@ -28,9 +19,9 @@ using terms from application "iChat"
         register as application "iChat Growl AppleScript" all notifications allNotificationsList default notifications enabledNotificationsList icon of application "iChat"
         
         if buddyIcon is equal to missing value then
-          notify with name "IM Received" title whoDidIt description message application name "iChat Growl AppleScript" sticky no
+          notify with name "IM Received" title whoDidIt description message application name "iChat Growl AppleScript" sticky no identifier whoDidIt
         else
-          notify with name "IM Received" title whoDidIt description message application name "iChat Growl AppleScript" sticky no image buddyIcon
+          notify with name "IM Received" title whoDidIt description message application name "iChat Growl AppleScript" sticky no identifier whoDidIt image buddyIcon
         end if
       end tell
     end if
