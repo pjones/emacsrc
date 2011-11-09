@@ -10,10 +10,9 @@
  pmade-print-css "http://www.contextualdevelopment.com/static/stylesheets/print.css")
 
 ;; Interface Options (remove some interface elements, such as the toolbar, scroll bar, and menu bar.
-;; The menu bar is only removed from non-GUI versions of emacs
 (when (fboundp 'tool-bar-mode) (tool-bar-mode -1))
 (when (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
-(and terminal-frame (fboundp 'menu-bar-mode) (menu-bar-mode -1))
+(menu-bar-mode -1)
 
 ;; General options
 (setq
