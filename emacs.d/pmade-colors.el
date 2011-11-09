@@ -19,7 +19,7 @@
         (fg-high    "#93a1a1")
         (fg-inverse "#657b83"))
     (custom-set-faces
-     `(default        ((t (:background ,bg-normal :foreground ,fg-normal))))
+     `(default        ((((type graphic)) (:background ,bg-normal :foreground ,fg-normal))))
      `(cursor         ((t (:background ,yellow :foreground ,bg-normal))))
      `(link           ((t (:underline  ,cyan))))
      `(match          ((t (:background ,bg-high :foreground ,fg-normal))))
@@ -179,23 +179,6 @@
      ;; Remaining Junk
      `(completion-dynamic-face ((t (:inherit 'match)))))))
 
-(defun color-theme-pmade-gui ()
-  (color-theme-pmade)
-  (custom-set-faces))
-
-(defun color-theme-pmade-terminal ()
-  (color-theme-pmade)
-  (custom-set-faces
-   `(default ((t (:background nil :foreground "brightwhite"))))
-   `(font-lock-variable-name-face ((t (:foreground "blue"))))
-   `(font-lock-string-face ((t (:foreground "green"))))
-   `(font-lock-builtin-face ((t (:foreground "blue" :bold t))))
-   `(font-lock-constant-face ((t (:foreground "cyan"))))
-   `(font-lock-type-face ((t (:foreground "green" :bold t))))
-   `(show-paren-match ((t (:background "red" :foreground "yellow" :bold t))))
-   `(font-lock-comment-delimiter-face ((t (:foreground "white"))))
-   `(font-lock-comment-face ((t (:italic t :foreground "magenta"))))))
-
 ;; Create some faces
 (copy-face 'font-lock-warning-face 'pmade-fixme-face)
 (make-face 'pmade-org-next-face)
@@ -207,8 +190,7 @@
       pmade-org-reading-face 'pmade-org-reading-face)
 
  ;; Load color-theme
-(if terminal-frame (color-theme-pmade-terminal)
-  (color-theme-pmade-gui))
+(color-theme-pmade)
 
 ;; Notes
 ;; * To see all faces in effect: list-faces-display
