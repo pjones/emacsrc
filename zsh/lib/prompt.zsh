@@ -11,10 +11,10 @@ if [[ "x$INSIDE_SCRIPT" = "x" ]]; then
     { 
         lc=`fc -lnD -1|awk '{print $1}'`
         branch=$(git_current_branch 2> /dev/null)
-        prompt="%{$fg[cyan]%}.----(%{$fg[blue]%} %n%{$fg[red]%}@%{$fg[green]%}%m %{$fg[cyan]%})----(%{$fg[magenta]%} %?/$lc %{$fg[cyan]%})----%{$fg[cyan]%}(%{$fg[yellow]%} %2~ %{$fg[cyan]%})"
+        prompt="%{$fg[cyan]%}.----(%{$fg[blue]%} %n%{$fg[red]%}@%{$fg[green]%}%m %{$fg[cyan]%})--(%{$fg[magenta]%} %?/$lc %{$fg[cyan]%})--%{$fg[cyan]%}(%{$fg[yellow]%} %2~ %{$fg[cyan]%})"
         
         if [[ ${#branch} -ne 0 ]]; then
-          prompt="${prompt}----%{$fg[cyan]%}(%{$fg[red]%} $branch %{$fg[cyan]%})"
+          prompt="${prompt}--%{$fg[cyan]%}(%{$fg[red]%} $branch %{$fg[cyan]%})"
         fi
 
         prompt="${prompt}${prompt_newline}${prompt_backtick}--%{$reset_color%}> "
