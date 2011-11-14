@@ -114,7 +114,7 @@ git_master_pull ()
 # List info about each sub-module
 git_sb_info ()
 {
-  git submodule --quiet foreach '(cd $path && echo $path $(git_current_branch))'
+  git submodule --quiet foreach 'zsh ~/.zsh/util/git-sb-info.zsh'
 }
 
 ################################################################################

@@ -16,11 +16,15 @@ endef
 
 # Top level directory
 $(eval $(call DIR_template,$(DEST)/lib))
-$(foreach f,$(wildcard lib/*),$(eval $(call COPY_template,$(DEST)/lib/$(notdir $(f)),$(f))))
+$(foreach f,$(wildcard lib/*.zsh),$(eval $(call COPY_template,$(DEST)/lib/$(notdir $(f)),$(f))))
 
 # App files
 $(eval $(call DIR_template,$(DEST)/app))
-$(foreach f,$(wildcard app/*),$(eval $(call COPY_template,$(DEST)/app/$(notdir $(f)),$(f))))
+$(foreach f,$(wildcard app/*.zsh),$(eval $(call COPY_template,$(DEST)/app/$(notdir $(f)),$(f))))
+
+# Util files
+$(eval $(call DIR_template,$(DEST)/util))
+$(foreach f,$(wildcard util/*.zsh),$(eval $(call COPY_template,$(DEST)/util/$(notdir $(f)),$(f))))
 
 # Function files
 FUNC_DEST  = $(DEST)/func
