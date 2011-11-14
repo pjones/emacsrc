@@ -1,7 +1,4 @@
-#!/usr/local/bin/zsh
-
 # stuff for every os
-alias add-key='ssh-add $HOME/.ssh/id_dsa'
 alias vared="IFS=\$'\n' vared"
 alias bc='bc -q'
 alias lc='fc -lnD -1'
@@ -9,10 +6,6 @@ alias h='history -fdD'
 alias j='jobs -l'
 alias f="find . -name"
 alias g="egrep"
-alias s="screen-driver"
-alias irb='irb --readline -r irb/completion'
-alias xc='xcodebuild -alltargets -configuration Debug && xcodebuild -alltargets -configuration Release'
-alias p2t='pdftotext -layout -eol unix -nopgbrk'
 
 # ls command
 if [[ $OSNAME == "FreeBSD" || $OSNAME == "Darwin" ]]; then
@@ -54,24 +47,3 @@ alias pg="p|g"
 if [[ $OSNAME == "Darwin" ]]; then
     alias ldd='otool -L'
 fi
-
-# a place to paste shit into
-alias pb="cat > /dev/null"
-
-# mutt looks better if you have a time zone set
-alias mutt='env TZ=America/Mountain mutt'
-
-# script
-script ()
-{
-    script_options='-a'
-    [[ $OSNAME == "FreeBSD" ]] && script_options="$script_options -k"
-    (export INSIDE_SCRIPT=yes; command script `eval echo $script_options` $*)
-}
-
-# tags
-rtags () { command rtags --quiet $(find . -type f -name '*.rb')}
-
-# random junk
-alias longmont-library='telnet 204.133.207.247'
-alias lafayette-library='telnet cityoflafayette.com'

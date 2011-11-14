@@ -1,5 +1,3 @@
-#!/usr/local/bin/zsh
-
 # fix ^w
 export WORDCHARS="*?_-.[]~={}<>"
 autoload backward-kill-word-match select-word-style match-words-by-style
@@ -17,8 +15,7 @@ done
 bindkey -e
 
 # Insert some custom keybindings
-bindkey -e ^q  push-line-or-edit
-bindkey -e ^u  kill-whole-line
+bindkey -e ^xp push-line-or-edit
 bindkey -e ^xh run-help
 bindkey -e ^r  history-incremental-search-backward
 bindkey -e ^w  backward-kill-word-match

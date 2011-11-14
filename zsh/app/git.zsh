@@ -1,10 +1,8 @@
-# -*- mode: sh -*-
-
 ################################################################################
 # Git Log
 glog ()
 {
-    git log --pretty=format:'%Cgreen%h%Creset %Cred%ci%Creset %Cblue%ae%Creset %s' $@
+    git log --pretty=format:'%Cgreen%h%Creset %Cred%ci%Creset %Cblue%ae%Creset %s' --graph $@
 }
 
 ################################################################################
@@ -56,44 +54,37 @@ git_repo_needs_push ()
 }
 
 ################################################################################
-# Track a remote branch
-git_track ()
+# Returns the name of the current git branch if we're in a git repo
+git_current_branch ()
 {
-  if [ $# -ne 1 ]; then
-    echo "$0: missing branch name"
-    return 1
-  fi
-
-  branch=$1
-  git branch --track $branch origin/$branch || return 1
-  git checkout $branch || return 1
+  ref=$(git symbolic-ref HEAD 2> /dev/null) || return
+  echo ${ref#refs/heads/}
 }
 
 ################################################################################
 # Create a new branch, and push it to the origin server
 git_mk_branch ()
 {
-  if [ $# -ne 1 ]; then
-    echo "$0: missing branch name"
+  if [ $# -eq 0 ]; then
+    echo "Usage: $0 branch [remote]"
     return 1
   fi
 
   branch=$1
+  remote=${2:-origin}
 
   git checkout -b $branch || return 1
-  git push origin $branch || return 1
-  git checkout master     || return 1
-  git branch -D $branch   || return 1
-  git pull                || return 1
-  git_track $branch       || return 1
+  git config --add branch.${branch}.remote $remote || return 1
+  git config --add branch.${branch}.merge refs/heads/${branch} || return 1
+  git push || return 1
 }
 
 ################################################################################
-# Delete a branch
+# Delete a branch: FIXME: remove from all remotes
 git_rm_branch ()
 {
-  if [ $# -ne 1 ]; then
-    echo "$0: missing branch name"
+  if [ $# -eq 0 ]; then
+    echo "Usage: $0 branch"
     return 1
   fi
   
@@ -112,11 +103,18 @@ git_master_pull ()
   remote=origin
   test $# -eq 1 && remote=$1
   
-  branch=`git branch|egrep '^\*'|sed 's/^\* //'`
+  branch=`git_current_branch`
   echo "==> Leaving branch ${branch}"
   git checkout master  || return 1
   git pull $remote     || return 1
   git checkout $branch || return 1
+}
+
+################################################################################
+# List info about each sub-module
+git_sb_info ()
+{
+  git submodule --quiet foreach '(cd $path && echo $path $(git_current_branch))'
 }
 
 ################################################################################

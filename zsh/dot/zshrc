@@ -13,32 +13,9 @@ functions_directory=~/.zsh/func
 widgets_directory=~/.zsh/wids
 fpath=($functions_directory $widgets_directory $fpath)
 
-# history stuff
-HISTSIZE=100
-SAVEHIST=100
-HISTFILE=~/.zsh/history
-setopt append_history 
-setopt inc_append_history 
-setopt extended_history 
-setopt hist_find_no_dups
-setopt hist_ignore_all_dups
-setopt hist_reduce_blanks 
-setopt hist_ignore_space
-setopt hist_no_store 
-setopt hist_no_functions 
-setopt no_hist_beep
-setopt hist_save_no_dups
-
 # clober stuff
 setopt no_clobber 
 setopt hist_allow_clobber
-
-# directory stuff
-DIRSTACKSIZE=16
-setopt auto_pushd
-setopt pushd_minus
-setopt pushd_silent
-setopt pushd_ignore_dups
 
 # other options
 setopt no_beep
@@ -54,11 +31,6 @@ setopt magic_equal_subst
 setopt no_hup
 setopt no_check_jobs
 
-if [[ "$TERM" = "eterm-color" ]]; then
-  # Looks like a bad termcap on Mac OS X
-  TERM=screen
-fi
-
 # autoload my functions
 autoload -U ${fpath[1]}/*(:t)
 
@@ -66,12 +38,14 @@ autoload -U ${fpath[1]}/*(:t)
 zmodload zsh/datetime
 
 # bring in other files
-. ~/.zsh/bindings
-. ~/.zsh/aliases
-. ~/.zsh/hosts
-. ~/.zsh/completion
-. ~/.zsh/emacs
-. ~/.zsh/git
+source ~/.zsh/lib/bindings.zsh
+source ~/.zsh/lib/aliases.zsh
+source ~/.zsh/lib/hosts.zsh
+source ~/.zsh/lib/completion.zsh
+source ~/.zsh/lib/directories.zsh
+source ~/.zsh/lib/history.zsh
+source ~/.zsh/lib/prompt.zsh
 
-# finally configure the prompt
-. ~/.zsh/prompt
+for file in $(find ~/.zsh/app -type f -name '*.zsh'); do
+  source $file
+done

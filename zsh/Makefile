@@ -15,8 +15,12 @@ $(1): $(2)
 endef
 
 # Top level directory
-$(eval $(call DIR_template,$(DEST)))
-$(foreach f,$(wildcard rc/*),$(eval $(call COPY_template,$(DEST)/$(notdir $(f)),$(f))))
+$(eval $(call DIR_template,$(DEST)/lib))
+$(foreach f,$(wildcard lib/*),$(eval $(call COPY_template,$(DEST)/lib/$(notdir $(f)),$(f))))
+
+# App files
+$(eval $(call DIR_template,$(DEST)/app))
+$(foreach f,$(wildcard app/*),$(eval $(call COPY_template,$(DEST)/app/$(notdir $(f)),$(f))))
 
 # Function files
 FUNC_DEST  = $(DEST)/func
