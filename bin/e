@@ -1,0 +1,90 @@
+#!/usr/bin/env ruby
+
+################################################################################
+require('optparse')
+
+################################################################################
+class RemoteEmacs
+  
+  ##############################################################################
+  REMOTE_SERVER_FILE = '/tmp/emacs-server'
+  
+  ##############################################################################
+  DEFAULT_OPTIONS = {
+    'verbose' => false,
+    'version' => false, 
+    'tty'     => false, 
+    'frame'   => false,
+    'eval'    => false,
+    'wait'    => false,
+  }
+  
+  ##############################################################################
+  OptionProxy = Struct.new(*DEFAULT_OPTIONS.keys.sort.map {|k| k.to_sym})
+  
+  ##############################################################################
+  def initialize
+    @options = OptionProxy.new(*DEFAULT_OPTIONS.keys.sort.map {|k| DEFAULT_OPTIONS[k]})
+    
+    OptionParser.new do |p|
+      p.on('-h', '--help', 'This message.') {$stdout.puts(p); exit}
+      p.on('-V', '--version', 'Show Emacs version information') {|v| @options.version = v}
+      p.on('--verbose', 'Enable verbose messages') {|v| @options.verbose = v}
+      p.on('-t', '--tty', 'Open a new frame on the current terminal') {|t| @options.tty = t}
+      p.on('-c', '--create-frame', 'Create a new Emacs frame') {|f| @options.frame = f}
+      p.on('-e', '--eval', 'Eval the file argument as lisp') {|e| @options.eval = e}
+      p.on('-n', '--no-wait', 'Don\'t wait for Emacs [default]') {@options.wait = false}
+      p.on('-w', '--wait', 'Wait for Emacs to finish') {@options.wait = true}
+    end.parse!(ARGV)
+    
+    @emacsclient = ['emacsclient']
+  end
+  
+  ##############################################################################
+  def run
+    @emacsclient << '--version'      if @options.version
+    @emacsclient << '--tty'          if @options.tty
+    @emacsclient << '--create-frame' if @options.frame
+    @emacsclient << '--eval'         if @options.eval
+    @emacsclient << '--no-wait'      if !@options.wait
+    # @emacsclient << '--quiet'        if !@options.verbose
+
+    if !File.exist?(File.expand_path('~/.emacs.d/server/server'))
+      prepare_for_remote_send
+    end
+
+    @emacsclient.concat(ARGV)
+    $stdout.puts(@emacsclient.join(' ')) if @options.verbose
+    system(*@emacsclient) || raise('emacsclient failed')
+  end
+  
+  ##############################################################################
+  private
+  
+  ##############################################################################
+  def prepare_for_remote_send
+    fetch_remote_server_file
+    @emacsclient << "--server-file=#{REMOTE_SERVER_FILE}"
+    return if @options.eval
+
+    host = `hostname`.chomp
+    
+    ARGV.map! do |arg|
+      file = File.expand_path(arg)
+      file.sub(ENV['HOME'], "/Users/pjones/Develop/hosts/#{host}")
+    end
+  end
+  
+  ##############################################################################
+  def fetch_remote_server_file
+    system('scp', '-qB', '192.168.31.1:.emacs.d/server/server', REMOTE_SERVER_FILE)
+  end
+end
+
+################################################################################
+begin
+  RemoteEmacs.new.run
+rescue RuntimeError => e
+  $stderr.puts(File.basename($0) + ": ERROR: #{e}")
+  exit(1)
+end
