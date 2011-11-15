@@ -47,10 +47,13 @@ class RemoteEmacs
     @emacsclient << '--create-frame' if @options.frame
     @emacsclient << '--eval'         if @options.eval
     @emacsclient << '--no-wait'      if !@options.wait
-    # @emacsclient << '--quiet'        if !@options.verbose
 
     if !File.exist?(File.expand_path('~/.emacs.d/server/server'))
       prepare_for_remote_send
+    else
+      # TODO: Use this for remotes too once I upgrade Emacs on my
+      # virtual machines.
+      @emacsclient << '--quiet' if !@options.verbose
     end
 
     @emacsclient.concat(ARGV)
