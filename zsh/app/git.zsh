@@ -75,8 +75,7 @@ git_mk_branch ()
 
   git checkout -b $branch || return 1
   git config --add branch.${branch}.remote $remote || return 1
-  git config --add branch.${branch}.merge refs/heads/${branch} || return 1
-  git push || return 1
+  git push $remote $branch || return 1
 }
 
 ################################################################################
