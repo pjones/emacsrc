@@ -14,13 +14,14 @@
  */
         
     /* Ctrl shortcuts */
+    "^;"        = "checkSpelling:";                 /* C-;          Check spelling */
     "^l"        = "centerSelectionInVisibleArea:";  /* C-l          Recenter */
     "^/"        = "undo:";                          /* C-/          Undo */
     "^_"        = "undo:";                          /* C-_          Undo */
     "^ "        = "setMark:";                       /* C-Spc        Set mark */
     "^\@"       = "setMark:";                       /* C-@          Set mark */
     "^w"        = "deleteWordBackward:";            /* C-w          Delete to mark */
-
+    "^y"        = "paste:";                         /* C-y          Paste from clipboard */
 
     /* Meta shortcuts */
     "~f"        = "moveWordForward:";               /* M-f          Move forward word */
