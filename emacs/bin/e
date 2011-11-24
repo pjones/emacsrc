@@ -46,7 +46,14 @@ class RemoteEmacs
     @emacsclient << '--tty'          if @options.tty
     @emacsclient << '--create-frame' if @options.frame
     @emacsclient << '--eval'         if @options.eval
-    @emacsclient << '--no-wait'      if !@options.wait
+    
+    if !@options.wait    and 
+       !@options.tty     and
+       !@options.eval    and
+       !@options.version
+    then
+      @emacsclient << '--no-wait'
+    end
 
     if !File.exist?(File.expand_path('~/.emacs.d/server/server'))
       prepare_for_remote_send
