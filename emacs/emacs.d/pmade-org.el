@@ -16,13 +16,6 @@
 (require 'org-basecamp)
 (setq org-basecamp-mark-todo nil)
 
-;; Org Crypt
-(require 'org-crypt)
-(org-crypt-use-before-save-magic)
-
-;; Org Depend
-(require 'org-depend)
-
 (setq
  ;; General Org Settings
  org-log-done t
