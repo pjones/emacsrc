@@ -58,26 +58,6 @@ placing it in the kill ring)."
    ((looking-at "\\_>") (hippie-expand nil))
    (t (indent-for-tab-command))))
 
-(defun pmade-find-file-code-window nil
-  "Open a file in the window I normally write code in."
-  (interactive)
-  (let* ((max (length (window-list)))
-         (win (if (> max 2) 2 1))
-         (buf (save-window-excursion
-                (ido-find-file)
-                (current-buffer))))
-    (idea-select-window win)
-    (switch-to-buffer buf)))
-
-(defun pmade-find-file-window-1 ()
-  (interactive)
-  (let ((new-buf
-         (save-window-excursion
-           (ido-find-file)
-           (current-buffer))))
-    (idea-select-window 1)
-    (switch-to-buffer new-buf)))
-
 (defun pmade-pwgen (&optional kill-only)
   "Generate and insert a password."
   (interactive "P")
@@ -97,11 +77,6 @@ placing it in the kill ring)."
          (set-window-buffer (funcall selector) this-win)
          (select-window (funcall selector)))
        (setq arg (if (plusp arg) (1- arg) (1+ arg))))))
-
-(defun pmade-goto-terminal ()
-  "Jump to the terminal"
-  (interactive)
-  (shell-command "osascript -e 'tell application \"Terminal\" to activate'"))
         
 (defun pmade-select-window nil
   "Use ido completion to select a window based on its buffer name"
@@ -111,17 +86,6 @@ placing it in the kill ring)."
          (win (get-buffer-window (get-buffer sel))))
     (select-window win)))
     
-(defun pmade-make-calc-frame ()
-  (interactive)
-  (let* ((old (selected-frame))
-         (new (make-frame)))
-    (select-frame new)
-    (set-frame-size new 147 35)
-    (set-frame-position new 1920 1098)
-    (scroll-bar-mode -1)
-    (full-calc)
-    (select-frame old)))
-
 (defun pmade-toggle-dictionary ()
   (interactive)
   (let ((dict ispell-current-dictionary))
