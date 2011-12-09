@@ -27,7 +27,7 @@ vmware_mount () {
 vmware_session () {
   name=$1
   
-  vmware_mount $name
+  vmware_mount $name || return 1
   directory=`vmware_base_mount_point`"/$name"
-  (cd $directory && tmux new-session -d -s $name)
+  (cd $directory/develop && tmux new-session -d -s $name)
 }
