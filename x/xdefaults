@@ -1,0 +1,20 @@
+! ############################################################################
+! # urxvt terminal
+urxvt.depth: 32
+urxvt.background: rgba:0000/0000/0000/aaaa
+urxvt.foreground: #e6e6e6
+urxvt.scrollBar: false
+urxvt.font: -*-terminus-medium-*-*-*-*-140-*-*-*-*-iso8859-1
+urxvt.color0: #111111
+urxvt.color1: #dc322f
+urxvt.color2: #859900
+urxvt.color3: #b58900
+urxvt.color4: #268bd2
+urxvt.color5: #d33682
+urxvt.color6: #2aa198
+urxvt.color7: #839496
+
+! ############################################################################
+! # dzen
+dzen.background: #888888
+dzen.foreground: #ffffff
