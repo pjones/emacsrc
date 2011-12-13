@@ -1,7 +1,7 @@
 #!/bin/sh
 
 . `dirname $0`/common.sh
-URL="git://pmade.com/gnus.git"
+URL="http://git.gnus.org/gnus.git"
 dir=`fetch_url $URL`
 
 (
