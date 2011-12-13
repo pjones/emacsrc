@@ -5,10 +5,10 @@
 ;; Local site-lisp
 (setq pmade-site-lisp
       (cond
-       ((file-exists-p "~/Local/share/emacs/site-lisp")   "~/Local/share/emacs/site-lisp")
+       ((file-exists-p "~/.emacs.d/share/emacs/site-lisp") "~/.emacs.d/share/emacs/site-lisp")
        ((file-exists-p "/usr/local/share/emacs/site-lisp") "/usr/local/share/emacs/site-lisp")))
 
 (add-to-list 'load-path pmade-site-lisp)
-(add-to-list 'load-path (concat pmade-site-lisp "/muse"))
+(add-to-list 'load-path (concat pmade-site-lisp "/gnus/lisp"))
 (add-to-list 'load-path (concat pmade-site-lisp "/rinari"))
 (add-to-list 'load-path (concat pmade-site-lisp "/idea"))

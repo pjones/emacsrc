@@ -1,12 +1,14 @@
 (eval-when-compile
   (load "pmade-loadpath"))
 
+;; Bring in an external Gnus
+(require 'gnus-load)
+
 ;; Emacs nonstandard editing commands
 (autoload 'zap-up-to-char "misc" nil t)
 
 ;; Use Aspell
 (setq ispell-program-name "aspell")
-;;(setenv "ASPELL_CONF" nil)
 (add-hook 'text-mode-hook 'turn-on-flyspell)
 
 ;; Better buffer switching and file finding
@@ -28,11 +30,6 @@
 ;; Save your place in files you edit
 (setq save-place-file "~/.emacs.d/places.el")
 (require 'saveplace)
-
-;; Bookmarks
-(setq
- bookmark-save-flag 1
- bookmark-default-file "~/.comm-sync/var/emacs/bookmarks.el")
 
 ;; Dired-X
 (require 'dired-x)
