@@ -1,12 +1,15 @@
+#!/bin/sh
+
 . `dirname $0`/common.sh
-URL="git://gitorious.org/magit/mainline.git"
-dir=`fetch_url $URL magit.git`
+URL="git://github.com/magit/magit.git"
+dir=`fetch_url $URL`
 
 (
   cd $dir || die "WTF"
-  DEST=${PREFIX}/share/emacs/site-lisp
-  rm -rf $DEST/magit*
-  cp -p magit.el $DEST/
+  git checkout $VERSION || die "bad tag: $VERSION"
+  sed "s|^PREFIX=.*|PREFIX=${PREFIX}|" < Makefile > Makefile.fix
+  make -f Makefile.fix install || die "make install failed"
+  rm Makefile.fix
 )
 
 clean_files $dir

@@ -7,7 +7,7 @@ if [ $# -ne 1 ]; then
 fi
 
 VERSION=$1
-PREFIX="${HOME}/Local"
+PREFIX="${HOME}/.emacs.d"
 CURL_OPTIONS="--progress-bar"
 OSNAME=`uname -s`
 export EMACS=`which emacs` # fix for a bug in my env
