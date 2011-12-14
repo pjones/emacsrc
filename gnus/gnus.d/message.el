@@ -8,8 +8,7 @@
   (define-key message-mode-map "\C-c\t"   'external-abook-try-expand)
   (define-key message-mode-map "\C-c\C-w" 'pmade-mail-signature-next)
   (define-key message-mode-map "\C-c\C-q" 'boxquote-region)
-  (define-key message-mode-map "\C-c\C-y" 'boxquote-yank)
-  (orgstruct-mode t))
+  (define-key message-mode-map "\C-c\C-y" 'boxquote-yank))
 
 (defun pmade-message-setup-hook ()
   "Called after a new message has been initialized")

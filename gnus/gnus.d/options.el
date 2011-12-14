@@ -16,22 +16,6 @@
  gnus-treat-date-local 'head
  gnus-read-active-file 'some)           ; Speed up initial load
 
-;; File locations
-(setq
- pmade-comm-base "~/.comm-sync"
- pmade-gnus-var (concat pmade-comm-base "/var/gnus")
- pmade-gnus-etc (concat pmade-comm-base "/etc/gnus")
- pmade-sigs-dir (concat pmade-comm-base "/etc/signatures")
- pmade-authinfo (concat pmade-gnus-etc "/authinfo")
- gnus-directory pmade-gnus-var
- mail-signature-dir pmade-sigs-dir
- gnus-agent-directory (concat pmade-gnus-var "/agent")
- gnus-article-save-directory (concat pmade-gnus-var "/news")
- gnus-cache-directory (concat pmade-gnus-var "/cache")
- gnus-startup-file (concat pmade-gnus-etc "/newsrc")
- gnus-save-newsrc-file nil
- gnus-read-newsrc-file nil)
-
 ;; MIME
 (eval-after-load "mm-decode"
   '(progn

@@ -1,9 +1,8 @@
 ;;; Mail and News Servers
 
 ;; IMAP (incoming mail)
-(setq pmade-mail-server "mail.pmade.com"
-      nnimap-authinfo-file pmade-authinfo)
-
+(setq pmade-mail-server "mail.pmade.com")
+      
 ;; SMTP (outgoing mail)
 (setq pmade-smtp-host pmade-mail-server
       pmade-smtp-port 25)
@@ -15,11 +14,9 @@
         pmade-smtp-port 2525
         starttls-extra-arguments '("--insecure"));;)
 
-(setq nntp-authinfo-file pmade-authinfo
-      message-send-mail-function 'smtpmail-send-it
+(setq message-send-mail-function 'smtpmail-send-it
       smtpmail-smtp-server pmade-smtp-host
       smtpmail-smtp-service pmade-smtp-port
-      smtpmail-auth-credentials pmade-authinfo
       smtpmail-starttls-credentials `((,pmade-smtp-host ,pmade-smtp-port nil nil))
       smtpmail-local-domain "pmade.com"
       starttls-use-gnutls t
@@ -30,14 +27,14 @@
    gnus-select-method 
    `(nnimap ,pmade-mail-server 
             (nnir-search-engine imap)
-            (nnimap-stream ssl))
+            (nnimap-stream ssl)))
 
-   gnus-secondary-select-methods
-   '((nntp "news.gmane.org")
-     (nntp "news.eternal-september.org"
-           (nntp-open-connection-function nntp-open-tls-stream)
-           (nntp-port-number 563)
-           (nntp-address "news.eternal-september.org"))))
+   ;; gnus-secondary-select-methods
+   ;; '((nntp "news.gmane.org")
+   ;;   (nntp "news.eternal-september.org"
+   ;;         (nntp-open-connection-function nntp-open-tls-stream)
+   ;;         (nntp-port-number 563)
+   ;;         (nntp-address "news.eternal-september.org"))))
 
 ;; Use the correct value for the Message-ID header
 (defun message-make-message-id ()

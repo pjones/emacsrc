@@ -3,6 +3,8 @@
 
 ;; Bring in an external Gnus
 (require 'gnus-load)
+(setq gnus-directory "~/.gnus.d/news"
+      mail-signature-dir "~/develop/pmade/privaterc/signatures")
 
 ;; Emacs nonstandard editing commands
 (autoload 'zap-up-to-char "misc" nil t)

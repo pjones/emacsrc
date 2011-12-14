@@ -27,7 +27,7 @@
 ;; Posting Styles (least specific to most specific)
 (setq gnus-posting-styles
       `((".*"
-         (signature-file ,(concat pmade-sigs-dir "/pmade")
+         (signature-file ,(concat mail-signature-dir "/pmade")
          (From "Peter Jones <pjones@pmade.com>")))
         ;; Message from Rebekah
         ((header "from" ".*dontpatroneyesme.*")
@@ -39,16 +39,16 @@
          (From "Peter Jones <pjones@pmade.com>"))
         ;; Messages going to the pmade.com domain
         ((header "to" "pjones@pmade\\.com")
-         (signature-file ,(concat pmade-sigs-dir "/pmade"))
+         (signature-file ,(concat mail-signature-dir "/pmade"))
          (From "Peter Jones <pjones@pmade.com>"))
         ;; Messages going to the contextualdevlopment.com domain
         ((header "to" "pjones@contextualdevelopment\\.com")
-         (signature-file ,(concat pmade-sigs-dir "/contextual"))
+         (signature-file ,(concat mail-signature-dir "/contextual"))
          (From "Peter Jones <pjones@contextualdevelopment.com>"))
         ;; Messages to my Land Cruiser Aliases
         ((header "to" "suv8@pmade\\.org")
          (From "Peter Jones <suv8@pmade.org>")
-         (signature-file ,(concat pmade-sigs-dir "/fj40")))
+         (signature-file ,(concat mail-signature-dir "/fj40")))
         ;; News groups
         (message-news-p
          (From "Peter Jones <mlists@pmade.com>"))
@@ -61,7 +61,7 @@
         (".*lcml"
          (To "lcml@tlca.org")
          (From "Peter Jones <suv8@pmade.org>")
-         (signature-file ,(concat pmade-sigs-dir "/fj40")))
+         (signature-file ,(concat mail-signature-dir "/fj40")))
         ;; Google Mailing Lists
         ((header "to" ".*@googlegroups\\.com")
          (From "Peter Jones <pjones@pmade.com>"))))
@@ -69,20 +69,11 @@
 ;; Mailing Lists
 (setq message-subscribed-addresses
       '("landcruisers@tlca.org"
-        "rubyosa-discuss@rubyforge.org"
         "rb-appscript-discuss@rubyforge.org"
         "bdrg-members@rubyforge.org"
         "emacs-app-dev-@lists.sourceforge.net"
         "derailed@googlegroups.com"
-        "devalot@googlegroups.com"
-        "help-gnu-emacs@gnu.org"
-        "engine-developers@lists.rails-engines.org"
-        "muse-el-discuss@gna.org"
-        "pdf-reader@googlegroups.com"
-        "emacs-orgmode@gnu.org"
-        "ruby_emacs_dev@yahoogroups.com"
-        "emacs-orgmode@gnu.org"
-        "emacs-on-rails@googlegroups.com"))
+        "help-gnu-emacs@gnu.org"))
 
 ;; Group List
 (setq
