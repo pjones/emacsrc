@@ -1,4 +1,6 @@
 xsetroot -cursor_name left_ptr
+eval `ssh-agent`
+xmms2-launcher
 xmodmap ~/.xmodmaprc
 xcompmgr -n &
 exec xmonad

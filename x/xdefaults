@@ -1,10 +1,18 @@
 ! ############################################################################
+! # Global
+*.background: #222222
+*.foreground: #e6e6e6
+*.font: xft:dejavu sans mono:size=10
+
+! ############################################################################
 ! # urxvt terminal
-urxvt.depth: 32
-urxvt.background: rgba:0000/0000/0000/aaaa
-urxvt.foreground: #e6e6e6
+urxvt.modifer: alt
+urxvt.meta8: false
 urxvt.scrollBar: false
-urxvt.font: -*-terminus-medium-*-*-*-*-140-*-*-*-*-iso8859-1
+urxvt.internalBorder: 4
+urxvt.cursorBlink: true
+urxvt.cursorUnderline: true
+urxvt.pointerBlank: true
 urxvt.color0: #111111
 urxvt.color1: #dc322f
 urxvt.color2: #859900
@@ -13,8 +21,11 @@ urxvt.color4: #268bd2
 urxvt.color5: #d33682
 urxvt.color6: #2aa198
 urxvt.color7: #839496
-
-! ############################################################################
-! # dzen
-dzen.background: #888888
-dzen.foreground: #ffffff
+urxvt.color8: #1c1c1c
+urxvt.color9: #d75f00
+urxvt.color10: #85aa11
+urxvt.color11: #b68a01
+urxvt.color12: #0188ff
+urxvt.color13: #5f5faf
+urxvt.color14: #2ba299
+urxvt.color15: #ffffd7

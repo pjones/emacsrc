@@ -4,14 +4,16 @@ remove Lock = Caps_Lock
 add Control = Caps_Lock
 
 !############################################################################
-!# Turn the left control key into the hyper/super key.
+!# Turn the left control key into the Mod3 key (for xmonad)
+remove Control = Control_L
+add Mod3 = Control_L
 
 !############################################################################
-!# Turn the left alt key into the Mod5 key.
-! remove Mod1 = Alt_L
-! add Mod5 = Alt_L
+!# Turn the left alt key into the Mod4 (Super) key.
+remove Mod1 = Alt_L
+add Mod4 = Alt_L
 
 !############################################################################
 !# Turn the left command key into the left alt key.
-! clear Mod4
-! keycode 115 = Alt_L
+remove Mod4 = Super_L
+add Mod1 = Super_L
