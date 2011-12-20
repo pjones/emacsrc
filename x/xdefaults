@@ -2,10 +2,10 @@
 ! # Global
 *.background: #222222
 *.foreground: #e6e6e6
-*.font: xft:dejavu sans mono:size=10
 
 ! ############################################################################
 ! # urxvt terminal
+urxvt.font: xft:dejavu sans mono:size=10
 urxvt.modifer: alt
 urxvt.meta8: false
 urxvt.scrollBar: false

@@ -1,19 +1,21 @@
 !############################################################################
-!# Turn the caps lock key into a left control key.
+!# Turn the caps lock key into a left control key, and turn the left
+!# control key into the Mod3 key (for xmonad)
 remove Lock = Caps_Lock
-add Control = Caps_Lock
-
-!############################################################################
-!# Turn the left control key into the Mod3 key (for xmonad)
 remove Control = Control_L
-add Mod3 = Control_L
+keysym Control_L = Caps_Lock
+keysym Caps_Lock = Control_L
+add Control = Control_L
+add Mod3 = Caps_Lock
 
 !############################################################################
-!# Turn the left alt key into the Mod4 (Super) key.
-remove Mod1 = Alt_L
-add Mod4 = Alt_L
-
-!############################################################################
-!# Turn the left command key into the left alt key.
-remove Mod4 = Super_L
-add Mod1 = Super_L
+!# On my Apple Keyboard I'd like the Command key to be the Alt key,
+!# and the Alt key to be the Super key.  First, I have to swap the
+!# keysyms or Emacs will find a way to get around xmodmap.  Then I
+!# have to remap the modifiers for other applications.
+keysym Super_L = Alt_L Meta_L
+keysym Alt_L = Super_L
+clear Mod1
+clear Mod4
+add Mod1 = Alt_L Alt_R
+add Mod4 = Super_L Super_R
