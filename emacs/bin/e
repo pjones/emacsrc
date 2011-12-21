@@ -12,6 +12,7 @@ class RemoteEmacs
   ##############################################################################
   DEFAULT_OPTIONS = {
     'verbose' => false,
+    'server'  => 'server',
     'version' => false, 
     'tty'     => false, 
     'frame'   => false,
@@ -35,9 +36,11 @@ class RemoteEmacs
       p.on('-e', '--eval', 'Eval the file argument as lisp') {|e| @options.eval = e}
       p.on('-n', '--no-wait', 'Don\'t wait for Emacs [default]') {@options.wait = false}
       p.on('-w', '--wait', 'Wait for Emacs to finish') {@options.wait = true}
+      p.on('-s', '--server=NAME', 'Set the server name to use') {|s| @options.server = s}
     end.parse!(ARGV)
     
     @emacsclient = ['emacsclient']
+    @socket_file = File.expand_path("~/.emacs.d/server/#{@options.server}")
   end
   
   ##############################################################################
@@ -55,17 +58,18 @@ class RemoteEmacs
       @emacsclient << '--no-wait'
     end
 
-    if !File.exist?(File.expand_path('~/.emacs.d/server/server'))
+    if !File.exist?(@socket_file)
       prepare_for_remote_send
     else
       # TODO: Use this for remotes too once I upgrade Emacs on my
       # virtual machines.
       @emacsclient << '--quiet' if !@options.verbose
+      @emacsclient << "--server-file=#{@socket_file}"
     end
 
     @emacsclient.concat(ARGV)
     $stdout.puts(@emacsclient.join(' ')) if @options.verbose
-    system(*@emacsclient) || raise('emacsclient failed')
+    exec(*@emacsclient) || raise('emacsclient failed')
   end
   
   ##############################################################################
