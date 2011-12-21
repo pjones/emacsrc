@@ -1,32 +1,58 @@
+-- Load XMonad
 import XMonad
 import qualified XMonad.StackSet as W
-import qualified Data.Map as M
-import XMonad.Hooks.DynamicLog
+
+-- XMonad contrib (Actions)
+import XMonad.Actions.CycleWS (toggleWS)
+import XMonad.Actions.Promote
 import XMonad.Actions.Submap
+import XMonad.Actions.UpdatePointer
+
+-- XMonad contrib (Hooks)
 import XMonad.Hooks.DynamicLog
+import XMonad.Hooks.FadeInactive
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.UrgencyHook
-import XMonad.Hooks.FadeInactive
-import XMonad.Util.Paste
-import XMonad.Util.Run
+
+-- XMonad contrib (Layouts)
 import XMonad.Layout.NoBorders
-import XMonad.Layout.ResizableTile
+import XMonad.Layout.PerWorkspace (onWorkspace)
+
+-- Utilities
+import qualified Data.Map as M
 import Graphics.X11.ExtraTypes.XF86
 import System.Exit
+import XMonad.Util.Paste
+import XMonad.Util.Run
 
 main = do
   xmproc <- spawnPipe "xmobar"
   xmonad $ withUrgencyHook NoUrgencyHook $ defaultConfig
     { modMask = mod3Mask
-    , terminal = "urxvt"
+    , terminal = "urxvtc"
     , borderWidth = 2
     , normalBorderColor = "#1a1a1a"
     , focusedBorderColor = "#00bfff"
+    , workspaces = myWorkspaces
     , keys = myKeys
-    , logHook = fadeInactiveLogHook 0.8 >> (dynamicLogWithPP $ myPP xmproc)
+    , logHook = fadeInactiveLogHook 0.8 
+                >> (updatePointer (Relative 1 1))
+                >> (dynamicLogWithPP $ myPP xmproc)
     , layoutHook = myLayoutRules
     , manageHook = manageHook defaultConfig <+> manageDocks
     }
+
+myWorkspaces = 
+  [ "1:Dev"
+  , "2:Web"
+  , "3:Comm"
+  , "4:VNC"
+  , "5:Fire"
+  , "6"
+  , "7"
+  , "8"
+  , "9"
+  ]
 
 myPP output = defaultPP
   { ppCurrent = xmobarColor "#7b79b1" "#0f141f" . wrap "[" "]"
@@ -40,17 +66,42 @@ myPP output = defaultPP
   , ppOutput = hPutStrLn output
   }
 
-myLayoutRules = avoidStruts $
-  (tall ||| full)
+myDefaultLayout = (tall ||| full)
   where
     tall = Tall 1 (3/100) (1/2)
     full = noBorders Full
 
+myLayoutRules = avoidStruts $
+                onWorkspace (myWorkspaces !! 2) (skinny ||| tall) myDefaultLayout
+              where
+                tall   = Tall 1 (3/100) (1/2)
+                skinny = Tall 1 (3/100) (9/10)
+
+-- Keys I use to jump workspaces without a modifier.    
+myWorkspaceKeys = 
+  [ 0x1008ff03 -- keycode 232: F1 without the Fn key pressed
+  , 0x1008ff02 -- keycode 233: F2 "       "   "  "   "
+--, ?????????? -- keycode 128: F3 "       "   "  "   "
+--, ?????????? -- keycode 212: F4 "       "   "  "   "
+  , 0x1008ff06 -- keycode 237: F5 "       "   "  "   "
+  , 0x1008ff05 -- keycode 238: F6 "       "   "  "   "
+  ]
+
+-- Other keys on this keyboard
+-- keycode 191 keysym 0x0: F13
+-- keycode 192 keysym 0x0: F14
+-- keycode 193 keysym 0x0: F15
+-- keycode 194 keysym 0x0: F16
+-- keycode 195 keysym 0x0: F17
+-- keycode 196 keysym 0x0: F18
+-- keycode 197 keysym 0x0: F19
+-- keycode 169 keysym 0x1008ff2c: XF86Eject
+
 -- Use C-z as a prefix key, and have all other keys come under it.
 myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
   [ ((controlMask, xK_z), submap . M.fromList $
-      -- Send C-z (when pressed twice)
-      [ ((controlMask, xK_z), sendKey controlMask xK_z)
+      [ ((controlMask, xK_z), toggleWS)
+      , ((0,           xK_z), sendKey controlMask xK_z)
 
       -- Focusing and swapping windows
       , ((0,         xK_n),  windows W.focusDown)
@@ -59,7 +110,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
       , ((shiftMask, xK_n),  windows W.swapDown)
       , ((shiftMask, xK_p),  windows W.swapUp)
       , ((0,         xK_m),  windows W.focusMaster)
-      , ((shiftMask, xK_m),  windows W.swapMaster)
+      , ((shiftMask, xK_m),  promote)
       , ((shiftMask, xK_t),  withFocused $ windows . W.sink)
       , ((0,         xK_c),  kill)
 
