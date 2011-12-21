@@ -58,6 +58,13 @@ placing it in the kill ring)."
    ((looking-at "\\_>") (hippie-expand nil))
    (t (indent-for-tab-command))))
 
+(defun pmade-irc (&optional local-only)
+  "Start IRC client.  With an argument only start a connection to
+the local bitlbee instance."
+  (interactive "P")
+  (load "pmade-rcirc")
+  (if local-only (rcirc-connect "localhost") (rcirc nil)))
+  
 (defun pmade-pwgen (&optional kill-only)
   "Generate and insert a password."
   (interactive "P")
@@ -112,3 +119,9 @@ placing it in the kill ring)."
         (goto-char (point-min))
         (show-all)))
     (switch-to-buffer buf)))
+
+(defun pmade:urgency-hint (frame status)
+  (let* ((wm-hints (append (x-window-property "WM_HINTS" frame "WM_HINTS" nil nil t) nil))
+	 (flags (car wm-hints)))
+    (setcar wm-hints (if status (logior flags #x00000100) (logand flags #x1ffffeff)))
+    (x-change-window-property "WM_HINTS" wm-hints frame "WM_HINTS" 32 t)))
