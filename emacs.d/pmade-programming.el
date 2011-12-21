@@ -113,6 +113,10 @@
 (add-hook 'espresso-mode-hook 'pmade-programming-mode-hook)
 (setq espresso-indent-level 2 espresso-flat-functions t)
 
+;; Haskell
+(autoload 'haskell-mode "haskell-mode" "Start haskell-mode" t)
+(add-to-list 'auto-mode-alist '("\\.hs$" . haskell-mode))
+
 ;; Shell scripting
 (setq sh-basic-offset 2)
 (add-hook 'sh-mode-hook (lambda ()
@@ -128,8 +132,8 @@
 ;; I keep Ruby programming stuff in a separate file
 (load "~/.emacs.d/pmade/pmade-ruby")
 
-;; LaTeX
-(load "auctex.el" nil t t)
+;; LaTeX (FIXME: autoload this)
+; (load "auctex.el" nil t t)
 
 (add-hook 'LaTeX-mode-hook
   (lambda ()

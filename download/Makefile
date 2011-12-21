@@ -1,9 +1,18 @@
+################################################################################
 PACKAGE_VERSIONS  = orgmode/release_7.8
 PACKAGE_VERSIONS += rhtml/20090213
 PACKAGE_VERSIONS += magit/1.0.0
-PACKAGE_VERSIONS += auctex/11.85
 PACKAGE_VERSIONS += gnus/n0-17
 
+ifeq (texdoc,$(notdir $(shell which texdoc)))
+PACKAGE_VERSIONS += auctex/11.85
+endif
+
+ifeq (ghci,$(notdir $(shell which ghci)))
+PACKAGE_VERSIONS += haskell/2.8.0
+endif
+
+################################################################################
 DEST = $(HOME)/.emacs.d/download
 PACKAGES = $(wildcard *.sh)
 

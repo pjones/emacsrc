@@ -1,5 +1,6 @@
 ;; Places I keep elisp files
 (add-to-list 'load-path "~/.emacs.d")
+(add-to-list 'load-path "~/.emacs.d/pmade")
 (add-to-list 'load-path "~/.emacs.d/packages")
 
 ;; Local site-lisp
@@ -11,4 +12,5 @@
 (add-to-list 'load-path pmade-site-lisp)
 (add-to-list 'load-path (concat pmade-site-lisp "/gnus/lisp"))
 (add-to-list 'load-path (concat pmade-site-lisp "/rinari"))
+(add-to-list 'load-path (concat pmade-site-lisp "/haskell"))
 (add-to-list 'load-path (concat pmade-site-lisp "/idea"))
