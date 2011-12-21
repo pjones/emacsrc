@@ -62,6 +62,10 @@
          (To "lcml@tlca.org")
          (From "Peter Jones <suv8@pmade.org>")
          (signature-file ,(concat mail-signature-dir "/fj40")))
+        ;; ThriveSmart INBOX
+        (".*googlemail.*INBOX.*"
+         (From "Peter Jones <peter@thrivesmart.com>")
+         (signature-file ,(concat mail-signature-dir "/thrivesmart")))
         ;; Google Mailing Lists
         ((header "to" ".*@googlegroups\\.com")
          (From "Peter Jones <pjones@pmade.com>"))))

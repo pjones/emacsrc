@@ -1,4 +1,4 @@
-(eval-when-compile
+1(eval-when-compile
   (require 'gnus)
   (require 'nnheader)
   (require 'cl))
@@ -25,12 +25,11 @@
 
 ;; Apple Address Book
 (require 'external-abook)
-(setq external-abook-command "contacts -lf '%%e\t%%n' %s")
+(setq external-abook-command "ssh beefy \"contacts -lf \'%%e\t%%n\' %s\"")
 
 ;; Checking for New Mail
 (defun pmade-new-level-one-mail () (gnus-group-get-new-news 1))
-;; (gnus-demon-add-handler 'pmade-new-level-one-mail 20 t)
-;; (gnus-demon-init)
+(gnus-demon-add-handler 'pmade-new-level-one-mail 10 t)
 
 ;; Highlight the current line in the groups and summary buffers
 (defun pmade-gnus-index-hook ()
