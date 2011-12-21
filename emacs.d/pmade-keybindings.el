@@ -36,3 +36,11 @@
 
 ; Not using C-z right now
 (global-set-key "\C-z"            nil)
+
+;; Super key bindings
+(global-set-key (kbd "s-p") 'windmove-up)
+(global-set-key (kbd "s-n") 'windmove-down)
+(global-set-key (kbd "s-f") 'windmove-right)
+(global-set-key (kbd "s-b") 'windmove-left)
+(global-set-key (kbd "s-a") 'align)
+(global-set-key (kbd "s-x") 'switch-to-previous-buffer)

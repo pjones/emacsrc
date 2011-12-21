@@ -37,7 +37,7 @@
 (require 'dired-x)
 
 ;; Winmove is awesome
-(windmove-default-keybindings 'hyper)
+(windmove-default-keybindings 'super)
 (setq windmove-wrap-around t)
 
 ;; Getting and fetching pastie.caboo.se
