@@ -9,7 +9,7 @@
 (autoload 'org-export-as-mindmap "org-mindmap" nil t)
 
 (eval-after-load "org-eva"
-  '(let ((eva-conf "~/.comm-sync/etc/eva.el"))
+  '(let ((eva-conf "~/develop/pmade/privaterc/emacs/secrets.el"))
      (when (file-exists-p eva-conf) (load-file eva-conf))))
 
 ;; Org Basecamp
@@ -44,84 +44,12 @@
  org-show-siblings '((default . t))
  org-show-entry-below '((default . t))
 
- ;; The notes file and options
- org-directory "~/Documents/pmade/pmade-inc/planning"
- org-default-notes-file (concat org-directory "/general/business.org")
- pmade-org-active-clients (concat (expand-file-name org-directory) "/clients/active")
- pmade-org-general-files (concat (expand-file-name org-directory) "/general")
- pmade-org-misc-files (expand-file-name "~/.emacs.d/orgfiles")
-
- ;; Agenda Files and Agenda Settings
- org-agenda-window-setup 'current-window
- org-agenda-restore-windows-after-quit nil
- org-stuck-projects '("+LEVEL=2+project-90octane" ("NEXT" "PENDING") ("single") nil)
- org-agenda-ndays 1
- org-agenda-skip-deadline-if-done t
- org-agenda-skip-scheduled-if-done t
- org-agenda-show-all-dates t
- org-agenda-start-on-weekday 1
- org-agenda-todo-ignore-with-date t
- org-agenda-include-diary nil
- org-agenda-time-grid
-   '((today) "--------------------" (730 900 1030 1400 1600 1700))
- org-agenda-files 
-   (append
-    (directory-files pmade-org-active-clients t "\\.org$")
-    (directory-files pmade-org-general-files  t "\\.org$")
-    (directory-files pmade-org-misc-files     t "\\.org$"))
-
- ;; Custom Agenda Views
- org-agenda-custom-commands
- '(("d" "Daily Agenda"
-    ((agenda ""
-       ((org-agenda-todo-keyword-format "")
-        (org-agenda-remove-tags t)))
-     (tags "LEVEL=2+goals"
-       ((org-agenda-remove-tags t)
-        (org-agenda-prefix-format "  ")
-        (org-agenda-todo-keyword-format "")))
-     (tags "TODO=\"NEXT\"-client"
-       ((org-agenda-overriding-header "Non-Client Tasks Marked NEXT")
-        (org-agenda-sorting-strategy '(tag-up))
-        (org-agenda-show-inherited-tags nil)
-        (org-agenda-todo-keyword-format "")))
-     (tags "TODO=\"NEXT\"+client" 
-       ((org-agenda-overriding-header "Client Tasks")
-        (org-agenda-sorting-strategy '(category-up))
-        (org-agenda-show-inherited-tags t)
-        (org-agenda-todo-keyword-format "")))
-     (todo "PENDING"
-       ((org-agenda-todo-keyword-format "")))
-     (stuck ""
-       ((org-agenda-remove-tags t)))))
-   ("b" "Blocked Items"
-    ((todo "BLOCKED")))
-   ("e" "Next Item Effort"
-    ((todo "NEXT"
-       ((org-agenda-sorting-strategy '(effort-up))
-        (org-agenda-show-inherited-tags nil)
-        (org-agenda-todo-keyword-format ""))))))
- 
  ;; Faces
  org-todo-keyword-faces
    '(("NEXT"    . pmade-org-next-face)
      ("PENDING" . pmade-org-pending-face)
-     ("READING" . pmade-org-reading-face))
+     ("READING" . pmade-org-reading-face)))
    
- ;; MobileOrg
- org-mobile-directory "/Volumes/pmade/org"
- org-mobile-inbox-for-pull (concat pmade-org-general-files "/from-mobile.org"))
-
-(defun pmade:org-tex-to-pdf (file)
-  (let* ((dir (file-name-directory file))
-         (base (file-name-nondirectory file))
-         (pdf (concat (file-name-sans-extension base) ".pdf")))
-    (shell-command (concat "cd " dir " && latexmk -pdf " base))
-    (shell-command (concat "cd " dir " && mv " pdf " __" pdf))
-    (shell-command (concat "cd " dir " && latexmk -CA " base))
-    (shell-command (concat "cd " dir " && mv __" pdf " " pdf))
-    (delete-file file)))
-
 (defun pmade:org-mode-hook ()
   ;; Extra Bindings
   (org-defkey org-mode-map "\C-ci"     'org-invoice-report)
@@ -281,23 +209,3 @@ are formatted as HH:MM and returns them in that format"
   (org-minutes-to-hh:mm-string 
    (- (org-hh:mm-string-to-minutes t1)
       (org-hh:mm-string-to-minutes t2))))
-
-;; Override the default mode line to use Growl instead
-(defun pmade:org-clock-growl (msg)
-  (let ((fname "/tmp/org-clock.txt"))
-    (with-temp-file fname (insert msg))
-    (call-process "growlnotify"
-                  fname nil nil "-n" "Org" "-s" 
-                  "-a" "Emacs" "-d" "modeline"
-                  "OrgMode Clock")))
-    
-(eval-after-load 'org-clock
-  '(progn
-     (defun org-clock-update-mode-line ()
-       (if org-clock-effort (org-clock-notify-once-if-expired)
-         (setq org-task-overrun nil))
-       (setq global-mode-string (delq 'org-mode-line-string global-mode-string))
-       (pmade:org-clock-growl (org-no-properties (org-clock-get-clock-string))))
-     (defun pmade:org-clock-out-with-growl ()
-       (pmade:org-clock-growl "Stopped"))
-     (add-hook 'org-clock-out-hook 'pmade:org-clock-out-with-growl)))

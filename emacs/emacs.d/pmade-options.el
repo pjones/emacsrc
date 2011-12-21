@@ -4,15 +4,27 @@
 ;; Personal Settings
 (setq
  user-full-name "Peter Jones"
- user-mail-address "pjones@pmade.com"
- pmade-com-src "~/Documents/pmade/pmade.com"
- pmade-com-dst (concat pmade-com-src "/published")
- pmade-print-css "http://www.contextualdevelopment.com/static/stylesheets/print.css")
+ user-mail-address "pjones@pmade.com")
 
 ;; Interface Options (remove some interface elements, such as the toolbar, scroll bar, and menu bar.
-(when (fboundp 'tool-bar-mode) (tool-bar-mode -1))
-(when (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
-(menu-bar-mode -1)
+;; Frame setup
+(setq default-frame-alist 
+ '((cursor-type  . bar)
+   (cursor-color . "yellow")))
+
+(defun pmade-configure-new-frame (frame)
+  (when (fboundp 'tool-bar-mode) (tool-bar-mode -1))
+  (when (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
+  (when (fboundp 'menu-bar-mode) (menu-bar-mode -1))
+  (setq-default 
+   cursor-in-non-selected-windows 'hbar
+   indicate-buffer-boundaries 'left
+   indicate-empty-lines t)
+  (blink-cursor-mode)
+  (require 'fringe)
+  (fringe-mode 10))
+
+(add-hook 'after-make-frame-functions 'pmade-configure-new-frame)
 
 ;; General options
 (setq
@@ -27,22 +39,6 @@
 
 ;; Aliases
 (defalias 'yes-or-no-p 'y-or-n-p)
-
-;; Frame setup
-(setq
- default-frame-alist 
- '((cursor-type  . bar)
-   (cursor-color . "yellow")))
-
-(when window-system
-  (setq-default cursor-in-non-selected-windows 'hbar)
-  (blink-cursor-mode 1))
-
-;; Window Fringes
-(require 'fringe)
-(setq default-indicate-buffer-boundaries 'left) ; Indicate the top and bottom of a buffer
-(setq default-indicate-empty-lines t)           ; Display an indicator for lines beyond the buffer EOF
-(fringe-mode 'default)
 
 ;; Font lock mode (syntax coloring)
 (setq font-lock-maximum-decoration t)
