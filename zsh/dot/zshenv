@@ -5,7 +5,7 @@ typeset -U path
 path=(~/bin $path)
 
 # Load in optional operating system override
-[ -r ~/.zsh/os ] && . ~/.zsh/os
+[ -r ~/.zsh/os ] && source ~/.zsh/os
 
 # Load in optional local override file
-[ -r ~/.zsh/local ] && . ~/.zsh/local
+[ -r ~/.zsh/local ] && source ~/.zsh/local

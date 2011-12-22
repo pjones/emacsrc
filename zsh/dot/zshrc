@@ -46,6 +46,11 @@ source ~/.zsh/lib/directories.zsh
 source ~/.zsh/lib/history.zsh
 source ~/.zsh/lib/prompt.zsh
 
+# Application files are autoloaded, if I can get it to freaking work:
+# http://zsh.sourceforge.net/Doc/Release/Functions.html
+# fpath=(~/.zsh/app $fpath)
+
 for file in $(find ~/.zsh/app -type f -name '*.zsh'); do
   source $file
+  #autoload -w $file
 done

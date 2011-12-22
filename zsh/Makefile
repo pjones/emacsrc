@@ -14,6 +14,14 @@ $(1): $(2)
 	install -m 0640 $(2) $(1)
 endef
 
+define COMPILE_template
+all: $(1).zwc
+$(1).zwc: $(2)
+	zsh -c 'zcompile -U $(2)'
+	install -m 0644 $(2).zwc $(1).zwc
+	@ rm -f $(2).zwc
+endef
+
 # Top level directory
 $(eval $(call DIR_template,$(DEST)/lib))
 $(foreach f,$(wildcard lib/*.zsh),$(eval $(call COPY_template,$(DEST)/lib/$(notdir $(f)),$(f))))
