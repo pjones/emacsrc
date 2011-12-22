@@ -13,6 +13,9 @@ urxvt.internalBorder: 4
 urxvt.cursorBlink: true
 urxvt.cursorUnderline: true
 urxvt.pointerBlank: true
+urxvt.perl-lib: /home/pjones/.urxvt
+urxvt.perl-ext-common: url-select,clipboard
+urxvt.keysym.C-y: perl:clipboard:paste
 urxvt.color0: #111111
 urxvt.color1: #dc322f
 urxvt.color2: #859900
