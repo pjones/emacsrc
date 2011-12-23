@@ -1,11 +1,11 @@
 Config
-  { font = "xft:dejavu sans mono:size=10"
+  { font = "xft:dejavu sans mono:size=9"
   , position = Bottom
   , bgColor = "#1c1c1c"
   , fgColor = "#e6e6e6"
   , commands =
       [ Run StdinReader
-      , Run Com "xmms2" ["status"] "playing" 50
+      , Run Com "xmms2" ["current"] "playing" 50
       , Run Date "%a %b %d, %H:%M" "clock" 50
       , Run Weather "KBJC" ["-t", "F:<tempF> C:<tempC> H:<rh>%"] 36000
       ]
