@@ -17,6 +17,7 @@ import XMonad.Hooks.UrgencyHook
 -- XMonad contrib (Layouts)
 import XMonad.Layout.NoBorders
 import XMonad.Layout.PerWorkspace (onWorkspace)
+import XMonad.Layout.ResizableTile
 
 -- Utilities
 import qualified Data.Map as M
@@ -68,14 +69,14 @@ myPP output = defaultPP
 
 myDefaultLayout = (tall ||| full)
   where
-    tall = Tall 1 (3/100) (1/2)
+    tall = ResizableTall 1 (3/100) (1/2) []
     full = noBorders Full
 
 myLayoutRules = avoidStruts $
                 onWorkspace (myWorkspaces !! 2) (skinny ||| tall) myDefaultLayout
               where
-                tall   = Tall 1 (3/100) (1/2)
-                skinny = Tall 1 (3/100) (9/10)
+                tall   = ResizableTall 1 (3/100) (1/2)  []
+                skinny = ResizableTall 1 (3/100) (9/10) []
 
 -- Keys I use to jump workspaces without a modifier.    
 myWorkspaceKeys = 
@@ -114,12 +115,9 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
       , ((shiftMask, xK_t),  withFocused $ windows . W.sink)
       , ((0,         xK_c),  kill)
 
-      -- Switch back to the previous workspace
-      -- , ((0,         ?),  toggleWS)
-
       -- Control Xmonad (restart, quit)
       , ((shiftMask, xK_q),  io (exitWith ExitSuccess))
-      , ((0,         xK_q),  spawn "xmonad --recompile; xmonad --restart")
+      , ((0,         xK_q),  spawn "xmonad --recompile && xmonad --restart")
       , ((0,         xK_b),  sendMessage ToggleStruts)
 
       -- Controlling X (sending keys, pasting, etc)
@@ -143,9 +141,11 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
     -- Remaining keys that use the XMonad modifier key
 
-    -- Resizing the master window
-    , ((modm,      xK_comma),  sendMessage Shrink)
-    , ((modm,      xK_period), sendMessage Expand)
+    -- Window resizing
+    , ((modm, xK_Left),  sendMessage Shrink)
+    , ((modm, xK_Right), sendMessage Expand)
+    , ((modm, xK_Up),    sendMessage MirrorShrink)
+    , ((modm, xK_Down),  sendMessage MirrorExpand)
 
     -- Switching layouts
     , ((modm,               xK_space), sendMessage NextLayout)
