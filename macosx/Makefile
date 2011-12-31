@@ -1,5 +1,7 @@
 BINDINGS_FILE = $(HOME)/Library/KeyBindings/DefaultKeyBinding.dict
 
+.PHONEY: all
+
 all: $(BINDINGS_FILE)
 	@ $(MAKE) -C scripts/iTunes all
 

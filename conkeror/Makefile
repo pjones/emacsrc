@@ -2,7 +2,9 @@ FILES = $(shell ls | egrep -v 'Makefile')
 DEST  = $(HOME)/.conkerorrc
 
 .PHONEY: all
+
 all: $(DEST) $(foreach f,$(FILES),$(DEST)/$(f))
+	@:
 
 $(DEST):
 	mkdir -p $@

@@ -2,6 +2,10 @@ DEST = $(HOME)/.zsh
 HOST = $(shell hostname)
 OS   = $(shell uname -s | tr '[:upper:]' '[:lower:]')
 
+.PHONEY: all
+all:
+	@:
+
 define DIR_template
 all: $(1)
 $(1):

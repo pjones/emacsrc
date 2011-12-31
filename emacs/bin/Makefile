@@ -1,6 +1,9 @@
 FILES = $(shell ls | grep -v Makefile)
 
+.PHONEY: all
+
 all: $(HOME)/bin $(foreach f,$(FILES),$(HOME)/bin/$(f))
+	@:
 
 $(HOME)/bin:
 	mkdir -p $@

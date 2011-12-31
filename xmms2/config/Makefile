@@ -1,8 +1,10 @@
 DEST_D = $(HOME)/.config/xmms2
 DEST_F = $(DEST_D)/clients/nycli.conf
 
-all: $(DEST_F)
+.PHONEY: all
 
+all: $(DEST_F)
+	@:
 
 define INSTALL_template
 $(1): $(notdir $(1))

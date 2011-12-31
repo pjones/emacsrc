@@ -1,6 +1,9 @@
 DEST = $(HOME)/.xmonad
 
+.PHONEY: all
+
 all: $(DEST) $(DEST)/xmonad.hs
+	@:
 
 $(DEST):
 	mkdir -p $(DEST)

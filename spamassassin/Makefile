@@ -1,4 +1,7 @@
+.PHONEY: all
+
 all: $(HOME)/.spamassassin $(HOME)/.spamassassin/user_prefs
+	@:
 
 $(HOME)/.spamassassin:
 	mkdir -p $@

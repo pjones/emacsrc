@@ -1,6 +1,9 @@
 FILES = $(shell ls | egrep -v 'Makefile|xdefaults')
 
+.PHONEY: all
+
 all: $(foreach f,$(FILES),$(HOME)/.$(f)) $(HOME)/.Xdefaults
+	@:
 
 define COPY_template
 $(HOME)/.$(2): $(1)

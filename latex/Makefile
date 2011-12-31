@@ -1,3 +1,5 @@
+.PHONEY: all
+
 all: $(HOME)/.latexmkrc
 	@(cd packages && $(MAKE))
 
