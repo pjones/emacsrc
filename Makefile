@@ -1,6 +1,8 @@
 DIRS = download packages emacs.d bin
 DOTFILE = $(HOME)/.emacs
 
+.PHONEY: all
+
 all: $(DOTFILE)
 
 all uninstall:

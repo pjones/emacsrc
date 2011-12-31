@@ -7,7 +7,10 @@ EMACS_FLAGS += --eval "(add-to-list 'load-path \".\")"
 EMACS_FLAGS += --eval "(load \"~/develop/pmade/rc/emacs/emacs.d/pmade-loadpath\")"
 EMACS_FLAGS += -f batch-byte-compile
 
-all: $(DEST) $(COMPILED) $(addprefix $(DEST)/,$(TO_REMOVE)) 
+.PHONEY: all
+
+all: $(DEST) $(COMPILED) $(addprefix $(DEST)/,$(TO_REMOVE))
+	@:
 
 uninstall:
 	rm -f $(COMPILED)

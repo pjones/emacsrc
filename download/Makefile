@@ -16,7 +16,10 @@ endif
 DEST = $(HOME)/.emacs.d/download
 PACKAGES = $(wildcard *.sh)
 
+.PHONEY: all
+
 all: $(DEST)
+	@:
 
 define PKG_template
 $(DEST)/$(subst /,-,$(1)):
