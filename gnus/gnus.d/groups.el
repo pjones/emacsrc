@@ -63,9 +63,12 @@
          (From "Peter Jones <suv8@pmade.org>")
          (signature-file ,(concat mail-signature-dir "/fj40")))
         ;; ThriveSmart INBOX
-        (".*googlemail.*INBOX.*"
+        ("^nnimap\\+Thrive Smart:.*"
          (From "Peter Jones <peter@thrivesmart.com>")
          (signature-file ,(concat mail-signature-dir "/thrivesmart")))
+        ("^nnimap\\+Aura Software:.*"
+         (From "Peter Jones <pjones@aura-software.com>")
+         (signature-file ,(concat mail-signature-dir "/aurasoftware")))
         ;; Google Mailing Lists
         ((header "to" ".*@googlegroups\\.com")
          (From "Peter Jones <pjones@pmade.com>"))))

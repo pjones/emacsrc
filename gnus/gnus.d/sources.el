@@ -32,15 +32,20 @@
            (nnimap-stream ssl)))
 
 (setq gnus-secondary-select-methods
-  '((nnimap "imap.googlemail.com"
-            (nnimap-stream ssl))))
-
-   ;; gnus-secondary-select-methods
-   ;; '((nntp "news.gmane.org")
-   ;;   (nntp "news.eternal-september.org"
-   ;;         (nntp-open-connection-function nntp-open-tls-stream)
-   ;;         (nntp-port-number 563)
-   ;;         (nntp-address "news.eternal-september.org"))))
+  '((nnimap "Thrive Smart"
+            (nnimap-address "tsmail.pmade.com")
+            (nnimap-server-port 993)
+            (nnimap-stream ssl))
+    (nnimap "Aura Software"
+            (nnimap-address "asmail.pmade.com")
+            (nnimap-server-port 993)
+            (nnimap-stream ssl))
+    (nntp "Gmane"
+          (nntp-address "news.gmane.org"))
+    (nntp "Eternal September"
+          (nntp-open-connection-function nntp-open-tls-stream)
+          (nntp-port-number 563)
+          (nntp-address "news.eternal-september.org"))))
 
 ;; Use the correct value for the Message-ID header
 (defun message-make-message-id ()
