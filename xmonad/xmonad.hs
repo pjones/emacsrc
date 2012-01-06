@@ -78,26 +78,6 @@ myLayoutRules = avoidStruts $
                 tall   = ResizableTall 1 (3/100) (1/2)  []
                 skinny = ResizableTall 1 (3/100) (9/10) []
 
--- Keys I use to jump workspaces without a modifier.    
-myWorkspaceKeys = 
-  [ 0x1008ff03 -- keycode 232: F1 without the Fn key pressed
-  , 0x1008ff02 -- keycode 233: F2 "       "   "  "   "
---, ?????????? -- keycode 128: F3 "       "   "  "   "
---, ?????????? -- keycode 212: F4 "       "   "  "   "
-  , 0x1008ff06 -- keycode 237: F5 "       "   "  "   "
-  , 0x1008ff05 -- keycode 238: F6 "       "   "  "   "
-  ]
-
--- Other keys on this keyboard
--- keycode 191 keysym 0x0: F13
--- keycode 192 keysym 0x0: F14
--- keycode 193 keysym 0x0: F15
--- keycode 194 keysym 0x0: F16
--- keycode 195 keysym 0x0: F17
--- keycode 196 keysym 0x0: F18
--- keycode 197 keysym 0x0: F19
--- keycode 169 keysym 0x1008ff2c: XF86Eject
-
 -- Use C-z as a prefix key, and have all other keys come under it.
 myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
   [ ((controlMask, xK_z), submap . M.fromList $
@@ -151,11 +131,11 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm,               xK_space), sendMessage NextLayout)
     , ((modm .|. shiftMask, xK_space), setLayout $ XMonad.layoutHook conf)
 
-    -- Controlling XMMS2
-    , ((0, xF86XK_AudioPlay),        spawn "xmms2 toggle")
-    , ((0, xF86XK_AudioRaiseVolume), spawn "amixer set Master 5%+")
-    , ((0, xF86XK_AudioLowerVolume), spawn "amixer set Master 5%-")
-    , ((0, xF86XK_AudioMute),        spawn "amixer set Master toggle")
-    , ((0, xF86XK_AudioPrev),        spawn "xmms2 prev")
-    , ((0, xF86XK_AudioNext),        spawn "xmms2 next")
+    -- Controlling Music and Volume
+    , ((modm, xK_F1),          spawn "mpc prev")
+    , ((modm, xK_F2),          spawn "mpc toggle")
+    , ((modm, xK_F3),          spawn "mpc next")                              
+    , ((modm, xK_Print),       spawn "amixer set Master 5%-")
+    , ((modm, xK_Scroll_Lock), spawn "amixer set Master 5%+")
+    , ((modm, xK_Pause),       spawn "amixer set Master toggle")
   ]
