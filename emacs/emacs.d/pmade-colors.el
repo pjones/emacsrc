@@ -29,8 +29,8 @@
      `(lazy-highlight ((t (:background ,bg-inverse :foreground ,fg-inverse))))
      `(isearch        ((t (:background ,magenta :foreground ,bg-inverse))))
      `(region         ((t (:background ,bg-high))))
-     `(highlight      ((t (:background ,bg-low))))
-     `(hl-line        ((t (:background ,bg-low))))
+     `(highlight      ((t (:background ,green :foreground ,bg-inverse))))
+     `(hl-line        ((t (:background ,green :foreground ,bg-inverse))))
 
      ;; Show paren
      `(show-paren-match ((t (:background ,bg-inverse
