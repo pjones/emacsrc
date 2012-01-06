@@ -5,6 +5,13 @@ mpd_column_list () {
 }
 
 ################################################################################
+# Returns a heavily modified version of `mpc current`.
+mpd_current () {
+  mpc current --format '%title% [[(%artist% / %album%)]|==%name%]' | \
+    sed -re 's/==([^:-]{,20})[:-]?.*$/(\1)/' -e 's/ *\)/)/g'
+}
+
+################################################################################
 # Lists all artists known to MPD.
 mpd_list_artists () {
   mpc list artist | sort | mpd_column_list
@@ -51,7 +58,7 @@ mpd_random () {
 
   typeset -a exclude_genres
   exclude_genres=(
-    Comedy Humor Folk Children Game
+    Comedy Humor Folk Children Game Trains
     Holiday Christmas Halloween Religious Meditation
     Audiobook Spoken Radio Introduction)
 
@@ -88,5 +95,23 @@ mpd_ban () {
     echo $playing_song >> $ban_file
     mpc -q del 0
     echo "Banned: $playing_song"
+  fi
+}
+
+################################################################################
+# Put a song into my Happy playlist.
+mpd_happy () {
+  happy_file=~/.mpd/playlists/Happy.m3u
+  playing_song=$(mpc current --format %file%)
+
+  if [ -n "$playing_song" ]; then
+    [ -r $happy_file ] || touch $happy_file
+    
+    if grep -qF "$playing_song" $happy_file; then
+      echo "Already in Happy: $playing_song"
+    else
+      echo $playing_song >> $happy_file
+      echo "Happy: $playing_song"
+    fi
   fi
 }
