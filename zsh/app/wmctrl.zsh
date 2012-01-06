@@ -6,3 +6,9 @@ wmctrl_activate_emacs () {
     wmctrl -ia $win_id
   fi
 }
+
+################################################################################
+# Activates the biggest Conkeror window.
+wmctrl_activate_conkeror () {
+  wmctrl -ia $(wmctrl -lG|grep Conkeror|sort -nk 5|tail -1|awk '{print $1}')
+}

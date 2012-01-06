@@ -1,0 +1,5 @@
+#!/bin/sh
+
+zsh -ic wmctrl_activate_conkeror
+sleep 0.25
+conkeror $@
