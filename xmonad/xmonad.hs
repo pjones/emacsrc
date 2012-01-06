@@ -13,6 +13,7 @@ import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.FadeInactive
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.UrgencyHook
+import XMonad.Hooks.EwmhDesktops
 
 -- XMonad contrib (Layouts)
 import XMonad.Layout.NoBorders
@@ -28,7 +29,7 @@ import XMonad.Util.Run
 
 main = do
   xmproc <- spawnPipe "xmobar"
-  xmonad $ withUrgencyHook NoUrgencyHook $ defaultConfig
+  xmonad $ ewmh $ withUrgencyHook NoUrgencyHook $ defaultConfig
     { modMask = mod3Mask
     , terminal = "urxvtc"
     , borderWidth = 2
@@ -138,4 +139,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm, xK_Print),       spawn "amixer set Master 5%-")
     , ((modm, xK_Scroll_Lock), spawn "amixer set Master 5%+")
     , ((modm, xK_Pause),       spawn "amixer set Master toggle")
+
+    -- Activating certain applications/desktops
+    , ((modm, xK_Escape),      spawn "zsh -ic wmctrl_activate_emacs")
   ]
