@@ -1,18 +1,5 @@
 !############################################################################
-!# My Caps Lock and left Control key have already been switched in
-!# /etc/default/keyboard.  What I want to do now is strip the Caps
-!# Lock from the left Control key and make it a Mod3 key.
+!# Most configuration for my keyboard is in /etc/default/keyboard.
+!# All I do here is turn my left control key into a mod3 key.
 remove Lock = Caps_Lock
 add Mod3 = Caps_Lock
-
-!############################################################################
-!# On my Apple Keyboard I'd like the Command key to be the Alt key,
-!# and the Alt key to be the Super key.  First, I have to swap the
-!# keysyms or Emacs will find a way to get around xmodmap.  Then I
-!# have to remap the modifiers for other applications.
-keysym Super_L = Alt_L Meta_L
-keysym Alt_L = Super_L
-clear Mod1
-clear Mod4
-add Mod1 = Alt_L Alt_R
-add Mod4 = Super_L Super_R

@@ -5,7 +5,7 @@ Config
   , fgColor = "#e6e6e6"
   , commands =
       [ Run StdinReader
-      , Run Com "xmms2" ["current"] "playing" 50
+      , Run Com "zsh" ["-ic", "mpd_current"] "playing" 10
       , Run Date "%a %b %d, %H:%M" "clock" 50
       , Run Weather "KBJC" ["-t", "F:<tempF> C:<tempC> H:<rh>%"] 36000
       ]

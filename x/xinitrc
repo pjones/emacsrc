@@ -7,6 +7,10 @@ xrandr --output DVI-0 --primary --mode 1920x1200 \
 # Set the default cursor.
 xsetroot -cursor_name left_ptr
 
+# Remap my keys
+xmodmap -pke > ~/.xmodmap.orig
+xmodmap ~/.xmodmaprc
+
 # Load authentication agents.  They output environment variables that
 # we need to evaluate so they are inherited by all process going
 # forward.  Kill any agents that might already be running.
@@ -15,18 +19,9 @@ pkill -u $USER gpg-agent
 eval `ssh-agent`
 eval `gpg-agent --daemon`
 
-# Remap my keys
-xmodmap ~/.xmodmaprc
-
-# Run a composition helper so I can have transparent windows.
-xcompmgr -n &
-
 # urxvtd is a terminal emulator daemon.  Once it's started you use
 # urxvtc to start new X terminal emulators that share resources.
 urxvtd -q -o -f
-
-# Start a terminal that waits for you to enter your ssh key.
-urxvtc -e 'ssh-add'
 
 # I run three copies of Emacs because I'm a freak.  They each run as a
 # daemon and I'll try to kill them first.  These are started here
@@ -36,6 +31,12 @@ for name in server irc gnus; do
   [ -r ~/.emacs.d/server/$name ] && ~/bin/e -es $name '(kill-emacs)'
   emacs --daemon=$name
 done
+
+# Run a composition helper so I can have transparent windows.
+xcompmgr -n &
+
+# Start a terminal that waits for you to enter your ssh key.
+urxvtc -e 'ssh-add'
 
 # Finally, execute my window manager.
 exec xmonad

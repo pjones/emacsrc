@@ -67,5 +67,5 @@
       vc-handled-backends nil)          ; disable SCCS integration
 
 ;; URL browsing
-;; (setq browse-url-browser-function 'browse-url-generic
-;;       browse-url-generic-program "conkopen.sh")
+(setq browse-url-browser-function 'browse-url-generic
+      browse-url-generic-program "open-url")
