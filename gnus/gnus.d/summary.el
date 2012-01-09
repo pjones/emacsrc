@@ -1,8 +1,14 @@
 ;;; Settings that affect the summary view
 (setq 
  gnus-extract-address-components 'mail-extract-address-components ; slower but more accurate address parsing
- gnus-auto-center-summary nil                                     ; don't auto-center the summary buffer
- gnus-list-identifiers "\\[\\w+-\\w+]*\\]")
+ gnus-auto-center-summary nil)                                    ; don't auto-center the summary buffer
+
+;; Regular expressions to remove from the Subject line.  For example,
+;; removing the name of a mailing list.
+(setq gnus-list-identifiers 
+  '("Re: \\[Medtronic (Aura Software)\\] *"
+    "\\[LCML\\] *"
+    "\\[\\w+-\\w+\\] *"))
 
 ;; How the summary line should look
 (setq 
