@@ -3,10 +3,10 @@
 ################################################################################
 #
 # This script will output a list of decoded file names that are in
-# your iTunes music library.  This is useful for comparing with the
-# output of find(1) to locate files that iTunes doesn't know about, or
-# let you know about files that iTunes thinks are in your music
-# directory but aren't.
+# your iTunes music library (or the given playlist file).  This is
+# useful for comparing with the output of find(1) to locate files that
+# iTunes doesn't know about, or let you know about files that iTunes
+# thinks are in your music directory but aren't.
 #
 ################################################################################
 require('rubygems')
@@ -21,8 +21,8 @@ MUSIC_DIR   = '/Volumes/AVRAID/iTunes/Music/'
 class Library
   
   ##############################################################################
-  def run
-    file = File.open(LIBRARY_XML)
+  def run (file_name)
+    file = File.open(file_name || LIBRARY_XML)
     doc = Nokogiri::XML(file)
 
     # This is the correct xpath, but nokogiri chokes on it and takes
@@ -35,7 +35,7 @@ class Library
         url = loc.next_sibling.content.sub('file://localhost', '')
         url = CGI.unescape(url.gsub('+', '%2b'))
         next unless url[0, MUSIC_DIR.size] == MUSIC_DIR
-        $stdout.puts(url)
+        $stdout.puts(url.sub(MUSIC_DIR, ''))
       end
     end
   ensure
@@ -45,7 +45,7 @@ end
 
 ################################################################################
 begin
-  Library.new.run
+  Library.new.run(ARGV.first)
 rescue RuntimeError => e
   $stderr.puts(File.basename($0) + ": ERROR: #{e}")
   exit(1)
