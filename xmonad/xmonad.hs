@@ -24,8 +24,8 @@ import XMonad.Layout.ResizableTile
 import qualified Data.Map as M
 import Graphics.X11.ExtraTypes.XF86
 import System.Exit
-import XMonad.Util.Paste
 import XMonad.Util.Run
+import XMonad.Util.Paste (sendKey)
 
 main = do
   xmproc <- spawnPipe "xmobar"
@@ -84,6 +84,8 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
   [ ((controlMask, xK_z), submap . M.fromList $
       [ ((controlMask, xK_z), toggleWS)
       , ((0,           xK_z), sendKey controlMask xK_z)
+      , ((controlMask, xK_g), return ()) -- do nothing
+      , ((0,           xK_g), return ()) -- do nothing
 
       -- Focusing and swapping windows
       , ((0,         xK_n),  windows W.focusDown)
@@ -94,15 +96,12 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
       , ((0,         xK_m),  windows W.focusMaster)
       , ((shiftMask, xK_m),  promote)
       , ((shiftMask, xK_t),  withFocused $ windows . W.sink)
-      , ((0,         xK_c),  kill)
+      , ((modm,      xK_c),  kill)
 
       -- Control Xmonad (restart, quit)
       , ((shiftMask, xK_q),  io (exitWith ExitSuccess))
       , ((0,         xK_q),  spawn "xmonad --recompile && xmonad --restart")
       , ((0,         xK_b),  sendMessage ToggleStruts)
-
-      -- Controlling X (sending keys, pasting, etc)
-      , ((0,         xK_y), pasteSelection)
 
       -- Spawning other applications
       , ((0,         xK_space), spawn "exe=`dmenu_path | dmenu` && eval \"exec $exe\"")
