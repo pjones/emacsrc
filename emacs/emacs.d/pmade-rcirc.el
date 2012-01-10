@@ -38,15 +38,14 @@ Example use: /all away food or /all quit zzzz."
 
 (defun pmade:rcirc-hook ()
   (require 'rcirc-color)
-  (unless (string-match "localhost\\|derailed" (buffer-name))
+  (when (and (string-match "#" (buffer-name))
+             (not (string-match "derailed" (buffer-name))))
     (setq rcirc-ignore-buffer-activity-flag t)
     (rcirc-omit-mode))
   (define-key rcirc-mode-map (kbd "C-c C-o") 'rcirc-browse-url)
   (set (make-local-variable 'scroll-conservatively) 8192)
   (set (make-local-variable 'next-line-add-newlines) nil)
   (setq mode-line-format '("  %b " global-mode-string))
-  (column-number-mode -1)
-  (line-number-mode -1)
   (flyspell-mode t)
   (rcirc-track-minor-mode 1))
 
