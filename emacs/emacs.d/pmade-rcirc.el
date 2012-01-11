@@ -39,7 +39,7 @@ Example use: /all away food or /all quit zzzz."
 (defun pmade:rcirc-hook ()
   (require 'rcirc-color)
   (when (and (string-match "#" (buffer-name))
-             (not (string-match "derailed" (buffer-name))))
+             (not (string-match "derailed\\|twitter" (buffer-name))))
     (setq rcirc-ignore-buffer-activity-flag t)
     (rcirc-omit-mode))
   (define-key rcirc-mode-map (kbd "C-c C-o") 'rcirc-browse-url)
