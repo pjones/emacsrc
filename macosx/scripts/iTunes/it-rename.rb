@@ -23,6 +23,9 @@ class Rename
     # Remove (Bonus Track), (Bonus Disc), and (With Bonus Video)
     [/\s*\(\s*(With\s+)?Bonus\s+(Track|Disc|Video)(\s+Version)?\s*\)/i, ''],
     
+    # Remove (Deluxe) or (Deluxe Version)
+    [/\s*\(Deluxe(\s+Version)?\)/i, ''],
+    
     # Some weird Depeche Mode track names
     [/\s*\(24\/48\s+PCM[^\)]+\)/i, ''],
     
