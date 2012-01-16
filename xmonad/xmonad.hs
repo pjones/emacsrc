@@ -126,6 +126,8 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm, xK_Right), sendMessage Expand)
     , ((modm, xK_Up),    sendMessage MirrorShrink)
     , ((modm, xK_Down),  sendMessage MirrorExpand)
+    , ((modm, xK_minus), sendMessage (IncMasterN (-1)))
+    , ((modm, xK_equal), sendMessage (IncMasterN 1))
 
     -- Switching layouts
     , ((modm,               xK_space), sendMessage NextLayout)
