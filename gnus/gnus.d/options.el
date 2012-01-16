@@ -25,7 +25,7 @@
 
 ;; Apple Address Book
 (require 'external-abook)
-(setq external-abook-command "ssh beefy \"contacts -lf \'%%e\t%%n\' %s\"")
+(setq external-abook-command "ssh renfield \"contacts -lf \'%%e\t%%n\' %s\"")
 
 ;; Checking for New Mail
 (defun pmade-new-level-one-mail () (gnus-group-get-new-news 1))
