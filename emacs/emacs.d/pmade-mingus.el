@@ -1,5 +1,6 @@
 ;;; Mingus (front-end to MPD)
 (setq mingus-use-ido-mode-p t
+      mingus-playlist-separator " » "
       mingus-stream-alist
       '(("AbaClub"              . "http://listen.radionomy.com/abaclub")
         ("AccentMix"            . "http://live.it.acc.vmix.fr:8000/")
@@ -21,3 +22,11 @@
         ("Suburbs of Goa"       . "http://voxsc1.somafm.com:8850")
         ("Tag's Trip"           . "http://205.188.215.230:8012")
         ("Underground Eighties" . "http://voxsc1.somafm.com:8880")))
+
+(defun pmade:mingus-hook ()
+  "Set up all of the mingus buffers in a similar way."
+  (hl-line-mode t)
+  (flyspell-mode -1))
+
+(add-hook 'mingus-playlist-hooks 'pmade:mingus-hook)
+(add-hook 'mingus-browse-hook    'pmade:mingus-hook)
