@@ -28,12 +28,23 @@ class Rename
     
     # Some weird Depeche Mode track names
     [/\s*\(24\/48\s+PCM[^\)]+\)/i, ''],
+    [/\s*\(PCM(?:\s+Stereo)?\)/i,   ''],
     
     # Stupid albums with (+digital booklet)
     [/\s*\(\+?digital\s+booklet\s*\)/i, ''],
     
     # Remove (Remastered) or (Remastered 2006)
     [/\s*\(\s*Remastered[^\)]*\)/i, ''],
+    
+    # And (YYYY Digital Remaster)
+    [/\s*\(\d{4}\s+Digital\s+Remaster\)/i, ''],
+    [/\s*\(\d{4}\s+Remastered(?:\s+Single)?(?:\s+Version)?\)/i, ''],
+    
+    # (Digital Version)
+    [/\s*\(Digital\s+Version\)/i, ''],
+    
+    # Of course it an (Album Version)
+    [/\s*\(Album\s+Version\)/i, ''],
     
     # Remove (Disc N) crap
     [/\s*\(\s*Disc\s+\d+\s*\)/i, ''],
@@ -84,10 +95,12 @@ class Rename
     end
     
     after = "#{name} - #{album}"
-    $stdout.puts("#{before} ==> #{after}") if options.verbose
 
-    track.name.set(name)
-    track.album.set(album)
+    if before != after
+      $stdout.puts("#{before} ==> #{after}") if options.verbose
+      track.name.set(name)
+      track.album.set(album)
+    end
   end
 end
 
