@@ -35,3 +35,6 @@ view_source_use_external_editor = true;
 url_completion_use_history = true;
 url_completion_use_bookmarks = true;
 url_completion_use_webjumps = true;
+
+// Other options
+minibuffer_completion_rows = 30; // size of the completion buffer
