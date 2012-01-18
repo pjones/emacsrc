@@ -8,5 +8,5 @@ all: $(DEST) $(DEST)/xmonad.hs
 $(DEST):
 	mkdir -p $(DEST)
 
-$(DEST)/xmonad.hs: $(DEST) xmonad.hs
+$(DEST)/xmonad.hs: xmonad.hs
 	install -m 0640 xmonad.hs $@

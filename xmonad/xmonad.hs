@@ -19,6 +19,7 @@ import XMonad.Hooks.EwmhDesktops
 import XMonad.Layout.NoBorders
 import XMonad.Layout.PerWorkspace (onWorkspace)
 import XMonad.Layout.ResizableTile
+import XMonad.Layout.Named (named)
 
 -- Utilities
 import qualified Data.Map as M
@@ -70,14 +71,10 @@ myPP output = defaultPP
 
 myDefaultLayout = (tall ||| full)
   where
-    tall = ResizableTall 1 (3/100) (1/2) []
-    full = noBorders Full
+    tall = named "T" $ ResizableTall 1 (3/100) (1/2) []
+    full = named "F" $ noBorders Full
 
-myLayoutRules = avoidStruts $
-                onWorkspace (myWorkspaces !! 2) (skinny ||| tall) myDefaultLayout
-              where
-                tall   = ResizableTall 1 (3/100) (1/2)  []
-                skinny = ResizableTall 1 (3/100) (9/10) []
+myLayoutRules = avoidStruts $ myDefaultLayout
 
 -- Use C-z as a prefix key, and have all other keys come under it.
 myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
