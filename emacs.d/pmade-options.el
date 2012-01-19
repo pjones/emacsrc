@@ -6,9 +6,8 @@
  user-full-name "Peter Jones"
  user-mail-address "pjones@pmade.com")
 
-;; Interface Options (remove some interface elements, such as the toolbar, scroll bar, and menu bar.
 ;; Frame setup
-(setq default-frame-alist 
+(setq default-frame-alist
  '((cursor-type  . bar)
    (cursor-color . "yellow")))
 
@@ -16,7 +15,7 @@
   (when (fboundp 'tool-bar-mode) (tool-bar-mode -1))
   (when (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
   (when (fboundp 'menu-bar-mode) (menu-bar-mode -1))
-  (setq-default 
+  (setq-default
    cursor-in-non-selected-windows 'hbar
    indicate-buffer-boundaries 'left
    indicate-empty-lines t)
@@ -35,7 +34,8 @@
  column-number-mode t             ; display column number in mode line
  enable-recursive-minibuffers t   ; allow multiple minibuffers
  echo-keystrokes 0.1              ; show unfinished keystrokes early
- disabled-command-hook nil)       ; Enable commands disabled by default for novice users
+ disabled-command-hook nil        ; Enable commands disabled by default for novice users
+ frame-title-format "%b")         ; Set the contents of the frame title
 
 ;; Aliases
 (defalias 'yes-or-no-p 'y-or-n-p)

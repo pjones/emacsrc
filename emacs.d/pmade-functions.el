@@ -1,4 +1,11 @@
 ;;; Miscellaneous Functions
+(defun pmade-maybe-save-buffers-kill-terminal (&optional arg)
+  "Save me from myself.  I somehow keep hitting C-x C-c when I
+don't want to."
+  (interactive)
+  (if (yes-or-no-p "Really close this terminal? ")
+      (save-buffers-kill-terminal arg)))
+
 (defun open-line-below-like-vim ()
   "Open a line below the point, and move there"
   (interactive)
@@ -63,8 +70,17 @@ placing it in the kill ring)."
 the local bitlbee instance."
   (interactive "P")
   (load "pmade-rcirc")
-  (if local-only (rcirc-connect "localhost") (rcirc nil)))
-  
+  (if local-only (rcirc-connect "localhost")
+    (rcirc nil)
+    (when (= 1 (length (window-list)))
+      (split-window-right)
+      (split-window-below)
+      (split-window-below)
+      (windmove-right)
+      (split-window-below)
+      (split-window-below)
+      (balance-windows))))
+
 (defun pmade-pwgen (&optional kill-only)
   "Generate and insert a password."
   (interactive "P")
@@ -84,7 +100,7 @@ the local bitlbee instance."
          (set-window-buffer (funcall selector) this-win)
          (select-window (funcall selector)))
        (setq arg (if (plusp arg) (1- arg) (1+ arg))))))
-        
+
 (defun pmade-select-window nil
   "Use ido completion to select a window based on its buffer name"
   (interactive)
@@ -92,7 +108,7 @@ the local bitlbee instance."
          (sel (ido-completing-read "Window: " (mapcar 'buffer-name bufs)))
          (win (get-buffer-window (get-buffer sel))))
     (select-window win)))
-    
+
 (defun pmade-toggle-dictionary ()
   (interactive)
   (let ((dict ispell-current-dictionary))
