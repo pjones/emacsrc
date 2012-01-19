@@ -4,6 +4,7 @@
 
 ;; Global Key Bindings
 (global-set-key [escape]   (lambda () (interactive) (message "WTF: ESC")))
+(global-set-key "\C-x\C-c" 'pmade-maybe-save-buffers-kill-terminal)
 (global-set-key "\C-x\C-m" 'execute-extended-command)
 (global-set-key "\C-x\C-b" 'ibuffer)
 (global-set-key "\C-xrS"   'string-insert-rectangle)

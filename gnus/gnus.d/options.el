@@ -17,11 +17,9 @@
  gnus-read-active-file 'some)           ; Speed up initial load
 
 ;; MIME
-(eval-after-load "mm-decode"
-  '(progn
-     (dolist (i '("text/html" "text/richtext" "multipart/mixed" "multipart/related"))
-       (add-to-list 'mm-discouraged-alternatives i)
-       (setq mm-automatic-display (remove i mm-automatic-display)))))
+(setq gnus-inhibit-mime-unbuttonizing t
+      mm-automatic-display '("text/plain" "text/html")
+      mm-discouraged-alternatives '("text/html"))
 
 ;; Apple Address Book
 (require 'external-abook)

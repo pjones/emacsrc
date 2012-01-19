@@ -43,15 +43,14 @@
 ;; Code that should be called for each programming mode
 (defun pmade-programming-mode-hook ()
   (require 'align)
-  (require 'enclose)
-  (require 'wrap-region)
-  (setq show-trailing-whitespace nil save-place t)
+  (setq save-place t)
   (set (make-local-variable 'comment-auto-fill-only-comments) t)
   (turn-on-auto-fill)
   (flyspell-prog-mode)
   (hs-minor-mode 1)
-  (enclose-mode t)
-  (wrap-region-mode t)
+  (electric-pair-mode 1)
+  (when (not (string= "php-mode" major-mode))
+    (whitespace-mode t))
   ;(idea-complement-mode 1)
   (font-lock-add-keywords nil '(("\\<\\(FIXME:\\|TODO:\\|NOTE:\\)" 1 pmade-fixme-face t)))
   (local-set-key "\C-cf"  'hs-toggle-hiding)
@@ -116,6 +115,10 @@
 ;; Haskell
 (autoload 'haskell-mode "haskell-mode" "Start haskell-mode" t)
 (add-to-list 'auto-mode-alist '("\\.hs$" . haskell-mode))
+
+;; PHP
+(autoload 'php-mode "php-mode" "php-mode" t)
+(add-to-list 'auto-mode-alist '("\\.php$" . php-mode))
 
 ;; Shell scripting
 (setq sh-basic-offset 2)
