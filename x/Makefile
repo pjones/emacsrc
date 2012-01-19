@@ -1,4 +1,4 @@
-FILES = $(shell ls | egrep -v 'Makefile|xdefaults')
+FILES = $(shell ls | egrep -v 'Makefile|xdefaults|urxvt')
 
 .PHONEY: all
 

@@ -42,7 +42,7 @@ main = do
                 >> (updatePointer (Relative 1 1))
                 >> (dynamicLogWithPP $ myPP xmproc)
     , layoutHook = myLayoutRules
-    , manageHook = manageHook defaultConfig <+> manageDocks
+    , manageHook = myManageHook <+> manageDocks
     }
 
 myWorkspaces = 
@@ -75,6 +75,9 @@ myDefaultLayout = (tall ||| full)
     full = named "F" $ noBorders Full
 
 myLayoutRules = avoidStruts $ myDefaultLayout
+
+myManageHook = composeAll
+                 [ className =? "MPlayer" --> (ask >>= doF . W.sink) ]
 
 -- Use C-z as a prefix key, and have all other keys come under it.
 myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
