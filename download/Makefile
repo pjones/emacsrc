@@ -4,6 +4,7 @@ PACKAGE_VERSIONS += rhtml/20090213
 PACKAGE_VERSIONS += magit/1.0.0
 PACKAGE_VERSIONS += gnus/n0-17
 PACKAGE_VERSIONS += mingus/master
+PACKAGE_VERSIONS += php/master
 
 ifeq (texdoc,$(notdir $(shell which texdoc)))
 PACKAGE_VERSIONS += auctex/11.85
