@@ -14,13 +14,18 @@ define_webjump("weather", "http://www.wunderground.com/" +
 
 // Ping Feedburner
 define_webjump("pingfb", "http://feedburner.google.com/fb/a/" +
-               "pingSubmit?bloglink=http%3A%2F%2F" + 
+               "pingSubmit?bloglink=http%3A%2F%2F" +
                "feeds.feedburner.com%2Fdevalot-all");
 
 // Amazon MP3 Store
 define_webjump("amazon-mp3", "http://www.amazon.com/exec/obidos/external-search" +
                "/?url=search-alias%3Ddigital-music&field-keywords=%s");
-               
-define_webjump("dictionary","http://www.thefreedictionary.com/%s");
+
+// Translation
+define_webjump("it-en", "http://translate.google.com/#it|en|%s");
+define_webjump("en-it", "http://translate.google.com/#en|it|%s");
+
+// Other search engines
 define_webjump("duckduckgo", "http://duckduckgo.com/?q=%s");
 define_webjump("github", "http://github.com/search?q=%s&type=Everything");
+define_webjump("imdb", "http://www.imdb.com/find?s=all&q=%s");
