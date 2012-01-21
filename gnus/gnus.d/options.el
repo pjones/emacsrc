@@ -1,4 +1,4 @@
-1(eval-when-compile
+(eval-when-compile
   (require 'gnus)
   (require 'nnheader)
   (require 'cl))
@@ -8,13 +8,19 @@
       (regexp-opt
        `(,user-mail-address "mlists@pmade.com" "suv8@pmade.org")))
 
+;; Where things are stored
+(setq gnus-startup-file      "~/.gnus.d/newsrc"
+      gnus-directory         "~/.gnus.d/news"
+      gnus-agent-directory   "~/.gnus.d/agent"
+      message-directory      "~/.gnus.d/Mail"
+      mail-default-directory "~/.gnus.d/")
+
 ;; Various Settings
-(setq
- message-kill-buffer-on-exit t
- gnus-large-newsgroup 1000
- gnus-topic-display-empty-topics nil
- gnus-treat-date-local 'head
- gnus-read-active-file 'some)           ; Speed up initial load
+(setq message-kill-buffer-on-exit t
+      gnus-large-newsgroup 1000
+      gnus-topic-display-empty-topics nil
+      gnus-treat-date-local 'head
+      gnus-read-active-file 'some)
 
 ;; MIME
 (setq gnus-inhibit-mime-unbuttonizing t
@@ -24,6 +30,12 @@
 ;; Apple Address Book
 (require 'external-abook)
 (setq external-abook-command "ssh renfield \"contacts -lf \'%%e\t%%n\' %s\"")
+
+;; Don't keep back-up versions of newsrc
+(defun pmade:gnus-turn-off-backup ()
+  (set (make-local-variable 'backup-inhibited) t))
+(add-hook 'gnus-save-quick-newsrc-hook 'pmade:gnus-turn-off-backup)
+(add-hook 'gnus-save-standard-newsrc-hook 'pmade:gnus-turn-off-backup)
 
 ;; Checking for New Mail
 (defun pmade-new-level-one-mail () (gnus-group-get-new-news 1))
@@ -54,29 +66,15 @@ group and summary buffers)"
         "^Newsgroups:" "^Posted-To:" "^Gnus-Warning:"))
 
 ;; Window Layout
-;; (gnus-add-configuration '(group (horizontal 1.0 (calendar 0.33) (group 1.0 point))))
+(gnus-add-configuration '(group (vertical 1.0 (group 1.0 point) (calendar 0.33))))
 ;; (gnus-add-configuration '(summary (horizontal 1.0 (group 0.33) (summary 1.0 point))))
 ;; (gnus-add-configuration '(article (horizontal 1.0 (summary 0.5 point) (article 1.0))))
 ;; (gnus-add-configuration '(reply-yank (horizontal 1.0 (summary 0.5) (reply 1.0 point))))
 ;; (gnus-add-configuration '(message (horizontal 1.0 (group 0.33) (message 1.0 point) (calendar 0.33))))
 
-;; ;; Window Layout Helpers
-;; (defun pmade:gnus-reply-buffer ()
-;;   (let (replies)
-;;     (dolist (buffer (buffer-list))
-;;       (when (string-match "^\\*\\(wide \\)?reply" (buffer-name buffer))
-;;         (push (buffer-name buffer) replies)))
-;;     (car replies)))
+(defun pmade:gnus-calendar-buffer ()
+  (save-window-excursion (calendar))
+  "*Calendar*")
 
-;; (defun pmade:gnus-calendar-buffer ()
-;;   (save-window-excursion (calendar))
-;;   "*Calendar*")
-
-;; (setq gnus-window-to-buffer (assq-delete-all 'reply gnus-window-to-buffer))
-;; (push (cons 'reply 'pmade:gnus-reply-buffer) gnus-window-to-buffer)
-
-;; (setq gnus-window-to-buffer (assq-delete-all 'calendar gnus-window-to-buffer))
-;; (push (cons 'calendar 'pmade:gnus-calendar-buffer) gnus-window-to-buffer)
-
-;; (setq gnus-window-to-buffer (assq-delete-all 'scratch gnus-window-to-buffer))
-;; (push (cons 'scratch "*scratch*") gnus-window-to-buffer)
+(setq gnus-window-to-buffer (assq-delete-all 'calendar gnus-window-to-buffer))
+(push (cons 'calendar 'pmade:gnus-calendar-buffer) gnus-window-to-buffer)

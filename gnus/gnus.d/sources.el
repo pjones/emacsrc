@@ -2,7 +2,7 @@
 
 ;; IMAP (incoming mail)
 (setq pmade-mail-server "mail.pmade.com")
-      
+
 ;; SMTP (outgoing mail)
 (setq pmade-smtp-host pmade-mail-server
       pmade-smtp-port 25)
@@ -23,29 +23,36 @@
       smtpmail-starttls-credentials `((,pmade-smtp-host ,pmade-smtp-port nil nil))
       smtpmail-local-domain "pmade.com"
       starttls-use-gnutls t
-      gnus-message-archive-group "nnimap+mail.pmade.com:Sent Messages"
       gnus-gcc-mark-as-read t)
 
-(setq gnus-select-method 
-  `(nnimap ,pmade-mail-server 
+(setq gnus-select-method
+  `(nnimap ,pmade-mail-server
            (nnir-search-engine imap)
            (nnimap-stream ssl)))
 
 (setq gnus-secondary-select-methods
   '((nnimap "Thrive Smart"
-            (nnimap-address "tsmail.pmade.com")
-            (nnimap-server-port 993)
-            (nnimap-stream ssl))
+      (nnimap-address "tsmail.pmade.com")
+      (nnimap-server-port 993)
+      (nnimap-stream ssl))
     (nnimap "Aura Software"
-            (nnimap-address "asmail.pmade.com")
-            (nnimap-server-port 993)
-            (nnimap-stream ssl))
+      (nnimap-address "asmail.pmade.com")
+      (nnimap-server-port 993)
+      (nnimap-stream ssl))
     (nntp "Gmane"
-          (nntp-address "news.gmane.org"))
+      (nntp-address "news.gmane.org"))
     (nntp "Eternal September"
-          (nntp-open-connection-function nntp-open-tls-stream)
-          (nntp-port-number 563)
-          (nntp-address "news.eternal-september.org"))))
+      (nntp-open-connection-function nntp-open-tls-stream)
+      (nntp-port-number 563)
+      (nntp-address "news.eternal-september.org"))))
+
+(setq gnus-message-archive-group "nnimap+mail.pmade.com:Sent Messages"
+      gnus-message-archive-method
+        '(nnfolder "archive"
+           (nnfolder-directory   "~/.gnus.d/archive")
+           (nnfolder-active-file "~/.gnus.d/archive/active")
+           (nnfolder-get-new-mail nil)
+           (nnfolder-inhibit-expiry t)))
 
 ;; Use the correct value for the Message-ID header
 (defun message-make-message-id ()

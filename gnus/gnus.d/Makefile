@@ -1,2 +1,2 @@
-DEST = $(HOME)/.gnus.d
+DEST = $(HOME)/.gnus.d/config
 include ../../emacs/emacs.mk

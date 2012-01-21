@@ -2,12 +2,12 @@
 (require 'nnir)
 
 ;; Load the rest of my Gnus config files
-(load "~/.gnus.d/options")
-(load "~/.gnus.d/faces")
-(load "~/.gnus.d/groups")
-(load "~/.gnus.d/summary")
-(load "~/.gnus.d/sources")
-(load "~/.gnus.d/message")
+(load "~/.gnus.d/config/options")
+(load "~/.gnus.d/config/faces")
+(load "~/.gnus.d/config/groups")
+(load "~/.gnus.d/config/summary")
+(load "~/.gnus.d/config/sources")
+(load "~/.gnus.d/config/message")
 
 ;; Compile things like format strings
 (gnus-compile)
