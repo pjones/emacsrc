@@ -8,7 +8,7 @@ tmux_mount () {
   fi
 
   name=$1
-  mount_point=$HOME/mnt/$1
+  mount_point=$HOME/develop/hosts/$1
   server=sshfs.${name}.pmade.com
   
   mkdir -p $mount_point
