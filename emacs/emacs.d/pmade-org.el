@@ -6,7 +6,6 @@
 (autoload 'org-invoice-report "org-invoice" nil t)
 (autoload 'org-dblock-write:invoice "org-invoice" nil t)
 (autoload 'org-eva-submit "org-eva" nil t)
-(autoload 'org-export-as-mindmap "org-mindmap" nil t)
 
 (eval-after-load "org-eva"
   '(let ((eva-conf "~/develop/pmade/privaterc/emacs/secrets.el"))
@@ -37,7 +36,7 @@
  org-completion-use-ido t
  org-goto-interface 'outline-path-completion
  org-outline-path-complete-in-steps t
- 
+
  ;; Showing context
  org-show-hierarchy-above '((default . t))
  org-show-following-heading '((default . t))
@@ -49,7 +48,7 @@
    '(("NEXT"    . pmade-org-next-face)
      ("PENDING" . pmade-org-pending-face)
      ("READING" . pmade-org-reading-face)))
-   
+
 (defun pmade:org-mode-hook ()
   ;; Extra Bindings
   (org-defkey org-mode-map "\C-ci"     'org-invoice-report)
@@ -69,9 +68,9 @@
 
   ;; Buffer Settings
   (setq save-place nil)
-  
+
   ;; Exporting
-  (setq 
+  (setq
    org-latex-to-pdf-process 'pmade:org-tex-to-pdf
    org-export-html-auto-postamble nil
    org-export-with-sub-superscripts nil
@@ -80,15 +79,15 @@
    org-icalendar-store-UID t
    org-export-html-style-default ""
    org-export-html-style-extra ""
-   org-export-html-style (concat "<link rel=\"stylesheet\" type=\"text/css\" href=\"" pmade-print-css "\"/>")))
+   org-export-html-style nil))
 
 (add-hook 'org-mode-hook 'pmade:org-mode-hook)
 
-(add-hook 'org-agenda-mode-hook 
-  (lambda () 
+(add-hook 'org-agenda-mode-hook
+  (lambda ()
     ;; Use line highlighting in the Org Agenda
     (hl-line-mode 1)
-    
+
     ;; Keys
     (define-key org-agenda-keymap " " 'org-agenda-cycle-show)
     (define-key org-agenda-mode-map " " 'org-agenda-cycle-show)
@@ -96,52 +95,6 @@
     (local-set-key "\C-x\C-w" 'pmade:org-write-agenda)))
 
 ;; Publishing
-(setq org-publish-project-alist
-  '(("knowledge-base"
-     :style "<link rel=\"stylesheet\" href=\"/stylesheets/basic.css\" type=\"text/css\"/>"
-     :base-directory "~/Documents/pmade/knowledge-base"
-     :publishing-directory "~/Sites/knowledge-base"
-     :recursive t
-     :author-info t
-     :email-info t
-     :creator-info t
-     :timestamp t
-     :emphasize t
-     :sub-superscript t
-     :special-strings t
-     :tags t
-     :todo-keywords t
-     :auto-preamble t
-     :auto-postamble t
-     :auto-sitemap t
-;;     :inline-images t
-;;     :link-up t
-;;     :link-home t
-     :sitemap-title "Sitemap"
-     :sitemap-sort-folders last)
-    ("journal"
-     :base-directory "~/Documents/journal"
-     :base-extension "org\\|jpg"
-     :publishing-directory "~/Sites/journal"
-     :publishing-function pmade:org-publish-html-or-image
-     :style "<link rel=\"stylesheet\" href=\"/stylesheets/basic.css\" type=\"text/css\"/>"
-     :exclude "setup\\.org"
-     :recursive t
-     :author-info t
-     :email-info t
-     :creator-info t
-     :timestamp t
-     :emphasize t
-     :sub-superscript t
-     :special-strings t
-     :tags t
-     :todo-keywords t
-     :auto-preamble t
-     :auto-postamble t
-     :auto-sitemap t
-     :sitemap-title "Sitemap"
-     :sitemap-sort-folders last)))
-
 (defun pmade:org-publish-html-or-image (plist filename pub-dir)
   (if (string-match "\\.org$" filename)
       (org-publish-org-to-html plist filename pub-dir)
@@ -206,6 +159,6 @@ generated from external processes."
 (defun pmade:org-time-diff (t1 t2)
   "Returns the difference between t1 and t2.  Expects that times
 are formatted as HH:MM and returns them in that format"
-  (org-minutes-to-hh:mm-string 
+  (org-minutes-to-hh:mm-string
    (- (org-hh:mm-string-to-minutes t1)
       (org-hh:mm-string-to-minutes t2))))
