@@ -33,7 +33,7 @@ main = do
   xmonad $ ewmh $ withUrgencyHook NoUrgencyHook $ defaultConfig
     { modMask = mod3Mask
     , terminal = "urxvtc"
-    , borderWidth = 2
+    , borderWidth = 3
     , normalBorderColor = "#1a1a1a"
     , focusedBorderColor = "#00bfff"
     , workspaces = myWorkspaces

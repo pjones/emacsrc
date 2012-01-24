@@ -12,7 +12,8 @@
 (setq gnus-startup-file      "~/.gnus.d/newsrc"
       gnus-directory         "~/.gnus.d/news"
       gnus-agent-directory   "~/.gnus.d/agent"
-      message-directory      "~/.gnus.d/Mail"
+      message-directory      "~/.gnus.d/mail"
+      nnfolder-directory     "~/.gnus.d/mail"
       mail-default-directory "~/.gnus.d/")
 
 ;; Various Settings
@@ -66,7 +67,7 @@ group and summary buffers)"
         "^Newsgroups:" "^Posted-To:" "^Gnus-Warning:"))
 
 ;; Window Layout
-(gnus-add-configuration '(group (vertical 1.0 (group 1.0 point) (calendar 0.33))))
+(gnus-add-configuration '(group (vertical 1.0 (group 1.0 point) (calendar 0.2))))
 ;; (gnus-add-configuration '(summary (horizontal 1.0 (group 0.33) (summary 1.0 point))))
 ;; (gnus-add-configuration '(article (horizontal 1.0 (summary 0.5 point) (article 1.0))))
 ;; (gnus-add-configuration '(reply-yank (horizontal 1.0 (summary 0.5) (reply 1.0 point))))

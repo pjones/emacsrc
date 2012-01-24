@@ -7,6 +7,7 @@ url_remoting_fn = load_url_in_new_buffer;
 download_buffer_automatic_open_target = OPEN_NEW_BUFFER_BACKGROUND;
 
 // Automatically follow unambiguous links
+hint_background_color = "#ddd";
 hints_auto_exit_delay = 500;
 hints_ambiguous_auto_exit_delay = 0;
 
@@ -38,3 +39,5 @@ url_completion_use_webjumps = true;
 
 // Other options
 minibuffer_completion_rows = 30; // size of the completion buffer
+can_kill_last_buffer = false;    // Don't close windows
+isearch_keep_selection = true;   // Helpful for M-w
