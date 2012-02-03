@@ -15,7 +15,7 @@
 
 ;; Better buffer switching and file finding
 (require 'ido)
-(add-hook 'ido-setup-hook 
+(add-hook 'ido-setup-hook
   (lambda ()
     (define-key ido-file-dir-completion-map "\C-n" 'ido-next-work-directory)
     (define-key ido-file-dir-completion-map "\C-p" 'ido-prev-work-directory)
@@ -88,7 +88,7 @@
 
 ;; EasyPG http://www.easypg.org/
 ;; (require 'epa)
-(setq epa-file-encrypt-to "61C4F407C4EB56B7"
+(setq epa-file-encrypt-to "D4426FFA"
       epa-popup-info-window nil)
 
 ;; Graphviz Dot Files
@@ -100,7 +100,7 @@
 (add-to-list 'auto-mode-alist '("\\.R$" . R-mode))
 
 ;; Calendar/Diary
-(setq 
+(setq
  diary-file "~/Documents/pmade/pmade-inc/planning/schedule/diary"
  calendar-date-style 'iso)
 
