@@ -5,7 +5,8 @@
  pmade-archive-group "nnimap+mail.pmade.com:Archive"
  pmade-review-group  "nnimap+mail.pmade.com:Review"
  pmade-spam-group  "nnimap+mail.pmade.com:spam"
- pmade-rebekah-group "nnimap+mail.pmade.com:Rebekah")
+ pmade-rebekah-group "nnimap+mail.pmade.com:Rebekah"
+ pmade-trash-group "nnimap+mail.pmade.com:Deleted Messages")
 
 ;; Settings by Group
 (setq gnus-parameters
@@ -14,7 +15,7 @@
         (".*INBOX.*"
          (display . all)
          (gnus-thread-sort-functions 'gnus-thread-sort-by-date))
-        
+
         ;; Mailing Lists
         ("\\.mlists\\."
          (comment . "Mailing List")
@@ -23,7 +24,7 @@
          (auto-expire . t)
          (expiry-wait . 14)
          (gnus-thread-sort-functions '(gnus-thread-sort-by-number (not gnus-thread-sort-by-date))))))
-        
+
 ;; Posting Styles (least specific to most specific)
 (setq gnus-posting-styles
       `((".*"

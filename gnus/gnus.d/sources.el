@@ -40,11 +40,7 @@
       (nnimap-server-port 993)
       (nnimap-stream ssl))
     (nntp "Gmane"
-      (nntp-address "news.gmane.org"))
-    (nntp "Eternal September"
-      (nntp-open-connection-function nntp-open-tls-stream)
-      (nntp-port-number 563)
-      (nntp-address "news.eternal-september.org"))))
+      (nntp-address "news.gmane.org"))))
 
 (setq gnus-message-archive-group "nnimap+mail.pmade.com:Sent Messages"
       gnus-message-archive-method
