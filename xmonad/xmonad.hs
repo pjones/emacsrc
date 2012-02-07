@@ -103,8 +103,11 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
       , ((0,         xK_q),  spawn "xmonad --recompile && xmonad --restart")
       , ((0,         xK_b),  sendMessage ToggleStruts)
 
+      -- Switching layouts
+      , ((0,         xK_space), sendMessage NextLayout)
+      , ((shiftMask, xK_space), setLayout $ XMonad.layoutHook conf)
+
       -- Spawning other applications
-      , ((0,         xK_space), spawn "exe=`dmenu_path | dmenu` && eval \"exec $exe\"")
       , ((0,         xK_t),     spawn $ XMonad.terminal conf)
       ]
       ++
@@ -129,10 +132,6 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm, xK_minus), sendMessage (IncMasterN (-1)))
     , ((modm, xK_equal), sendMessage (IncMasterN 1))
 
-    -- Switching layouts
-    , ((modm,               xK_space), sendMessage NextLayout)
-    , ((modm .|. shiftMask, xK_space), setLayout $ XMonad.layoutHook conf)
-
     -- Controlling Music and Volume
     , ((modm, xK_F1),          spawn "mpc prev")
     , ((modm, xK_F2),          spawn "mpc toggle")
@@ -142,5 +141,6 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm, xK_Pause),       spawn "amixer set Master toggle")
 
     -- Activating certain applications/desktops
+    , ((modm, xK_space),       spawn "gmrun")
     , ((modm, xK_Escape),      spawn "zsh -ic wmctrl_activate_emacs")
   ]
