@@ -3,7 +3,6 @@ import XMonad
 import qualified XMonad.StackSet as W
 
 -- XMonad contrib (Actions)
-import XMonad.Actions.CycleWS (toggleWS)
 import XMonad.Actions.Promote
 import XMonad.Actions.Submap
 import XMonad.Actions.UpdatePointer
@@ -25,8 +24,11 @@ import XMonad.Layout.Named (named)
 import qualified Data.Map as M
 import Graphics.X11.ExtraTypes.XF86
 import System.Exit
+import Control.Monad (unless)
+import XMonad.Util.Types
 import XMonad.Util.Run
 import XMonad.Util.Paste (sendKey)
+import XMonad.Util.Scratchpad
 
 main = do
   xmproc <- spawnPipe "xmobar"
@@ -42,7 +44,9 @@ main = do
                 >> (updatePointer (Relative 1 1))
                 >> (dynamicLogWithPP $ myPP xmproc)
     , layoutHook = myLayoutRules
-    , manageHook = myManageHook <+> manageDocks
+    , manageHook = myManageHook
+               <+> manageDocks  
+               <+> scratchpadManageHookDefault
     }
 
 myWorkspaces = 
@@ -60,6 +64,7 @@ myWorkspaces =
 myPP output = defaultPP
   { ppCurrent = xmobarColor "#7b79b1" "#0f141f" . wrap "[" "]"
   , ppVisible = wrap "(" ")"
+  , ppHidden = hideScratchPad
   , ppHiddenNoWindows = const ""
   , ppSep = " » "
   , ppTitle = xmobarColor "#7b79b1" "" . shorten 40
@@ -68,6 +73,8 @@ myPP output = defaultPP
   , ppExtras = []
   , ppOutput = hPutStrLn output
   }
+  where
+    hideScratchPad ws = if ws == "NSP" then "" else ws
 
 myDefaultLayout = (tall ||| full)
   where
@@ -82,7 +89,7 @@ myManageHook = composeAll
 -- Use C-z as a prefix key, and have all other keys come under it.
 myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
   [ ((controlMask, xK_z), submap . M.fromList $
-      [ ((controlMask, xK_z), toggleWS)
+      [ ((controlMask, xK_z), jumpToPrevWS)
       , ((0,           xK_z), sendKey controlMask xK_z)
       , ((controlMask, xK_g), return ()) -- do nothing
       , ((0,           xK_g), return ()) -- do nothing
@@ -141,6 +148,11 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm, xK_Pause),       spawn "amixer set Master toggle")
 
     -- Activating certain applications/desktops
-    , ((modm, xK_space),       spawn "gmrun")
-    , ((modm, xK_Escape),      spawn "zsh -ic wmctrl_activate_emacs")
+    , ((modm, xK_space),       scratchpadSpawnAction conf)
   ]
+
+jumpToPrevWS :: X ()
+jumpToPrevWS = do
+    ws <- gets windowset
+    let hs = filter ((/="NSP") . W.tag) $ W.hidden ws
+    unless (null hs) (windows . W.view . W.tag $ head hs)

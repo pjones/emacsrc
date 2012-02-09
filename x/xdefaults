@@ -4,31 +4,31 @@
 *.foreground: #e6e6e6
 
 ! ############################################################################
-! # urxvt terminal
-urxvt.font: xft:dejavu sans mono:size=10
-urxvt.modifer: alt
-urxvt.meta8: false
-urxvt.scrollBar: false
-urxvt.internalBorder: 4
-urxvt.cursorBlink: true
-urxvt.cursorUnderline: true
-urxvt.pointerBlank: true
-urxvt.perl-lib: /home/pjones/.urxvt
-urxvt.perl-ext-common: url-select,clipboard
-urxvt.keysym.C-y: perl:clipboard:paste
-urxvt.color0: #111111
-urxvt.color1: #dc322f
-urxvt.color2: #859900
-urxvt.color3: #b58900
-urxvt.color4: #268bd2
-urxvt.color5: #d33682
-urxvt.color6: #2aa198
-urxvt.color7: #839496
-urxvt.color8: #1c1c1c
-urxvt.color9: #d75f00
-urxvt.color10: #85aa11
-urxvt.color11: #b68a01
-urxvt.color12: #0188ff
-urxvt.color13: #5f5faf
-urxvt.color14: #2ba299
-urxvt.color15: #ffffd7
+! # URxvt terminal
+URxvt.font: xft:dejavu sans mono:size=10
+URxvt.modifer: alt
+URxvt.meta8: false
+URxvt.scrollBar: false
+URxvt.internalBorder: 4
+URxvt.cursorBlink: true
+URxvt.cursorUnderline: true
+URxvt.pointerBlank: true
+URxvt.perl-lib: /home/pjones/.URxvt
+URxvt.perl-ext-common: url-select,clipboard
+URxvt.keysym.C-y: perl:clipboard:paste
+URxvt.color0: #111111
+URxvt.color1: #dc322f
+URxvt.color2: #859900
+URxvt.color3: #b58900
+URxvt.color4: #268bd2
+URxvt.color5: #d33682
+URxvt.color6: #2aa198
+URxvt.color7: #839496
+URxvt.color8: #1c1c1c
+URxvt.color9: #d75f00
+URxvt.color10: #85aa11
+URxvt.color11: #b68a01
+URxvt.color12: #0188ff
+URxvt.color13: #5f5faf
+URxvt.color14: #2ba299
+URxvt.color15: #ffffd7
