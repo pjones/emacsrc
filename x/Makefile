@@ -1,8 +1,8 @@
-FILES = $(shell ls | egrep -v 'Makefile|xdefaults|urxvt')
+FILES = $(shell ls | egrep -v 'Makefile|xdefaults|urxvt|user-dirs')
 
 .PHONEY: all
 
-all: $(foreach f,$(FILES),$(HOME)/.$(f)) $(HOME)/.Xdefaults
+all: $(foreach f,$(FILES),$(HOME)/.$(f)) $(HOME)/.Xdefaults $(HOME)/.config/user-dirs.conf
 	@:
 
 define COPY_template
@@ -13,3 +13,4 @@ endef
 
 $(foreach f,$(FILES),$(eval $(call COPY_template,$(f),$(f))))
 $(eval $(call COPY_template,xdefaults,Xdefaults))
+$(eval $(call COPY_template,user-dirs.conf,config/user-dirs.conf))
