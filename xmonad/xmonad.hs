@@ -6,6 +6,7 @@ import qualified XMonad.StackSet as W
 import XMonad.Actions.Promote
 import XMonad.Actions.Submap
 import XMonad.Actions.UpdatePointer
+import XMonad.Actions.OnScreen (viewOnScreen)
 
 -- XMonad contrib (Hooks)
 import XMonad.Hooks.DynamicLog
@@ -122,7 +123,9 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
       -- Switch workspaces and move windows to other workspaces
       [((m, k), windows $ f i)
             | (i, k) <- zip (XMonad.workspaces conf) [xK_1 .. xK_9]
-            , (f, m) <- [(W.greedyView, 0), (W.shift, shiftMask)]]
+            , (f, m) <- [ (W.greedyView, 0)
+                        , (W.shift, shiftMask)
+                        , (viewOnScreen 1, controlMask)]]
       ++
       -- Switch screens and move workspaces to other screens
       [((m, key), screenWorkspace sc >>= flip whenJust (windows . f))
