@@ -1,0 +1,74 @@
+#!/usr/bin/env ruby
+
+################################################################################
+#
+# This script prints out the remaining time until some given future
+# date.  Use --help for more information.
+#
+################################################################################
+require('date')
+require('optparse')
+require('ostruct')
+
+################################################################################
+class Remaining
+
+  ##############################################################################
+  DEFAULT_OPTIONS = {
+    :prefix => '',
+    :suffix => '',
+  }
+
+  ##############################################################################
+  attr_reader(:options)
+
+  ##############################################################################
+  def initialize (args)
+    @options = OpenStruct.new(DEFAULT_OPTIONS)
+
+    OptionParser.new do |p|
+      p.on('-h', '--help', 'This message') do
+        $stdout.puts(p); exit
+      end
+
+      p.on('-p', '--prefix=TEXT', 'Output TEXT before calculation') do |p|
+        options.prefix = p
+      end
+
+      p.on('-s', '--suffix=TEXT', 'Output TEXT after calculation') do |s|
+        options.suffix = s
+      end
+    end.parse!(args)
+
+    if args.size != 1
+      raise("please give a date to parse")
+    end
+
+    @to = Date.parse(args.first)
+    @from = Date.today
+  end
+
+  ##############################################################################
+  def run
+    remaining = format_remaining_time
+    $stdout.puts(options.prefix + remaining + options.suffix)
+  end
+
+  ##############################################################################
+  def format_remaining_time
+    return 'Today'  if @to == @from
+    return 'Passed' if @from > @to
+
+    # just print the number of days for now
+    days = (@to - @from).to_i
+    days.to_s + (days == 1 ? ' day' : ' days')
+  end
+end
+
+################################################################################
+begin
+  Remaining.new(ARGV).run
+rescue RuntimeError => e
+  $stderr.puts(File.basename($0) + ": ERROR: #{e}")
+  exit(1)
+end
