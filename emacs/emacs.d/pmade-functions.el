@@ -6,19 +6,11 @@ don't want to."
   (if (yes-or-no-p "Really close this terminal? ")
       (save-buffers-kill-terminal arg)))
 
-(defun open-line-below-like-vim ()
+(defun pmade-open-line-below ()
   "Open a line below the point, and move there"
   (interactive)
   (move-end-of-line 1)
   (newline)
-  (indent-according-to-mode))
-
-(defun open-line-above-like-vim ()
-  "Open a line above the point, and move there"
-  (interactive)
-  (move-beginning-of-line 1)
-  (newline)
-  (previous-line)
   (indent-according-to-mode))
 
 (defun switch-to-previous-buffer ()
