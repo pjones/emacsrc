@@ -6,7 +6,7 @@ import qualified XMonad.StackSet as W
 import XMonad.Actions.Promote
 import XMonad.Actions.Submap
 import XMonad.Actions.UpdatePointer
-import XMonad.Actions.OnScreen (viewOnScreen)
+import XMonad.Actions.OnScreen (viewOnScreen, greedyViewOnScreen)
 
 -- XMonad contrib (Hooks)
 import XMonad.Hooks.DynamicLog
@@ -150,8 +150,13 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm, xK_Scroll_Lock), spawn "amixer set Master 5%+")
     , ((modm, xK_Pause),       spawn "amixer set Master toggle")
 
+    -- Default screen and workspace configurations
+    , ((modm, xK_1),  windows $ viewOnScreen 0 (myWorkspaces!!0) 
+                              . viewOnScreen 1 (myWorkspaces!!8))
+
     -- Activating certain applications/desktops
-    , ((modm, xK_space),       scratchpadSpawnAction conf)
+    , ((modm,     xK_space), scratchpadSpawnAction conf)
+    , ((mod4Mask, xK_space), spawn "gmrun")
   ]
 
 jumpToPrevWS :: X ()

@@ -5,11 +5,12 @@ Config
   , fgColor = "#e6e6e6"
   , commands =
       [ Run StdinReader
-      , Run Com "zsh" ["-ic", "mpd_current"] "playing" 10
-      , Run Com "sh"  ["/home/pjones/bin/clock-status.sh"] "tisk" 50
+      , Run Com "zsh"  ["-ic", "mpd_current"] "playing" 10
+      , Run Com "sh"   ["/home/pjones/bin/clock-status.sh"] "tisk" 50
+      , Run Com "ruby" ["/home/pjones/bin/remaining", "--prefix='Vegas in <fc=#e65b48>'", "--suffix='</fc>'", "2012-02-29"] "remaining" 36000
       , Run Date "%a %b %d, %H:%M" "clock" 50
       , Run Weather "KBJC" ["-t", "F:<tempF> C:<tempC> H:<rh>%"] 36000
       ]
   , alignSep = "}{"
-  , template = "%StdinReader% | %playing% | %tisk% }{ %KBJC% | %clock%"
+  , template = "%StdinReader% | %playing% | %tisk% }{ <fc=#859900>%KBJC%</fc> | %remaining% | <fc=#268bd2>%clock%</fc>"
   }
