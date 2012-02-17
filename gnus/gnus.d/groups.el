@@ -36,7 +36,6 @@
          (From "Peter Jones <pjones@pmade.com>"))
         (".*Rebekah"
          (gcc ,pmade-rebekah-group)
-         (To "Rebekah Jones <dontpatroneyesme@gmail.com>")
          (From "Peter Jones <pjones@pmade.com>"))
         ;; Messages going to the pmade.com domain
         ((header "to" "pjones@pmade\\.com")
