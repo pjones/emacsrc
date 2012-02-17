@@ -1,0 +1,79 @@
+#!/usr/bin/env ruby
+
+################################################################################
+# http://bogojoker.com/readline/
+require('readline')
+require('rubygems')
+require('rmpd')
+
+################################################################################
+STATIONS_FILE = File.expand_path('../misc/streams', File.dirname(__FILE__))
+PROMPT        = 'Radio > '
+
+################################################################################
+class Radio
+
+  ##############################################################################
+  def initialize
+    ENV['PATH'] = ''
+    @stations = parse_stations_file
+  end
+
+  ##############################################################################
+  def run
+    Readline.completion_append_character = ''
+    Readline.completion_proc = method(:auto_complete)
+
+    while line = Readline.readline(PROMPT, true)
+      name_or_url = line.strip
+
+      if @stations.has_key?(name_or_url)
+        start_url(@stations[name_or_url])
+      elsif name_or_url.match(/^http/)
+        start_url(name_or_url)
+      else
+        $stderr.puts("WTF is #{name_or_url}")
+      end
+    end
+  end
+
+  ##############################################################################
+  private
+
+  ##############################################################################
+  def parse_stations_file
+    File.readlines(STATIONS_FILE).inject({}) do |collector, line|
+      name, url = line.split(/\s*=\s*/, 2)
+      collector[name] = url; collector
+    end
+  end
+
+  ##############################################################################
+  def auto_complete (typed)
+    @stations.keys.grep(/#{Regexp.escape(typed)}/i)
+  end
+
+  ##############################################################################
+  def start_url (url)
+    $stdout.puts(url)
+    mpc = Rmpd::Connection.new
+
+    status  = mpc.status
+    current = mpc.current_song
+    mpc.addid(url.chomp, -1)
+
+    if status and status[:state] == 'play'
+      if !current[:file].match(/^file:/)
+        mpc.delete(0)
+      end
+    end
+  end
+end
+
+################################################################################
+begin
+  Radio.new.run
+rescue RuntimeError => e
+  $stderr.puts(File.basename($0) + ": ERROR: #{e}}")
+  exit(1)
+end
