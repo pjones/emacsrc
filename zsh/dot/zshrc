@@ -14,7 +14,7 @@ widgets_directory=~/.zsh/wids
 fpath=($functions_directory $widgets_directory $fpath)
 
 # clober stuff
-setopt no_clobber 
+setopt no_clobber
 setopt hist_allow_clobber
 
 # other options
@@ -23,7 +23,7 @@ setopt auto_cd
 setopt multios
 setopt completeinword
 setopt alwaystoend
-setopt correct 
+setopt correct
 setopt no_correct_all
 setopt magic_equal_subst
 
