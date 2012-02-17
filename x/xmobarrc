@@ -7,7 +7,7 @@ Config
       [ Run StdinReader
       , Run Com "zsh"  ["-ic", "mpd_current"] "playing" 10
       , Run Com "sh"   ["/home/pjones/bin/clock-status.sh"] "tisk" 50
-      , Run Com "ruby" ["/home/pjones/bin/remaining", "--prefix='Vegas in <fc=#e65b48>'", "--suffix='</fc>'", "2012-02-29"] "remaining" 36000
+      , Run Com "ruby" ["/home/pjones/bin/remaining", "--prefix='Vegas in <fc=#e6bc48>'", "--suffix='</fc>'", "2012-02-29"] "remaining" 36000
       , Run Date "%a %b %d, %H:%M" "clock" 50
       , Run Weather "KBJC" ["-t", "F:<tempF> C:<tempC> H:<rh>%"] 36000
       ]
