@@ -1,1 +1,1 @@
-include $(HOME)/Develop/pmade/rc/latex/latex.mk
+include $(HOME)/develop/pmade/rc/latex/latex.mk
