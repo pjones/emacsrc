@@ -2,10 +2,16 @@
 
 path=(~/bin /usr/local/bin /usr/local/sbin /usr/bin /usr/sbin /bin /sbin)
 
+if [ -d /usr/local/texlive/2011/bin/x86_64-linux ]; then
+  path=(/usr/local/texlive/2011/bin/x86_64-linux $path)
+fi
+
 if [ -d /var/lib/gems/1.8/bin ]; then
   path=(/var/lib/gems/1.8/bin $path)
 fi
 
 # Allow more control keys through in the terminal
-stty stop undef
-stty start undef
+if [ -t 1 ]; then
+  stty stop undef
+  stty start undef
+fi
