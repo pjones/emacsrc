@@ -135,7 +135,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
     -- Controlling Music and Volume
     , ((modm, xK_F1),          spawn "mpc prev")
-    , ((modm, xK_F2),          spawn "mpc toggle")
+    , ((modm, xK_F2),          spawn "mpc-pause")
     , ((modm, xK_F3),          spawn "mpc next")                              
     , ((modm, xK_Print),       spawn "amixer set Master 5%-")
     , ((modm, xK_Scroll_Lock), spawn "amixer set Master 5%+")
