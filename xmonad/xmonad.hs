@@ -50,17 +50,8 @@ main = do
                <+> scratchpadManageHookDefault
     }
 
-myWorkspaces = 
-  [ "1:Dev"
-  , "2:Web"
-  , "3:Comm"
-  , "4:VNC"
-  , "5:Fire"
-  , "6"
-  , "7"
-  , "8"
-  , "9"
-  ]
+myWorkspaces :: [String]    
+myWorkspaces = map show [1..9]
 
 myPP output = defaultPP
   { ppCurrent = xmobarColor "#7b79b1" "#0f141f" . wrap "[" "]"
@@ -85,7 +76,7 @@ myDefaultLayout = (tall ||| full)
 myLayoutRules = avoidStruts $ myDefaultLayout
 
 myManageHook = composeAll
-                 [ className =? "MPlayer" --> (ask >>= doF . W.sink) ]
+  [ className =? "MPlayer" --> (ask >>= doF . W.sink) ]
 
 -- Use C-z as a prefix key, and have all other keys come under it.
 myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
