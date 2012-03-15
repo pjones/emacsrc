@@ -66,9 +66,14 @@
         ("^nnimap\\+Thrive Smart:.*"
          (From "Peter Jones <peter@thrivesmart.com>")
          (signature-file ,(concat mail-signature-dir "/thrivesmart")))
+        ;; Aura Software INBOX
         ("^nnimap\\+Aura Software:.*"
          (From "Peter Jones <pjones@aura-software.com>")
          (signature-file ,(concat mail-signature-dir "/aurasoftware")))
+        ;; SCORS Inbox
+        ("^nnimap\\+SCORS:.*"
+         (From "Peter Jones <peter.jones@ors.sc.gov>")
+         (signature-file ,(concat mail-signature-dir "/scors")))
         ;; Google Mailing Lists
         ((header "to" ".*@googlegroups\\.com")
          (From "Peter Jones <pjones@pmade.com>"))))

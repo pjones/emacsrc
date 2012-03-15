@@ -3,10 +3,18 @@
   (require 'nnheader)
   (require 'cl))
 
-;; Personal Settings
-(setq gnus-ignored-from-addresses
-      (regexp-opt
-       `(,user-mail-address "mlists@pmade.com" "suv8@pmade.org")))
+;; Email addresses that get stripped from a Cc list.
+(setq message-dont-reply-to-names
+      '("pjones@pmade"
+        "pjones@devalot"
+        "pjones@contextualdevelopment"
+        "mlists@pmade"
+        "suv8@pmade"
+        "peter\\.jones@ors\\.sc\\.gov"
+        "pjones@aura-software\\.com"
+        "peter@thrivesmart\\.com"))
+
+(setq gnus-ignored-from-addresses message-dont-reply-to-names)
 
 ;; Where things are stored
 (setq gnus-startup-file      "~/.gnus.d/newsrc"
