@@ -31,6 +31,7 @@ import XMonad.Util.Run
 import XMonad.Util.Paste (sendKey)
 import XMonad.Util.Scratchpad
 
+main :: IO ()
 main = do
   xmproc <- spawnPipe "xmobar"
   xmonad $ ewmh $ withUrgencyHook NoUrgencyHook $ defaultConfig
@@ -100,7 +101,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
       -- Control Xmonad (restart, quit)
       , ((shiftMask, xK_q),  io (exitWith ExitSuccess))
       , ((0,         xK_q),  spawn "xmonad --recompile && xmonad --restart")
-      , ((0,         xK_b),  sendMessage ToggleStruts)
+      , ((shiftMask, xK_b),  sendMessage ToggleStruts)
 
       -- Switching layouts
       , ((0,         xK_space), sendMessage NextLayout)
@@ -120,7 +121,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
       ++
       -- Switch screens and move workspaces to other screens
       [((m, key), screenWorkspace sc >>= flip whenJust (windows . f))
-            | (key, sc) <- zip [xK_w, xK_e, xK_r] [0..]
+            | (key, sc) <- zip [xK_b, xK_f] [0..]
             , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]])
 
     -- Remaining keys that use the XMonad modifier key
@@ -141,9 +142,13 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm, xK_Scroll_Lock), spawn "amixer set Master 5%+")
     , ((modm, xK_Pause),       spawn "amixer set Master toggle")
 
-    -- Default screen and workspace configurations
-    , ((modm, xK_1),  windows $ viewOnScreen 0 (myWorkspaces!!0) 
-                              . viewOnScreen 1 (myWorkspaces!!8))
+    -- Same actions, but for my Mac keyboard
+    , ((0, xF86XK_AudioPlay),        spawn "mpc-pause")
+    , ((0, xF86XK_AudioRaiseVolume), spawn "amixer set Master 5%+")
+    , ((0, xF86XK_AudioLowerVolume), spawn "amixer set Master 5%-")
+    , ((0, xF86XK_AudioMute),        spawn "amixer set Master toggle")
+    , ((0, xF86XK_AudioPrev),        spawn "mpc prev")
+    , ((0, xF86XK_AudioNext),        spawn "mpc next")    
 
     -- Activating certain applications/desktops
     , ((modm,     xK_space), scratchpadSpawnAction conf)
