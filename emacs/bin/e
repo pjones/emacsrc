@@ -5,28 +5,28 @@ require('optparse')
 
 ################################################################################
 class RemoteEmacs
-  
+
   ##############################################################################
-  REMOTE_SERVER_FILE = '/tmp/emacs-server'
-  
+  REMOTE_SERVER_FILE = File.expand_path('~/develop/emacs.server')
+
   ##############################################################################
   DEFAULT_OPTIONS = {
     'verbose' => false,
     'server'  => 'server',
-    'version' => false, 
-    'tty'     => false, 
+    'version' => false,
+    'tty'     => false,
     'frame'   => false,
     'eval'    => false,
     'wait'    => false,
   }
-  
+
   ##############################################################################
   OptionProxy = Struct.new(*DEFAULT_OPTIONS.keys.sort.map {|k| k.to_sym})
-  
+
   ##############################################################################
   def initialize
     @options = OptionProxy.new(*DEFAULT_OPTIONS.keys.sort.map {|k| DEFAULT_OPTIONS[k]})
-    
+
     OptionParser.new do |p|
       p.on('-h', '--help', 'This message.') {$stdout.puts(p); exit}
       p.on('-V', '--version', 'Show Emacs version information') {|v| @options.version = v}
@@ -38,19 +38,20 @@ class RemoteEmacs
       p.on('-w', '--wait', 'Wait for Emacs to finish') {@options.wait = true}
       p.on('-s', '--server=NAME', 'Set the server name to use') {|s| @options.server = s}
     end.parse!(ARGV)
-    
+
     @emacsclient = ['emacsclient']
     @socket_file = File.expand_path("~/.emacs.d/server/#{@options.server}")
   end
-  
+
   ##############################################################################
   def run
+    @emacsclient << '--quiet'        if !@options.verbose
     @emacsclient << '--version'      if @options.version
     @emacsclient << '--tty'          if @options.tty
     @emacsclient << '--create-frame' if @options.frame
     @emacsclient << '--eval'         if @options.eval
-    
-    if !@options.wait    and 
+
+    if !@options.wait    and
        !@options.tty     and
        !@options.eval    and
        !@options.version
@@ -61,9 +62,6 @@ class RemoteEmacs
     if !File.exist?(@socket_file)
       prepare_for_remote_send
     else
-      # TODO: Use this for remotes too once I upgrade Emacs on my
-      # virtual machines.
-      @emacsclient << '--quiet' if !@options.verbose
       @emacsclient << "--server-file=#{@socket_file}"
     end
 
@@ -71,27 +69,22 @@ class RemoteEmacs
     $stdout.puts(@emacsclient.join(' ')) if @options.verbose
     exec(*@emacsclient) || raise('emacsclient failed')
   end
-  
+
   ##############################################################################
   private
-  
+
   ##############################################################################
   def prepare_for_remote_send
-    fetch_remote_server_file
     @emacsclient << "--server-file=#{REMOTE_SERVER_FILE}"
     return if @options.eval
 
-    host = `hostname`.chomp
-    
+    host  = `hostname`.chomp
+    mount = File.expand_path('~/develop')
+
     ARGV.map! do |arg|
       file = File.expand_path(arg)
-      file.sub(ENV['HOME'], "/Users/pjones/Develop/hosts/#{host}")
+      file.sub(mount, "/home/pjones/develop/hosts/#{host}")
     end
-  end
-  
-  ##############################################################################
-  def fetch_remote_server_file
-    system('scp', '-qB', '192.168.31.1:.emacs.d/server/server', REMOTE_SERVER_FILE)
   end
 end
 

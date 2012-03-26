@@ -10,11 +10,12 @@ tmux_mount () {
   name=$1
   mount_point=$HOME/develop/hosts/$1
   server=sshfs.${name}.pmade.com
-  
+
   mkdir -p $mount_point
-  sshfs "${server}:develop" $mount_point -oauto_cache,reconnect
+  sshfs "${server}:develop" $mount_point -oauto_cache,reconnect || return 1
+  cp ~/.emacs.d/server/server $mount_point/emacs.server
   (cd $mount_point && tmux new-session -d -s $name)
-  
+
   return $?
 }
 
