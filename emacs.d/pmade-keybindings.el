@@ -28,6 +28,7 @@
 ;                 C-c h     Toggle header/source
 (global-set-key "\C-cl"    'org-store-link)
 (global-set-key "\C-cm"    'magit-status)
+(global-set-key "\C-cn"    'pmade-insert-italian-name)
 (global-set-key "\C-cr"    'revert-buffer)
 (global-set-key "\C-ct"    'pmade-transpose-windows)
 (global-set-key "\C-cu"    'goto-last-change)

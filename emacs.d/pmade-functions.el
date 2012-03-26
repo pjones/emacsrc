@@ -109,6 +109,14 @@ the local bitlbee instance."
     (activate-input-method
      (if (string= dict "italian") nil "italian-postfix"))))
 
+(defun pmade-insert-italian-name ()
+  "Helper function for when I'm writing Italian dialog."
+  (interactive)
+  (let* ((names '("Alessandra" "Piera" "Carlotta" "Stefano"
+                  "Valentina" "Paolo"))
+         (pick (ido-completing-read "Name: " names)))
+    (insert (concat "*" pick ":* "))))
+
 (defun pmade-schedule ()
   "Load the daily schedule into a buffer."
   (interactive)
