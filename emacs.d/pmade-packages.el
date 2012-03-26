@@ -53,6 +53,8 @@
 (autoload 'markdown-mode "markdown-mode" nil t)
 (add-to-list 'auto-mode-alist '("\\.md$" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.markdown$" . markdown-mode))
+(setq markdown-command "pandoc -f markdown -t html"
+      markdown-follow-wiki-link-on-enter nil)
 
 ;; Visual Bookmarks
 (autoload 'bm-toggle   "bm" "Toggle bookmark in current buffer." t)
