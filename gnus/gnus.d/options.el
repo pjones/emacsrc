@@ -34,7 +34,11 @@
 ;; MIME
 (setq gnus-inhibit-mime-unbuttonizing t
       mm-automatic-display '("text/plain" "text/html")
-      mm-discouraged-alternatives '("text/html"))
+      mm-discouraged-alternatives '("text/html")
+      mm-file-name-rewrite-functions
+        '(mm-file-name-trim-whitespace
+          mm-file-name-collapse-whitespace
+          mm-file-name-replace-whitespace))
 
 ;; Apple Address Book
 (require 'external-abook)
