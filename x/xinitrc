@@ -16,8 +16,10 @@ xmodmap ~/.xmodmaprc
 # forward.  Kill any agents that might already be running.
 pkill -u $USER ssh-agent
 pkill -u $USER gpg-agent
-eval `ssh-agent`
 eval `gpg-agent --daemon`
+ssh-agent > ~/.ssh/agent
+chmod 600 ~/.ssh/agent
+. ~/.ssh/agent
 
 # urxvtd is a terminal emulator daemon.  Once it's started you use
 # urxvtc to start new X terminal emulators that share resources.
