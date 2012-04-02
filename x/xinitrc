@@ -1,8 +1,10 @@
 #!/bin/sh
 
 # Configure my multi-head monitors.
-xrandr --output DVI-0 --primary --mode 1920x1200 \
-       --output DVI-1 --right-of DVI-0
+if [ `hostname` = 'hawkins' ]; then
+  xrandr --output DVI-0 --primary --mode 1920x1200 \
+         --output DVI-1 --right-of DVI-0
+fi
 
 # Set the default cursor.
 xsetroot -cursor_name left_ptr
@@ -11,34 +13,21 @@ xsetroot -cursor_name left_ptr
 xmodmap -pke > ~/.xmodmap.orig
 xmodmap ~/.xmodmaprc
 
-# Load authentication agents.  They output environment variables that
-# we need to evaluate so they are inherited by all process going
-# forward.  Kill any agents that might already be running.
-pkill -u $USER ssh-agent
-pkill -u $USER gpg-agent
-eval `gpg-agent --daemon`
-ssh-agent > ~/.ssh/agent
-chmod 600 ~/.ssh/agent
+# Load environment variables for authentication agents.
 . ~/.ssh/agent
+. ~/.gpg-agent-info
 
 # urxvtd is a terminal emulator daemon.  Once it's started you use
 # urxvtc to start new X terminal emulators that share resources.
 urxvtd -q -o -f
 
-# I run three copies of Emacs because I'm a freak.  They each run as a
-# daemon and I'll try to kill them first.  These are started here
-# (instead of as a @reboot entry in my crontab) because they need the
-# environment variables from the agents above.
-for name in server irc gnus; do
-  [ -r ~/.emacs.d/server/$name ] && ~/bin/e -es $name '(kill-emacs)'
-  emacs --daemon=$name
-done
-
 # Run a composition helper so I can have transparent windows.
 xcompmgr -n &
 
 # Start a terminal that waits for you to enter your ssh key.
-urxvtc -e 'ssh-add'
+if ssh-add -l | grep -qv id_dsa; then
+  urxvtc -e 'ssh-add'
+fi
 
 # Finally, execute my window manager.
 exec xmonad
