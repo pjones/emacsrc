@@ -53,6 +53,9 @@
         (message-news-p
          (From "Peter Jones <mlists@pmade.com>"))
         ;; Mailing Lists
+        ("BoulderRuby"
+         (To "Boulder Ruby Group <bdrg-members@rubyforge.org>")
+         (From "Peter Jones <mlists@pmade.com>"))
         (".*mlists"
          (From "Peter Jones <mlists@pmade.com>"))
         (".*rb-appscript"
