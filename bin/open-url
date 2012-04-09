@@ -1,5 +1,16 @@
 #!/bin/sh
 
+if [ $# -eq 0 ]; then
+  url='http://google.com'
+else
+  url=$1
+  shift
+fi
+
+if [ -r "$url" ]; then
+  url=file://`pwd`/"$url"
+fi
+
 zsh -ic wmctrl_activate_conkeror
 sleep 0.25
-conkeror $@
+conkeror "$url" "$@"
