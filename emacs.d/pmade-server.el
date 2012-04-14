@@ -4,7 +4,7 @@
     (server-start)))
 
 (setq server-use-tcp t
-      server-host (if (string= "hawkins.pmade.com" system-name)
+      server-host (if (string= "hawkins" system-name)
                       "10.0.1.10" system-name))
 
 (add-hook 'after-init-hook 'pmade-server-start)
