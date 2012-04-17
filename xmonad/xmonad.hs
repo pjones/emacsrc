@@ -101,7 +101,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
       -- Control Xmonad (restart, quit)
       , ((shiftMask, xK_q),  io (exitWith ExitSuccess))
       , ((0,         xK_q),  spawn "xmonad --recompile && xmonad --restart")
-      , ((shiftMask, xK_b),  sendMessage ToggleStruts)
+      , ((0,         xK_s),  sendMessage ToggleStruts)
 
       -- Switching layouts
       , ((0,         xK_space), sendMessage NextLayout)
