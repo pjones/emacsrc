@@ -9,14 +9,6 @@ fi
 # Set the default cursor.
 xsetroot -cursor_name left_ptr
 
-# Remap my keys
-xmodmap -pke > ~/.xmodmap.orig
-xmodmap ~/.xmodmaprc
-
-# Load environment variables for authentication agents.
-. ~/.ssh/agent
-. ~/.gpg-agent-info
-
 # urxvtd is a terminal emulator daemon.  Once it's started you use
 # urxvtc to start new X terminal emulators that share resources.
 urxvtd -q -o -f
@@ -28,6 +20,13 @@ xcompmgr -n &
 if ssh-add -l | grep -qv id_dsa; then
   urxvtc -e 'ssh-add'
 fi
+
+# Remap my keys
+xmodmap -pke > ~/.xmodmap.orig
+xmodmap ~/.xmodmaprc
+
+# Screen-saver
+xscreensaver -no-splash &
 
 # Finally, execute my window manager.
 exec xmonad
