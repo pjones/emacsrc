@@ -1,6 +1,6 @@
 #!/usr/bin/env zsh
 
-path=(~/bin /usr/local/bin /usr/local/sbin /usr/bin /usr/sbin /bin /sbin)
+path=(/usr/local/bin /usr/local/sbin /usr/games /usr/bin /usr/sbin /bin /sbin)
 
 if [ -d /usr/local/texlive/2011/bin/x86_64-linux ]; then
   path=(/usr/local/texlive/2011/bin/x86_64-linux $path)
@@ -9,6 +9,13 @@ fi
 if [ -d /var/lib/gems/1.8/bin ]; then
   path=(/var/lib/gems/1.8/bin $path)
 fi
+
+if [ -d ~/.cabal/bin ]; then
+  path=(~/.cabal/bin $path)
+fi
+
+# Always keep ~/bin at the front of PATH
+path=(~/bin $path)
 
 # Allow more control keys through in the terminal
 if [ -t 1 ]; then
