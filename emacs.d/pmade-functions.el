@@ -6,6 +6,13 @@ don't want to."
   (if (yes-or-no-p "Really close this terminal? ")
       (save-buffers-kill-terminal arg)))
 
+(defun pmade-open-line-above ()
+  "Open a line above point and move there."
+  (interactive)
+  (move-beginning-of-line nil)
+  (open-line 1)
+  (indent-according-to-mode))
+
 (defun pmade-open-line-below ()
   "Open a line below the point, and move there"
   (interactive)

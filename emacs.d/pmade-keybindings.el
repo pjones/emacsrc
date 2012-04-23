@@ -8,6 +8,7 @@
 (global-set-key "\C-x\C-m" 'execute-extended-command)
 (global-set-key "\C-x\C-b" 'ibuffer)
 (global-set-key "\C-xrS"   'string-insert-rectangle)
+(global-set-key "\C-o"     'pmade-open-line-above)
 (global-set-key "\M-o"     'pmade-open-line-below)
 (global-set-key "\C-s"     'isearch-forward-regexp)
 (global-set-key "\C-r"     'isearch-backward-regexp)
