@@ -71,7 +71,7 @@
 
   ;; Exporting
   (setq
-   org-latex-to-pdf-process 'pmade:org-tex-to-pdf
+   org-latex-to-pdf-process '("pdflatex -interaction nonstopmode -output-directory %o %f" "pdflatex -interaction nonstopmode -output-directory %o %f" "pdflatex -interaction nonstopmode -output-directory %o %f")
    org-export-html-auto-postamble nil
    org-export-with-sub-superscripts nil
    org-export-with-emphasize nil
