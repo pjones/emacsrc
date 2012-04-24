@@ -109,6 +109,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
       -- Spawning other applications
       , ((0,         xK_t),     spawn $ XMonad.terminal conf)
+      , ((0,         xK_l),     spawn "xscreensaver-command -activate")
       ]
       ++
 
