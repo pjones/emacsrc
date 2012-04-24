@@ -2,6 +2,11 @@
 import XMonad
 import qualified XMonad.StackSet as W
 
+-- XMonad contrib (Prompt)
+import XMonad.Prompt
+import XMonad.Prompt.Window (windowPromptGoto)
+import XMonad.Prompt.XMonad (xmonadPrompt)
+
 -- XMonad contrib (Actions)
 import XMonad.Actions.Promote
 import XMonad.Actions.Submap
@@ -42,16 +47,16 @@ main = do
     , focusedBorderColor = "#00bfff"
     , workspaces = myWorkspaces
     , keys = myKeys
-    , logHook = fadeInactiveLogHook 0.8 
-                >> (updatePointer (Relative 1 1))
+    , logHook = fadeInactiveLogHook 0.8
+                >> (updatePointer (Relative 0.9 0.9))
                 >> (dynamicLogWithPP $ myPP xmproc)
     , layoutHook = myLayoutRules
     , manageHook = myManageHook
-               <+> manageDocks  
+               <+> manageDocks
                <+> scratchpadManageHookDefault
     }
 
-myWorkspaces :: [String]    
+myWorkspaces :: [String]
 myWorkspaces = map show [1..9]
 
 myPP output = defaultPP
@@ -79,6 +84,10 @@ myLayoutRules = avoidStruts $ myDefaultLayout
 myManageHook = composeAll
   [ className =? "MPlayer" --> (ask >>= doF . W.sink) ]
 
+myXPConfig = defaultXPConfig
+  { autoComplete = Just 500000
+  }
+
 -- Use C-z as a prefix key, and have all other keys come under it.
 myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
   [ ((controlMask, xK_z), submap . M.fromList $
@@ -97,11 +106,13 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
       , ((shiftMask, xK_m),  promote)
       , ((shiftMask, xK_t),  withFocused $ windows . W.sink)
       , ((modm,      xK_c),  kill)
+      , ((0,         xK_w),  windowPromptGoto myXPConfig)
 
       -- Control Xmonad (restart, quit)
       , ((shiftMask, xK_q),  io (exitWith ExitSuccess))
       , ((0,         xK_q),  spawn "xmonad --recompile && xmonad --restart")
       , ((0,         xK_s),  sendMessage ToggleStruts)
+      , ((0,         xK_x),  xmonadPrompt myXPConfig)
 
       -- Switching layouts
       , ((0,         xK_space), sendMessage NextLayout)
@@ -138,7 +149,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     -- Controlling Music and Volume
     , ((modm, xK_F1),          spawn "mpc prev")
     , ((modm, xK_F2),          spawn "mpc-pause")
-    , ((modm, xK_F3),          spawn "mpc next")                              
+    , ((modm, xK_F3),          spawn "mpc next")
     , ((modm, xK_Print),       spawn "amixer set Master 5%-")
     , ((modm, xK_Scroll_Lock), spawn "amixer set Master 5%+")
     , ((modm, xK_Pause),       spawn "amixer set Master toggle")
@@ -149,7 +160,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((0, xF86XK_AudioLowerVolume), spawn "amixer set Master 5%-")
     , ((0, xF86XK_AudioMute),        spawn "amixer set Master toggle")
     , ((0, xF86XK_AudioPrev),        spawn "mpc prev")
-    , ((0, xF86XK_AudioNext),        spawn "mpc next")    
+    , ((0, xF86XK_AudioNext),        spawn "mpc next")
 
     -- Activating certain applications/desktops
     , ((modm,     xK_space), scratchpadSpawnAction conf)
