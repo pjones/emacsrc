@@ -8,7 +8,7 @@
       rcirc-default-full-name "Peter Jones"
       rcirc-fill-column 70)
 
-(setq 
+(setq
  rcirc-server-alist
  '(("localhost" :nick "pjones")
    ("irc.freenode.net" :channels ("#xmonad" "#derailed" "#mpd" "#conkeror" "#debian" "#emacs"))))
@@ -39,7 +39,7 @@ Example use: /all away food or /all quit zzzz."
 (defun pmade:rcirc-hook ()
   (require 'rcirc-color)
   (when (and (string-match "#" (buffer-name))
-             (not (string-match "derailed\\|twitter" (buffer-name))))
+             (not (string-match "developers\\|derailed\\|twitter" (buffer-name))))
     (setq rcirc-ignore-buffer-activity-flag t)
     (rcirc-omit-mode))
   (define-key rcirc-mode-map (kbd "C-c C-o") 'rcirc-browse-url)
@@ -72,7 +72,7 @@ not currently displayed in a window."
                     (not (string= (rcirc-server-name proc) sender)))))
 ;           (not (get-buffer-window buf)))
       (pmade:rcirc-notify sender text))))
-  
+
 (add-hook 'rcirc-mode-hook 'pmade:rcirc-hook)
 (add-hook 'rcirc-update-activity-string-hook 'pmade:rcirc-activity-string)
 (add-hook 'rcirc-print-hooks 'pmade:rcirc-print-hook)
