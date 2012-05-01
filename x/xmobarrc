@@ -12,5 +12,5 @@ Config
       , Run Date "%a %b %d, %H:%M" "clock" 50
       , Run Volume "default" "Master" [] 10
       , Run Weather "KBJC" ["-t", "F:<tempF> C:<tempC> H:<rh>%"] 36000]
-  , template = "%StdinReader% } %playing% | %tisk% {<fc=#859900>%KBJC%</fc> | %remaining% | %default:Master% | <fc=#268bd2>%clock%</fc>"
+  , template = "%StdinReader% %tisk% } %playing% {<fc=#859900>%KBJC%</fc> | %remaining% | %default:Master% | <fc=#268bd2>%clock%</fc>"
   }
