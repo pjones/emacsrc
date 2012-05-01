@@ -105,7 +105,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
       , ((0,         xK_m),  windows W.focusMaster)
       , ((shiftMask, xK_m),  promote)
       , ((shiftMask, xK_t),  withFocused $ windows . W.sink)
-      , ((modm,      xK_c),  kill)
+      , ((shiftMask, xK_k),  kill)
       , ((0,         xK_w),  windowPromptGoto myXPConfig)
 
       -- Control Xmonad (restart, quit)
