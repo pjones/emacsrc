@@ -37,6 +37,7 @@ class Rename
     [/\s*\(\s*Remastered[^\)]*\)/i, ''],
     
     # And (YYYY Digital Remaster)
+    [/\s*\(\d{4}\s+Remaster\)/i, ''],
     [/\s*\(\d{4}\s+Digital\s+Remaster\)/i, ''],
     [/\s*\(\d{4}\s+Remastered(?:\s+Single)?(?:\s+Version)?\)/i, ''],
     
