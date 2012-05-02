@@ -1,7 +1,7 @@
 (require 'rcirc)
 
 ;; Load passwords from a private file
-(load "~/develop/pmade/privaterc/emacs/secrets.el")
+(load "~/keys/emacs/secrets.el")
 
 (setq rcirc-default-nick "pmade"
       rcirc-default-user-name "pmade"
