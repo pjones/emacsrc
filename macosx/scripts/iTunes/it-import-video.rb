@@ -145,7 +145,7 @@ class Driver
 
   ##############################################################################
   def search
-    raise("missing search string, use --search") if options.search.nil?
+    options.search ||= ARGV.first.to_s.sub(/\.\w+$/, '').gsub('_', ' ').sub(/WS$/, '')
     
     if !options.itunes_sel
       raise("you should give exactly one movie") unless ARGV.size == 1
