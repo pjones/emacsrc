@@ -2,13 +2,14 @@
 
 ################################################################################
 # http://bogojoker.com/readline/
+# http://mpd.wikia.com/wiki/MusicPlayerDaemonCommands
 require('readline')
 require('rubygems')
 require('rmpd')
 
 ################################################################################
 STATIONS_FILE = File.expand_path('../misc/streams', File.dirname(__FILE__))
-PROMPT        = 'Radio > '
+PROMPT        = 'radio> '
 
 ################################################################################
 class Radio
@@ -55,18 +56,16 @@ class Radio
 
   ##############################################################################
   def start_url (url)
+    url = url.chomp
     $stdout.puts(url)
     mpc = Rmpd::Connection.new
 
     status  = mpc.status
     current = mpc.current_song
-    mpc.addid(url.chomp, -1)
 
-    if status and status[:state] == 'play'
-      if !current[:file].match(/^file:/)
-        mpc.delete(0)
-      end
-    end
+    mpc.addid(url, -1)
+    mpc.delete(0) if current[:file].match(/^http:/)
+    mpc.play      if status[:state] != 'play'
   end
 end
 

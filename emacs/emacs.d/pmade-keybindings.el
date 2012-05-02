@@ -8,6 +8,7 @@
 (global-set-key "\C-x\C-m" 'execute-extended-command)
 (global-set-key "\C-x\C-b" 'ibuffer)
 (global-set-key "\C-xrS"   'string-insert-rectangle)
+(global-set-key "\C-o"     'pmade-open-line-above)
 (global-set-key "\M-o"     'pmade-open-line-below)
 (global-set-key "\C-s"     'isearch-forward-regexp)
 (global-set-key "\C-r"     'isearch-backward-regexp)
@@ -28,6 +29,7 @@
 ;                 C-c h     Toggle header/source
 (global-set-key "\C-cl"    'org-store-link)
 (global-set-key "\C-cm"    'magit-status)
+(global-set-key "\C-cn"    'pmade-insert-italian-name)
 (global-set-key "\C-cr"    'revert-buffer)
 (global-set-key "\C-ct"    'pmade-transpose-windows)
 (global-set-key "\C-cu"    'goto-last-change)

@@ -89,7 +89,7 @@
 (add-hook 'objc-mode-hook
   (lambda ()
     (require 'hideshow)
-    (add-to-list 'hs-special-modes-alist 
+    (add-to-list 'hs-special-modes-alist
       '(objc-mode "{" "}" "/[*/]" nil hs-c-like-adjust-block-beginning))
     (pmade-programming-mode-hook)
     (when (string-match "\\.m$" buffer-file-name) (hs-hide-all))
@@ -135,8 +135,8 @@
 ;; I keep Ruby programming stuff in a separate file
 (load "~/.emacs.d/pmade/pmade-ruby")
 
-;; LaTeX (FIXME: autoload this)
-; (load "auctex.el" nil t t)
+;; LaTeX
+(load "auctex" t t t)
 
 (add-hook 'LaTeX-mode-hook
   (lambda ()

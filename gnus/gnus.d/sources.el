@@ -39,6 +39,11 @@
       (nnimap-address "asmail.pmade.com")
       (nnimap-server-port 993)
       (nnimap-stream ssl))
+    (nnimap "SCORS"
+      (nnimap-address "scowa.sc.gov")
+      (nnimap-server-port 993)
+      (nnimap-authenticator login)
+      (nnimap-stream ssl))
     (nntp "Gmane"
       (nntp-address "news.gmane.org"))))
 

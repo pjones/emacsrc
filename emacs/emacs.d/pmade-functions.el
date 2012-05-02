@@ -6,6 +6,13 @@ don't want to."
   (if (yes-or-no-p "Really close this terminal? ")
       (save-buffers-kill-terminal arg)))
 
+(defun pmade-open-line-above ()
+  "Open a line above point and move there."
+  (interactive)
+  (move-beginning-of-line nil)
+  (open-line 1)
+  (indent-according-to-mode))
+
 (defun pmade-open-line-below ()
   "Open a line below the point, and move there"
   (interactive)
@@ -108,6 +115,14 @@ the local bitlbee instance."
      (if (string= dict "italian") "english" "italian"))
     (activate-input-method
      (if (string= dict "italian") nil "italian-postfix"))))
+
+(defun pmade-insert-italian-name ()
+  "Helper function for when I'm writing Italian dialog."
+  (interactive)
+  (let* ((names '("Alessandra" "Piera" "Carlotta" "Stefano"
+                  "Valentina" "Paolo"))
+         (pick (ido-completing-read "Name: " names)))
+    (insert (concat "*" pick ":* "))))
 
 (defun pmade-schedule ()
   "Load the daily schedule into a buffer."
