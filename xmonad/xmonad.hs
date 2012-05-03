@@ -57,7 +57,7 @@ main = do
     }
 
 myWorkspaces :: [String]
-myWorkspaces = map show [1..9]
+myWorkspaces = map show ([1..9] ++ [0])
 
 myPP output = defaultPP
   { ppCurrent = xmobarColor "#7b79b1" "#0f141f" . wrap "[" "]"
@@ -126,7 +126,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
       -- Switch workspaces and move windows to other workspaces
       [((m, k), windows $ f i)
-            | (i, k) <- zip (XMonad.workspaces conf) [xK_1 .. xK_9]
+            | (i, k) <- zip (XMonad.workspaces conf) ([xK_1 .. xK_9] ++ [xK_0])
             , (f, m) <- [ (W.greedyView, 0)
                         , (W.shift, shiftMask)
                         , (viewOnScreen 1, controlMask)]]
@@ -154,13 +154,16 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm, xK_Scroll_Lock), spawn "amixer set Master 5%+")
     , ((modm, xK_Pause),       spawn "amixer set Master toggle")
 
-    -- Same actions, but for my Mac keyboard
-    , ((0, xF86XK_AudioPlay),        spawn "mpc-pause")
-    , ((0, xF86XK_AudioRaiseVolume), spawn "amixer set Master 5%+")
-    , ((0, xF86XK_AudioLowerVolume), spawn "amixer set Master 5%-")
-    , ((0, xF86XK_AudioMute),        spawn "amixer set Master toggle")
-    , ((0, xF86XK_AudioPrev),        spawn "mpc prev")
-    , ((0, xF86XK_AudioNext),        spawn "mpc next")
+    -- Same actions, but for my laptop
+    , ((0, xF86XK_AudioRaiseVolume),    spawn "amixer set Master 5%+")
+    , ((0, xF86XK_AudioLowerVolume),    spawn "amixer set Master 5%-")
+    , ((0, xF86XK_AudioMute),           spawn "amixer set Master toggle")
+    , ((modm, xF86XK_AudioMute),        spawn "mpc-pause")
+    , ((modm, xF86XK_AudioLowerVolume), spawn "mpc prev")
+    , ((modm, xF86XK_AudioRaiseVolume), spawn "mpc next")
+
+    -- Other actions exclusively for my laptop
+    , ((0, xF86XK_WebCam), spawn "tptoggle.sh")
 
     -- Activating certain applications/desktops
     , ((modm,     xK_space), scratchpadSpawnAction conf)
