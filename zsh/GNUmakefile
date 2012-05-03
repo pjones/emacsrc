@@ -11,7 +11,7 @@ OS   = $(shell uname -s | tr '[:upper:]' '[:lower:]')
 FILES  = $(wildcard lib/*.zsh)
 FILES += $(wildcard app/*.zsh)
 FILES += $(wildcard util/*.zsh)
-FILES += $(wildcard func/*.zsh)
+FILES += $(wildcard func/*)
 FILES += $(wildcard wids/*.zsh)
 
 ################################################################################
