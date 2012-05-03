@@ -17,8 +17,10 @@ urxvtd -q -o -f
 xcompmgr -n &
 
 # Start a terminal that waits for you to enter your ssh key.
-if ssh-add -l | grep -qv id_dsa; then
-  urxvtc -e 'ssh-add'
+if [ `hostname` = 'hawkins' ]; then
+  if ssh-add -l | grep -qv id_dsa; then
+    urxvtc -e 'ssh-add'
+  fi
 fi
 
 # Remap my keys
@@ -27,6 +29,9 @@ xmodmap ~/.xmodmaprc
 
 # Screen-saver
 xscreensaver -no-splash &
+
+# Mouse avoidance
+keynav &
 
 # Finally, execute my window manager.
 exec xmonad
