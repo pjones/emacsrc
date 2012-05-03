@@ -1,7 +1,6 @@
 ! ############################################################################
-! # Global
-*.background: #222222
-*.foreground: #e6e6e6
+! # Emacs
+Emacs.font: -unknown-DejaVu Sans Mono-normal-normal-normal-*-13-*-*-*-m-0-iso10646-1
 
 ! ############################################################################
 ! # URxvt terminal
@@ -16,6 +15,8 @@ URxvt.pointerBlank: true
 URxvt.perl-lib: /home/pjones/.urxvt
 URxvt.perl-ext-common: url-select,clipboard
 URxvt.keysym.C-y: perl:clipboard:paste
+URxvt.background: #222222
+URxvt.foreground: #e6e6e6
 URxvt.color0: #111111
 URxvt.color1: #dc322f
 URxvt.color2: #859900
