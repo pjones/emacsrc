@@ -1,8 +1,0 @@
-#!/bin/sh
-
-if [ $# -ne 2 ]; then
-  echo "Usage: $0 server:path local-dir"
-  exit
-fi
-
-sshfs $1 $2 -oauto_cache,reconnect,volname=`basename $2`

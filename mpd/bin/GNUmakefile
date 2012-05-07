@@ -1,1 +1,0 @@
-include ../../mk/bin.mk
