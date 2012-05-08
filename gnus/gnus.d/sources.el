@@ -31,21 +31,23 @@
            (nnimap-stream ssl)))
 
 (setq gnus-secondary-select-methods
-  '((nnimap "Thrive Smart"
-      (nnimap-address "tsmail.pmade.com")
-      (nnimap-server-port 993)
-      (nnimap-stream ssl))
-    (nnimap "Aura Software"
-      (nnimap-address "asmail.pmade.com")
-      (nnimap-server-port 993)
-      (nnimap-stream ssl))
-    (nnimap "SCORS"
+  '((nnimap "SCORS"
       (nnimap-address "scowa.sc.gov")
       (nnimap-server-port 993)
       (nnimap-authenticator login)
       (nnimap-stream ssl))
     (nntp "Gmane"
       (nntp-address "news.gmane.org"))))
+
+;; (nnimap "Thrive Smart"
+;;       (nnimap-address "tsmail.pmade.com")
+;;       (nnimap-server-port 993)
+;;       (nnimap-stream ssl))
+;;     (nnimap "Aura Software"
+;;       (nnimap-address "asmail.pmade.com")
+;;       (nnimap-server-port 993)
+;;       (nnimap-stream ssl))
+
 
 (setq gnus-message-archive-group "nnimap+mail.pmade.com:Sent Messages"
       gnus-message-archive-method
