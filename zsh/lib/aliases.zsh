@@ -15,12 +15,14 @@ if [[ $OSNAME == "FreeBSD" || $OSNAME == "Darwin" ]]; then
     alias la='ls -lFGha'
 
 elif [[ $OSNAME == "Linux"  || $OSNAME == "CYGWIN_NT-5.0" ]]; then
-    alias ls='ls --color=auto'
-    alias l='ls -lhF --color=auto'
-    alias ll='ls -lhF --color=auto'
-    alias la='ls -lhFa --color=auto'
-
-else 
+    alias ls='\ls --color=auto --group-directories-first'
+    alias lsa='ls -A'
+    alias l='\ls -lhF --color=auto --group-directories-first'
+    alias ll='l'
+    alias la='l -A'
+    alias _df_awk="awk '{print \$2 \"\\t\" \$4 \"\\t\" \$5 \"\\t\" \$6}'"
+    alias df="df -hP|_df_awk"
+else
     alias l='ls -lF'
     alias ll='ls -lF'
     alias la='ls -lFa'
