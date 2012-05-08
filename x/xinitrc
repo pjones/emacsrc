@@ -16,10 +16,11 @@ urxvtd -q -o -f
 # Run a composition helper so I can have transparent windows.
 xcompmgr -n &
 
-# Start a terminal that waits for you to enter your ssh key.
-if [ `hostname` = 'hawkins' ]; then
+# Add a private SSH key to the SSH agent
+if [ -r ~/keys/ssh/`hostname`.id_dsa ]; then
   if ssh-add -l | grep -qv id_dsa; then
-    urxvtc -e 'ssh-add'
+    env SSH_ASKPASS='ssh-askpass.sh' \
+      ssh-add ~/keys/ssh/`hostname`.id_dsa < /dev/null
   fi
 fi
 

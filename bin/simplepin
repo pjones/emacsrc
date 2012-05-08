@@ -1,0 +1,53 @@
+#!/usr/bin/env ruby
+
+################################################################################
+require('optparse')
+
+################################################################################
+class Command
+
+  ##############################################################################
+  def initialize
+    @prompt = nil
+    @desc   = nil
+
+    OptionParser.new do |p|
+      p.on('-h', '--help', 'This message') do
+        $stdout.puts(p)
+        exit
+      end
+
+      p.on('-p', '--prompt=STR', 'Set the prompt to STR') do |prompt|
+        @prompt = prompt
+      end
+
+      p.on('-d', '--description=DESC', 'Set the description to DESC') do |desc|
+        @desc = desc
+      end
+    end.parse(ARGV)
+  end
+
+  ##############################################################################
+  def run
+    open('|pinentry', 'w+') do |pinentry|
+      pinentry.puts('SETPROMPT ' + @prompt) if @prompt
+      pinentry.puts('SETDESC '   + @desc)   if @desc
+      pinentry.puts('GETPIN')
+
+      while line = pinentry.readline
+        if m = line.match(/^D (.*)$/)
+          $stdout.print(m[1])
+          break
+        end
+      end
+    end
+  end
+end
+
+################################################################################
+begin
+  Command.new.run
+rescue RuntimeError => e
+  $stderr.puts(File.basename($0) + ": ERROR: #{e}")
+  exit(1)
+end
