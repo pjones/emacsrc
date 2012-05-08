@@ -16,14 +16,6 @@ urxvtd -q -o -f
 # Run a composition helper so I can have transparent windows.
 xcompmgr -n &
 
-# Add a private SSH key to the SSH agent
-if [ -r ~/keys/ssh/`hostname`.id_dsa ]; then
-  if ssh-add -l | grep -qv id_dsa; then
-    env SSH_ASKPASS='ssh-askpass.sh' \
-      ssh-add ~/keys/ssh/`hostname`.id_dsa < /dev/null
-  fi
-fi
-
 # Remap my keys
 xmodmap -pke > ~/.xmodmap.orig
 xmodmap ~/.xmodmaprc
@@ -33,6 +25,14 @@ xscreensaver -no-splash &
 
 # Mouse avoidance
 keynav &
+
+# Add a private SSH key to the SSH agent
+if [ -r ~/keys/ssh/`hostname`.id_dsa ]; then
+  if ssh-add -l | grep -qv id_dsa; then
+    env SSH_ASKPASS='ssh-askpass.sh' \
+      ssh-add ~/keys/ssh/`hostname`.id_dsa < /dev/null &
+  fi
+fi
 
 # Finally, execute my window manager.
 exec xmonad
