@@ -16,14 +16,6 @@
 
 (setq gnus-ignored-from-addresses message-dont-reply-to-names)
 
-;; Where things are stored
-(setq gnus-startup-file      "~/.gnus.d/newsrc"
-      gnus-directory         "~/.gnus.d/news"
-      gnus-agent-directory   "~/.gnus.d/agent"
-      message-directory      "~/.gnus.d/mail"
-      nnfolder-directory     "~/.gnus.d/mail"
-      mail-default-directory "~/.gnus.d/")
-
 ;; Various Settings
 (setq message-kill-buffer-on-exit t
       gnus-large-newsgroup 1000

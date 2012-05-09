@@ -1,10 +1,18 @@
 (eval-when-compile
   (load "pmade-loadpath"))
 
-;; Bring in an external Gnus
+;; Bring in an external Gnus, but first we need to set some location
+;; variables otherwise Gnus will load and create the wrong
+;; directories.
+(setq gnus-startup-file      "~/.gnus.d/newsrc"
+      gnus-directory         "~/.gnus.d/news"
+      gnus-agent-directory   "~/.gnus.d/agent"
+      message-directory      "~/.gnus.d/mail"
+      nnfolder-directory     "~/.gnus.d/mail"
+      nndraft-directory      "~/.gnus.d/mail"
+      mail-default-directory "~/.gnus.d/"
+      mail-signature-dir     "~/develop/pmade/privaterc/signatures")
 (require 'gnus-load)
-(setq gnus-directory "~/.gnus.d/news"
-      mail-signature-dir "~/develop/pmade/privaterc/signatures")
 
 ;; Emacs nonstandard editing commands
 (autoload 'zap-up-to-char "misc" nil t)
