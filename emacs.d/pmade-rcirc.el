@@ -20,16 +20,28 @@
 (setq rcirc-omit-responses '("JOIN" "PART" "QUIT" "NICK" "AWAY")
       rcirc-buffer-maximum-lines 500)
 
-(defun-rcirc-command all (input)
-  "Run the arguments as a command for all connections.
-Example use: /all away food or /all quit zzzz."
-  (interactive "s")
+(defun pmade:rcirc-cmd-all (input)
+  "See the docs for rcirc-cmd-all."
   (let ((buffers (mapcar 'process-buffer (rcirc-process-list))))
     (dolist (buf buffers)
       (with-current-buffer buf
         (goto-char (point-max))
         (insert "/" input)
         (rcirc-send-input)))))
+
+(defun-rcirc-command all (input)
+  "Run the arguments as a command for all connections.
+Example use: /all away food or /all quit zzzz."
+  (interactive "s")
+  (pmade:rcirc-cmd-all input))
+
+(defun pmade:rcirc-quit ()
+  "Quit all rcirc connections."
+  (interactive)
+  (let ((buffers (mapcar 'process-buffer (rcirc-process-list))))
+    (dolist (buf buffers)
+      (with-current-buffer buf
+        (rcirc-cmd-quit "bye.")))))
 
 (defun pmade:rcirc-macrumors ()
   "Connect to the macrumors IRC server."
