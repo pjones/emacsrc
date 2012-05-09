@@ -48,7 +48,7 @@ main = do
     , workspaces = myWorkspaces
     , keys = myKeys
     , logHook = fadeInactiveLogHook 0.8
-                >> (updatePointer (Relative 0.9 0.9))
+                >> (updatePointer (Relative 0.98 0.98))
                 >> (dynamicLogWithPP $ myPP xmproc)
     , layoutHook = myLayoutRules
     , manageHook = myManageHook
