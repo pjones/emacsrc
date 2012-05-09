@@ -63,15 +63,15 @@ class Radio
     status  = mpc.status
     current = mpc.current_song
 
-    mpc.addid(url, -1)
-    mpc.delete(0) if current[:file].match(/^http:/)
+    mpc.addid(url, current.empty? ? 0 : -1)
+    mpc.delete(0) if current[:file].to_s.match(/^http:/)
     mpc.play      if status[:state] != 'play'
   end
 end
 
 ################################################################################
 begin
-  Radio.new.run
+   Radio.new.run
 rescue RuntimeError => e
   $stderr.puts(File.basename($0) + ": ERROR: #{e}}")
   exit(1)
