@@ -9,7 +9,7 @@ Config
       , Run Com "zsh" ["-ic", "mpd_current"] "playing" 10
 --    , Run Com "sh"  ["/home/pjones/bin/clock-status.sh"] "tisk" 50
 --    , Run Com "sh"  ["/home/pjones/bin/count-down.sh"] "remaining" 18000
-      , Run BatteryP ["BAT0"] ["-t", "B:<acstatus><timeleft>", "--", "-O", "AC ", "-o", ""] 600
+      , Run BatteryP ["BAT0"] ["-t", "B:<acstatus><timeleft>", "--", "-O", "AC ", "-o", "", "-f", "AC0/online"] 600
       , Run Date "%a %b %d, %H:%M" "clock" 50
       , Run Volume "default" "Master" [] 10
       , Run Weather "KBJC" ["-t", "F:<tempF> C:<tempC> H:<rh>%"] 36000]
