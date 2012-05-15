@@ -128,5 +128,9 @@
 (setq whitespace-style '(face trailing tabs newline lines-tail)
       whitespace-action '(auto-cleanup))
 
+;; Highline (http://emacswiki.org/emacs/HighlineMode)
+(autoload 'highline-mode "highline" "Highline Mode" t)
+(setq highline-priority 10)
+
 ;; Idea (awesome for coding and window management)
 ;;(require 'idea nil t)
