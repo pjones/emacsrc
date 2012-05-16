@@ -34,9 +34,9 @@
 
      ;; Show paren
      `(show-paren-match ((t (:background ,bg-inverse
-                                         :foreground ,blue 
+                                         :foreground ,blue
                                          :bold t))))
-     
+
      ;; Font-lock
      `(font-lock-builtin-face           ((t (:foreground ,fg-low))))
      `(font-lock-comment-delimiter-face ((t (:foreground ,fg-inverse :bold t))))
@@ -58,17 +58,17 @@
      `(mode-line-inactive ((t (:background ,bg-high :foreground ,fg-normal :box (:line-width 1 :style released-button)))))
      `(modeline-mousable ((t (:background ,bg-high :foreground ,fg-normal))))
      `(modeline-mousable-minor-mode ((t (:background ,bg-high :foreground ,bg-high))))
-     
+
      ;; Flyspell
      `(flyspell-duplicate ((t (:underline ,yellow))))
      `(flyspell-incorrect ((t (:underline ,red))))
 
      ;; Outline Mode
-     `(outline-1 ((t (:foreground ,orange :bold t))))
-     `(outline-2 ((t (:foreground ,magenta :bold t))))
-     `(outline-3 ((t (:foreground ,blue :bold nil))))
-     `(outline-4 ((t (:foreground ,green :bold nil))))
-     `(outline-5 ((t (:foreground ,red :bold nil))))
+     `(outline-1 ((t (:foreground ,blue    :bold t))))
+     `(outline-2 ((t (:foreground ,violet  :bold t))))
+     `(outline-3 ((t (:foreground ,magenta :bold nil))))
+     `(outline-4 ((t (:foreground ,yellow  :bold nil))))
+     `(outline-5 ((t (:foreground ,cyan    :bold nil))))
 
      ;; Org-Mode
      `(org-level-1               ((t (:inherit 'outline-1))))
@@ -92,6 +92,8 @@
      `(org-date                  ((t (:foreground ,fg-low))))
      `(org-tag                   ((t (:foreground ,fg-low))))
      `(org-tag-default           ((t (:inherit 'org-tag))))
+     `(org-special-keyword       ((t (:inherit 'org-tag))))
+     `(org-code                  ((t (:inherit 'font-lock-function-name-face :bold nil))))
      `(org-hide                  ((t (:foreground ,bg-off))))
      `(org-column                ((t (:background ,bg-high))))
      `(org-column-title          ((t (:inherit 'mode-line :background ,orange))))
@@ -128,7 +130,7 @@
      `(magit-branch           ((t (:inherit 'font-lock-comment-face))))
      `(magit-header           ((t (:inherit 'outline-1))))
      `(magit-item-highlight   ((t (:background ,bg-low))))
-     
+
      ;; Compilation
      `(compilation-info ((t (:inherit 'font-lock-string-face :bold t))))
      `(compilation-error ((t (:underline ,red :bold t))))
@@ -163,10 +165,10 @@
      `(rcirc-timestamp     ((t (:inherit 'rcirc-server))))
      `(rcirc-my-nick       ((t (:foreground ,violet))))
      `(rcirc-url           ((t (:inherit 'link))))
-     
+
      ;; Message mode (mail)
      `(message-header-subject ((t (:inherit 'default :bold t))))
-     
+
      ;; LaTeX
      `(font-latex-sectioning-0-face ((t (:inherit 'outline-1 :height 1.0))))
      `(font-latex-sectioning-1-face ((t (:inherit 'font-latex-sectioning-0-face))))
@@ -174,10 +176,10 @@
      `(font-latex-sectioning-3-face ((t (:inherit 'font-latex-sectioning-0-face))))
      `(font-latex-sectioning-4-face ((t (:inherit 'font-latex-sectioning-0-face))))
      `(font-latex-sectioning-5-face ((t (:inherit 'font-latex-sectioning-0-face))))
-     
+
      ;; Non-Standard Faces
      `(pmade-fixme-face ((t (:background ,bg-inverse :foreground ,red :bold t :box (:line-width 1 :color ,bg-low)))))
-     
+
      ;; Remaining Junk
      `(completion-dynamic-face ((t (:inherit 'match)))))))
 
