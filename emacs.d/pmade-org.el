@@ -43,6 +43,14 @@
  org-show-siblings '((default . t))
  org-show-entry-below '((default . t))
 
+ ;; Emphasis
+ org-emphasis-alist
+   `(("_" bold "<b>" "</b>")
+     ("*" italic "<i>" "</i>")
+     ("=" underline "<span style=\"text-decoration:underline;\">" "</span>")
+     ("`" org-code "<code>" "</code>" verbatim)
+     ("~" org-verbatim "<code>" "</code>" verbatim))
+
  ;; Faces
  org-todo-keyword-faces
    '(("NEXT"    . pmade-org-next-face)
