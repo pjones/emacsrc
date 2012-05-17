@@ -6,9 +6,9 @@ url_remoting_fn = load_url_in_new_buffer;
 // instead of in new windows.
 download_buffer_automatic_open_target = OPEN_NEW_BUFFER_BACKGROUND;
 
-// Automatically follow unambiguous links
+// Don't automatically follow unambiguous links
 hint_background_color = "#ddd";
-hints_auto_exit_delay = 500;
+hints_auto_exit_delay = 0;
 hints_ambiguous_auto_exit_delay = 0;
 
 // Display properties of the current selected node during
