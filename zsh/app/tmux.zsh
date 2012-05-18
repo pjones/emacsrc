@@ -42,12 +42,19 @@ tmux_umount () {
   name=$1
   mount_point=$HOME/develop/hosts/$1
 
-  echo "==> Killing tmux session $name"
-  tmux kill-session -t $name || return 1
+  if tmux list-sessions | awk '{print $1}' | grep -q ^${name}:\$; then
+    echo "==> Killing tmux session $name"
+    tmux kill-session -t $name || return 1
+  fi
 
-  echo "==> Un-mounting $mount_point"
-  fusermount -u $mount_point || return 1
+  # Avoid my 'df' alias below by giving the full path
+  if /bin/df -P | awk 'NR > 1 {print $6}' | grep -q hosts/$name\$; then
+    echo "==> Un-mounting $mount_point"
+    fusermount -u $mount_point || return 1
+  fi
 
-  echo "==> Stopping $name virtual machine"
-  virsh_stop $name || return 1
+  if virsh_running $name; then
+    echo "==> Stopping $name virtual machine"
+    virsh_stop $name || return 1
+  fi
 }
