@@ -11,9 +11,15 @@ tmux_mount () {
   mount_point=$HOME/develop/hosts/$1
   server=sshfs.${name}.pmade.com
 
+  # Start the VM if it's not already running
+  virsh_running $name || virsh_start $name
+
+  echo "==> Mounting $name on $mount_point"
   mkdir -p $mount_point
   sshfs "${server}:develop" $mount_point -oauto_cache,reconnect || return 1
   cp ~/.emacs.d/server/server $mount_point/emacs.server
+
+  echo "==> Starting tmux session $name"
   (cd $mount_point && tmux new-session -d -s $name)
 
   return $?
@@ -23,4 +29,25 @@ tmux_mount () {
 # Mount and attach to a new session
 tmux_mount_attach () {
   tmux_mount $1 && tmux attach -t $1
+}
+
+################################################################################
+# Kill a tmux session and un-mount the sshfs file system.
+tmux_umount () {
+  if [ $# -ne 1 ]; then
+    echo "Usage: tmux_umount name"
+    return 1
+  fi
+
+  name=$1
+  mount_point=$HOME/develop/hosts/$1
+
+  echo "==> Killing tmux session $name"
+  tmux kill-session -t $name || return 1
+
+  echo "==> Un-mounting $mount_point"
+  fusermount -u $mount_point || return 1
+
+  echo "==> Stopping $name virtual machine"
+  virsh_stop $name || return 1
 }
