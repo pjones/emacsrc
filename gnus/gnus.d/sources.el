@@ -1,29 +1,12 @@
 ;;; Mail and News Servers
-
-;; IMAP (incoming mail)
-(setq pmade-mail-server "mail.pmade.com")
-
-;; SMTP (outgoing mail)
-(setq pmade-smtp-host pmade-mail-server
-      pmade-smtp-port 25)
-
-;; When I'm on my laptop, do SMTP through a SSH tunnel (because port
-;; 25 is blocked by my ISP and at most coffee shops I frequent)
-;;(when (string= "skinny.local" system-name)
-  ;; (setq pmade-smtp-host "127.0.0.1"
-  ;;       pmade-smtp-port 2525
-  ;;       starttls-extra-arguments '("--insecure"));;)
-(setq pmade-smtp-host pmade-mail-server
-      pmade-smtp-port 25
-      starttls-extra-arguments '("--insecure"))
-
-(setq message-send-mail-function 'smtpmail-send-it
-      smtpmail-smtp-server pmade-smtp-host
-      smtpmail-smtp-service pmade-smtp-port
-      smtpmail-starttls-credentials `((,pmade-smtp-host ,pmade-smtp-port nil nil))
+(setq pmade-mail-server "mail.pmade.com"
+      message-send-mail-function 'smtpmail-send-it
+      smtpmail-smtp-server pmade-mail-server
+      smtpmail-smtp-service 25
+      smtpmail-starttls-credentials `((,pmade-mail-server 25 nil nil))
       smtpmail-local-domain "pmade.com"
       starttls-use-gnutls t
-      gnus-gcc-mark-as-read t)
+      starttls-extra-arguments '("--insecure"))
 
 (setq gnus-select-method
   `(nnimap ,pmade-mail-server
@@ -60,3 +43,13 @@
 ;; Use the correct value for the Message-ID header
 (defun message-make-message-id ()
   (concat "<" (message-unique-id) "@pmade.com>"))
+
+;; When I can't access my mail server because some really stupid
+;; networks redirect traffic to port 25.
+(defun pmade:gnus-use-ssh-tunnel ()
+  "Send outgoing mail over a SSH tunnel."
+  (interactive)
+  (setq smtpmail-smtp-server "127.0.0.1"
+        smtpmail-smtp-service 2525
+        smtpmail-starttls-credentials `((,smtpmail-smtp-server ,smtpmail-smtp-service nil nil))
+        starttls-extra-arguments '("--insecure")))

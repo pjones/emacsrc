@@ -21,7 +21,8 @@
       gnus-large-newsgroup 1000
       gnus-topic-display-empty-topics nil
       gnus-treat-date-local 'head
-      gnus-read-active-file 'some)
+      gnus-read-active-file 'some
+      gnus-gcc-mark-as-read t)
 
 ;; MIME
 (setq gnus-inhibit-mime-unbuttonizing t
