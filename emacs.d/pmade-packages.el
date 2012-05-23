@@ -64,6 +64,12 @@
 (setq markdown-command "pandoc -f markdown -t html"
       markdown-follow-wiki-link-on-enter nil)
 
+(defun pmade-markdown-mode-hook ()
+  (whitespace-mode t)
+  (local-set-key "\C-c\C-o" 'markdown-follow-any-link-at-point))
+
+(add-hook 'markdown-mode-hook 'pmade-markdown-mode-hook)
+
 ;; Visual Bookmarks
 (autoload 'bm-toggle   "bm" "Toggle bookmark in current buffer." t)
 (autoload 'bm-next     "bm" "Goto bookmark."                     t)
