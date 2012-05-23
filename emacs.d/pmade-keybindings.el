@@ -20,6 +20,7 @@
 (global-set-key "\M-z"     'zap-up-to-char)
 (global-set-key "\M-\S-z"  'zap-to-char)
 (global-set-key "\t"       'pmade-smart-tab)
+(global-set-key (kbd "C-`") 'next-error)
 
 ;; User Key Bindings (using the C-c prefix)
 (global-set-key "\C-c;"    'flyspell-auto-correct-previous-word)
@@ -45,4 +46,7 @@
 (global-set-key (kbd "s-f") 'windmove-right)
 (global-set-key (kbd "s-b") 'windmove-left)
 (global-set-key (kbd "s-a") 'align)
+(global-set-key (kbd "s-m") 'bm-toggle)
+(global-set-key (kbd "s-`") 'bm-next)
+(global-set-key (kbd "s-~") 'bm-previous)
 (global-set-key (kbd "s-x") 'switch-to-previous-buffer)
