@@ -148,5 +148,8 @@
 (autoload 'svn-status "psvn" "Run `svn status'." t)
 (autoload 'svn-update "psvn" "Run `svn update'." t)
 
+;; Makefile
+(add-hook 'makefile-mode-hook 'pmade-programming-mode-hook)
+
 ;; Other file name to mode mappings
 (add-to-list 'auto-mode-alist '("errors\\.out$" . compilation-mode))
