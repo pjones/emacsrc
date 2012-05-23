@@ -3,7 +3,6 @@ PACKAGE_VERSIONS  = orgmode/release_7.8
 PACKAGE_VERSIONS += rhtml/20090213
 PACKAGE_VERSIONS += magit/1.0.0
 PACKAGE_VERSIONS += gnus/m0-5
-PACKAGE_VERSIONS += mingus/master
 PACKAGE_VERSIONS += php/master
 
 ifeq (texdoc,$(notdir $(shell which texdoc)))
