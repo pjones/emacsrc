@@ -45,5 +45,4 @@
 (global-set-key (kbd "s-f") 'windmove-right)
 (global-set-key (kbd "s-b") 'windmove-left)
 (global-set-key (kbd "s-a") 'align)
-(global-set-key (kbd "s-m") 'mingus)
 (global-set-key (kbd "s-x") 'switch-to-previous-buffer)

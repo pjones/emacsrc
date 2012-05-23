@@ -125,10 +125,6 @@
 (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
 (eval-after-load 'org '(load "~/.emacs.d/pmade/pmade-org"))
 
-;; Mingus (front-end for MPD)
-(autoload 'mingus "mingus" "Mingus" t)
-(eval-after-load 'mingus '(load "~/.emacs.d/pmade/pmade-mingus"))
-
 ;; Whitespace Mode
 (autoload 'whitespace-mode "whitespace" "Whitespace Mode" t)
 (setq whitespace-style '(face trailing tabs newline lines-tail)
