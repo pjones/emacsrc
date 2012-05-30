@@ -61,6 +61,18 @@ tmux_umount () {
     echo "==> Un-mounting $mount_point"
     fusermount -u $mount_point || return 1
   fi
+}
+
+################################################################################
+# Runs tmux_umount and then stops the VM
+tmux_umount_stop () {
+  if [ $# -ne 1 ]; then
+    echo "Usage: tmux_umount_stop name"
+    return 1
+  fi
+
+  name=$1
+  tmux_umount $name || return 1
 
   if virsh_running $name; then
     echo "==> Stopping $name virtual machine"
