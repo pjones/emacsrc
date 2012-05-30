@@ -3,15 +3,20 @@
 #
 # send your SSH public key to another host
 #
-if [ $# != 1 ]; then
-    echo "Usage: $0 <host>"
+if [ $# -lt 1 ]; then
+    echo "Usage: $0 <host> [ssh-options]"
     return 1
 fi
 
 to_host=$1
-tmp=newkey
+shift
 
-if [ -r ~/.ssh/id_dsa.pub ]; then
+tmp=newkey
+agent_key=$(ssh-add -L|awk '{print $3}'|head -1)
+
+if [ -r "$agent_key".pub ]; then
+  src="$agent_key".pub
+elif [ -r ~/.ssh/id_dsa.pub ]; then
   src=~/.ssh/id_dsa.pub
 elif [ -r ~/.ssh/id_rsa.pub ]; then
   src=~/.ssh/id_rsa.pub
@@ -20,7 +25,7 @@ else
   return 1
 fi
 
-cat $src | ssh $to_host "
+cat $src | ssh $@ $to_host "
     mkdir -p ~/.ssh;
     chmod 700 ~/.ssh;
     cat >> ~/.ssh/authorized_keys;
