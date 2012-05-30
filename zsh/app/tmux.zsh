@@ -16,7 +16,16 @@ tmux_mount () {
 
   echo "==> Mounting $name on $mount_point"
   mkdir -p $mount_point
-  sshfs "${server}:develop" $mount_point -oauto_cache,reconnect || return 1
+
+  if ssh $server test -d develop; then
+    server_dir=develop
+  elif ssh $server test -d Develop; then
+    server_dir=Develop
+  else
+    server_dir=""
+  fi
+
+  sshfs "${server}:${server_dir}" $mount_point -oauto_cache,reconnect || return 1
   cp ~/.emacs.d/server/server $mount_point/emacs.server
 
   echo "==> Starting tmux session $name"
