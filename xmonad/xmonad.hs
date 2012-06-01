@@ -83,7 +83,9 @@ myDefaultLayout = (tall ||| full)
 myLayoutRules = avoidStruts $ myDefaultLayout
 
 myManageHook = composeAll
-  [ className =? "MPlayer" --> (ask >>= doF . W.sink) ]
+  [ className =? "MPlayer"    --> (ask >>= doF . W.sink) 
+  , appName   =? "random-vnc" --> doShift "P1"
+  ]
 
 myXPConfig = defaultXPConfig
   { autoComplete = Just 500000
@@ -140,6 +142,14 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
       [((m, k), windows $ f i)
             | (i, k) <- zip (XMonad.workspaces conf) ([xK_1 .. xK_9] ++ [xK_0, xK_minus, xK_equal])
             , (f, m) <- [(viewOnScreen 1, controlMask)]]
+      ++
+      -- Send windows to the projector workspaces
+      [ ((modm, xK_minus), windows $ W.shift "P1")
+      , ((modm, xK_equal), windows $ W.shift "P2")
+      ]
+      -- [((m, k), windows $ f i)
+      --       | (i, k) <- zip ["P1", "P2"] [xK_underscore, xK_plus]
+      --       , (f, m) <- [(W.shift, 0)]]
       ++
       -- Switch screens and move workspaces to other screens
       [((m, key), screenWorkspace sc >>= flip whenJust (windows . f))

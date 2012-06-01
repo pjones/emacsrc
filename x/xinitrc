@@ -34,5 +34,8 @@ if [ -r ~/keys/ssh/`hostname`.id_dsa ]; then
   fi
 fi
 
+# On-screen notifications
+/usr/lib/notify-osd/notify-osd &
+
 # Finally, execute my window manager.
 exec xmonad
