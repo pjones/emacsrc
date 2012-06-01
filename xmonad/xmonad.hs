@@ -12,6 +12,7 @@ import XMonad.Actions.Promote
 import XMonad.Actions.Submap
 import XMonad.Actions.UpdatePointer
 import XMonad.Actions.OnScreen (viewOnScreen, greedyViewOnScreen)
+import XMonad.Actions.PerWorkspaceKeys (bindOn)
 
 -- XMonad contrib (Hooks)
 import XMonad.Hooks.DynamicLog
@@ -57,7 +58,7 @@ main = do
     }
 
 myWorkspaces :: [String]
-myWorkspaces = map show ([1..9] ++ [0])
+myWorkspaces = (map show ([1..9] ++ [0])) ++ ["P1", "P2"]
 
 myPP output = defaultPP
   { ppCurrent = xmobarColor "#7b79b1" "#0f141f" . wrap "[" "]"
@@ -91,7 +92,7 @@ myXPConfig = defaultXPConfig
 -- Use C-z as a prefix key, and have all other keys come under it.
 myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
   [ ((controlMask, xK_z), submap . M.fromList $
-      [ ((controlMask, xK_z), jumpToPrevWS)
+      [ ((controlMask, xK_z), bindOn [("P1", return ()), ("P2", return ()), ("", jumpToPrevWS)])
       , ((0,           xK_z), sendKey controlMask xK_z)
       , ((controlMask, xK_g), return ()) -- do nothing
       , ((0,           xK_g), return ()) -- do nothing
@@ -108,6 +109,9 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
       , ((shiftMask, xK_k),  kill)
       , ((0,         xK_w),  windowPromptGoto myXPConfig)
 
+      -- Escape hatch if I get on workspace P1 or P2
+      , ((modm,      xK_1),  windows $ W.greedyView "1")
+
       -- Control Xmonad (restart, quit)
       , ((shiftMask, xK_q),  io (exitWith ExitSuccess))
       , ((0,         xK_q),  spawn "xmonad --recompile && xmonad --restart")
@@ -122,14 +126,20 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
       , ((0,         xK_t),     spawn $ XMonad.terminal conf)
       , ((0,         xK_l),     spawn "xscreensaver-command -lock")
       ]
-      ++
 
-      -- Switch workspaces and move windows to other workspaces
-      [((m, k), windows $ f i)
+      ++
+      -- Switch workspaces and move windows to other workspaces, but
+      -- disable this feature on worksapces P1 and P2.  Also, don't
+      -- allow switching to workspaces P1 or P2 directly.
+      [((m, k), bindOn [("P1", return ()), ("P2", return ()), ("", windows $ f i)])
             | (i, k) <- zip (XMonad.workspaces conf) ([xK_1 .. xK_9] ++ [xK_0])
             , (f, m) <- [ (W.greedyView, 0)
-                        , (W.shift, shiftMask)
-                        , (viewOnScreen 1, controlMask)]]
+                        , (W.shift, shiftMask)]]
+      ++
+      -- Switch which workspace is on the second physical screen
+      [((m, k), windows $ f i)
+            | (i, k) <- zip (XMonad.workspaces conf) ([xK_1 .. xK_9] ++ [xK_0, xK_minus, xK_equal])
+            , (f, m) <- [(viewOnScreen 1, controlMask)]]
       ++
       -- Switch screens and move workspaces to other screens
       [((m, key), screenWorkspace sc >>= flip whenJust (windows . f))
