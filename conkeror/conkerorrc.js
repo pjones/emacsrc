@@ -27,7 +27,7 @@ external_content_handlers.set("application/pdf", "xpdf");
 //external_content_handlers.set("video/*", "urxvtc -e mplayer");
 
 // External editor, Emacs of course.
-editor_shell_command = "e -c --wait";
+editor_shell_command = "e -c --wait < /dev/null > /dev/null";
 
 // View source in your editor.
 view_source_use_external_editor = true;
