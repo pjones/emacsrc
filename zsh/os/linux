@@ -9,6 +9,9 @@ path=(~/.cabal/bin $path)
 # Always keep ~/bin at the front of PATH
 path=(~/bin $path)
 
+# Some aliases for Linux
+alias vnc="ssvncviewer -escape Alt_L"
+
 # Allow more control keys through in the terminal
 if [ -t 1 ]; then
   stty stop undef

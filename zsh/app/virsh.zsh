@@ -81,3 +81,17 @@ virsh_stop () {
   echo "==> Waiting for $name to stop"
   virsh managedsave $name --verbose
 }
+
+################################################################################
+# Open a vnc connection to a virtual machine
+virsh_vnc () {
+  if [ $# -ne 1 ]; then
+    echo "Usage: virsh_vnc name"
+    return 1
+  fi
+
+  name=$1
+  port=$(virsh vncdisplay $name|head -1|sed 's/^.*://')
+  port=$(expr 5900 + $port)
+  vnc localhost:$port
+}
