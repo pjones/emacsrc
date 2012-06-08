@@ -33,3 +33,7 @@ URxvt.color12: #0188ff
 URxvt.color13: #5f5faf
 URxvt.color14: #2ba299
 URxvt.color15: #ffffd7
+
+! ############################################################################
+! # Bigger terminal for presentations
+BigTerm.font: xft:dejavu sans mono:size=18

@@ -125,8 +125,9 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
       , ((shiftMask, xK_space), setLayout $ XMonad.layoutHook conf)
 
       -- Spawning other applications
-      , ((0,         xK_t),     spawn $ XMonad.terminal conf)
-      , ((0,         xK_l),     spawn "xscreensaver-command -lock")
+      , ((0,           xK_t),     spawn $ XMonad.terminal conf)
+      , ((controlMask, xK_t),     spawn "urxvtc -name BigTerm")
+      , ((0,           xK_l),     spawn "xscreensaver-command -lock")
       ]
 
       ++
