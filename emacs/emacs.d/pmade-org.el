@@ -1,19 +1,7 @@
 ;; This file contains my customizations for the awesome Org-Mode
 (eval-when-compile
-  (load "pmade-loadpath"))
-
-;; Org Invoice
-(autoload 'org-invoice-report "org-invoice" nil t)
-(autoload 'org-dblock-write:invoice "org-invoice" nil t)
-(autoload 'org-eva-submit "org-eva" nil t)
-
-(eval-after-load "org-eva"
-  '(let ((eva-conf "~/develop/pmade/privaterc/emacs/secrets.el"))
-     (when (file-exists-p eva-conf) (load-file eva-conf))))
-
-;; Org Basecamp
-(require 'org-basecamp)
-(setq org-basecamp-mark-todo nil)
+  (load "pmade-loadpath")
+  (require 'org))
 
 (setq
  ;; General Org Settings
@@ -57,19 +45,21 @@
      ("PENDING" . pmade-org-pending-face)
      ("READING" . pmade-org-reading-face)))
 
+;; Need to tell org-mode to update org-emphasis-alist
+(org-set-emph-re 'org-emphasis-alist org-emphasis-alist)
+
 (defun pmade:org-mode-hook ()
   ;; Extra Bindings
-  (org-defkey org-mode-map "\C-ci"     'org-invoice-report)
   (org-defkey org-mode-map "\C-\M-f"   'org-metaright)
   (org-defkey org-mode-map "\C-\M-b"   'org-metaleft)
   (org-defkey org-mode-map "\C-\M-S-f" 'org-shiftmetaright)
   (org-defkey org-mode-map "\C-\M-S-b" 'org-shiftmetaleft)
   (org-defkey org-mode-map "\C-\M-p"   'org-metaup)
   (org-defkey org-mode-map "\C-\M-n"   'org-metadown)
+  (org-defkey org-mode-map "\C-c;"     'flyspell-auto-correct-previous-word)
 
   (org-defkey org-mode-map "\C-c0"               'pmade:org-hide-all)
   (org-defkey org-mode-map "\C-c1"               'pmade:org-hide-others)
-  (org-defkey org-mode-map "\C-c\C-r"            'pmade:org-reveal)
   (org-defkey org-mode-map "\C-j"                'pmade:org-list-append)
   (org-defkey org-mode-map [(meta return)]       'pmade:org-list-append)
   (org-defkey org-mode-map [(shift meta return)] 'pmade:org-list-append-with-checkbox)
@@ -79,7 +69,6 @@
 
   ;; Exporting
   (setq
-   org-latex-to-pdf-process '("pdflatex -interaction nonstopmode -output-directory %o %f" "pdflatex -interaction nonstopmode -output-directory %o %f" "pdflatex -interaction nonstopmode -output-directory %o %f")
    org-export-html-auto-postamble nil
    org-export-with-sub-superscripts nil
    org-export-with-emphasize nil
@@ -90,35 +79,6 @@
    org-export-html-style nil))
 
 (add-hook 'org-mode-hook 'pmade:org-mode-hook)
-
-(add-hook 'org-agenda-mode-hook
-  (lambda ()
-    ;; Use line highlighting in the Org Agenda
-    (hl-line-mode 1)
-
-    ;; Keys
-    (define-key org-agenda-keymap " " 'org-agenda-cycle-show)
-    (define-key org-agenda-mode-map " " 'org-agenda-cycle-show)
-    (define-key org-agenda-mode-map "g" 'pmade:org-agenda-redo)
-    (local-set-key "\C-x\C-w" 'pmade:org-write-agenda)))
-
-;; Publishing
-(defun pmade:org-publish-html-or-image (plist filename pub-dir)
-  (if (string-match "\\.org$" filename)
-      (org-publish-org-to-html plist filename pub-dir)
-    (org-publish-attachment plist filename pub-dir)))
-
-(defun pmade:org-write-agenda ()
-  "Write the agenda buffer to a file, and send to pmade.com."
-  (interactive)
-  (org-write-agenda "~/agenda.html")
-  (shell-command "sed -E 's/T:([0-9+-]+)/T:<a href=\"tel:\\1\">\\1<\\/a>/' < ~/agenda.html | ssh -q dracula.pmade.com 'cat > websites/pmade.com/www/private/agenda.html'")
-  (delete-file "~/agenda.html"))
-
-(defun pmade:org-reveal (&optional siblings)
-  (interactive "P")
-  (org-decrypt-entry)
-  (org-reveal siblings))
 
 (defun pmade:org-hide-others ()
   "Close all headings except the heading at point."
