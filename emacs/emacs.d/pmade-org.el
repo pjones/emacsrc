@@ -43,6 +43,13 @@
  org-show-siblings '((default . t))
  org-show-entry-below '((default . t))
 
+ ;; Following Links
+ org-link-frame-setup
+   '((vm   . vm-visit-folder-other-frame)
+     (gnus . org-gnus-no-new-news)
+     (file . find-file)
+     (wl   . wl-other-frame))
+
  ;; Emphasis
  org-emphasis-alist
    `(("_" bold "<b>" "</b>")
