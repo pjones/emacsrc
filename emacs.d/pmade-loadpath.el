@@ -14,4 +14,4 @@
 (add-to-list 'load-path (concat pmade-site-lisp "/rinari"))
 (add-to-list 'load-path (concat pmade-site-lisp "/haskell"))
 (add-to-list 'load-path (concat pmade-site-lisp "/idea"))
-(add-to-list 'load-path (concat pmade-site-lisp "/mingus"))
+(add-to-list 'load-path (concat pmade-site-lisp "/org"))
