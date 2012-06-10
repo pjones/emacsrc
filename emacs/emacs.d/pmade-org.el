@@ -76,6 +76,7 @@
 
   ;; Exporting
   (setq
+   org-export-html-link-org-files-as-html nil
    org-export-html-auto-postamble nil
    org-export-with-sub-superscripts nil
    org-export-with-emphasize nil
