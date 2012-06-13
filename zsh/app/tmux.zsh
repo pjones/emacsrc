@@ -9,7 +9,8 @@ tmux_mount () {
 
   name=$1
   mount_point=$HOME/develop/hosts/$1
-  server=sshfs.${name}.pmade.com
+  mount_options="-oauto_cache,reconnect,ControlMaster=no"
+  server=${name}.pmade.com
 
   # Start the VM if it's not already running
   virsh_running $name || virsh_start $name
@@ -25,7 +26,7 @@ tmux_mount () {
     server_dir=""
   fi
 
-  sshfs "${server}:${server_dir}" $mount_point -oauto_cache,reconnect || return 1
+  sshfs "${server}:${server_dir}" $mount_point $mount_options || return 1
   cp ~/.emacs.d/server/server $mount_point/emacs.server
 
   echo "==> Starting tmux session $name"
