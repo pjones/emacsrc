@@ -4,9 +4,7 @@
 
 ;; Load other configuration files
 (load "~/.emacs.d/pjones/lisp/loadpath")
-
-(dolist (file pjones:lisp-files)
-  (load (concat pjones:lisp-dir file)))
+(pjones:load-configuration-files)
 
 ;; Stuff for the custom interface (not used)
 (setq custom-file "~/.emacs.d/pjones/lisp/custom.el")

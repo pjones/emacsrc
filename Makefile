@@ -1,4 +1,4 @@
-DIRS = download packages emacs.d bin
+DIRS = download packages lisp modes bin
 DOTFILE = $(HOME)/.emacs
 
 .PHONEY: all
