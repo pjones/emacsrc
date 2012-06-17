@@ -2,17 +2,11 @@
 (setq default-major-mode  'text-mode)
 (add-hook 'text-mode-hook 'turn-on-auto-fill)
 
-;; Load pmade Custom Files
-(load "~/.emacs.d/pmade/pmade-loadpath")
-(load "~/.emacs.d/pmade/pmade-options")
-(load "~/.emacs.d/pmade/pmade-packages")
-(load "~/.emacs.d/pmade/pmade-functions")
-(load "~/.emacs.d/pmade/pmade-keybindings")
-(load "~/.emacs.d/pmade/pmade-programming")
-(load "~/.emacs.d/pmade/pmade-colors")
-(load "~/.emacs.d/pmade/pmade-term")
-(load "~/.emacs.d/pmade/pmade-server")
-(load "~/.emacs.d/pmade/pmade-local")
+;; Load other configuration files
+(load "~/.emacs.d/pjones/lisp/loadpath")
+
+(dolist (file pjones:lisp-files)
+  (load (concat pjones:lisp-dir file)))
 
 ;; Stuff for the custom interface (not used)
-(setq custom-file "~/.emacs.d/pmade/pmade-custom.el")
+(setq custom-file "~/.emacs.d/pjones/lisp/custom.el")
