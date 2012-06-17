@@ -11,7 +11,7 @@
   "The directory where I install extra software packages like org-mode.")
 
 (defvar pjones:lisp-files
-  '("packages")
+  '("modes" "packages")
   "A list of my config files to load in the correct order.")
 
 ;; Add my "site-lisp" directory to load-path.
@@ -21,9 +21,7 @@
 (dolist (d (directory-files pjones:site-lisp t))
   (if (file-directory-p d) (add-to-list 'load-path d)))
 
-;; Automatically load my mode configuration files after a mode starts.
-(dolist (file (directory-files pjones:modes-dir t))
-  (let ((basename (file-name-sans-extension (file-name-nondirectory file))))
-    (when (string-match "\\(-conf\\)$" basename)
-      (eval-after-load (intern (replace-match "" t t basename))
-        (load file)))))
+(defun pjones:load-configuration-files ()
+  "Load all of my lisp configuration files."
+  (dolist (file pjones:lisp-files)
+    (load (concat pjones:lisp-dir file))))

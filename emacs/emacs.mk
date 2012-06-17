@@ -5,7 +5,7 @@ PMADE_LOAD_PATH ?= $(CURDIR)/../emacs.d/pmade-loadpath
 EMACS = emacs
 EMACS_FLAGS = -q --no-site-file --batch
 EMACS_FLAGS += --eval "(add-to-list 'load-path \".\")"
-EMACS_FLAGS += --eval "(load \"$(PMADE_LOAD_PATH)\")"
+EMACS_FLAGS += -l $(PMADE_LOAD_PATH)
 EMACS_FLAGS += -f batch-byte-compile
 
 .PHONEY: all
@@ -20,7 +20,7 @@ uninstall:
 
 $(DEST)/%.elc: %.el
 	@ echo emacs compile $<
-	@ $(EMACS) $(EMACS_FLAGS) $< #2> /dev/null
+	@ $(EMACS) $(EMACS_FLAGS) $<
 	@ mv $(<:.el=.elc) $@
 
 $(DEST):
