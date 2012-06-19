@@ -124,24 +124,10 @@ the local bitlbee instance."
          (pick (ido-completing-read "Name: " names)))
     (insert (concat "*" pick ":* "))))
 
-(defun pmade-schedule ()
-  "Load the daily schedule into a buffer."
-  (interactive)
-  (let* ((file "~/Documents/pmade/pmade-inc/planning/schedule/schedule.yml")
-         (rawnames (shell-command-to-string (concat "schedule.rb --names " file)))
-         (names (split-string rawnames nil t))
-         (pick (ido-completing-read "Schedule: " names))
-         (buf (get-buffer-create "*schedule*")))
-    (with-current-buffer buf
-      (setq buffer-read-only t)
-      (let ((buffer-read-only nil))
-        (erase-buffer)
-        (insert (shell-command-to-string (concat "schedule.rb --orgout " file " " pick)))
-        (org-mode)
-        (hl-line-mode t)
-        (goto-char (point-min))
-        (show-all)))
-    (switch-to-buffer buf)))
+(defun pmade:org-clock-time ()
+  "Returns a formatted org clock time if currently clocked in."
+  (if (and (fboundp 'org-clocking-p) (org-clocking-p))
+      (substring-no-properties (org-clock-get-clock-string)) ""))
 
 (defun pmade:urgency-hint (frame status)
   (let* ((wm-hints (append (x-window-property "WM_HINTS" frame "WM_HINTS" nil nil t) nil))
