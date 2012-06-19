@@ -37,3 +37,4 @@ URxvt.color15: #ffffd7
 ! ############################################################################
 ! # Bigger terminal for presentations
 BigTerm.font: xft:dejavu sans mono:size=18
+BigTerm.keysym.C-y: builtin:
