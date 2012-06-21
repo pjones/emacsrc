@@ -70,6 +70,11 @@
 
 (add-hook 'markdown-mode-hook 'pmade-markdown-mode-hook)
 
+;; Emacs Bookmarks
+(setq bookmark-default-file (concat user-emacs-directory "bookmarks")
+      bookmark-save-flag 0              ; save bookmarks as they change
+      bookmark-version-control 'never)
+      
 ;; Visual Bookmarks
 (autoload 'bm-toggle   "bm" "Toggle bookmark in current buffer." t)
 (autoload 'bm-next     "bm" "Goto bookmark."                     t)
