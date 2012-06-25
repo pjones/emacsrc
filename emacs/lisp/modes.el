@@ -6,4 +6,4 @@
   (let ((basename (file-name-sans-extension (file-name-nondirectory file))))
     (when (string-match "\\(-conf\\)$" basename)
       (eval-after-load (intern (replace-match "" t t basename))
-        (load file)))))
+        `(load ,file)))))
