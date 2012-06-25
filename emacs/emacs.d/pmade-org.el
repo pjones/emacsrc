@@ -19,6 +19,7 @@
  org-M-RET-may-split-line t
  org-time-clocksum-format "%02d:%02d"
  org-clock-into-drawer "CLOCK"
+ org-clock-clocked-in-display 'frame-title
  org-log-into-drawer "LOGBOOK"
  org-tags-exclude-from-inheritance nil
  org-completion-use-ido t

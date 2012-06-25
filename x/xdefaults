@@ -5,6 +5,7 @@ Emacs.font: -unknown-DejaVu Sans Mono-normal-normal-normal-*-13-*-*-*-m-0-iso106
 ! ############################################################################
 ! # URxvt terminal
 URxvt.font: xft:dejavu sans mono:size=10
+URxvt.insecure: true
 URxvt.modifer: alt
 URxvt.meta8: false
 URxvt.scrollBar: false
@@ -37,3 +38,4 @@ URxvt.color15: #ffffd7
 ! ############################################################################
 ! # Bigger terminal for presentations
 BigTerm.font: xft:dejavu sans mono:size=18
+BigTerm.keysym.C-y: builtin:
