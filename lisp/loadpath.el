@@ -11,7 +11,7 @@
   "The directory where I install extra software packages like org-mode.")
 
 (defvar pjones:lisp-files
-  '("modes" "packages")
+  '("modes" "packages" "automode" "interactive" "keys")
   "A list of my config files to load in the correct order.")
 
 ;; Add my "site-lisp" directory to load-path.
