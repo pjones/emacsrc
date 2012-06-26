@@ -3,7 +3,7 @@ PACKAGE_VERSIONS  = orgmode/release_7.8.11
 PACKAGE_VERSIONS += rhtml/20090213
 PACKAGE_VERSIONS += magit/1.0.0
 PACKAGE_VERSIONS += gnus/m0-5
-PACKAGE_VERSIONS += php/master
+PACKAGE_VERSIONS += markdown/pjones-links
 
 ifeq (texdoc,$(notdir $(shell which texdoc)))
 PACKAGE_VERSIONS += auctex/11.85

@@ -33,6 +33,9 @@
           mm-file-name-collapse-whitespace
           mm-file-name-replace-whitespace))
 
+;; Variables used in all the other files
+(setq mail-signature-dir "~/develop/pmade/privaterc/signatures")
+
 ;; Apple Address Book
 (require 'external-abook)
 (setq external-abook-command "ssh renfield \"contacts -lf \'%%e\t%%n\' %s\"")

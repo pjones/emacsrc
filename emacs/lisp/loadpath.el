@@ -11,8 +11,8 @@
   "The directory where I install extra software packages like org-mode.")
 
 (defvar pjones:lisp-files
-  '("modes" "packages" "options" "automode" "functions"
-    "interactive" "completion" "keys")
+  '("modes" "packages" "options" "autoload" "automode"
+    "functions" "interactive" "completion" "keys" "gnus")
   "A list of my config files to load in the correct order.")
 
 (defvar pjones:theme-files (concat user-emacs-directory "themes")
@@ -26,7 +26,11 @@
 
 ;; Add all directories in "site-lisp" to the load-path.
 (dolist (d (directory-files pjones:site-lisp t))
-  (if (file-directory-p d) (add-to-list 'load-path d)))
+  (cond
+   ((file-directory-p (concat d "/lisp"))
+    (add-to-list 'load-path (concat d "/lisp")))
+   ((file-directory-p d)
+    (add-to-list 'load-path d))))
 
 ;; Set up the custom theme path.
 (add-to-list 'custom-theme-load-path pjones:theme-files)

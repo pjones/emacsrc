@@ -8,6 +8,7 @@ fi
 
 VERSION=$1
 PREFIX="${HOME}/.emacs.d"
+SITE_LISP=$PREFIX/share/emacs/site-lisp
 CURL_OPTIONS="--progress-bar"
 OSNAME=`uname -s`
 export EMACS=`which emacs` # fix for a bug in my env
@@ -50,18 +51,19 @@ fetch_git_url ()
 {
   # $1: The URL to the Git repo
   # $2: The basename of the repo
-  
+
   gitcache=~/.emacs.d/gitcache/$2
-  
+
   if [ ! -d `dirname $gitcache` ]; then
     mkdir -p `dirname $gitcache` || die "failed to mkdir"
   fi
 
   if [ -d $gitcache ]; then
     (
-      cd $gitcache 
+      cd $gitcache
       git checkout master > /dev/null 2>&1
       git pull -q > /dev/stderr || exit 1
+      git checkout $VERSION || die "bad tag: $VERSION"
     ) || die "git pull failed"
   else
     (
@@ -69,7 +71,7 @@ fetch_git_url ()
       git clone -q $1 $2 > /dev/stderr || exit 1
     ) || die "git clone failed"
   fi
-  
+
   echo $gitcache
 }
 
@@ -89,7 +91,7 @@ untar ()
   else
     dir=`untar_name $1`
   fi
-  
+
   if [ ! -d $dir ]; then
     if echo $1 | egrep -q '\.tar.gz|\.tgz'; then
       tar xzf $1 || die "failed to untar file: $1"

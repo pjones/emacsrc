@@ -1,4 +1,4 @@
-DIRS = download packages lisp modes themes bin
+DIRS = download third-party lisp modes themes bin
 DOTFILE = $(HOME)/.emacs
 MAKE_ARGS = --no-print-directory
 

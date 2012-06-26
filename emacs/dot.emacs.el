@@ -1,7 +1,3 @@
-;; Turn off GUI elements first thing!
-(dolist (mode '(menu-bar-mode tool-bar-mode scroll-bar-mode))
-  (if (fboundp mode) (funcall mode -1)))
-
 ;; Load other configuration files
 (load "~/.emacs.d/pjones/lisp/loadpath")
 (load-theme pjones:default-theme t)
