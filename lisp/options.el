@@ -7,6 +7,7 @@
 ;; Things to turn on for all modes
 (add-hook 'fundamental-mode-hook 'font-lock-mode)
 (add-hook 'fundamental-mode-hook 'auto-fill-mode)
+(add-hook 'fundamental-mode-hook 'flyspell-mode)
 (add-hook 'fundamental-mode-hook 'column-number-mode)
 (add-hook 'fundamental-mode-hook 'show-paren-mode)
 
@@ -31,15 +32,26 @@
               indent-tabs-mode nil                  ; Don't use tabs
               truncate-lines)                       ; Don't wrap lines
 
+;; Settings not worth their own file in the modes directory:
+(setq epa-file-encrypt-to "D4426FFA")   ; Default GPG key to use
+
 ;; Frame setup
 (setq default-frame-alist
       '((cursor-type  . bar)
         (cursor-color . "yellow")))
 
-(defun pjones:configure-new-frame (frame)
+(defun pjones:configure-new-frame (&optional frame)
   "Hook to configure a new frame."
+  (dolist (mode '(menu-bar-mode tool-bar-mode scroll-bar-mode))
+    (if (fboundp mode) (funcall mode -1)))
   (blink-cursor-mode)
   (require 'fringe)
   (fringe-mode 10))
 
+(add-hook 'after-init-hook 'pjones:configure-new-frame)
 (add-hook 'after-make-frame-functions 'pjones:configure-new-frame)
+
+;; Libraries used throughout my Emacs session
+(require 'saveplace)                    ; Saves your location in files
+(require 'dired-x)                      ; Extra features for dired-mode
+(require 'org-install)                  ; Load external org-mode

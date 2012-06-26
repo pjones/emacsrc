@@ -1,6 +1,5 @@
-DEST = ${HOME}/.emacs.d/packages
-TO_REMOVE  = find-recursive.elc
-TO_REMOVE += git.elc
+DEST = ${HOME}/.emacs.d/share/emacs/site-lisp
+IGNORE_EMACS_WARNINGS = YES
 include ../emacs.mk
 
 all: $(DEST)/ri-emacs.rb
