@@ -11,6 +11,8 @@
         ci = commit
         co = checkout
         sb = submodule
+        sbu = submodule update --init
+        
 [core]
 	excludesfile = /Users/pjones/.gitignore
 [url "dracula.pmade.com:git/oss/"]
