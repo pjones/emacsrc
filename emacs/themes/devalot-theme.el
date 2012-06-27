@@ -24,8 +24,8 @@
 ;; The majority of the colors in this theme come from the Solarized
 ;; palette, which is released under an MIT license:
 ;; https://github.com/altercation/solarized.
-
 ;;; Code:
+
 (deftheme devalot "A theme loosely based on solarized.")
 
 ;; Notes
@@ -46,7 +46,8 @@
       (fg-normal  "#839496")
       (fg-low     "#586e75")
       (fg-high    "#93a1a1")
-      (fg-inverse "#657b83"))
+      (fg-inverse "#657b83")
+      (class '((class color) (min-colors 89))))
   (custom-theme-set-faces
    'devalot
    `(default        ((((type graphic)) (:background ,bg-normal :foreground ,fg-normal))))
@@ -203,9 +204,9 @@
    `(font-latex-sectioning-5-face ((t (:inherit 'font-latex-sectioning-0-face))))
 
    ;; Whitespace Mode
-   `(whitespace-tab ((t (:background ,bg-low))))
-   `(whitespace-trailing ((t (:inherit 'default))))
-   `(whitespace-line ((t (:background ,bg-low))))
+   `(whitespace-tab ((,class (:background ,bg-low))))
+   `(whitespace-trailing ((,class (:background ,bg-normal :foreground ,fg-normal))))
+   `(whitespace-line ((,class (:background ,bg-low))))
 
    ;; Non-Standard Faces
    ;;`(devalot-fixme-face ((t (:background ,bg-inverse :foreground ,red :bold t :box (:line-width 1 :color ,bg-low)))))
