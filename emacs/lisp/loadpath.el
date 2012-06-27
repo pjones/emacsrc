@@ -11,7 +11,7 @@
   "The directory where I install extra software packages like org-mode.")
 
 (defvar pjones:lisp-files
-  '("modes" "packages" "options" "autoload" "automode"
+  '("code" "modes" "packages" "options" "autoload" "automode"
     "functions" "interactive" "completion" "keys" "gnus")
   "A list of my config files to load in the correct order.")
 
