@@ -22,6 +22,7 @@
       disabled-command-function nil      ; Disable novice user protection
       truncate-partial-width-windows nil ; When windows don't fill the frame
       mark-even-if-inactive t            ; Use the mark without a region
+      next-line-add-newlines t           ; Create new lines by moving down
       frame-title-format "%b")           ; Set the contents of the frame title
 
 ;; Default variables that become buffer/frame local.

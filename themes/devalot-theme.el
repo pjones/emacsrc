@@ -206,6 +206,7 @@
    ;; Whitespace Mode
    `(whitespace-tab ((,class (:background ,bg-low))))
    `(whitespace-trailing ((,class (:background ,bg-normal :foreground ,fg-normal))))
+   `(whitespace-empty ((,class (:background ,bg-normal :foreground ,fg-normal))))
    `(whitespace-line ((,class (:background ,bg-low))))
 
    ;; Non-Standard Faces
