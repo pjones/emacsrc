@@ -11,6 +11,7 @@ EMACS_FLAGS += -l $(PMADE_LOAD_PATH)
 EMACS_FLAGS += -f batch-byte-compile
 
 ##############################################################################
+CHECK_EMACS_OUTPUT ?= $(CURDIR)/../scripts/check-emacs-output.sh
 EMACS_OUTPUT_FILE = emacs.out
 
 ##############################################################################
@@ -32,7 +33,7 @@ $(DEST)/%.elc: %.el
 	@ echo emacs compile $<
 	@ $(EMACS) $(EMACS_FLAGS) $< > $(EMACS_OUTPUT_FILE) 2>&1; exit
 ifeq ($(IGNORE_EMACS_WARNINGS),)
-	@ if [ `egrep -v '^(Wrote|Loading)' $(EMACS_OUTPUT_FILE)|wc -l` -ne 0 ]; then \
+	@ if [ `$(CHECK_EMACS_OUTPUT) < $(EMACS_OUTPUT_FILE)` -ne 0 ]; then \
 	    cat $(EMACS_OUTPUT_FILE); exit 1; \
 	  fi
 endif
