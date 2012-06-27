@@ -2,9 +2,10 @@
 (eval-when-compile (require 'saveplace))
 
 ;; Create some faces
-(defvar pjones:fixme-face nil "Face to style FIXME and TODO")
-(copy-face 'font-lock-warning-face 'pjones:fixme-face)
-(setq pjones:fixme-face 'pjones:fixme-face)
+(defface pjones:fixme-face
+  '((t (:inherit 'font-lock-warning-face)))
+  "Face to style FIXME and TODO with."
+  :group 'faces)
 
 (defun pjones:comment-bar (&optional without-newline)
   "Create a comment bar based on the current mode."
@@ -27,9 +28,11 @@
                                  1 pjones:fixme-face t))))
 
 (defun pjones:add-programming-hook (mode-hook)
+  (add-hook mode-hook 'show-paren-mode)
   (add-hook mode-hook 'whitespace-mode)
   (add-hook mode-hook 'auto-fill-mode)
   (add-hook mode-hook 'flyspell-prog-mode)
   (add-hook mode-hook 'electric-pair-mode)
-  (add-hook mode-hook 'pjones:prog-mode-hook))
-
+  (add-hook mode-hook 'pjones:prog-mode-hook)
+  (add-hook 'after-save-hook
+            'executable-make-buffer-file-executable-if-script-p))

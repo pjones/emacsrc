@@ -16,3 +16,6 @@
 
 ;; Highline (http://emacswiki.org/emacs/HighlineMode)
 (autoload 'highline-mode "highline" "Highline Mode" t)
+
+;; RHTML (.html.erb for Rails)
+(autoload 'rhtml-mode "rhtml-mode" "RHTML" t)

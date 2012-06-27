@@ -39,6 +39,10 @@ ifeq ($(IGNORE_EMACS_WARNINGS),)
 endif
 	@ rm $(EMACS_OUTPUT_FILE)
 	@ mv $(<:.el=.elc) $@
+	@ if [ "$(EMACS_INSTALL_PACKAGES)" = "$<" ]; then \
+		echo emacs packages install; \
+		$(EMACS) --batch -l $(PMADE_LOAD_PATH) -l $< -f "pjones:install-packages"; \
+	  fi
 
 ##############################################################################
 $(DEST):
