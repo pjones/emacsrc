@@ -24,5 +24,8 @@
 (add-to-list 'auto-mode-alist '("\\.yml$"  . yaml-mode))
 (add-to-list 'auto-mode-alist '("\\.yaml$" . yaml-mode))
 
+;; ZSH
+(add-to-list 'auto-mode-alist '("\\.zsh$" . sh-mode))
+
 ;; Files that trigger complication-mode
 (add-to-list 'auto-mode-alist '("errors\\.out$" . compilation-mode))
