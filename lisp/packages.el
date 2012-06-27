@@ -1,19 +1,22 @@
 ;;; packages.el -- Emacs package management
 (require 'package)
 
-;; Which package archives to use.
-(add-to-list 'package-archives
-  '("marmalade" . "http://marmalade-repo.org/packages/") t)
+(defvar pjones:package-archives
+  '(("marmalade" . "http://marmalade-repo.org/packages/")
+    ("melpa" . "http://melpa.milkbox.net/packages/"))
+  "List of package archives to use with Emacs.")
+
+(defvar pjones:packages
+  '(magit flymake-ruby ruby-end inf-ruby htmlize yaml-mode bm)
+  "A list of packages to ensure are installed at launch.")
+
+(dolist (archive pjones:package-archives)
+  (add-to-list 'package-archives archive t))
 
 ;; Prepare package management
 (package-initialize)
 (when (not package-archive-contents)
   (package-refresh-contents))
-
-;; Packages I like.
-(defvar pjones:packages
-  '(magit flymake-ruby ruby-end inf-ruby htmlize)
-  "A list of packages to ensure are installed at launch.")
 
 ;; Make sure all the packages are installed
 (defun pjones:install-packages ()

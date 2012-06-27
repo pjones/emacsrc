@@ -24,7 +24,7 @@ placing it in the kill ring)."
 (defun pjones:switch-to-previous-buffer ()
   "Switch back to the last buffer shown in this window."
   (interactive)
-  (switch-to-buffer (other-buffer nil t)))
+  (switch-to-buffer (other-buffer)))
 
 (defun pjones:open-line-above ()
   "Open a line above point and move there."
@@ -44,7 +44,7 @@ placing it in the kill ring)."
   "Start IRC client.  With an argument only start a connection to
 the local bitlbee instance."
   (interactive "P")
-  (require 'rcirc)
+  (require 'rcirc) ; loads in my rcirc-conf.el file
   (if local-only (rcirc-connect "localhost")
     (rcirc nil)
     (when (= 1 (length (window-list)))

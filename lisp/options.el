@@ -5,11 +5,15 @@
       user-mail-address "pjones@pmade.com")
 
 ;; Things to turn on for all modes
-(add-hook 'fundamental-mode-hook 'font-lock-mode)
-(add-hook 'fundamental-mode-hook 'auto-fill-mode)
-(add-hook 'fundamental-mode-hook 'flyspell-mode)
-(add-hook 'fundamental-mode-hook 'column-number-mode)
-(add-hook 'fundamental-mode-hook 'show-paren-mode)
+(defun pjones:add-basic-mode-hook (mode-hook)
+  "A helper function to add minor modes to another mode's hooks."
+  (add-hook mode-hook 'font-lock-mode)
+  (add-hook mode-hook 'auto-fill-mode)
+  (add-hook mode-hook 'flyspell-mode)
+  (add-hook mode-hook 'column-number-mode))
+
+(pjones:add-basic-mode-hook 'text-mode-hook)
+(pjones:add-basic-mode-hook 'fundamental-mode-hook)
 
 ;; Variables defined in Emacs' C source
 (setq inhibit-startup-message t          ; I've seen it already
@@ -31,7 +35,7 @@
               indicate-empty-lines t                ; Ditto
               require-final-newline t               ; Always end files with \n
               indent-tabs-mode nil                  ; Don't use tabs
-              truncate-lines)                       ; Don't wrap lines
+              truncate-lines t)                     ; Don't wrap lines
 
 ;; Settings not worth their own file in the modes directory:
 (setq epa-file-encrypt-to "D4426FFA"    ; Default GPG key to use
