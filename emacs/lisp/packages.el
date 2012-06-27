@@ -7,7 +7,7 @@
   "List of package archives to use with Emacs.")
 
 (defvar pjones:packages
-  '(magit flymake-ruby ruby-end inf-ruby htmlize yaml-mode bm)
+  '(magit flymake-ruby ruby-end inf-ruby htmlize yaml-mode bm gist)
   "A list of packages to ensure are installed at launch.")
 
 (dolist (archive pjones:package-archives)
