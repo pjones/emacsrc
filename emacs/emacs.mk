@@ -1,7 +1,7 @@
 ##############################################################################
 SRC	 ?= $(wildcard *.el)
 COMPILED  = $(patsubst %.el,$(DEST)/%.elc,$(SRC))
-PMADE_LOAD_PATH ?= $(CURDIR)/../emacs.d/pmade-loadpath
+PMADE_LOAD_PATH ?= $(CURDIR)/../lisp/loadpath.el
 
 ##############################################################################
 EMACS = emacs
@@ -30,7 +30,7 @@ uninstall:
 ##############################################################################
 $(DEST)/%.elc: %.el
 	@ echo emacs compile $<
-	@ $(EMACS) $(EMACS_FLAGS) $< > $(EMACS_OUTPUT_FILE) 2>&1
+	@ $(EMACS) $(EMACS_FLAGS) $< > $(EMACS_OUTPUT_FILE) 2>&1; exit
 ifeq ($(IGNORE_EMACS_WARNINGS),)
 	@ if [ `egrep -v '^(Wrote|Loading)' $(EMACS_OUTPUT_FILE)|wc -l` -ne 0 ]; then \
 	    cat $(EMACS_OUTPUT_FILE); exit 1; \
