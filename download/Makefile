@@ -1,9 +1,11 @@
 ################################################################################
 PACKAGE_VERSIONS  = orgmode/release_7.8.11
 PACKAGE_VERSIONS += rhtml/20090213
-PACKAGE_VERSIONS += magit/1.0.0
 PACKAGE_VERSIONS += gnus/m0-5
 PACKAGE_VERSIONS += markdown/pjones-links
+
+################################################################################
+# PACKAGE_VERSIONS += magit/1.0.0
 
 ifeq (texdoc,$(notdir $(shell which texdoc)))
 PACKAGE_VERSIONS += auctex/11.85
@@ -33,5 +35,3 @@ $(foreach pkg,$(PACKAGE_VERSIONS),$(eval $(call PKG_template,$(pkg))))
 
 $(DEST):
 	mkdir -p $(DEST)
-
-
