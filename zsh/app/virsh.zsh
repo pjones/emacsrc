@@ -38,6 +38,12 @@ virsh_has_managed_save () {
 }
 
 ################################################################################
+# Returns the current version of libvirt
+virsh_version () {
+  virsh version | head -1 | awk -F: '{print $2}' | awk '{print $2}'
+}
+
+################################################################################
 # Start a VM and wait for it to be running.
 virsh_start () {
   if [ $# -ne 1 ]; then
@@ -74,12 +80,17 @@ virsh_stop () {
   fi
 
   name=$1
+  flags=""
+
+  if [ $(virsh_version) != '0.9.8' ]; then
+    flags="--verbose"
+  fi
 
   # Can't stop a domain unless it's running
   virsh_running $name || return 0
 
   echo "==> Waiting for $name to stop"
-  virsh managedsave $name --verbose
+  virsh managedsave $name $flags
 }
 
 ################################################################################
