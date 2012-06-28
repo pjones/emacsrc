@@ -27,12 +27,12 @@ URxvt.color5: #d33682
 URxvt.color6: #2aa198
 URxvt.color7: #839496
 URxvt.color8: #1c1c1c
-URxvt.color9: #d75f00
-URxvt.color10: #85aa11
-URxvt.color11: #b68a01
-URxvt.color12: #0188ff
-URxvt.color13: #5f5faf
-URxvt.color14: #2ba299
+URxvt.color9: #dc5c5a
+URxvt.color10: #88b324
+URxvt.color11: #b5a924
+URxvt.color12: #509cd2
+URxvt.color13: #d36198
+URxvt.color14: #4aa19a
 URxvt.color15: #ffffd7
 
 ! ############################################################################

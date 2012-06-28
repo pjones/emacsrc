@@ -27,12 +27,14 @@
 ;; palette, which is released under an MIT license:
 ;; https://github.com/altercation/solarized.
 ;;
+;;
 ;;; Code:
 
 (deftheme devalot "A theme loosely based on solarized.")
 
 ;;; Notes
 ;; * To see all faces in effect: list-faces-display
+;; * To see all colors: list-colors-display
 (let ((yellow       "#b58900")
       (yellow-high  "#b5a924")
       (orange       "#cb4b16")
@@ -66,7 +68,6 @@
    `(error          ((t (:foreground ,red-high))))
    `(warning        ((t (:foreground ,yellow-high))))
    `(success        ((t (:foreground ,green-high))))
-   `(link           ((t (:underline  ,blue-high))))
    `(match          ((t (:background ,bg-high :foreground ,fg-normal))))
    `(fringe         ((t (:background ,bg-low :foreground ,fg-low))))
    `(lazy-highlight ((t (:background ,bg-high :foreground ,magenta-high))))
@@ -74,6 +75,10 @@
    `(region         ((t (:background ,bg-high))))
    `(highlight      ((t (:background ,green-high :foreground ,bg-low))))
    `(hl-line        ((t (:inherit 'highlight))))
+
+   `(link ((,class (:underline  ,blue-high :foreground ,fg-normal))
+           (t (:underline "blue" :foreground "blue"))))
+
 
    ;; Show paren
    `(show-paren-match ((t (:background ,bg-inverse :foreground ,blue :bold t))))
@@ -96,7 +101,8 @@
    `(minibuffer-prompt ((t (:foreground ,magenta :bold t))))
 
    ;; Modeline and Things in the Modeline
-   `(modeline ((t (:background ,green :foreground ,bg-normal :box (:line-width 1 :style released-button)))))
+   `(modeline ((,class (:background ,green :foreground ,bg-normal :box (:line-width 1 :style released-button)))
+               (t (:background "green" :foreground "black"))))
    `(mode-line-inactive ((t (:background ,bg-low :foreground ,fg-low :box (:line-width 1 :style released-button)))))
    `(modeline-mousable ((t (:background ,bg-high :foreground ,fg-normal))))
    `(modeline-mousable-minor-mode ((t (:background ,bg-high :foreground ,bg-high))))
@@ -117,17 +123,22 @@
    `(dired-warning ((t (:underline ,yellow-high))))
 
    ;; Outline Mode
-   `(outline-1 ((t (:foreground ,blue-high :bold t))))
-   `(outline-2 ((t (:foreground ,green-high :bold t))))
-   `(outline-3 ((t (:foreground ,cyan-high :bold nil))))
-   `(outline-4 ((t (:foreground ,orange :bold nil))))
-   `(outline-5 ((t (:foreground ,yellow-high :bold nil))))
+   `(outline-1 ((,class (:foreground ,blue-high :bold t))
+                (t (:foreground "blue" :bold t))))
+   `(outline-2 ((,class (:foreground ,green-high :bold t))
+                (t (:foreground "green" :bold t))))
+   `(outline-3 ((,class (:foreground ,cyan-high :bold nil))
+                (t (:foreground "cyan" :bold t))))
+   `(outline-4 ((,class (:foreground ,orange :bold nil))
+                (t (:foreground "orange" :bold t))))
+   `(outline-5 ((,class (:foreground ,yellow-high :bold nil))
+                (t (:foreground "magenta"))))
 
    ;; Org-Mode
    `(org-level-1               ((t (:inherit 'outline-1))))
    `(org-level-2               ((t (:inherit 'outline-2))))
    `(org-level-3               ((t (:inherit 'outline-3))))
-   `(org-level-4               ((t (:inherit 'outline-4))))
+   `(org-level-4               ((t (:inherit 'outline-4 :italic t))))
    `(org-level-5               ((t (:inherit 'outline-5))))
    `(org-archived              ((t (:inherit 'font-lock-string-face))))
    `(org-document-title        ((t (:inherit 'font-lock-comment-delimiter-face))))
@@ -145,20 +156,31 @@
    `(org-date                  ((t (:foreground ,fg-low))))
    `(org-tag                   ((t (:foreground ,fg-low))))
    `(org-tag-default           ((t (:inherit 'org-tag))))
-   `(org-special-keyword       ((t (:inherit 'org-tag))))
-   `(org-code                  ((t (:inherit 'font-lock-function-name-face :bold nil))))
-   `(org-hide                  ((t (:foreground ,bg-off))))
-   `(org-column                ((t (:background ,bg-high))))
-   `(org-column-title          ((t (:inherit 'mode-line :background ,orange))))
+   `(org-column                ((t (:background ,bg-low))))
+   `(org-column-title          ((t (:inherit 'mode-line :background ,orange-high))))
    `(org-checkbox              ((t (:inherit 'mode-line :background ,green))))
    `(org-todo                  ((t (:inherit 'mode-line :background ,red))))
    `(org-done                  ((t (:inherit 'mode-line :background ,green))))
 
+   `(org-hide ((,class (:foreground ,bg-off))
+               (t (:foreground "black"))))
+
+   `(org-special-keyword ((,class (:foreground ,fg-low))
+                          (t (:foreground "gray"))))
+
+   `(org-code ((,class (:inherit 'font-lock-keyword-face :bold nil))
+               (nil (:foreground "green"))))
+
+   `(org-block ((t (:inherit 'org-code))))
+   `(org-block-begin-line ((t (:inherit 'org-special-keyword))))
+   `(org-block-end-line ((t (:inherit 'org-block-begin-line))))
+
+
    ;; ERB (Ruby Embedded in HTML)
    `(erb-face               ((t (:inherit 'default))))
-   `(erb-delim-face         ((t (:foreground ,fg-low))))
+   `(erb-delim-face         ((,class (:foreground ,fg-low)) (t (:foreground "magenta"))))
    `(erb-out-face           ((t (:inherit 'default))))
-   `(erb-out-delim-face     ((t (:foreground ,blue))))
+   `(erb-out-delim-face     ((,class (:foreground ,blue)) (t (:foreground "blue"))))
    `(erb-comment-delim-face ((t (:inherit 'font-lock-comment-delimiter-face))))
    `(erb-comment-face       ((t (:inherit 'font-lock-comment-face))))
 

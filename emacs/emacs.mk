@@ -11,7 +11,7 @@ EMACS_FLAGS += -l $(PMADE_LOAD_PATH)
 EMACS_FLAGS += -f batch-byte-compile
 
 ##############################################################################
-CHECK_EMACS_OUTPUT ?= $(CURDIR)/../scripts/check-emacs-output.sh
+CHECK_EMACS_OUTPUT ?= $(dir $(PMADE_LOAD_PATH))/../scripts/check-emacs-output.sh
 EMACS_OUTPUT_FILE = emacs.out
 
 ##############################################################################
