@@ -18,6 +18,7 @@
 ;; Variables defined in Emacs' C source
 (setq inhibit-startup-message t          ; I've seen it already
       initial-scratch-message nil        ; Ditto
+      make-backup-files nil              ; Don't make backup files
       mouse-yank-at-point t              ; Don't move point when mouse pasting
       ring-bell-function (lambda ())     ; Kill those damn bells
       visible-bell nil                   ; No visual bell
