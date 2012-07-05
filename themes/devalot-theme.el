@@ -32,6 +32,9 @@
 
 (deftheme devalot "A theme loosely based on solarized.")
 
+;; Create the faces if they don't already exist.
+(put 'devalot 'theme-immediate t)
+
 ;;; Notes
 ;; * To see all faces in effect: list-faces-display
 ;; * To see all colors: list-colors-display
@@ -64,7 +67,7 @@
   (custom-theme-set-faces
    'devalot
    `(default        ((((type graphic)) (:background ,bg-normal :foreground ,fg-normal))))
-   `(cursor         ((t (:background ,yellow :foreground ,bg-normal))))
+   `(cursor         ((t (:background ,magenta-high :foreground ,bg-normal))))
    `(error          ((t (:foreground ,red-high))))
    `(warning        ((t (:foreground ,yellow-high))))
    `(success        ((t (:foreground ,green-high))))
@@ -177,12 +180,12 @@
 
 
    ;; ERB (Ruby Embedded in HTML)
-   `(erb-face               ((t (:inherit 'default))))
+   `(erb-face               ((t (:background ,bg-normal :foreground ,fg-normal))))
    `(erb-delim-face         ((,class (:foreground ,fg-low)) (t (:foreground "magenta"))))
-   `(erb-out-face           ((t (:inherit 'default))))
-   `(erb-out-delim-face     ((,class (:foreground ,blue)) (t (:foreground "blue"))))
-   `(erb-comment-delim-face ((t (:inherit 'font-lock-comment-delimiter-face))))
-   `(erb-comment-face       ((t (:inherit 'font-lock-comment-face))))
+   `(erb-out-face           ((t (:background ,bg-normal :foreground ,fg-normal))))
+   `(erb-out-delim-face     ((,class (:foreground ,blue :background ,bg-normal)) (t (:foreground "blue"))))
+   `(erb-comment-delim-face ((t (:foreground ,fg-low :bold t))))
+   `(erb-comment-face       ((t (:foreground ,violet :italic t))))
 
    ;; Diff Mode
    `(diff-added             ((t (:foreground ,green))))
@@ -207,8 +210,8 @@
    `(compilation-info ((t (:inherit 'font-lock-string-face :bold t))))
    `(compilation-error ((t (:underline ,red :bold t))))
    `(compilation-line-number ((t (:foreground ,orange :bold t))))
-   `(flymake-errline ((t :underline ,red)))
-   `(flymake-warnline ((t :underline ,yellow)))
+   `(flymake-errline ((t :underline ,magenta-high :background ,bg-off, :foreground ,magenta-high)))
+   `(flymake-warnline ((t :underline ,yellow ,bg-normal)))
 
    ;; nXML
    `(nxml-element-colon-face             ((t (:inherit 'font-lock-type-face))))
