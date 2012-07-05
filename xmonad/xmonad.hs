@@ -1,3 +1,7 @@
+-- Links:
+--   xmonad: http://xmonad.org/
+--   xmonad-contrib: http://xmonad.org/xmonad-docs/xmonad-contrib/
+
 -- Load XMonad
 import XMonad
 import qualified XMonad.StackSet as W
@@ -49,7 +53,7 @@ main = do
     , workspaces = myWorkspaces
     , keys = myKeys
     , logHook = fadeInactiveLogHook 0.8
-                >> (updatePointer (Relative 0.98 0.98))
+                >> (updatePointer Nearest)
                 >> (dynamicLogWithPP $ myPP xmproc)
     , layoutHook = myLayoutRules
     , manageHook = myManageHook
@@ -127,7 +131,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
       -- Spawning other applications
       , ((0,           xK_t),     spawn $ XMonad.terminal conf)
       , ((controlMask, xK_t),     spawn "urxvtc -name BigTerm")
-      , ((0,           xK_l),     spawn "xscreensaver-command -lock")
+      , ((0,           xK_l),     bindOn [("P1", return ()), ("P2", return ()), ("", jumpToPrevWS)])
       ]
 
       ++
@@ -189,6 +193,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     -- Activating certain applications/desktops
     , ((modm,     xK_space), scratchpadSpawnAction conf)
     , ((mod4Mask, xK_space), spawn "gmrun")
+    , ((modm,     xK_l),     spawn "xscreensaver-command -lock")
   ]
 
 jumpToPrevWS :: X ()
