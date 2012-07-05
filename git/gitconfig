@@ -14,6 +14,7 @@
         sbu = submodule update --init
         
 [core]
-	excludesfile = /Users/pjones/.gitignore
+	excludesfile = ~/.gitignore
+
 [url "dracula.pmade.com:git/oss/"]
         pushInsteadOf = git://pmade.com/
