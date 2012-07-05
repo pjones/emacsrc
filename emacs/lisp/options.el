@@ -27,8 +27,7 @@
       disabled-command-function nil      ; Disable novice user protection
       truncate-partial-width-windows nil ; When windows don't fill the frame
       mark-even-if-inactive t            ; Use the mark without a region
-      next-line-add-newlines t           ; Create new lines by moving down
-      frame-title-format "%b")           ; Set the contents of the frame title
+      next-line-add-newlines t)          ; Create new lines by moving down
 
 ;; Default variables that become buffer/frame local.
 (setq-default cursor-in-non-selected-windows 'hbar  ; Self-explanatory
@@ -43,9 +42,17 @@
       custom-file "~/.emacs.d/pjones/lisp/custom.el") ; To keep Emacs happy
 
 ;; Frame setup
-(setq default-frame-alist
-      '((cursor-type  . bar)
-        (cursor-color . "yellow")))
+(defun pjones:frame-title-file-name ()
+  (let* ((home (expand-file-name "~"))
+         (end (length home))
+         (start (and buffer-file-name (substring buffer-file-name 0 end)))
+         (under-home (and start (string= home start))))
+    (cond (under-home
+           (concat "~/" (file-relative-name buffer-file-name "~")))
+          (buffer-file-name buffer-file-name)
+          (dired-directory
+           (if (listp dired-directory) (car dired-directory) dired-directory))
+          (t (buffer-name)))))
 
 (defun pjones:configure-new-frame (&optional frame)
   "Hook to configure a new frame."
@@ -54,6 +61,9 @@
   (blink-cursor-mode)
   (require 'fringe)
   (fringe-mode 10))
+
+(setq default-frame-alist '((cursor-type  . bar))
+      frame-title-format '(:eval (pjones:frame-title-file-name)))
 
 (add-hook 'after-init-hook 'pjones:configure-new-frame)
 (add-hook 'after-make-frame-functions 'pjones:configure-new-frame)
