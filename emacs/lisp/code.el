@@ -11,9 +11,10 @@
   "Create a comment bar based on the current mode."
   (interactive "P")
   (let ((start (if (string= comment-start "# ") "#" comment-start))
-        (end comment-end))
+        (end comment-end)
+        (col (current-column)))
     (insert start)
-    (insert-char ?# (- 80 (length start) (length end) (current-column)))
+    (insert-char ?# (- 80 (length start) (length end) col))
     (insert end)
     (if without-newline (beginning-of-line) (newline))
     (indent-according-to-mode)))
