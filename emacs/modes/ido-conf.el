@@ -13,6 +13,6 @@
       ido-enable-flex-matching t
       ido-auto-merge-work-directories-length nil
       ido-create-new-buffer 'always
-      ido-use-filename-at-point 'guess
+      ido-use-filename-at-point nil
       ido-use-virtual-buffers t
       ido-max-prospects 10)

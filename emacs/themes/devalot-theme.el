@@ -96,7 +96,7 @@
    `(font-lock-preprocessor-face      ((t (:foreground ,red))))
    `(font-lock-string-face            ((t (:foreground ,violet-high))))
    `(font-lock-type-face              ((t (:foreground ,blue :bold t))))
-   `(font-lock-variable-name-face     ((t (:foreground ,magenta-high))))
+   `(font-lock-variable-name-face     ((t (:foreground ,cyan-high))))
    `(font-lock-warning-face           ((t (:foreground ,magenta :background ,bg-off :bold t))))
 
    ;; Minibuffer
