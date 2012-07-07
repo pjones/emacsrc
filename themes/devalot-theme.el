@@ -76,7 +76,7 @@
    `(lazy-highlight ((t (:background ,bg-high :foreground ,magenta-high))))
    `(isearch        ((t (:background ,magenta :foreground ,bg-inverse :bold t))))
    `(region         ((t (:background ,bg-high))))
-   `(highlight      ((t (:background ,green-high :foreground ,bg-low))))
+   `(highlight      ((t (:background ,bg-off))))
    `(hl-line        ((t (:inherit 'highlight))))
 
    `(link ((,class (:underline  ,blue-high :foreground ,fg-normal))
