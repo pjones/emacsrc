@@ -104,7 +104,7 @@ tmux_has_session () {
 # $2: A list of windows to create (array)
 # $3: The directories for those windows (array)
 tmux_new_session () {
-  if [ $# -ne 3 ]; then
+  if [ $# -lt 3 ]; then
     echo "Usage: tmux_new_session name windows dirs"
     return 1
   fi
@@ -129,7 +129,9 @@ tmux_new_session () {
     done
   fi
 
-  tmux attach-session -t $n
+  if [ $# -lt 4 -o "$4" != NO ]; then
+    tmux attach-session -t $n
+  fi
 }
 
 ################################################################################
@@ -176,6 +178,20 @@ tmux_session_classroom () {
 
   name=classroom
   windows=(bootcamp)
-  dirs=~/documents/books/bootcamp
+  dirs=(~/documents/books/bootcamp)
   tmux_new_session name windows dirs
+}
+
+################################################################################
+# Start my "music" tmux session
+tmux_session_music () {
+  typeset -a windows
+  typeset -a dirs
+
+  name=music
+  windows=(radio pandora)
+  dirs=(~/develop/pmade/rc/mpd ~)
+  tmux_new_session name windows dirs NO
+  tmux set-option -t $name status off
+  tmux attach-session -t $name
 }
