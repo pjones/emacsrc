@@ -15,6 +15,9 @@ URxvt.cursorUnderline: true
 URxvt.pointerBlank: true
 URxvt.perl-lib: /home/pjones/.urxvt
 URxvt.perl-ext-common: url-select,clipboard
+URxvt.keysym.M-w: builtin:
+URxvt.keysym.C-w: builtin:
+URxvt.keysym.C-M-w: perl:clipboard:copy
 URxvt.keysym.C-y: perl:clipboard:paste
 URxvt.background: #222222
 URxvt.foreground: #e6e6e6
@@ -39,3 +42,4 @@ URxvt.color15: #ffffd7
 ! # Bigger terminal for presentations
 BigTerm.font: xft:dejavu sans mono:size=18
 BigTerm.keysym.C-y: builtin:
+BigTerm.keysym.C-M-y: perl:clipboard:paste
