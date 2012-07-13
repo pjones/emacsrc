@@ -6,6 +6,9 @@
   (require 'org-clock)
   (require 'org-html))
 
+;; Silence a compiler warning
+(declare-function org-bookmark-jump-unhide "org")
+
 ;; General Org Settings
 (setq org-log-done t
       org-reverse-note-order t
@@ -65,6 +68,7 @@
   (org-defkey org-mode-map "\C-c0"               'pjones:org-hide-all)
   (org-defkey org-mode-map "\C-c1"               'pjones:org-hide-others)
   (org-defkey org-mode-map "\C-j"                'pjones:org-list-append)
+  (org-defkey org-mode-map "\C-c\C-j"            'pjones:org-goto)
   (org-defkey org-mode-map [(meta return)]       'pjones:org-list-append)
   (org-defkey org-mode-map [(shift meta return)] 'pjones:org-list-append-with-checkbox)
 
@@ -124,5 +128,13 @@ are formatted as HH:MM and returns them in that format"
    (- (org-hh:mm-string-to-minutes t1)
       (org-hh:mm-string-to-minutes t2))))
 
-;; Silence a compiler warning
-(declare-function org-bookmark-jump-unhide "org")
+(defun pjones:org-goto (&optional alternative-interface)
+  "My version of `org-goto' that first widens the buffer (if
+narrowed), jumps to the correct heading via `org-goto', then
+narrows it again if necessary."
+  (interactive "P")
+  (let ((point-size (save-restriction (- (point-max) (point-min))))
+        (buff-size  (buffer-size)))
+    (widen)
+    (org-goto alternative-interface)
+    (if (/= buff-size point-size) (org-narrow-to-subtree))))
