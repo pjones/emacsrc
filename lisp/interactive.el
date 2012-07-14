@@ -91,3 +91,16 @@ the local bitlbee instance."
                   "Valentina" "Paolo"))
          (pick (ido-completing-read "Name: " names)))
     (insert (concat "*" pick ":* "))))
+
+(defun pjones:inc-file ()
+  "Given that the current file name is a number, increment that
+number and open a file with the incremented number as a name."
+  (interactive)
+  (let* ((base (file-name-nondirectory buffer-file-name))
+         (dir  (file-name-directory buffer-file-name))
+         (name (file-name-sans-extension base))
+         (ext  (file-name-extension base t))
+         (num  (string-to-number name))
+         (fmt  (concat "%0" (number-to-string (length name)) "d"))
+         (new  (format fmt (1+ num))))
+    (find-file (concat dir new ext))))
