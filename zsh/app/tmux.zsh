@@ -55,6 +55,7 @@ tmux_umount () {
   if tmux list-sessions | awk '{print $1}' | grep -q ^${name}:\$; then
     echo "==> Killing tmux session $name"
     tmux kill-session -t $name || return 1
+    sleep 2 # Wait for all processes accessing the VM to die
   fi
 
   # Avoid my 'df' alias below by giving the full path
