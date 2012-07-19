@@ -3,7 +3,8 @@
   (require 'align))
 
 (defun pjones:ruby-mode-hook ()
-  (setq align-mode-rules-list
+  (setq ruby-deep-indent-paren nil
+        align-mode-rules-list
         '((ruby-comma
            (regexp . ",\\(\\s-*\\)")
            (group  . 1)
