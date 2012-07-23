@@ -1,6 +1,7 @@
 ;;; ruby-conf.el -- Settings for ruby-mode.
 (eval-when-compile
-  (require 'align))
+  (require 'align)
+  (require 'ruby-mode))
 
 (defun pjones:ruby-mode-hook ()
   (setq ruby-deep-indent-paren nil
