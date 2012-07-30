@@ -6,13 +6,13 @@ Config
   , alignSep = "}{"
   , commands = 
       [ Run StdinReader
-      , Run Com "zsh" ["-ic", "mpd_current"] "playing" 10
+--    , Run Com "zsh" ["-ic", "mpd_current"] "playing" 10
 --    , Run Com "sh"  ["/home/pjones/bin/clock-status.sh"] "tisk" 50
 --    , Run Com "sh"  ["/home/pjones/bin/count-down.sh"] "remaining" 18000
       , Run Com "sh"  ["/home/pjones/bin/org-clock-string.sh"] "orgclock" 300
       , Run BatteryP ["BAT0"] ["-t", "B:<acstatus><timeleft>", "--", "-O", "AC ", "-o", "", "-f", "AC0/online"] 600
       , Run Date "%a %b %d, %H:%M" "clock" 50
-      , Run Volume "default" "Master" [] 10
+      , Run Volume "default" "Master" [] 20
       , Run Weather "KBJC" ["-t", "F:<tempF> C:<tempC> H:<rh>%"] 36000]
-  , template = "%StdinReader% %playing% <fc=#dc322f>%orgclock%</fc> }{<fc=#859900>%KBJC%</fc> | %battery% | %default:Master% | <fc=#268bd2>%clock%</fc>"
+  , template = "%StdinReader% <fc=#dc322f>%orgclock%</fc> }{<fc=#859900>%KBJC%</fc> | %battery% | %default:Master% | <fc=#268bd2>%clock%</fc>"
   }
