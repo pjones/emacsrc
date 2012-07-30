@@ -1,6 +1,7 @@
 ;;; rcirc-conf.el -- Settings for rcirc.
 (eval-when-compile
   (load "../lisp/functions.el")
+  (require 'cl)
   (require 'rcirc))
 
 ;; Silence compiler warnings
@@ -34,6 +35,30 @@
 
 (setq rcirc-omit-responses '("JOIN" "PART" "QUIT" "NICK" "AWAY")
       rcirc-buffer-maximum-lines 500)
+
+(defvar pjones:rcirc-buffers
+  '("#mpd@irc.freenode.net"
+    "#conkeror@irc.freenode.net"
+    "#emacs@irc.freenode.net"
+    "#xmonad@irc.freenode.net"
+    "&bitlbee@localhost"
+    "#debian@irc.freenode.net")
+  "A list of rcirc buffer names in the order in which they should
+be placed into the current set of windows.")
+
+(defun pjones:rcirc-windows ()
+  "Split the current frame into several windows and place the
+buffers listed in `pjones:rcirc-buffers' in each of the resulting
+windows, in the correct order."
+  (let ((wins (window-list nil nil (frame-first-window))))
+    (when (= 1 (length wins))
+      (split-window-right)
+      (dolist (w (window-list))
+        (select-window w)
+        (dotimes (i 2) (split-window-below)))
+      (balance-windows))
+      (setq wins (window-list nil nil (frame-first-window)))
+      (cl-mapcar 'set-window-buffer wins pjones:rcirc-buffers)))
 
 (defun pjones:rcirc-cmd-all (input)
   "See the docs for rcirc-cmd-all."
@@ -103,3 +128,7 @@ not currently displayed in a window."
 (add-hook 'rcirc-mode-hook 'pjones:rcirc-hook)
 (add-hook 'rcirc-update-activity-string-hook 'pjones:rcirc-activity-string)
 (add-hook 'rcirc-print-hooks 'pjones:rcirc-print-hook)
+
+;; Local Variables:
+;; byte-compile-warnings: (not cl-functions)
+;; End:
