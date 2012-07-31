@@ -6,7 +6,7 @@
       js-flat-functions t)
 
 (defvar pjones:js-keywords
-  '(("\\(function *\\)("
+  '(("\\(function\\) *("
      (0 (progn (compose-region (match-beginning 1)
                                (match-end 1) "\u0192") nil))))
   "Extra keywords to add to JavaScript buffers.
