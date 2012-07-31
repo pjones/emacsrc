@@ -1,5 +1,11 @@
 ;;; automode.el -- Set up the auto-mode-alist variable
 
+;; CSS
+(add-to-list 'auto-mode-alist '("\\.css\\.scss" . css-mode))
+
+;; JavaScript
+(add-to-list 'auto-mode-alist '("\\.js\\.erb$" . js-mode))
+
 ;; Markdown
 (add-to-list 'auto-mode-alist '("\\.md$"       . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.markdown$" . markdown-mode))
@@ -17,8 +23,8 @@
 (add-to-list 'auto-mode-alist '("Capfile$"    . ruby-mode))
 
 ;; RHTML
-(add-to-list 'auto-mode-alist '("\\.rhtml$"     . rhtml-mode))
-(add-to-list 'auto-mode-alist '("\\.html\.erb$" . rhtml-mode))
+(add-to-list 'auto-mode-alist '("\\.rhtml$"      . rhtml-mode))
+(add-to-list 'auto-mode-alist '("\\.html\\.erb$" . rhtml-mode))
 
 ;; YAML
 (add-to-list 'auto-mode-alist '("\\.yml$"  . yaml-mode))
