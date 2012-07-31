@@ -172,17 +172,17 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm, xK_equal), sendMessage (IncMasterN 1))
 
     -- Controlling Music and Volume
-    , ((modm, xK_F1),          spawn "mpc prev")
-    , ((modm, xK_F2),          spawn "mpc-pause")
-    , ((modm, xK_F3),          spawn "mpc next")
-    , ((modm, xK_Print),       spawn "amixer set Master 5%-")
-    , ((modm, xK_Scroll_Lock), spawn "amixer set Master 5%+")
-    , ((modm, xK_Pause),       spawn "amixer set Master toggle")
+    , ((modm, xK_F1), spawn "mpc-pause")
+    , ((modm, xK_F2), spawn "mpc prev")
+    , ((modm, xK_F3), spawn "mpc next")
+    , ((modm .|. shiftMask, xK_F1), spawn "amixer set Master toggle")
+    , ((modm .|. shiftMask, xK_F2), spawn "amixer set Master 5%-")
+    , ((modm .|. shiftMask, xK_F3), spawn "amixer set Master 5%+")
 
     -- Same actions, but for my laptop
-    , ((0, xF86XK_AudioRaiseVolume),    spawn "amixer set Master 5%+")
-    , ((0, xF86XK_AudioLowerVolume),    spawn "amixer set Master 5%-")
     , ((0, xF86XK_AudioMute),           spawn "amixer set Master toggle")
+    , ((0, xF86XK_AudioLowerVolume),    spawn "amixer set Master 5%-")
+    , ((0, xF86XK_AudioRaiseVolume),    spawn "amixer set Master 5%+")
     , ((modm, xF86XK_AudioMute),        spawn "mpc-pause")
     , ((modm, xF86XK_AudioLowerVolume), spawn "mpc prev")
     , ((modm, xF86XK_AudioRaiseVolume), spawn "mpc next")
@@ -194,6 +194,8 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm,     xK_space), scratchpadSpawnAction conf)
     , ((mod4Mask, xK_space), spawn "gmrun")
     , ((modm,     xK_l),     spawn "xscreensaver-command -lock")
+    , ((0,    xK_Print),     spawn "screenshot.sh root")
+    , ((modm, xK_Print),     spawn "screenshot.sh window")
   ]
 
 jumpToPrevWS :: X ()
