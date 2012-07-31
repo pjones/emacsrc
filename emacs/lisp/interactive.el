@@ -100,3 +100,12 @@ number and open a file with the incremented number as a name."
          (fmt  (concat "%0" (number-to-string (length name)) "d"))
          (new  (format fmt (1+ num))))
     (find-file (concat dir new ext))))
+
+(defun pjones:window-config (&optional set)
+  "Simple shortcut for remembering a window configuration and
+then jumping back to it later.  With a prefix argument, save the
+current window configuration.  Otherwise restore the window
+configuration."
+  (interactive "P")
+  (if set (window-configuration-to-register ?.)
+    (jump-to-register ?.)))
