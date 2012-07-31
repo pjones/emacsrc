@@ -68,6 +68,10 @@
 (add-hook 'after-init-hook 'pjones:configure-new-frame)
 (add-hook 'after-make-frame-functions 'pjones:configure-new-frame)
 
+;; Control how Emacs makes buffer names unique.
+(require 'uniquify)
+(setq uniquify-buffer-name-style 'post-forward-angle-brackets)
+
 ;; Libraries used throughout my Emacs session
 (require 'saveplace)                    ; Saves your location in files
 (require 'dired-x)                      ; Extra features for dired-mode
