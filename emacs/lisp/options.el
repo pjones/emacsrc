@@ -73,4 +73,4 @@
 (require 'dired-x)                      ; Extra features for dired-mode
 (require 'align)                        ; Align things
 (require 'org-install)                  ; Load external org-mode
-(require 'switch-window)                ; Takes over C-x o
+(require 'switch-window nil t)          ; Takes over C-x o
