@@ -26,17 +26,21 @@
 (global-set-key (kbd "C-`")     'next-error)
 
 ;; User Key Bindings (using the C-c prefix)
-(global-set-key (kbd "C-c ;") 'flyspell-auto-correct-previous-word)
-(global-set-key (kbd "C-c a") 'align)
-(global-set-key (kbd "C-c d") 'pjones:toggle-dictionary)
-(global-set-key (kbd "C-c g") 'rgrep)
-(global-set-key (kbd "C-c h") 'highline-mode)
-(global-set-key (kbd "C-c m") 'magit-status)
-(global-set-key (kbd "C-c n") 'pjones:insert-italian-name)
-(global-set-key (kbd "C-c r") 'revert-buffer)
-(global-set-key (kbd "C-c t") 'pjones:transpose-windows)
-(global-set-key (kbd "C-c u") 'goto-last-change)
-;                     C-c \t   Insert comment bar in source code file
+(global-set-key (kbd "C-c ;")   'flyspell-auto-correct-previous-word)
+(global-set-key (kbd "C-c a")   'align)
+(global-set-key (kbd "C-c d")   'pjones:toggle-dictionary)
+(global-set-key (kbd "C-c g")   'rgrep)
+(global-set-key (kbd "C-c h")   'highline-mode)
+(global-set-key (kbd "C-c m")   'magit-status)
+(global-set-key (kbd "C-c n")   'pjones:insert-italian-name)
+(global-set-key (kbd "C-c r")   'revert-buffer)
+(global-set-key (kbd "C-c t")   'pjones:transpose-windows)
+(global-set-key (kbd "C-c u")   'goto-last-change)
+;                     C-c \t     Insert comment bar in source code file
+(global-set-key (kbd "C-c w w") 'pjones:window-config)
+(global-set-key (kbd "C-c w u") 'winner-undo)
+(global-set-key (kbd "C-c w r") 'winner-redo)
+
 
 ; C-z is used by my window manager.
 (global-set-key (kbd "C-z") nil)
