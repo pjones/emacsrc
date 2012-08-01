@@ -13,25 +13,29 @@
 The Unicode anonymous function code was stolen from
 https://github.com/technomancy/emacs-starter-kit")
 
-(defun pjones:js-add-extra-keywords ()
-  "Add some extra keywords to JavaScript buffers."
-  (interactive)
-  (font-lock-add-keywords 'js-mode pjones:js-keywords)
-  (font-lock-fontify-buffer))
+(defvar pjones:js-keywords-enabled nil
+  "Internal variable used to keep track of
+  `pjones:js-keywords`.")
 
-(defun pjones:js-rm-extra-keywords ()
-  "Remove some extra keywords from JavaScript buffers."
+(defun pjones:js-extra-keywords ()
+  "Toggle adding some extra keywords to JavaScript buffers."
   (interactive)
   (let ((modified (buffer-modified-p)))
-    (font-lock-remove-keywords 'js-mode pjones:js-keywords)
-    (remove-text-properties (point-min) (point-max) '(composition nil))
+    (if (not pjones:js-keywords-enabled)
+        (font-lock-add-keywords 'js-mode pjones:js-keywords)
+      (font-lock-remove-keywords 'js-mode pjones:js-keywords)
+      (save-excursion
+        (goto-char (point-min))
+        (while (re-search-forward (caar pjones:js-keywords) nil t)
+          (decompose-region (match-beginning 1) (match-end 1)))))
+    (font-lock-fontify-buffer)
+    (setq pjones:js-keywords-enabled (not pjones:js-keywords-enabled))
     (set-buffer-modified-p modified)))
 
 (defun pjones:js-mode-hook ()
   "Configure JS mode and key bindings."
-  (local-set-key (kbd "C-c C-k")   'pjones:js-rm-extra-keywords)
-  (local-set-key (kbd "C-c C-S-k") 'pjones:js-add-extra-keywords))
+  (local-set-key (kbd "C-c C-k")   'pjones:js-extra-keywords))
 (add-hook 'js-mode-hook 'pjones:js-mode-hook)
 
 ;; Set up the cool extra keywords right away!
-(pjones:js-add-extra-keywords)
+(pjones:js-extra-keywords)
