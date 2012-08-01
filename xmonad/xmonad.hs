@@ -172,12 +172,12 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm, xK_equal), sendMessage (IncMasterN 1))
 
     -- Controlling Music and Volume
-    , ((modm, xK_F1), spawn "mpc-pause")
-    , ((modm, xK_F2), spawn "mpc prev")
-    , ((modm, xK_F3), spawn "mpc next")
-    , ((modm .|. shiftMask, xK_F1), spawn "amixer set Master toggle")
-    , ((modm .|. shiftMask, xK_F2), spawn "amixer set Master 5%-")
-    , ((modm .|. shiftMask, xK_F3), spawn "amixer set Master 5%+")
+    , ((modm, xK_F1),     spawn "mpc-pause")
+    , ((modm, xK_F2),     spawn "mpc prev")
+    , ((modm, xK_F3),     spawn "mpc next")
+    , ((mod4Mask, xK_F1), spawn "amixer set Master toggle")
+    , ((mod4Mask, xK_F2), spawn "amixer set Master 5%-")
+    , ((mod4Mask, xK_F3), spawn "amixer set Master 5%+")
 
     -- Same actions, but for my laptop
     , ((0, xF86XK_AudioMute),           spawn "amixer set Master toggle")
