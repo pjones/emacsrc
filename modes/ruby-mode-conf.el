@@ -20,7 +20,6 @@
            (repeat . nil)))))
 
 (add-hook 'ruby-mode-hook 'ruby-end-mode)
-(add-hook 'ruby-mode-hook 'flymake-ruby-load)
 (add-hook 'ruby-mode-hook 'pjones:ruby-mode-hook)
 
 ;; Getting Ruby Documentation via RI
