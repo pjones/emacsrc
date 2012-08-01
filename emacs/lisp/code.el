@@ -26,7 +26,7 @@
   (local-set-key (kbd "C-c TAB") 'pjones:comment-bar)
   (local-set-key (kbd "RET") 'reindent-then-newline-and-indent)
   (font-lock-add-keywords nil '(("\\<\\(FIXME:\\|TODO:\\|NOTE:\\)"
-                                 1 pjones:fixme-face t))))
+                                 1 'pjones:fixme-face t))))
 
 (defun pjones:add-programming-hook (mode-hook)
   (add-hook mode-hook 'show-paren-mode)
