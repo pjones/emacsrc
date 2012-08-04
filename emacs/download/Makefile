@@ -5,14 +5,8 @@ PACKAGE_VERSIONS += gnus/m0-5
 PACKAGE_VERSIONS += markdown/pjones-links
 
 ################################################################################
-# PACKAGE_VERSIONS += magit/1.0.0
-
 ifeq (texdoc,$(notdir $(shell which texdoc)))
 PACKAGE_VERSIONS += auctex/11.85
-endif
-
-ifeq (ghci,$(notdir $(shell which ghci)))
-PACKAGE_VERSIONS += haskell/2.8.0
 endif
 
 ################################################################################
