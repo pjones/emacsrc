@@ -1,7 +1,9 @@
 ;;; dired-conf.el -- Settings for dired-mode
 (eval-when-compile
-  (require 'dired)
-  (require 'dired-aux))
+  (require 'dired))
+
+;; Load dired-aux at runtime.
+(require 'dired-aux)
 
 (setq dired-listing-switches "-lRA --ignore='.git' --group-directories-first"
       dired-auto-revert-buffer t
@@ -18,3 +20,7 @@
 
 (add-hook 'dired-load-hook 'pjones:dired-load-hook)
 (add-hook 'dired-mode-hook 'turn-on-gnus-dired-mode)
+
+;; Local Variables:
+;; byte-compile-warnings: (not noruntime)
+;; End:
