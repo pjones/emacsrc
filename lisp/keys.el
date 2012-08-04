@@ -29,6 +29,7 @@
 (global-set-key (kbd "C-c ;")   'flyspell-auto-correct-previous-word)
 (global-set-key (kbd "C-c a")   'align)
 (global-set-key (kbd "C-c d")   'pjones:toggle-dictionary)
+(global-set-key (kbd "C-c f")   'pjones:kill-file-name)
 (global-set-key (kbd "C-c g")   'rgrep)
 (global-set-key (kbd "C-c h")   'highline-mode)
 (global-set-key (kbd "C-c m")   'magit-status)

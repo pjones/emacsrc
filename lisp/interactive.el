@@ -109,3 +109,11 @@ configuration."
   (interactive "P")
   (if set (window-configuration-to-register ?.)
     (jump-to-register ?.)))
+
+(defun pjones:kill-file-name (&optional full-path)
+  "Create a new kill containing the base name of the buffer's
+file.  With a prefix argument kill the entire path for the file."
+  (interactive "P")
+  (let* ((path (buffer-file-name))
+         (name (file-name-nondirectory path)))
+    (kill-new (if full-path path name))))
