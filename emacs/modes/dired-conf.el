@@ -5,7 +5,7 @@
 ;; Load dired-aux at runtime.
 (require 'dired-aux)
 
-(setq dired-listing-switches "-lRA --ignore='.git' --group-directories-first"
+(setq dired-listing-switches "-lhRA --ignore='.git' --group-directories-first"
       dired-auto-revert-buffer t
       dired-isearch-filenames t)
 
@@ -15,11 +15,19 @@
   (dired-toggle-marks)
   (dired-do-kill-lines))
 
+(defun pjones:dired-remove-total-lines ()
+  "Remove those useless \"total\" lines from ls."
+  (let ((buffer-read-only nil))
+    (save-excursion
+      (goto-char (point-min))
+      (flush-lines "^ *total"))))
+
 (defun pjones:dired-load-hook ()
   (define-key dired-mode-map [?%?h] 'pjones:dired-show-only-matching-files))
 
 (add-hook 'dired-load-hook 'pjones:dired-load-hook)
 (add-hook 'dired-mode-hook 'turn-on-gnus-dired-mode)
+(add-hook 'dired-after-readin-hook 'pjones:dired-remove-total-lines)
 
 ;; Local Variables:
 ;; byte-compile-warnings: (not noruntime)
