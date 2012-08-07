@@ -96,6 +96,12 @@ myManageHook = composeAll
 myXPConfig = defaultXPConfig
   { position = Bottom
   , font = "xft:dejavu sans mono:size=9"
+--  , bgColor = "#1c1c1c"
+--  , fgColor = "#e6e6e6"
+--  , bgHLight = ""
+--  , fgHLight = ""
+--  , promptBorderWidth = 2
+--  , borderColor = ""
   }
 
 -- Use C-z as a prefix key, and have all other keys come under it.
