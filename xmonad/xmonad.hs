@@ -10,6 +10,7 @@ import qualified XMonad.StackSet as W
 import XMonad.Prompt
 import XMonad.Prompt.Window (windowPromptGoto)
 import XMonad.Prompt.XMonad (xmonadPrompt)
+import XMonad.Prompt.Shell (shellPrompt)
 
 -- XMonad contrib (Actions)
 import XMonad.Actions.Promote
@@ -192,7 +193,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
     -- Activating certain applications/desktops
     , ((modm,     xK_space), scratchpadSpawnAction conf)
-    , ((mod4Mask, xK_space), spawn "gmrun")
+    , ((mod4Mask, xK_space), shellPrompt myXPConfig)
     , ((modm,     xK_l),     spawn "xscreensaver-command -lock")
     , ((0,    xK_Print),     spawn "screenshot.sh root")
     , ((modm, xK_Print),     spawn "screenshot.sh window")
