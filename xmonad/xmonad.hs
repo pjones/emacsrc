@@ -92,8 +92,10 @@ myManageHook = composeAll
   , appName   =? "random-vnc" --> doShift "P1"
   ]
 
+-- http://xmonad.org/xmonad-docs/xmonad-contrib/XMonad-Prompt.html#t:XPConfig
 myXPConfig = defaultXPConfig
-  { autoComplete = Just 500000
+  { position = Bottom
+  , font = "xft:dejavu sans mono:size=9"
   }
 
 -- Use C-z as a prefix key, and have all other keys come under it.
