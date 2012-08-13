@@ -141,11 +141,11 @@ tmux_session_home () {
   name=home
 
   typeset -a windows
-  windows=(rc privrc clients down)
+  windows=(rc privrc business clients down)
 
   typeset -a dirs
   dirs=(~/develop/pmade/rc ~/develop/pmade/privaterc
-    ~/documents/clients ~/download)
+    ~/documents/business ~/documents/clients ~/download)
 
   tmux_new_session name windows dirs
 }
