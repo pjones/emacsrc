@@ -4,7 +4,8 @@
   (require 'ruby-mode))
 
 (defun pjones:ruby-mode-hook ()
-  (setq ruby-deep-indent-paren nil
+  (setq ruby-deep-arglist 'space
+        ruby-deep-indent-paren 'space
         align-mode-rules-list
         '((ruby-comma
            (regexp . ",\\(\\s-*\\)")

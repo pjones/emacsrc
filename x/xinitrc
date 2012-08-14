@@ -16,9 +16,9 @@ urxvtd -q -o -f
 # Run a composition helper so I can have transparent windows.
 xcompmgr -n &
 
-# Remap my keys
-xmodmap -pke > ~/.xmodmap.orig
-xmodmap ~/.xmodmaprc
+# Remap my keys, but do it in the background so it doesn't conflict
+# with xorg setting up the keyboard.
+(sleep 5; xmodmap -pke > ~/.xmodmap.orig; xmodmap ~/.xmodmaprc) &
 
 # Screen-saver
 xscreensaver -no-splash &
