@@ -1,0 +1,130 @@
+#!/usr/bin/env zsh
+
+################################################################################
+#
+# Work with multiple git repositories at once.
+#
+################################################################################
+REPO_LIST=$HOME/.mgit-list
+source ~/.zsh/app/git.zsh
+
+################################################################################
+usage () {
+  echo "Usage: mgit command"
+  echo
+  echo "  Commands:"
+  echo "      list: List managed repositories"
+  echo "    status: Show the status of each repository"
+  echo "      sync: Attempt to sync (pull/push) each repository"
+  echo "       add: Add a repository to the list"
+  echo "        rm: Remove a repository from the list"
+}
+
+################################################################################
+die () {
+  echo "error: " "$@"
+  exit 1
+}
+
+################################################################################
+do_add () {
+  if [ $# -ne 1 ]; then
+    echo "Usage: mgit add directory"
+    exit 1
+  fi
+
+  if [ ! -d $1 ]; then
+    echo "no such directory: $1"
+    exit 1
+  fi
+
+  if [ ! -d $1/.git ]; then
+    echo "not a git repository: $1"
+    exit 1
+  fi
+
+  echo ${1:a} >> $REPO_LIST
+}
+
+################################################################################
+do_list () {
+  awk -F/ '{print $NF ": " $0}' < $REPO_LIST | column -t
+}
+
+################################################################################
+do_status () {
+  for repo in $(cat $REPO_LIST); do
+    cd $repo
+    name=$(echo $repo | awk -F/ '{print $NF}')
+
+    if git_repo_has_changes; then
+      echo "${name}: dirty"
+    elif git_repo_needs_push; then
+      echo "${name}: push"
+    else
+      echo "${name}: clean"
+    fi
+  done
+}
+
+################################################################################
+do_sync () {
+  if do_status | grep -q dirty; then
+    echo "dirty repo, try mgit status first"
+    exit 1
+  fi
+
+  for repo in $(cat $REPO_LIST); do
+    cd $repo
+    name=$(echo $repo | awk -F/ '{print $NF}')
+    echo "==> $name: $repo"
+
+    echo "${name}: pull"
+    git pull || die "failed to git pull"
+
+    if git_repo_needs_push; then
+      echo "${name}: push"
+      git push || die "failed to git push"
+    fi
+
+    # FIXME: do a submodule update
+  done
+}
+
+################################################################################
+if [ $# -eq 0 ]; then
+  usage
+  exit 1
+fi
+
+################################################################################
+commad=$1
+shift
+
+case $commad in
+  add)
+    do_add "$@"
+    ;;
+
+  remove|rm)
+    echo "not implemented"
+    exit 1
+    ;;
+
+  list)
+    do_list
+    ;;
+
+  status|st|s)
+    do_status | column -t
+    ;;
+
+  sync)
+    do_sync
+    ;;
+
+  --help|-h|help|*)
+    usage
+    exit
+    ;;
+esac
