@@ -20,6 +20,23 @@ virsh_running () {
 }
 
 ################################################################################
+# Returns 0 if the given VM is registered with libvirt, otherwise 1.
+virsh_is_registered () {
+  if [ $# -ne 1 ]; then
+    echo "Usage: virsh_is_registered name"
+    return 2
+  fi
+
+  name=$1
+
+  if virsh dominfo $name > /dev/null 2>&1; then
+    return 0
+  else
+    return 1
+  fi
+}
+
+################################################################################
 # Returns 0 if the VM has managed save info, otherwise 1.
 virsh_has_managed_save () {
   if [ $# -ne 1 ]; then
@@ -67,8 +84,8 @@ virsh_start () {
   # Start it and wait for it to be pingable
   virsh start $name || return 1
   echo "==> Waiting for $name to start..."
-  [ $with_save -eq 0 ] && sleep 30
-  ping -c 1 -q -w 120 $hostname
+  [ $with_save -eq 0 ] && sleep 60
+  ping -c 5 -q -w 120 $hostname
 }
 
 ################################################################################

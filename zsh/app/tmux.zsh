@@ -12,8 +12,8 @@ tmux_mount () {
   mount_options="-oauto_cache,reconnect,ControlMaster=no"
   server=${name}.pmade.com
 
-  # Start the VM if it's not already running
-  virsh_running $name || virsh_start $name
+  # If the host is a VM and it's not already running, start it.
+  virsh_is_registered $name && (virsh_running $name || virsh_start $name)
 
   echo "==> Mounting $name on $mount_point"
   mkdir -p $mount_point
