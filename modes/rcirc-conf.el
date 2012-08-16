@@ -98,7 +98,8 @@ Example use: /all away food or /all quit zzzz."
   (set (make-local-variable 'scroll-conservatively) 8192)
   (set (make-local-variable 'next-line-add-newlines) nil)
   (setq mode-line-format '("  %b " global-mode-string))
-  (flyspell-mode t)
+  (flyspell-mode)
+  (visual-line-mode)
   (rcirc-track-minor-mode 1))
 
 (defun pjones:rcirc-activity-string ()
