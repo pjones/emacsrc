@@ -1,11 +1,4 @@
 ################################################################################
-# Returns a heavily modified version of `mpc current`.
-mpd_current () {
-  mpc current --format '%title% [[(%artist% / %album%)]|==%name%]' | \
-    sed -re 's/==([^:-]{,20})[:-]?.*$/(\1)/' -e 's/ *\)/)/g'
-}
-
-################################################################################
 # Build a playlist called Random.
 mpd_random () {
   keep_out_file=/tmp/mpc-genres-keep-out
@@ -22,20 +15,20 @@ mpd_random () {
   for genre in $exclude_genres; do
     mpc search genre $genre >> $keep_out_file
   done
-  
+
   if [ -r ~/.mpd/playlists/Ban.m3u ]; then
     cat ~/.mpd/playlists/Ban.m3u >> $keep_out_file
   fi
-  
+
   sort $keep_out_file > ${keep_out_file}.sort
   mv ${keep_out_file}.sort $keep_out_file
   mpc clear -q
   mpc listall | sort > $all_files_list
-  
+
   diff -u $keep_out_file $all_files_list | \
     egrep '^\+[^+]' | sed -r 's/^\+//' | \
     mpc add
-  
+
   mpc rm Random
   mpc save Random
   rm -f $keep_out_file $all_files_list
@@ -46,7 +39,7 @@ mpd_random () {
 mpd_ban () {
   ban_file=~/.mpd/playlists/Ban.m3u
   playing_song=$(mpc current --format %file%)
-  
+
   if [ -n "$playing_song" ]; then
     echo $playing_song >>| $ban_file
     mpc -q del 0
@@ -75,7 +68,7 @@ mpd_happy () {
 mpd_buy () {
   buy_file=~/documents/audio/music-to-buy
   playing_song=$(mpc current --format '%title% - %artist% - %name%')
-  
+
   if [ -n "$playing_song" ]; then
     echo $playing_song >>| $buy_file
     echo "You should by $playing_song"

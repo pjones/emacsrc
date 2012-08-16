@@ -6,7 +6,7 @@ Config
   , alignSep = "}{"
   , commands = 
       [ Run StdinReader
-      , Run Com "zsh" ["-ic", "mpd_current"] "playing" 10
+      , Run CommandReader "/home/pjones/bin/mpd-current.sh" "playing"
       , Run Com "sh"  ["/home/pjones/bin/clock-status.sh"] "tisk" 50
       , Run Com "sh"  ["/home/pjones/bin/count-down.sh"] "remaining" 18000
       , Run Date "%a %b %d, %H:%M" "clock" 50
