@@ -75,6 +75,10 @@ class RemoteEmacs
 
   ##############################################################################
   def prepare_for_remote_send
+    details = File.read(REMOTE_SERVER_FILE).
+      sub('0.0.0.0', ENV['SSH_CLIENT'].split.first)
+    File.open(REMOTE_SERVER_FILE, 'w') {|f| f.write(details)}
+
     @emacsclient << "--server-file=#{REMOTE_SERVER_FILE}"
     return if @options.eval
 
