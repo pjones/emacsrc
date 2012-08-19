@@ -88,6 +88,26 @@ the local bitlbee instance."
          (pick (ido-completing-read "Name: " names)))
     (insert (concat "*" pick ":* "))))
 
+(defun pjones:journal ()
+  "Open an entry in the journal for today."
+  (interactive)
+  (let* ((base (expand-file-name "~/documents/journal/"))
+         (path (downcase (format-time-string "%Y/%m/%d-%A.md")))
+         (full (concat base path))
+         (dir (file-name-directory full)))
+    (unless (file-directory-p dir) (make-directory dir t))
+    (find-file full)
+    (when (= (buffer-size) 0)
+      (insert (format-time-string "%% %A, %B %d, %Y\n\n")))))
+
+(defun pjones:bookmark (&optional set)
+  "Quicker access to Emacs bookmarks.  Prompts for a bookmark and
+then jumps to that bookmark.  If a prefix argument is given, set
+a bookmark instead."
+  (interactive "P")
+  (if set (call-interactively 'bookmark-set)
+    (call-interactively 'bookmark-jump)))
+
 (defun pjones:inc-file ()
   "Given that the current file name is a number, increment that
 number and open a file with the incremented number as a name."
