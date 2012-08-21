@@ -5,7 +5,7 @@
 # Work with multiple git repositories at once.
 #
 ################################################################################
-REPO_LIST=$HOME/.mgit-list
+REPO_LIST=$HOME/.mglist
 source ~/.zsh/app/git.zsh
 
 ################################################################################
@@ -17,7 +17,7 @@ usage () {
   echo "    status: Show the status of each repository"
   echo "      sync: Attempt to sync (pull/push) each repository"
   echo "       add: Add a repository to the list"
-  echo "        rm: Remove a repository from the list"
+  echo "      edit: open your editor on the repo list"
 }
 
 ################################################################################
@@ -43,7 +43,8 @@ do_add () {
     exit 1
   fi
 
-  echo ${1:a} >> $REPO_LIST
+  name=$(echo ${1:a}|sed "s|$HOME|~|")
+  echo $name >> $REPO_LIST
 }
 
 ################################################################################
@@ -54,8 +55,10 @@ do_list () {
 ################################################################################
 do_status () {
   for repo in $(cat $REPO_LIST); do
+    repo=${repo:s/~/$HOME}
+
     cd $repo
-    name=$(echo $repo | awk -F/ '{print $NF}')
+    name=$(basename $repo)
 
     if git_repo_has_changes; then
       echo "${name}: dirty"
@@ -74,57 +77,57 @@ do_sync () {
     exit 1
   fi
 
-  for repo in $(cat $REPO_LIST); do
-    cd $repo
-    name=$(echo $repo | awk -F/ '{print $NF}')
-    echo "==> $name: $repo"
+  for r in $(cat $REPO_LIST); do
+    repo=${r:s/~/$HOME}
 
-    echo "${name}: pull"
-    git pull || die "failed to git pull"
+    cd $repo
+    name=$(basename $repo)
+
+    echo "==> $name: $r (pull)"
+    git pull > /dev/null 2>&1 || die "failed to git pull"
 
     if git_repo_needs_push; then
-      echo "${name}: push"
-      git push || die "failed to git push"
+      echo "==> $name: $r (push)"
+      git push > /dev/null 2>&1 || die "failed to git push"
     fi
 
-    # FIXME: do a submodule update
+    if [ -r .gitmodules ]; then
+      echo "==> $name: $r (update submodules)"
+      git submodule update --init > /dev/null 2>&1
+    fi
   done
 }
 
 ################################################################################
-if [ $# -eq 0 ]; then
-  usage
-  exit 1
-fi
+[ -r $REPO_LIST ] || touch $REPO_LIST
 
 ################################################################################
 commad=$1
-shift
+[ $# -gt 0 ] && shift
 
 case $commad in
   add)
     do_add "$@"
     ;;
 
-  remove|rm)
-    echo "not implemented"
-    exit 1
+  edit)
+    eval "${EDITOR:-vi} $REPO_LIST"
     ;;
 
   list)
     do_list
     ;;
 
-  status|st|s)
-    do_status | column -t
-    ;;
-
   sync)
     do_sync
     ;;
 
-  --help|-h|help|*)
+  --help|-h|help)
     usage
     exit
+    ;;
+
+  status|st|s|*)
+    do_status | column -t
     ;;
 esac
