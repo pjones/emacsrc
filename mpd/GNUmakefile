@@ -3,9 +3,7 @@ include ../mk/init.mk
 include ../mk/files.mk
 
 ################################################################################
-ifeq ($(shell hostname),hawkins)
-  $(eval $(call PMADE_INSTALL_FILE,config/mpd.conf,~/.mpdconf))
-endif
+$(eval $(call PMADE_INSTALL_FILE,config/mpd.conf,~/.mpdconf))
 
 ################################################################################
 $(eval $(call PMADE_INSTALL_FILE,config/ncmpcpp.config,~/.ncmpcpp/config))
