@@ -22,7 +22,8 @@
 (setq rcirc-default-nick "pmade"
       rcirc-default-user-name "pmade"
       rcirc-default-full-name "Peter Jones"
-      rcirc-fill-column 70)
+      rcirc-multiline-major-mode 'markdown-mode
+      rcirc-fill-flag nil)
 
 (setq rcirc-server-alist
       '(("localhost" :nick "pjones")
@@ -95,9 +96,10 @@ Example use: /all away food or /all quit zzzz."
     (setq rcirc-ignore-buffer-activity-flag t)
     (rcirc-omit-mode))
   (define-key rcirc-mode-map (kbd "C-c C-o") 'rcirc-browse-url)
-  (set (make-local-variable 'scroll-conservatively) 8192)
+  (set (make-local-variable 'scroll-conservatively) 101)
   (set (make-local-variable 'next-line-add-newlines) nil)
-  (setq mode-line-format '("  %b " global-mode-string))
+  (setq mode-line-format '("  %b " global-mode-string)
+        wrap-prefix "      ")
   (flyspell-mode)
   (visual-line-mode)
   (rcirc-track-minor-mode 1))
