@@ -1,0 +1,52 @@
+# Some pre-defined tmux sessions.
+
+- name: home
+  windows:
+    - name: rc
+      root: ~/develop/pmade/rc
+    - name: privrc
+      root: ~/develop/pmade/privaterc
+    - name: business
+      root: ~/documents/business
+    - name: clients
+      root: ~/documents/clients
+    - name: down
+      root: ~/download
+
+- name: music
+  options:
+    - status off
+  windows:
+    - name: ncmpcpp
+      root: ~
+      shell: ncmpcpp
+
+- name: radio
+  options:
+    - status off
+  windows:
+    - name: radio
+      root: ~/develop/pmade/rc/mpd
+    - name: pandora
+      root: ~
+
+- name: classroom
+  options:
+    - status off
+  windows:
+    - name: bootcamp
+      root: ~/documents/books/bootcamp
+
+- name: clocks
+  options:
+    - status off
+  windows:
+    - name: clocks
+      shell: tty-clock -c -C 4 -f "Colorado %Y-%m-%d"
+      splits:
+        - options: -h
+          shell: env TZ=America/New_York tty-clock -c -f "New York %Y-%m-%d"
+        - options: -v -t 0
+          shell: env TZ=Europe/Rome tty-clock -c -f "Italy %Y-%m-%d"
+        - options: -v -t 1
+          shell: env TZ=UTC tty-clock -c -f "UTC %Y-%m-%d"

@@ -1,0 +1,150 @@
+#!/usr/bin/env ruby
+
+################################################################################
+require('yaml')
+require('ostruct')
+require('optparse')
+require('shellwords')
+
+################################################################################
+class SessionManager
+
+  ##############################################################################
+  CONF_FILE = File.expand_path('~/.tmux-sessions.yml')
+
+  ##############################################################################
+  DEFAULT_OPTIONS = {
+    :attach  => false,
+    :command => :list,
+    :session => nil,
+    :verbose => false,
+  }
+
+  ##############################################################################
+  attr_reader(:options)
+
+  ##############################################################################
+  def initialize
+    @options = OpenStruct.new(DEFAULT_OPTIONS)
+
+    OptionParser.new do |p|
+      p.on('-h', '--help', 'This message') {$stderr.puts(p); exit}
+      p.on('-c', '--create', 'Create a session') {|s| options.command = :create}
+      p.on('-a', '--attach', 'Attach to a session') {|a| options.attach = a}
+      p.on('-s', '--session=NAME', 'Use NAME for the session') {|s| options.session = s}
+      p.on('-v', '--verbose', 'Verbose output') {|v| options.verbose = v}
+    end.parse!(ARGV)
+
+    parse_sessions_file
+  end
+
+  ##############################################################################
+  def run
+    send(options.command)
+  end
+
+  ##############################################################################
+  private
+
+  ##############################################################################
+  def parse_sessions_file
+    sessions = YAML.load_file(CONF_FILE)
+    raise("sessions file should be an array!") unless sessions.is_a?(Array)
+
+    @sessions = sessions.inject({}) do |acc, session|
+      acc[session['name']] = check_session(session); acc
+    end
+  end
+
+  ##############################################################################
+  def check_session (session)
+    raise("each session should be a hash") unless session.is_a?(Hash)
+    raise("session doesn't have a name") unless session.has_key?('name')
+
+    session['windows'].each do |window|
+      raise("window isn't a hash") unless window.is_a?(Hash)
+      raise("window doesn't have a name") unless window.has_key?('name')
+
+      Array(window['splits']).each do |split|
+        raise("split isn't a hash") unless split.is_a?(Hash)
+      end
+    end
+
+    session['windows'] = session['windows'].inject([]) do |ws, window|
+      wo = OpenStruct.new(window)
+
+      wo.splits = Array(window['splits']).inject([]) do |ss, split|
+        ss << OpenStruct.new(split)
+      end
+
+      ws << wo
+    end
+
+    OpenStruct.new(session)
+  end
+
+  ##############################################################################
+  def list
+    $stdout.puts(@sessions.keys.sort.join("\n"))
+  end
+
+  ##############################################################################
+  def create
+    raise("must give the name of a session to create") unless options.session
+    raise("session isn't defined") unless @sessions.has_key?(options.session)
+    raise("session already exists") if session_exists?(options.session)
+
+    session = @sessions[options.session]
+    primary = session.windows.first
+
+    if session.windows.any? {|w| !w.splits.empty?} and ENV['TMUX']
+      raise("you can't create a session with splits while in tmux")
+    end
+
+    commands = [[primary.root||'~', 'new', '-ds', session.name, '-n', primary.name]]
+    commands.last << primary.shell if primary.shell
+
+    session.windows.each do |window|
+      if window != primary
+        commands << [window.root||'~', 'neww', '-dn', window.name]
+        commands.last << window.shell if window.shell
+      end
+
+      window.splits.each do |split|
+        commands << [nil, 'splitw', *Shellwords.split(split.options.to_s)]
+        commands.last << split.shell if split.shell
+      end
+    end
+
+    Array(session.options).each do |option|
+      commands << [nil, 'set', '-t', session.name, *Shellwords.split(option)]
+    end
+
+    if options.attach and ENV['TMUX']
+      commands << [nil, 'switchc', '-t', session.name]
+    elsif options.attach
+      commands << [nil, 'attach', '-t', session.name]
+    end
+
+    commands.each do |command|
+      dir = command.shift
+      Dir.chdir(File.expand_path(dir)) if dir
+      sh = 'tmux ' + Shellwords.join(command)
+      $stdout.puts(sh) if options.verbose
+      system("#{sh} > /dev/null 2>&1") || raise("fail: #{sh}")
+    end
+  end
+
+  ##############################################################################
+  def session_exists? (name)
+    system("tmux has-session -t #{Shellwords.escape(name)} > /dev/null 2>&1")
+  end
+end
+
+################################################################################
+begin
+  SessionManager.new.run
+rescue RuntimeError => e
+  $stderr.puts(File.basename($0) + ": ERROR: #{e}")
+  exit(1)
+end
