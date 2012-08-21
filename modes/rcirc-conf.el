@@ -99,10 +99,12 @@ Example use: /all away food or /all quit zzzz."
   (set (make-local-variable 'scroll-conservatively) 101)
   (set (make-local-variable 'next-line-add-newlines) nil)
   (setq mode-line-format '("  %b " global-mode-string)
-        wrap-prefix "      ")
+        wrap-prefix "      "
+        rcirc-prompt "――――❯ ")
   (flyspell-mode)
   (visual-line-mode)
-  (rcirc-track-minor-mode 1))
+  (rcirc-update-prompt)
+  (rcirc-track-minor-mode))
 
 (defun pjones:rcirc-activity-string ()
   (when (string= "[]" rcirc-activity-string)
