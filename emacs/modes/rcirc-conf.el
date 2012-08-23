@@ -23,7 +23,7 @@
       rcirc-default-user-name "pmade"
       rcirc-default-full-name "Peter Jones"
       rcirc-multiline-major-mode 'markdown-mode
-      rcirc-fill-flag nil)
+      rcirc-fill-flag t)
 
 (setq rcirc-server-alist
       '(("localhost" :nick "pjones")
@@ -99,8 +99,9 @@ Example use: /all away food or /all quit zzzz."
   (set (make-local-variable 'scroll-conservatively) 8192)
   (set (make-local-variable 'next-line-add-newlines) nil)
   (setq mode-line-format '("  %b " global-mode-string)
-        wrap-prefix "      "
-        rcirc-prompt "――――❯ ")
+        rcirc-fill-column (- (window-width) 2)
+        wrap-prefix "  "
+        rcirc-prompt "❯ ")
   (flyspell-mode)
   (visual-line-mode)
   (rcirc-update-prompt)
