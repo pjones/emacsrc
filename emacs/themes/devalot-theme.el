@@ -73,6 +73,7 @@
    `(success        ((t (:foreground ,green-high))))
    `(match          ((t (:background ,bg-high :foreground ,fg-normal))))
    `(fringe         ((t (:background ,bg-low :foreground ,fg-low))))
+   `(linum          ((t (:background ,bg-low :foreground ,fg-low))))
    `(lazy-highlight ((t (:background ,bg-high :foreground ,magenta-high))))
    `(isearch        ((t (:background ,magenta :foreground ,bg-inverse :bold t))))
    `(region         ((t (:background ,bg-high))))
