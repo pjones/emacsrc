@@ -18,13 +18,15 @@ xcompmgr -n &
 
 # Remap my keys, but do it in the background so it doesn't conflict
 # with xorg setting up the keyboard.
-(sleep 5; xmodmap -pke > ~/.xmodmap.orig; xmodmap ~/.xmodmaprc) &
+(sleep 8; xmodmap -pke > ~/.xmodmap.orig; xmodmap ~/.xmodmaprc) &
 
 # Screen-saver
 xscreensaver -no-splash &
 
-# Mouse avoidance
-keynav &
+# Mount my encrypted drives
+if [ -r ~/etc/keys.img ]; then
+  (sleep 10; mount-keys.sh) &
+fi
 
 # Add a private SSH key to the SSH agent
 if [ -r ~/keys/ssh/`hostname`.id_dsa ]; then
