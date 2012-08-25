@@ -34,6 +34,7 @@ import XMonad.Layout.Named (named)
 
 -- Utilities
 import qualified Data.Map as M
+import Data.Ratio
 import Graphics.X11.ExtraTypes.XF86
 import System.Exit
 import Control.Monad (unless)
@@ -82,13 +83,13 @@ myPP output = defaultPP
 
 myDefaultLayout = (tall ||| full)
   where
-    tall = named "T" $ ResizableTall 1 (3/100) (1/2) []
+    tall = named "T" $ ResizableTall 1 (1.5/100) (2/3) []
     full = named "F" $ noBorders Full
 
 myLayoutRules = avoidStruts $ myDefaultLayout
 
 myManageHook = composeAll
-  [ className =? "MPlayer"    --> (ask >>= doF . W.sink) 
+  [ className =? "MPlayer"    --> (ask >>= doF . W.sink)
   , appName   =? "random-vnc" --> doShift "P1"
   ]
 
