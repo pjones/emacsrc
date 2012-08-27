@@ -38,4 +38,4 @@
      (add-to-list 'message-mode-hook  'pmade-message-mode-hook)
      (add-to-list 'message-setup-hook 'pmade-message-setup-hook)))
 
-(add-hook 'gnus-article-prepare-hook 'pmade-gnus-article-hook)
+(add-hook 'gnus-article-mode-hook 'pmade-gnus-article-hook)
