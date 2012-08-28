@@ -54,7 +54,7 @@ main = do
     , focusedBorderColor = "#00bfff"
     , workspaces = myWorkspaces
     , keys = myKeys
-    , logHook = fadeInactiveLogHook 0.8
+    , logHook = fadeInactiveLogHook 0.85
                 >> (updatePointer (Relative 0.98 0.01))
                 >> (dynamicLogWithPP $ myPP xmproc)
     , layoutHook = myLayoutRules
