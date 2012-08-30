@@ -1,0 +1,5 @@
+# -*- conf -*-
+
+# Show all images from a directory, randomly, and scaled to fit the
+# window.  Progress to the next image every 300 seconds.
+slideshow -zxr -D 300 -B black --scale-down --geometry 500x500
