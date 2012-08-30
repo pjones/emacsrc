@@ -31,6 +31,7 @@ import XMonad.Layout.NoBorders
 import XMonad.Layout.PerWorkspace (onWorkspace)
 import XMonad.Layout.ResizableTile
 import XMonad.Layout.Named (named)
+import XMonad.Layout.BoringWindows
 
 -- Utilities
 import qualified Data.Map as M
@@ -81,7 +82,7 @@ myPP output = defaultPP
   where
     hideScratchPad ws = if ws == "NSP" then "" else ws
 
-myDefaultLayout = (tall ||| full)
+myDefaultLayout = boringWindows (tall ||| full)
   where
     tall = named "T" $ ResizableTall 1 (1.5/100) (2/3) []
     full = named "F" $ noBorders Full
@@ -114,12 +115,12 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
       , ((0,           xK_g), return ()) -- do nothing
 
       -- Focusing and swapping windows
-      , ((0,         xK_n),  windows W.focusDown)
-      , ((0,         xK_p),  windows W.focusUp)
-      , ((0,         xK_o),  windows W.focusDown)
+      , ((0,         xK_n),  focusDown) -- windows W.focusDown)
+      , ((0,         xK_p),  focusUp)   -- windows W.focusUp)
+      , ((0,         xK_o),  focusDown) -- windows W.focusDown)
       , ((shiftMask, xK_n),  windows W.swapDown)
       , ((shiftMask, xK_p),  windows W.swapUp)
-      , ((0,         xK_m),  windows W.focusMaster)
+      , ((0,         xK_m),  focusMaster) -- windows W.focusMaster)
       , ((shiftMask, xK_m),  promote)
       , ((shiftMask, xK_t),  withFocused $ windows . W.sink)
       , ((shiftMask, xK_k),  kill)
@@ -173,13 +174,14 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
     -- Remaining keys that use the XMonad modifier key
 
-    -- Window resizing
+    -- Window sizing and control
     , ((modm, xK_Left),  sendMessage Shrink)
     , ((modm, xK_Right), sendMessage Expand)
     , ((modm, xK_Up),    sendMessage MirrorShrink)
     , ((modm, xK_Down),  sendMessage MirrorExpand)
     , ((modm, xK_minus), sendMessage (IncMasterN (-1)))
     , ((modm, xK_equal), sendMessage (IncMasterN 1))
+    , ((modm, xK_b),     markBoring)
 
     -- Controlling Music and Volume
     , ((modm, xK_F1),     spawn "mpc-pause")
