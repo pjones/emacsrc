@@ -11,3 +11,6 @@ $(eval $(call PMADE_INSTALL_FILE,config/ncmpcpp.keys,~/.ncmpcpp/keys))
 
 ################################################################################
 $(foreach f,$(wildcard bin/*),$(eval $(call PMADE_INSTALL_BIN,$(f),~/$(f))))
+
+################################################################################
+$(foreach l,$(wildcard lib/*),$(eval $(call PMADE_INSTALL_FILE,$(l),~/lib/sh/$(notdir $(l)))))
