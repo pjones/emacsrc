@@ -9,28 +9,30 @@ require('open-uri')
 
 ################################################################################
 class XPathTool
-  
+
   ##############################################################################
   DEFAULT_OPTIONS = {
-    :match        => nil,   
-    :negate       => false, 
-    :print        => nil,   
-    :nprint       => nil,   
-    :noexit       => false, 
-    :mail_to      => nil,  
+    :output       => false,
+    :match        => nil,
+    :negate       => false,
+    :print        => nil,
+    :nprint       => nil,
+    :noexit       => false,
+    :mail_to      => nil,
     :mail_subject => 'XPath %x matches!'
   }
-  
+
   ##############################################################################
   attr_reader(:options)
-  
+
   ##############################################################################
   def initialize
     @options = OpenStruct.new(DEFAULT_OPTIONS)
-    
+
     OptionParser.new do |p|
       p.banner = 'Usage: xpath [options] url xpath'
       p.on('-h', '--help', 'This message') {$stdout.puts(p); exit}
+      p.on('-o', '--output', 'Output matching nodes') {|o| options.output = o}
       p.on('-m', '--match=RE', 'Text at xpath should match RE') {|m| options.match = m}
       p.on('-n', '--negate', 'Negate the exit status and actions') {|n| options.negate = n}
       p.on('-p', '--print=MSG', 'Print a message when successful') {|p| options.print = p}
@@ -39,28 +41,32 @@ class XPathTool
       p.on('--mail-to=ADDR', 'Send email to ADDR') {|m| options.mail_to = m}
       p.on('--mail-subject=SUBJECT', 'Set the email subject') {|s| options.mail_subject = s}
     end.permute!(ARGV)
-    
+
     raise("must give url and xpath") unless ARGV.size == 2
     @url, @xpath = ARGV
     @status = false
   end
-  
+
   ##############################################################################
   def run
     @doc = Nokogiri::HTML(open(@url))
     @elements = Array(@doc.xpath(@xpath))
 
+    if options.output
+      @elements.each {|e| $stdout.puts(e.to_s)}
+    end
+
     if @elements.empty?
       run_actions
       return
     end
-    
+
     if options.match and @elements.any? {|e| e.content.to_s.match(options.match)}
       @status = true
     else
       @status = true
     end
-    
+
     run_actions
   rescue RuntimeError => e
     @status = false
@@ -70,29 +76,29 @@ class XPathTool
     $stdout.puts(make_message(options.nprint)) if !@status and options.nprint
     exit((@status || options.noexit) ? 0 : 1)
   end
-  
+
   ##############################################################################
   private
-  
+
   ##############################################################################
   def run_actions
     @status = !@status if options.negate
     return unless @status
-    
+
     if options.print
       message = make_message(options.print)
       $stdout.puts(message)
     end
-    
+
     sendmail if options.mail_to
   end
-  
+
   ##############################################################################
   def make_message (input)
     input.sub('%u', @url).
           sub('%x', @xpath)
   end
-  
+
   ##############################################################################
   def sendmail
     IO.popen('/usr/sbin/sendmail -t', 'w+') do |sm|
