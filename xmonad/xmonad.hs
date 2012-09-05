@@ -21,7 +21,7 @@ import XMonad.Actions.PerWorkspaceKeys (bindOn)
 
 -- XMonad contrib (Hooks)
 import XMonad.Hooks.DynamicLog
-import XMonad.Hooks.FadeInactive
+import XMonad.Hooks.FadeWindows
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.UrgencyHook
 import XMonad.Hooks.EwmhDesktops
@@ -55,13 +55,14 @@ main = do
     , focusedBorderColor = "#00bfff"
     , workspaces = myWorkspaces
     , keys = myKeys
-    , logHook = fadeInactiveLogHook 0.85
+    , logHook = fadeWindowsLogHook myFadeHook
                 >> (updatePointer (Relative 0.98 0.01))
                 >> (dynamicLogWithPP $ myPP xmproc)
     , layoutHook = myLayoutRules
     , manageHook = myManageHook
                <+> manageDocks
                <+> scratchpadManageHookDefault
+    , handleEventHook = fadeWindowsEventHook
     }
 
 myWorkspaces :: [String]
@@ -92,6 +93,13 @@ myLayoutRules = avoidStruts $ myDefaultLayout
 myManageHook = composeAll
   [ className =? "MPlayer"    --> (ask >>= doF . W.sink)
   , appName   =? "random-vnc" --> doShift "P1"
+  ]
+
+myFadeHook = composeAll
+  [ transparency 0.02  --  Default
+  , isUnfocused        --> transparency 0.1
+  , isFloating         --> opaque
+  , className =? "feh" --> opaque
   ]
 
 -- http://xmonad.org/xmonad-docs/xmonad-contrib/XMonad-Prompt.html#t:XPConfig
