@@ -14,5 +14,5 @@ fi
 
 ################################################################################
 for file in `find $KB -type f -name $1.md`; do
-  awk '/^# Cheat Sheet/ {m=NR; next}; /^#/ {exit}; m && NR > (m+1)' $file
+  awk '/^# Cheat Sheet/ {m=NR; next}; /^# / {exit}; m && NR > (m+1)' $file
 done
