@@ -53,9 +53,14 @@
         (message-news-p
          (From "Peter Jones <mlists@pmade.com>"))
         ;; Mailing Lists
+        ("Derailed"
+         (To "DeRailed <derailed@googlegroups.com>")
+         (From "Peter Jones <pjones@devalot.com>")
+         (signature-file ,(concat mail-signature-dir "/devalot")))
         ("BoulderRuby"
          (To "Boulder Ruby Group <bdrg-members@rubyforge.org>")
-         (From "Peter Jones <mlists@pmade.com>"))
+         (From "Peter Jones <mlists@pmade.com>")
+         (signature-file ,(concat mail-signature-dir "/devalot")))
         (".*mlists"
          (From "Peter Jones <mlists@pmade.com>"))
         (".*rb-appscript"
