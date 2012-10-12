@@ -98,7 +98,8 @@ the local bitlbee instance."
     (unless (file-directory-p dir) (make-directory dir t))
     (find-file full)
     (when (= (buffer-size) 0)
-      (insert (format-time-string "%% %A, %B %d, %Y\n\n")))))
+      (insert (format-time-string "%% %A, %B %d, %Y\n\n"))
+      (insert-file-contents (concat base "template.md")))))
 
 (defun pjones:bookmark (&optional set)
   "Quicker access to Emacs bookmarks.  Prompts for a bookmark and
