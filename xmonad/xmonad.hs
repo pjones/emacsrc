@@ -92,6 +92,7 @@ myLayoutRules = avoidStruts $ myDefaultLayout
 
 myManageHook = composeAll
   [ className =? "MPlayer"    --> (ask >>= doF . W.sink)
+  , title     =? "HandBrake"  --> (ask >>= doF . W.sink)
   , appName   =? "random-vnc" --> doShift "P1"
   ]
 
@@ -100,6 +101,7 @@ myFadeHook = composeAll
   , isUnfocused        --> transparency 0.1
   , isFloating         --> opaque
   , className =? "feh" --> opaque
+  , className =? "vlc" --> opaque
   ]
 
 -- http://xmonad.org/xmonad-docs/xmonad-contrib/XMonad-Prompt.html#t:XPConfig
