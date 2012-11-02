@@ -28,7 +28,8 @@
 (setq rcirc-server-alist
       '(("localhost" :nick "pjones")
         ("irc.freenode.net" :channels ("#xmonad" "#derailed" "#mpd"
-                                       "#conkeror" "#debian" "#emacs"))))
+                                       "#conkeror" "#debian" "#emacs"
+                                       "#haskell" "#gnus"))))
 
 (setq rcirc-authinfo
       `(("freenode"  nickserv "pmade"  ,freenode-password)
