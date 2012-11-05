@@ -39,12 +39,12 @@
       rcirc-buffer-maximum-lines 500)
 
 (defvar pjones:rcirc-buffers
-  '("#mpd@irc.freenode.net"
+  '("#gnus@irc.freenode.net"
+    "#xmonad@irc.freenode.net"
     "#conkeror@irc.freenode.net"
     "#emacs@irc.freenode.net"
-    "#xmonad@irc.freenode.net"
     "&bitlbee@localhost"
-    "#debian@irc.freenode.net")
+    "#haskell@irc.freenode.net")
   "A list of rcirc buffer names in the order in which they should
 be placed into the current set of windows.")
 
