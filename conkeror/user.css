@@ -17,4 +17,5 @@ input[type="number"], textarea {
   #listbox {float: none ! important}
   #detailsbox {float: none ! important; margin-top: 20px ! important}
   .appfooter {display: none ! important}
+  html body #detailsbox input[type="text"], textarea {color: #eee ! important}
 }
