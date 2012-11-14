@@ -1,0 +1,20 @@
+/*
+ * Sites that don't specify color details for text inputs seem to
+ * break under my GTK theme, so I need to set some defaults here.
+ */
+input[type="text"], input[type="email"],
+input[type="number"], textarea {
+  background-color: #eee;
+  color: #444;
+}
+
+/* Make Remember the Milk a bit easier to use */
+/* https://developer.mozilla.org/en-US/docs/CSS/@document */
+@-moz-document domain(rememberthemilk.com) {
+  #appheader a[href="/"] {display: none ! important}
+  #topnav {float: none ! important; position: relative;}
+  #searchbox {float: none ! important; position: relative;}
+  #listbox {float: none ! important}
+  #detailsbox {float: none ! important; margin-top: 20px ! important}
+  .appfooter {display: none ! important}
+}
