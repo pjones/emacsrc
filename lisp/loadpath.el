@@ -12,7 +12,7 @@
 
 (defvar pjones:lisp-files
   '("code" "modes" "packages" "options" "autoload" "automode"
-    "functions" "interactive" "completion" "keys" "gnus")
+    "functions" "interactive" "completion" "keys" "gnus" "projector")
   "A list of my config files to load in the correct order.")
 
 (defvar pjones:theme-files (concat user-emacs-directory "themes")
