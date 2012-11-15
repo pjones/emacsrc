@@ -44,15 +44,6 @@
       custom-file "~/.emacs.d/pjones/lisp/custom.el") ; To keep Emacs happy
 
 ;; Frame setup
-(defvar pjones:big-font
-  "-unknown-DejaVu Sans Mono-normal-normal-normal-*-22-*-*-*-m-0-iso10646-1"
-  "A large font to use for projectors.")
-
-(defun pjones:font-big ()
-  "Switch the current frame to a big font."
-  (interactive)
-  (set-frame-font pjones:big-font))
-
 (defun pjones:frame-title-file-name ()
   (let* ((home (expand-file-name "~"))
          (end (length home))
