@@ -1,0 +1,30 @@
+################################################################################
+begin
+  prog = bufshow
+  button = KEY_FORWARD
+  config = e -s projector -e '(bufshow-next)'
+end
+
+begin
+  prog = bufshow
+  button = KEY_REWIND
+  config = e -s projector -e '(bufshow-prev)'
+end
+
+begin
+  prog = bufshow
+  button = KEY_SELECT
+  config = e -s projector -e '(pjones:projector-highline)'
+end
+
+begin
+  prog = bufshow
+  button = KEY_VOLUMEUP
+  config = e -s projector -e '(pjones:projector-prev-line)'
+end
+
+begin
+  prog = bufshow
+  button = KEY_VOLUMEDOWN
+  config = e -s projector -e '(pjones:projector-next-line)'
+end
