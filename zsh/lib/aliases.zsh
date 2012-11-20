@@ -49,3 +49,6 @@ alias pg="p|g"
 if [[ $OSNAME == "Darwin" ]]; then
     alias ldd='otool -L'
 fi
+
+# More complicated aliases that need to be functions.
+dl () {dict "$@" | less}
