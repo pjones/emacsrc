@@ -7,6 +7,8 @@ typeset -U manpath
 
 # some variables to export
 export OSNAME=`uname -s`
+export LESS="-SRFiJMW"
+export PAGER=less
 
 # add our function path
 functions_directory=~/.zsh/func
