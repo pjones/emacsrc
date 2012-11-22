@@ -27,3 +27,10 @@
   (with-current-buffer (window-buffer (selected-window))
     (call-interactively 'previous-line)
     (if highline-mode (highline-highlight-current-line))))
+
+(defun pjones:projector-recenter ()
+  "Places the current line at the top of the window from outside
+Emacs."
+  (with-current-buffer (window-buffer (selected-window))
+    (recenter 0)
+    (if highline-mode (highline-highlight-current-line))))
