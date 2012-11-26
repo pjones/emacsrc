@@ -15,13 +15,15 @@ score URIBL_BLACK            3.0
 score URIBL_RHS_URIBL_BLACK  3.0
 score URIBL_JP_SURBL         3.0
 score RCVD_IN_BL_SPAMCOP_NET 3.0
+score MISSING_MID            3.0
+score MISSING_DATE           3.0
 
 # Use the local bayes database to help score spam
 # http://wiki.apache.org/spamassassin/BasicConfiguration
 score BAYES_00 -4
 score BAYES_05 -2
-score BAYES_95  1.5
-score BAYES_99  2.5
+score BAYES_95  1.0
+score BAYES_99  2.9
 
 # Personal rules
 header PMADE_SOMEONE_SEARCHED_FOR_YOU Subject =~ /(an old friend|an ex recently) searched for you/i
@@ -30,11 +32,11 @@ score  PMADE_SOMEONE_SEARCHED_FOR_YOU 5.0
 # Blacklists
 blacklist_from *@pmade.org
 blacklist_to *@pmade.org
-blacklist_from *@blueredgolds.info
+blacklist_from *blueredgolds.info
 blacklist_from *musiciansfriend.com
-blacklist_from *@dinospeaker.com
+blacklist_from *dinospeaker.com
 
 # Manual whitelists
-whitelist_from *@bvsd.org
-whitelist_from *@premiermembers.org
+whitelist_from *bvsd.org
+whitelist_from *premiermembers.org
 whitelist_to coders01@devalot.com
