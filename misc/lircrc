@@ -28,3 +28,9 @@ begin
   button = KEY_VOLUMEDOWN
   config = e -s projector -e '(pjones:projector-next-line)'
 end
+
+begin
+  prog = bufshow
+  button = KEY_MENU
+  config = e -s projector -e '(pjones:projector-recenter)'
+end
