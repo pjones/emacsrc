@@ -18,6 +18,13 @@ score RCVD_IN_BL_SPAMCOP_NET 3.0
 score MISSING_MID            3.0
 score MISSING_DATE           3.0
 
+# http://www.dnswl.org/ might be comprised since a ton of spam is
+# getting through because the defaults for the rules below reduce the
+# score by quite a lot.
+score RCVD_IN_DNSWL_LOW 0
+score RCVD_IN_DNSWL_MED 0
+score RCVD_IN_DNSWL_HI  0
+
 # Use the local bayes database to help score spam
 # http://wiki.apache.org/spamassassin/BasicConfiguration
 score BAYES_00 -4
