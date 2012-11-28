@@ -7,7 +7,7 @@ typeset -U manpath
 
 # some variables to export
 export OSNAME=`uname -s`
-export LESS="-SRFiJMW"
+export LESS="-SRiJMW"
 export PAGER=less
 
 # add our function path
