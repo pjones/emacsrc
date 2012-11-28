@@ -34,3 +34,8 @@ Emacs."
   (with-current-buffer (window-buffer (selected-window))
     (recenter 0)
     (if highline-mode (highline-highlight-current-line))))
+
+(defun pjones:projector-other-window ()
+  "Move to the other window from outside Emacs."
+  (select-window (next-window nil 0 'visible))
+  (if highline-mode (highline-highlight-current-line)))
