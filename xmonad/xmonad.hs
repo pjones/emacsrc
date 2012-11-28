@@ -32,6 +32,8 @@ import XMonad.Layout.PerWorkspace (onWorkspace)
 import XMonad.Layout.ResizableTile
 import XMonad.Layout.Named (named)
 import XMonad.Layout.BoringWindows
+import qualified XMonad.Layout.PerWorkspace as LPW
+import XMonad.Layout.SimplestFloat (simplestFloat)
 
 -- Utilities
 import qualified Data.Map as M
@@ -53,6 +55,7 @@ main = do
     , borderWidth = 3
     , normalBorderColor = "#1a1a1a"
     , focusedBorderColor = "#00bfff"
+    , focusFollowsMouse = False
     , workspaces = myWorkspaces
     , keys = myKeys
     , logHook = fadeWindowsLogHook myFadeHook
@@ -83,10 +86,13 @@ myPP output = defaultPP
   where
     hideScratchPad ws = if ws == "NSP" then "" else ws
 
-myDefaultLayout = boringWindows (tall ||| full)
+myDefaultLayout =
+  onWorkspace "8" float $
+  boringWindows (tall ||| full)
   where
-    tall = named "T" $ ResizableTall 1 (1.5/100) (2/3) []
-    full = named "F" $ noBorders Full
+    tall  = named "T"  $ ResizableTall 1 (1.5/100) (2/3) []
+    full  = named "F"  $ noBorders Full
+    float = named "FL" $ simplestFloat
 
 myLayoutRules = avoidStruts $ myDefaultLayout
 

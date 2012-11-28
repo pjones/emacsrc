@@ -19,7 +19,7 @@
   windows:
     - name: ncmpcpp
       root: ~
-      shell: ncmpcpp
+      shell: zsh -ic ncmpcpp
 
 - name: radio
   options:
