@@ -34,3 +34,9 @@ begin
   button = KEY_MENU
   config = e -s projector -e '(pjones:projector-recenter)'
 end
+
+begin
+  prog = bufshow
+  button = KEY_PLAYPAUSE
+  config = e -s projector -e '(pjones:projector-other-window)'
+end
