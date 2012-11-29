@@ -2,8 +2,9 @@
  * Sites that don't specify color details for text inputs seem to
  * break under my GTK theme, so I need to set some defaults here.
  */
-input[type="text"], input[type="email"],
-input[type="number"], textarea {
+input[type="text"],   input[type="email"],
+input[type="number"], input="password",
+textarea {
   background-color: #eee;
   color: #444;
 }

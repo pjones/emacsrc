@@ -38,6 +38,6 @@ url_completion_use_bookmarks = true;
 url_completion_use_webjumps = true;
 
 // Other options
-minibuffer_completion_rows = 30; // size of the completion buffer
+minibuffer_completion_rows = 15; // size of the completion buffer
 can_kill_last_buffer = false;    // Don't close windows
 isearch_keep_selection = true;   // Helpful for M-w
