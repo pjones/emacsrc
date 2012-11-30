@@ -2,11 +2,14 @@
  * Sites that don't specify color details for text inputs seem to
  * break under my GTK theme, so I need to set some defaults here.
  */
-input[type="text"],   input[type="email"],
-input[type="number"], input="password",
-textarea {
-  background-color: #eee;
-  color: #444;
+html input, html textarea {
+  background-color: #fff ! important;
+  color: #444 ! important;
+}
+
+html input[type="submit"], html input[type="button"] {
+  background-color: inherit ! important;
+  color: #eee ! important;
 }
 
 /* Make Remember the Milk a bit easier to use */
@@ -18,5 +21,4 @@ textarea {
   #listbox {float: none ! important}
   #detailsbox {float: none ! important; margin-top: 20px ! important}
   .appfooter {display: none ! important}
-  html body #detailsbox input[type="text"], textarea {color: #eee ! important}
 }
