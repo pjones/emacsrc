@@ -82,22 +82,25 @@ focusFollowsTiledOnly e@(CrossingEvent {ev_window = w, ev_event_type = t})
 focusFollowsTiledOnly _ =  return $ All True
 
 myWorkspaces :: [String]
-myWorkspaces = (map show ([1..9] ++ [0])) ++ ["P1", "P2"]
+myWorkspaces = map show ([1..9] ++ [0])
 
 myPP output = defaultPP
-  { ppCurrent = xmobarColor "#7b79b1" "#0f141f" . wrap "[" "]"
-  , ppVisible = wrap "(" ")"
-  , ppHidden = hideScratchPad
-  , ppHiddenNoWindows = const ""
-  , ppSep = " » "
-  , ppTitle = xmobarColor "#7b79b1" "" . shorten 40
-  , ppUrgent = xmobarColor "#f92672" "#0f141f"
-  , ppWsSep = " "
-  , ppExtras = []
-  , ppOutput = hPutStrLn output
+  { ppCurrent         = xmobarColor "#88b324" "" . wrap "[" "]"
+  , ppVisible         = wrap "(" ")"
+  , ppHidden          = hideScratchPad
+  , ppHiddenNoWindows = xmobarColor "#3c3c3c" "" . hideScratchPad
+  , ppSep             = xmobarColor "#5c5c5c" "" " | "
+  , ppTitle           = xmobarColor "#9396c4" "" . shorten 40
+  , ppUrgent          = xmobarColor "#1c1c1c" "#d33682" . wrap "{" "}"
+  , ppWsSep           = " "
+  , ppExtras          = []
+  , ppOutput          = hPutStrLn output
   }
   where
-    hideScratchPad ws = if ws == "NSP" then "" else ws
+    hideScratchPad "NSP" = ""
+    hideScratchPad "P1"  = ""  -- Temp fix until I restart xmonad
+    hideScratchPad "P2"  = ""  -- ditto.
+    hideScratchPad name  = name
 
 myDefaultLayout =
   onWorkspace "8" float $
@@ -138,7 +141,7 @@ myXPConfig = defaultXPConfig
 -- Use C-z as a prefix key, and have all other keys come under it.
 myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
   [ ((controlMask, xK_z), submap . M.fromList $
-      [ ((controlMask, xK_z), bindOn [("P1", return ()), ("P2", return ()), ("", jumpToPrevWS)])
+      [ ((controlMask, xK_z), jumpToPrevWS)
       , ((0,           xK_z), sendKey controlMask xK_z)
       , ((controlMask, xK_g), return ()) -- do nothing
       , ((0,           xK_g), return ()) -- do nothing
@@ -155,9 +158,6 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
       , ((shiftMask, xK_k),  kill)
       , ((0,         xK_w),  windowPromptGoto myXPConfig)
 
-      -- Escape hatch if I get on workspace P1 or P2
-      , ((modm,      xK_1),  windows $ W.greedyView "1")
-
       -- Control Xmonad (restart, quit)
       , ((shiftMask, xK_q),  io (exitWith ExitSuccess))
       , ((0,         xK_q),  spawn "xmonad --recompile && xmonad --restart")
@@ -171,30 +171,22 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
       -- Spawning other applications
       , ((0,           xK_t),     spawn $ XMonad.terminal conf)
       , ((controlMask, xK_t),     spawn "urxvtc -name BigTerm")
-      , ((0,           xK_l),     bindOn [("P1", return ()), ("P2", return ()), ("", jumpToPrevWS)])
+      , ((0,           xK_l),     jumpToPrevWS)
       ]
 
       ++
       -- Switch workspaces and move windows to other workspaces, but
       -- disable this feature on worksapces P1 and P2.  Also, don't
       -- allow switching to workspaces P1 or P2 directly.
-      [((m, k), bindOn [("P1", return ()), ("P2", return ()), ("", windows $ f i)])
+      [((m, k), windows $ f i)
             | (i, k) <- zip (XMonad.workspaces conf) ([xK_1 .. xK_9] ++ [xK_0])
             , (f, m) <- [ (W.greedyView, 0)
                         , (W.shift, shiftMask)]]
       ++
       -- Switch which workspace is on the second physical screen
       [((m, k), windows $ f i)
-            | (i, k) <- zip (XMonad.workspaces conf) ([xK_1 .. xK_9] ++ [xK_0, xK_minus, xK_equal])
+            | (i, k) <- zip (XMonad.workspaces conf) ([xK_1 .. xK_9] ++ [xK_0])
             , (f, m) <- [(viewOnScreen 1, controlMask)]]
-      ++
-      -- Send windows to the projector workspaces
-      [ ((modm, xK_minus), windows $ W.shift "P1")
-      , ((modm, xK_equal), windows $ W.shift "P2")
-      ]
-      -- [((m, k), windows $ f i)
-      --       | (i, k) <- zip ["P1", "P2"] [xK_underscore, xK_plus]
-      --       , (f, m) <- [(W.shift, 0)]]
       ++
       -- Switch screens and move workspaces to other screens
       [((m, key), screenWorkspace sc >>= flip whenJust (windows . f))
