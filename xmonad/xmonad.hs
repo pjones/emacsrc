@@ -40,7 +40,8 @@ import qualified Data.Map as M
 import Data.Ratio
 import Graphics.X11.ExtraTypes.XF86
 import System.Exit
-import Control.Monad (unless)
+import Control.Monad (when, unless)
+import Data.Monoid
 import XMonad.Util.Types
 import XMonad.Util.Run
 import XMonad.Util.Paste (sendKey)
@@ -65,8 +66,20 @@ main = do
     , manageHook = myManageHook
                <+> manageDocks
                <+> scratchpadManageHookDefault
-    , handleEventHook = fadeWindowsEventHook
+    , handleEventHook = focusFollowsTiledOnly <+> fadeWindowsEventHook
     }
+
+
+-- | Enables 'focusFollowsMouse' for tiled windows only.  For this to
+--   work you need to turn off 'focusFollowsMouse' in your
+--   configuration and then add this function to your
+--   'handleEventHook'.
+focusFollowsTiledOnly :: Event -> X All
+focusFollowsTiledOnly e@(CrossingEvent {ev_window = w, ev_event_type = t})
+    | t == enterNotify && ev_mode e == notifyNormal
+    = do whenX (gets (not . M.member w . W.floating . windowset)) (focus w)
+         return $ All True
+focusFollowsTiledOnly _ =  return $ All True
 
 myWorkspaces :: [String]
 myWorkspaces = (map show ([1..9] ++ [0])) ++ ["P1", "P2"]
