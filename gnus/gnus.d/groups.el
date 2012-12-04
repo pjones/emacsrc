@@ -41,6 +41,10 @@
         ((header "to" "pjones@pmade\\.com")
          (signature-file ,(concat mail-signature-dir "/pmade"))
          (From "Peter Jones <pjones@pmade.com>"))
+        ;; Messages going to devalot.com
+        ((header "to" "pjones@devalot\\.com")
+         (signature-file ,(concat mail-signature-dir "/devalot"))
+         (From "Peter Jones <pjones@devalot.com>"))
         ;; Messages going to the contextualdevlopment.com domain
         ((header "to" "pjones@contextualdevelopment\\.com")
          (signature-file ,(concat mail-signature-dir "/contextual"))
