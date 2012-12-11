@@ -34,6 +34,8 @@ import XMonad.Layout.Named (named)
 import XMonad.Layout.BoringWindows
 import qualified XMonad.Layout.PerWorkspace as LPW
 import XMonad.Layout.SimplestFloat (simplestFloat)
+import XMonad.Layout.ThreeColumns (ThreeCol(..))
+import XMonad.Layout.ToggleLayouts
 
 -- Utilities
 import qualified Data.Map as M
@@ -64,22 +66,25 @@ main = do
                 >> (dynamicLogWithPP $ myPP xmproc)
     , layoutHook = myLayoutRules
     , manageHook = myManageHook
-               <+> manageDocks
-               <+> scratchpadManageHookDefault
-    , handleEventHook = focusFollowsTiledOnly <+> fadeWindowsEventHook
+                   <+> manageDocks
+                   <+> scratchpadManageHookDefault
+    , handleEventHook = focusFollowsTiledOnly
+                        <+> fadeWindowsEventHook
     }
-
 
 -- | Enables 'focusFollowsMouse' for tiled windows only.  For this to
 --   work you need to turn off 'focusFollowsMouse' in your
 --   configuration and then add this function to your
---   'handleEventHook'.
+--   'handleEventHook'. TODO: Improvement: if the window losing the
+--   focus is a floating window then don't allow focus change (must
+--   use a mouse click to change focus in that case).
 focusFollowsTiledOnly :: Event -> X All
 focusFollowsTiledOnly e@(CrossingEvent {ev_window = w, ev_event_type = t})
-    | t == enterNotify && ev_mode e == notifyNormal
-    = do whenX (gets (not . M.member w . W.floating . windowset)) (focus w)
-         return $ All True
-focusFollowsTiledOnly _ =  return $ All True
+  | isNormalEnter = whenX notFloating (focus w) >> return continueHooks
+  where isNormalEnter = t == enterNotify && ev_mode e == notifyNormal
+        notFloating   = gets $ not . M.member w . W.floating . windowset
+        continueHooks = All True
+focusFollowsTiledOnly _ = return (All True)
 
 myWorkspaces :: [String]
 myWorkspaces = map show ([1..9] ++ [0])
@@ -91,7 +96,7 @@ myPP output = defaultPP
   , ppHiddenNoWindows = xmobarColor "#3c3c3c" "" . hideScratchPad
   , ppSep             = xmobarColor "#5c5c5c" "" " | "
   , ppTitle           = xmobarColor "#9396c4" "" . shorten 40
-  , ppUrgent          = xmobarColor "#1c1c1c" "#d33682" . wrap "{" "}"
+  , ppUrgent          = xmobarColor "#1c1c1c" "#d33682" . wrap "<" ">"
   , ppWsSep           = " "
   , ppExtras          = []
   , ppOutput          = hPutStrLn output
@@ -104,10 +109,11 @@ myPP output = defaultPP
 
 myDefaultLayout =
   onWorkspace "8" float $
-  boringWindows (tall ||| full)
+  boringWindows $ toggleLayouts full (tall ||| three)
   where
     tall  = named "T"  $ ResizableTall 1 (1.5/100) (2/3) []
     full  = named "F"  $ noBorders Full
+    three = named "3"  $ ThreeColMid 1 (3/100) (1/2)
     float = named "FL" $ simplestFloat
 
 myLayoutRules = avoidStruts $ myDefaultLayout
@@ -115,7 +121,6 @@ myLayoutRules = avoidStruts $ myDefaultLayout
 myManageHook = composeAll
   [ className =? "MPlayer"    --> (ask >>= doF . W.sink)
   , title     =? "HandBrake"  --> (ask >>= doF . W.sink)
-  , appName   =? "random-vnc" --> doShift "P1"
   ]
 
 myFadeHook = composeAll
@@ -165,8 +170,9 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
       , ((0,         xK_x),  xmonadPrompt myXPConfig)
 
       -- Switching layouts
-      , ((0,         xK_space), sendMessage NextLayout)
-      , ((shiftMask, xK_space), setLayout $ XMonad.layoutHook conf)
+      , ((0,           xK_space), sendMessage ToggleLayout)
+      , ((controlMask, xK_space), sendMessage NextLayout)
+      , ((shiftMask,   xK_space), setLayout $ XMonad.layoutHook conf)
 
       -- Spawning other applications
       , ((0,           xK_t),     spawn $ XMonad.terminal conf)
@@ -175,9 +181,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
       ]
 
       ++
-      -- Switch workspaces and move windows to other workspaces, but
-      -- disable this feature on worksapces P1 and P2.  Also, don't
-      -- allow switching to workspaces P1 or P2 directly.
+      -- Switch workspaces and move windows to other workspaces,
       [((m, k), windows $ f i)
             | (i, k) <- zip (XMonad.workspaces conf) ([xK_1 .. xK_9] ++ [xK_0])
             , (f, m) <- [ (W.greedyView, 0)
