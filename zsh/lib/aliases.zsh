@@ -52,3 +52,6 @@ fi
 
 # More complicated aliases that need to be functions.
 dl () {dict "$@" | less}
+
+# Just to shorten typing
+alias tclock="tty-clock -c -C 4 -f '%b. %d, %Y'"
