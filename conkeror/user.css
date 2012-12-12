@@ -2,7 +2,8 @@
  * Sites that don't specify color details for text inputs seem to
  * break under my GTK theme, so I need to set some defaults here.
  */
-html input, html textarea {
+/*
+html body input, html body textarea {
   background-color: #fff ! important;
   color: #444 ! important;
 }
@@ -11,6 +12,7 @@ html input[type="submit"], html input[type="button"] {
   background-color: inherit ! important;
   color: #eee ! important;
 }
+*/
 
 /* Make Remember the Milk a bit easier to use */
 /* https://developer.mozilla.org/en-US/docs/CSS/@document */
