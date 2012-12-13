@@ -2,8 +2,8 @@
 
 # Configure my multi-head monitors.
 if [ `hostname` = 'hawkins' ]; then
-  xrandr --output DVI-0 --primary --mode 1920x1200 \
-         --output DVI-1 --right-of DVI-0
+  xrandr --output DVI-0 --primary        --mode 1920x1080 \
+         --output DVI-1 --right-of DVI-0 --mode 1920x1080
 fi
 
 # Set the default cursor.
