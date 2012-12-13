@@ -16,7 +16,7 @@ import XMonad.Prompt.Shell (shellPrompt)
 import XMonad.Actions.Promote
 import XMonad.Actions.Submap
 import XMonad.Actions.UpdatePointer
-import XMonad.Actions.OnScreen (viewOnScreen, greedyViewOnScreen)
+import XMonad.Actions.OnScreen (onlyOnScreen)
 import XMonad.Actions.PerWorkspaceKeys (bindOn)
 
 -- XMonad contrib (Hooks)
@@ -190,7 +190,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
       -- Switch which workspace is on the second physical screen
       [((m, k), windows $ f i)
             | (i, k) <- zip (XMonad.workspaces conf) ([xK_1 .. xK_9] ++ [xK_0])
-            , (f, m) <- [(viewOnScreen 1, controlMask)]]
+            , (f, m) <- [(onlyOnScreen 1, controlMask)]]
       ++
       -- Switch screens and move workspaces to other screens
       [((m, key), screenWorkspace sc >>= flip whenJust (windows . f))
@@ -235,6 +235,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm, xK_Print),     spawn "screenshot.sh window")
   ]
 
+-- | Toggle between the current and previous workspace.
 jumpToPrevWS :: X ()
 jumpToPrevWS = do
     ws <- gets windowset
