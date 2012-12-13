@@ -111,10 +111,10 @@ myDefaultLayout =
   onWorkspace "8" float $
   boringWindows $ toggleLayouts full (tall ||| three)
   where
-    tall  = named "T"  $ ResizableTall 1 (1.5/100) (2/3) []
-    full  = named "F"  $ noBorders Full
-    three = named "3"  $ ThreeColMid 1 (3/100) (1/2)
-    float = named "FL" $ simplestFloat
+    tall  = named "Tall"  $ ResizableTall 1 (1.5/100) (2/3) []
+    full  = named "Full"  $ noBorders Full
+    three = named "3Col"  $ ThreeColMid 1 (3/100) (1/2)
+    float = named "Float" $ simplestFloat
 
 myLayoutRules = avoidStruts $ myDefaultLayout
 
