@@ -55,6 +55,30 @@
 ;; Need to tell org-mode to update org-emphasis-alist
 (org-set-emph-re 'org-emphasis-alist org-emphasis-alist)
 
+;; Stuff for org-agenda.
+(setq org-agenda-files '("~/documents/kb/lists/projects.org")
+      org-stuck-projects '("+LEVEL=2/-DONE"
+                           ("TODO" "NEXT" "PENDING" "DEPENDS")
+                           nil "")
+      org-agenda-custom-commands
+      '(("p" "Projects"
+         ((todo "TODO|NEXT")
+          (todo "WAITING")
+          (stuck)))))
+
+(defadvice org-agenda (around pjones:agenda-remember-windows activate)
+  (window-configuration-to-register :org-agenda-windows)
+  ad-do-it
+  (jump-to-register :org-agenda-windows)
+  (set-window-buffer (selected-window) "*Org Agenda*"))
+
+(defun pjones:org-agenda-quit ()
+  "Restores the previous window configuration and kills the
+agenda buffer."
+  (interactive)
+  (org-agenda-quit)
+  (jump-to-register :org-agenda-windows))
+
 (defun pjones:org-mode-hook ()
   ;; Extra Bindings
   (org-defkey org-mode-map "\C-\M-f"   'org-metaright)
@@ -82,8 +106,11 @@
         org-export-html-style-default ""
         org-export-html-style-extra ""
         org-export-html-style nil))
-
 (add-hook 'org-mode-hook 'pjones:org-mode-hook)
+
+(defun pjones:org-agenda-mode-hook ()
+  (define-key org-agenda-mode-map (kbd "q") 'pjones:org-agenda-quit))
+(add-hook 'org-agenda-mode-hook 'pjones:org-agenda-mode-hook)
 
 (defun pjones:org-hide-others ()
   "Close all headings except the heading at point."

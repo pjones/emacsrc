@@ -138,3 +138,9 @@ file.  With a prefix argument kill the entire path for the file."
   (let* ((path (buffer-file-name))
          (name (file-name-nondirectory path)))
     (kill-new (if full-path path name))))
+
+(defun pjones:agenda ()
+  "Start org-agenda with my custom agenda view"
+  (interactive)
+  (require 'org)
+  (org-agenda nil "p"))

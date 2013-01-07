@@ -36,6 +36,7 @@
 (global-set-key (kbd "C-c j")   'pjones:journal)
 (global-set-key (kbd "C-c m")   'magit-status)
 (global-set-key (kbd "C-c n")   'pjones:insert-italian-name)
+(global-set-key (kbd "C-c p")   'pjones:agenda)
 (global-set-key (kbd "C-c r")   'revert-buffer)
 (global-set-key (kbd "C-c t")   'pjones:transpose-windows)
 (global-set-key (kbd "C-c u")   'goto-last-change)
