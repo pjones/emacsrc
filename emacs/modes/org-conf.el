@@ -61,10 +61,10 @@
                            ("TODO" "NEXT" "PENDING" "DEPENDS")
                            nil "")
       org-agenda-custom-commands
-      '(("p" "Projects"
-         ((todo "TODO|NEXT")
-          (todo "WAITING")
-          (stuck)))))
+      '(("p" "Projects" ((todo "TODO|NEXT")
+                         (todo "DAILY")
+                         (todo "WAITING")
+                         (stuck)))))
 
 (defadvice org-agenda (around pjones:agenda-remember-windows activate)
   (window-configuration-to-register :org-agenda-windows)
@@ -107,6 +107,7 @@ agenda buffer."
         org-export-html-style-extra ""
         org-export-html-style nil))
 (add-hook 'org-mode-hook 'pjones:org-mode-hook)
+(add-hook 'org-mode-hook 'whitespace-mode)
 
 (defun pjones:org-agenda-mode-hook ()
   (define-key org-agenda-mode-map (kbd "q") 'pjones:org-agenda-quit))
