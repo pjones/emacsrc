@@ -72,13 +72,26 @@ the local bitlbee instance."
          (select-window (funcall selector)))
        (setq arg (if (plusp arg) (1- arg) (1+ arg))))))
 
-(defun pjones:toggle-dictionary ()
-  (interactive)
-  (let ((dict ispell-current-dictionary))
-    (ispell-change-dictionary
-     (if (string= dict "italian") "english" "italian"))
-    (activate-input-method
-     (if (string= dict "italian") nil "italian-postfix"))))
+(defvar pjones:last-dictionary nil
+  "The last non-English dictionary used by `pjones:toggle-dictionary'.")
+
+(defun pjones:toggle-dictionary (&optional reset)
+  "Switch between English and another language easily.  Switches
+the current input method and dictionary.  With a prefix argument
+prompts for the foreign language to use."
+  (interactive "P")
+  (let* ((en "english")
+         ;;         Human        Dict       Input Method
+         (langs '(("Italian" . ("italian"  "italian-postfix"))
+                  ("French"  . ("francais" "french-postfix"))))
+         (names (mapcar 'car langs))
+         (last (if (or reset (not pjones:last-dictionary))
+                   (ido-completing-read "Lang: " names) pjones:last-dictionary))
+         (cur-dict (or (and reset en) ispell-current-dictionary en))
+         (new-dict (if (string= cur-dict en) last en)))
+    (setq pjones:last-dictionary last)
+    (ispell-change-dictionary (cadr (assoc new-dict langs)))
+    (activate-input-method (car (cddr (assoc new-dict langs))))))
 
 (defun pjones:insert-italian-name ()
   "Helper function for when I'm writing Italian dialog."
