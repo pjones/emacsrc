@@ -66,6 +66,7 @@
          (From "Peter Jones <mlists@pmade.com>")
          (signature-file ,(concat mail-signature-dir "/devalot")))
         (".*mlists"
+         (signature-file ,(concat mail-signature-dir "/devalot"))
          (From "Peter Jones <mlists@pmade.com>"))
         (".*rb-appscript"
          (To "rb-appscript-discuss@rubyforge.org")
@@ -97,7 +98,8 @@
         "bdrg-members@rubyforge.org"
         "emacs-app-dev-@lists.sourceforge.net"
         "derailed@googlegroups.com"
-        "help-gnu-emacs@gnu.org"))
+        "help-gnu-emacs@gnu.org"
+        "iphone@haskell.org"))
 
 ;; Group List
 (setq
