@@ -1,6 +1,7 @@
 ;;; interactive.el -- Interactive functions.
 (eval-when-compile
   (require 'cl)                         ; for plusp (need to replace it)
+  (require 'etags)
   (require 'ispell))
 
 ;; Hush some compiler warnings.
