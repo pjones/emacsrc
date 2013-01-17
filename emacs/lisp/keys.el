@@ -27,7 +27,9 @@
 
 ;; User Key Bindings (using the C-c prefix)
 (global-set-key (kbd "C-c ;")   'flyspell-auto-correct-previous-word)
+(global-set-key (kbd "C-c .")   'pjones:push-tag-mark)
 (global-set-key (kbd "C-c a")   'align)
+(global-set-key (kbd "C-c A")   'align-regexp)
 (global-set-key (kbd "C-c b")   'pjones:bookmark)
 (global-set-key (kbd "C-c d")   'pjones:toggle-dictionary)
 (global-set-key (kbd "C-c f")   'pjones:kill-file-name)
@@ -45,20 +47,10 @@
 (global-set-key (kbd "C-c w u") 'winner-undo)
 (global-set-key (kbd "C-c w r") 'winner-redo)
 
-
-; C-z is used by my window manager.
+;; C-z is used by my window manager.
 (global-set-key (kbd "C-z") nil)
 
 ;; Super key bindings
-(global-set-key (kbd "s-A") 'align-regexp)
-(global-set-key (kbd "s-a") 'align)
-(global-set-key (kbd "s-b") 'windmove-left)
-(global-set-key (kbd "s-f") 'windmove-right)
 (global-set-key (kbd "s-g") 'gnus)
-(global-set-key (kbd "s-m") 'bm-toggle)
-(global-set-key (kbd "s-n") 'windmove-down)
-(global-set-key (kbd "s-p") 'windmove-up)
 (global-set-key (kbd "s-r") 'pjones:irc)
 (global-set-key (kbd "s-u") 'browse-url)
-(global-set-key (kbd "s-~") 'bm-previous)
-(global-set-key (kbd "s-`") 'bm-next)
