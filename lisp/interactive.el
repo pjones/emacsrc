@@ -144,6 +144,12 @@ configuration."
   (if set (window-configuration-to-register ?.)
     (jump-to-register ?.)))
 
+(defun pjones:push-tag-mark ()
+  "Pushes the current location of point onto the tags mark ring
+so you can pop back later with `M-.'."
+  (interactive)
+  (ring-insert find-tag-marker-ring (point-marker)))
+
 (defun pjones:kill-file-name (&optional full-path)
   "Create a new kill containing the base name of the buffer's
 file.  With a prefix argument kill the entire path for the file."
