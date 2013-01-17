@@ -1,6 +1,7 @@
 ;;; org-conf.el -- Settings for org-mode.
 (eval-when-compile
   (require 'saveplace)
+  (require 'whitespace)
   (require 'org-install)
   (require 'org)
   (require 'org-clock)
@@ -8,6 +9,7 @@
 
 ;; Silence a compiler warning
 (declare-function org-bookmark-jump-unhide "org")
+(declare-function whitespace-mode "whitespace")
 
 ;; General Org Settings
 (setq org-log-done t
@@ -50,7 +52,14 @@
         ("*" italic "<i>" "</i>")
         ("=" underline "<span style=\"text-decoration:underline;\">" "</span>")
         ("`" org-code "<code>" "</code>" verbatim)
-        ("~" org-verbatim "<code>" "</code>" verbatim)))
+        ("~" org-verbatim "<code>" "</code>" verbatim))
+
+      ;; TODO keyword faces
+      org-todo-keyword-faces
+      '(("NEXT"    . (:inherit 'mode-line :background "#268bd2"))
+        ("DAILY"   . (:inherit 'mode-line :background "#859900"))
+        ("WAITING" . (:inherit 'mode-line :background "#d33682"))
+        ("DEPENDS" . (:inherit 'mode-line :background "#2aa198"))))
 
 ;; Need to tell org-mode to update org-emphasis-alist
 (org-set-emph-re 'org-emphasis-alist org-emphasis-alist)
@@ -58,7 +67,7 @@
 ;; Stuff for org-agenda.
 (setq org-agenda-files '("~/documents/kb/lists/projects.org")
       org-stuck-projects '("+LEVEL=2/-DONE"
-                           ("TODO" "NEXT" "PENDING" "DEPENDS")
+                           ("TODO" "NEXT" "DAILY" "WAITING" "DEPENDS")
                            nil "")
       org-agenda-custom-commands
       '(("p" "Projects" ((todo "TODO|NEXT")
@@ -105,9 +114,14 @@ agenda buffer."
         org-export-with-emphasize nil
         org-export-html-style-default ""
         org-export-html-style-extra ""
-        org-export-html-style nil))
+        org-export-html-style nil)
+
+  ;; Tailor whitespace mode
+  (set (make-local-variable 'whitespace-style)
+       '(trailing tabs empty))
+  (whitespace-mode))
+
 (add-hook 'org-mode-hook 'pjones:org-mode-hook)
-(add-hook 'org-mode-hook 'whitespace-mode)
 
 (defun pjones:org-agenda-mode-hook ()
   (define-key org-agenda-mode-map (kbd "q") 'pjones:org-agenda-quit))
