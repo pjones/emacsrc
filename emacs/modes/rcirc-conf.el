@@ -90,6 +90,17 @@ Example use: /all away food or /all quit zzzz."
   (interactive)
   (rcirc-connect "irc.macrumorslive.com" nil nil nil nil "#macrumors"))
 
+(defun pjones:rcirc-update-fill-column (&optional window)
+  "Update `rcirc-fill-column' based on the width of WINDOW, or
+the current window if WINDOW is nil."
+  (with-current-buffer (window-buffer window)
+    (if (eq major-mode 'rcirc-mode)
+        (setq rcirc-fill-column (- (window-width window) 2)))))
+
+(defun pjones:rcirc-update-fill-column-all-windows ()
+  "Call `pjones:rcirc-update-fill-column' for all windows."
+  (walk-windows 'pjones:rcirc-update-fill-column 'no-minibuf nil))
+
 (defun pjones:rcirc-hook ()
   (require 'rcirc-color)
   (when (and (string-match "#" (buffer-name))
@@ -100,13 +111,15 @@ Example use: /all away food or /all quit zzzz."
   (set (make-local-variable 'scroll-conservatively) 8192)
   (set (make-local-variable 'next-line-add-newlines) nil)
   (setq mode-line-format '("  %b " global-mode-string)
-        rcirc-fill-column (- (window-width) 2)
         wrap-prefix "  "
         rcirc-prompt "❯ ")
+  (pjones:rcirc-update-fill-column)
   (flyspell-mode)
   (visual-line-mode)
   (rcirc-update-prompt)
-  (rcirc-track-minor-mode))
+  (rcirc-track-minor-mode)
+  (add-to-list 'window-size-change-functions
+               'pjones:rcirc-update-fill-column-all-windows))
 
 (defun pjones:rcirc-activity-string ()
   (when (string= "[]" rcirc-activity-string)
