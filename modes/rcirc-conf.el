@@ -97,9 +97,9 @@ the current window if WINDOW is nil."
     (if (eq major-mode 'rcirc-mode)
         (setq rcirc-fill-column (- (window-width window) 2)))))
 
-(defun pjones:rcirc-update-fill-column-all-windows ()
+(defun pjones:rcirc-update-fill-column-all-windows (&optional frame)
   "Call `pjones:rcirc-update-fill-column' for all windows."
-  (walk-windows 'pjones:rcirc-update-fill-column 'no-minibuf nil))
+  (walk-windows 'pjones:rcirc-update-fill-column 'no-minibuf frame))
 
 (defun pjones:rcirc-hook ()
   (require 'rcirc-color)
@@ -117,9 +117,7 @@ the current window if WINDOW is nil."
   (flyspell-mode)
   (visual-line-mode)
   (rcirc-update-prompt)
-  (rcirc-track-minor-mode)
-  (add-to-list 'window-size-change-functions
-               'pjones:rcirc-update-fill-column-all-windows))
+  (rcirc-track-minor-mode))
 
 (defun pjones:rcirc-activity-string ()
   (when (string= "[]" rcirc-activity-string)
@@ -148,6 +146,7 @@ not currently displayed in a window."
 (add-hook 'rcirc-mode-hook 'pjones:rcirc-hook)
 (add-hook 'rcirc-update-activity-string-hook 'pjones:rcirc-activity-string)
 (add-hook 'rcirc-print-hooks 'pjones:rcirc-print-hook)
+(add-hook 'window-size-change-functions 'pjones:rcirc-update-fill-column-all-windows)
 
 ;; Local Variables:
 ;; byte-compile-warnings: (not cl-functions)
