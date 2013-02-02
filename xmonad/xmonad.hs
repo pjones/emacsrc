@@ -42,7 +42,8 @@ import qualified Data.Map as M
 import Data.Ratio
 import Graphics.X11.ExtraTypes.XF86
 import System.Exit
-import Control.Monad (when, unless)
+import Control.Monad (when, unless, liftM)
+import Control.Applicative ((<$>), (<*>))
 import Data.Monoid
 import XMonad.Util.Types
 import XMonad.Util.Run
@@ -73,18 +74,18 @@ main = do
     }
 
 -- | Enables 'focusFollowsMouse' for tiled windows only.  For this to
---   work you need to turn off 'focusFollowsMouse' in your
---   configuration and then add this function to your
---   'handleEventHook'. TODO: Improvement: if the window losing the
---   focus is a floating window then don't allow focus change (must
---   use a mouse click to change focus in that case).
+-- work you need to turn off 'focusFollowsMouse' in your configuration
+-- and then add this function to your 'handleEventHook'.
 focusFollowsTiledOnly :: Event -> X All
 focusFollowsTiledOnly e@(CrossingEvent {ev_window = w, ev_event_type = t})
-  | isNormalEnter = whenX notFloating (focus w) >> return continueHooks
-  where isNormalEnter = t == enterNotify && ev_mode e == notifyNormal
-        notFloating   = gets $ not . M.member w . W.floating . windowset
-        continueHooks = All True
-focusFollowsTiledOnly _ = return (All True)
+  | isNormalEnter = whenX bothTiled (focus w) >> continueHooks
+  where isNormalEnter   = t == enterNotify && ev_mode e == notifyNormal
+        bothTiled       = (&&) <$> notFloating w <*> currentIsTiled
+        currentIsTiled  = currentWindow >>= maybe (return True) notFloating
+        currentWindow   = gets $ W.peek . windowset
+        notFloating w'  = gets $ not . M.member w' . W.floating . windowset
+        continueHooks   = return . mempty $ True
+focusFollowsTiledOnly _ = return . mempty $ True
 
 myWorkspaces :: [String]
 myWorkspaces = map show ([1..9] ++ [0])
