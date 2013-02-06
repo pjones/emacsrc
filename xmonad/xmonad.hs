@@ -78,14 +78,13 @@ main = do
 -- and then add this function to your 'handleEventHook'.
 focusFollowsTiledOnly :: Event -> X All
 focusFollowsTiledOnly e@(CrossingEvent {ev_window = w, ev_event_type = t})
-  | isNormalEnter = whenX bothTiled (focus w) >> continueHooks
+  | isNormalEnter = whenX bothTiled (focus w) >> mempty
   where isNormalEnter   = t == enterNotify && ev_mode e == notifyNormal
-        bothTiled       = (&&) <$> notFloating w <*> currentIsTiled
+        bothTiled       = notFloating w <&&> currentIsTiled
         currentIsTiled  = currentWindow >>= maybe (return True) notFloating
         currentWindow   = gets $ W.peek . windowset
         notFloating w'  = gets $ not . M.member w' . W.floating . windowset
-        continueHooks   = return . mempty $ True
-focusFollowsTiledOnly _ = return . mempty $ True
+focusFollowsTiledOnly _ = mempty
 
 myWorkspaces :: [String]
 myWorkspaces = map show ([1..9] ++ [0])
