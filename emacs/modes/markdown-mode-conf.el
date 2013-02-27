@@ -6,7 +6,7 @@
 
 (defun pjones:markdown-mode-hook ()
   "Set up key bindings and other crap for markdown-mode."
-  (local-set-key (kbd "C-c C-o") 'markdown-follow-any-link-at-point))
+  (local-set-key (kbd "C-c C-o") 'markdown-follow-link-at-point))
 
 (add-hook 'markdown-mode-hook 'whitespace-mode)
 (add-hook 'markdown-mode-hook 'pjones:markdown-mode-hook)
