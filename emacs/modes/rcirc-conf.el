@@ -29,7 +29,8 @@
       '(("localhost" :nick "pjones")
         ("irc.freenode.net" :channels ("#xmonad" "#derailed" "#mpd"
                                        "#conkeror" "#debian" "#emacs"
-                                       "#haskell" "#gnus"))))
+                                       "#haskell" "#gnus" "#hakyll"
+                                       "#haskell-mobile"))))
 
 (setq rcirc-authinfo
       `(("freenode"  nickserv "pmade"  ,freenode-password)
@@ -47,6 +48,13 @@
     "#haskell@irc.freenode.net")
   "A list of rcirc buffer names in the order in which they should
 be placed into the current set of windows.")
+
+(defvar pjones:rcirc-low-traffic-channels
+  '("#haskell-mobile@irc.freenode.net"
+    "#hakyll@irc.freenode.net"
+    "#derailed@irc.freenode.net")
+  "A list of IRC channels that have low enough traffic that it's
+okay to send me notifications of activity.")
 
 (defun pjones:rcirc-windows ()
   "Split the current frame into several windows and place the
@@ -104,7 +112,8 @@ the current window if WINDOW is nil."
 (defun pjones:rcirc-hook ()
   (require 'rcirc-color)
   (when (and (string-match "#" (buffer-name))
-             (not (string-match "developers\\|derailed\\|twitter" (buffer-name))))
+             (not (string-match "developers\\|twitter" (buffer-name)))
+             (not (member (buffer-name) pjones:rcirc-low-traffic-channels)))
     (setq rcirc-ignore-buffer-activity-flag t)
     (rcirc-omit-mode))
   (define-key rcirc-mode-map (kbd "C-c C-o") 'rcirc-browse-url)
