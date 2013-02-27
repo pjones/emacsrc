@@ -55,6 +55,8 @@
          (signature-file ,(concat mail-signature-dir "/fj40")))
         ;; News groups
         (message-news-p
+         (signature-file ,(concat mail-signature-dir "/devalot"))
+         (Reply-To "Peter Jones <mlists@pmade.com>")
          (From "Peter Jones <mlists@pmade.com>"))
         ;; Mailing Lists
         ("Derailed"
