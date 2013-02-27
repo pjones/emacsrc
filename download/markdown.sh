@@ -1,7 +1,7 @@
 #!/bin/sh
 
 . `dirname $0`/common.sh
-URL="git://pmade.com/markdown-mode.git"
+URL="git://jblevins.org/git/markdown-mode.git"
 dir=`fetch_url $URL`
 
 (
