@@ -1,6 +1,7 @@
 -- Links:
 --   xmonad: http://xmonad.org/
 --   xmonad-contrib: http://xmonad.org/xmonad-docs/xmonad-contrib/
+--   Use: xprop(1) to get a window's class
 
 -- Load XMonad
 import XMonad
