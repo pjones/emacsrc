@@ -30,15 +30,15 @@
   (set (make-local-variable 'comment-auto-fill-only-comments) t)
   (local-set-key (kbd "C-c TAB") 'pjones:comment-bar)
   (local-set-key (kbd "RET") 'reindent-then-newline-and-indent)
+  (show-paren-mode)
+  (whitespace-mode)
+  (auto-fill-mode)
+  (flyspell-prog-mode)
+  (electric-pair-mode)
+  (add-hook 'after-save-hook
+            'executable-make-buffer-file-executable-if-script-p)
   (font-lock-add-keywords nil '(("\\<\\(FIXME:\\|TODO:\\|NOTE:\\)"
                                  1 'pjones:fixme-face t))))
 
 (defun pjones:add-programming-hook (mode-hook)
-  (add-hook mode-hook 'show-paren-mode)
-  (add-hook mode-hook 'whitespace-mode)
-  (add-hook mode-hook 'auto-fill-mode)
-  (add-hook mode-hook 'flyspell-prog-mode)
-  (add-hook mode-hook 'electric-pair-mode)
-  (add-hook mode-hook 'pjones:prog-mode-hook)
-  (add-hook 'after-save-hook
-            'executable-make-buffer-file-executable-if-script-p))
+  (add-hook mode-hook 'pjones:prog-mode-hook))
