@@ -9,29 +9,29 @@
 % ============================================================================
 % \EmailAddress -- Set the email address used in title pages, etc.
 \def\EmailAddress#1{\gdef\@EmailAddress{#1}}
-\def\@EmailAddress{pjones@pmade.com}
+\def\@EmailAddress{pjones@devalot.com}
 
 % ============================================================================
 % \WebSite -- Set the URL of a website used in title pages, etc.
 \def\WebSite#1{\gdef\@WebSite{#1}}
-\def\@WebSite{http://pmade.com}
+\def\@WebSite{http://devalot.com}
 
 % ============================================================================
 \usepackage{graphicx}
 
 % ============================================================================
 % Other nice fonts: Baskerville, Century Gothic, Cochin
-\def\SetMainFont#1{\gdef\@MainFont{#1}}
-\def\@MainFont{Georgia}
+%\def\SetMainFont#1{\gdef\@MainFont{#1}}
+%\def\@MainFont{Georgia}
 
 % ============================================================================
 \usepackage{fontspec}
 \usepackage{xunicode}
 \usepackage{xltxtra}
-\defaultfontfeatures{Scale=MatchLowercase}
-\setmainfont[Mapping=tex-text]{\@MainFont}
-\setsansfont[Mapping=tex-text]{Tahoma}
-\setmonofont{Monaco}
+%% \defaultfontfeatures{Scale=MatchLowercase}
+%% \setmainfont[Mapping=tex-text]{\@MainFont}
+%% \setsansfont[Mapping=tex-text]{Tahoma}
+%% \setmonofont{Monaco}
 
 % ============================================================================
 \usepackage{titlesec}
@@ -81,7 +81,6 @@
 \let\OrigMakeTitle\maketitle
 \renewcommand\maketitle{%
   \hypersetup{pdftitle={\@title}, pdfauthor={\@author}}
-  \setmainfont[Mapping=tex-text]{Futura}
   \OrigMakeTitle}
 
 % ============================================================================
