@@ -25,7 +25,12 @@ define_webjump("amazon-mp3", "http://www.amazon.com/exec/obidos/external-search"
 define_webjump("it-en", "http://translate.google.com/#it|en|%s");
 define_webjump("en-it", "http://translate.google.com/#en|it|%s");
 
+// Searching Hackage via Google
+define_webjump("hackage", "http://www.google.co.uk/search?hl=en&" +
+               "as_sitesearch=hackage.haskell.org/package&as_q=%s");
+
 // Other search engines
+define_webjump("hoogle", "http://haskell.org/hoogle/?hoogle=%s");
 define_webjump("duckduckgo", "http://duckduckgo.com/?q=%s");
 define_webjump("github", "http://github.com/search?q=%s&type=Everything");
 define_webjump("imdb", "http://www.imdb.com/find?s=all&q=%s");
