@@ -31,6 +31,7 @@
 (global-set-key (kbd "C-c a")   'align)
 (global-set-key (kbd "C-c A")   'align-regexp)
 (global-set-key (kbd "C-c b")   'pjones:bookmark)
+(global-set-key (kbd "C-c c")   'quick-calc)
 (global-set-key (kbd "C-c d")   'pjones:toggle-dictionary)
 (global-set-key (kbd "C-c f")   'pjones:kill-file-name)
 (global-set-key (kbd "C-c g")   'rgrep)
