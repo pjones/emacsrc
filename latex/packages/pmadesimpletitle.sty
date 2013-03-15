@@ -7,17 +7,16 @@
 % ============================================================================
 \renewcommand\maketitle{%
   \hypersetup{pdftitle={\@title}, pdfauthor={\@author}}
-  \setmainfont[Mapping=tex-text]{Futura}
 
-  \begin{titlepage}
-    \vfill
+  %% \begin{titlepage}
+  %%   \vfill
 
     \begin{center}
       \begin{huge}
         \@title
       \end{huge}
 
-      \rule{\linewidth}{0.5mm} \\[1.5cm]
+      \rule{\linewidth}{0.5mm} \\[0.5cm]
 
       \begin{minipage}{0.4\textwidth}
         \begin{flushleft} \large
@@ -32,9 +31,9 @@
         \end{flushright}
       \end{minipage}
 
-      \vfill
-      \large \@date
+      
+      zo\vfill
+%      \large \@date
     \end{center}
-  \end{titlepage}
-
-  \setmainfont[Mapping=tex-text]{\@MainFont}}
+%  \end{titlepage}}
+}
