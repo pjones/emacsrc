@@ -2,11 +2,14 @@
 (setq pmade-mail-server "mail.pmade.com"
       message-send-mail-function 'smtpmail-send-it
       smtpmail-smtp-server pmade-mail-server
-      smtpmail-smtp-service 25
-      smtpmail-starttls-credentials `((,pmade-mail-server 25 nil nil))
+      smtpmail-smtp-service 465
+      smtpmail-stream-type 'ssl
       smtpmail-local-domain "pmade.com"
       starttls-use-gnutls t
       starttls-extra-arguments '("--insecure"))
+
+;;; Old STARTTLS settings.
+;; smtpmail-starttls-credentials `((,pmade-mail-server 25 nil nil))
 
 (setq gnus-select-method
   `(nnimap ,pmade-mail-server
