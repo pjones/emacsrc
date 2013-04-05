@@ -37,6 +37,11 @@ IMAP mail group."
   (gnus-summary-move-article nil group nil 'move)
   (message "Moved to group: %s" group))
 
+(defun pmade-gnus-summary-bottom ()
+  (interactive)
+  (goto-char (point-max))
+  (forward-line -1))
+
 (defun pmade-summary-hook ()
   (local-set-key "a" (lambda ()
                        (interactive)
@@ -55,6 +60,7 @@ IMAP mail group."
   (local-set-key "R" 'gnus-summary-wide-reply-with-original)
   (local-set-key "s" (lambda ()
                        (interactive)
-                       (pmade-move-to-mail-group pmade-spam-group))))
+                       (pmade-move-to-mail-group pmade-spam-group)))
+  (local-set-key (vector 'remap 'end-of-buffer) 'pmade-gnus-summary-bottom))
 
 (add-hook 'gnus-summary-mode-hook 'pmade-summary-hook)

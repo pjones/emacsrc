@@ -117,6 +117,11 @@
   (goto-char (point-min))
   (search-forward "INBOX"))
 
+(defun pmade-gnus-goto-bottom ()
+  (interactive)
+  (goto-char (point-max))
+  (forward-line -1))
+
 ;; Various Settings
 (add-hook 'gnus-select-group-hook 'gnus-group-set-timestamp)
 (setq gnus-newsgroup-variables '(gnus-thread-sort-functions))
@@ -124,4 +129,5 @@
 (add-hook 'gnus-group-mode-hook
   (lambda ()
     (gnus-topic-mode 1)
-    (local-set-key "i" 'pmade-gnus-goto-inbox)))
+    (local-set-key "i" 'pmade-gnus-goto-inbox)
+    (local-set-key (vector 'remap 'end-of-buffer) 'pmade-gnus-goto-bottom)))
