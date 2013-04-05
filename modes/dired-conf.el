@@ -22,10 +22,17 @@
       (goto-char (point-min))
       (flush-lines "^ *total"))))
 
-(defun pjones:dired-load-hook ()
-  (define-key dired-mode-map [?%?h] 'pjones:dired-show-only-matching-files))
+(defun pjones:dired-jump-to-bottom ()
+  (interactive)
+  (goto-char (point-max))
+  (dired-next-line -1))
 
-(add-hook 'dired-load-hook 'pjones:dired-load-hook)
+(defun pjones:dired-load-hook ()
+  (define-key dired-mode-map [?%?h] 'pjones:dired-show-only-matching-files)
+  (define-key dired-mode-map
+    (vector 'remap 'end-of-buffer) 'pjones:dired-jump-to-bottom))
+
+(add-hook 'dired-mode-hook 'pjones:dired-load-hook)
 (add-hook 'dired-mode-hook 'turn-on-gnus-dired-mode)
 (add-hook 'dired-after-readin-hook 'pjones:dired-remove-total-lines)
 
