@@ -166,3 +166,13 @@ file.  With a prefix argument kill the entire path for the file."
   (interactive)
   (require 'org)
   (org-agenda nil "p"))
+
+;; Stolen from: http://whattheemacsd.com//key-bindings.el-01.html
+(defun pjones:goto-line-with-feedback ()
+  "Show line numbers temporarily while prompting for the line
+number input."
+  (interactive)
+  (unwind-protect
+      (progn (linum-mode 1)
+             (call-interactively 'goto-line))
+    (linum-mode -1)))

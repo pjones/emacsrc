@@ -25,6 +25,9 @@
 (global-set-key (kbd "M-S-z")   'zap-to-char)
 (global-set-key (kbd "C-`")     'next-error)
 
+;; Remapping existing keys.
+(global-set-key [remap goto-line] 'pjones:goto-line-with-feedback)
+
 ;; User Key Bindings (using the C-c prefix)
 (global-set-key (kbd "C-c ;")   'flyspell-auto-correct-previous-word)
 (global-set-key (kbd "C-c .")   'pjones:push-tag-mark)
