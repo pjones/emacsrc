@@ -33,9 +33,11 @@ placing it in the kill ring)."
 (defun pjones:open-line-above ()
   "Open a line above point and move there."
   (interactive)
-  (move-beginning-of-line nil)
-  (open-line 1)
-  (indent-according-to-mode))
+  (let ((already-bol (bolp)))
+    (move-beginning-of-line nil)
+    (open-line 1)
+    (when (not already-bol)
+      (indent-according-to-mode))))
 
 (defun pjones:open-line-below ()
   "Open a line below the point, and move there"
