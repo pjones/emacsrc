@@ -21,8 +21,7 @@
     (insert-char char (- 80 (length start) (length end) col))
     (insert end)
     (if without-newline (beginning-of-line)
-      (newline)
-      (indent-according-to-mode))))
+      (call-interactively (key-binding (kbd "RET"))))))
 
 (defun pjones:prog-mode-hook ()
   "Settings and bindings for programming modes."
