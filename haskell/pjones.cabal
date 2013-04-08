@@ -1,0 +1,28 @@
+name:          pjones
+version:       0.1.0.0
+synopsis:      A way to build Haskell tools I use
+homepage:      http://www.pmade.com
+license:       BSD3
+license-file:  /dev/null
+author:        Peter Jones
+maintainer:    Peter Jones
+category:      System
+build-type:    Simple
+cabal-version: >=1.8
+
+executable pjones
+  main-is: pjones.hs
+  build-depends: base           == 4.5.*
+               , xmonad         == 0.11
+               , xmonad-contrib == 0.11.1
+               , pandoc         == 1.11.*
+--               , taffybar       == 0.2.2
+--               , xmobar         == 0.16
+
+-- NOTE: For xmobar you need to install with:
+--
+-- cabal install xmobar --flags="with_xft with_mpd with_alsa"
+--
+-- or
+--
+-- cabal install xmobar --flags="all_extensions"
