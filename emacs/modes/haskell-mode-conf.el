@@ -68,7 +68,7 @@ With a prefix argument make the import qualified."
 (defun pjones:haskell-mode-hook ()
   (pjones:prog-mode-hook)
   (local-set-key (kbd "RET")     'newline-and-indent)
-  (local-set-key (kbd "C-c C-i") 'pjones:haskell-new-import)
+  (local-set-key (kbd "C-c C-a") 'pjones:haskell-new-import)
   (local-set-key (kbd "C-c C-s") 'pjones:haskell-sort-imports)
   (local-set-key (kbd "C-c C-v") 'pjones:haskell-lint-all)
   (make-local-variable 'tab-always-indent)
