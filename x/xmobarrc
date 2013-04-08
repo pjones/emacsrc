@@ -4,14 +4,12 @@ Config
   , bgColor = "#1c1c1c"
   , fgColor = "#e6e6e6"
   , alignSep = "}{"
-  , commands = 
-      [ Run StdinReader
-      , Run CommandReader "/home/pjones/bin/mpd-current.sh" "playing"
-      , Run Com "sh"  ["/home/pjones/bin/clock-status.sh"] "tisk" 50
-      , Run Com "sh"  ["/home/pjones/bin/count-down.sh"] "remaining" 18000
-      , Run Date "%a %b %d, %H:%M" "clock" 50
-      , Run Volume "default" "Master" [] 10
-      , Run Weather "KBJC" ["-t", "F:<tempF> C:<tempC> H:<rh>%"] 36000
-      ]
-  , template = "%StdinReader% %tisk% } %playing% {<fc=#859900>%KBJC%</fc> <fc=#5c5c5c>|</fc> %remaining% <fc=#5c5c5c>|</fc> %default:Master% <fc=#5c5c5c>|</fc> <fc=#268bd2>%clock%</fc>"
+  , commands =
+    [ Run StdinReader
+    , Run CommandReader "/home/pjones/bin/mpd-current.sh" "playing"
+    , Run Date "%a %b %d, %H:%M" "clock" 50
+    , Run Volume "default" "Master" [] 10
+    , Run Weather "KBJC" ["-t", "F:<tempF> C:<tempC> H:<rh>%"] 36000
+    ]
+  , template = "%StdinReader% } %playing% {<fc=#859900>%KBJC%</fc> <fc=#5c5c5c>|</fc> %default:Master% <fc=#5c5c5c>|</fc> <fc=#268bd2>%clock%</fc>"
   }
