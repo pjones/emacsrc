@@ -4,7 +4,7 @@
 path=(/usr/local/bin /usr/local/sbin /usr/games /usr/bin /usr/sbin /bin /sbin)
 path=($path /usr/local/texlive/2011/bin/x86_64-linux)
 path=(/var/lib/gems/1.8/bin $path)
-path=(~/.cabal/bin $path)
+path=(~/.hsver/bin $path)
 
 # Always keep ~/bin at the front of PATH
 path=(~/bin $path)
