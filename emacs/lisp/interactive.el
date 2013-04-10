@@ -151,6 +151,7 @@ configuration."
   "Pushes the current location of point onto the tags mark ring
 so you can pop back later with `M-.'."
   (interactive)
+  (require 'etags)
   (ring-insert find-tag-marker-ring (point-marker)))
 
 (defun pjones:kill-file-name (&optional full-path)
@@ -176,3 +177,7 @@ number input."
       (progn (linum-mode 1)
              (call-interactively 'goto-line))
     (linum-mode -1)))
+
+;; Local Variables:
+;; byte-compile-warnings: (not noruntime)
+;; End:
