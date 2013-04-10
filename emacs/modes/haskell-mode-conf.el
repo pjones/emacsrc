@@ -27,6 +27,7 @@ Otherwise go totally crazy."
              (move-beginning-of-line nil)
              (while (looking-at "^import") (forward-line 1))
              (forward-line -1)
+             (move-end-of-line nil)
              (point))))
     (sort-regexp-fields
      nil "^import \\(qualified \\)?\\(.+\\)$" "\\2" b e)))
@@ -67,10 +68,19 @@ With a prefix argument make the import qualified."
 
 (defun pjones:haskell-mode-hook ()
   (pjones:prog-mode-hook)
-  (local-set-key (kbd "RET")     'newline-and-indent)
+  (turn-on-haskell-indentation)
+
+  ;; Undo some stupid haskell-mode bindings.
+  (let ((map haskell-indentation-mode-map))
+    (define-key map (kbd "RET") 'newline-and-indent)
+    (define-key map [?\r]       'newline-and-indent)
+    (define-key map [backspace] 'backward-delete-char-untabify))
+
+  ;; And add some of my own
   (local-set-key (kbd "C-c C-a") 'pjones:haskell-new-import)
   (local-set-key (kbd "C-c C-s") 'pjones:haskell-sort-imports)
   (local-set-key (kbd "C-c C-v") 'pjones:haskell-lint-all)
+
   (make-local-variable 'tab-always-indent)
   (setq tab-always-indent t
         haskell-indentation-layout-offset 2
@@ -78,8 +88,7 @@ With a prefix argument make the import qualified."
         haskell-indentation-left-offset 2
         haskell-indentation-ifte-offset 2
         haskell-indentation-where-pre-offset 2
-        haskell-indentation-where-post-offset 2)
-  (turn-on-haskell-indentation))
+        haskell-indentation-where-post-offset 2))
 
 (add-hook 'haskell-mode-hook 'pjones:haskell-mode-hook)
 
