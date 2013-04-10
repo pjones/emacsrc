@@ -16,13 +16,14 @@ endef
 
 ################################################################################
 # Simple tests for tools with matching directories in this repo.
-TOOLS = zsh emacs conkeror git mpd ruby tmux xmonad
+TOOLS = zsh emacs conkeror git mpd ruby tmux
 $(foreach t,$(TOOLS),$(eval $(call MAYBE_ADD_DIRECTORY,$(t))))
 
 ################################################################################
 # More complicated tests.
 $(eval $(call MAYBE_ADD_DIRECTORY,gnus,emacs))
-$(eval $(call MAYBE_ADD_DIRECTORY,haskell,ghci))
+$(eval $(call MAYBE_ADD_DIRECTORY,haskell,ghc))
+$(eval $(call MAYBE_ADD_DIRECTORY,xmonad,ghc))
 $(eval $(call MAYBE_ADD_DIRECTORY,latex,texdoc))
 $(eval $(call MAYBE_ADD_DIRECTORY,spamassassin,sa-learn))
 $(eval $(call MAYBE_ADD_DIRECTORY,r,R))

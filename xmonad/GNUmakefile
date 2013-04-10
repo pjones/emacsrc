@@ -1,19 +1,23 @@
 ################################################################################
-TARGET = $(HOME)/.xmonad/xmonad-x86_64-linux
+include ../mk/init.mk
+include ../mk/haskell.mk
+
+################################################################################
+ARCH   = $(shell uname -m)
+OS     = $(shell uname -s | tr '[A-Z]' '[a-z]')
+TARGET = $(HOME)/.xmonad/xmonad-$(ARCH)-$(OS)
 SRC    = $(shell find . -type f -name '*.hs')
 BIN    = cabal-dev/bin/pjones-xmonad
 XMONAD = cabal-dev/bin/xmonad
 
 ################################################################################
-.PHONEY: all install restart clean realclean
+.PHONEY: install restart clean realclean
 
 ################################################################################
 all: $(BIN)
 
 ################################################################################
-install: $(BIN)
-	mv $(TARGET) $(TARGET).prev
-	cp $(BIN) $(TARGET)
+install: $(TARGET)
 
 ################################################################################
 restart: install
@@ -30,3 +34,9 @@ realclean: clean
 ################################################################################
 $(BIN): $(SRC)
 	cabal-dev install
+
+################################################################################
+$(TARGET): $(BIN)
+	mv $@ $@.prev
+	cp -p $< $@
+	cd $(dir $@) && ln -nfs $(notdir $@) xmonad
