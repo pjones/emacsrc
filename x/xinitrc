@@ -25,7 +25,7 @@ xscreensaver -no-splash &
 
 # Mount my encrypted drives
 if [ -r ~/etc/keys.img ]; then
-  (sleep 10; mount-keys.sh) &
+  mount-keys.sh &
 fi
 
 # Add a private SSH key to the SSH agent
