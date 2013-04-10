@@ -1,0 +1,20 @@
+name:          pjones-xmonad
+version:       0.1.0.0
+synopsis:      Peter's Xmonad Configuration
+homepage:      http://www.pmade.com
+license:       BSD3
+license-file:  /dev/null
+author:        Peter Jones
+maintainer:    Peter Jones
+category:      Graphics
+build-type:    Simple
+cabal-version: >=1.8
+
+executable xmonad
+  main-is: xmonad.hs
+  build-depends: base           == 4.5.*
+               , xmonad         == 0.11
+               , xmonad-contrib == 0.11.1
+               , X11            == 1.6.1.*
+               , containers     == 0.4.2.*
+

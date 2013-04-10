@@ -122,6 +122,9 @@ myLayoutRules = avoidStruts $ myDefaultLayout
 myManageHook = composeAll
   [ className =? "MPlayer"    --> (ask >>= doF . W.sink)
   , title     =? "HandBrake"  --> (ask >>= doF . W.sink)
+
+  , -- Pop-up windows in Google Chrome.
+    stringProperty "WM_WINDOW_ROLE" =? "pop-up" --> doFloat
   ]
 
 myFadeHook = composeAll
