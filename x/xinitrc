@@ -36,8 +36,13 @@ if [ -r ~/keys/ssh/`hostname`.id_dsa ]; then
   fi
 fi
 
-# On-screen notifications
+# On-screen notifications.
 /usr/lib/notify-osd/notify-osd &
+
+# Set my desktop background.
+if [ -r $HOME/.fehbg ]; then
+  sh $HOME/.fehbg &
+fi
 
 # Finally, execute my window manager.
 exec $HOME/.xmonad/xmonad
