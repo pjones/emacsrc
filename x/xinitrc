@@ -40,4 +40,4 @@ fi
 /usr/lib/notify-osd/notify-osd &
 
 # Finally, execute my window manager.
-exec xmonad
+exec $HOME/.xmonad/xmonad-x86_64-linux
