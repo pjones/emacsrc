@@ -38,6 +38,8 @@ class Command
         if m = line.match(/^D (.*)$/)
           $stdout.print(m[1])
           break
+        elsif line.match(/^ERR/)
+          exit(1)
         end
       end
     end
