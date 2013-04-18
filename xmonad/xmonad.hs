@@ -23,6 +23,7 @@ import XMonad.Actions.PerWorkspaceKeys (bindOn)
 -- XMonad contrib (Hooks)
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.FadeWindows
+import XMonad.Hooks.FadeInactive (isUnfocusedOnCurrentWS)
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.UrgencyHook
 import XMonad.Hooks.EwmhDesktops
@@ -70,8 +71,8 @@ main = do
     , manageHook = myManageHook
                    <+> manageDocks
                    <+> scratchpadManageHookDefault
-    , handleEventHook = focusFollowsTiledOnly
-                        <+> fadeWindowsEventHook
+    , handleEventHook = fadeWindowsEventHook
+                        <+> focusFollowsTiledOnly
     }
 
 -- | Enables 'focusFollowsMouse' for tiled windows only.  For this to
@@ -127,12 +128,23 @@ myManageHook = composeAll
     stringProperty "WM_WINDOW_ROLE" =? "pop-up" --> doFloat
   ]
 
+
+--------------------------------------------------------------------------------
+-- Fade hooks compose from right to left, or in my case from bottom to
+-- top.  The first match wins (again, moving from bottom to top).
+--
+-- Specific notes:
+--
+--   * Blender: There's an issue between Blender and xcompmgr that
+--     I've found which causes Blender to have transparency no matter
+--     what.  Using @blender-softwaregl@ seems to fix that though.
 myFadeHook = composeAll
-  [ transparency 0.02  --  Default
-  , isUnfocused        --> transparency 0.1
-  , isFloating         --> opaque
-  , className =? "feh" --> opaque
-  , className =? "vlc" --> opaque
+  [ transparency 0.02      --  Default
+  , isUnfocusedOnCurrentWS --> transparency 0.1
+  , isFloating             --> opaque
+  , className =? "feh"     --> opaque
+  , className =? "Vlc"     --> opaque
+  , className =? "Blender" --> opaque -- See note above.
   ]
 
 -- http://xmonad.org/xmonad-docs/xmonad-contrib/XMonad-Prompt.html#t:XPConfig
