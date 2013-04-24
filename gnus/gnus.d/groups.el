@@ -10,20 +10,26 @@
 
 ;; Settings by Group
 (setq gnus-parameters
-      '(
-        ;; Defaults
-        (".*INBOX.*"
-         (display . all)
-         (gnus-thread-sort-functions 'gnus-thread-sort-by-date))
+  '((".*INBOX\\|Archive\\|Sent"
+     (display . all)
+     (gnus-show-threads nil)
+     (gnus-article-sort-functions '(gnus-article-sort-by-date)))
 
-        ;; Mailing Lists
-        ("\\.mlists\\."
-         (comment . "Mailing List")
-         (display . [unread])
-         (subscribed . t)
-         (auto-expire . t)
-         (expiry-wait . 14)
-         (gnus-thread-sort-functions '(gnus-thread-sort-by-number (not gnus-thread-sort-by-date))))))
+    ;; SPAM!
+    (".*spam.*"
+     (display . [unread])
+     (gnus-show-threads nil)
+     (gnus-article-sort-functions '(gnus-article-sort-by-date)))
+
+    ;; Mailing Lists
+    ("\\.mlists\\."
+     (comment . "Mailing List")
+     (display . [unread])
+     (subscribed . t)
+     (auto-expire . t)
+     (expiry-wait . 14)
+     (gnus-thread-sort-functions '(gnus-thread-sort-by-number
+                                   (not gnus-thread-sort-by-date))))))
 
 ;; Posting Styles (least specific to most specific)
 (setq gnus-posting-styles
