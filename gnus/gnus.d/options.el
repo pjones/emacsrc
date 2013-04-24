@@ -63,11 +63,13 @@ group and summary buffers)"
 ;; User Format Functions
 (defun gnus-user-format-function-d (header)
   "Display group and article dates in an easy to read format."
-  (let ((date))
-    (cond
-     (header (setq date (gnus-date-get-time (mail-header-date header))))
-     (t      (setq date (gnus-group-timestamp gnus-tmp-group))))
-    (if date (format-time-string "%a %b %d, %Y %R" date) "")))
+  (let* ((base-fmt "%m/%d/%y")
+         (date (cond (header (gnus-date-get-time (mail-header-date header)))
+                     (t      (gnus-group-timestamp gnus-tmp-group))))
+         (since (if date (time-to-number-of-days (time-since date)) 0.0))
+         (fmt (cond ((> since 1.0) (concat base-fmt " %a  "))
+                    (t             (concat base-fmt " %R")))))
+    (if date (format-time-string fmt date) "")))
 
 ;; Headers
 (setq gnus-visible-headers
