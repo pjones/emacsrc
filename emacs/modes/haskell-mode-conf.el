@@ -5,6 +5,15 @@
   (require 'haskell-indentation)
   (require 'haskell-mode))
 
+;;; TO-DO List:
+;;
+;; * Add support for camelcase to keys like C-w
+;; * Fix the auto-indenting in comments!!!
+;; * Figure out a better way to do completions.
+;; * Need a better key for completions.
+;; * Remove whitespace at end of line while typing?
+
+
 (defun pjones:haskell-find-cabal-file ()
   "Return the directory containing a *.cabal file or the current
 directory."
