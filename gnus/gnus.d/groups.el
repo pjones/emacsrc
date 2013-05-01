@@ -113,9 +113,9 @@
 (setq
  pmade-group-sep "%9{ ⎮ %}"
  gnus-group-mode-line-format "Gnus: %%b"
- gnus-group-line-format (concat "%P" "%5{%M%S%}" pmade-group-sep "%6{%4y%}" pmade-group-sep "%*"
+ gnus-group-line-format (concat "%P" "%5{%M%S%}" "%6{%4y%}" pmade-group-sep "%*"
                                 "%8{%-30,30G%}" pmade-group-sep "%1L" pmade-group-sep
-                                "%6{%-22,22ud%}" pmade-group-sep "\n"))
+                                "%6{%-22,22ud%}" "\n"))
 
 ;; Key Bindings
 (defun pmade-gnus-goto-inbox ()
