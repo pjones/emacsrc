@@ -147,12 +147,16 @@ configuration."
   (if set (window-configuration-to-register ?.)
     (jump-to-register ?.)))
 
-(defun pjones:push-tag-mark ()
+(defun pjones:push-tag-mark (&optional jump)
   "Pushes the current location of point onto the tags mark ring
-so you can pop back later with `M-.'."
-  (interactive)
+so you can pop back later with `M-.'.  When JUMP is non-nil jump
+to the previous tag mark.  This allows you to jump back and forth
+between two points."
+  (interactive "P")
   (require 'etags)
-  (ring-insert find-tag-marker-ring (point-marker)))
+  (let ((mark (point-marker)))
+    (if jump (pop-tag-mark))
+    (ring-insert find-tag-marker-ring mark)))
 
 (defun pjones:kill-file-name (&optional full-path)
   "Create a new kill containing the base name of the buffer's

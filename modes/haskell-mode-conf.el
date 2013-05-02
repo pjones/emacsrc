@@ -75,20 +75,69 @@ With a prefix argument make the import qualified."
                  (directory-files dir t))))
     (haskell-check (concat "hlint " (mapconcat 'identity files " ")))))
 
+(defun pjones:haskell-smart-newline ()
+  "Insert a new line below point that looks like the current
+line.  Examples:
+
+  * List item markup in comments
+  * Applicative <$> and <*> lines
+  * Lines that should begin with a pipe
+  * Lines that should begin with a comma (export list, list literals)
+  * Duplicate what's on the line up to a =
+  * Another import statement
+  * Everything on the current line up to point"
+  (interactive)
+  (let ((pt (point)))
+    (beginning-of-line)
+    (cond ((looking-at "\\(--\\s-+\\*\\)")
+           (end-of-line)
+           (newline)
+           (insert (concat (match-string-no-properties 1) " ")))
+          ((looking-at "\\(.*<\\$>\\|\\s-+<\\*>\\)")
+           (end-of-line)
+           (newline)
+           (insert (make-string (- (length (match-string-no-properties 1)) 3) ? ))
+           (insert "<*> "))
+          ((looking-at "\\(data.*=\\|\\s-+|\\)")
+           (end-of-line)
+           (newline)
+           (insert (make-string (- (length (match-string-no-properties 1)) 1) ? ))
+           (insert "| "))
+          ((looking-at "\\(\\s-+[,(]\\|.*[{\\[]\\)")
+           (end-of-line)
+           (newline)
+           (insert (make-string (- (length (match-string-no-properties 1)) 1) ? ))
+           (insert ", "))
+          ((looking-at "\\(.*=\\)")
+           (end-of-line)
+           (newline)
+           (insert (concat (match-string-no-properties 1) " ")))
+          ((looking-at "import\\s-")
+           (end-of-line)
+           (newline)
+           (insert "import "))
+          (t
+           (let ((text (buffer-substring (point) pt)))
+             (end-of-line)
+             (newline)
+             (insert text))))))
+
 (defun pjones:haskell-mode-hook ()
+  "Hook run on new Haskell buffers."
   (pjones:prog-mode-hook)
   (turn-on-haskell-indentation)
 
   ;; Undo some stupid haskell-mode bindings.
   (let ((map haskell-indentation-mode-map))
-    (define-key map (kbd "RET") 'newline-and-indent)
-    (define-key map [?\r]       'newline-and-indent)
-    (define-key map [backspace] 'backward-delete-char-untabify))
+    (define-key map (kbd "RET")   'newline-and-indent)
+    (define-key map [?\r]         'newline-and-indent)
+    (define-key map [backspace]   'backward-delete-char-untabify))
 
   ;; And add some of my own
   (local-set-key (kbd "C-c C-a") 'pjones:haskell-new-import)
   (local-set-key (kbd "C-c C-s") 'pjones:haskell-sort-imports)
   (local-set-key (kbd "C-c C-v") 'pjones:haskell-lint-all)
+  (local-set-key (kbd "M-RET")   'pjones:haskell-smart-newline)
 
   (make-local-variable 'tab-always-indent)
   (setq tab-always-indent t
