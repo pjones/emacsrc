@@ -1,5 +1,6 @@
 ;;; markdown-conf.el -- Settings for markdown-mode.
-(eval-when-compile (require 'markdown-mode))
+(eval-when-compile
+  (require 'markdown-mode))
 
 (setq markdown-command "pandoc -f markdown -t html"
       markdown-follow-wiki-link-on-enter nil)
@@ -11,7 +12,7 @@
   ;; Files in /tmp that are *.txt are from my browser and most
   ;; websites don't like it when text you submit has newlines.
   (when (string-match "^/tmp/.*\\.txt$" (buffer-file-name))
-    (longlines-mode)))
+    (visual-line-mode)))
 
 (add-hook 'markdown-mode-hook 'whitespace-mode)
 (add-hook 'markdown-mode-hook 'pjones:markdown-mode-hook)
