@@ -1,0 +1,9 @@
+# Key bindings for mlterm.  See /usr/share/doc/mlterm/PROTOCOL.gz for
+# additional keys that can be set with the "proto:" option.
+
+# Paste the clipboard
+Mod+Control+y = INSERT_SELECTION
+
+# Adjust the font size
+Mod+Control+equal = "proto:fontsize=larger"
+Mod+Control+minus = "proto:fontsize=smaller"

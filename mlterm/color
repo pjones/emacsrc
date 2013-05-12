@@ -1,0 +1,20 @@
+# Base colors for mlterm.  These just set the colors that have names
+# in a terminal.  Applications can still specific one of the 256
+# terminal colors available.
+
+black      = #333333
+hl_black   = #083d4a
+red        = #dc322f
+hl_red     = #dc5c5a
+green      = #859900
+hl_green   = #88b324
+yellow     = #b58900
+hl_yellow  = #b5a924
+blue       = #268bd2
+hl_blue    = #509cd2
+magenta    = #d33682
+hl_magenta = #d36198
+cyan       = #2aa198
+hl_cyan    = #4aa19a
+white      = #eeeeee
+hl_white   = #ffffff
