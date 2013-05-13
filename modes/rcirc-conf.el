@@ -60,6 +60,7 @@ okay to send me notifications of activity.")
   "Split the current frame into several windows and place the
 buffers listed in `pjones:rcirc-buffers' in each of the resulting
 windows, in the correct order."
+  (interactive)
   (let ((wins (window-list nil nil (frame-first-window))))
     (when (= 1 (length wins))
       (split-window-right)
