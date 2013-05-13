@@ -4,9 +4,6 @@
   (require 'etags)
   (require 'ispell))
 
-;; Hush some compiler warnings.
-(declare-function pjones:rcirc-windows "../modes/rcirc-conf.el")
-
 (defun pjones:maybe-save-buffers-kill-terminal (&optional arg)
   "Save me from myself.  I somehow keep hitting C-x C-c when I
 don't want to."
@@ -52,8 +49,7 @@ the local bitlbee instance."
   (interactive "P")
   (require 'rcirc) ; loads in my rcirc-conf.el file
   (if local-only (rcirc-connect "localhost")
-    (rcirc nil))
-  (pjones:rcirc-windows))
+    (rcirc nil)))
 
 (defun pjones:pwgen (&optional kill-only)
   "Generate and insert a password."
