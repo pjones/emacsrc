@@ -159,5 +159,5 @@ not currently displayed in a window."
 (add-hook 'window-size-change-functions 'pjones:rcirc-update-fill-column-all-windows)
 
 ;; Local Variables:
-;; byte-compile-warnings: (not cl-functions)
+;; byte-compile-warnings: (not cl-functions noruntime)
 ;; End:
