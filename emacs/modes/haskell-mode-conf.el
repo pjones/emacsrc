@@ -8,7 +8,6 @@
 ;;; TO-DO List:
 ;;
 ;; * Add support for camelcase to keys like C-w
-;; * Fix the auto-indenting in comments!!!
 ;; * Figure out a better way to do completions.
 ;; * Need a better key for completions.
 ;; * Remove whitespace at end of line while typing?
@@ -122,6 +121,17 @@ line.  Examples:
              (newline)
              (insert text))))))
 
+(defun pjones:haskell-new-module ()
+  "Write out a blank module line."
+  (interactive)
+  (let* ((cabal-path (pjones:haskell-find-cabal-file))
+         (mod-path   (substring (file-name-sans-extension (buffer-file-name))
+                                (length cabal-path)))
+         (mod-name   (replace-regexp-in-string "/" "." mod-path t t)))
+    (when (string= (substring mod-name 0 4) "src.")
+      (setq mod-name (substring mod-name 4)))
+    (insert (concat "module " mod-name " () where\n"))))
+
 (defun pjones:haskell-mode-hook ()
   "Hook run on new Haskell buffers."
   (pjones:prog-mode-hook)
@@ -137,11 +147,12 @@ line.  Examples:
   (local-set-key (kbd "C-c C-a") 'pjones:haskell-new-import)
   (local-set-key (kbd "C-c C-s") 'pjones:haskell-sort-imports)
   (local-set-key (kbd "C-c C-v") 'pjones:haskell-lint-all)
+  (local-set-key (kbd "C-c M-m") 'pjones:haskell-new-module)
   (local-set-key (kbd "M-RET")   'pjones:haskell-smart-newline)
 
   (make-local-variable 'tab-always-indent)
   (setq tab-always-indent t
-        haskell-indentation-layout-offset 2
+        haskell-indentation-layout-offset 0
         haskell-indentation-starter-offset 2
         haskell-indentation-left-offset 2
         haskell-indentation-ifte-offset 2
