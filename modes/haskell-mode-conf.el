@@ -40,6 +40,26 @@ Otherwise go totally crazy."
     (sort-regexp-fields
      nil "^import \\(qualified \\)?\\(.+\\)$" "\\2" b e)))
 
+(defun pjones:haskell-module-name ()
+  "Return the module name for the current buffer."
+  (let* ((cabal-path (pjones:haskell-find-cabal-file))
+         (mod-path   (substring (file-name-sans-extension (buffer-file-name))
+                                (length cabal-path)))
+         (mod-name   (replace-regexp-in-string "/" "." mod-path t t)))
+    (if (string= (substring mod-name 0 4) "src.") (substring mod-name 4)
+      mod-name)))
+
+(defun pjones:haskell-new-module ()
+  "Write out a blank module line."
+  (interactive)
+  (let ((mod-name (pjones:haskell-module-name)))
+    (insert (concat "module " mod-name " () where\n"))))
+
+(defun pjones:haskell-module-name-to-kill-ring ()
+  "Save the module name of the current buffer to the kill ring."
+  (interactive)
+  (kill-new (pjones:haskell-module-name)))
+
 (defun pjones:haskell-new-import (&optional qualified)
   "Add a new import statement up along with the other import
 statements.  If no other imports exist add it after the first
@@ -121,17 +141,6 @@ line.  Examples:
              (newline)
              (insert text))))))
 
-(defun pjones:haskell-new-module ()
-  "Write out a blank module line."
-  (interactive)
-  (let* ((cabal-path (pjones:haskell-find-cabal-file))
-         (mod-path   (substring (file-name-sans-extension (buffer-file-name))
-                                (length cabal-path)))
-         (mod-name   (replace-regexp-in-string "/" "." mod-path t t)))
-    (when (string= (substring mod-name 0 4) "src.")
-      (setq mod-name (substring mod-name 4)))
-    (insert (concat "module " mod-name " () where\n"))))
-
 (defun pjones:haskell-mode-hook ()
   "Hook run on new Haskell buffers."
   (pjones:prog-mode-hook)
@@ -148,6 +157,7 @@ line.  Examples:
   (local-set-key (kbd "C-c C-s") 'pjones:haskell-sort-imports)
   (local-set-key (kbd "C-c C-v") 'pjones:haskell-lint-all)
   (local-set-key (kbd "C-c M-m") 'pjones:haskell-new-module)
+  (local-set-key (kbd "C-c M-w") 'pjones:haskell-module-name-to-kill-ring)
   (local-set-key (kbd "M-RET")   'pjones:haskell-smart-newline)
 
   (make-local-variable 'tab-always-indent)
