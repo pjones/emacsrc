@@ -27,10 +27,17 @@
 
 (setq rcirc-server-alist
       '(("localhost" :nick "pjones")
-        ("irc.freenode.net" :channels ("#xmonad" "#derailed" "#mpd"
-                                       "#conkeror" "#debian" "#emacs"
-                                       "#haskell" "#gnus" "#hakyll"
+        ("irc.freenode.net" :channels ("#xmonad" "#derailed" "#conkeror"
+                                       "#emacs" "#haskell"
                                        "#haskell-mobile"))))
+
+;; Other interesting Freenode channels:
+;;
+;; #hakyll -- Hakyll static site generator
+;; #gnus   -- Gnus news/mail reader
+;; #debian -- Obvious
+;; #mpd    -- Music player daemon
+
 
 (setq rcirc-authinfo
       `(("freenode"  nickserv "pmade"  ,freenode-password)
@@ -40,7 +47,7 @@
       rcirc-buffer-maximum-lines 500)
 
 (defvar pjones:rcirc-buffers
-  '("#gnus@irc.freenode.net"
+  '("#derailed@irc.freenode.net"
     "#xmonad@irc.freenode.net"
     "#conkeror@irc.freenode.net"
     "#emacs@irc.freenode.net"
