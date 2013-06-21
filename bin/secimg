@@ -1,0 +1,124 @@
+#!/usr/bin/env ruby
+
+################################################################################
+# Create and maintain mountable encrypted disk images.
+
+################################################################################
+require('optparse')
+
+################################################################################
+class Driver
+
+  ##############################################################################
+  COMMANDS = {
+    :create => "Create an encrypted disk image",
+    :mount  => "Mount an encrypted disk image",
+  }
+
+  ##############################################################################
+  def initialize
+    @args = ARGV.dup
+    command = @args.shift
+
+    OptionParser.new do |p|
+      p.banner = "Usage: secimg command [options]"
+
+      p.on('-h', '--help', 'This message') do
+        $stdout.puts(p)
+        $stdout.puts("\nCommands:\n")
+        COMMANDS.each.map {|k, v| $stdout.puts("  #{k}: #{v}")}
+        exit(0)
+      end
+    end.parse([command])
+
+    if !COMMANDS.has_key?(command.to_sym)
+      $stderr.puts("no such command: \"#{command}\".  Try --help")
+      exit(1)
+    end
+
+    send(command)
+  end
+
+  ##############################################################################
+  private
+
+  ##############################################################################
+  def create
+    options = {
+      :size => 50,
+    }
+
+    OptionParser.new do |p|
+      p.banner = "Usage: secimg create [options] file"
+
+      p.on('-h', '--help', 'This message') do
+        $stdout.puts(p)
+        exit(1)
+      end
+
+      p.on('-s', '--size=MB', 'Size in MB') do |s|
+        options[:size] = s.to_i
+      end
+    end.parse!(@args)
+
+    raise("missing file name") unless @args.size == 1
+    raise("file already exists") if File.exist?(@args.first)
+    raise("must be root") unless Process.uid == 0
+
+    device = `losetup -f`.chomp
+    crypt_device = File.basename(device) + '_crypt'
+
+    begin
+      run('dd', 'if=/dev/zero', "of=#{@args.first}", 'bs=1M', "count=#{options[:size]}")
+      run('losetup', device, @args.first)
+      run('cryptsetup', '-c', 'aes', '-s', '256', '-h', 'sha256', '-y', 'luksFormat', device)
+      run('cryptsetup', 'luksOpen', device, crypt_device)
+      run('mkfs.ext4', "/dev/mapper/#{crypt_device}")
+    ensure
+      run('cryptsetup', 'luksClose', crypt_device) if system("cryptsetup status #{crypt_device} > /dev/null 2>&1")
+      run('losetup', '-d', device) if system("losetup #{device} > /dev/null 2>&1")
+    end
+  end
+
+  ##############################################################################
+  def mount
+    OptionParser.new do |p|
+      p.banner = "Usage: secimg mount img-file directory"
+
+      p.on('-h', '--help', 'This message') do
+        $stdout.puts(p)
+        exit(1)
+      end
+    end.parse!(@args)
+
+    raise("must give image file and directory") unless @args.size == 2
+    raise("no such file: #{@args.first}") unless File.exist?(@args.first)
+    raise("no such dir: #{@args.last}") unless File.directory?(@args.last)
+    raise("must be root") unless Process.uid == 0
+
+    device = `losetup -f`.chomp
+    crypt_device = File.basename(device) + '_crypt'
+
+    begin
+      run('losetup', device, @args.first)
+      run('cryptsetup', 'luksOpen', device, crypt_device)
+      run('mount', "/dev/mapper/#{crypt_device}", File.expand_path(@args.last))
+    rescue Exception => e
+      run('losetup', '-d', device) if system("losetup #{device} > /dev/null 2>&1")
+      raise(e)
+    end
+  end
+
+  ##############################################################################
+  def run (*args)
+    raise("failed to run: #{args.join(' ')}") unless system(*args)
+  end
+end
+
+################################################################################
+begin
+  Driver.new
+rescue RuntimeError => e
+  $stderr.puts(File.basename($0) + ": ERROR: #{e}")
+  exit(1)
+end
