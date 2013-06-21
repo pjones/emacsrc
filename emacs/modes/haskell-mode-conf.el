@@ -22,6 +22,24 @@ directory."
       (setq dir (file-name-directory (substring dir 0 -1))))
     (if (string= dir "/") default-directory dir)))
 
+(defun pjones:haskell-beginning-of-defun (&optional arg)
+  "Move to the beginning of the current function."
+  (dotimes (i (or arg 1))
+    (beginning-of-line)
+    (while (and (not (bobp)) (or (eolp) (looking-at "^\\s-")))
+      (forward-line -1))
+    (if (save-excursion (forward-line -1) (looking-at "^\\w"))
+        (forward-line -1))) t)
+
+(defun pjones:haskell-end-of-defun (&optional arg)
+  "Move to the end of the current function."
+  (dotimes (i (or arg 1))
+    (beginning-of-line)
+    (while (and (not (eobp)) (looking-at "^\\w"))
+      (forward-line)) ;; Move past the function name.
+    (while (and (not (eobp)) (or (eolp) (looking-at "^\\s-")))
+      (forward-line))) t)
+
 (defun pjones:haskell-sort-imports ()
   "If point is in a block of import statements then sort them.
 Otherwise go totally crazy."
@@ -167,7 +185,9 @@ line.  Examples:
         haskell-indentation-left-offset 2
         haskell-indentation-ifte-offset 2
         haskell-indentation-where-pre-offset 2
-        haskell-indentation-where-post-offset 2))
+        haskell-indentation-where-post-offset 2
+        beginning-of-defun-function 'pjones:haskell-beginning-of-defun
+        end-of-defun-function 'pjones:haskell-end-of-defun))
 
 (add-hook 'haskell-mode-hook 'pjones:haskell-mode-hook)
 
