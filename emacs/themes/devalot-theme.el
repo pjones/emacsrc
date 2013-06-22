@@ -261,8 +261,27 @@
    `(whitespace-empty ((t (:background ,bg-normal :foreground ,fg-normal))))
    `(whitespace-line ((t (:background ,bg-normal :underline ,bg-off))))
 
+   ;; Terminal Emulation
+   `(term               ((t (:foreground ,fg-normal))))
+   `(term-bold          ((t (:inherit 'term :bold t))))
+   `(term-color-black   ((t (:foreground ,fg-low))))
+   `(term-color-blue    ((t (:foreground ,blue))))
+   `(term-color-cyan    ((t (:foreground ,cyan-high))))
+   `(term-color-green   ((t (:foreground ,green-high))))
+   `(term-color-magenta ((t (:foreground ,magenta-high))))
+   `(term-color-red     ((t (:foreground ,red))))
+   `(term-color-white   ((t (:foreground ,fg-high))))
+   `(term-color-yellow  ((t (:foreground ,yellow-high))))
+   `(term-underline     ((t (:foreground ,fg-inverse :underline ,bg-high))))
+
    ;; Remaining Junk
-   `(completion-dynamic-face ((t (:inherit 'match))))))
+   `(completion-dynamic-face ((t (:inherit 'match)))))
+
+  ;; Vector for ANSI Colors.
+  (custom-theme-set-variables
+   'devalot
+   `(ansi-color-names-vector [,fg-low ,red ,green-high ,yellow-high
+                              ,blue ,magenta-high ,cyan-high ,fg-high])))
 
 ;;;###autoload
 (when load-file-name
