@@ -4,10 +4,6 @@ if [ `hostname` = 'hawkins' ]; then
   # Configure my multi-head monitors.
   xrandr --output DVI-0 --primary        --mode 1920x1080 \
          --output DVI-1 --right-of DVI-0 --mode 1920x1080
-
-  # Share my keyboard and mouse.
-  synergys -c ~/.synergy.conf --no-tray --daemon \
-    --crypto-pass `cat ~/.synergy.pass` --crypto-mode gcm
 fi
 
 # Set the default cursor.
@@ -49,4 +45,4 @@ if [ -r $HOME/.fehbg ]; then
 fi
 
 # Finally, execute my window manager.
-exec $HOME/.xmonad/xmonad
+exec $HOME/bin/xmonad
