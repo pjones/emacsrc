@@ -39,3 +39,7 @@ Emacs."
   "Move to the other window from outside Emacs."
   (select-window (next-window nil 0 'visible))
   (if highline-mode (highline-highlight-current-line)))
+
+;; Local Variables:
+;; byte-compile-warnings: (not noruntime)
+;; End:
