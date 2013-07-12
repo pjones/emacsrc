@@ -18,7 +18,7 @@
 directory."
   (let ((dir default-directory))
     (while (and (not (string= dir "/"))
-                (not (file-expand-wildcards (concat dir "*.cabal"))))
+                (not (file-expand-wildcards (concat dir "?*.cabal"))))
       (setq dir (file-name-directory (substring dir 0 -1))))
     (if (string= dir "/") default-directory dir)))
 
