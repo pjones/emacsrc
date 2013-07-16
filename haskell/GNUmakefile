@@ -9,6 +9,11 @@ PACKAGES += hlint/1.8.*
 PACKAGES += pandoc/1.11.*
 
 ################################################################################
+# TODO:  Figure out how to build xmobar like this:
+#
+# cabal install xmobar --flags="with_xft with_mpd with_alsa"
+
+################################################################################
 # $1: Package and binary name.
 # $2: Cabal version pattern.
 define INSTALL_CABAL_PACKAGE
@@ -33,11 +38,9 @@ $(shell echo '$(1)' | sed 's|^.*/||')
 endef
 
 ################################################################################
-define PKG_SPLIT_AND_CALL
-endef
-
-################################################################################
+# Configuration files.
 $(eval $(call PMADE_INSTALL_FILE,dot.ghci,~/.ghci))
+$(eval $(call PMADE_INSTALL_FILE,cabal.config,~/.cabal/config))
 
 ################################################################################
 $(foreach p,$(PACKAGES),$(eval \
