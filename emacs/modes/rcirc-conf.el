@@ -28,7 +28,7 @@
 (setq rcirc-server-alist
       '(("localhost" :nick "pjones")
         ("irc.freenode.net" :channels ("#xmonad" "#derailed" "#conkeror"
-                                       "#emacs" "#haskell"
+                                       "#emacs" "#haskell" "#boulderhs"
                                        "#haskell-mobile"))))
 
 ;; Other interesting Freenode channels:
@@ -59,7 +59,8 @@ be placed into the current set of windows.")
 (defvar pjones:rcirc-low-traffic-channels
   '("#haskell-mobile@irc.freenode.net"
     "#hakyll@irc.freenode.net"
-    "#derailed@irc.freenode.net")
+    "#derailed@irc.freenode.net"
+    "#boulderhs@irc.freenode.net")
   "A list of IRC channels that have low enough traffic that it's
 okay to send me notifications of activity.")
 
