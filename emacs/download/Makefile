@@ -1,7 +1,7 @@
 ################################################################################
 PACKAGE_VERSIONS  = orgmode/release_7.8.11
 PACKAGE_VERSIONS += rhtml/20090213
-PACKAGE_VERSIONS += gnus/m0-5
+PACKAGE_VERSIONS += gnus/m0-7
 PACKAGE_VERSIONS += markdown/v1.9
 
 ################################################################################

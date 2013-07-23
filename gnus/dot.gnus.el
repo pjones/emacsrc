@@ -8,6 +8,3 @@
 (load "~/.gnus.d/config/summary")
 (load "~/.gnus.d/config/sources")
 (load "~/.gnus.d/config/message")
-
-;; Compile things like format strings
-(gnus-compile)
