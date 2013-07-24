@@ -12,23 +12,8 @@
       root: ~/documents/clients
     - name: down
       root: ~/download
-
-- name: music
-  options:
-    - status off
-  windows:
-    - name: ncmpcpp
-      root: ~
-      shell: zsh -ic ncmpcpp
-
-- name: radio
-  options:
-    - status off
-  windows:
-    - name: radio
-      root: ~/develop/pmade/rc/mpd
-    - name: pandora
-      root: ~
+    - name: rip
+      root: ~/documents/ripping
 
 - name: classroom
   options:
