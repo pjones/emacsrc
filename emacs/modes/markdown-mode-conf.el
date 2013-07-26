@@ -12,7 +12,7 @@
 
   ;; Files in /tmp that are *.txt are from my browser and most
   ;; websites don't like it when text you submit has newlines.
-  (when (string-match "^/tmp/.*\\.txt$" (buffer-file-name))
+  (when (and buffer-file-name (string-match "^/tmp/.*\\.txt$" buffer-file-name))
     (whitespace-mode -1)
     (auto-fill-mode -1)
     (visual-line-mode)))
