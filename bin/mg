@@ -86,11 +86,6 @@ do_sync () {
     echo "==> $name: $r (pull)"
     git pull > /dev/null 2>&1 || die "failed to git pull"
 
-    if [ -r Makefile -o -r GNUmakefile ]; then
-      echo "==> $name: $r (make)"
-      make > /dev/null 2>&1 || die "make failed"
-    fi
-
     if git_repo_needs_push; then
       echo "==> $name: $r (push)"
       git push > /dev/null 2>&1 || die "failed to git push"
@@ -99,6 +94,11 @@ do_sync () {
     if [ -r .gitmodules ]; then
       echo "==> $name: $r (update submodules)"
       git submodule update --init > /dev/null 2>&1
+    fi
+
+    if [ -r Makefile -o -r GNUmakefile ]; then
+      echo "==> $name: $r (make)"
+      make > /dev/null 2>&1 || die "make failed"
     fi
   done
 }
