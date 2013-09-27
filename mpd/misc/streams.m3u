@@ -1,7 +1,55 @@
 #EXTM3U
 
+#EXTINF:-1,Beat Blender (soma fm)
+http://somafm.com/beatblender.pls
+
+#EXTINF:-1,Covers (soma fm)
+http://somafm.com/covers.pls
+
+#EXTINF:-1,Deep Space One (soma fm)
+http://somafm.com/deepspaceone.pls
+
+#EXTINF:-1,DEF CON Radio (soma fm)
+http://somafm.com/events.pls
+
+#EXTINF:-1,Doomed (soma fm)
+http://somafm.com/doomed.pls
+
+#EXTINF:-1,Drone Zone (soma fm)
+http://somafm.com/dronezone.pls
+
+#EXTINF:-1,Dub Step Beyond (soma fm)
+http://somafm.com/dubstep.pls
+
+#EXTINF:-1,Groove Salad (soma fm)
+http://somafm.com/groovesalad.pls
+
 #EXTINF:-1,HITPARTY
 http://www.hitparty.fr/hitparty-adsl.m3u
 
+#EXTINF:-1,Illinois Street Lounge (soma fm)
+http://somafm.com/illstreet.pls
+
+#EXTINF:-1,Lush (soma fm)
+http://somafm.com/lush.pls
+
 #EXTINF:-1,Pig Radio
 http://www.pigradio.com/pig128.pls
+
+#EXTINF:-1,PopTron (soma fm)
+http://somafm.com/poptron.pls
+
+#EXTINF:-1,Secret Agent (soma fm)
+http://somafm.com/secretagent.pls
+
+#EXTINF:-1,Space Station Soma (soma fm)
+http://somafm.com/spacestation.pls
+
+#EXTINF:-1,Suburbs of Goa (soma fm)
+http://somafm.com/suburbsofgoa.pls
+
+#EXTINF:-1,The Trip (soma fm)
+http://somafm.com/thetrip.pls
+
+#EXTINF:-1,Underground 80s (soma fm)
+http://somafm.com/u80s.pls
