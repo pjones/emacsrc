@@ -4,6 +4,8 @@
   (require 'ruby-mode))
 
 (defun pjones:ruby-mode-hook ()
+  (if (fboundp 'ruby-indent-line)
+      (setq indent-line-function 'ruby-indent-line))
   (setq ruby-deep-arglist 'space
         ruby-deep-indent-paren 'space
         align-mode-rules-list
