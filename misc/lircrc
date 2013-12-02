@@ -40,3 +40,16 @@ begin
   button = KEY_PLAYPAUSE
   config = e -s projector -e '(pjones:projector-other-window)'
 end
+
+################################################################################
+begin
+  prog = conkeror
+  button = KEY_FORWARD
+  config = conkeror -f pres-next
+end
+
+begin
+  prog = conkeror
+  button = KEY_REWIND
+  config = conkeror -f pres-prev
+end
