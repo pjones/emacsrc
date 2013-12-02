@@ -2,7 +2,7 @@ Config
   { font = "xft:dejavu sans mono:size=9"
   , position = Bottom
   , bgColor = "#222222"
-  , fgColor = "#e6e6e6"
+  , fgColor = "#839496"
   , alignSep = "}{"
   , commands =
     [ Run StdinReader
