@@ -14,6 +14,7 @@
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 (global-set-key (kbd "C-x r S") 'string-insert-rectangle)
 (global-set-key (kbd "C-x l")   'pjones:switch-to-previous-buffer)
+(global-set-key (kbd "C-x o")   'ido-select-window)
 (global-set-key (kbd "C-o")     'pjones:open-line-above)
 (global-set-key (kbd "M-o")     'pjones:open-line-below)
 (global-set-key (kbd "C-s")     'isearch-forward-regexp)
