@@ -1,4 +1,12 @@
 ################################################################################
+#
+# Example useage:
+#
+#   irexec -n conkeror
+#
+# Where the argument to `-n' is one of the of `prog' values below.
+#
+################################################################################
 begin
   prog = bufshow
   button = KEY_FORWARD
@@ -52,4 +60,22 @@ begin
   prog = conkeror
   button = KEY_REWIND
   config = conkeror -f pres-prev
+end
+
+begin
+  prog = conkeror
+  button = KEY_VOLUMEUP
+  config = conkeror -f zoom-in-text
+end
+
+begin
+  prog = conkeror
+  button = KEY_VOLUMEDOWN
+  config = conkeror -f zoom-out-text
+end
+
+begin
+  prog = conkeror
+  button = KEY_SELECT
+  config = conkeror -f zoom-reset-text
 end
