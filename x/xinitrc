@@ -1,12 +1,5 @@
 #!/bin/sh
 
-if [ `hostname` = 'hawkins' ]; then
-  # Configure my multi-head monitors.
-  xrandr --output DVI-0 --primary               --mode 1920x1080 \
-         --output DVI-1 --right-of DVI-0        --mode 1920x1080 \
-         --output DisplayPort-0 --left-of DVI-0 --mode 1920x1080
-fi
-
 # Set the default cursor.
 xsetroot -cursor_name left_ptr
 
