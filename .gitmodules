@@ -1,0 +1,3 @@
+[submodule "xmonad"]
+	path = xmonad
+	url = git://pmade.com/xmonadrc.git
