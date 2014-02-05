@@ -7,9 +7,6 @@ xsetroot -cursor_name left_ptr
 # mlclient to start new X terminal emulators that share resources.
 mlterm --daemon=genuine --screens=0
 
-# Run a composition helper so I can have transparent windows.
-xcompmgr -n &
-
 # Remap my keys, but do it in the background so it doesn't conflict
 # with xorg setting up the keyboard.
 (sleep 8; xmodmap -pke > ~/.xmodmap.orig; xmodmap ~/.xmodmaprc) &
