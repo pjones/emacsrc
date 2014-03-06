@@ -25,6 +25,7 @@ mkdir -p $screenshot_dir
 import -window $window $screenshot_file
 
 ################################################################################
+remote_name=`md5sum $screenshot_file | cut -f1 -d' '`.png
 ssh $ssh_host mkdir -p $ssh_path
-scp -q $screenshot_file ${ssh_dest}/
-echo ${url_base}/`basename $screenshot_file` | xsel -ib
+scp -q $screenshot_file ${ssh_dest}/$remote_name
+echo ${url_base}/$remote_name | xsel -ib
