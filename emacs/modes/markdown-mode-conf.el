@@ -16,7 +16,7 @@
   (local-set-key (kbd "C-c C-o") 'markdown-follow-link-at-point)
   (whitespace-mode)
   (orgstruct-mode)
-  (orgtbl-mode)
+  ; (orgtbl-mode) ; Oh orgtbl, how you fuck up interactive search.
 
   ;; Files in /tmp that are *.txt are from my browser and most
   ;; websites don't like it when text you submit has newlines.
