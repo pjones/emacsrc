@@ -4,7 +4,7 @@
 
 ;; Personal information
 (setq user-full-name "Peter Jones"
-      user-mail-address "pjones@pmade.com")
+      user-mail-address "pjones@devalot.com")
 
 ;; Things to turn on for all modes
 (defun pjones:add-basic-mode-hook (mode-hook)
