@@ -34,8 +34,8 @@
 ;; Posting Styles (least specific to most specific)
 (setq gnus-posting-styles
       `((".*"
-         (signature-file ,(concat mail-signature-dir "/pmade")
-         (From "Peter Jones <pjones@pmade.com>")))
+         (signature-file ,(concat mail-signature-dir "/devalot")
+         (From "Peter Jones <pjones@devalot.com>")))
         ;; Message from Rebekah
         ((header "from" ".*dontpatroneyesme.*")
          (gcc ,pmade-rebekah-group)
@@ -65,14 +65,6 @@
          (Reply-To "Peter Jones <mlists@pmade.com>")
          (From "Peter Jones <mlists@pmade.com>"))
         ;; Mailing Lists
-        ("Derailed"
-         (To "DeRailed <derailed@googlegroups.com>")
-         (From "Peter Jones <pjones@devalot.com>")
-         (signature-file ,(concat mail-signature-dir "/devalot")))
-        ("BoulderRuby"
-         (To "Boulder Ruby Group <bdrg-members@rubyforge.org>")
-         (From "Peter Jones <mlists@pmade.com>")
-         (signature-file ,(concat mail-signature-dir "/devalot")))
         (".*mlists"
          (signature-file ,(concat mail-signature-dir "/devalot"))
          (From "Peter Jones <mlists@pmade.com>"))
@@ -83,21 +75,14 @@
          (To "lcml@tlca.org")
          (From "Peter Jones <suv8@pmade.org>")
          (signature-file ,(concat mail-signature-dir "/fj40")))
-        ;; ThriveSmart INBOX
-        ("^nnimap\\+Thrive Smart:.*"
-         (From "Peter Jones <peter@thrivesmart.com>")
-         (signature-file ,(concat mail-signature-dir "/thrivesmart")))
-        ;; Aura Software INBOX
-        ("^nnimap\\+Aura Software:.*"
-         (From "Peter Jones <pjones@aura-software.com>")
-         (signature-file ,(concat mail-signature-dir "/aurasoftware")))
         ;; SCORS Inbox
         ("^nnimap\\+SCORS:.*"
          (From "Peter Jones <peter.jones@ors.sc.gov>")
          (signature-file ,(concat mail-signature-dir "/scors")))
         ;; Google Mailing Lists
         ((header "to" ".*@googlegroups\\.com")
-         (From "Peter Jones <pjones@pmade.com>"))))
+         (signature-file ,(concat mail-signature-dir "/devalot"))
+         (From "Peter Jones <pjones@devalot.com>"))))
 
 ;; Mailing Lists
 (setq message-subscribed-addresses
