@@ -2,6 +2,16 @@
 
 # Set default path
 typeset -U path
+
+# Add some standard directories to PATH.
+[ -d ~/.cabal/bin ] && path=(~/.cabal/bin $path)
+
+# Another tool which updates my path...
+if [ -x ~/local/paths.sh ]; then
+    eval $(~/local/paths.sh)
+fi
+
+# Always keep ~/bin at the head of the list.
 path=(~/bin $path)
 
 # Load SSH agent environment vars

@@ -1,2 +1,3 @@
-/haskell/cabal-dev
+/haskell/.cabal-sandbox
+/haskell/cabal.sandbox.config
 /haskell/dist

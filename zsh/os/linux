@@ -1,13 +1,7 @@
 #!/usr/bin/env zsh
 
-# Update PATH
-path=(/usr/local/bin /usr/local/sbin /usr/games /usr/bin /usr/sbin /bin /sbin)
-path=($path /usr/local/texlive/2011/bin/x86_64-linux)
-path=(/var/lib/gems/1.8/bin $path)
-path=(~/.hsver/bin ~/.cabal/bin $path)
-
-# Always keep ~/bin at the front of PATH
-path=(~/bin $path)
+# Make sure these directories are in PATH.
+path=($path /usr/local/bin /usr/local/sbin /usr/games /usr/bin /usr/sbin /bin /sbin)
 
 # Some aliases for Linux
 alias vnc="ssvncviewer -escape Alt_L"

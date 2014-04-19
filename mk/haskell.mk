@@ -1,13 +1,15 @@
 ################################################################################
+CABAL_SANDBOX_CFG = cabal.sandbox.config
+
+################################################################################
 .PHONEY: clean realclean
 
 ################################################################################
-# Make sure that cabal-dev is installed.
-all: $(HOME)/.cabal/bin/cabal-dev
+all: $(CABAL_SANDBOX_CFG)
 
 ################################################################################
-$(HOME)/.cabal/bin/cabal-dev:
-	cabal install cabal-dev
+$(CABAL_SANDBOX_CFG):
+	cabal sandbox init
 
 ################################################################################
 clean:
@@ -15,4 +17,4 @@ clean:
 
 ################################################################################
 realclean: clean
-	rm -rf cabal-dev
+	rm -rf .cabal-sandbox $(CABAL_SANDBOX_CFG)
