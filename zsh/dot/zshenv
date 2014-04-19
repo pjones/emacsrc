@@ -7,9 +7,7 @@ typeset -U path
 [ -d ~/.cabal/bin ] && path=(~/.cabal/bin $path)
 
 # Another tool which updates my path...
-if [ -x ~/local/paths.sh ]; then
-    eval $(~/local/paths.sh)
-fi
+[ -r ~/local/paths ] && eval $(~/bin/local-paths.sh ~/local/paths)
 
 # Always keep ~/bin at the head of the list.
 path=(~/bin $path)
