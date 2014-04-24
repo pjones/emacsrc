@@ -190,6 +190,7 @@ line.  Examples:
         end-of-defun-function 'pjones:haskell-end-of-defun))
 
 (add-hook 'haskell-mode-hook 'pjones:haskell-mode-hook)
+(add-hook 'haskell-cabal-mode-hook 'pjones:prog-mode-hook)
 
 ;; Local Variables:
 ;; byte-compile-warnings: (not noruntime)
