@@ -7,12 +7,15 @@ require('optparse')
 class RemoteEmacs
 
   ##############################################################################
+  LOCAL_SERVER_DIR = File.expand_path('~/.emacs.d/server/')
+
+  ##############################################################################
   REMOTE_SERVER_FILE = File.expand_path('~/develop/emacs.server')
 
   ##############################################################################
   DEFAULT_OPTIONS = {
     'verbose' => false,
-    'server'  => 'server',
+    'server'  => nil,
     'version' => false,
     'tty'     => false,
     'frame'   => false,
@@ -40,7 +43,7 @@ class RemoteEmacs
     end.parse!(ARGV)
 
     @emacsclient = ['emacsclient']
-    @socket_file = File.expand_path("~/.emacs.d/server/#{@options.server}")
+    @socket_file = server_file || File.expand_path(LOCAL_SERVER_DIR + '/server')
   end
 
   ##############################################################################
@@ -72,6 +75,21 @@ class RemoteEmacs
 
   ##############################################################################
   private
+
+  ##############################################################################
+  # Help find the server file matching the command line arguments or env.
+  def server_file
+    base = '~/.emacs.d/server/'
+
+    [ @options.server,
+      ENV['EMACS_SERVER'],
+      `tmux display-message -p '#S' 2> /dev/null`.chomp,
+    ].inject([]) do |a, f|
+      next a if f.nil? or f.match(/\A[[:space:]]*\z/)
+      file = File.expand_path(File.join(LOCAL_SERVER_DIR, f))
+      a << file if File.exist?(file); a
+    end.first
+  end
 
   ##############################################################################
   def prepare_for_remote_send
