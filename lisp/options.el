@@ -3,7 +3,7 @@
   (require 'server))
 
 ;; Personal information
-(setq user-full-name "Peter J. Jones"
+(setq user-full-name "Peter Jones"
       user-mail-address "pjones@devalot.com")
 
 ;; Things to turn on for all modes
