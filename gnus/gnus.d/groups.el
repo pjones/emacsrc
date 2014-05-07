@@ -35,45 +35,45 @@
 (setq gnus-posting-styles
       `((".*"
          (signature-file ,(concat mail-signature-dir "/devalot")
-         (From "Peter J. Jones <pjones@devalot.com>")))
+         (From "Peter Jones <pjones@devalot.com>")))
         ;; Message from Rebekah
         ((header "from" ".*dontpatroneyesme.*")
          (gcc ,pmade-rebekah-group)
-         (From "Peter J. Jones <pjones@pmade.com>"))
+         (From "Peter Jones <pjones@pmade.com>"))
         (".*Rebekah"
          (gcc ,pmade-rebekah-group)
-         (From "Peter J. Jones <pjones@pmade.com>"))
+         (From "Peter Jones <pjones@pmade.com>"))
         ;; Messages going to the pmade.com domain
         ((header "to" "pjones@pmade\\.com")
          (signature-file ,(concat mail-signature-dir "/pmade"))
-         (From "Peter J. Jones <pjones@pmade.com>"))
+         (From "Peter Jones <pjones@pmade.com>"))
         ;; Messages going to devalot.com
         ((header "to" "pjones@devalot\\.com")
          (signature-file ,(concat mail-signature-dir "/devalot"))
-         (From "Peter J. Jones <pjones@devalot.com>"))
+         (From "Peter Jones <pjones@devalot.com>"))
         ;; Messages going to the contextualdevlopment.com domain
         ((header "to" "pjones@contextualdevelopment\\.com")
          (signature-file ,(concat mail-signature-dir "/contextual"))
-         (From "Peter J. Jones <pjones@contextualdevelopment.com>"))
+         (From "Peter Jones <pjones@contextualdevelopment.com>"))
         ;; Messages to my Land Cruiser Aliases
         ((header "to" "suv8@pmade\\.org")
-         (From "Peter J. Jones <suv8@pmade.org>")
+         (From "Peter Jones <suv8@pmade.org>")
          (signature-file ,(concat mail-signature-dir "/fj40")))
         ;; News groups
         (message-news-p
          (signature-file ,(concat mail-signature-dir "/devalot"))
-         (Reply-To "Peter J. Jones <mlists@pmade.com>")
-         (From "Peter J. Jones <mlists@pmade.com>"))
+         (Reply-To "Peter Jones <mlists@pmade.com>")
+         (From "Peter Jones <mlists@pmade.com>"))
         ;; Mailing Lists
         (".*mlists"
          (signature-file ,(concat mail-signature-dir "/devalot"))
-         (From "Peter J. Jones <mlists@pmade.com>"))
+         (From "Peter Jones <mlists@pmade.com>"))
         (".*rb-appscript"
          (To "rb-appscript-discuss@rubyforge.org")
-         (From "Peter J. Jones <mlists@pmade.com>"))
+         (From "Peter Jones <mlists@pmade.com>"))
         (".*lcml"
          (To "lcml@tlca.org")
-         (From "Peter J. Jones <suv8@pmade.org>")
+         (From "Peter Jones <suv8@pmade.org>")
          (signature-file ,(concat mail-signature-dir "/fj40")))
         ;; SCORS Inbox
         ("^nnimap\\+SCORS:.*"
@@ -82,7 +82,7 @@
         ;; Google Mailing Lists
         ((header "to" ".*@googlegroups\\.com")
          (signature-file ,(concat mail-signature-dir "/devalot"))
-         (From "Peter J. Jones <pjones@devalot.com>"))))
+         (From "Peter Jones <pjones@devalot.com>"))))
 
 ;; Mailing Lists
 (setq message-subscribed-addresses
