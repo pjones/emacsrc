@@ -58,5 +58,6 @@
 
 ;; Super key bindings
 (global-set-key (kbd "s-g") 'gnus)
+(global-set-key (kbd "s-p") 'pjones:text-to-speech-para)
 (global-set-key (kbd "s-r") 'pjones:irc)
 (global-set-key (kbd "s-u") 'browse-url)

@@ -14,3 +14,11 @@
          (flags (car wm-hints)))
     (setcar wm-hints (if status (logior flags #x00000100) (logand flags #x1ffffeff)))
     (x-change-window-property "WM_HINTS" wm-hints frame "WM_HINTS" 32 t)))
+
+(defun pjones:text-to-speech-para ()
+  "Read the current paragraph."
+  (interactive)
+  (save-excursion
+    (let* ((r-end (progn (forward-paragraph) (point)))
+           (r-start (progn (backward-paragraph) (point))))
+      (festival-say-region r-start r-end))))
