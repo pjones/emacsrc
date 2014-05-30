@@ -12,7 +12,8 @@
   (add-hook mode-hook 'font-lock-mode)
   (add-hook mode-hook 'auto-fill-mode)
   (add-hook mode-hook 'flyspell-mode)
-  (add-hook mode-hook 'column-number-mode))
+  (add-hook mode-hook 'column-number-mode)
+  (add-hook mode-hook 'subword-mode))
 
 (pjones:add-basic-mode-hook 'text-mode-hook)
 (pjones:add-basic-mode-hook 'fundamental-mode-hook)

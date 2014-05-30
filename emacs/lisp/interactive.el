@@ -2,7 +2,8 @@
 (eval-when-compile
   (require 'cl)                         ; for plusp (need to replace it)
   (require 'etags)
-  (require 'ispell))
+  (require 'ispell)
+  (require 'subword))
 
 (defun pjones:maybe-save-buffers-kill-terminal (&optional arg)
   "Save me from myself.  I somehow keep hitting C-x C-c when I
@@ -20,7 +21,9 @@ placing it in the kill ring)."
   (interactive "p")
   (if (or (not transient-mark-mode) (and transient-mark-mode mark-active))
       (kill-region (region-beginning) (region-end))
-    (delete-region (point) (progn (forward-word (- arg)) (point)))))
+    (delete-region (point)
+      (progn (if subword-mode (subword-forward (- arg)) (forward-word (- arg)))
+             (point)))))
 
 (defun pjones:switch-to-previous-buffer ()
   "Switch back to the last buffer shown in this window."
