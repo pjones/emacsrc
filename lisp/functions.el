@@ -3,6 +3,10 @@
   (require 'org)
   (require 'org-clock))
 
+;; Silence a compiler warning
+(declare-function org-clock-get-clock-string "org")
+(declare-function festival-say-region "festival")
+
 (defun pjones:org-clock-time ()
   "Returns a formatted org clock time if currently clocked in."
   (if (and (fboundp 'org-clocking-p) (org-clocking-p))
