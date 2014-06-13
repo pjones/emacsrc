@@ -1,0 +1,16 @@
+Config
+  { font = "xft:dejavu sans mono:size=9"
+  , position = Bottom
+  , bgColor = "#222222"
+  , fgColor = "#839496"
+  , alignSep = "}{"
+  , commands =
+    [ Run StdinReader
+    , Run CommandReader "/home/pjones/bin/mpd-current.sh" "playing"
+    , Run Date "%a %b %d, %H:%M" "clock" 50
+    , Run Volume "default" "Master" ["-t","V:<status>", "--", "-O", "", "-o", "M"] 10
+    , Run Weather "KBJC" ["-t", "F:<tempF> C:<tempC> H:<rh>%"] 36000
+    , Run BatteryP ["BAT0"] ["-t", "B:<acstatus><timeleft>", "--", "-O", "AC ", "-o", "", "-f", "ADP0/online"] 600
+    ]
+  , template = "%StdinReader% } %playing% {<fc=#859900>%KBJC%</fc> <fc=#5c5c5c>|</fc> <fc=#b58900>%default:Master%</fc> <fc=#5c5c5c>|</fc> %battery% <fc=#5c5c5c>|</fc> <fc=#268bd2>%clock%</fc>"
+  }

@@ -3,28 +3,24 @@
 # Set the default cursor.
 xsetroot -cursor_name left_ptr
 
+# Authentication Agents and Other Daemons.
+reboot-services.sh
+
+# Load agent environment variables.
+. $HOME/lib/sh/agents/agent-env.sh
+
 # mlterm is a terminal emulator daemon.  Once it's started you use
 # mlclient to start new X terminal emulators that share resources.
 mlterm --daemon=genuine --screens=0
 
-# Remap my keys, but do it in the background so it doesn't conflict
-# with xorg setting up the keyboard.
-(sleep 8; xmodmap -pke > ~/.xmodmap.orig; xmodmap ~/.xmodmaprc) &
-
 # Screen-saver
-xscreensaver -no-splash &
-
-# Mount my encrypted drives
-if [ -r ~/etc/keys.img ]; then
-  mount-keys.sh &
+if which xscreensaver 2>&1 > /dev/null; then
+  xscreensaver -no-splash &
 fi
 
-# Add a private SSH key to the SSH agent
-if [ -r ~/keys/ssh/`hostname`.id_dsa ]; then
-  if ssh-add -l | grep -qv id_dsa; then
-    env SSH_ASKPASS='ssh-askpass.sh' \
-      ssh-add ~/keys/ssh/`hostname`.id_dsa < /dev/null &
-  fi
+# Mount my encrypted drives.
+if [ -r ~/etc/keys.img ]; then
+  mount-keys.sh &
 fi
 
 # On-screen notifications.
@@ -34,6 +30,10 @@ fi
 if [ -r $HOME/.fehbg ]; then
   sh $HOME/.fehbg &
 fi
+
+# Remap my keys, but do it in the background so it doesn't conflict
+# with xorg setting up the keyboard.
+(sleep 8; xmodmap -pke > ~/.xmodmap.orig; xmodmap ~/.xmodmaprc) &
 
 # Finally, execute my window manager.
 exec $HOME/bin/xmonad

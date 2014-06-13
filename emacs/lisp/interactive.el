@@ -22,8 +22,9 @@ placing it in the kill ring)."
   (if (or (not transient-mark-mode) (and transient-mark-mode mark-active))
       (kill-region (region-beginning) (region-end))
     (delete-region (point)
-      (progn (if subword-mode (subword-forward (- arg)) (forward-word (- arg)))
-             (point)))))
+                   (progn (if (and (fboundp 'subword-forward) subword-mode)
+                              (subword-forward (- arg)) (forward-word (- arg)))
+                          (point)))))
 
 (defun pjones:switch-to-previous-buffer ()
   "Switch back to the last buffer shown in this window."

@@ -13,6 +13,7 @@ include ../mk/haskell.mk
 #
 PACKAGES  = hasktags/0.68.*
 PACKAGES += hlint/1.8.*
+PACKAGES += c2hs/0.17.*
 PACKAGES += pandoc/1.11.*
 PACKAGES += xmobar/0.20.1/--flags="with_xft|with_mpd|with_alsa"
 

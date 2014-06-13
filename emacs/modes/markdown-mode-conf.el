@@ -8,8 +8,7 @@
 (declare-function orgtbl-mode "org-table")
 
 ;; Basic settings.
-(setq markdown-command "pandoc -f markdown -t html"
-      markdown-follow-wiki-link-on-enter nil)
+(setq markdown-command "pandoc -f markdown -t html")
 
 (defun pjones:markdown-mode-hook ()
   "Set up key bindings and other crap for markdown-mode."

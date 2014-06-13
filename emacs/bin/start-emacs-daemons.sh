@@ -5,10 +5,7 @@ daemons=""
 
 if [ $# -eq 0 ]; then
   case `hostname` in
-    hawkins)
-      daemons="server irc gnus"
-      ;;
-    seward)
+    hawkins|seward|holmwood)
       daemons="server irc gnus"
       ;;
     *)
