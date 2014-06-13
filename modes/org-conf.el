@@ -1,15 +1,14 @@
 ;;; org-conf.el -- Settings for org-mode.
-(eval-when-compile
-  (require 'saveplace)
-  (require 'whitespace)
-  (require 'org-install)
-  (require 'org)
-  (require 'org-clock)
-  (require 'org-html))
-
-;; Silence a compiler warning
-(declare-function org-bookmark-jump-unhide "org")
+;; Silence compiler warnings
 (declare-function whitespace-mode "whitespace")
+(declare-function org-bookmark-jump-unhide "org")
+
+(require 'saveplace)
+(require 'whitespace)
+(require 'org-install)
+(require 'org)
+(require 'org-clock)
+(require 'org-html)
 
 ;; General Org Settings
 (setq org-log-done t
@@ -17,7 +16,7 @@
       org-deadline-warning-days 14
       org-hide-leading-stars t
       org-blank-before-new-entry '((heading . nil) (plain-list-item . nil))
-      org-empty-line-terminates-plain-lists t
+      org-list-empty-line-terminates-plain-lists t
       org-use-fast-todo-selection t
       org-use-fast-tag-selection 'auto
       org-fast-tag-selection-single-key t
@@ -110,7 +109,6 @@ agenda buffer."
 
   ;; Exporting
   (setq org-export-html-link-org-files-as-html nil
-        org-export-with-sub-superscripts nil
         org-export-with-emphasize nil
         org-export-html-style-default ""
         org-export-html-style-extra ""
@@ -152,7 +150,7 @@ is set, add a plain list item with a checkbox."
     (if (eolp) (newline)
       (newline)
       (forward-line -1))
-    (org-indent-line-function)
+    ;;(org-indent-line-function)
     (insert (concat "-" (if checkbox " [ ] " " ")))
     (save-excursion
       (org-back-to-heading)
@@ -166,7 +164,7 @@ is set, add a plain list item with a checkbox."
 (defun pjones:org-time-diff (t1 t2)
   "Returns the difference between t1 and t2.  Expects that times
 are formatted as HH:MM and returns them in that format"
-  (org-minutes-to-hh:mm-string
+  (org-minutes-to-clocksum-string
    (- (org-hh:mm-string-to-minutes t1)
       (org-hh:mm-string-to-minutes t2))))
 
@@ -180,3 +178,7 @@ narrows it again if necessary."
     (widen)
     (org-goto alternative-interface)
     (if (/= buff-size point-size) (org-narrow-to-subtree))))
+
+;; Local Variables:
+;; byte-compile-warnings: (not noruntime)
+;; End:

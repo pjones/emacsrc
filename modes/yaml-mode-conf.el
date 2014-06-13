@@ -4,6 +4,8 @@
   (load "../lisp/code.el")
   (require 'yaml-mode))
 
+(declare-function pjones:add-programming-hook "code.el")
+
 (defun pjones:yaml-new-array-item ()
   "Make yaml-mode sort of like org-mode by inserting a newline,
 indenting, and then inserting the array marker (dash)."

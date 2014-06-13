@@ -8,7 +8,7 @@
 
 (defvar pjones:packages
   '(magit flymake-ruby ruby-end inf-ruby htmlize yaml-mode
-          bm gist haskell-mode ido-select-window)
+          bm gist haskell-mode ido-select-window switch-window)
   "A list of packages to ensure are installed at launch.")
 
 (dolist (archive pjones:package-archives)

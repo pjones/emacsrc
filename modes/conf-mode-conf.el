@@ -3,4 +3,5 @@
   (load "../lisp/code.el")
   (require 'conf-mode))
 
+(declare-function pjones:add-programming-hook "code.el")
 (pjones:add-programming-hook 'conf-mode-hook)

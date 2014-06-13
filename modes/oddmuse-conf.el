@@ -1,6 +1,8 @@
 ;;; oddmuse-conf.el -- Settings for Oddmuse (EmacsWiki).
 (eval-when-compile (require 'oddmuse))
 
+(declare-function oddmuse-mode-initialize "oddmuse.el")
+
 (defun pmade-oddmuse-hook ()
   "Hook is run after oddmuse is started"
   (unless (string-match "question" oddmuse-post)

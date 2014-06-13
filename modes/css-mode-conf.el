@@ -3,6 +3,8 @@
   (load "../lisp/code.el")
   (require 'css-mode))
 
+(declare-function pjones:add-programming-hook "code.el")
+
 (defun pjones:css-mode-hook ()
   "Settings and overrides for css-mode."
   (setq css-indent-offset 2))

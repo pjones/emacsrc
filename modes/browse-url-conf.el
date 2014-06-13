@@ -5,6 +5,8 @@
   (require 'browse-url))
 
 (declare-function message-goto-body "message")
+(declare-function message-goto-to "message")
+(declare-function message-goto-subject "message")
 (declare-function gnus-group-mail "gnus-msg")
 
 (defun pjones:new-mail-in-gnus (url)
