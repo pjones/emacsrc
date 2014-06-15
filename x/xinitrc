@@ -7,20 +7,19 @@ xsetroot -cursor_name left_ptr
 reboot-services.sh
 
 # Load agent environment variables.
-. $HOME/lib/sh/agents/agent-env.sh
+if -r $HOME/lib/sh/agents/agent-env.sh; then
+  . $HOME/lib/sh/agents/agent-env.sh
+fi
 
 # mlterm is a terminal emulator daemon.  Once it's started you use
 # mlclient to start new X terminal emulators that share resources.
-mlterm --daemon=genuine --screens=0
+if ! pgrep -f 'mlterm.*daemon' 2>&1 > /dev/null; then
+  mlterm --daemon=genuine --screens=0
+fi
 
 # Screen-saver
 if which xscreensaver 2>&1 > /dev/null; then
   xscreensaver -no-splash &
-fi
-
-# Mount my encrypted drives.
-if [ -r ~/etc/keys.img ]; then
-  mount-keys.sh &
 fi
 
 # On-screen notifications.
@@ -29,6 +28,13 @@ fi
 # Set my desktop background.
 if [ -r $HOME/.fehbg ]; then
   sh $HOME/.fehbg &
+fi
+
+# Run any additional scripts.
+if [ -d $HOME/.xinitrc.d ]; then
+  for f in $HOME/.xinitrc.d/*; do
+    $HOME/.xinitrc.d/$f
+  done
 fi
 
 # Remap my keys, but do it in the background so it doesn't conflict
