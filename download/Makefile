@@ -5,9 +5,10 @@ PACKAGE_VERSIONS += gnus/m0-7
 PACKAGE_VERSIONS += markdown/v1.9
 
 ################################################################################
-ifeq (texdoc,$(notdir $(shell which texdoc)))
-PACKAGE_VERSIONS += auctex/11.85
-endif
+# Packages I no longer use.
+# ifeq (texdoc,$(notdir $(shell which texdoc)))
+# PACKAGE_VERSIONS += auctex/11.85
+# endif
 
 ################################################################################
 DEST = $(HOME)/.emacs.d/download
