@@ -31,7 +31,10 @@
 
 (defun pmade-gnus-article-hook ()
   "Called when gnus prepares to show a message"
-  (setq truncate-lines nil))
+  (setq gnus-treat-mail-gravatar 'head
+        gnus-treat-body-boundary 'head
+        gnus-treat-fill-long-lines t
+        gnus-treat-unsplit-urls t))
 
 (eval-after-load "message"
   '(progn

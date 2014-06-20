@@ -122,5 +122,5 @@
 (add-hook 'gnus-group-mode-hook
   (lambda ()
     (gnus-topic-mode 1)
-    (local-set-key "i" 'pmade-gnus-goto-inbox)
+    (define-key gnus-group-mode-map (kbd "v i") 'pmade-gnus-goto-inbox)
     (local-set-key (vector 'remap 'end-of-buffer) 'pmade-gnus-goto-bottom)))

@@ -43,24 +43,34 @@ IMAP mail group."
   (forward-line -1))
 
 (defun pmade-summary-hook ()
-  (local-set-key "a" (lambda ()
-                       (interactive)
-                       (pmade-move-to-mail-group pmade-archive-group)))
-  (local-set-key "A" (lambda ()
-                       (interactive)
-                       (pmade-move-to-mail-group pmade-review-group)))
-  (local-set-key "d" (lambda ()
-                       (interactive)
-                       (pmade-move-to-mail-group pmade-trash-group)))
-  (local-set-key "f" 'gnus-summary-mail-forward)
-  (local-set-key "l" (lambda ()
-                       (interactive)
-                       (pmade-move-to-mail-group pmade-rebekah-group)))
-  (local-set-key "r" 'gnus-summary-reply-with-original)
-  (local-set-key "R" 'gnus-summary-wide-reply-with-original)
-  (local-set-key "s" (lambda ()
-                       (interactive)
-                       (pmade-move-to-mail-group pmade-spam-group)))
+  (define-key gnus-summary-mode-map
+    (kbd "v a") (lambda ()
+                  (interactive)
+                  (pmade-move-to-mail-group pmade-archive-group)))
+
+  (define-key gnus-summary-mode-map
+    (kbd "v r") (lambda ()
+                  (interactive)
+                  (pmade-move-to-mail-group pmade-review-group)))
+
+  (define-key gnus-summary-mode-map
+    (kbd "v d") (lambda ()
+                  (interactive)
+                  (pmade-move-to-mail-group pmade-trash-group)))
+
+  (define-key gnus-summary-mode-map
+    (kbd "v f") 'gnus-summary-mail-forward)
+
+  (define-key gnus-summary-mode-map
+    (kbd "v l") (lambda ()
+                  (interactive)
+                  (pmade-move-to-mail-group pmade-rebekah-group)))
+
+  (define-key gnus-summary-mode-map
+    (kbd "v s") (lambda ()
+                  (interactive)
+                  (pmade-move-to-mail-group pmade-spam-group)))
+
   (local-set-key (vector 'remap 'end-of-buffer) 'pmade-gnus-summary-bottom))
 
 (add-hook 'gnus-summary-mode-hook 'pmade-summary-hook)
