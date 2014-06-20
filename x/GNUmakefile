@@ -31,7 +31,7 @@ $(eval $(call FILE_WITH_HOSTNAME,xmodmaprc))
 
 ################################################################################
 # Xorg initialization.
-XINITRC_EXTRA = $(shell ls xinitrc.d/$(HOSTNAME)-*)
+XINITRC_EXTRA = $(shell find xinitrc.d -type f -name $(HOSTNAME)-\*)
 $(eval $(call PMADE_INSTALL_BIN,xinitrc,~/.xinitrc))
 $(foreach f,$(XINITRC_EXTRA),\
   $(eval $(call PMADE_INSTALL_BIN,$(f),~/.xinitrc.d/$(notdir $(f)))))
