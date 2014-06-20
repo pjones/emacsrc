@@ -8,9 +8,6 @@
       starttls-use-gnutls t
       starttls-extra-arguments '("--insecure"))
 
-;;; Old STARTTLS settings.
-;; smtpmail-starttls-credentials `((,pmade-mail-server 25 nil nil))
-
 (setq gnus-select-method
   `(nnimap ,pmade-mail-server
            (nnir-search-engine imap)
@@ -24,16 +21,6 @@
       (nnimap-stream ssl))
     (nntp "Gmane"
       (nntp-address "news.gmane.org"))))
-
-;; (nnimap "Thrive Smart"
-;;       (nnimap-address "tsmail.pmade.com")
-;;       (nnimap-server-port 993)
-;;       (nnimap-stream ssl))
-;;     (nnimap "Aura Software"
-;;       (nnimap-address "asmail.pmade.com")
-;;       (nnimap-server-port 993)
-;;       (nnimap-stream ssl))
-
 
 (setq gnus-message-archive-group "nnimap+mail.pmade.com:Sent Messages"
       gnus-message-archive-method
