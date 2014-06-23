@@ -3,6 +3,13 @@
 # Set the default cursor.
 xsetroot -cursor_name left_ptr
 
+# Start Pulse Audio.
+if which start-pulseaudio-x11 2>&1 > /dev/null; then
+  if ! pgrep pulseaudio 2>&1 > /dev/null; then
+    start-pulseaudio-x11
+  fi
+fi
+
 # Authentication Agents and Other Daemons.
 reboot-services.sh
 
