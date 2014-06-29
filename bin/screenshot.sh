@@ -3,7 +3,7 @@
 ################################################################################
 year=`date +%Y`
 screenshot_dir=~/documents/pictures/screenshots/$year
-screenshot_file=$screenshot_dir/`date +%Y-%m-%d-%H:%M`.png
+screenshot_file=$screenshot_dir/`date +%Y-%m-%d-%H%M`.png
 ssh_host=dracula.pmade.com
 ssh_path=websites/pmade.com/www/static/images/$year
 ssh_dest=${ssh_host}:${ssh_path}
