@@ -47,8 +47,8 @@
 (add-hook 'gnus-save-standard-newsrc-hook 'pmade:gnus-turn-off-backup)
 
 ;; Checking for New Mail
-(defun pmade-new-level-one-mail () (gnus-group-get-new-news 1))
-(gnus-demon-add-handler 'pmade-new-level-one-mail 10 t)
+;; (defun pmade-new-level-one-mail () (gnus-group-get-new-news 1))
+;; (gnus-demon-add-handler 'pmade-new-level-one-mail 10 t)
 
 ;; Highlight the current line in the groups and summary buffers
 (defun pmade-gnus-index-hook ()
