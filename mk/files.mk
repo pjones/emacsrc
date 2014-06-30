@@ -1,6 +1,9 @@
 # -*- mode: makefile-gmake -*-
 
 ################################################################################
+HOSTNAME = $(shell hostname)
+
+################################################################################
 # $1: Local source file
 # $2: Path to destination
 define PMADE_INSTALL_FILE
@@ -27,4 +30,15 @@ all: ~/.$(notdir $(1))
 $(HOME)/.$(notdir $(1)): $(1)
 	@ mkdir -p `dirname $$@`
 	install -m 0644 $$< $$@
+endef
+
+################################################################################
+# $1: File name without hostname prefix.
+# $2: Optional destination.
+define PMADE_INSTALL_WITH_HOSTNAME
+ifneq ($(wildcard $(dir $(1))$(HOSTNAME).$(notdir $(1))),)
+  $(call PMADE_INSTALL_FILE,$(dir $(1))$(HOSTNAME).$(notdir $(1)),$(if $(2),$(2),~/.$(1)))
+else
+  $(call PMADE_INSTALL_DOT,$(1),$(2))
+endif
 endef

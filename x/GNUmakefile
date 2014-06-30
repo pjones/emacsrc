@@ -13,21 +13,8 @@ $(eval $(call PMADE_INSTALL_FILE,feh.themes,~/.config/feh/themes))
 $(foreach f,$(wildcard urxvt/*),$(eval $(call PMADE_INSTALL_FILE,$(f),~/.$(f))))
 
 ################################################################################
-HOSTNAME = $(shell hostname)
-
-################################################################################
-# $1: File name without hostname prefix.
-define FILE_WITH_HOSTNAME
-ifneq ($(wildcard $(HOSTNAME).$(1)),)
-  $(call PMADE_INSTALL_FILE,$(HOSTNAME).$(1),~/.$(1))
-else
-  $(call PMADE_INSTALL_DOT,$(1))
-endif
-endef
-
-################################################################################
-$(eval $(call FILE_WITH_HOSTNAME,xmobarrc))
-$(eval $(call FILE_WITH_HOSTNAME,xmodmaprc))
+$(eval $(call PMADE_INSTALL_WITH_HOSTNAME,xmobarrc))
+$(eval $(call PMADE_INSTALL_WITH_HOSTNAME,xmodmaprc))
 
 ################################################################################
 # Xorg initialization.
