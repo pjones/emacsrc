@@ -77,9 +77,7 @@
          (signature-file ,(concat mail-signature-dir "/fj40")))
         ;; SCORS Inbox
         ("^nnimap\\+SCORS:.*"
-         (From "Peter Jones <peter.jones@ors.sc.gov>")
-         ;; Address starting 7/1:
-         ;;(From "Peter Jones <peter.jones@rfa.sc.gov>")
+         (From "Peter Jones <peter.jones@rfa.sc.gov>")
          (signature-file ,(concat mail-signature-dir "/scors")))
         ;; Google Mailing Lists
         ((header "to" ".*@googlegroups\\.com")
