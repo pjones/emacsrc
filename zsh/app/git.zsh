@@ -18,7 +18,7 @@ git_resolve_with_local ()
   fi
 
   PREFIX=`git rev-parse --show-prefix`
-  
+
   # need the echo below because the files are someone all glued
   # together in a single string
   for f in `echo $FILES`; do
@@ -27,7 +27,7 @@ git_resolve_with_local ()
     touch "$f"
     git add -- "$f"
   done
-  
+
   echo "now run git commit"
 }
 
@@ -35,7 +35,7 @@ git_resolve_with_local ()
 # Find out if a repo has uncommitted changes
 git_repo_has_changes ()
 {
-  if ! git status|grep -q -F '(working directory clean)'; then
+  if ! git status|grep -q -F 'working directory clean'; then
     return 0
   else
     return 1
@@ -86,10 +86,10 @@ git_rm_branch ()
     echo "Usage: $0 branch"
     return 1
   fi
-  
+
   branch=$1
   git branch -d $branch || return 1
-  
+
   if git branch -a | grep -q origin/$branch; then
     git push origin :heads/$branch
   fi
@@ -101,7 +101,7 @@ git_master_pull ()
 {
   remote=origin
   test $# -eq 1 && remote=$1
-  
+
   branch=`git_current_branch`
   echo "==> Leaving branch ${branch}"
   git checkout master  || return 1
@@ -123,10 +123,10 @@ git_new_repo ()
   remote_path=$1
   remote_name=origin
   remote_host=dracula.pmade.com
-  
+
   test $# -gt 1 && remote_name=$2
   test $# -gt 2 && remote_host=$3
-  
+
   ssh $remote_host "mkdir -p $remote_path && cd $remote_path && git init --bare"
   git remote add $remote_name ${remote_host}:$remote_path
   git config --add branch.master.remote $remote_name
