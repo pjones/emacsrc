@@ -30,9 +30,11 @@ if which xscreensaver 2>&1 > /dev/null; then
 fi
 
 # On-screen notifications.
-if [ -x /usr/lib/notify-osd/notify-osd ]; then
-  /usr/lib/notify-osd/notify-osd &
+if [ -x /usr/lib/x86_64-linux-gnu/xfce4/notifyd/xfce4-notifyd ]; then
+  # First choice.
+  /usr/lib/x86_64-linux-gnu/xfce4/notifyd/xfce4-notifyd &
 else
+  # Fallback.
   /usr/lib/notification-daemon/notification-daemon &
 fi
 
