@@ -30,7 +30,11 @@ if which xscreensaver 2>&1 > /dev/null; then
 fi
 
 # On-screen notifications.
-/usr/lib/notification-daemon/notification-daemon &
+if [ -x /usr/lib/notify-osd/notify-osd ]; then
+  /usr/lib/notify-osd/notify-osd &
+else
+  /usr/lib/notification-daemon/notification-daemon &
+fi
 
 # Set my desktop background.
 if [ -r $HOME/.fehbg ]; then
@@ -40,7 +44,7 @@ fi
 # Run any additional scripts.
 if [ -d $HOME/.xinitrc.d ]; then
   for f in $HOME/.xinitrc.d/*; do
-    $HOME/.xinitrc.d/$f
+    $f
   done
 fi
 
