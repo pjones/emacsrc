@@ -2,4 +2,4 @@
 
 ################################################################################
 # Turn off the trackpad.
-tptoggle.sh off
+$HOME/bin/tptoggle.sh off
