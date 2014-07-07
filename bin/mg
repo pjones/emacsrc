@@ -96,10 +96,10 @@ do_sync () {
       git submodule update --init > /dev/null 2>&1
     fi
 
-    if [ -r Makefile -o -r GNUmakefile ]; then
-      echo "==> $name: $r (make)"
-      make > /dev/null 2>&1 || die "make failed"
-    fi
+    # if [ -r Makefile -o -r GNUmakefile ]; then
+    #   echo "==> $name: $r (make)"
+    #   make > /dev/null 2>&1 || die "make failed"
+    # fi
   done
 }
 
