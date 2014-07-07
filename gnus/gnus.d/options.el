@@ -10,9 +10,7 @@
         "pjones@contextualdevelopment"
         "mlists@pmade"
         "suv8@pmade"
-        "peter\\.jones@ors\\.sc\\.gov"
-        "pjones@aura-software\\.com"
-        "peter@thrivesmart\\.com"))
+        "peter\\.jones@rfa\\.sc\\.gov"))
 
 (setq gnus-ignored-from-addresses message-dont-reply-to-names)
 
