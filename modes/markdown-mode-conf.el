@@ -1,6 +1,7 @@
 ;;; markdown-conf.el -- Settings for markdown-mode.
 (eval-when-compile
   (require 'markdown-mode)
+  (require 'whitespace)
   (require 'org)
   (require 'org-table))
 
