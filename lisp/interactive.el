@@ -19,12 +19,12 @@ the kill ring in a similar manner to `kill-region'.  If there
 isn't a region, the word before point will be deleted (without
 placing it in the kill ring)."
   (interactive "p")
-  (if (or (not transient-mark-mode) (and transient-mark-mode mark-active))
-      (kill-region (region-beginning) (region-end))
-    (delete-region (point)
-                   (progn (if (and (fboundp 'subword-forward) subword-mode)
-                              (subword-forward (- arg)) (forward-word (- arg)))
-                          (point)))))
+  (let ((forward (if (or subword-mode global-subword-mode)
+                     'subword-forward 'forward-word)))
+    (if (or (not transient-mark-mode) (and transient-mark-mode mark-active))
+        (kill-region (region-beginning) (region-end))
+      (delete-region (point) (progn (funcall forward (- arg))
+                                    (point))))))
 
 (defun pjones:switch-to-previous-buffer ()
   "Switch back to the last buffer shown in this window."
@@ -63,17 +63,16 @@ the local bitlbee instance."
     (kill-new pw)
     (if (not kill-only) (insert pw))))
 
-(defun pjones:transpose-windows (arg)
-   "Transpose the buffers shown in two windows."
-   (interactive "p")
-   (let ((selector (if (>= arg 0) 'next-window 'previous-window)))
-     (while (/= arg 0)
-       (let ((this-win (window-buffer))
-             (next-win (window-buffer (funcall selector))))
-         (set-window-buffer (selected-window) next-win)
-         (set-window-buffer (funcall selector) this-win)
-         (select-window (funcall selector)))
-       (setq arg (if (plusp arg) (1- arg) (1+ arg))))))
+(defun pjones:transpose-windows (&optional keep-cursor)
+   "Transpose the buffers shown in two windows.  By default point
+stays in the currently active buffer.  When KEEP-CURSOR is
+non-nil keep the cursor in the currently active window."
+   (interactive "P")
+   (let ((this-win (window-buffer))
+         (next-win (window-buffer (next-window))))
+     (set-window-buffer (selected-window) next-win)
+     (set-window-buffer (next-window) this-win)
+     (unless keep-cursor (select-window (next-window)))))
 
 (defvar pjones:last-dictionary nil
   "The last non-English dictionary used by `pjones:toggle-dictionary'.")
