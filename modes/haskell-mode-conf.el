@@ -104,8 +104,8 @@ With a prefix argument make the import qualified."
   (let* ((dir (pjones:haskell-find-cabal-file))
          (files (cl-remove-if
                  (lambda (f)
-                   (or (string= "."         (file-name-base f))
-                       (string= ".."        (file-name-base f))
+                   (or (string-match "^\\." (file-name-base f))
+                       (string= "dist"      (file-name-base f))
                        (string= "cabal-dev" (file-name-base f))
                        (and (not (file-directory-p f))
                             (not (string= "hs" (file-name-extension f))))))
