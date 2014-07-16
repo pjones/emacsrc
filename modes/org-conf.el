@@ -150,7 +150,7 @@ is set, add a plain list item with a checkbox."
     (if (eolp) (newline)
       (newline)
       (forward-line -1))
-    ;;(org-indent-line-function)
+    (org-indent-line)
     (insert (concat "-" (if checkbox " [ ] " " ")))
     (save-excursion
       (org-back-to-heading)
