@@ -3,6 +3,7 @@
   (require 'cl)                         ; for plusp (need to replace it)
   (require 'etags)
   (require 'ispell)
+  (require 'rcirc)
   (require 'subword))
 
 (defun pjones:maybe-save-buffers-kill-terminal (&optional arg)
@@ -20,7 +21,8 @@ isn't a region, the word before point will be deleted (without
 placing it in the kill ring)."
   (interactive "p")
   (let ((forward (if (or subword-mode global-subword-mode)
-                     'subword-forward 'forward-word)))
+                     'subword-forward
+                   'forward-word)))
     (if (or (not transient-mark-mode) (and transient-mark-mode mark-active))
         (kill-region (region-beginning) (region-end))
       (delete-region (point) (progn (funcall forward (- arg))
@@ -51,8 +53,11 @@ placing it in the kill ring)."
   "Start IRC client.  With an argument only start a connection to
 the local bitlbee instance."
   (interactive "P")
-  (require 'rcirc) ; loads in my rcirc-conf.el file
-  (if local-only (rcirc-connect "localhost")
+  (require 'rcirc) ; Loads in my rcirc-conf.el file
+  (if local-only
+      ;; Restrict to first server in the list.
+      (let ((rcirc-server-alist (list (car rcirc-server-alist))))
+        (rcirc nil))
     (rcirc nil)))
 
 (defun pjones:pwgen (&optional kill-only)

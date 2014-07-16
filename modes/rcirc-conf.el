@@ -25,6 +25,10 @@
       rcirc-multiline-major-mode 'markdown-mode
       rcirc-fill-flag t)
 
+;; List of servers to connect to.
+::
+;; N.B. The first server is the one used when the pjones:irc function
+;; is called with a prefix argument.
 (setq rcirc-server-alist
       '(("localhost" :nick "pjones")
         ("irc.freenode.net" :channels ("#xmonad" "#derailed" "#conkeror"
