@@ -1,5 +1,5 @@
-# How many points before a mail is considered spam.
-required_score 3
+# How many points before a mail is considered spam. (Default is 5.)
+required_score 10
 
 # Enable auto white listing
 # http://wiki.apache.org/spamassassin/AutoWhitelist
@@ -9,14 +9,14 @@ use_auto_whitelist 1
 # read from the installed spamassassin rules files, but you can override them
 # here.  To see the list of tests and their default scores, go to
 # http://spamassassin.apache.org/tests.html .
-score MIME_HTML_ONLY         3.0
-score MICROSOFT_EXECUTABLE   3.0
-score URIBL_BLACK            3.0
-score URIBL_RHS_URIBL_BLACK  3.0
-score URIBL_JP_SURBL         3.0
-score RCVD_IN_BL_SPAMCOP_NET 3.0
-score MISSING_MID            3.0
-score MISSING_DATE           3.0
+score MIME_HTML_ONLY         5
+score MICROSOFT_EXECUTABLE   10
+score URIBL_BLACK            10
+score URIBL_RHS_URIBL_BLACK  10
+score URIBL_JP_SURBL         10
+score RCVD_IN_BL_SPAMCOP_NET 10
+score MISSING_MID            10
+score MISSING_DATE           10
 
 # http://www.dnswl.org/ might be comprised since a ton of spam is
 # getting through because the defaults for the rules below reduce the
@@ -27,18 +27,26 @@ score RCVD_IN_DNSWL_HI  0
 
 # Use the local bayes database to help score spam
 # http://wiki.apache.org/spamassassin/BasicConfiguration
-score BAYES_00 -4
-score BAYES_05 -2
-score BAYES_95  1.0
-score BAYES_99  2.9
+# http://spamassassin.apache.org/tests_3_2_x.html
+use_bayes 1
+bayes_auto_learn 1
+score BAYES_00 -5.0
+score BAYES_05 -2.0
+score BAYES_20  0.0
+score BAYES_40  2.0
+score BAYES_50  2.5
+score BAYES_60  3.0
+score BAYES_80  3.5
+score BAYES_95  5.0
+score BAYES_99  7.0
 
 # Personal rules
 header PMADE_SOMEONE_SEARCHED_FOR_YOU Subject =~ /(an old friend|an ex recently) searched for you/i
-score  PMADE_SOMEONE_SEARCHED_FOR_YOU 5.0
+score  PMADE_SOMEONE_SEARCHED_FOR_YOU 10
 
 # Blacklists
 blacklist_from *@pmade.org
-blacklist_to *@pmade.org
+blacklist_to   *@pmade.org
 blacklist_from *blueredgolds.info
 blacklist_from *musiciansfriend.com
 blacklist_from *dinospeaker.com
@@ -48,4 +56,4 @@ whitelist_from *bvsd.org
 whitelist_from *premiermembers.org
 whitelist_from *gemresourcing.com
 whitelist_from *gmane.org
-whitelist_to coders01@devalot.com
+whitelist_to   coders01@devalot.com
