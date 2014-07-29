@@ -56,7 +56,7 @@ Otherwise go totally crazy."
              (move-end-of-line nil)
              (point))))
     (sort-regexp-fields
-     nil "^import \\(qualified \\)?\\(.+\\)$" "\\2" b e)))
+     nil "^import +\\(qualified \\)?\\(.+\\)$" "\\2" b e)))
 
 (defun pjones:haskell-module-name ()
   "Return the module name for the current buffer."
