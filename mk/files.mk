@@ -37,8 +37,8 @@ endef
 # $2: Optional destination.
 define PMADE_INSTALL_WITH_HOSTNAME
 ifneq ($(wildcard $(dir $(1))$(HOSTNAME).$(notdir $(1))),)
-  $(call PMADE_INSTALL_FILE,$(dir $(1))$(HOSTNAME).$(notdir $(1)),$(if $(2),$(2),~/.$(1)))
+  $(call PMADE_INSTALL_FILE,$(dir $(1))$(HOSTNAME).$(notdir $(1)),$(2))
 else
-  $(call PMADE_INSTALL_DOT,$(1),$(2))
+  $(call PMADE_INSTALL_FILE,$(1),$(2))
 endif
 endef
