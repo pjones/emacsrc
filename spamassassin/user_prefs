@@ -37,8 +37,8 @@ score BAYES_40  2.0
 score BAYES_50  2.5
 score BAYES_60  3.0
 score BAYES_80  3.5
-score BAYES_95  6.0
-score BAYES_99  8.0
+score BAYES_95  4.0
+score BAYES_99  5.0
 
 # Personal rules.
 # https://wiki.apache.org/spamassassin/WritingRules
