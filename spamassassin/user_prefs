@@ -37,12 +37,21 @@ score BAYES_40  2.0
 score BAYES_50  2.5
 score BAYES_60  3.0
 score BAYES_80  3.5
-score BAYES_95  5.0
-score BAYES_99  7.0
+score BAYES_95  6.0
+score BAYES_99  8.0
 
-# Personal rules
+# Personal rules.
+# https://wiki.apache.org/spamassassin/WritingRules
+
+# Annoying subjects.
 header PMADE_SOMEONE_SEARCHED_FOR_YOU Subject =~ /(an old friend|an ex recently) searched for you/i
 score  PMADE_SOMEONE_SEARCHED_FOR_YOU 10
+
+# Red flag when to/cc address doesn't include my name.
+header PMADE_MISSING_NAME_TO To !~ /pete/i
+header PMADE_MISSING_NAME_CC Cc !~ /pete/i
+score  PMADE_MISSING_NAME_TO 5.0
+score  PMADE_MISSING_NAME_CC 5.0
 
 # Blacklists
 blacklist_from *@pmade.org
