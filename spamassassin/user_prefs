@@ -53,6 +53,12 @@ header PMADE_MISSING_NAME_CC Cc !~ /pete/i
 score  PMADE_MISSING_NAME_TO 5.0
 score  PMADE_MISSING_NAME_CC 5.0
 
+# If you do use my name it's probably because I gave it to you.
+header PMADE_HAS_NAME_TO To =~ /Peter/
+header PMADE_HAS_NAME_CC Cc =~ /Peter/
+score  PMADE_HAS_NAME_TO -3.0
+score  PMADE_HAS_NAME_CC -3.0
+
 # Blacklists
 blacklist_from *@pmade.org
 blacklist_to   *@pmade.org
