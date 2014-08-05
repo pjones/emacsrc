@@ -179,6 +179,16 @@
    `(org-block-begin-line ((t (:inherit 'org-special-keyword))))
    `(org-block-end-line ((t (:inherit 'org-block-begin-line))))
 
+   ;; Markdown mode
+   `(markdown-header-delimiter-face ((t (:inherit 'org-agenda-dimmed-todo-face))))
+   `(markdown-header-face           ((t (:inherit 'outline-1))))
+   `(markdown-header-face-1         ((t (:inherit 'outline-1))))
+   `(markdown-header-face-2         ((t (:inherit 'outline-2))))
+   `(markdown-header-face-3         ((t (:inherit 'outline-3))))
+   `(markdown-header-face-4         ((t (:inherit 'outline-4))))
+   `(markdown-header-face-5         ((t (:inherit 'outline-5))))
+   `(markdown-header-face-6         ((t (:inherit 'outline-6))))
+
 
    ;; ERB (Ruby Embedded in HTML)
    `(erb-face               ((t (:background ,bg-normal :foreground ,fg-normal))))
