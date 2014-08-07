@@ -6,4 +6,5 @@ OFF_TIMEOUT_SECS=300
 
 ################################################################################
 # Change display sleep settings.
+xset +dpms
 xset dpms $OFF_TIMEOUT_SECS $OFF_TIMEOUT_SECS $OFF_TIMEOUT_SECS
