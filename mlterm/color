@@ -16,5 +16,6 @@ magenta    = #d33682
 hl_magenta = #d36198
 cyan       = #2aa198
 hl_cyan    = #4aa19a
-white      = #eeeeee
+# white      = #eeeeee
+white      = #93a1a1
 hl_white   = #ffffff
