@@ -66,6 +66,7 @@ score  PMADE_HAS_NAME_CC -5.0
 # Blacklists
 blacklist_from *@pmade.org
 blacklist_to   *@pmade.org
+blacklist_from *@pmtcert.com
 blacklist_from *blueredgolds.info
 blacklist_from *musiciansfriend.com
 blacklist_from *dinospeaker.com
