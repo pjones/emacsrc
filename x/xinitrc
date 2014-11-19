@@ -3,6 +3,9 @@
 # Set the default cursor.
 xsetroot -cursor_name left_ptr
 
+# Start dbus for everything else.
+eval `dbus-launch --auto-syntax`
+
 # Start Pulse Audio.
 if which start-pulseaudio-x11 2>&1 > /dev/null; then
   if ! pgrep pulseaudio 2>&1 > /dev/null; then
@@ -55,4 +58,5 @@ fi
 (sleep 8; xmodmap -pke > ~/.xmodmap.orig; xmodmap ~/.xmodmaprc) &
 
 # Finally, execute my window manager.
+$HOME/bin/taffybar.sh &
 exec $HOME/bin/xmonad
