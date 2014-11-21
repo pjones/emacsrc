@@ -22,7 +22,7 @@ if -r $HOME/lib/sh/agents/agent-env.sh; then
 fi
 
 # urxvtd is a terminal emulator daemon.  Once it's started you use
-# mlclient to start new X terminal emulators that share resources.
+# urxvtc to start new X terminal emulators that share resources.
 if ! pgrep -f 'urxvtd' 2>&1 > /dev/null; then
   urxvtd -q -o -f
 fi
