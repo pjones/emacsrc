@@ -21,10 +21,10 @@ if -r $HOME/lib/sh/agents/agent-env.sh; then
   . $HOME/lib/sh/agents/agent-env.sh
 fi
 
-# mlterm is a terminal emulator daemon.  Once it's started you use
+# urxvtd is a terminal emulator daemon.  Once it's started you use
 # mlclient to start new X terminal emulators that share resources.
-if ! pgrep -f 'mlterm.*daemon' 2>&1 > /dev/null; then
-  mlterm --daemon=genuine --screens=0
+if ! pgrep -f 'urxvtd' 2>&1 > /dev/null; then
+  urxvtd -q -o -f
 fi
 
 # Screen-saver
