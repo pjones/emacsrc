@@ -5,7 +5,9 @@ Emacs.font: -unknown-DejaVu Sans Mono-normal-normal-normal-*-12-*-*-*-m-0-iso106
 ! ############################################################################
 ! # URxvt terminal
 URxvt.font: xft:dejavu sans mono:pixelsize=12
+Urxvt.saveLines: 25
 URxvt.letterSpace: 0
+URxvt.urgentOnBell: true
 URxvt.insecure: true
 URxvt.modifer: alt
 URxvt.meta8: false
@@ -15,32 +17,42 @@ URxvt.cursorBlink: true
 URxvt.cursorUnderline: true
 URxvt.pointerBlank: true
 URxvt.perl-lib: /home/pjones/.urxvt
-URxvt.perl-ext-common: url-select,clipboard
+URxvt.perl-ext-common: url-select,clipboard,font-size
 URxvt.keysym.M-w: builtin:
 URxvt.keysym.C-w: builtin:
+URxvt.keysym.C-y: builtin:
 URxvt.keysym.C-M-w: perl:clipboard:copy
-URxvt.keysym.C-y: perl:clipboard:paste
+URxvt.keysym.C-M-y: perl:clipboard:paste
+URxvt.keysym.C-M-equal: perl:font-size:increase
+URxvt.keysym.C-M-minus: perl:font-size:decrease
+URxvt.keysym.C-M-0: perl:font-size:reset
 URxvt.background: #222222
-URxvt.foreground: #e6e6e6
-URxvt.color0: #111111
+URxvt.foreground: #839496
+URxvt.highlightColor: #003340
+URxvt.highlightTextColor: #839496
+URxvt.color0: #333333
 URxvt.color1: #dc322f
 URxvt.color2: #859900
 URxvt.color3: #b58900
 URxvt.color4: #268bd2
 URxvt.color5: #d33682
 URxvt.color6: #2aa198
-URxvt.color7: #839496
-URxvt.color8: #1c1c1c
+URxvt.color7: #93a1a1
+URxvt.color8: #083d4a
 URxvt.color9: #dc5c5a
 URxvt.color10: #88b324
 URxvt.color11: #b5a924
 URxvt.color12: #509cd2
 URxvt.color13: #d36198
 URxvt.color14: #4aa19a
-URxvt.color15: #ffffd7
+URxvt.color15: #ffffff
 
 ! ############################################################################
-! # Bigger terminal for presentations
+! # Bigger terminal.
 BigTerm.font: xft:dejavu sans mono:size=18
-BigTerm.keysym.C-y: builtin:
-BigTerm.keysym.C-M-y: perl:clipboard:paste
+
+! ############################################################################
+! # Bigger terminal for presentations.
+BigTermP.font: xft:dejavu sans mono:size=18
+BigTermP.background: #fdf6e3
+BigTermP.foreground: #002b36
