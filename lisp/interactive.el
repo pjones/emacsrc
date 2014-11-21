@@ -20,9 +20,11 @@ the kill ring in a similar manner to `kill-region'.  If there
 isn't a region, the word before point will be deleted (without
 placing it in the kill ring)."
   (interactive "p")
-  (let ((forward (if (or subword-mode global-subword-mode)
-                     'subword-forward
-                   'forward-word)))
+  (let ((forward
+    (if (and (boundp 'subword-mode)
+             (or subword-mode global-subword-mode))
+        'subword-forward
+      'forward-word)))
     (if (or (not transient-mark-mode) (and transient-mark-mode mark-active))
         (kill-region (region-beginning) (region-end))
       (delete-region (point) (progn (funcall forward (- arg))

@@ -163,6 +163,7 @@ line.  Examples:
   "Hook run on new Haskell buffers."
   (pjones:prog-mode-hook)
   (turn-on-haskell-indentation)
+  (subword-mode)
 
   ;; Undo some stupid haskell-mode bindings.
   (let ((map haskell-indentation-mode-map))
