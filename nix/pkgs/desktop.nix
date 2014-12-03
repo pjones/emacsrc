@@ -3,7 +3,7 @@
 
 with pkgs; {
   # Terminals and core software:
-  inherit rxvt_unicode;
+  inherit rxvt_unicode_with-plugins;
 
   # Internet Utilities:
   inherit uzbl chromium;
@@ -13,6 +13,10 @@ with pkgs; {
 
   # Media Ripping:
   inherit handbrake makemkv;
+
+  # Helper tools for Xorg:
+  xkbcomp = xorg.xkbcomp;
+  xev = xorg.xev;
 
 } // import ./base.nix {inherit pkgs;} //
      import ./development.nix {inherit pkgs;}

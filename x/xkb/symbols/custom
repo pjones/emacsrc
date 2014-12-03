@@ -1,0 +1,13 @@
+// Swap the capslock key with the right control key.
+partial modifier_keys 
+xkb_symbols "capsrctl" {
+    replace key <CAPS>	{  [ Control_R ] };
+    replace key <RCTL>	{  [ Caps_Lock ] };
+};
+
+// Turn the left control key into a mod3 key.
+partial hidden modifier_keys
+xkb_symbols "lctlmod3" {
+  replace key <LCTL> { [ VoidSymbol, VoidSymbol ] };
+  modifier_map Mod3  { <LCTL> };
+};

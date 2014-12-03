@@ -11,4 +11,10 @@ with pkgs; {
 
   # Build tools:
   inherit gnumake;
+
+  # Haskell:
+  ghc = haskellPackages.ghc;
+  cabal = haskellPackages.cabalInstall;
+  alex = haskellPackages.alex;
+  happy = haskellPackages.happy;
 }
