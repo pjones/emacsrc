@@ -1,22 +1,38 @@
-# Packages for a full user experience on a laptop or workstation.
 { pkgs, ... }:
 
-with pkgs; {
-  # Terminals and core software:
-  inherit rxvt_unicode_with-plugins;
+{
+  # List of other files to include:
+  imports = [
+    ./base.nix
+    ./development.nix
+  ];
 
-  # Internet Utilities:
-  inherit uzbl chromium;
+  # Packages for a full user experience on a laptop or workstation.
+  packages = with pkgs; [
+    # Terminals and core software:
+    rxvt_unicode_with-plugins wmctrl gnome.gnome_keyring
 
-  # Media Players:
-  inherit mpd mpc_cli ncmpcpp vlc mpg123 moc;
+    # Internet Utilities:
+    uzbl chromium bitlbee ssvnc
 
-  # Media Ripping:
-  inherit handbrake makemkv;
+    # Media Players/Viewers:
+    mpd mpc_cli ncmpcpp vlc mpg123 moc feh zathura
 
-  # Helper tools for Xorg:
-  xkbcomp = xorg.xkbcomp;
-  xev = xorg.xev;
+    # Media Ripping:
+    handbrake makemkv
 
-} // import ./base.nix {inherit pkgs;} //
-     import ./development.nix {inherit pkgs;}
+    # Media Editors:
+    audacity gimp inkscape darktable
+
+    # Writing and Designing.
+    aspell aspellDicts.en dict
+    texLiveFull gcolor2 impressive libreoffice
+    graphviz mscgen xournal
+
+    # Games.
+    mednafen
+
+    # Misc.
+    tty-clock
+  ];
+}

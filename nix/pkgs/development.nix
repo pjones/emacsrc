@@ -1,20 +1,24 @@
-# Packages for software development.
 { pkgs, ... }:
 
-with pkgs; {
-  # Core Tools like Text Editors:
-  inherit emacs vim;
+{
+  # Packages for software development.
+  packages = with pkgs; [
+    # Core Tools like Text Editors:
+    emacs
 
-  # Revision Control Systems:
-  git = gitAndTools.gitFull;
-  inherit darcs;
+    # Revision Control Systems:
+    gitAndTools.gitFull darcs
 
-  # Build tools:
-  inherit gnumake;
+    # Build tools:
+    gnumake
 
-  # Haskell:
-  ghc = haskellPackages.ghc;
-  cabal = haskellPackages.cabalInstall;
-  alex = haskellPackages.alex;
-  happy = haskellPackages.happy;
+    # Haskell:
+    haskellPackages.ghc
+    haskellPackages.cabalInstall
+    haskellPackages.alex
+    haskellPackages.happy
+
+    # Hardware Hacking.
+    arduino_core picocom
+  ];
 }

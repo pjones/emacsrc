@@ -1,4 +1,4 @@
-# Packages to install for my laptop Seward.
+# Packages to install for my workstation Hawkings.
 let pkgs = import <nixpkgs> {}; in
 
 (import ../lib {inherit pkgs;}).process {
