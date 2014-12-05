@@ -14,9 +14,10 @@ all: $(NIXPKGS_CONFIG_DEST)
 ################################################################################
 $(CHANNEL_FILE):
 	nix-channel --add $(CHANNEL_URL) nixpkgs
+	nix-channel --update
 
 ################################################################################
-$(NIXPKGS_CONFIG_DEST): $(notdir $(NIXPKGS_CONFIG_DEST)) $(CHANNEL_FILE)
+$(NIXPKGS_CONFIG_DEST): $(notdir $(NIXPKGS_CONFIG_DEST)) $(CHANNEL_FILE) $(NIX_FILES)
 	mkdir -p $(dir $@)
 	install -m 0644 $< $@
 	nix-env -f hosts/$(HOSTNAME).nix -i
