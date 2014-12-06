@@ -12,19 +12,8 @@ typeset -U path
 # Always keep ~/bin at the head of the list.
 path=(~/bin $path)
 
-# Load SSH agent environment vars
-if [ -r ~/.ssh/agent ]; then
-  eval $(cat ~/.ssh/agent | egrep -v ^echo)
-  export SSH_AGENT_PID
-  export SSH_AUTH_SOCK
-fi
-
-# Load GPG agent environment vars
-if [ -r ~/.gpg-agent-info ]; then
-  source ~/.gpg-agent-info
-  export GPG_AGENT_INFO
-fi
-
+# Load agent environment variables.
+source ~/.zsh/lib/agents.zsh
 
 # Load in optional operating system override
 [ -r ~/.zsh/os ] && source ~/.zsh/os

@@ -1,7 +1,12 @@
 #!/usr/bin/env zsh
 
-# Make sure these directories are in PATH.
-path=($path /usr/local/bin /usr/local/sbin /usr/games /usr/bin /usr/sbin /bin /sbin)
+if [ -n "$NIX_PATH" ]; then
+  # NixOS
+  NIX_PATH="nixpkgs=$HOME/.nix-defexpr/channels/nixpkgs:$NIX_PATH"
+else
+  # Make sure these directories are in PATH.
+  path=($path /usr/local/bin /usr/local/sbin /usr/games /usr/bin /usr/sbin /bin /sbin)
+fi
 
 # Some aliases for Linux
 alias vnc="ssvncviewer -escape Alt_L"

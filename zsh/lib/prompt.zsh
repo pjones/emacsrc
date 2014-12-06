@@ -27,6 +27,7 @@ if [ "x$INSIDE_SCRIPT" = "x" ]; then
     # Move to the next line and present the command prompt.
     prompt="${prompt}${prompt_newline}${prompt_backtick}-%F{white}>%f "
     PS1=$prompt
+    RPROMPT=""
   }
 else
   PS1="$ "

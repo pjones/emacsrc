@@ -26,4 +26,4 @@ fi
 
 ################################################################################
 # Now activate the keys.
-xkbcomp $XKB_PATH $XKB_KEYMAP $DISPLAY
+xkbcomp $XKB_PATH $XKB_KEYMAP $DISPLAY > /dev/null

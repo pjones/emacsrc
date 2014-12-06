@@ -18,7 +18,7 @@ XINITRC_EXTRA  = $(shell find xinitrc.d -type f -name $(HOSTNAME)-\*)
 XINITRC_EXTRA += $(shell find xinitrc.d -type f -regex 'xinitrc.d/[0-9]+-.*')
 
 $(eval $(call PMADE_INSTALL_BIN,xinitrc,~/.xinitrc))
-$(eval $(call PMADE_INSTALL_BIN,xsession,~/.xsession))
+$(eval $(call PMADE_INSTALL_BIN,xinitrc,~/.xsession))
 
 $(foreach f,$(XINITRC_EXTRA),\
   $(eval $(call PMADE_INSTALL_BIN,$(f),~/.xinitrc.d/$(notdir $(f)))))
