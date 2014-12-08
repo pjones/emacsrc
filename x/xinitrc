@@ -3,54 +3,18 @@
 # Force this file to be processed by zsh.
 if [ -z "$ZSH_LOADED_FROM" ]; then
   export ZSH_LOADED_FROM=$0
-  exec zsh $0
+  exec zsh -x $0
 fi
 
-# Set the default cursor.
+# Set the default cursor and background.
 xsetroot -cursor_name left_ptr
+xsetroot -solid "#4b0082"
 
-# Start dbus for everything else.
-eval `dbus-launch --auto-syntax`
-
-# Start Pulse Audio.
-if which start-pulseaudio-x11 2>&1 > /dev/null; then
-  if ! pgrep pulseaudio 2>&1 > /dev/null; then
-    start-pulseaudio-x11
-  fi
-fi
-
-# Authentication Agents and Other Daemons.
-reboot-services.sh
-
-# urxvtd is a terminal emulator daemon.  Once it's started you use
-# urxvtc to start new X terminal emulators that share resources.
-if ! pgrep -f 'urxvtd' 2>&1 > /dev/null; then
-  urxvtd -q -o -f
-fi
-
-# Screen-saver
-if which xscreensaver 2>&1 > /dev/null; then
-  xscreensaver -no-splash &
-fi
-
-# On-screen notifications.
-if [ -x /usr/lib/x86_64-linux-gnu/xfce4/notifyd/xfce4-notifyd ]; then
-  # First choice.
-  /usr/lib/x86_64-linux-gnu/xfce4/notifyd/xfce4-notifyd &
-else
-  # Fallback.
-  /usr/lib/notification-daemon/notification-daemon &
-fi
-
-# Set my desktop background.
-if [ -r ~/.fehbg ]; then
-  sh ~/.fehbg &
-fi
-
-# Run any additional scripts.
+# Run scripts that might change the environment for the remaining apps
+# that need to be started.
 if [ -d ~/.xinitrc.d ]; then
   for f in ~/.xinitrc.d/*; do
-    $f
+    source $f
   done
 fi
 

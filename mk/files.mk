@@ -14,6 +14,16 @@ $(2): $(1)
 endef
 
 ################################################################################
+# $1: Name of file to create link to.
+# $2: Name of the link itself.
+define PMADE_SYMLINK_FILE
+all: $(2)
+$(2): $(1)
+	@ mkdir -p `dirname $(2)`
+	ln -nfs $(1) $(2)
+endef
+
+################################################################################
 # $1: Local source file
 # $2: Path to destination
 define PMADE_INSTALL_BIN

@@ -1,4 +1,4 @@
-FILES = $(shell ls | grep -v Makefile)
+FILES = $(shell ls | grep -v Makefile | grep -v realpath)
 
 .PHONEY: all
 
