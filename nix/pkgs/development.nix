@@ -16,7 +16,10 @@
     haskellPackages.ghc
     haskellPackages.cabalInstall
     haskellPackages.alex
+    haskellPackages.c2hs
     haskellPackages.happy
+    haskellPackages.hasktags
+    haskellPackages.hlint
 
     # Hardware Hacking.
     arduino_core picocom
