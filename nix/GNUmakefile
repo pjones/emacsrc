@@ -9,7 +9,7 @@ CHANNEL_FILE = $(HOME)/.nix-defexpr/channels/nixpkgs/default.nix
 CHANNEL_URL = http://nixos.org/channels/nixpkgs-unstable
 
 ################################################################################
-all: $(NIXPKGS_CONFIG_DEST)
+all:: $(NIXPKGS_CONFIG_DEST)
 
 ################################################################################
 $(CHANNEL_FILE):

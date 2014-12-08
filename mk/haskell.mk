@@ -5,7 +5,7 @@ CABAL_SANDBOX_CFG = cabal.sandbox.config
 .PHONEY: clean realclean
 
 ################################################################################
-all: $(CABAL_SANDBOX_CFG)
+all:: $(CABAL_SANDBOX_CFG)
 
 ################################################################################
 $(CABAL_SANDBOX_CFG):
