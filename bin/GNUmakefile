@@ -1,16 +1,11 @@
-FILES = $(shell ls | grep -v Makefile | grep -v realpath)
+################################################################################
+SCRIPTS = $(shell find . -type f | grep -iv makefile | grep -v realpath)
 
-.PHONEY: all
+################################################################################
+ifneq ($(notdir $(shell which realpath 2>/dev/null)),realpath)
+  SCRIPTS += realpath
+endif
 
-all: $(HOME)/bin $(foreach f,$(FILES),$(HOME)/bin/$(f))
-	@:
-
-$(HOME)/bin:
-	mkdir -p $@
-
-define COPY_template
-$(HOME)/bin/$(1): $(1)
-	install -m 0755 $(1) $(HOME)/bin/$(1)
-endef
-
-$(foreach f,$(FILES),$(eval $(call COPY_template,$(f))))
+################################################################################
+include ../mk/init.mk
+include ../mk/bin.mk
