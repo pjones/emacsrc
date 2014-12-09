@@ -2,9 +2,6 @@
 include mk/init.mk
 
 ################################################################################
-MAKEFLAGS = --no-print-directory
-
-################################################################################
 # Add a directory to the list of directories to run make inside of if
 # a tool is found in PATH.
 #
@@ -13,7 +10,7 @@ MAKEFLAGS = --no-print-directory
 define MAYBE_ADD_DIRECTORY
 all::
 	@ if which $(2) > /dev/null 2>&1; then \
-            echo "==> $(1)"; $(MAKE) -C $(1); \
+            echo "====> $(1)"; $(MAKE) -C $(1); \
           fi
 endef
 
@@ -26,7 +23,8 @@ $(eval $(call MAYBE_ADD_DIRECTORY,nix,nix-env))
 $(eval $(call MAYBE_ADD_DIRECTORY,bin,sh))
 $(eval $(call MAYBE_ADD_DIRECTORY,conkeror,conkeror))
 $(eval $(call MAYBE_ADD_DIRECTORY,git,git))
-$(eval $(call MAYBE_ADD_DIRECTORY,gnus,emacs))
+# FIXME: move this to emacsrc
+# $(eval $(call MAYBE_ADD_DIRECTORY,gnus,emacs))
 $(eval $(call MAYBE_ADD_DIRECTORY,haskell,ghc))
 $(eval $(call MAYBE_ADD_DIRECTORY,latex,texdoc))
 $(eval $(call MAYBE_ADD_DIRECTORY,misc,sh))

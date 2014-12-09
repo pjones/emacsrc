@@ -18,3 +18,5 @@
 
 [url "dracula.pmade.com:git/oss/"]
         pushInsteadOf = git://pmade.com/
+[push]
+	default = simple
