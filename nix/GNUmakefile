@@ -20,4 +20,4 @@ $(CHANNEL_FILE):
 $(NIXPKGS_CONFIG_DEST): $(notdir $(NIXPKGS_CONFIG_DEST)) $(CHANNEL_FILE) $(NIX_FILES)
 	mkdir -p $(dir $@)
 	install -m 0644 $< $@
-	nix-env -f hosts/$(HOSTNAME).nix -i
+	nix-env -f hosts/$(HOSTNAME).nix -ir

@@ -12,16 +12,7 @@
     # Build tools:
     gnumake
 
-    # Haskell:
-    haskellPackages.ghc
-    haskellPackages.cabalInstall
-    haskellPackages.alex
-    haskellPackages.c2hs
-    haskellPackages.happy
-    haskellPackages.hasktags
-    haskellPackages.hlint
-
     # Hardware Hacking.
-    arduino_core picocom
+    # arduino_core picocom FIXME: remove these at some point.
   ];
 }

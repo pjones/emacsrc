@@ -24,12 +24,13 @@
     # Media Editors:
     audacity gimp inkscape darktable
 
-    # Writing and Designing.
+    # Writing and Designing:
     aspell aspellDicts.en dict
-    texLiveFull gcolor2 impressive libreoffice
+    ghostscript texLiveFull
+    gcolor2 impressive libreoffice
     graphviz mscgen xournal
 
-    # Games.
+    # Games:
     mednafen
 
     # Misc.
