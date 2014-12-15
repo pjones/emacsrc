@@ -5,10 +5,11 @@
 
 (require 'saveplace)
 (require 'whitespace)
-(require 'org-install)
+;;(require 'org-install)
 (require 'org)
 (require 'org-clock)
-(require 'org-html)
+;;(require 'org-html)
+(require 'org-agenda)
 
 ;; General Org Settings
 (setq org-log-done t
@@ -108,11 +109,11 @@ agenda buffer."
   (setq save-place nil)
 
   ;; Exporting
-  (setq org-export-html-link-org-files-as-html nil
-        org-export-with-emphasize nil
-        org-export-html-style-default ""
-        org-export-html-style-extra ""
-        org-export-html-style nil)
+  ;;(setq org-export-html-link-org-files-as-html nil
+  ;;      org-export-with-emphasize nil
+  ;;      org-export-html-style-default ""
+  ;;      org-export-html-style-extra ""
+  ;;      org-export-html-style nil)
 
   ;; Tailor whitespace mode
   (set (make-local-variable 'whitespace-style)
