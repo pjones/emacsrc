@@ -1,6 +1,0 @@
-[submodule "xmonad"]
-	path = xmonad
-	url = git://pmade.com/xmonadrc.git
-[submodule "emacs"]
-	path = emacs
-	url = git://pmade.com/emacsrc
