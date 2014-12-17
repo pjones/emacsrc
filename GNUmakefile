@@ -2,6 +2,10 @@
 include mk/init.mk
 
 ################################################################################
+BANNER = echo "====> $(1)"
+GO_DIR = $(call BANNER,$(1)); $(MAKE) -C $(1)
+
+################################################################################
 # Add a directory to the list of directories to run make inside of if
 # a tool is found in PATH.
 #
@@ -9,9 +13,7 @@ include mk/init.mk
 # $2: The tool that should be in PATH.
 define MAYBE_ADD_DIRECTORY
 all::
-	@ if which $(2) > /dev/null 2>&1; then \
-            echo "====> $(1)"; $(MAKE) -C $(1); \
-          fi
+	@ if which $(2) > /dev/null 2>&1; then $(call GO_DIR, $(1)); fi
 endef
 
 ################################################################################
@@ -23,8 +25,6 @@ $(eval $(call MAYBE_ADD_DIRECTORY,nix,nix-env))
 $(eval $(call MAYBE_ADD_DIRECTORY,bin,sh))
 $(eval $(call MAYBE_ADD_DIRECTORY,conkeror,conkeror))
 $(eval $(call MAYBE_ADD_DIRECTORY,git,git))
-# FIXME: move this to emacsrc
-# $(eval $(call MAYBE_ADD_DIRECTORY,gnus,emacs))
 $(eval $(call MAYBE_ADD_DIRECTORY,haskell,ghc))
 $(eval $(call MAYBE_ADD_DIRECTORY,latex,texdoc))
 $(eval $(call MAYBE_ADD_DIRECTORY,misc,sh))
@@ -41,4 +41,11 @@ $(eval $(call MAYBE_ADD_DIRECTORY,zsh,zsh))
 # MacOS X specific directory.
 ifeq (Darwin,$(shell uname))
 $(eval $(call MAYBE_ADD_DIRECTORY,macos,sh))
+endif
+
+################################################################################
+# Gnus configuration can only be built if ../emacs exists.
+ifneq ($(and $(wildcard ../emacs),$(shell which emacs > /dev/null 2>&1)),"")
+all::
+	@ $(call GO_DIR,gnus)
 endif
