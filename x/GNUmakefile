@@ -25,3 +25,10 @@ $(foreach f,$(XINITRC_EXTRA),\
 # xkb symbol files.
 $(foreach f,$(wildcard xkb/symbols/*),\
   $(eval $(call PMADE_INSTALL_FILE,$(f),~/.xkb/symbols/$(notdir $(f)))))
+
+################################################################################
+# Power management scripts.
+POWER_SCRIPTS = $(shell find power.d -type f)
+
+$(foreach f,$(POWER_SCRIPTS),\
+  $(eval $(call PMADE_INSTALL_BIN,$(f),~/.power.d/$(notdir $(f)))))
