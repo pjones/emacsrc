@@ -105,6 +105,8 @@ class SessionManager
     commands.last << primary.shell if primary.shell
 
     session.windows.each do |window|
+      next unless File.directory?(window.root)
+
       if window != primary
         commands << [window.root||'~', 'neww', '-dn', window.name]
         commands.last << window.shell if window.shell

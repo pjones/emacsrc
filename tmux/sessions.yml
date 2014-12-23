@@ -2,10 +2,8 @@
 
 - name: home
   windows:
-    - name: rc
-      root: ~/develop/pmade/rc
-    - name: privrc
-      root: ~/develop/pmade/privaterc
+    - name: core
+      root: ~/core
     - name: business
       root: ~/documents/business
     - name: clients
