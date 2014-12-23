@@ -13,7 +13,7 @@ xsetroot -solid "#4b0082"
 # Run scripts that might change the environment for the remaining apps
 # that need to be started.
 if [ -d ~/.xinitrc.d ]; then
-  for f in ~/.xinitrc.d/*; do
+  for f in `ls ~/.xinitrc.d/*`; do
     source $f
   done
 fi

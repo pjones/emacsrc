@@ -19,7 +19,7 @@ maybe_start () {
   bin=$1;  shift
 
   if which $bin > /dev/null 2>&1; then
-    if ! pgrep -u $uid $name > /dev/null 2>&1; then
+    if ! pgrep -u $uid `echo $name` > /dev/null 2>&1; then
       $bin "$@"
     fi
   fi
@@ -79,10 +79,11 @@ fi
 # Start some services.
 maybe_start pulseaudio start-pulseaudio-x11
 maybe_start mpd mpd
-maybe_start tmux tc -cs home
+maybe_start tmux ts -cs home
 maybe_start "-f 'emacs --daemon'" start-emacs-daemons.sh
 maybe_start urxvtd urxvtd -q -o -f
 maybe_start bitlbee bitlbee -c $HOME/keys/bitlbee/bitlbee.conf
+maybe_start wicd-gtk wicd-gtk -t &
 
 ################################################################################
 # On-screen notifications.  So many to choose from.
