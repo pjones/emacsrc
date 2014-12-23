@@ -1,9 +1,6 @@
 # -*- mode: makefile-gmake -*-
 
 ################################################################################
-HOSTNAME = $(shell hostname)
-
-################################################################################
 # $1: Local source file
 # $2: Path to destination
 define PMADE_INSTALL_FILE
