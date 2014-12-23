@@ -10,7 +10,8 @@
   # Packages for a full user experience on a laptop or workstation.
   packages = with pkgs; [
     # Terminals and core software:
-    rxvt_unicode_with-plugins wmctrl gnome.gnome_keyring
+    rxvt_unicode_with-plugins # FIXME: Remove this after upgrading to 14.12.
+    wmctrl gnome.gnome_keyring
 
     # Internet Utilities:
     uzbl chromium bitlbee ssvnc
