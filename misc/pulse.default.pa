@@ -1,0 +1,5 @@
+################################################################################
+### Automatically switch to a connected headset.
+.ifexists module-switch-on-connect.so
+load-module module-switch-on-connect
+.endif
