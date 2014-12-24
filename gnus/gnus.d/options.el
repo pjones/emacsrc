@@ -32,7 +32,7 @@
           mm-file-name-replace-whitespace))
 
 ;; Variables used in all the other files
-(setq mail-signature-dir "~/develop/pmade/privaterc/signatures")
+(setq mail-signature-dir "~/core/privaterc/signatures")
 
 ;; Apple Address Book
 (require 'external-abook)
