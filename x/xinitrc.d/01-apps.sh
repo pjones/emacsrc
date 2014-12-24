@@ -76,16 +76,6 @@ fi
 . ~/.zsh/lib/agents.zsh
 
 ################################################################################
-# Start some services.
-maybe_start pulseaudio start-pulseaudio-x11
-maybe_start mpd mpd
-maybe_start tmux ts -cs home
-maybe_start "-f 'emacs --daemon'" start-emacs-daemons.sh
-maybe_start urxvtd urxvtd -q -o -f
-maybe_start bitlbee bitlbee -c $HOME/keys/bitlbee/bitlbee.conf
-maybe_start wicd-gtk wicd-gtk -t &
-
-################################################################################
 # On-screen notifications.  So many to choose from.
 if which notify-osd > /dev/null 2>&1; then
     notify-osd &
@@ -94,3 +84,13 @@ elif [ -x /usr/lib/x86_64-linux-gnu/xfce4/notifyd/xfce4-notifyd ]; then
 else
   /usr/lib/notification-daemon/notification-daemon &
 fi
+
+################################################################################
+# Start some services.
+maybe_start pulseaudio start-pulseaudio-x11
+maybe_start mpd mpd
+maybe_start tmux ts -cs home
+maybe_start "-f 'emacs --daemon'" start-emacs-daemons.sh
+maybe_start urxvtd urxvtd -q -o -f
+maybe_start bitlbee bitlbee -c $HOME/keys/bitlbee/bitlbee.conf
+maybe_start wicd-gtk wicd-gtk -t &
