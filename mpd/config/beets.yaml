@@ -1,6 +1,6 @@
 # Basic settings.
 directory: ~/documents/music
-plugins: embedart fetchart ftintitle importadded bucket the
+plugins: embedart fetchart ftintitle importadded bucket the play random missing
 original_date: yes
 threaded: yes
 color: yes
@@ -35,3 +35,7 @@ match:
     countries: ['US', 'GB|UK']
     media: ['CD', 'Digital Media|File']
     original_year: yes
+
+play:
+  relative_to: ~/documents/music
+  command: bash -c 'cat $0 | mpc add'
