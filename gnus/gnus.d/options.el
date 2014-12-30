@@ -10,7 +10,8 @@
         "pjones@contextualdevelopment"
         "mlists@pmade"
         "suv8@pmade"
-        "peter\\.jones@rfa\\.sc\\.gov"))
+        "peter\\.jones@rfa\\.sc\\.gov"
+        "peter\\.jones@ors\\.sc\\.gov"))
 
 (setq gnus-ignored-from-addresses message-dont-reply-to-names)
 
@@ -43,10 +44,6 @@
   (set (make-local-variable 'backup-inhibited) t))
 (add-hook 'gnus-save-quick-newsrc-hook 'pmade:gnus-turn-off-backup)
 (add-hook 'gnus-save-standard-newsrc-hook 'pmade:gnus-turn-off-backup)
-
-;; Checking for New Mail
-;; (defun pmade-new-level-one-mail () (gnus-group-get-new-news 1))
-;; (gnus-demon-add-handler 'pmade-new-level-one-mail 10 t)
 
 ;; Highlight the current line in the groups and summary buffers
 (defun pmade-gnus-index-hook ()
@@ -87,3 +84,9 @@ group and summary buffers)"
 
 (setq gnus-window-to-buffer (assq-delete-all 'calendar gnus-window-to-buffer))
 (push (cons 'calendar 'pmade:gnus-calendar-buffer) gnus-window-to-buffer)
+
+;; Things to do in the background.
+(setq gnus-inhibit-demon nil)
+(gnus-demon-add-handler 'gnus-demon-close-connections     2 t)
+(gnus-demon-add-handler 'gnus-demon-nntp-close-connection 2 t)
+(gnus-demon-init)
