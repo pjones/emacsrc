@@ -4,6 +4,7 @@ include ../mk/files.mk
 
 ################################################################################
 $(eval $(call PMADE_INSTALL_WITH_HOSTNAME,config/mpd.conf,~/.mpdconf))
+$(eval $(call PMADE_INSTALL_FILE,config/beets.yaml,~/.config/beets/config.yaml))
 
 ################################################################################
 $(eval $(call PMADE_INSTALL_FILE,config/ncmpcpp.config,~/.ncmpcpp/config))

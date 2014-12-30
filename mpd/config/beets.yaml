@@ -1,0 +1,37 @@
+# Basic settings.
+directory: ~/documents/music
+plugins: embedart fetchart ftintitle importadded bucket the
+original_date: yes
+threaded: yes
+color: yes
+ignore: .* *.m4p  *.m4v
+
+paths:
+  default: "%bucket{%the{$albumartist}}/$albumartist/$album%aunique{}/$track-$title"
+  singleton: "%bucket{%the{$albumartist}}/$albumartist/Non-Album/$title"
+  comp: "@/$album%aunique{}/$track-$title"
+  albumtype:soundtrack: "@/$album%aunique{}/$track-$title"
+
+the:
+  # Remove leading quotes
+  patterns: >-
+    ^“ ^" ^'
+bucket:
+  bucket_alpha: ['#', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
+  bucket_alpha_regex:
+    '#': ^[^A-Za-z]
+
+import:
+  none_rec_action: ask
+  autotag: yes
+  incremental: yes
+  resume: no
+  log: ~/documents/ripping/beets.log
+
+match:
+  strong_rec_thresh: 0.10
+  ignored: unmatched_tracks
+  preferred:
+    countries: ['US', 'GB|UK']
+    media: ['CD', 'Digital Media|File']
+    original_year: yes
