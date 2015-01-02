@@ -112,7 +112,7 @@ class Sync
 
   ##############################################################################
   def run
-    Dir.mktmpdir('beet-sync') do |tmpdir|
+    Dir.mktmpdir('beet-sync-') do |tmpdir|
       verbose("temporary playlist directory: #{tmpdir}")
       tmp_music_dir    = File.join(tmpdir,    'music')
       tmp_playlist_dir = File.join(tmpdir, 'playlists')
@@ -127,7 +127,7 @@ class Sync
         verbose("reading playlist: #{playlist}")
         incoming = Playlist.read(File.join(config.playlist_dir, playlist))
 
-        File.open(File.join(tmpdir, playlist), 'w') do |corrected|
+        File.open(File.join(tmp_playlist_dir, playlist), 'w') do |corrected|
           incoming.items.each do |file_name|
             link_file(file_name, tmp_music_dir)
             corrected.puts(File.join(device.music_prefix, file_name))
