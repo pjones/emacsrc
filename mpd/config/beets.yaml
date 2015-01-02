@@ -1,26 +1,35 @@
+################################################################################
 # Basic settings.
 directory: ~/documents/music
-plugins: embedart fetchart ftintitle importadded bucket the play random missing
+plugins: embedart fetchart ftintitle importadded bucket the play random missing mpdstats smartplaylist
 original_date: yes
 threaded: yes
 color: yes
 ignore: .* *.m4p  *.m4v
 
+################################################################################
+# Where to put music files in the library directory:
 paths:
   default: "%bucket{%the{$albumartist}}/$albumartist/$album%aunique{}/$track-$title"
   singleton: "%bucket{%the{$albumartist}}/$albumartist/Non-Album/$title"
   comp: "@/$album%aunique{}/$track-$title"
   albumtype:soundtrack: "@/$album%aunique{}/$track-$title"
 
+################################################################################
+# Removing English articles.
 the:
   # Remove leading quotes
   patterns: >-
     ^“ ^" ^'
+################################################################################
+# Sorting music into different "bucket" directories:
 bucket:
   bucket_alpha: ['#', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
   bucket_alpha_regex:
     '#': ^[^A-Za-z]
 
+################################################################################
+# Music importer settings:
 import:
   none_rec_action: ask
   autotag: yes
@@ -28,6 +37,8 @@ import:
   resume: no
   log: ~/documents/ripping/beets.log
 
+################################################################################
+# MusicBrainz settings:
 match:
   strong_rec_thresh: 0.10
   ignored: unmatched_tracks
@@ -36,6 +47,38 @@ match:
     media: ['CD', 'Digital Media|File']
     original_year: yes
 
+################################################################################
+# Settings for the `beet play` command:
 play:
   relative_to: ~/documents/music
   command: bash -c 'cat $0 | mpc add'
+
+################################################################################
+# Smart playlists.
+smartplaylist:
+    relative_to: ~/documents/music
+    playlist_dir: ~/documents/playlists
+    auto: yes
+
+    playlists:
+        - name: "Highly Rated.m3u"
+          query: 'rating:>0.4'
+
+        - name: "Recently Added.m3u"
+          query: 'added:2014-06..'
+
+################################################################################
+# Device syncing:
+sync:
+  playlist_dir: ~/documents/playlists
+
+  devices:
+    - name: mina
+      music_dir: "~/android/Internal storage/Music"
+      playlist_dir: "~/android/Internal storage/Playlists"
+      music_prefix: "/storage/emulated/0/Music/"
+
+      playlists:
+        - Bedroom.m3u
+        - Recently Added.m3u
+        # - Highly Rated.m3u
