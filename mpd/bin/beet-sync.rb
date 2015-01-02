@@ -1,4 +1,4 @@
-#!ruby
+#!/usr/bin/env ruby
 
 ################################################################################
 require('fileutils')
@@ -13,7 +13,7 @@ class Cfg
 
   ##############################################################################
   # Device entries.
-  Device = Struct.new(:name, :music_dir, :music_prefix, :playlist_dir, :playlists)
+  Device = Struct.new(:name, :remote, :music_dir, :music_prefix, :playlist_dir, :playlists)
 
   ##############################################################################
   attr_accessor(:directory, :playlist_dir, :devices)
@@ -26,11 +26,18 @@ class Cfg
     sync = raw['sync']
 
     devices = sync['devices'].reduce({}) do |h, settings|
+      music_dir = settings['music_dir']
+      music_dir = File.expand_path(music_dir) unless settings['remote']
+
+      playlist_dir = settings['playlist_dir']
+      playlist_dir = File.expand_path(playlist_dir) unless settings['remote']
+
       h[settings['name']] =
         Device.new(settings['name'],
-                   File.expand_path(settings['music_dir']),
+                   settings['remote'] || false,
+                   music_dir,
                    settings['music_prefix'],
-                   File.expand_path(settings['playlist_dir']),
+                   playlist_dir,
                    Array(settings['playlists']))
       h
     end
@@ -110,12 +117,11 @@ class Sync
       tmp_music_dir    = File.join(tmpdir,    'music')
       tmp_playlist_dir = File.join(tmpdir, 'playlists')
 
+      verbose("creating tmp music and playlist directories")
       FileUtils.mkdir_p(tmp_music_dir)
       FileUtils.mkdir_p(tmp_playlist_dir)
-      FileUtils.mkdir_p(device.music_dir)
-      FileUtils.mkdir_p(device.playlist_dir)
-
-      verbose("creating tmp music and playlist directories")
+      FileUtils.mkdir_p(device.music_dir)    unless device.remote
+      FileUtils.mkdir_p(device.playlist_dir) unless device.remote
 
       device.playlists.each do |playlist|
         verbose("reading playlist: #{playlist}")
@@ -146,11 +152,11 @@ class Sync
   def rsync_command
     cmd = [
       'rsync',
-      '--times',
       '--copy-links',
       '--delete-before',
       '--recursive',
       '--prune-empty-dirs',
+      '--checksum',
     ]
 
     if options.verbose
@@ -182,6 +188,9 @@ class Sync
   def link_file (src, dst)
     full_src = File.join(config.directory, src)
     full_dst = File.join(dst, src)
+
+    # May be already linked from another playlist.
+    return if File.exist?(full_dst)
 
     FileUtils.mkdir_p(File.dirname(full_dst))
     FileUtils.ln_s(full_src, full_dst)

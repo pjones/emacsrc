@@ -67,6 +67,15 @@ smartplaylist:
         - name: "Recently Added.m3u"
           query: 'added:2014-06..'
 
+        - name: "Favorite Bands.m3u"
+          query:
+            - "album::^Since I Left You$"
+            - "artist::^IAMX$"
+            - "artist::^London Grammar$"
+            - "artist::^Peace Orchestra$"
+            - "artist::^The Knife$"
+            - "artist::^The Wombats$"
+
 ################################################################################
 # Device syncing:
 sync:
@@ -74,11 +83,13 @@ sync:
 
   devices:
     - name: mina
-      music_dir: "~/android/Internal storage/Music"
-      playlist_dir: "~/android/Internal storage/Playlists"
+      remote: yes
+      music_dir: "mina:/storage/emulated/0/Music/"
+      playlist_dir: "mina:/storage/emulated/0/Playlists"
       music_prefix: "/storage/emulated/0/Music/"
 
       playlists:
-        - Bedroom.m3u
-        - Recently Added.m3u
-        # - Highly Rated.m3u
+        - "Bedroom.m3u"
+        - "Favorite Bands.m3u"
+        - "Recently Added.m3u"
+        # - "Highly Rated.m3u"
