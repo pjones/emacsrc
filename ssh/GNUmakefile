@@ -5,6 +5,8 @@ include ../mk/files.mk
 ################################################################################
 DIRS = $(HOME)/.ssh/master
 HOST_CONFIG = $(HOME)/keys/ssh/$(HOSTNAME).config
+HOST_PRV_KEY = $(wildcard $(HOME)/keys/ssh/$(HOSTNAME).id_[rd]sa)
+HOST_PUB_KEY = $(wildcard $(HOME)/keys/ssh/$(HOSTNAME).id_[rd]sa.pub)
 
 ################################################################################
 all::
@@ -15,6 +17,8 @@ all::
 ################################################################################
 ifneq ($(wildcard $(HOST_CONFIG)),"")
 $(eval $(call PMADE_SYMLINK_FILE,$(HOST_CONFIG),~/.ssh/config))
+$(eval $(call PMADE_SYMLINK_FILE,$(HOST_PRV_KEY),~/.ssh/$(notdir $(HOST_PRV_KEY))))
+$(eval $(call PMADE_SYMLINK_FILE,$(HOST_PUB_KEY),~/.ssh/$(notdir $(HOST_PUB_KEY))))
 else
 $(eval $(call PMADE_INSTALL_FILE,config,~/.ssh/config))
 endif
