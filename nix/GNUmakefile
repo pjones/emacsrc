@@ -11,7 +11,7 @@ CHANNEL_URL = http://nixos.org/channels/nixpkgs-unstable
 ################################################################################
 # Just in case NIX_PATH doesn't include nixpkgs from a channel,
 # probably because nix-channel command below hasn't run yet.
-NIX_PATH = nixpkgs=$(CHANNEL_FILE)$(if $(NIX_PATH),:$(NIX_PATH))
+NIX_PATH := nixpkgs=$(CHANNEL_FILE)$(if $(NIX_PATH),:$(NIX_PATH))
 export NIX_PATH
 
 ################################################################################
