@@ -1,10 +1,8 @@
-.PHONEY: all
+################################################################################
+include ../mk/init.mk
+include ../mk/files.mk
 
-all: $(HOME)/.gitconfig $(HOME)/.gitignore
-	@:
-
-$(HOME)/.gitconfig: gitconfig
-	cp -p $< $@
-
-$(HOME)/.gitignore: gitignore
-	cp -p $< $@
+################################################################################
+$(eval $(call PMADE_INSTALL_DOT,gitconfig))
+$(eval $(call PMADE_INSTALL_DOT,gitignore))
+$(eval $(call PMADE_INSTALL_DOT,mrconfig))

@@ -1,0 +1,11 @@
+[core]
+checkout = git clone 'dracula.pmade.com:git/personal/core' 'core'
+
+[documents/rebekah]
+checkout = git clone 'dracula.pmade.com:git/personal/rebekah' 'rebekah'
+
+[documents/business]
+checkout = git clone 'dracula.pmade.com:git/business/business' 'business'
+
+[documents/clients]
+checkout = git clone 'dracula.pmade.com:git/business/clients' 'clients'
