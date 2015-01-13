@@ -10,11 +10,8 @@
 (declare-function rcirc-nick "rcirc")
 (declare-function rcirc-server-name "rcirc")
 
-(defvar freenode-password nil
-  "My nick password for irc.freenode.net.")
-
-(defvar bitlbee-password nil
-  "My account password for bitlbee.")
+(defvar pjones-irc-password nil
+  "My password for connecting to ZNC.")
 
 ;; Load passwords from a private file
 (load "~/keys/emacs/secrets.el")
@@ -30,10 +27,14 @@
 ;; N.B. The first server is the one used when the pjones:irc function
 ;; is called with a prefix argument.
 (setq rcirc-server-alist
-      '(("localhost" :nick "pjones")
-        ("irc.freenode.net" :channels ("#xmonad" "#derailed" "#conkeror"
-                                       "#emacs" "#haskell" "#boulderhs"
-                                       "#haskell-mobile"))))
+      `(("bitlbee.pmade.com"
+        :nick "pjones" :user-name "pjones/bitlbee"
+        :port 6697 :encryption tls
+        :password ,pjones-irc-password)
+        ("freenode.pmade.com"
+         :nick "pjones" :user-name "pjones/freenode"
+         :port 6697 :encryption tls
+         :password ,pjones-irc-password)))
 
 ;; Other interesting Freenode channels:
 ;;
@@ -41,11 +42,6 @@
 ;; #gnus   -- Gnus news/mail reader
 ;; #debian -- Obvious
 ;; #mpd    -- Music player daemon
-
-
-(setq rcirc-authinfo
-      `(("freenode"  nickserv "pmade"  ,freenode-password)
-        ("localhost" bitlbee  "pjones" ,bitlbee-password)))
 
 (setq rcirc-omit-responses '("JOIN" "PART" "QUIT" "NICK" "AWAY")
       rcirc-buffer-maximum-lines 500)
