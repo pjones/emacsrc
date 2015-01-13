@@ -7,12 +7,12 @@
     emacs
 
     # Revision Control Systems:
-    gitAndTools.gitFull darcs
+    gitAndTools.gitFull gitAndTools.gitAnnex darcs mr
 
     # Build tools:
     gnumake
 
     # Hardware Hacking.
-    # arduino_core picocom FIXME: remove these at some point.
+    arduino_core picocom
   ];
 }

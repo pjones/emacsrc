@@ -14,7 +14,7 @@
     wmctrl gnome.gnome_keyring
 
     # Internet Utilities:
-    uzbl chromium bitlbee ssvnc pypyPackages.googlecl
+    uzbl chromium ssvnc pypyPackages.googlecl
 
     # Media Players/Viewers:
     mpd mpc_cli ncmpcpp vlc mpg123 moc feh zathura
