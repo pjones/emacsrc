@@ -1,11 +1,27 @@
 ################################################################################
 # Basic settings.
 directory: ~/documents/music
-plugins: embedart fetchart ftintitle importadded bucket the play random missing mpdstats smartplaylist
 original_date: yes
 threaded: yes
 color: yes
 ignore: .* *.m4p  *.m4v
+
+################################################################################
+# List of plug-ins;
+plugins: >-
+  bucket
+  embedart
+  fetchart
+  ftintitle
+  importadded
+  missing
+  mpdstats
+  play
+  random
+  smartplaylist
+  the
+  types
+  web
 
 ################################################################################
 # Where to put music files in the library directory:
@@ -54,7 +70,14 @@ play:
   command: bash -c 'cat $0 | mpc add'
 
 ################################################################################
+# Settings for the types plug-in.
+# http://beets.readthedocs.org/en/latest/plugins/types.html
+types:
+  rating: float
+
+################################################################################
 # Smart playlists.
+# http://beets.readthedocs.org/en/latest/plugins/smartplaylist.html
 smartplaylist:
     relative_to: ~/documents/music
     playlist_dir: ~/documents/playlists
@@ -62,19 +85,13 @@ smartplaylist:
 
     playlists:
         - name: "Highly Rated.m3u"
-          query: 'rating:>0.4'
+          query: 'rating:0.85..'
 
         - name: "Recently Added.m3u"
           query: 'added:2014-06..'
 
-        - name: "Favorite Bands.m3u"
-          query:
-            - "album::^Since I Left You$"
-            - "artist::^IAMX$"
-            - "artist::^London Grammar$"
-            - "artist::^Peace Orchestra$"
-            - "artist::^The Knife$"
-            - "artist::^The Wombats$"
+        - name: "Favorite Albums.m3u"
+          album_query: 'rating:1.0'
 
 ################################################################################
 # Device syncing:
@@ -90,6 +107,7 @@ sync:
 
       playlists:
         - "Bedroom.m3u"
-        - "Favorite Bands.m3u"
+        - "Favorite Albums.m3u"
         - "Recently Added.m3u"
-        # - "Highly Rated.m3u"
+        - "Highly Rated.m3u"
+        - "Current Mood.m3u"
