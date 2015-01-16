@@ -92,22 +92,3 @@ smartplaylist:
 
         - name: "Favorite Albums.m3u"
           album_query: 'rating:1.0'
-
-################################################################################
-# Device syncing:
-sync:
-  playlist_dir: ~/documents/playlists
-
-  devices:
-    - name: mina
-      remote: yes
-      music_dir: "mina:/storage/emulated/0/Music/"
-      playlist_dir: "mina:/storage/emulated/0/Playlists"
-      music_prefix: "/storage/emulated/0/Music/"
-
-      playlists:
-        - "Bedroom.m3u"
-        - "Favorite Albums.m3u"
-        - "Recently Added.m3u"
-        - "Highly Rated.m3u"
-        - "Current Mood.m3u"
