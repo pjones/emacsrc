@@ -53,6 +53,7 @@ class Sync
     :music_prefix => '/storage/emulated/0/Music/',
     :playlist_in  => '~/sync/%s/playlists',
     :playlist_out => 'Playlists',
+    :remove_old   => false,
     :sync_out     => '~/sync/%s/',
     :verbose      => false,
     :versions_dir => 'versions',
@@ -71,10 +72,6 @@ class Sync
         exit
       end
 
-      p.on('--[no-]verbose', 'Turn on/off verbosity') do |x|
-        options.verbose = x
-      end
-
       p.on('-d', '--device=NAME', 'Device to sync') do |x|
         options.device = x
       end
@@ -83,12 +80,20 @@ class Sync
         options.music_in = x
       end
 
+      p.on('-p', '--playlist-in=DIR', 'Playlist directory') do |x|
+        options.playlist_in = x
+      end
+
+      p.on('-r', '--remove-old', 'Remove old versions') do |x|
+        options.remove_old = x
+      end
+
       p.on('-s', '--sync-out=DIR', 'Sync directory') do |x|
         options.sync_out = x
       end
 
-      p.on('-p', '--playlist-in=DIR', 'Playlist directory') do |x|
-        options.playlist_in = x
+      p.on('--[no-]verbose', 'Turn on/off verbosity') do |x|
+        options.verbose = x
       end
     end.parse!(ARGV)
 
@@ -162,9 +167,7 @@ class Sync
 
   ##############################################################################
   def link_file (src, dst)
-    # May be already linked from another playlist.
-    return if File.exist?(dst)
-
+    return if File.exist?(dst) # May be already linked from another playlist.
     FileUtils.mkdir_p(File.dirname(dst))
     FileUtils.ln_s(src, dst)
   end
@@ -173,7 +176,20 @@ class Sync
   def activate (checksum, out)
     current = File.join(out, 'current')
     verbose("setting current link to #{File.basename(checksum)}")
-    FileUtils.ln_s(checksum, current, :force => true)
+    system('ln', '-nfs', checksum, current) || raise("ln failed")
+    remove_old(checksum) if options.remove_old
+  end
+
+  ##############################################################################
+  def remove_old (current)
+    dir  = File.dirname(current)
+    base = File.basename(current)
+
+    Dir.foreach(dir) do |entry|
+      next if entry == base or entry.match(/^\./)
+      verbose("removing old version: #{entry}")
+      FileUtils.rm_rf(File.join(dir, entry))
+    end
   end
 end
 
