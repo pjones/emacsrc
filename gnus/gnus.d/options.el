@@ -84,9 +84,3 @@ group and summary buffers)"
 
 (setq gnus-window-to-buffer (assq-delete-all 'calendar gnus-window-to-buffer))
 (push (cons 'calendar 'pmade:gnus-calendar-buffer) gnus-window-to-buffer)
-
-;; Things to do in the background.
-(setq gnus-inhibit-demon nil)
-(gnus-demon-add-handler 'gnus-demon-close-connections     2 t)
-(gnus-demon-add-handler 'gnus-demon-nntp-close-connection 2 t)
-(gnus-demon-init)

@@ -31,11 +31,15 @@
    gnus-sum-thread-tree-single-leaf     "└─> "))
 
 ;; Functions for Key Bindings
-(defun pmade-move-to-mail-group (group)
+(defun pmade-move-to-mail-group (folder)
   "Move the marked messages (or the current message) to the given
-IMAP mail group."
-  (gnus-summary-move-article nil group nil 'move)
-  (message "Moved to group: %s" group))
+folder of the current group."
+  (let* ((server (or (gnus-method-to-full-server-name
+                      (gnus-find-method-for-group gnus-newsgroup-name))
+                     "nnimap+mail.pmade.com"))
+         (to-group (concat server ":" folder)))
+    (gnus-summary-move-article nil to-group nil 'move)
+    (message "Moved to group: %s" to-group)))
 
 (defun pmade-gnus-summary-bottom ()
   (interactive)
@@ -46,17 +50,17 @@ IMAP mail group."
   (define-key gnus-summary-mode-map
     (kbd "v a") (lambda ()
                   (interactive)
-                  (pmade-move-to-mail-group pmade-archive-group)))
+                  (pmade-move-to-mail-group "Archive")))
 
   (define-key gnus-summary-mode-map
     (kbd "v r") (lambda ()
                   (interactive)
-                  (pmade-move-to-mail-group pmade-review-group)))
+                  (pmade-move-to-mail-group "Review")))
 
   (define-key gnus-summary-mode-map
     (kbd "v d") (lambda ()
                   (interactive)
-                  (pmade-move-to-mail-group pmade-trash-group)))
+                  (pmade-move-to-mail-group "Trash")))
 
   (define-key gnus-summary-mode-map
     (kbd "v f") 'gnus-summary-mail-forward)
@@ -64,12 +68,12 @@ IMAP mail group."
   (define-key gnus-summary-mode-map
     (kbd "v l") (lambda ()
                   (interactive)
-                  (pmade-move-to-mail-group pmade-rebekah-group)))
+                  (pmade-move-to-mail-group "Rebekah")))
 
   (define-key gnus-summary-mode-map
     (kbd "v s") (lambda ()
                   (interactive)
-                  (pmade-move-to-mail-group pmade-spam-group)))
+                  (pmade-move-to-mail-group "Junk")))
 
   (local-set-key (vector 'remap 'end-of-buffer) 'pmade-gnus-summary-bottom))
 
