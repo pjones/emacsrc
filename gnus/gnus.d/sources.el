@@ -3,22 +3,25 @@
       message-send-mail-function 'smtpmail-send-it
       smtpmail-smtp-server pmade-mail-server
       smtpmail-smtp-service 465
-      smtpmail-stream-type 'ssl
+      smtpmail-stream-type 'tls
       smtpmail-local-domain "pmade.com"
       starttls-use-gnutls t
       starttls-extra-arguments '("--insecure"))
 
 (setq gnus-select-method
-  `(nnimap ,pmade-mail-server
-           (nnir-search-engine imap)
-           (nnimap-stream ssl)))
+  `(nnimap "pmade"
+           (nnimap-address ,pmade-mail-server)
+           (nnimap-server-port 993)
+           (nnimap-authenticator plain)
+           (nnimap-stream tls)
+           (nnir-search-engine imap)))
 
 (setq gnus-secondary-select-methods
   '((nnimap "SCORS"
       (nnimap-address "scowa.sc.gov")
       (nnimap-server-port 993)
       (nnimap-authenticator login)
-      (nnimap-stream ssl))
+      (nnimap-stream tls))
     (nntp "Gmane"
       (nntp-address "news.gmane.org"))))
 
