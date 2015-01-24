@@ -10,17 +10,16 @@
   # Packages for a full user experience on a laptop or workstation.
   packages = with pkgs; [
     # Terminals and core software:
-    rxvt_unicode_with-plugins # FIXME: Remove this after upgrading to 14.12.
     wmctrl gnome.gnome_keyring
 
     # Internet Utilities:
-    uzbl chromium ssvnc pypyPackages.googlecl
+    uzbl chromium conkeror ssvnc pypyPackages.googlecl
 
     # Media Players/Viewers:
     mpd mpc_cli ncmpcpp vlc mpg123 moc feh zathura
 
     # Media Ripping:
-    handbrake makemkv
+    handbrake /* FIXME: makemkv (404) */
 
     # Media Editors:
     audacity gimp inkscape darktable
