@@ -3,6 +3,11 @@
 ;; Quoting library
 (require 'boxquote)
 
+;; Calendar invitations.
+(require 'gnus-icalendar)
+(gnus-icalendar-setup)
+
+
 (defun pmade-message-mode-hook ()
   "Called to customize message mode"
   (define-key message-mode-map (kbd "s-h")       'pmade-make-html-part)
