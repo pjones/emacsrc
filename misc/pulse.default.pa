@@ -1,4 +1,8 @@
 ################################################################################
+### Load the system version of this file first.
+.include /etc/pulse/default.pa
+
+################################################################################
 ### Automatically switch to a connected headset.
 .ifexists module-switch-on-connect.so
 load-module module-switch-on-connect
