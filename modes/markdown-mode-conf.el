@@ -11,6 +11,32 @@
 ;; Basic settings.
 (setq markdown-command "pandoc -f markdown -t html")
 
+(defvar pjones:markdown-langs
+  '("ruby" "javascript" "html" "css")
+  "List of pandoc languages I use.")
+
+(define-skeleton pjones:markdown-slide-notes
+  "Add a div section for slide notes." nil
+  "<div class=\"notes\">"
+  ?\n ?\n "  * " _
+  ?\n ?\n "</div>")
+
+(defun pjones:markdown-slide-fenced-code-block (&optional with-insert)
+  "Insert a markdown fenced code block."
+  (interactive "P")
+  (let* ((indent (- (point) (save-excursion (forward-line 0) (point))))
+         (prefix (make-string indent ? ))
+         (lang (ido-completing-read "Lang: " pjones:markdown-langs)))
+    (insert (concat "~~~ {." lang "}\n" prefix "\n" prefix "~~~\n"))
+    (forward-line -2)
+    (end-of-line)
+    t))
+(put 'pjones:markdown-slide-fenced-code-block 'no-self-insert t)
+
+(defun pjones:markdown-slide-fenced-code-insert nil
+  (pjones:markdown-slide-fenced-code-block t))
+(put 'pjones:markdown-slide-fenced-code-insert 'no-self-insert t)
+
 (defun pjones:markdown-visual-line ()
   "Don't wrap lines.  Needed for most web forms."
   (interactive)
@@ -21,9 +47,16 @@
 (defun pjones:markdown-mode-hook ()
   "Set up key bindings and other crap for markdown-mode."
   (local-set-key (kbd "C-c C-o") 'markdown-follow-link-at-point)
+  (abbrev-mode)
   (whitespace-mode)
   (orgstruct-mode)
   ; (orgtbl-mode) ; Oh orgtbl, how you fuck up interactive search.
+
+  (define-abbrev-table 'markdown-mode-abbrev-table
+    '(("nt" "" pjones:markdown-slide-notes)
+      ("fc" "" pjones:markdown-slide-fenced-code-block)
+      ("fi" "" pjones:markdown-slide-fenced-code-insert)))
+  (setq local-abbrev-table markdown-mode-abbrev-table)
 
   ;; Files in /tmp that are *.txt are from my browser and most
   ;; websites don't like it when text you submit has newlines.
