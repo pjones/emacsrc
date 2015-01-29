@@ -25,5 +25,6 @@ if [ ! -r $XKB_KEYMAP ]; then
 fi
 
 ################################################################################
-# Now activate the keys.
+# First reset to default then activate the new keys.
+setxkbmap
 xkbcomp ${=XKB_PATH} $XKB_KEYMAP $DISPLAY > /dev/null
