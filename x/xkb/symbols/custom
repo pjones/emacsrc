@@ -5,9 +5,13 @@ xkb_symbols "capsrctl" {
     replace key <RCTL>	{  [ Caps_Lock ] };
 };
 
-// Turn the left control key into a mod3 key.
-partial hidden modifier_keys
+
+// Make the left control key become a mod3 key.
+xkb_compatibility {
+  interpret Control_L { action = SetsMods(modifiers=Mod3); };
+};
+
 xkb_symbols "lctlmod3" {
-  replace key <LCTL> { [ VoidSymbol, VoidSymbol ] };
-  modifier_map Mod3  { <LCTL> };
+  key  <LCTL> { [ Control_L ] };
+  modifier_map Mod3 { Control_L };
 };
