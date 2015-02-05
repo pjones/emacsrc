@@ -9,6 +9,9 @@
 
   # Packages for a full user experience on a laptop or workstation.
   packages = with pkgs; [
+    # Security:
+    pwsafe
+
     # Terminals and core software:
     wmctrl gnome.gnome_keyring
 
