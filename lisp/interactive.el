@@ -35,12 +35,13 @@ placing it in the kill ring)."
   (interactive)
   (switch-to-buffer (other-buffer)))
 
-(defun pjones:open-line-above ()
-  "Open a line above point and move there."
-  (interactive)
+(defun pjones:open-line-above (stay)
+  "Open a line above point and move there if STAY is nil."
+  (interactive "P")
   (let ((already-bol (bolp)))
     (move-beginning-of-line nil)
     (open-line 1)
+    (if stay (move-end-of-line 2))
     (when (not already-bol)
       (indent-according-to-mode))))
 
