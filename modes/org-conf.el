@@ -32,6 +32,8 @@
       org-completion-use-ido t
       org-goto-interface 'outline-path-completion
       org-outline-path-complete-in-steps t
+      org-id-link-to-org-use-id 'create-if-interactive-and-no-custom-id
+      org-edit-src-persistent-message nil
 
       ;; Showing context
       org-show-hierarchy-above '((default . t))
