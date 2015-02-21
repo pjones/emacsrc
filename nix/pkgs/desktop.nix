@@ -25,7 +25,7 @@
     handbrake /* FIXME: makemkv (404) */
 
     # Media Editors:
-    audacity gimp inkscape darktable
+    audacity gimp inkscape darktable imagemagick
 
     # Writing and Designing:
     aspell aspellDicts.en dict
