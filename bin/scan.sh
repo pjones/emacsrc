@@ -14,6 +14,25 @@ mode=Gray # Color
 resolution=150
 size="-x 215.9 -y 279.4" # Letter
 base=`date +%Y-%m-%d_%H:%M:%S`
+multipe=NO
+current_page=1
+
+################################################################################
+while getopts "mb:" o; do
+  case "${o}" in
+    m) multipe=YES
+       ;;
+
+    b) base=$OPTARG
+       ;;
+
+    *) echo "Bad arguments"
+       exit 1
+       ;;
+  esac
+done
+
+shift $((OPTIND-1))
 
 ################################################################################
 if [ $# -gt 0 ]; then
@@ -28,9 +47,30 @@ if [ -r ${base}.pnm -o -r ${base}.pdf ]; then
 fi
 
 ################################################################################
-scanimage --mode $mode --resolution $resolution $size > ${base}.pnm
-convert ${base}.pnm ${base}.pdf
-rm ${base}.pnm
+while [ $multipe = YES -o $current_page -eq 1 ]; do
+  if [ $multipe = YES ]; then
+    file_name=`printf %s-%2d.pnm $base $current_page`
+  else
+    file_name=${base}.pnm
+  fi
+
+  scanimage --mode $mode --resolution $resolution $size > $file_name
+  current_page=`expr 1 + $current_page`
+
+  if [ $multipe = YES ]; then
+    printf %s "Next page or quit (RET or q): "
+    read answer
+    [ "$answer" = "q" -o "$answer" = "Q" ] && break
+  fi
+done
+
+if [ $multipe = YES ]; then
+  convert ${base}-*.pnm ${base}.pdf
+  rm ${base}-*.pnm
+else
+  convert ${base}.pnm ${base}.pdf
+  rm ${base}.pnm
+fi
 
 ################################################################################
 echo "created ${base}.pdf"
