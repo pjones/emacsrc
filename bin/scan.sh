@@ -18,12 +18,15 @@ multipe=NO
 current_page=1
 
 ################################################################################
-while getopts "mb:" o; do
+while getopts "b:cm" o; do
   case "${o}" in
-    m) multipe=YES
+    b) base=$OPTARG
        ;;
 
-    b) base=$OPTARG
+    c) mode=Color
+       ;;
+
+    m) multipe=YES
        ;;
 
     *) echo "Bad arguments"
