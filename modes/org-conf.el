@@ -106,6 +106,7 @@ agenda buffer."
   (org-defkey org-mode-map "\C-\M-n"   'org-metadown)
   (org-defkey org-mode-map "\C-c;"     'flyspell-auto-correct-previous-word)
 
+  (org-defkey org-mode-map "\C-c."               'pjones:push-tag-mark)
   (org-defkey org-mode-map "\C-ce"               'pjones:org-edit-special)
   (org-defkey org-mode-map "\C-c0"               'pjones:org-hide-all)
   (org-defkey org-mode-map "\C-c1"               'pjones:org-hide-others)
