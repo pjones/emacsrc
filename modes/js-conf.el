@@ -38,4 +38,4 @@ https://github.com/technomancy/emacs-starter-kit")
 (add-hook 'js-mode-hook 'pjones:js-mode-hook)
 
 ;; Set up the cool extra keywords right away!
-(pjones:js-extra-keywords)
+;;(pjones:js-extra-keywords)

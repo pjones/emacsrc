@@ -3,13 +3,14 @@
 
 (defvar pjones:package-archives
   '(("marmalade" . "http://marmalade-repo.org/packages/")
-    ("melpa" . "http://melpa.milkbox.net/packages/"))
+    ("melpa"     . "http://melpa.milkbox.net/packages/")
+    ("org"       . "http://orgmode.org/elpa/"))
   "List of package archives to use with Emacs.")
 
 (defvar pjones:packages
   '(magit flymake-ruby ruby-end inf-ruby htmlize yaml-mode
           bm gist haskell-mode ido-select-window switch-window
-          markdown-mode)
+          markdown-mode skewer-mode org)
   "A list of packages to ensure are installed at launch.")
 
 (dolist (archive pjones:package-archives)

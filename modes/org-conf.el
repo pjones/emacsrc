@@ -5,18 +5,17 @@
 
 (require 'saveplace)
 (require 'whitespace)
-;;(require 'org-install)
 (require 'org)
 (require 'org-clock)
-;;(require 'org-html)
 (require 'org-agenda)
+(require 'org-id)
 
 ;; General Org Settings
 (setq org-log-done t
       org-reverse-note-order t
       org-deadline-warning-days 14
       org-hide-leading-stars t
-      org-blank-before-new-entry '((heading . nil) (plain-list-item . nil))
+      org-blank-before-new-entry '((heading . auto) (plain-list-item . true))
       org-list-empty-line-terminates-plain-lists t
       org-use-fast-todo-selection t
       org-use-fast-tag-selection 'auto
@@ -48,13 +47,20 @@
         (file . find-file)
         (wl   . wl-other-frame))
 
+      org-file-apps
+      '((auto-mode . emacs)
+        ("\\.mm\\'" . default)
+        ("\\.x?html?\\'" . default)
+        ("\\.pdf\\'" . "zathura %s"))
+
       ;; Emphasis
       org-emphasis-alist
-      `(("_" bold "<b>" "</b>")
-        ("*" italic "<i>" "</i>")
-        ("=" underline "<span style=\"text-decoration:underline;\">" "</span>")
-        ("`" org-code "<code>" "</code>" verbatim)
-        ("~" org-verbatim "<code>" "</code>" verbatim))
+      `(("_" bold)
+        ("*" italic)
+        ("=" underline)
+        ("`" org-verbatim verbatim)
+        ("~" org-code verbatim)
+        ("+" (:strike-through t)))
 
       ;; TODO keyword faces
       org-todo-keyword-faces
@@ -100,6 +106,7 @@ agenda buffer."
   (org-defkey org-mode-map "\C-\M-n"   'org-metadown)
   (org-defkey org-mode-map "\C-c;"     'flyspell-auto-correct-previous-word)
 
+  (org-defkey org-mode-map "\C-ce"               'pjones:org-edit-special)
   (org-defkey org-mode-map "\C-c0"               'pjones:org-hide-all)
   (org-defkey org-mode-map "\C-c1"               'pjones:org-hide-others)
   (org-defkey org-mode-map "\C-j"                'pjones:org-list-append)
@@ -181,6 +188,18 @@ narrows it again if necessary."
     (widen)
     (org-goto alternative-interface)
     (if (/= buff-size point-size) (org-narrow-to-subtree))))
+
+(defun pjones:org-edit-special (&optional arg)
+  "A wrapper around `org-edit-special' that acts differently from
+within a terminal vs. a graphical client.  I typically do
+presentations from within a terminal and tmux session and in that
+case I don't want org to mess around with the window
+arrangement."
+  (interactive "P")
+  (let ((org-src-window-setup
+         (if (display-graphic-p) 'reorganize-frame
+           'current-window)))
+    (org-edit-special arg)))
 
 ;; Local Variables:
 ;; byte-compile-warnings: (not noruntime)
