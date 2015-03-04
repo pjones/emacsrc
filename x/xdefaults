@@ -5,6 +5,7 @@ Emacs.font: Dejavu Sans Mono-9
 ! ############################################################################
 ! # URxvt terminal
 URxvt.font: xft:Dejavu Sans Mono-9
+URxvt.termName: rxvt-256color
 Urxvt.saveLines: 25
 URxvt.letterSpace: 0
 URxvt.urgentOnBell: true
@@ -17,7 +18,9 @@ URxvt.cursorBlink: true
 URxvt.cursorUnderline: true
 URxvt.pointerBlank: true
 URxvt.perl-lib: /home/pjones/.urxvt
-URxvt.perl-ext-common: url-select,clipboard,font-size
+URxvt.perl-ext-common: url-select,clipboard,font-size,colors
+URxvt.keysym.C-c: builtin:
+URxvt.keysym.M-c: builtin:
 URxvt.keysym.M-w: builtin:
 URxvt.keysym.C-w: builtin:
 URxvt.keysym.C-y: builtin:
@@ -26,10 +29,13 @@ URxvt.keysym.C-M-y: perl:clipboard:paste
 URxvt.keysym.C-M-equal: perl:font-size:increase
 URxvt.keysym.C-M-minus: perl:font-size:decrease
 URxvt.keysym.C-M-0: perl:font-size:reset
+Urxvt.keysym.C-M-c: perl:colors:toggle
 URxvt.background: #222222
 URxvt.foreground: #839496
 URxvt.highlightColor: #003340
 URxvt.highlightTextColor: #839496
+URxvt.altBackground: #fdf6e3
+URxvt.altForeground: #002b36
 URxvt.color0: #333333
 URxvt.color1: #dc322f
 URxvt.color2: #859900
@@ -50,9 +56,3 @@ URxvt.color15: #ffffff
 ! ############################################################################
 ! # Bigger terminal.
 BigTerm.font: xft:dejavu sans mono:size=18
-
-! ############################################################################
-! # Bigger terminal for presentations.
-BigTermP.font: xft:dejavu sans mono:size=18
-BigTermP.background: #fdf6e3
-BigTermP.foreground: #002b36

@@ -1,0 +1,36 @@
+#!/usr/bin/perl
+
+use strict;
+use warnings;
+
+sub on_start
+{
+    my ($self) = @_;
+    $self->{"origBackground"} = $self->x_resource("background");
+    $self->{"origForeground"} = $self->x_resource("foreground");
+    $self->{"altBackground"}  = $self->x_resource("altBackground");
+    $self->{"altForeground"}  = $self->x_resource("altForeground");
+    $self->{"curBackground"}  = $self->{"origBackground"};
+}
+
+sub on_user_command
+{
+    my ($self, $cmd) = @_;
+
+    if ($self->{"curBackground"} eq $self->{"origBackground"}) {
+        set_colors($self, "alt");
+    } else {
+        set_colors($self, "orig");
+    }
+}
+
+sub set_colors
+{
+    my ($self, $prefix) = @_;
+    my $foreground = $self->{$prefix . "Foreground"};
+    my $background = $self->{$prefix . "Background"};
+    
+    $self->{"curBackground"} = $background;
+    $self->cmd_parse("\033]10;" . $foreground . "\033\\");
+    $self->cmd_parse("\033]11;" . $background . "\033\\");
+}
