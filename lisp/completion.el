@@ -7,9 +7,8 @@
 (require 'ido)
 (ido-mode t)
 
-;; If the current line is already indented, have the tab key try to
-;; auto-complete the word at point.
-(setq tab-always-indent 'complete)
+;; What to do with the tab key.
+(setq tab-always-indent t)
 
 ;; Replace completion-at-point with hippie expand
 (defun pjones:hippie-expand () (hippie-expand nil))

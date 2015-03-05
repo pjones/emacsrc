@@ -4,7 +4,8 @@
   (require 'etags)
   (require 'ispell)
   (require 'rcirc)
-  (require 'subword))
+  (require 'subword)
+  (require 'server))
 
 (defun pjones:maybe-save-buffers-kill-terminal (&optional arg)
   "Save me from myself.  I somehow keep hitting C-x C-c when I
@@ -51,6 +52,14 @@ placing it in the kill ring)."
   (move-end-of-line 1)
   (newline)
   (indent-according-to-mode))
+
+(defun pjones:start-primary-app (arg)
+  "Start an application like Gnus or IRC client based on the name
+of the Emacs server."
+  (interactive "P")
+  (cond
+   ((string= "gnus" server-name) (gnus arg))
+   ((string= "irc"  server-name) (pjones:irc arg))))
 
 (defun pjones:irc (&optional local-only)
   "Start IRC client.  With an argument only start a connection to
