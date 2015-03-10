@@ -21,8 +21,8 @@ $(eval $(call PMADE_INSTALL_DOT,dot/zshenv))
 
 ################################################################################
 # Local (hostname based) Override
-ifneq ($(wildcard local/$(HOST)),)
-  $(eval $(call PMADE_INSTALL_FILE,local/$(HOST),$(DEST)/local))
+ifneq ($(wildcard local/$(HOSTNAME)),)
+  $(eval $(call PMADE_INSTALL_FILE,local/$(HOSTNAME),$(DEST)/local))
 endif
 
 ################################################################################
