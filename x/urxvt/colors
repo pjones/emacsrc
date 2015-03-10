@@ -17,10 +17,19 @@ sub on_user_command
 {
     my ($self, $cmd) = @_;
 
+    if ($cmd eq "colors:toggle") {
+        $self->toggle_colors;
+    }
+}
+
+sub toggle_colors
+{
+    my ($self) = @_;
+
     if ($self->{"curBackground"} eq $self->{"origBackground"}) {
-        set_colors($self, "alt");
+        $self->set_colors("alt");
     } else {
-        set_colors($self, "orig");
+        $self->set_colors("orig");
     }
 }
 

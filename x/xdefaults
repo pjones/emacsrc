@@ -29,7 +29,7 @@ URxvt.keysym.C-M-y: perl:clipboard:paste
 URxvt.keysym.C-M-equal: perl:font-size:increase
 URxvt.keysym.C-M-minus: perl:font-size:decrease
 URxvt.keysym.C-M-0: perl:font-size:reset
-Urxvt.keysym.C-M-c: perl:colors:toggle
+URxvt.keysym.C-M-c: perl:colors:toggle
 URxvt.background: #222222
 URxvt.foreground: #839496
 URxvt.highlightColor: #003340
