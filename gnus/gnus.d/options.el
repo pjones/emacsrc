@@ -35,9 +35,9 @@
 ;; Variables used in all the other files
 (setq mail-signature-dir "~/core/privaterc/signatures")
 
-;; Apple Address Book
-(require 'external-abook)
-(setq external-abook-command "ssh renfield \"contacts -lf \'%%e\t%%n\' %s\"")
+;; Address Book
+(require 'bbdb)
+(add-hook 'gnus-startup-hook 'bbdb-insinuate-gnus)
 
 ;; Don't keep back-up versions of newsrc
 (defun pmade:gnus-turn-off-backup ()

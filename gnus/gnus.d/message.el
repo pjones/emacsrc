@@ -7,13 +7,16 @@
 (require 'gnus-icalendar)
 (gnus-icalendar-setup)
 
+;; Address Book.
+(require 'bbdb)
 
 (defun pmade-message-mode-hook ()
   "Called to customize message mode"
   (define-key message-mode-map (kbd "s-h")       'pmade-make-html-part)
   (define-key message-mode-map (kbd "C-c C-s")   'message-kill-to-signature)
   (define-key message-mode-map (kbd "s-s")       'pmade-mail-signature-next)
-  (define-key message-mode-map (kbd "C-c <tab>") 'external-abook-try-expand)
+  (define-key message-mode-map (kbd "C-c <tab>") 'bbdb-complete-mail)
+  (define-key message-mode-map (kbd "M-<tab>")   'bbdb-complete-mail)
   (define-key message-mode-map (kbd "s-q")       'boxquote-region)
   (define-key message-mode-map (kbd "s-y")       'boxquote-yank))
 
