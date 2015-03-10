@@ -24,7 +24,6 @@ $(eval $(call MAYBE_ADD_DIRECTORY,nix,nix-env))
 # Now everyone else.
 $(eval $(call MAYBE_ADD_DIRECTORY,bin,sh))
 $(eval $(call MAYBE_ADD_DIRECTORY,conkeror,conkeror))
-$(eval $(call MAYBE_ADD_DIRECTORY,git,git))
 $(eval $(call MAYBE_ADD_DIRECTORY,haskell,ghc))
 $(eval $(call MAYBE_ADD_DIRECTORY,latex,texdoc))
 $(eval $(call MAYBE_ADD_DIRECTORY,misc,sh))
@@ -50,3 +49,8 @@ ifneq ($(and $(wildcard ../emacs),$(shell which emacs > /dev/null 2>&1)),"")
 all::
 	@ $(call GO_DIR,gnus)
 endif
+
+################################################################################
+# More decisions are made in these directories:
+all::
+	@ $(call GO_DIR,sccs)
