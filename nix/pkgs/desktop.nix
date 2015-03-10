@@ -16,7 +16,7 @@
     wmctrl gnome.gnome_keyring
 
     # Internet Utilities:
-    uzbl chromium conkeror ssvnc pypyPackages.googlecl
+    uzbl chromium conkeror ssvnc /* asynk */
 
     # Media Players/Viewers:
     mpd mpc_cli ncmpcpp vlc mpg123 moc feh zathura
