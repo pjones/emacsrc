@@ -6,7 +6,7 @@ set -e
 ################################################################################
 if [ -d ~/.nix-profile/etc/sane.d/ ]; then
   export LD_LIBRARY_PATH=~/.nix-profile/lib/sane
-  export SANE_CONFIG_DIR=~/.nix-profile/etc/sane.d/
+  export SANE_CONFIG_DIR=~/.nix-profile/etc/sane.d
 fi
 
 ################################################################################
@@ -16,9 +16,10 @@ size="-x 215.9 -y 279.4" # Letter
 base=`date +%Y-%m-%d_%H:%M:%S`
 multipe=NO
 current_page=1
+convert_options="-trim"
 
 ################################################################################
-while getopts "b:cm" o; do
+while getopts "b:clmt" o; do
   case "${o}" in
     b) base=$OPTARG
        ;;
@@ -26,7 +27,15 @@ while getopts "b:cm" o; do
     c) mode=Color
        ;;
 
+    l) scanimage -L
+       exit
+       ;;
+
     m) multipe=YES
+       ;;
+
+    t) strace scanimage -L
+       exit
        ;;
 
     *) echo "Bad arguments"
@@ -68,12 +77,17 @@ while [ $multipe = YES -o $current_page -eq 1 ]; do
 done
 
 if [ $multipe = YES ]; then
-  convert ${base}-*.pnm ${base}.pdf
+  convert $convert_options ${base}-*.pnm ${base}.pdf
   rm ${base}-*.pnm
 else
-  convert ${base}.pnm ${base}.pdf
+  convert $convert_options ${base}.pnm ${base}.pdf
   rm ${base}.pnm
 fi
+
+################################################################################
+# Try reducing the file size using pdfcrop.
+pdfcrop ${base}.pdf ${base}.crop.pdf > /dev/null
+mv ${base}.crop.pdf ${base}.pdf
 
 ################################################################################
 echo "created ${base}.pdf"
