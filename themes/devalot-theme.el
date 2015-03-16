@@ -1,6 +1,6 @@
 ;;; devalot-theme.el --- Solarized-based custom theme for faces.
 ;;
-;; Copyright (C) 2007-2012 Peter Jones <pjones@pmade.com>
+;; Copyright (C) 2007-2015 Peter Jones <pjones@pmade.com>
 ;;
 ;; Permission is hereby granted, free of charge, to any person obtaining
 ;; a copy of this software and associated documentation files (the
@@ -38,260 +38,275 @@
 ;;; Notes
 ;; * To see all faces in effect: list-faces-display
 ;; * To see all colors: list-colors-display
-(let ((yellow       "#b58900")
-      (yellow-high  "#b5a924")
-      (orange       "#cb4b16")
-      (orange-high  "#cb683f")
-      (red          "#dc322f")
-      (red-high     "#dc5c5a")
-      (magenta      "#d33682")
-      (magenta-high "#d36198")
-      (violet       "#6c71c4")
-      (violet-high  "#9396c4")
-      (blue         "#268bd2")
-      (blue-high    "#509cd2")
-      (cyan         "#2aa198")
-      (cyan-high    "#4aa19a")
-      (green        "#859900")
-      (green-high   "#88b324")
-      (bg-normal    "#222222")
-      (bg-off       "#003340")
-      (bg-high      "#083d4a")
-      (bg-low       "#2a2a2a")
-      (bg-inverse   "#fdf6e3")
-      (fg-normal    "#839496")
-      (fg-low       "#586e75")
-      (fg-high      "#93a1a1")
-      (fg-inverse   "#657b83")
-      (class '((class color) (min-colors 89))))
-  (custom-theme-set-faces
-   'devalot
-   `(default        ((((type graphic)) (:background ,bg-normal :foreground ,fg-normal))))
-   `(cursor         ((t (:background ,magenta-high :foreground ,bg-normal))))
-   `(error          ((t (:foreground ,red-high))))
-   `(warning        ((t (:foreground ,yellow-high))))
-   `(success        ((t (:foreground ,green-high))))
-   `(match          ((t (:background ,bg-high :foreground ,fg-normal))))
-   `(fringe         ((t (:background ,bg-low :foreground ,fg-low))))
-   `(linum          ((t (:background ,bg-low :foreground ,fg-low))))
-   `(lazy-highlight ((t (:background ,bg-high :foreground ,magenta-high))))
-   `(isearch        ((t (:background ,magenta :foreground ,bg-inverse :bold t))))
-   `(region         ((t (:background ,bg-high))))
-   `(highlight      ((t (:background ,bg-off))))
-   `(hl-line        ((t (:inherit 'highlight))))
+(defvar devalot-colors-dark
+  '((yellow       "#b58900")
+    (yellow-high  "#b5a924")
+    (orange       "#cb4b16")
+    (orange-high  "#cb683f")
+    (red          "#dc322f")
+    (red-high     "#dc5c5a")
+    (magenta      "#d33682")
+    (magenta-high "#d36198")
+    (violet       "#6c71c4")
+    (violet-high  "#9396c4")
+    (blue         "#268bd2")
+    (blue-high    "#509cd2")
+    (cyan         "#2aa198")
+    (cyan-high    "#4aa19a")
+    (green        "#859900")
+    (green-high   "#88b324")
+    (bg-normal    "#222222")
+    (bg-off       "#003340")
+    (bg-high      "#083d4a")
+    (bg-low       "#2a2a2a")
+    (bg-inverse   "#fdf6e3")
+    (fg-normal    "#839496")
+    (fg-low       "#586e75")
+    (fg-high      "#93a1a1")
+    (fg-inverse   "#657b83")
+    (class        ((class color) (min-colors 89))))
+  "Colors for the dark version of the Devalot theme.")
 
-   `(link ((,class (:underline  ,blue-high :foreground ,fg-normal))
-           (t (:underline "blue" :foreground "blue"))))
+(defun devalot-colors-apply (name colors)
+  "Return a list suitable for `custom-theme-set-faces'."
+  ; this is hack right now
+  (let (yellow yellow-high orange orange-high red red-high
+        magenta magenta-high violet violet-high blue blue-high cyan
+        cyan-high green green-high bg-normal bg-off bg-high bg-low
+        bg-inverse fg-normal fg-low fg-high fg-inverse class)
 
+    (mapc (lambda (color)
+            (set (car color) (cadr color)))
+          colors)
 
-   ;; Show paren
-   `(show-paren-match ((t (:background ,bg-inverse :foreground ,blue :bold t))))
+    ;; Vector for ANSI Colors.
+    (custom-theme-set-variables name
+      `(ansi-color-names-vector [,fg-low ,red ,green-high ,yellow-high
+                                ,blue ,magenta-high ,cyan-high ,fg-high]))
 
-   ;; Font-lock
-   `(font-lock-builtin-face           ((t (:foreground ,fg-low))))
-   `(font-lock-comment-delimiter-face ((t (:foreground ,fg-low :bold t))))
-   `(font-lock-comment-face           ((t (:foreground ,violet :italic t))))
-   `(font-lock-constant-face          ((t (:foreground ,yellow))))
-   `(font-lock-function-name-face     ((t (:foreground ,orange :bold t))))
-   `(font-lock-keyword-face           ((t (:foreground ,green :bold t))))
-   `(font-lock-preprocessor-face      ((t (:foreground ,red))))
-   `(font-lock-string-face            ((t (:foreground ,violet-high))))
-   `(font-lock-type-face              ((t (:foreground ,blue :bold t))))
-   `(font-lock-variable-name-face     ((t (:foreground ,cyan-high))))
-   `(font-lock-warning-face           ((t (:foreground ,magenta :background ,bg-off :bold t))))
+    `((default        ((((type graphic)) (:background ,bg-normal :foreground ,fg-normal))))
+     (cursor         ((t (:background ,magenta-high :foreground ,bg-normal))))
+     (error          ((t (:foreground ,red-high))))
+     (warning        ((t (:foreground ,yellow-high))))
+     (success        ((t (:foreground ,green-high))))
+     (match          ((t (:background ,bg-high :foreground ,fg-normal))))
+     (fringe         ((t (:background ,bg-low :foreground ,fg-low))))
+     (linum          ((t (:background ,bg-low :foreground ,fg-low))))
+     (lazy-highlight ((t (:background ,bg-high :foreground ,magenta-high))))
+     (isearch        ((t (:background ,magenta :foreground ,bg-inverse :bold t))))
+     (region         ((t (:background ,bg-high))))
+     (highlight      ((t (:background ,bg-off))))
+     (hl-line        ((t (:inherit 'highlight))))
 
-   ;; Minibuffer
-   `(minibuffer-noticeable-prompt ((t (:foreground ,red-high :bold t))))
-   `(minibuffer-prompt ((t (:foreground ,magenta :bold t))))
-
-   ;; Modeline and Things in the Modeline
-   `(mode-line ((,class (:background ,green :foreground ,bg-normal :box (:line-width 1 :style released-button)))
-                (t (:background "green" :foreground "black"))))
-   `(mode-line-inactive ((t (:background ,bg-low :foreground ,fg-low :box (:line-width 1 :style released-button)))))
-   `(modeline-mousable ((t (:background ,bg-high :foreground ,fg-normal))))
-   `(modeline-mousable-minor-mode ((t (:background ,bg-high :foreground ,bg-high))))
-
-   ;; Flyspell
-   `(flyspell-duplicate ((t (:foreground ,yellow-high :underline ,yellow))))
-   `(flyspell-incorrect ((t (:foreground ,magenta-high :underline ,red))))
-
-   ;; Dired
-   `(dired-directory ((t (:foreground ,blue :bold t))))
-   `(dired-flagged ((t (:foreground ,magenta-high))))
-   `(dired-header ((t (:foreground ,orange))))
-   `(dired-ignored ((t (:foreground ,fg-low))))
-   `(dired-mark ((t (:foreground ,yellow))))
-   `(dired-marked ((t (:foreground ,yellow-high))))
-   `(dired-perm-write ((t (:foreground ,fg-high))))
-   `(dired-symlink ((t (:foreground ,cyan))))
-   `(dired-warning ((t (:underline ,yellow-high))))
-
-   ;; Outline Mode
-   `(outline-1 ((,class (:foreground ,blue-high :bold t))
-                (t (:foreground "blue" :bold t))))
-   `(outline-2 ((,class (:foreground ,green-high :bold t))
-                (t (:foreground "green" :bold t))))
-   `(outline-3 ((,class (:foreground ,cyan-high :bold nil))
-                (t (:foreground "cyan" :bold t))))
-   `(outline-4 ((,class (:foreground ,orange :bold nil))
-                (t (:foreground "orange" :bold t))))
-   `(outline-5 ((,class (:foreground ,yellow-high :bold nil))
-                (t (:foreground "magenta"))))
-
-   ;; Org-Mode
-   `(org-level-1               ((t (:inherit 'outline-1))))
-   `(org-level-2               ((t (:inherit 'outline-2))))
-   `(org-level-3               ((t (:inherit 'outline-3))))
-   `(org-level-4               ((t (:inherit 'outline-4 :italic t))))
-   `(org-level-5               ((t (:inherit 'outline-5))))
-   `(org-archived              ((t (:inherit 'font-lock-string-face))))
-   `(org-document-title        ((t (:inherit 'font-lock-comment-delimiter-face))))
-   `(org-document-info-keyword ((t (:inherit 'font-lock-keyword-face))))
-   `(org-meta-line             ((t (:inherit 'font-lock-constant-face))))
-   `(org-link                  ((t (:inherit 'link))))
-   `(org-agenda-date           ((t (:inherit 'outline-1))))
-   `(org-agenda-date-weekend   ((t (:inherit 'outline-1))))
-   `(org-agenda-structure      ((t (:foreground ,violet))))
-   `(org-agenda-clocking       ((t (:background ,bg-off))))
-   `(org-scheduled-today       ((t (:inherit 'font-lock-comment-face))))
-   `(org-scheduled-previously  ((t (:inherit 'font-lock-warning-face))))
-   `(org-upcoming-deadline     ((t (:inherit 'font-lock-string-face))))
-   `(org-warning               ((t (:inherit 'font-lock-warning-face))))
-   `(org-date                  ((t (:foreground ,fg-low))))
-   `(org-tag                   ((t (:foreground ,fg-low))))
-   `(org-tag-default           ((t (:inherit 'org-tag))))
-   `(org-column                ((t (:background ,bg-low))))
-   `(org-column-title          ((t (:inherit 'mode-line :background ,orange-high))))
-   `(org-checkbox              ((t (:inherit 'mode-line :background ,green))))
-   `(org-todo                  ((t (:inherit 'mode-line :background ,red))))
-   `(org-done                  ((t (:inherit 'mode-line :background ,green))))
-
-   `(org-hide ((,class (:foreground ,bg-off))
-               (t (:foreground "black"))))
-
-   `(org-special-keyword ((,class (:foreground ,fg-low))
-                          (t (:foreground "gray"))))
-
-   `(org-code ((,class (:inherit 'font-lock-keyword-face :bold nil))
-               (nil (:foreground "green"))))
-
-   `(org-block ((t (:inherit 'org-code))))
-   `(org-block-begin-line ((t (:inherit 'org-special-keyword))))
-   `(org-block-end-line ((t (:inherit 'org-block-begin-line))))
-
-   ;; Markdown mode
-   `(markdown-header-delimiter-face ((t (:inherit 'org-agenda-dimmed-todo-face))))
-   `(markdown-header-face           ((t (:inherit 'outline-1))))
-   `(markdown-header-face-1         ((t (:inherit 'outline-1))))
-   `(markdown-header-face-2         ((t (:inherit 'outline-2))))
-   `(markdown-header-face-3         ((t (:inherit 'outline-3))))
-   `(markdown-header-face-4         ((t (:inherit 'outline-4))))
-   `(markdown-header-face-5         ((t (:inherit 'outline-5))))
-   `(markdown-header-face-6         ((t (:inherit 'outline-6))))
+     (link ((,class (:underline  ,blue-high :foreground ,fg-normal))
+            (t (:underline "blue" :foreground "blue"))))
 
 
-   ;; ERB (Ruby Embedded in HTML)
-   `(erb-face               ((t (:background ,bg-normal :foreground ,fg-normal))))
-   `(erb-delim-face         ((,class (:foreground ,fg-low)) (t (:foreground "magenta"))))
-   `(erb-out-face           ((t (:background ,bg-normal :foreground ,fg-normal))))
-   `(erb-out-delim-face     ((,class (:foreground ,blue :background ,bg-normal)) (t (:foreground "blue"))))
-   `(erb-comment-delim-face ((t (:foreground ,fg-low :bold t))))
-   `(erb-comment-face       ((t (:foreground ,violet :italic t))))
+     ;; Show paren
+     (show-paren-match ((t (:background ,bg-inverse :foreground ,blue :bold t))))
 
-   ;; Diff Mode
-   `(diff-added             ((t (:foreground ,green))))
-   `(diff-changed           ((t (:foreground ,yellow))))
-   `(diff-removed           ((t (:foreground ,red))))
-   `(diff-indicator-added   ((t (:foreground ,green  :background ,bg-low))))
-   `(diff-indicator-chnaged ((t (:foreground ,yellow :background ,bg-low))))
-   `(diff-indicator-removed ((t (:foreground ,red    :background ,bg-low))))
-   `(diff-context           ((t (:foreground ,fg-low))))
+     ;; Font-lock
+     (font-lock-builtin-face           ((t (:foreground ,fg-low))))
+     (font-lock-comment-delimiter-face ((t (:foreground ,fg-low :bold t))))
+     (font-lock-comment-face           ((t (:foreground ,violet :italic t))))
+     (font-lock-constant-face          ((t (:foreground ,yellow))))
+     (font-lock-function-name-face     ((t (:foreground ,orange :bold t))))
+     (font-lock-keyword-face           ((t (:foreground ,green :bold t))))
+     (font-lock-preprocessor-face      ((t (:foreground ,red))))
+     (font-lock-string-face            ((t (:foreground ,violet-high))))
+     (font-lock-type-face              ((t (:foreground ,blue :bold t))))
+     (font-lock-variable-name-face     ((t (:foreground ,cyan-high))))
+     (font-lock-warning-face           ((t (:foreground ,magenta :background ,bg-off :bold t))))
 
-   ;; Magit (Git GUI)
-   `(magit-diff-add         ((t (:inherit 'diff-added))))
-   `(magit-diff-del         ((t (:inherit 'diff-removed))))
-   `(magit-diff-file-header ((t (:inherit 'font-lock-constant-face))))
-   `(magit-diff-hunk-header ((t (:inherit 'font-lock-keyword-face))))
-   `(magit-diff-none        ((t (:inherit 'font-lock-comment-delimiter-face))))
-   `(magit-branch           ((t (:inherit 'font-lock-comment-face))))
-   `(magit-header           ((t (:inherit 'outline-1))))
-   `(magit-item-highlight   ((t (:background ,bg-low))))
+     ;; Minibuffer
+     (minibuffer-noticeable-prompt ((t (:foreground ,red-high :bold t))))
+     (minibuffer-prompt ((t (:foreground ,magenta :bold t))))
 
-   ;; Compilation
-   `(compilation-info ((t (:inherit 'font-lock-string-face :bold t))))
-   `(compilation-error ((t (:underline ,red :bold t))))
-   `(compilation-line-number ((t (:foreground ,orange :bold t))))
-   `(flymake-errline ((t :underline ,magenta-high :background ,bg-off, :foreground ,magenta-high)))
-   `(flymake-warnline ((t :underline ,yellow ,bg-normal)))
+     ;; Modeline and Things in the Modeline
+     (mode-line ((,class (:background ,green :foreground ,bg-normal :box (:line-width 1 :style released-button)))
+                 (t (:background "green" :foreground "black"))))
+     (mode-line-inactive ((t (:background ,bg-low :foreground ,fg-low :box (:line-width 1 :style released-button)))))
+     (modeline-mousable ((t (:background ,bg-high :foreground ,fg-normal))))
+     (modeline-mousable-minor-mode ((t (:background ,bg-high :foreground ,bg-high))))
 
-   ;; nXML
-   `(nxml-element-colon-face             ((t (:inherit 'font-lock-type-face))))
-   `(nxml-element-prefix-face            ((t (:inherit 'font-lock-keyword-face))))
-   `(nxml-attribute-value-delimiter-face ((t (:inherit 'font-lock-string-face))))
-   `(nxml-cdata-section-content-face     ((t (:inherit 'font-lock-string-face))))
-   `(nxml-attribute-value-face           ((t (:inherit 'font-lock-string-face))))
-   `(nxml-attribute-local-name-face      ((t (:inherit 'font-lock-constant-face))))
-   `(nxml-entity-ref-name-face           ((t (:inherit 'font-lock-constant-face))))
-   `(nxml-element-colon-face             ((t (:inherit 'font-lock-function-name-face))))
-   `(nxml-element-prefix-face            ((t (:inherit 'font-lock-function-name-face))))
-   `(nxml-element-local-name-face        ((t (:inherit 'font-lock-function-name-face))))
-   `(nxml-tag-delimiter-face             ((t (:inherit 'font-lock-function-name-face))))
-   `(nxml-tag-slash-face                 ((t (:inherit 'font-lock-function-name-face))))
-   `(nxml-comment-delimiter-face         ((t (:inherit 'font-lock-comment-delimiter-face))))
-   `(nxml-comment-content-face           ((t (:inherit 'font-lock-comment-face))))
+     ;; Flyspell
+     (flyspell-duplicate ((t (:foreground ,yellow-high :underline ,yellow))))
+     (flyspell-incorrect ((t (:foreground ,magenta-high :underline ,red))))
 
-   ;; ido
-   `(ido-first-match ((t (:foreground ,magenta-high))))
-   `(ido-only-match  ((t (:foreground ,green :bold t))))
-   `(ido-subdir      ((t (:foreground ,blue :bold t))))
-   `(ido-virtual     ((t (:foreground ,fg-low))))
+     ;; Dired
+     (dired-directory ((t (:foreground ,blue :bold t))))
+     (dired-flagged ((t (:foreground ,magenta-high))))
+     (dired-header ((t (:foreground ,orange))))
+     (dired-ignored ((t (:foreground ,fg-low))))
+     (dired-mark ((t (:foreground ,yellow))))
+     (dired-marked ((t (:foreground ,yellow-high))))
+     (dired-perm-write ((t (:foreground ,fg-high))))
+     (dired-symlink ((t (:foreground ,cyan))))
+     (dired-warning ((t (:underline ,yellow-high))))
 
-   ;; rcIRC
-   `(rcirc-track-nick    ((t (:foreground ,fg-low :bold t))))
-   `(rcirc-track-keyword ((t (:inherit 'rcirc-track-nick))))
-   `(rcirc-server        ((t (:foreground ,fg-high))))
-   `(rcirc-timestamp     ((t (:inherit 'rcirc-server))))
-   `(rcirc-my-nick       ((t (:foreground ,violet))))
-   `(rcirc-url           ((t (:inherit 'link))))
+     ;; Outline Mode
+     (outline-1 ((,class (:foreground ,blue-high :bold t))
+                 (t (:foreground "blue" :bold t))))
+     (outline-2 ((,class (:foreground ,green-high :bold t))
+                 (t (:foreground "green" :bold t))))
+     (outline-3 ((,class (:foreground ,cyan-high :bold nil))
+                 (t (:foreground "cyan" :bold t))))
+     (outline-4 ((,class (:foreground ,orange :bold nil))
+                 (t (:foreground "orange" :bold t))))
+     (outline-5 ((,class (:foreground ,yellow-high :bold nil))
+                 (t (:foreground "magenta"))))
 
-   ;; Message mode (mail)
-   `(message-header-subject ((t (:inherit 'default :bold t))))
+     ;; Org-Mode
+     (org-level-1               ((t (:inherit 'outline-1))))
+     (org-level-2               ((t (:inherit 'outline-2))))
+     (org-level-3               ((t (:inherit 'outline-3))))
+     (org-level-4               ((t (:inherit 'outline-4 :italic t))))
+     (org-level-5               ((t (:inherit 'outline-5))))
+     (org-archived              ((t (:inherit 'font-lock-string-face))))
+     (org-document-title        ((t (:inherit 'font-lock-comment-delimiter-face))))
+     (org-document-info-keyword ((t (:inherit 'font-lock-keyword-face))))
+     (org-meta-line             ((t (:inherit 'font-lock-constant-face))))
+     (org-link                  ((t (:inherit 'link))))
+     (org-agenda-date           ((t (:inherit 'outline-1))))
+     (org-agenda-date-weekend   ((t (:inherit 'outline-1))))
+     (org-agenda-structure      ((t (:foreground ,violet))))
+     (org-agenda-clocking       ((t (:background ,bg-off))))
+     (org-scheduled-today       ((t (:inherit 'font-lock-comment-face))))
+     (org-scheduled-previously  ((t (:inherit 'font-lock-warning-face))))
+     (org-upcoming-deadline     ((t (:inherit 'font-lock-string-face))))
+     (org-warning               ((t (:inherit 'font-lock-warning-face))))
+     (org-date                  ((t (:foreground ,fg-low))))
+     (org-tag                   ((t (:foreground ,fg-low))))
+     (org-tag-default           ((t (:inherit 'org-tag))))
+     (org-column                ((t (:background ,bg-low))))
+     (org-column-title          ((t (:inherit 'mode-line :background ,orange-high))))
+     (org-checkbox              ((t (:inherit 'mode-line :background ,green))))
+     (org-todo                  ((t (:inherit 'mode-line :background ,red))))
+     (org-done                  ((t (:inherit 'mode-line :background ,green))))
 
-   ;; LaTeX
-   `(font-latex-sectioning-0-face ((t (:inherit 'outline-1 :height 1.0))))
-   `(font-latex-sectioning-1-face ((t (:inherit 'font-latex-sectioning-0-face))))
-   `(font-latex-sectioning-2-face ((t (:inherit 'font-latex-sectioning-0-face))))
-   `(font-latex-sectioning-3-face ((t (:inherit 'font-latex-sectioning-0-face))))
-   `(font-latex-sectioning-4-face ((t (:inherit 'font-latex-sectioning-0-face))))
-   `(font-latex-sectioning-5-face ((t (:inherit 'font-latex-sectioning-0-face))))
+     (org-hide ((,class (:foreground ,bg-off))
+                (t (:foreground "black"))))
 
-   ;; Whitespace Mode
-   `(whitespace-tab ((t (:background ,bg-low))))
-   `(whitespace-trailing ((t (:background ,bg-normal :foreground ,fg-normal))))
-   `(whitespace-empty ((t (:background ,bg-normal :foreground ,fg-normal))))
-   `(whitespace-line ((t (:background ,bg-normal :underline ,bg-off))))
+     (org-special-keyword ((,class (:foreground ,fg-low))
+                           (t (:foreground "gray"))))
 
-   ;; Terminal Emulation
-   `(term               ((t (:foreground ,fg-normal))))
-   `(term-bold          ((t (:inherit 'term :bold t))))
-   `(term-color-black   ((t (:foreground ,fg-low))))
-   `(term-color-blue    ((t (:foreground ,blue))))
-   `(term-color-cyan    ((t (:foreground ,cyan-high))))
-   `(term-color-green   ((t (:foreground ,green-high))))
-   `(term-color-magenta ((t (:foreground ,magenta-high))))
-   `(term-color-red     ((t (:foreground ,red))))
-   `(term-color-white   ((t (:foreground ,fg-high))))
-   `(term-color-yellow  ((t (:foreground ,yellow-high))))
-   `(term-underline     ((t (:foreground ,fg-inverse :underline ,bg-high))))
+     (org-code ((,class (:inherit 'font-lock-keyword-face :bold nil))
+                (nil (:foreground "green"))))
 
-   ;; Remaining Junk
-   `(completion-dynamic-face ((t (:inherit 'match)))))
+     (org-block ((t (:inherit 'org-code))))
+     (org-block-begin-line ((t (:inherit 'org-special-keyword))))
+     (org-block-end-line ((t (:inherit 'org-block-begin-line))))
 
-  ;; Vector for ANSI Colors.
-  (custom-theme-set-variables
-   'devalot
-   `(ansi-color-names-vector [,fg-low ,red ,green-high ,yellow-high
-                              ,blue ,magenta-high ,cyan-high ,fg-high])))
+     ;; Markdown mode
+     (markdown-header-delimiter-face ((t (:inherit 'org-agenda-dimmed-todo-face))))
+     (markdown-header-face           ((t (:inherit 'outline-1))))
+     (markdown-header-face-1         ((t (:inherit 'outline-1))))
+     (markdown-header-face-2         ((t (:inherit 'outline-2))))
+     (markdown-header-face-3         ((t (:inherit 'outline-3))))
+     (markdown-header-face-4         ((t (:inherit 'outline-4))))
+     (markdown-header-face-5         ((t (:inherit 'outline-5))))
+     (markdown-header-face-6         ((t (:inherit 'outline-6))))
+
+
+     ;; ERB (Ruby Embedded in HTML)
+     (erb-face               ((t (:background ,bg-normal :foreground ,fg-normal))))
+     (erb-delim-face         ((,class (:foreground ,fg-low)) (t (:foreground "magenta"))))
+     (erb-out-face           ((t (:background ,bg-normal :foreground ,fg-normal))))
+     (erb-out-delim-face     ((,class (:foreground ,blue :background ,bg-normal)) (t (:foreground "blue"))))
+     (erb-comment-delim-face ((t (:foreground ,fg-low :bold t))))
+     (erb-comment-face       ((t (:foreground ,violet :italic t))))
+
+     ;; Diff Mode
+     (diff-added             ((t (:foreground ,green))))
+     (diff-changed           ((t (:foreground ,yellow))))
+     (diff-removed           ((t (:foreground ,red))))
+     (diff-indicator-added   ((t (:foreground ,green  :background ,bg-low))))
+     (diff-indicator-chnaged ((t (:foreground ,yellow :background ,bg-low))))
+     (diff-indicator-removed ((t (:foreground ,red    :background ,bg-low))))
+     (diff-context           ((t (:foreground ,fg-low))))
+
+     ;; Magit (Git GUI)
+     (magit-diff-add         ((t (:inherit 'diff-added))))
+     (magit-diff-del         ((t (:inherit 'diff-removed))))
+     (magit-diff-file-header ((t (:inherit 'font-lock-constant-face))))
+     (magit-diff-hunk-header ((t (:inherit 'font-lock-keyword-face))))
+     (magit-diff-none        ((t (:inherit 'font-lock-comment-delimiter-face))))
+     (magit-branch           ((t (:inherit 'font-lock-comment-face))))
+     (magit-header           ((t (:inherit 'outline-1))))
+     (magit-item-highlight   ((t (:background ,bg-low))))
+
+     ;; Compilation
+     (compilation-info ((t (:inherit 'font-lock-string-face :bold t))))
+     (compilation-error ((t (:underline ,red :bold t))))
+     (compilation-line-number ((t (:foreground ,orange :bold t))))
+     (flymake-errline ((t :underline ,magenta-high :background ,bg-off, :foreground ,magenta-high)))
+     (flymake-warnline ((t :underline ,yellow ,bg-normal)))
+
+     ;; nXML
+     (nxml-element-colon-face             ((t (:inherit 'font-lock-type-face))))
+     (nxml-element-prefix-face            ((t (:inherit 'font-lock-keyword-face))))
+     (nxml-attribute-value-delimiter-face ((t (:inherit 'font-lock-string-face))))
+     (nxml-cdata-section-content-face     ((t (:inherit 'font-lock-string-face))))
+     (nxml-attribute-value-face           ((t (:inherit 'font-lock-string-face))))
+     (nxml-attribute-local-name-face      ((t (:inherit 'font-lock-constant-face))))
+     (nxml-entity-ref-name-face           ((t (:inherit 'font-lock-constant-face))))
+     (nxml-element-colon-face             ((t (:inherit 'font-lock-function-name-face))))
+     (nxml-element-prefix-face            ((t (:inherit 'font-lock-function-name-face))))
+     (nxml-element-local-name-face        ((t (:inherit 'font-lock-function-name-face))))
+     (nxml-tag-delimiter-face             ((t (:inherit 'font-lock-function-name-face))))
+     (nxml-tag-slash-face                 ((t (:inherit 'font-lock-function-name-face))))
+     (nxml-comment-delimiter-face         ((t (:inherit 'font-lock-comment-delimiter-face))))
+     (nxml-comment-content-face           ((t (:inherit 'font-lock-comment-face))))
+
+     ;; ido
+     (ido-first-match ((t (:foreground ,magenta-high))))
+     (ido-only-match  ((t (:foreground ,green :bold t))))
+     (ido-subdir      ((t (:foreground ,blue :bold t))))
+     (ido-virtual     ((t (:foreground ,fg-low))))
+
+     ;; rcIRC
+     (rcirc-track-nick    ((t (:foreground ,fg-low :bold t))))
+     (rcirc-track-keyword ((t (:inherit 'rcirc-track-nick))))
+     (rcirc-server        ((t (:foreground ,fg-high))))
+     (rcirc-timestamp     ((t (:inherit 'rcirc-server))))
+     (rcirc-my-nick       ((t (:foreground ,violet))))
+     (rcirc-url           ((t (:inherit 'link))))
+
+     ;; Message mode (mail)
+     (message-header-subject ((t (:inherit 'default :bold t))))
+
+     ;; LaTeX
+     (font-latex-sectioning-0-face ((t (:inherit 'outline-1 :height 1.0))))
+     (font-latex-sectioning-1-face ((t (:inherit 'font-latex-sectioning-0-face))))
+     (font-latex-sectioning-2-face ((t (:inherit 'font-latex-sectioning-0-face))))
+     (font-latex-sectioning-3-face ((t (:inherit 'font-latex-sectioning-0-face))))
+     (font-latex-sectioning-4-face ((t (:inherit 'font-latex-sectioning-0-face))))
+     (font-latex-sectioning-5-face ((t (:inherit 'font-latex-sectioning-0-face))))
+
+     ;; Whitespace Mode
+     (whitespace-tab ((t (:background ,bg-low))))
+     (whitespace-trailing ((t (:background ,bg-normal :foreground ,fg-normal))))
+     (whitespace-empty ((t (:background ,bg-normal :foreground ,fg-normal))))
+     (whitespace-line ((t (:background ,bg-normal :underline ,bg-off))))
+
+     ;; Terminal Emulation
+     (term               ((t (:foreground ,fg-normal))))
+     (term-bold          ((t (:inherit 'term :bold t))))
+     (term-color-black   ((t (:foreground ,fg-low))))
+     (term-color-blue    ((t (:foreground ,blue))))
+     (term-color-cyan    ((t (:foreground ,cyan-high))))
+     (term-color-green   ((t (:foreground ,green-high))))
+     (term-color-magenta ((t (:foreground ,magenta-high))))
+     (term-color-red     ((t (:foreground ,red))))
+     (term-color-white   ((t (:foreground ,fg-high))))
+     (term-color-yellow  ((t (:foreground ,yellow-high))))
+     (term-underline     ((t (:foreground ,fg-inverse :underline ,bg-high))))
+
+     ;; Remaining Junk
+     (completion-dynamic-face ((t (:inherit 'match)))))))
+
+(let ((colors (devalot-colors-apply 'devalot devalot-colors-dark)))
+  (apply 'custom-theme-set-faces 'devalot colors))
 
 ;;;###autoload
 (when load-file-name
@@ -299,3 +314,4 @@
                (file-name-as-directory (file-name-directory load-file-name))))
 
 (provide-theme 'devalot)
+;; -*- coding: utf-8; lexical-binding:t -*-
