@@ -1,5 +1,7 @@
 #!/usr/bin/env zsh
 
+################################################################################
+# Set NIX_PATH to use my local channel, if I'm on NixOS.
 if [ -n "$NIX_PATH" ]; then
   # NixOS
   NIX_PATH="nixpkgs=$HOME/.nix-defexpr/channels/nixpkgs:$NIX_PATH"
@@ -8,9 +10,18 @@ else
   path=($path /usr/local/bin /usr/local/sbin /usr/games /usr/bin /usr/sbin /bin /sbin)
 fi
 
+################################################################################
+# NixOS internally knows where to search for man pages.  Help zsh auto
+# complete on them.
+if [ -d ~/.nix-profile ]; then
+  MANPATH=`man -w`
+fi
+
+################################################################################
 # Some aliases for Linux
 alias vnc="ssvncviewer -escape Alt_L"
 
+################################################################################
 # Allow more control keys through in the terminal
 if [ -t 1 ]; then
   stty stop undef
