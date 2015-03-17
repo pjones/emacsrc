@@ -1,24 +1,12 @@
-#!/usr/bin/env ruby
+#!/bin/sh
 
-################################################################################
-# http://mpd.wikia.com/wiki/MusicPlayerDaemonCommands
-require('rubygems')
-require('rmpd')
-
-################################################################################
-mpc = Rmpd::Connection.new
-status = mpc.status
-
-if status.nil? or status.state == 'stop'
-  mpc.play
-elsif status.state == 'pause'
-  mpc.pause(0)
-elsif status.state == 'play'
-  current = mpc.current_song
-
-  if current.file.match(/^http:/)
-    mpc.stop
+# Pause local music, but stop remote streams.
+if mpc | grep -qF '[playing]'; then
+  if mpc current -f '%file%' | egrep -q '^https?://'; then
+    mpc stop
   else
-    mpc.pause(1)
-  end
-end
+    mpc pause
+  fi
+else
+  mpc toggle
+fi
