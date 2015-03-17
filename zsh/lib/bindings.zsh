@@ -20,3 +20,4 @@ bindkey -e ^xh run-help
 bindkey -e ^r  history-incremental-search-backward
 bindkey -e ^w  backward-kill-word-match
 bindkey -e ^o  last-cmd-as-expansion
+bindkey -e ^i  expand-or-complete-prefix

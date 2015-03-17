@@ -1,7 +1,4 @@
 ################################################################################
-export VIRSH_DEFAULT_CONNECT_URI="qemu:///system"
-
-################################################################################
 # Returns 0 if a VM is running, otherwise 1.
 virsh_running () {
   if [ $# -ne 1 ]; then

@@ -20,14 +20,18 @@ setopt no_clobber
 setopt hist_allow_clobber
 
 # other options
-setopt no_beep
-setopt auto_cd
-setopt multios
-setopt completeinword
 setopt alwaystoend
+setopt auto_cd
+setopt auto_list
+setopt completeinword
 setopt correct
-setopt no_correct_all
 setopt magic_equal_subst
+setopt mark_dirs
+setopt multios
+setopt no_auto_remove_slash
+setopt no_beep
+setopt no_correct_all
+setopt rematch_pcre
 
 # job control
 setopt no_hup
