@@ -29,7 +29,7 @@
 
     # Writing and Designing:
     aspell aspellDicts.en dict
-    ghostscript texLiveFull
+    ghostscript /* FIXME: texLiveFull (broken) */
     gcolor2 impressive libreoffice
     graphviz mscgen xournal
 
