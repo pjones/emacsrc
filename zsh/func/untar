@@ -6,6 +6,12 @@ if [[ $1 == *.gz || $1 == *.tgz ]]; then
 elif [[ $1 == *.bz2 ]]; then
     bunzip2 -c $1 | tar xvf -
 
+elif [[ $1 == *.xz ]]; then
+    xz --decompress --stdout $1 | tar xvf -
+
+elif [[ $1 == *.zip ]]; then
+    unzip $1
+
 elif [[ $1 == *.tar ]]; then
     cat $1 | tar xvf -
 
