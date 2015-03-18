@@ -72,6 +72,7 @@ class SessionManager
 
     session['windows'] = session['windows'].inject([]) do |ws, window|
       wo = OpenStruct.new(window)
+      wo.root = File.expand_path(wo.root) unless wo.root.nil?
 
       wo.splits = Array(window['splits']).inject([]) do |ss, split|
         ss << OpenStruct.new(split)
