@@ -16,13 +16,13 @@
     wmctrl gnome.gnome_keyring
 
     # Internet Utilities:
-    uzbl chromium conkeror ssvnc /* asynk */
+    uzbl chromium conkeror ssvnc firefoxWrapper /* asynk */
 
     # Media Players/Viewers:
     mpd mpc_cli ncmpcpp vlc mpg123 moc feh zathura
 
     # Media Ripping:
-    handbrake /* FIXME: makemkv (404) */
+    handbrake makemkv
 
     # Media Editors:
     audacity gimp inkscape darktable imagemagick
