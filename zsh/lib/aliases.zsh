@@ -58,3 +58,4 @@ alias tclock="tty-clock -c -C 4 -f '%b. %d, %Y'"
 alias scclock='env TZ=America/New_York tty-clock -C 0 -c -f "South Carolina"'
 alias iss_payload='chromium --app=http://www.ustream.tv/channel/iss-hdev-payload/pop-out'
 alias rtm='chromium --app=https://www.rememberthemilk.com'
+alias mrs='mr -d ~ status'
