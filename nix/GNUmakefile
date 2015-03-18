@@ -8,7 +8,7 @@ NIX_REMOVE ?= NO # FIXME: change back to YES
 ################################################################################
 NIX_FILES = $(shell find . -type f -name \*.nix)
 NIXPKGS_CONFIG_DEST = $(HOME)/.nixpkgs/config.nix
-NIX_ENV_TOUCH = $(HOME)/nixpkgs/last-install.date
+NIX_ENV_TOUCH = $(HOME)/.cache/nixpkgs/last-install.date
 CHANNEL_FILE = $(HOME)/.nix-defexpr/channels/nixpkgs/default.nix
 CHANNEL_URL = http://nixos.org/channels/nixpkgs-unstable
 
@@ -20,9 +20,9 @@ export NIX_PATH
 
 ################################################################################
 ifeq "$(NIX_REMOVE)" "YES"
-  NIX_ENV_OPTIONS = "-ir"
+  NIX_ENV_OPTIONS = -ir
 else
-  NIX_ENV_OPTIONS = "-i"
+  NIX_ENV_OPTIONS = -i
 endif
 
 ################################################################################
