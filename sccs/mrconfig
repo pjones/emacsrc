@@ -1,11 +1,24 @@
 [core]
-checkout = git clone 'dracula.pmade.com:git/personal/core' 'core'
+checkout = git clone dracula.pmade.com:git/personal/core.git
 
 [documents/rebekah]
-checkout = git clone 'dracula.pmade.com:git/personal/rebekah' 'rebekah'
+checkout = git clone dracula.pmade.com:git/personal/rebekah.git
+skip = zsh -ic '! git_repo_has_changes'
 
 [documents/business]
-checkout = git clone 'dracula.pmade.com:git/business/business' 'business'
+checkout = git clone dracula.pmade.com:git/business/business.git
 
 [documents/clients]
-checkout = git clone 'dracula.pmade.com:git/business/clients' 'clients'
+checkout = git clone dracula.pmade.com:git/business/clients.git
+
+[develop/pmade/vimeta]
+checkout = git clone --recursive dracula.pmade.com:git/oss/vimeta.git
+
+[develop/training/courses]
+checkout = git clone --recursive dracula.pmade.com:git/training/courses.git
+
+[documents/journal]
+checkout = git clone dracula.pmade.com:git/personal/journal.git
+
+[documents/kb]
+checkout = git clone --recursive dracula.pmade.com:git/personal/kb
