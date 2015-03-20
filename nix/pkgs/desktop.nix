@@ -19,7 +19,8 @@
     uzbl chromium conkeror ssvnc firefoxWrapper /* asynk */
 
     # Media Players/Viewers:
-    mpd mpc_cli ncmpcpp vlc mpg123 moc feh zathura
+    mpd mpc_cli ncmpcpp vlc mpg123 moc beets
+    feh zathura
 
     # Media Ripping:
     handbrake makemkv
