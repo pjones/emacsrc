@@ -17,7 +17,7 @@ $(eval $(call PMADE_INSTALL_FILE,config/beets.yaml,~/.config/beets/config.yaml))
 
 ################################################################################
 $(eval $(call PMADE_INSTALL_FILE,config/ncmpcpp.config,~/.ncmpcpp/config))
-$(eval $(call PMADE_INSTALL_FILE,config/ncmpcpp.keys,~/.ncmpcpp/keys))
+$(eval $(call PMADE_INSTALL_FILE,config/ncmpcpp.keys,~/.ncmpcpp/bindings))
 $(eval $(call PMADE_INSTALL_FILE,misc/streams,~/documents/playlists/streams))
 
 ################################################################################
