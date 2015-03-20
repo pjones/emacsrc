@@ -24,6 +24,11 @@ if [ "x$INSIDE_SCRIPT" = "x" ]; then
       prompt="${prompt}--%F{cyan}(%F{green}%12<..<$branch%<<%F{cyan})"
     fi
 
+    # Maybe add info about the current nix-shell.
+    if _nix-inside-shell; then
+      prompt="${prompt}--%F{cyan}(%F{blue}%12<..<nxs%<<%F{cyan})"
+    fi
+
     # Move to the next line and present the command prompt.
     prompt="${prompt}${prompt_newline}${prompt_backtick}-%F{white}>%f "
     PS1=$prompt
