@@ -12,21 +12,27 @@ if [ "x$INSIDE_SCRIPT" = "x" ]; then
     prompt="%F{cyan}.---(%F{blue}%n%F{red}@%F{green}%m%F{cyan})"
 
     # Add conditional last process status
-    prompt="${prompt}%(?..--[%F{red}%B%?%b%F{cyan}])"
+    prompt="${prompt}%(?..-[%F{red}%B%?%b%F{cyan}])"
 
     # Add the current directory two levels deep.
-    prompt="${prompt}--%F{cyan}(%F{yellow}%20<..<%2~%<<%F{cyan})"
+    prompt="${prompt}-%F{cyan}(%F{yellow}%20<..<%2~%<<%F{cyan})"
 
     # Maybe add in the current Git branch.
     branch=$(git_current_branch 2> /dev/null)
 
     if [[ ${#branch} -ne 0 ]]; then
-      prompt="${prompt}--%F{cyan}(%F{green}%12<..<$branch%<<%F{cyan})"
+      if git_repo_has_changes; then
+        color=red
+      else
+        color=green
+      fi
+
+      prompt="${prompt}-%F{cyan}(%F{${color}}%12<..<$branch%<<%F{cyan})"
     fi
 
     # Maybe add info about the current nix-shell.
     if _nix-inside-shell; then
-      prompt="${prompt}--%F{cyan}(%F{blue}%12<..<nxs%<<%F{cyan})"
+      prompt="${prompt}-%F{cyan}(%F{blue}%12<..<nxs%<<%F{cyan})"
     fi
 
     # Move to the next line and present the command prompt.
