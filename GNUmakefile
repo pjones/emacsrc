@@ -40,7 +40,7 @@ $(eval $(call MAYBE_ADD_DIRECTORY,zsh,zsh))
 ################################################################################
 # MacOS X specific directory.
 ifeq (Darwin,$(shell uname))
-$(eval $(call MAYBE_ADD_DIRECTORY,macos,sh))
+$(eval $(call MAYBE_ADD_DIRECTORY,macosx,sh))
 endif
 
 ################################################################################

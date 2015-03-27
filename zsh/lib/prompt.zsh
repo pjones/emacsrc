@@ -17,6 +17,9 @@ if [ "x$INSIDE_SCRIPT" = "x" ]; then
     # Add the current directory two levels deep.
     prompt="${prompt}-%F{cyan}(%F{yellow}%20<..<%2~%<<%F{cyan})"
 
+    # Various flags to show.
+    flags=""
+
     # Maybe add in the current Git branch.
     branch=$(git_current_branch 2> /dev/null)
 
@@ -27,12 +30,21 @@ if [ "x$INSIDE_SCRIPT" = "x" ]; then
         color=green
       fi
 
-      prompt="${prompt}-%F{cyan}(%F{${color}}%12<..<$branch%<<%F{cyan})"
+      if [[ $branch == "master" && $color == "green" ]]; then
+        flags="${flags}%F{${color}}G"
+      else
+        prompt="${prompt}-%F{cyan}(%F{${color}}%12<..<$branch%<<%F{cyan})"
+      fi
     fi
 
     # Maybe add info about the current nix-shell.
     if _nix-inside-shell; then
-      prompt="${prompt}-%F{cyan}(%F{blue}%12<..<nxs%<<%F{cyan})"
+      flags="${flags}%F{magenta}N"
+    fi
+
+    # Incorporate flags.
+    if [[ -n $flags ]]; then
+      prompt="${prompt}-%F{cyan}{${flags}%F{cyan}}"
     fi
 
     # Move to the next line and present the command prompt.
