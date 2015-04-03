@@ -162,7 +162,6 @@ line.  Examples:
 (defun pjones:haskell-mode-hook ()
   "Hook run on new Haskell buffers."
   (pjones:prog-mode-hook)
-  (turn-on-haskell-indentation)
   (subword-mode)
 
   ;; Undo some stupid haskell-mode bindings.
@@ -192,6 +191,7 @@ line.  Examples:
 
 (add-hook 'haskell-mode-hook 'pjones:haskell-mode-hook)
 (add-hook 'haskell-cabal-mode-hook 'pjones:prog-mode-hook)
+(add-hook 'haskell-mode-hook 'haskell-indentation)
 
 ;; Local Variables:
 ;; byte-compile-warnings: (not noruntime)
