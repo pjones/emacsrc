@@ -3,8 +3,12 @@
 directory: ~/documents/music
 original_date: yes
 threaded: yes
-color: yes
 ignore: .* *.m4p  *.m4v
+
+################################################################################
+# User interface.
+ui:
+  color: yes
 
 ################################################################################
 # List of plug-ins;
