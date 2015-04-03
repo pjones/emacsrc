@@ -84,6 +84,10 @@ class Sync
         options.playlist_in = x
       end
 
+      p.on('-P', '--prefix=PATH', 'Prefix added to playlists') do |p|
+        options.music_prefix = p
+      end
+
       p.on('-r', '--remove-old', 'Remove old versions') do |x|
         options.remove_old = x
       end
@@ -128,7 +132,12 @@ class Sync
         File.open(File.join(playlist_out, playlist), 'w') do |corrected|
           incoming.items.each do |track|
             link_file(File.join(music_in, track), File.join(music_out, track))
-            corrected.puts(File.join(options.music_prefix, track))
+
+            if options.music_prefix.to_s.match(/^\s*$/)
+              corrected.puts(track)
+            else
+              corrected.puts(File.join(options.music_prefix, track))
+            end
           end
         end
       end

@@ -33,6 +33,7 @@ paths:
   default: "%bucket{%the{$albumartist}}/$albumartist/$album%aunique{}/$track-$title"
   singleton: "%bucket{%the{$albumartist}}/$albumartist/Non-Album/$title"
   comp: "@/$album%aunique{}/$track-$title"
+  "albumartist:'Various Artists'": "@/$album%aunique{}/$track-$title"
   albumtype:soundtrack: "@/$album%aunique{}/$track-$title"
 
 ################################################################################
@@ -41,6 +42,7 @@ the:
   # Remove leading quotes
   patterns: >-
     ^“ ^" ^'
+
 ################################################################################
 # Sorting music into different "bucket" directories:
 bucket:
