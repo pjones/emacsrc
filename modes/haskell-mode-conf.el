@@ -7,20 +7,25 @@
 
 ;;; TO-DO List:
 ;;
-;; * Add support for camelcase to keys like C-w
 ;; * Figure out a better way to do completions.
 ;; * Need a better key for completions.
 ;; * Remove whitespace at end of line while typing?
 
 
 (defun pjones:haskell-find-cabal-file ()
-  "Return the directory containing a *.cabal file or the current
-directory."
-  (let ((dir default-directory))
+  "Return the full path to the *.cabal file for the current project."
+  (let* ((dir default-directory)
+         (default (concat dir "/" (file-name-base dir) ".cabal"))
+         (name))
     (while (and (not (string= dir "/"))
-                (not (file-expand-wildcards (concat dir "?*.cabal"))))
+                (not (setq name (file-expand-wildcards (concat dir "?*.cabal")))))
       (setq dir (file-name-directory (substring dir 0 -1))))
-    (if (string= dir "/") default-directory dir)))
+    (if (string= dir "/") default (car name))))
+
+(defun pjones:haskell-edit-cabal-file ()
+  "Open the project's cabal file for editing."
+  (interactive)
+  (find-file (pjones:haskell-find-cabal-file)))
 
 (defun pjones:haskell-beginning-of-defun (&optional arg)
   "Move to the beginning of the current function."
@@ -60,7 +65,7 @@ Otherwise go totally crazy."
 
 (defun pjones:haskell-module-name ()
   "Return the module name for the current buffer."
-  (let* ((cabal-path (pjones:haskell-find-cabal-file))
+  (let* ((cabal-path (file-name-directory (pjones:haskell-find-cabal-file)))
          (mod-path   (substring (file-name-sans-extension (buffer-file-name))
                                 (length cabal-path)))
          (mod-name   (replace-regexp-in-string "/" "." mod-path t t)))
@@ -171,12 +176,14 @@ line.  Examples:
     (define-key map [backspace]   'backward-delete-char-untabify))
 
   ;; And add some of my own
-  (local-set-key (kbd "C-c C-a") 'pjones:haskell-new-import)
-  (local-set-key (kbd "C-c C-s") 'pjones:haskell-sort-imports)
-  (local-set-key (kbd "C-c C-v") 'pjones:haskell-lint-all)
-  (local-set-key (kbd "C-c M-m") 'pjones:haskell-new-module)
-  (local-set-key (kbd "C-c M-w") 'pjones:haskell-module-name-to-kill-ring)
-  (local-set-key (kbd "M-RET")   'pjones:haskell-smart-newline)
+  (let ((map haskell-mode-map))
+    (define-key map (kbd "C-c C-a") 'pjones:haskell-new-import)
+    (define-key map (kbd "C-c C-e") 'pjones:haskell-edit-cabal-file)
+    (define-key map (kbd "C-c C-s") 'pjones:haskell-sort-imports)
+    (define-key map (kbd "C-c C-v") 'pjones:haskell-lint-all)
+    (define-key map (kbd "C-c M-m") 'pjones:haskell-new-module)
+    (define-key map (kbd "C-c M-w") 'pjones:haskell-module-name-to-kill-ring)
+    (define-key map (kbd "M-RET")   'pjones:haskell-smart-newline))
 
   (make-local-variable 'tab-always-indent)
   (setq tab-always-indent t
@@ -190,8 +197,8 @@ line.  Examples:
         end-of-defun-function 'pjones:haskell-end-of-defun))
 
 (add-hook 'haskell-mode-hook 'pjones:haskell-mode-hook)
+(add-hook 'haskell-mode-hook 'haskell-indentation-mode)
 (add-hook 'haskell-cabal-mode-hook 'pjones:prog-mode-hook)
-(add-hook 'haskell-mode-hook 'haskell-indentation)
 
 ;; Local Variables:
 ;; byte-compile-warnings: (not noruntime)
