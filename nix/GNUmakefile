@@ -6,7 +6,7 @@ include ../mk/files.mk
 NIX_REMOVE ?= NO # FIXME: change back to YES
 
 ################################################################################
-NIX_FILES = $(shell find . -type f -name \*.nix)
+NIX_FILES = $(shell find . -type f -name \*.nix | grep -v ./config.nix)
 NIXPKGS_CONFIG_DEST = $(HOME)/.nixpkgs/config.nix
 NIX_ENV_TOUCH = $(HOME)/.cache/nixpkgs/last-install.date
 CHANNEL_FILE = $(HOME)/.nix-defexpr/channels/nixpkgs/default.nix

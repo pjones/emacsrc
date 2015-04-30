@@ -23,7 +23,7 @@
     feh zathura
 
     # Media Ripping:
-    handbrake makemkv
+    handbrake makemkv grip lame
 
     # Media Editors:
     audacity gimp inkscape darktable imagemagick
