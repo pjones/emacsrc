@@ -111,7 +111,7 @@ git_master_pull ()
 
 ################################################################################
 # List info about each sub-module
-git_sb_info ()
+function git-sb-info ()
 {
   git submodule --quiet foreach 'zsh ~/.zsh/util/git-sb-info.zsh'
 }
@@ -132,4 +132,11 @@ git_new_repo ()
   git config --add branch.master.remote $remote_name
   git config --add branch.master.merge refs/heads/master
   git push $remote_name master
+}
+
+################################################################################
+# Find out about the current repo.
+function git-what ()
+{
+  git describe --long --tags --dirty --always
 }

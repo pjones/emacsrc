@@ -1,22 +1,25 @@
 [user]
-	name = Peter Jones
-	email = pjones@pmade.com
+  name = Peter Jones
+  email = pjones@pmade.com
+
 [color]
-	status = auto
-	diff = auto
-	branch = auto
-        interactive = auto
+  status = auto
+  diff = auto
+  branch = auto
+  interactive = auto
+
 [alias]
-        st = status
-        ci = commit
-        co = checkout
-        sb = submodule
-        sbu = submodule update --init
+  st = status
+  ci = commit
+  co = checkout
+  sb = submodule
+  sbu = submodule update --init
         
 [core]
-	excludesfile = ~/.gitignore
+  excludesfile = ~/.gitignore
 
 [url "dracula.pmade.com:git/oss/"]
-        pushInsteadOf = git://pmade.com/
+  pushInsteadOf = git://pmade.com/
+
 [push]
-	default = simple
+  default = simple
