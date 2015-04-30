@@ -55,7 +55,7 @@ bucket:
 import:
   none_rec_action: ask
   autotag: yes
-  incremental: yes
+  incremental: no
   resume: no
   log: ~/documents/ripping/beets.log
 
