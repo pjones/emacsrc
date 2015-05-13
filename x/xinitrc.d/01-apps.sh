@@ -94,3 +94,4 @@ maybe_start "-f 'emacs --daemon'" start-emacs-daemons.sh
 maybe_start urxvtd urxvtd -q -o -f
 maybe_start bitlbee bitlbee -c $HOME/keys/bitlbee/bitlbee.conf
 maybe_start wicd-gtk wicd-gtk -t &
+maybe_start volumeicon volumeicon &
