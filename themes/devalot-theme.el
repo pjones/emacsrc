@@ -24,9 +24,8 @@
 ;;; Commentary
 ;;
 ;; The majority of the colors in this theme come from the Solarized
-;; palette, which is released under an MIT license:
+;; palette, which is released under a MIT license:
 ;; https://github.com/altercation/solarized.
-;;
 ;;
 ;;; Code:
 
