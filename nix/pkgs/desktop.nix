@@ -17,6 +17,7 @@
 
     # Internet Utilities:
     uzbl chromium conkeror ssvnc firefoxWrapper /* asynk */
+    curl wget
 
     # Media Players/Viewers:
     mpd mpc_cli ncmpcpp vlc mpg123 moc beets
