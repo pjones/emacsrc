@@ -19,12 +19,29 @@ current_page=1
 convert_options="-trim"
 
 ################################################################################
-while getopts "b:clmt" o; do
+usage () {
+  cat <<EOF
+Usage: scan.sh [options]
+
+  -b NAME Set output file base name
+  -c      Switch to color mode
+  -l      List scanners
+  -m      Scan multiple pages
+  -t      List scanners with strace
+EOF
+}
+
+################################################################################
+while getopts "b:chlmt" o; do
   case "${o}" in
     b) base=$OPTARG
        ;;
 
     c) mode=Color
+       ;;
+
+    h) usage
+       exit
        ;;
 
     l) scanimage -L
