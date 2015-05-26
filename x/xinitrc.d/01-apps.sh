@@ -76,16 +76,6 @@ fi
 . ~/.zsh/lib/agents.zsh
 
 ################################################################################
-# On-screen notifications.  So many to choose from.
-if which notify-osd > /dev/null 2>&1; then
-    notify-osd &
-elif [ -x /usr/lib/x86_64-linux-gnu/xfce4/notifyd/xfce4-notifyd ]; then
-  /usr/lib/x86_64-linux-gnu/xfce4/notifyd/xfce4-notifyd &
-else
-  /usr/lib/notification-daemon/notification-daemon &
-fi
-
-################################################################################
 # Start some services.
 maybe_start pulseaudio start-pulseaudio-x11
 maybe_start mpd mpd
