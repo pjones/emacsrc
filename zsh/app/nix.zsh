@@ -3,15 +3,27 @@
 if [ -d /etc/nix ]; then
 
   ##############################################################################
-  alias nxs='nix-shell --command zsh'
-
-  ##############################################################################
   function _nix-inside-shell () {
     if [[ -n $NIX_BUILD_TOP ]]; then
       return 0
     else
       return 1
     fi
+  }
+
+  ##############################################################################
+  # Nix shell with a local clone of nixpkgs.
+  function nixpkgs-shell () {
+    typeset -a options
+    options=()
+
+    # Automatically add a binary cache when on my home network:
+    if iwgetid | cut -d: -f2 | grep -q "515"; then
+      options=($options --option extra-binary-caches http://10.0.1.10:8080)
+    fi
+
+    export NIX_PATH=nixpkgs=$HOME/develop/oss/nixpkgs:$NIX_PATH
+    nix-shell $options --command zsh "$@"
   }
 
   ##############################################################################
@@ -46,6 +58,29 @@ if [ -d /etc/nix ]; then
       echo "error: whoa, you forgot to give the package dir name"
       return 2;
     fi
+  }
+
+  ##############################################################################
+  # Tool to help build Haskell projects using Nix.
+  function nix-hs-build () {
+    ( HOME="$(mktemp -d)" # For cabal-install.
+      if [ ! -d .cabal-sandbox ]; then
+        cabal sandbox init
+        cabal sandbox add-source vendor/themoviedb
+        cabal sandbox add-source vendor/byline
+        cabal install --only-dependencies
+      fi
+
+      cabal configure -fmaintainer
+      cabal build || exit 1
+    ) && hlint src
+  }
+
+  ##############################################################################
+  # Create a `shell.nix` file for a Haskell project.
+  function nix-hs-derivation () {
+    nixpkgs-shell -p haskellPackages.cabal2nix \
+        --command 'cabal2nix --shell $PWD > shell.nix'
   }
 
 ################################################################################
