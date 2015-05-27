@@ -8,11 +8,13 @@
   ];
 
   chromium = {
-    icedtea = true;
+    enablePepperFlash = true;
+    enablePepperPDF   = true;
+    icedtea           = true;
   };
 
   firefox = {
-    icedtea = true;
+    icedtea          = true;
     enableAdobeFlash = true;
   };
 }
