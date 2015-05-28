@@ -12,8 +12,12 @@ if [ -d /etc/nix ]; then
   }
 
   ##############################################################################
-  # Nix shell with a local clone of nixpkgs.
-  function nixpkgs-shell () {
+  # Run a Nix command with the correct options and environment for a
+  # local copy of nixpkgs.
+  function _nix-with-nixpkgs () {
+    command=$1
+    shift
+
     typeset -a options
     options=()
 
@@ -23,64 +27,26 @@ if [ -d /etc/nix ]; then
     fi
 
     export NIX_PATH=nixpkgs=$HOME/develop/oss/nixpkgs:$NIX_PATH
-    nix-shell $options --command zsh "$@"
+    $command $options "$@"
   }
 
   ##############################################################################
-  # Try to build a package from a file, instead of an attribute.
-  function nix-build-package () {
-    zparseopts -D -E -- p=here
-    pkg=$1
-
-    # Figure out which nixpkgs to use:
-    if [[ -n $here && -r default.nix ]]; then
-      # Use local nixpkgs
-      nixpkgs="\"$(pwd)\""
-
-    elif [[ -n $here ]]; then
-      echo "error: $(pwd) doesn't look like a nixpkgs clone"
-      return 1
-
-    else
-      nixpkgs="<nixpkgs>"
-    fi
-
-    # Now run nix-build:
-    if [[ -n $pkg && -r $pkg ]]; then
-      echo "building with ${nixpkgs}..."
-      nix-build -E "with import $nixpkgs {}; callPackage $pkg {}"
-
-    elif [[ -n $pkg ]]; then
-      echo "error: whoa, $pkg doesn't seem to exist"
-      return 2;
-
-    else
-      echo "error: whoa, you forgot to give the package dir name"
-      return 2;
-    fi
+  # Nix shell with a local clone of nixpkgs.
+  function nixpkgs-shell () {
+    _nix-with-nixpkgs nix-shell --command zsh "$@"
   }
 
   ##############################################################################
-  # Tool to help build Haskell projects using Nix.
-  function nix-hs-build () {
-    ( HOME="$(mktemp -d)" # For cabal-install.
-      if [ ! -d .cabal-sandbox ]; then
-        cabal sandbox init
-        cabal sandbox add-source vendor/themoviedb
-        cabal sandbox add-source vendor/byline
-        cabal install --only-dependencies
-      fi
-
-      cabal configure -fmaintainer
-      cabal build || exit 1
-    ) && hlint src
+  # Nix build with a local clone of nixpkgs.
+  function nixpkgs-build () {
+    _nix-with-nixpkgs nix-build "$@"
   }
 
   ##############################################################################
-  # Create a `shell.nix` file for a Haskell project.
+  # Create a `default.nix` file for a Haskell project.
   function nix-hs-derivation () {
     nixpkgs-shell -p haskellPackages.cabal2nix \
-        --command 'cabal2nix --shell $PWD > shell.nix'
+        --command "cabal2nix --shell $PWD -fmaintainer $@ > default.nix"
   }
 
 ################################################################################
