@@ -2,7 +2,6 @@
 
 ################################################################################
 # This is a simple wrapper around cabal to build Haskell projects.
-echo $NIX_GHC
 
 ################################################################################
 # Keep cabal from being affected by local configuration.
@@ -10,7 +9,7 @@ export HOME="$(mktemp -d)"
 
 ################################################################################
 # Some flags that can be overridden.
-CABAL_FLAGS=""
+CABAL_FLAGS="--enable-optimization"
 TEST_DIR=test
 SRC_DIR=src
 VENDOR_DIR=vendor
