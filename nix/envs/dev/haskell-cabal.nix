@@ -9,6 +9,7 @@ let
   drv  = ghc.callPackage f {};
 in
   (pkgs.haskell.lib.addBuildTools drv [
+    pkgs.git
     ghc.cabal-install
     ghc.hlint
   ]).env
