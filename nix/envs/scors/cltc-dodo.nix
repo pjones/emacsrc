@@ -16,8 +16,8 @@ in rec {
       haskell zlib
     ];
 
-    shellhook = with pkgs; ''
-      # needed for template haskell:
+    shellHook = with pkgs; ''
+      # Needed for template Haskell:
       LD_LIBRARY_PATH=${zlib}/lib
     '';
   };
