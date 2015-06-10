@@ -39,6 +39,6 @@
     mednafen
 
     # Misc.
-    tty-clock notify-osd libnotify
+    tty-clock libnotify
   ];
 }
