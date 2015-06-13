@@ -1,5 +1,13 @@
 #EXTM3U
 
+################################################################################
+#
+# Listings:
+#
+#   http://www.listenlive.eu/index.html
+#
+################################################################################
+
 #EXTINF:-1,Beat Blender (soma fm)
 http://somafm.com/beatblender.pls
 
@@ -24,8 +32,8 @@ http://somafm.com/dubstep.pls
 #EXTINF:-1,Groove Salad (soma fm)
 http://somafm.com/groovesalad.pls
 
-#EXTINF:-1,HITPARTY
-http://www.hitparty.fr/hitparty-adsl.m3u
+#EXTINF:-1,Hot Mix Radio
+http://www.hotmixradio.fr/hotmix.m3u
 
 #EXTINF:-1,Illinois Street Lounge (soma fm)
 http://somafm.com/illstreet.pls
@@ -33,8 +41,11 @@ http://somafm.com/illstreet.pls
 #EXTINF:-1,Lush (soma fm)
 http://somafm.com/lush.pls
 
-#EXTINF:-1,Pig Radio
-http://www.pigradio.com/pig128.pls
+#EXTINF:-1,M2 80s Hits
+http://www.m2radio.fr/pls/m280.m3u
+
+#EXTINF:-1,M2 Hits and Dance
+http://live.m2stream.fr/m2hit-128.mp3
 
 #EXTINF:-1,PopTron (soma fm)
 http://somafm.com/poptron.pls
