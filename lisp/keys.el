@@ -38,6 +38,7 @@
 (global-set-key (kbd "C-c f")   'pjones:kill-file-name)
 (global-set-key (kbd "C-c g")   'rgrep)
 (global-set-key (kbd "C-c h")   'highline-mode)
+(global-set-key (kbd "C-c i")   'pjones:uuid)
 (global-set-key (kbd "C-c j")   'pjones:journal)
 (global-set-key (kbd "C-c m")   'magit-status)
 (global-set-key (kbd "C-c n")   'pjones:insert-italian-name)

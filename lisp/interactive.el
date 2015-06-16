@@ -204,6 +204,14 @@ number input."
              (message "Kite: %s" (plist-get e :message))))
     (kite-console nil)))
 
+(defun pjones:uuid ()
+  "Create a UUID, add it to the kill ring, and insert it into the
+current buffer after point."
+  (interactive)
+  (let ((uuid (replace-regexp-in-string "[\n-]" "" (shell-command-to-string "uuid"))))
+    (kill-new uuid)
+    (insert uuid)))
+
 ;; Local Variables:
 ;; byte-compile-warnings: (not noruntime)
 ;; End:
