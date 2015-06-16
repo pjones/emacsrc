@@ -10,13 +10,23 @@
 (defun pjones:comment-bar (&optional without-newline)
   "Create a comment bar based on the current mode."
   (interactive "P")
-  (let ((char (if (string= comment-start "-- ") ?- ?#))
-        (end comment-end)
-        (col (current-column))
+  (let ((char (cond
+               ((string= comment-start "-- ") ?-)
+               ((string= comment-start "// ") ?*)
+               (t ?#)))
+
         (start (cond
                 ((string= comment-start "# ")  "#")
                 ((string= comment-start "-- ") "-")
-                (t comment-start))))
+                ((string= comment-start "// ") "/*")
+                (t comment-start)))
+
+        (end (if (> (length comment-end) 0) comment-end
+               (cond
+                ((string= comment-start "// ") "*/")
+                (t ""))))
+
+        (col (current-column)))
     (insert start)
     (insert-char char (- 80 (length start) (length end) col))
     (insert end)
