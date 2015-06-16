@@ -33,6 +33,7 @@
       org-outline-path-complete-in-steps t
       org-id-link-to-org-use-id 'create-if-interactive-and-no-custom-id
       org-edit-src-persistent-message nil
+      org-src-window-setup 'current-window
 
       ;; Showing context
       org-show-hierarchy-above '((default . t))
