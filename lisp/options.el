@@ -1,5 +1,8 @@
 ;;; options.el -- Emacs settings not tied to any one mode.
+;;; Commentary:
+;;; Code:
 (eval-when-compile
+  (load "./packages")
   (require 'server))
 
 ;; Personal information
@@ -70,6 +73,7 @@
 
 (add-hook 'after-init-hook 'pjones:configure-new-frame)
 (add-hook 'after-make-frame-functions 'pjones:configure-new-frame)
+(add-hook 'after-init-hook #'global-flycheck-mode)
 
 ;; Control how Emacs makes buffer names unique.
 (require 'uniquify)
@@ -81,3 +85,6 @@
 (require 'align)                        ; Align things
 (require 'org-install)                  ; Load external org-mode
 (require 'switch-window nil t)          ; Takes over C-x o
+
+(provide 'options)
+;;; options.el ends here
