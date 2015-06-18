@@ -39,6 +39,6 @@
     mednafen
 
     # Misc.
-    tty-clock libnotify
+    tty-clock libnotify libossp_uuid
   ];
 }

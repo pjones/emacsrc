@@ -14,5 +14,8 @@
 
     # Hardware Hacking.
     arduino_core picocom
+
+    # JavaScript Development
+    nodejs nodePackages.jshint
   ];
 }
