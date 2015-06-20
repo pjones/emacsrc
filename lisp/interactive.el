@@ -2,10 +2,11 @@
 (eval-when-compile
   (require 'cl)                         ; for plusp (need to replace it)
   (require 'etags)
+  (require 'flyspell)
   (require 'ispell)
   (require 'rcirc)
-  (require 'subword)
-  (require 'server))
+  (require 'server)
+  (require 'subword))
 
 (defun pjones:maybe-save-buffers-kill-terminal (&optional arg)
   "Save me from myself.  I somehow keep hitting C-x C-c when I
@@ -93,6 +94,27 @@ non-nil keep the cursor in the currently active window."
 
 (defvar pjones:last-dictionary nil
   "The last non-English dictionary used by `pjones:toggle-dictionary'.")
+
+(defun pjones:auto-correct-previous-word ()
+  "Use flyspell to automatically correct the previous word
+without going past the current line."
+  (interactive)
+  (let ((start (save-excursion
+                 (beginning-of-line)
+                 (point)))
+        (end (save-excursion
+               (end-of-line)
+               (point))))
+    (save-restriction
+      ;; Keep flyspell from trying to correct a previous word outside
+      ;; of the region.  It does this when there is no incorrect word
+      ;; within the current region :(
+      (when (and flyspell-auto-correct-previous-pos
+                 (or (> flyspell-auto-correct-previous-pos end)
+                     (< flyspell-auto-correct-previous-pos start)))
+        (setq flyspell-auto-correct-previous-pos nil))
+      (narrow-to-region start end)
+      (flyspell-auto-correct-previous-word (point)))))
 
 (defun pjones:toggle-dictionary (&optional reset)
   "Switch between English and another language easily.  Switches

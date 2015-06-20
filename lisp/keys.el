@@ -1,4 +1,6 @@
 ;;; keys.el -- Global key bindings.
+;;; Commentary:
+;;; Code:
 
 ;; For Macintosh Emacs only
 ;; (setq mac-option-modifier  'hyper
@@ -28,13 +30,14 @@
 (global-set-key [remap goto-line] 'pjones:goto-line-with-feedback)
 
 ;; User Key Bindings (using the C-c prefix)
-(global-set-key (kbd "C-c ;")   'flyspell-auto-correct-previous-word)
+(global-set-key (kbd "C-c ;")   'pjones:auto-correct-previous-word)
 (global-set-key (kbd "C-c .")   'pjones:push-tag-mark)
 (global-set-key (kbd "C-c a")   'align)
 (global-set-key (kbd "C-c A")   'align-regexp)
 (global-set-key (kbd "C-c b")   'pjones:bookmark)
 (global-set-key (kbd "C-c c")   'quick-calc)
-(global-set-key (kbd "C-c d")   'pjones:toggle-dictionary)
+(global-set-key (kbd "C-c d")   'dictionary-lookup-definition)
+(global-set-key (kbd "C-c D")   'pjones:toggle-dictionary)
 (global-set-key (kbd "C-c f")   'pjones:kill-file-name)
 (global-set-key (kbd "C-c g")   'rgrep)
 (global-set-key (kbd "C-c h")   'highline-mode)
@@ -61,3 +64,6 @@
 (global-set-key (kbd "s-k") 'pjones:kite-console)
 (global-set-key (kbd "s-p") 'pjones:text-to-speech-para)
 (global-set-key (kbd "s-u") 'browse-url)
+
+(provide 'keys)
+;;; keys.el ends here
