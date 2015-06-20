@@ -5,9 +5,10 @@
 ;; Load dired-aux at runtime.
 (require 'dired-aux)
 
-(setq dired-listing-switches "-lhRA --ignore='.git' --group-directories-first"
+(setq dired-listing-switches "-lhA --ignore='.git' --group-directories-first"
       dired-auto-revert-buffer t
-      dired-isearch-filenames t)
+      dired-isearch-filenames t
+      dired-hide-details-hide-symlink-targets nil)
 
 (defun pjones:dired-show-only-matching-files (regexp)
   (interactive "sFiles to show (regexp): ")
@@ -28,6 +29,7 @@
   (dired-next-line -1))
 
 (defun pjones:dired-load-hook ()
+  (dired-hide-details-mode) ;; Hide details by default
   (define-key dired-mode-map [?%?h] 'pjones:dired-show-only-matching-files)
   (define-key dired-mode-map
     (vector 'remap 'end-of-buffer) 'pjones:dired-jump-to-bottom))
