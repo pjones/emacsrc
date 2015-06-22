@@ -5,10 +5,29 @@
 ;; Load dired-aux at runtime.
 (require 'dired-aux)
 
-(setq dired-listing-switches "-lhA --ignore='.git' --group-directories-first"
+(setq dired-listing-switches "-lhA --ignore=.git --group-directories-first"
       dired-auto-revert-buffer t
       dired-isearch-filenames t
       dired-hide-details-hide-symlink-targets nil)
+
+(defvar pjones:dired-keywords
+  `((,(concat "\\(" (expand-file-name "~/") "\\)") ;; Replace paths to user's home dir.
+     (0 (pjones:shorten-home-path))))
+  "Extra things in the dired buffer to font-lock.")
+
+(defun pjones:shorten-home-path ()
+  (let ((buffer-read-only nil))
+    (put-text-property (match-beginning 1) (match-end 1)
+                       'display "~/"))
+  nil)
+
+(defun pjones:dired-extra-keywords ()
+  "Toggle adding some extra keywords to dired buffers."
+  (interactive)
+  (let ((modified (buffer-modified-p)))
+    (font-lock-add-keywords 'dired-mode pjones:dired-keywords t)
+    (font-lock-fontify-buffer)
+    (set-buffer-modified-p modified)))
 
 (defun pjones:dired-show-only-matching-files (regexp)
   (interactive "sFiles to show (regexp): ")
@@ -30,6 +49,7 @@
 
 (defun pjones:dired-load-hook ()
   (dired-hide-details-mode) ;; Hide details by default
+  (pjones:dired-extra-keywords)
   (define-key dired-mode-map [?%?h] 'pjones:dired-show-only-matching-files)
   (define-key dired-mode-map
     (vector 'remap 'end-of-buffer) 'pjones:dired-jump-to-bottom))
