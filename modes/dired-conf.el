@@ -29,6 +29,14 @@
     (font-lock-fontify-buffer)
     (set-buffer-modified-p modified)))
 
+(defun pjones:dired-insert-or-visit ()
+  "If point is on a directory, insert that directory into the
+current dired buffer.  Otherwise visit the file under point."
+  (interactive)
+  (let ((name (dired-get-file-for-visit)))
+    (if (file-directory-p name) (dired-maybe-insert-subdir name)
+      (dired-find-file))))
+
 (defun pjones:dired-show-only-matching-files (regexp)
   (interactive "sFiles to show (regexp): ")
   (dired-mark-files-regexp regexp)
@@ -50,6 +58,7 @@
 (defun pjones:dired-load-hook ()
   (dired-hide-details-mode) ;; Hide details by default
   (pjones:dired-extra-keywords)
+  (define-key dired-mode-map "\C-m" 'pjones:dired-insert-or-visit)
   (define-key dired-mode-map [?%?h] 'pjones:dired-show-only-matching-files)
   (define-key dired-mode-map
     (vector 'remap 'end-of-buffer) 'pjones:dired-jump-to-bottom))
