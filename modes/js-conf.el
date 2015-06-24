@@ -1,7 +1,6 @@
 ;;; js-conf.el -- Configuration options for js-mode (JavaScript).
 (eval-when-compile
-  (require 'js)
-  (require 'kite-console))
+  (require 'js))
 
 ;; JavaScript mode settings
 (setq js-indent-level 2
@@ -34,25 +33,10 @@ https://github.com/technomancy/emacs-starter-kit")
     (setq pjones:js-keywords-enabled (not pjones:js-keywords-enabled))
     (set-buffer-modified-p modified)))
 
-(defun pjones:js-send-code-to-kite (code)
-  (kite-console nil)
-  (kite-console-eval-input code))
-
-(defun pjones:js-send-region-to-kite ()
-  (interactive)
-  (let ((code (buffer-substring-no-properties (region-beginning) (region-end))))
-    (pjones:js-send-code-to-kite code)))
-
-(defun pjones:js-send-buffer-to-kite ()
-  (interactive)
-  (let ((code (buffer-string)))
-    (pjones:js-send-code-to-kite code)))
-
 (defun pjones:js-mode-hook ()
   "Configure JS mode and key bindings."
-  (local-set-key (kbd "C-c C-k")   'pjones:js-extra-keywords)
-  (local-set-key (kbd "C-c C-r")   'pjones:js-send-region-to-kite)
-  (local-set-key (kbd "C-c C-b")   'pjones:js-send-buffer-to-kite))
+  (local-set-key (kbd "C-c C-k")   'pjones:js-extra-keywords))
+
 (add-hook 'js-mode-hook 'pjones:js-mode-hook)
 
 ;; Local Variables:

@@ -220,12 +220,6 @@ number input."
              (call-interactively 'goto-line))
     (linum-mode -1)))
 
-(defun pjones:kite-console ()
-  (interactive)
-  (cl-flet ((kite--default-error-handler (e)
-             (message "Kite: %s" (plist-get e :message))))
-    (kite-console nil)))
-
 (defun pjones:uuid ()
   "Create a UUID, add it to the kill ring, and insert it into the
 current buffer after point."
