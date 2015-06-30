@@ -196,6 +196,25 @@ between two points."
     (if jump (pop-tag-mark))
     (ring-insert find-tag-marker-ring mark)))
 
+(defun pjones:jump-back-and-forth (&optional record)
+  "Jump between two points.  With a prefix argument, set the
+destination for the next jump to point."
+  (interactive "P")
+  (if record (point-to-register ?~)
+    (let ((old (get-register ?~)))
+      (point-to-register ?~)
+      (switch-to-buffer (marker-buffer old))
+      (goto-char old))))
+
+(defun pjones:register-get-set (&optional set)
+  "Insert a register into the buffer and move point to the end of
+the insertion.  With a prefix argument set the register instead."
+  (interactive "P")
+  (if set (let ((current-prefix-arg nil))
+            (call-interactively 'copy-to-register))
+    (let ((current-prefix-arg '(4)))
+      (call-interactively 'insert-register))))
+
 (defun pjones:kill-file-name (&optional full-path)
   "Create a new kill containing the base name of the buffer's
 file.  With a prefix argument kill the entire path for the file."
