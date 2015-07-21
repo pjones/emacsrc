@@ -15,6 +15,7 @@
 (global-set-key (kbd "C-x C-m") 'execute-extended-command)
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 (global-set-key (kbd "C-x l")   'pjones:switch-to-previous-buffer)
+(global-set-key (kbd "C-x o")   'ace-window)
 (global-set-key (kbd "C-o")     'pjones:open-line-above)
 (global-set-key (kbd "M-o")     'pjones:open-line-below)
 (global-set-key (kbd "C-s")     'isearch-forward-regexp)
@@ -25,6 +26,7 @@
 (global-set-key (kbd "M-z")     'zap-up-to-char)
 (global-set-key (kbd "M-S-z")   'zap-to-char)
 (global-set-key (kbd "C-`")     'next-error)
+(global-set-key (kbd "C-x 6 f") 'multicolumn-delete-other-windows-and-split-with-follow-mode)
 
 ;; Remapping existing keys.
 (global-set-key [remap goto-line] 'pjones:goto-line-with-feedback)

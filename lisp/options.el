@@ -84,7 +84,6 @@
 (require 'dired-x)                      ; Extra features for dired-mode
 (require 'align)                        ; Align things
 (require 'org-install)                  ; Load external org-mode
-(require 'switch-window nil t)          ; Takes over C-x o
 
 (provide 'options)
 ;;; options.el ends here

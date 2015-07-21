@@ -9,8 +9,8 @@
 
 (defvar pjones:packages
   '(magit ruby-end inf-ruby htmlize yaml-mode bm gist
-          haskell-mode switch-window markdown-mode org bbdb nix-mode
-          nodejs-repl hydra flycheck dictionary)
+          haskell-mode ace-window markdown-mode org bbdb nix-mode
+          nodejs-repl hydra flycheck dictionary multicolumn)
   "A list of packages to ensure are installed at launch.")
 
 (dolist (archive pjones:package-archives)

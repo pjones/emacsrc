@@ -33,6 +33,9 @@
     (if without-newline (beginning-of-line)
       (call-interactively (key-binding (kbd "RET"))))))
 
+(defun pjones:add-fixme-lock ()
+  (font-lock-add-keywords nil '(("\\<\\(FIXME:\\|TODO:\\|NOTE:\\)"
+                                 1 'pjones:fixme-face t))))
 (defun pjones:prog-mode-hook ()
   "Settings and bindings for programming modes."
   (setq save-place t)
@@ -44,10 +47,9 @@
   (auto-fill-mode)
   (flyspell-prog-mode)
   (electric-pair-mode)
+  (pjones:add-fixme-lock)
   (add-hook 'after-save-hook
-            'executable-make-buffer-file-executable-if-script-p)
-  (font-lock-add-keywords nil '(("\\<\\(FIXME:\\|TODO:\\|NOTE:\\)"
-                                 1 'pjones:fixme-face t))))
+            'executable-make-buffer-file-executable-if-script-p))
 
 (defun pjones:add-programming-hook (mode-hook)
   (add-hook mode-hook 'pjones:prog-mode-hook))

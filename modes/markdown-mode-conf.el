@@ -1,12 +1,8 @@
 ;;; markdown-conf.el -- Settings for markdown-mode.
 (eval-when-compile
+  (load "../lisp/code.el")
   (require 'markdown-mode)
-  (require 'whitespace)
-  (require 'org)
-  (require 'org-table))
-
-;; Silence a compiler warning.
-(declare-function orgtbl-mode "org-table")
+  (require 'whitespace))
 
 ;; Basic settings.
 (setq markdown-command "pandoc -f markdown -t html")
@@ -50,7 +46,7 @@
   (abbrev-mode)
   (whitespace-mode)
   (orgstruct-mode)
-  ; (orgtbl-mode) ; Oh orgtbl, how you fuck up interactive search.
+  (pjones:add-fixme-lock)
 
   (define-abbrev-table 'markdown-mode-abbrev-table
     '(("nt" "" pjones:markdown-slide-notes)
@@ -64,3 +60,7 @@
     (pjones:markdown-visual-line)))
 
 (add-hook 'markdown-mode-hook 'pjones:markdown-mode-hook)
+
+;; Local Variables:
+;; byte-compile-warnings: (not noruntime)
+;; End:
