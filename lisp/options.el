@@ -44,7 +44,7 @@
               truncate-lines t)                     ; Don't wrap lines
 
 ;; Settings not worth their own file in the modes directory:
-(setq epa-file-encrypt-to "D4426FFA"    ; Default GPG key to use
+(setq epa-file-encrypt-to "204284CB"                  ; Default GPG key to use
       custom-file "~/.emacs.d/pjones/lisp/custom.el") ; To keep Emacs happy
 
 ;; Frame setup
