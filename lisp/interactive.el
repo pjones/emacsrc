@@ -77,7 +77,7 @@ the local bitlbee instance."
   "Generate and insert a password."
   (interactive "P")
   (let ((pw (replace-regexp-in-string "\n" ""
-              (shell-command-to-string "pwgen -cnB 12 1"))))
+              (shell-command-to-string "pwgen -cnsyB 15 1"))))
     (kill-new pw)
     (if (not kill-only) (insert pw))))
 
