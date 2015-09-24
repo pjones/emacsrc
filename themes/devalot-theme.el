@@ -21,7 +21,7 @@
 ;; OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 ;; WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ;;
-;;; Commentary
+;;; Commentary:
 ;;
 ;; The majority of the colors in this theme come from the Solarized
 ;; palette, which is released under a MIT license:
@@ -92,7 +92,7 @@
      (fringe         ((t (:background ,bg-low :foreground ,fg-low))))
      (linum          ((t (:background ,bg-low :foreground ,fg-low))))
      (lazy-highlight ((t (:background ,bg-high :foreground ,magenta-high))))
-     (isearch        ((t (:background ,magenta :foreground ,bg-inverse :bold t))))
+     (isearch        ((t (:background ,magenta :foreground ,bg-inverse :weight bold))))
      (region         ((t (:background ,bg-high))))
      (highlight      ((t (:background ,bg-off))))
      (hl-line        ((t (:inherit 'highlight))))
@@ -102,24 +102,24 @@
 
 
      ;; Show paren
-     (show-paren-match ((t (:background ,bg-inverse :foreground ,blue :bold t))))
+     (show-paren-match ((t (:background ,bg-inverse :foreground ,blue :weight bold))))
 
      ;; Font-lock
      (font-lock-builtin-face           ((t (:foreground ,fg-low))))
-     (font-lock-comment-delimiter-face ((t (:foreground ,fg-low :bold t))))
+     (font-lock-comment-delimiter-face ((t (:foreground ,fg-low :weight bold))))
      (font-lock-comment-face           ((t (:foreground ,violet :italic t))))
      (font-lock-constant-face          ((t (:foreground ,yellow))))
-     (font-lock-function-name-face     ((t (:foreground ,orange :bold t))))
-     (font-lock-keyword-face           ((t (:foreground ,green :bold t))))
+     (font-lock-function-name-face     ((t (:foreground ,orange :weight bold))))
+     (font-lock-keyword-face           ((t (:foreground ,green :weight bold))))
      (font-lock-preprocessor-face      ((t (:foreground ,red))))
      (font-lock-string-face            ((t (:foreground ,violet-high))))
-     (font-lock-type-face              ((t (:foreground ,blue :bold t))))
+     (font-lock-type-face              ((t (:foreground ,blue :weight bold))))
      (font-lock-variable-name-face     ((t (:foreground ,cyan-high))))
-     (font-lock-warning-face           ((t (:foreground ,magenta :background ,bg-off :bold t))))
+     (font-lock-warning-face           ((t (:foreground ,magenta :background ,bg-off :weight bold))))
 
      ;; Minibuffer
-     (minibuffer-noticeable-prompt ((t (:foreground ,red-high :bold t))))
-     (minibuffer-prompt ((t (:foreground ,magenta :bold t))))
+     (minibuffer-noticeable-prompt ((t (:foreground ,red-high :weight bold))))
+     (minibuffer-prompt ((t (:foreground ,magenta :weight bold))))
 
      ;; Modeline and Things in the Modeline
      (mode-line ((,class (:background ,green :foreground ,bg-normal :box (:line-width 1 :style released-button)))
@@ -129,13 +129,15 @@
      (modeline-mousable-minor-mode ((t (:background ,bg-high :foreground ,bg-high))))
 
      ;; Flyspell
-     (flyspell-duplicate ((t (:foreground ,yellow-high :underline ,yellow))))
-     (flyspell-incorrect ((t (:foreground ,magenta-high :underline ,red))))
+     (flyspell-duplicate ((t (:underline (:color ,yellow :style wave)))))
+     (flyspell-incorrect ((t (:underline (:color ,red    :style wave)))))
 
      ;; Dired
-     (dired-directory ((t (:foreground ,blue :bold t))))
+     (dired-header ((t (:foreground ,orange :background ,bg-off
+                        :weight bold :height 1.2
+                        :box (:line-width 1 :style released-button)))))
+     (dired-directory ((t (:foreground ,blue))))
      (dired-flagged ((t (:foreground ,magenta-high))))
-     (dired-header ((t (:foreground ,orange))))
      (dired-ignored ((t (:foreground ,fg-low))))
      (dired-mark ((t (:foreground ,yellow))))
      (dired-marked ((t (:foreground ,yellow-high))))
@@ -144,14 +146,14 @@
      (dired-warning ((t (:underline ,yellow-high))))
 
      ;; Outline Mode
-     (outline-1 ((,class (:foreground ,blue-high :bold t))
-                 (t (:foreground "blue" :bold t))))
-     (outline-2 ((,class (:foreground ,green-high :bold t))
-                 (t (:foreground "green" :bold t))))
+     (outline-1 ((,class (:foreground ,blue-high :weight bold))
+                 (t (:foreground "blue" :weight bold))))
+     (outline-2 ((,class (:foreground ,green-high :weight bold))
+                 (t (:foreground "green" :weight bold))))
      (outline-3 ((,class (:foreground ,cyan-high :bold nil))
-                 (t (:foreground "cyan" :bold t))))
+                 (t (:foreground "cyan" :weight bold))))
      (outline-4 ((,class (:foreground ,orange :bold nil))
-                 (t (:foreground "orange" :bold t))))
+                 (t (:foreground "orange" :weight bold))))
      (outline-5 ((,class (:foreground ,yellow-high :bold nil))
                  (t (:foreground "magenta"))))
 
@@ -212,7 +214,7 @@
      (erb-delim-face         ((,class (:foreground ,fg-low)) (t (:foreground "magenta"))))
      (erb-out-face           ((t (:background ,bg-normal :foreground ,fg-normal))))
      (erb-out-delim-face     ((,class (:foreground ,blue :background ,bg-normal)) (t (:foreground "blue"))))
-     (erb-comment-delim-face ((t (:foreground ,fg-low :bold t))))
+     (erb-comment-delim-face ((t (:foreground ,fg-low :weight bold))))
      (erb-comment-face       ((t (:foreground ,violet :italic t))))
 
      ;; Diff Mode
@@ -235,9 +237,9 @@
      (magit-item-highlight   ((t (:background ,bg-low))))
 
      ;; Compilation
-     (compilation-info ((t (:inherit 'font-lock-string-face :bold t))))
-     (compilation-error ((t (:underline ,red :bold t))))
-     (compilation-line-number ((t (:foreground ,orange :bold t))))
+     (compilation-info ((t (:inherit 'font-lock-string-face :weight bold))))
+     (compilation-error ((t (:underline ,red :weight bold))))
+     (compilation-line-number ((t (:foreground ,orange :weight bold))))
      (flymake-errline ((t :underline ,magenta-high :background ,bg-off, :foreground ,magenta-high)))
      (flymake-warnline ((t :underline ,yellow ,bg-normal)))
 
@@ -259,20 +261,26 @@
 
      ;; ido
      (ido-first-match ((t (:foreground ,magenta-high))))
-     (ido-only-match  ((t (:foreground ,green :bold t))))
-     (ido-subdir      ((t (:foreground ,blue :bold t))))
+     (ido-only-match  ((t (:foreground ,green :weight bold))))
+     (ido-subdir      ((t (:foreground ,blue :weight bold))))
      (ido-virtual     ((t (:foreground ,fg-low))))
 
      ;; rcIRC
-     (rcirc-track-nick    ((t (:foreground ,fg-low :bold t))))
+     (rcirc-track-nick    ((t (:foreground ,fg-low :weight bold))))
      (rcirc-track-keyword ((t (:inherit 'rcirc-track-nick))))
      (rcirc-server        ((t (:foreground ,fg-high))))
      (rcirc-timestamp     ((t (:inherit 'rcirc-server))))
      (rcirc-my-nick       ((t (:foreground ,violet))))
      (rcirc-url           ((t (:inherit 'link))))
 
-     ;; Message mode (mail)
-     (message-header-subject ((t (:inherit 'default :bold t))))
+     ;; Message mode (mail) and Gnus
+     (message-header-subject ((t (:inherit 'default :weight bold))))
+     (gnus-summary-selected  ((t :foreground ,bg-low :background ,blue :weight bold)))
+
+ ;; '(gnus-header-name ((t (:foreground "#8CCC5F" :bold t))))
+ ;; '(gnus-header-from ((t (:foreground "#D6B163"))))
+ ;; '(gnus-header-subject ((t (:foreground "#CC7832" :height 1.3 :inherit variable-pitch)))))
+ ;; gnus-face-1 2 3 4 ... 9
 
      ;; LaTeX
      (font-latex-sectioning-0-face ((t (:inherit 'outline-1 :height 1.0))))
@@ -290,7 +298,7 @@
 
      ;; Terminal Emulation
      (term               ((t (:foreground ,fg-normal))))
-     (term-bold          ((t (:inherit 'term :bold t))))
+     (term-bold          ((t (:inherit 'term :weight bold))))
      (term-color-black   ((t (:foreground ,fg-low))))
      (term-color-blue    ((t (:foreground ,blue))))
      (term-color-cyan    ((t (:foreground ,cyan-high))))
@@ -313,4 +321,5 @@
                (file-name-as-directory (file-name-directory load-file-name))))
 
 (provide-theme 'devalot)
-;; -*- coding: utf-8; lexical-binding:t -*-
+;;; -*- coding: utf-8; lexical-binding:t -*-
+;;; devalot-theme.el ends here
