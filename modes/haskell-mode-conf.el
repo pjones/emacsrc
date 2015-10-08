@@ -27,6 +27,14 @@
   (interactive)
   (find-file (pjones:haskell-find-cabal-file)))
 
+(defun pjones:haskell-compile ()
+  "Compile the current project using `nix-hs-build'."
+  (interactive)
+  (let* ((cabal-file (pjones:haskell-find-cabal-file))
+         (default-directory (file-name-directory cabal-file))
+         (cmd "nix-hs-build"))
+    (compile cmd)))
+
 (defun pjones:haskell-beginning-of-defun (&optional arg)
   "Move to the beginning of the current function."
   (dotimes (i (or arg 1))
@@ -178,6 +186,7 @@ line.  Examples:
   ;; And add some of my own
   (let ((map haskell-mode-map))
     (define-key map (kbd "C-c C-a") 'pjones:haskell-new-import)
+    (define-key map (kbd "C-c C-c") 'pjones:haskell-compile)
     (define-key map (kbd "C-c C-e") 'pjones:haskell-edit-cabal-file)
     (define-key map (kbd "C-c C-s") 'pjones:haskell-sort-imports)
     (define-key map (kbd "C-c C-v") 'pjones:haskell-lint-all)
