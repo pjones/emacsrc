@@ -172,15 +172,39 @@ line.  Examples:
              (newline)
              (insert text))))))
 
+(defun pjones:haskell-auto-fill-function ()
+  "Fix the busted haskell-indentation-auto-fill-function."
+  (when (> (current-column) fill-column)
+    (while (> (current-column) fill-column)
+      (skip-syntax-backward "-")
+      (skip-syntax-backward "^-"))
+    (comment-indent-new-line)
+    (end-of-line)))
+
 (defun pjones:haskell-mode-hook ()
   "Hook run on new Haskell buffers."
+  (make-local-variable 'tab-always-indent)
+  (make-local-variable 'normal-auto-fill-function)
+
+  ;; These need to be set before calling `pjones:prog-mode-hook'.
+  (setq tab-always-indent t
+        normal-auto-fill-function 'pjones:haskell-auto-fill-function
+        haskell-indentation-layout-offset 0
+        haskell-indentation-starter-offset 2
+        haskell-indentation-left-offset 2
+        haskell-indentation-ifte-offset 2
+        haskell-indentation-where-pre-offset 2
+        haskell-indentation-where-post-offset 2
+        beginning-of-defun-function 'pjones:haskell-beginning-of-defun
+        end-of-defun-function 'pjones:haskell-end-of-defun)
+
   (pjones:prog-mode-hook)
   (subword-mode)
 
   ;; Undo some stupid haskell-mode bindings.
   (let ((map haskell-indentation-mode-map))
-    (define-key map (kbd "RET")   'newline-and-indent)
-    (define-key map [?\r]         'newline-and-indent)
+    (define-key map (kbd "RET")   (key-binding (kbd "C-j")))
+    (define-key map [?\r]         (key-binding (kbd "C-j")))
     (define-key map [backspace]   'backward-delete-char-untabify))
 
   ;; And add some of my own
@@ -192,18 +216,7 @@ line.  Examples:
     (define-key map (kbd "C-c C-v") 'pjones:haskell-lint-all)
     (define-key map (kbd "C-c M-m") 'pjones:haskell-new-module)
     (define-key map (kbd "C-c M-w") 'pjones:haskell-module-name-to-kill-ring)
-    (define-key map (kbd "M-RET")   'pjones:haskell-smart-newline))
-
-  (make-local-variable 'tab-always-indent)
-  (setq tab-always-indent t
-        haskell-indentation-layout-offset 0
-        haskell-indentation-starter-offset 2
-        haskell-indentation-left-offset 2
-        haskell-indentation-ifte-offset 2
-        haskell-indentation-where-pre-offset 2
-        haskell-indentation-where-post-offset 2
-        beginning-of-defun-function 'pjones:haskell-beginning-of-defun
-        end-of-defun-function 'pjones:haskell-end-of-defun))
+    (define-key map (kbd "M-RET")   'pjones:haskell-smart-newline)))
 
 (add-hook 'haskell-mode-hook 'pjones:haskell-mode-hook)
 (add-hook 'haskell-mode-hook 'haskell-indentation-mode)

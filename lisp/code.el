@@ -13,32 +13,36 @@
   (let ((char (cond
                ((string= comment-start "-- ") ?-)
                ((string= comment-start "// ") ?*)
+               ((string= comment-start "/* ") ?*)
                (t ?#)))
 
         (start (cond
                 ((string= comment-start "# ")  "#")
                 ((string= comment-start "-- ") "-")
                 ((string= comment-start "// ") "/*")
+                ((string= comment-start "/* ") "/*")
                 (t comment-start)))
 
-        (end (if (> (length comment-end) 0) comment-end
-               (cond
-                ((string= comment-start "// ") "*/")
-                (t ""))))
+        (end (cond
+              ((string= comment-start "// ") "*/")
+              ((string= comment-start "/* ") "*/")
+              (t (if (> (length comment-end) 0) comment-end ""))))
 
         (col (current-column)))
     (insert start)
     (insert-char char (- 80 (length start) (length end) col))
     (insert end)
     (if without-newline (beginning-of-line)
-      (call-interactively (key-binding (kbd "RET"))))))
+      (electric-indent-just-newline 1)
+      (indent-according-to-mode))))
 
 (defun pjones:add-fixme-lock ()
   (font-lock-add-keywords nil '(("\\<\\(FIXME:\\|TODO:\\|NOTE:\\)"
                                  1 'pjones:fixme-face t))))
 (defun pjones:prog-mode-hook ()
   "Settings and bindings for programming modes."
-  (setq save-place t)
+  (setq save-place t
+        comment-empty-lines t)
   (set (make-local-variable 'comment-auto-fill-only-comments) t)
   (local-set-key (kbd "C-c TAB") 'pjones:comment-bar)
   (local-set-key (kbd "RET") 'reindent-then-newline-and-indent)
