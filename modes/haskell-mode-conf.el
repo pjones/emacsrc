@@ -203,8 +203,8 @@ line.  Examples:
 
   ;; Undo some stupid haskell-mode bindings.
   (let ((map haskell-indentation-mode-map))
-    (define-key map (kbd "RET")   (key-binding (kbd "C-j")))
-    (define-key map [?\r]         (key-binding (kbd "C-j")))
+    (define-key map (kbd "RET")   'newline-and-indent)
+    (define-key map [?\r]         'newline-and-indent)
     (define-key map [backspace]   'backward-delete-char-untabify))
 
   ;; And add some of my own
