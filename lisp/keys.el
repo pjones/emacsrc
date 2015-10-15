@@ -49,7 +49,7 @@
 (global-set-key (kbd "C-c m")   'magit-status)
 (global-set-key (kbd "C-c n")   'pjones:insert-italian-name)
 (global-set-key (kbd "C-c p")   'pjones:pwgen)
-(global-set-key (kbd "C-c P")   'pjones:agenda)
+(global-set-key (kbd "C-c P")   'pjones:password-list)
 (global-set-key (kbd "C-c r")   'pjones:register-get-set)
 (global-set-key (kbd "C-c R")   'revert-buffer)
 (global-set-key (kbd "C-c s")   'sort-lines)

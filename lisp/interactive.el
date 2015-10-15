@@ -239,6 +239,12 @@ number input."
              (call-interactively 'goto-line))
     (linum-mode -1)))
 
+(defun pjones:password-list ()
+  "Show a list of password names."
+  (interactive)
+  (dired (expand-file-name "~/.password-store")
+         (concat dired-listing-switches " -R")))
+
 (defun pjones:uuid ()
   "Create a UUID, add it to the kill ring, and insert it into the
 current buffer after point."
