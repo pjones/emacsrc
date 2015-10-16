@@ -55,13 +55,24 @@ current dired buffer.  Otherwise visit the file under point."
   (goto-char (point-max))
   (dired-next-line -1))
 
+(defun pjones:dired-find-file ()
+  "Use the current dired directory as a starting point for
+find-file."
+  (interactive)
+  (let ((default-directory (dired-current-directory)))
+    (ido-find-file)))
+
 (defun pjones:dired-load-hook ()
   (dired-hide-details-mode) ;; Hide details by default
   (pjones:dired-extra-keywords)
-  (define-key dired-mode-map "\C-m" 'pjones:dired-insert-or-visit)
-  (define-key dired-mode-map [?%?h] 'pjones:dired-show-only-matching-files)
-  (define-key dired-mode-map
-    (vector 'remap 'end-of-buffer) 'pjones:dired-jump-to-bottom))
+
+  (let ((map dired-mode-map))
+    (define-key map (kbd "C-x C-f")  'pjones:dired-find-file)
+    (define-key map (kbd "C-m")      'pjones:dired-insert-or-visit)
+    (define-key map (kbd "e")        'dired-toggle-read-only)
+    (define-key map [?%?h]           'pjones:dired-show-only-matching-files)
+    (define-key map
+      (vector 'remap 'end-of-buffer) 'pjones:dired-jump-to-bottom)))
 
 (add-hook 'dired-mode-hook 'pjones:dired-load-hook)
 (add-hook 'dired-mode-hook 'turn-on-gnus-dired-mode)
