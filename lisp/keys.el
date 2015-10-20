@@ -12,9 +12,10 @@
 ;; Overriding default key bindings
 (global-set-key [escape] (lambda () (interactive) (message "WTF: ESC")))
 (global-set-key (kbd "C-x C-c") 'pjones:maybe-save-buffers-kill-terminal)
-(global-set-key (kbd "C-x C-m") 'execute-extended-command)
+(global-set-key (kbd "C-x C-m") 'smex)
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 (global-set-key (kbd "C-x l")   'pjones:switch-to-previous-buffer)
+(global-set-key (kbd "C-x m")   'magit-status)
 (global-set-key (kbd "C-x o")   'ace-window)
 (global-set-key (kbd "C-o")     'pjones:open-line-above)
 (global-set-key (kbd "M-o")     'pjones:open-line-below)
@@ -26,7 +27,6 @@
 (global-set-key (kbd "M-z")     'zap-up-to-char)
 (global-set-key (kbd "M-S-z")   'zap-to-char)
 (global-set-key (kbd "C-`")     'next-error)
-(global-set-key (kbd "C-x 6 f") 'multicolumn-delete-other-windows-and-split-with-follow-mode)
 
 ;; Remapping existing keys.
 (global-set-key [remap goto-line] 'pjones:goto-line-with-feedback)
@@ -40,8 +40,9 @@
 (global-set-key (kbd "C-c c")   'quick-calc)
 (global-set-key (kbd "C-c d")   'dictionary-lookup-definition)
 (global-set-key (kbd "C-c D")   'pjones:toggle-dictionary)
-(global-set-key (kbd "C-c f")   'pjones:kill-file-name)
-(global-set-key (kbd "C-c g")   'rgrep)
+(global-set-key (kbd "C-c f")   'projectile-find-file)
+(global-set-key (kbd "C-c F")   'pjones:kill-file-name)
+(global-set-key (kbd "C-c g")   'pjones:project-grep-or-rgrep)
 (global-set-key (kbd "C-c h")   'highline-mode)
 (global-set-key (kbd "C-c i")   'pjones:uuid)
 (global-set-key (kbd "C-c j")   'pjones:journal)
@@ -53,6 +54,7 @@
 (global-set-key (kbd "C-c r")   'pjones:register-get-set)
 (global-set-key (kbd "C-c R")   'revert-buffer)
 (global-set-key (kbd "C-c s")   'sort-lines)
+(global-set-key (kbd "C-c t")   'pjones:start-term-here)
 (global-set-key (kbd "C-c u")   'goto-last-change)
 ;                     C-c \t     Insert comment bar in source code file
 (global-set-key (kbd "C-c w w") 'pjones:window-config)
@@ -64,8 +66,10 @@
 (global-set-key (kbd "C-z") nil)
 
 ;; Super key bindings
+(global-set-key (kbd "s-c") 'projectile-compile-project)
+(global-set-key (kbd "s-t") 'projectile-test-project)
+(global-set-key (kbd "s-r") 'projectile-run-project)
 (global-set-key (kbd "s-g") 'pjones:start-primary-app)
-(global-set-key (kbd "s-k") 'pjones:kite-console)
 (global-set-key (kbd "s-p") 'pjones:text-to-speech-para)
 (global-set-key (kbd "s-u") 'browse-url)
 

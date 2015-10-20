@@ -47,7 +47,10 @@
 (setq epa-file-encrypt-to "204284CB"                  ; Default GPG key to use
       custom-file "~/.emacs.d/pjones/lisp/custom.el") ; To keep Emacs happy
 
-;; Frame setup
+;; Frame setup (which buffers get a new frame):
+(add-to-list 'special-display-regexps "compilation")
+(add-to-list 'special-display-regexps "grep")
+
 (defun pjones:frame-title-file-name ()
   (let* ((home (expand-file-name "~"))
          (end (length home))

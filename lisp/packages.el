@@ -13,11 +13,13 @@
      bm
      dictionary
      flycheck
+     flx-ido
      gist
      haskell-mode
      htmlize
      http
      hydra
+     ido-vertical-mode
      inf-ruby
      magit
      markdown-mode
@@ -25,6 +27,7 @@
      nodejs-repl
      org
      ruby-end
+     smex
      yaml-mode )
   "A list of packages to ensure are installed at launch.")
 

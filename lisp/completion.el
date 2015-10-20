@@ -1,4 +1,5 @@
 ;;; completion.el -- Configuration for completion, abbreviations, and shortcuts.
+(eval-when-compile)
 
 ;; I don't want to type "yes".
 (defalias 'yes-or-no-p 'y-or-n-p)

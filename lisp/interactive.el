@@ -6,7 +6,8 @@
   (require 'ispell)
   (require 'rcirc)
   (require 'server)
-  (require 'subword))
+  (require 'subword)
+  (require 'projectile))
 
 (defun pjones:maybe-save-buffers-kill-terminal (&optional arg)
   "Save me from myself.  I somehow keep hitting C-x C-c when I
@@ -244,6 +245,20 @@ number input."
   (interactive)
   (dired (expand-file-name "~/.password-store")
          (concat dired-listing-switches " -R")))
+
+(defun pjones:project-grep-or-rgrep ()
+  "If in a project use `projectile-grep' otherwise just use
+`rgrep'."
+  (interactive)
+  (call-interactively
+   (if (projectile-project-p) 'projectile-grep 'rgrep)))
+
+(defun pjones:start-term-here ()
+  "Start a terminal in the current dir."
+  (interactive)
+  (let ((dir (if (projectile-project-p) (projectile-project-root)
+               default-directory)))
+    (start-process "urxvtc" nil "urxvtc" "-cd" dir)))
 
 (defun pjones:uuid ()
   "Create a UUID, add it to the kill ring, and insert it into the

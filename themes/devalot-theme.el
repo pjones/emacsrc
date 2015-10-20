@@ -275,7 +275,9 @@
 
      ;; Message mode (mail) and Gnus
      (message-header-subject ((t (:inherit 'default :weight bold))))
-     (gnus-summary-selected  ((t :foreground ,bg-low :background ,blue :weight bold)))
+     (gnus-summary-selected  ((t (:foreground ,bg-low :background ,blue :weight bold))))
+     (gnus-group-mail-1 ((t (:inherit 'org-level-1))))
+     (gnus-group-mail-1-empty ((t (:inherit 'default))))
 
  ;; '(gnus-header-name ((t (:foreground "#8CCC5F" :bold t))))
  ;; '(gnus-header-from ((t (:foreground "#D6B163"))))
@@ -312,6 +314,19 @@
      ;; Remaining Junk
      (completion-dynamic-face ((t (:inherit 'match)))))))
 
+;;; Create a couple of useful faces
+;; Gnus user-defined faces.
+(defface gnus-face-1 nil "gnus-face-1" :group 'gnus)
+(defface gnus-face-2 nil "gnus-face-2" :group 'gnus)
+(defface gnus-face-3 nil "gnus-face-3" :group 'gnus)
+(defface gnus-face-4 nil "gnus-face-4" :group 'gnus)
+(defface gnus-face-5 nil "gnus-face-5" :group 'gnus)
+(defface gnus-face-6 nil "gnus-face-6" :group 'gnus)
+(defface gnus-face-7 nil "gnus-face-7" :group 'gnus)
+(defface gnus-face-8 nil "gnus-face-8" :group 'gnus)
+(defface gnus-face-9 nil "gnus-face-9" :group 'gnus)
+
+;; Load the theme.
 (let ((colors (devalot-colors-apply 'devalot devalot-colors-dark)))
   (apply 'custom-theme-set-faces 'devalot colors))
 
