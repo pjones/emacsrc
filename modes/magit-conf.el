@@ -17,4 +17,6 @@ buffer."
   (kill-buffer)
   (jump-to-register :magit-fullscreen))
 
+(setq magit-push-always-verify nil)
+
 (define-key magit-status-mode-map (kbd "q") 'pjones:magit-quit-session)
