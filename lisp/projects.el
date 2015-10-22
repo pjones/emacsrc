@@ -22,3 +22,10 @@
 
 (dir-locals-set-directory-class
    (expand-file-name "~/develop/scors/cltc-claims") 'cltc-new-project)
+
+(dir-locals-set-class-variables 'xmonad
+  '((nil . ((projectile-project-compilation-cmd "cd xmonad && script/nix-env.sh")
+            (projectile-project-run-cmd "cd xmonad && script/install.sh restart")))))
+
+(dir-locals-set-directory-class
+ (expand-file-name "~/core/xmonad") 'xmonad)

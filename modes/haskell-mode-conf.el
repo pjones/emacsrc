@@ -196,7 +196,8 @@ line.  Examples:
         haskell-indentation-where-pre-offset 2
         haskell-indentation-where-post-offset 2
         beginning-of-defun-function 'pjones:haskell-beginning-of-defun
-        end-of-defun-function 'pjones:haskell-end-of-defun)
+        end-of-defun-function 'pjones:haskell-end-of-defun
+        projectile-project-compilation-cmd "nix-hs-build")
 
   (pjones:prog-mode-hook)
   (subword-mode)
