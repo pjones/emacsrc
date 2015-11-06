@@ -7,6 +7,7 @@ PMADE_LOAD_PATH ?= $(CURDIR)/../lisp/loadpath.el
 EMACS = emacs
 EMACS_FLAGS = -q --no-site-file --batch
 EMACS_FLAGS += --eval "(add-to-list 'load-path \".\")"
+EMACS_FLAGS += --eval "(setq max-lisp-eval-depth 1200)"
 EMACS_FLAGS += -l $(PMADE_LOAD_PATH)
 EMACS_FLAGS += -f package-initialize
 EMACS_FLAGS += -f batch-byte-compile

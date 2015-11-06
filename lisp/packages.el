@@ -26,6 +26,7 @@
      nix-mode
      nodejs-repl
      org
+     projectile
      ruby-end
      smex
      yaml-mode )

@@ -21,7 +21,8 @@
 (pjones:add-basic-mode-hook 'fundamental-mode-hook)
 
 ;; Variables defined in Emacs' C source
-(setq inhibit-startup-message t          ; I've seen it already
+(setq max-lisp-eval-depth 1200           ; My theme is too deep
+      inhibit-startup-message t          ; I've seen it already
       initial-scratch-message nil        ; Ditto
       make-backup-files nil              ; Don't make backup files
       mouse-yank-at-point t              ; Don't move point when mouse pasting

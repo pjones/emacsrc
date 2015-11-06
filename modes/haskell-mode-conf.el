@@ -2,6 +2,7 @@
 (eval-when-compile
   (load "../lisp/code.el")
   (require 'cl)
+  (require 'projectile)
   (require 'haskell-indentation)
   (require 'haskell-mode))
 

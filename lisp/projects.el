@@ -1,11 +1,14 @@
 ;;; projects.el -- Configuration for various projects.
 (eval-when-compile
+  (require 'server)
   (require 'projectile))
 
 ;; Projectile is used to manage projects:
 ;; Need to fix the key binding before loading!
 (setq projectile-keymap-prefix (kbd "C-c C-p"))
-(projectile-global-mode)
+
+(if (and (boundp 'server-name) (string= server-name "server"))
+    (projectile-global-mode))
 
 ;; Which files mark a project:
 (add-to-list 'projectile-project-root-files "GNUmakefile")
