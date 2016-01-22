@@ -21,6 +21,7 @@
      hydra
      ido-vertical-mode
      inf-ruby
+     kite-mini
      magit
      markdown-mode
      nix-mode
