@@ -49,7 +49,7 @@
   (setq save-place t
         comment-empty-lines t)
   (set (make-local-variable 'comment-auto-fill-only-comments) t)
-  (local-set-key (kbd "C-c TAB") 'pjones:comment-bar)
+  (local-set-key (kbd "C-c <tab>") 'pjones:comment-bar)
   (local-set-key (kbd "RET") 'reindent-then-newline-and-indent)
   (show-paren-mode)
   (whitespace-mode)

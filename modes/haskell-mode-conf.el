@@ -54,24 +54,6 @@
     (while (and (not (eobp)) (or (eolp) (looking-at "^\\s-")))
       (forward-line))) t)
 
-(defun pjones:haskell-sort-imports ()
-  "If point is in a block of import statements then sort them.
-Otherwise go totally crazy."
-  (interactive)
-  (let ((b (save-excursion
-             (move-beginning-of-line nil)
-             (while (looking-at "^import") (forward-line -1))
-             (forward-line 1)
-             (point)))
-        (e (save-excursion
-             (move-beginning-of-line nil)
-             (while (looking-at "^import") (forward-line 1))
-             (forward-line -1)
-             (move-end-of-line nil)
-             (point))))
-    (sort-regexp-fields
-     nil "^import +\\(qualified \\)?\\(.+\\)$" "\\2" b e)))
-
 (defun pjones:haskell-module-name ()
   "Return the module name for the current buffer."
   (let* ((cabal-path (file-name-directory (pjones:haskell-find-cabal-file)))
@@ -91,26 +73,6 @@ Otherwise go totally crazy."
   "Save the module name of the current buffer to the kill ring."
   (interactive)
   (kill-new (pjones:haskell-module-name)))
-
-(defun pjones:haskell-new-import (&optional qualified)
-  "Add a new import statement up along with the other import
-statements.  If no other imports exist add it after the first
-module line, failing that add it at the top of the buffer.
-
-With a prefix argument make the import qualified."
-  (interactive "P")
-  (let* ((prompt  (if qualified "import qualified: " "import: "))
-         (default (if qualified "Data.Text as T" "Data.Text (Text)"))
-         (module (read-string prompt nil nil default)))
-    (save-excursion
-      (goto-char (point-min))
-      (re-search-forward "^module")
-      (re-search-forward "^import")
-      (move-end-of-line 1)
-      (newline)
-      (insert (concat "import " (if qualified "qualified ")))
-      (insert module)
-      (pjones:haskell-sort-imports))))
 
 (defun pjones:haskell-lint-all ()
   "Run hlint from a directory containing a .cabal file."
@@ -182,6 +144,36 @@ line.  Examples:
     (comment-indent-new-line)
     (end-of-line)))
 
+;; TODO:
+;; haskell-mode-contextual-space (needs haskell-interactive-mode)
+;;
+;; haskell-mode-toggle-scc-at-point
+;;
+;; haskell-decl-scan-mode and haskell-decl-scan-add-to-menubar
+;;
+;;      (eval-after-load "which-func"
+;;       '(add-to-list 'which-func-modes 'haskell-mode))
+;;
+;; (speedbar-add-supported-extension ".hs")
+;;
+;; haskell-compile and:
+;;   haskell-compile-cabal-build-command
+;;   haskell-compile-cabal-build-command-alt
+;;
+;; haskell-cabal-visit-file
+
+(defhydra hydra-haskell (:hint nil)
+  "
+^Imports^
+---------
+_i_: jump
+_r_: return
+_s_: sort
+"
+  ("i" haskell-navigate-imports)
+  ("r" haskell-navigate-imports-return :color blue)
+  ("s" haskell-sort-imports))
+
 (defun pjones:haskell-mode-hook ()
   "Hook run on new Haskell buffers."
   (make-local-variable 'tab-always-indent)
@@ -209,9 +201,10 @@ line.  Examples:
     (define-key map [?\r]         'newline-and-indent)
     (define-key map [backspace]   'backward-delete-char-untabify))
 
-  ;; And add some of my own
+  ;; And add some of my own (Note: "C-c TAB" is really "C-c i")
   (let ((map haskell-mode-map))
-    (define-key map (kbd "C-c C-a") 'pjones:haskell-new-import)
+    (define-key map (kbd "C-c C-h") 'hydra-haskell/body)
+    (define-key map (kbd "C-c TAB") 'haskell-navigate-imports)
     (define-key map (kbd "C-c C-c") 'pjones:haskell-compile)
     (define-key map (kbd "C-c C-e") 'pjones:haskell-edit-cabal-file)
     (define-key map (kbd "C-c C-s") 'pjones:haskell-sort-imports)
