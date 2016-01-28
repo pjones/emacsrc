@@ -2,6 +2,7 @@
 (eval-when-compile
   (load "../lisp/code.el")
   (require 'cl)
+  (require 'ghc)
   (require 'projectile)
   (require 'haskell-indentation)
   (require 'haskell-mode))
@@ -190,10 +191,12 @@ _s_: sort
         haskell-indentation-where-post-offset 2
         beginning-of-defun-function 'pjones:haskell-beginning-of-defun
         end-of-defun-function 'pjones:haskell-end-of-defun
-        projectile-project-compilation-cmd "nix-hs-build")
+        projectile-project-compilation-cmd "nix-hs-build"
+        ghc-module-command "nix-hs-ghc-mod")
 
   (pjones:prog-mode-hook)
   (subword-mode)
+  (ghc-init)
 
   ;; Undo some stupid haskell-mode bindings.
   (let ((map haskell-indentation-mode-map))
@@ -203,7 +206,7 @@ _s_: sort
 
   ;; And add some of my own (Note: "C-c TAB" is really "C-c i")
   (let ((map haskell-mode-map))
-    (define-key map (kbd "C-c C-h") 'hydra-haskell/body)
+    (define-key map (kbd "C-c h") 'hydra-haskell/body)
     (define-key map (kbd "C-c TAB") 'haskell-navigate-imports)
     (define-key map (kbd "C-c C-c") 'pjones:haskell-compile)
     (define-key map (kbd "C-c C-e") 'pjones:haskell-edit-cabal-file)

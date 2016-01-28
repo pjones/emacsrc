@@ -1,5 +1,7 @@
 ;;; completion.el -- Configuration for completion, abbreviations, and shortcuts.
-(eval-when-compile)
+(eval-when-compile
+  (require 'company)
+  (require 'company-ghc))
 
 ;; I don't want to type "yes".
 (defalias 'yes-or-no-p 'y-or-n-p)
@@ -26,3 +28,11 @@
         try-complete-file-name
         try-expand-whole-kill
         try-expand-line))
+
+;; In buffer completion:
+(require 'company)
+(add-hook 'after-init-hook 'global-company-mode)
+(add-to-list 'company-backends 'company-ghc)
+
+;; Minibuffer completion:
+(ivy-mode 1)

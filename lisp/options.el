@@ -87,7 +87,6 @@
 (require 'saveplace)                    ; Saves your location in files
 (require 'dired-x)                      ; Extra features for dired-mode
 (require 'align)                        ; Align things
-(require 'org-install)                  ; Load external org-mode
 
 (provide 'options)
 ;;; options.el ends here

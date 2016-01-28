@@ -12,14 +12,14 @@
 ;; Overriding default key bindings
 (global-set-key [escape] (lambda () (interactive) (message "WTF: ESC")))
 (global-set-key (kbd "C-x C-c") 'pjones:maybe-save-buffers-kill-terminal)
-(global-set-key (kbd "C-x C-m") 'smex)
+(global-set-key (kbd "C-x C-m") 'counsel-M-x)
 (global-set-key (kbd "C-x C-b") 'ibuffer)
+(global-set-key (kbd "C-x C-f") 'counsel-find-file)
 (global-set-key (kbd "C-x l")   'pjones:switch-to-previous-buffer)
 (global-set-key (kbd "C-x m")   'magit-status)
-(global-set-key (kbd "C-x o")   'ace-window)
 (global-set-key (kbd "C-o")     'pjones:open-line-above)
 (global-set-key (kbd "M-o")     'pjones:open-line-below)
-(global-set-key (kbd "C-s")     'isearch-forward-regexp)
+(global-set-key (kbd "C-s")     'swiper)
 (global-set-key (kbd "C-r")     'isearch-backward-regexp)
 (global-set-key (kbd "C-M-s")   'isearch-forward)
 (global-set-key (kbd "C-M-r")   'isearch-backward)
@@ -40,10 +40,11 @@
 (global-set-key (kbd "C-c c")   'quick-calc)
 (global-set-key (kbd "C-c d")   'dictionary-lookup-definition)
 (global-set-key (kbd "C-c D")   'pjones:toggle-dictionary)
-(global-set-key (kbd "C-c f")   'projectile-find-file)
+(global-set-key (kbd "C-c f")   'counsel-git)
 (global-set-key (kbd "C-c F")   'pjones:kill-file-name)
 (global-set-key (kbd "C-c g")   'pjones:project-grep-or-rgrep)
-(global-set-key (kbd "C-c h")   'highline-mode)
+;                     C-c h      Mode-specific hydra.
+(global-set-key (kbd "C-c H")   'highline-mode)
 (global-set-key (kbd "C-c i")   'pjones:uuid)
 (global-set-key (kbd "C-c j")   'pjones:journal)
 (global-set-key (kbd "C-c l")   'pjones:jump-back-and-forth)
@@ -56,11 +57,12 @@
 (global-set-key (kbd "C-c s")   'sort-lines)
 (global-set-key (kbd "C-c t")   'pjones:start-term-here)
 (global-set-key (kbd "C-c u")   'goto-last-change)
-;                     C-c \t     Insert comment bar in source code file
+;                     C-c t     Insert comment bar in source code file
 (global-set-key (kbd "C-c w w") 'pjones:window-config)
 (global-set-key (kbd "C-c w u") 'winner-undo)
 (global-set-key (kbd "C-c w r") 'winner-redo)
 (global-set-key (kbd "C-c w t") 'pjones:transpose-windows)
+(global-set-key (kbd "C-c SPC") 'company-complete)
 
 ;; C-z is used by my window manager.
 (global-set-key (kbd "C-z") nil)

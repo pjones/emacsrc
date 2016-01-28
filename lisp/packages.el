@@ -8,28 +8,26 @@
   "List of package archives to use with Emacs.")
 
 (defvar pjones:packages
-  '( ace-window
-     bbdb
+  '( bbdb
      bm
+     company
+     company-ghc
+     counsel
      dictionary
      flycheck
-     flx-ido
      gist
      haskell-mode
      htmlize
      http
      hydra
-     ido-vertical-mode
      inf-ruby
      kite-mini
      magit
      markdown-mode
      nix-mode
-     nodejs-repl
-     org
      projectile
      ruby-end
-     smex
+     swiper
      yaml-mode )
   "A list of packages to ensure are installed at launch.")
 
