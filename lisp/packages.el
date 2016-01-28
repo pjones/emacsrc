@@ -15,6 +15,7 @@
      counsel
      dictionary
      flycheck
+     flx
      gist
      haskell-mode
      htmlize

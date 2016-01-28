@@ -1,12 +1,14 @@
-;;; ivy-conf.el -- Incremental Vertical completion.
+;;; ivy-conf.el -- ido replacement tool.
 (eval-when-compile
   (load "../lisp/packages.el")
   (require 'ivy))
 
 (setq ivy-wrap t
-      ivy-re-builders-alist '((t . ivy--regex-fuzzy))
-      ivy-initial-inputs-alist nil)
+      ivy-initial-inputs-alist nil
+      ivy-re-builders-alist
+      '((counsel-describe-function . ivy--regex-plus)
+        (counsel-describe-variable . ivy--regex-plus)
+        (t                         . ivy--regex-fuzzy)))
 
 (define-key ivy-minibuffer-map (kbd "C-w")   'ivy-backward-kill-word)
-(define-key ivy-minibuffer-map (kbd "C-h")   'hydra-ivy/body)
 (define-key ivy-minibuffer-map (kbd "C-c h") 'hydra-ivy/body)
