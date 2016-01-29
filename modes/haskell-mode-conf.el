@@ -4,6 +4,7 @@
   (require 'cl)
   (require 'ghc)
   (require 'projectile)
+  (require 'haskell-compile)
   (require 'haskell-indentation)
   (require 'haskell-mode))
 
@@ -26,9 +27,8 @@
   "Compile the current project using `nix-hs-build'."
   (interactive)
   (let* ((cabal-file (pjones:haskell-find-cabal-file))
-         (default-directory (file-name-directory cabal-file))
-         (cmd "nix-hs-build"))
-    (compile cmd)))
+         (default-directory (file-name-directory cabal-file)))
+    (compile haskell-compile-cabal-build-command)))
 
 (defun pjones:haskell-beginning-of-defun (&optional arg)
   "Move to the beginning of the current function."
@@ -143,18 +143,9 @@ line.  Examples:
 ;;
 ;; * Remove whitespace at end of line while typing?
 ;;
-;; haskell-mode-contextual-space (needs haskell-interactive-mode)
-;;
-;; haskell-mode-toggle-scc-at-point
-;;
-;; haskell-decl-scan-mode and haskell-decl-scan-add-to-menubar
-;;
-;;      (eval-after-load "which-func"
+;; * which-func-mode
+;;     (eval-after-load "which-func"
 ;;       '(add-to-list 'which-func-modes 'haskell-mode))
-;;
-;; haskell-compile and:
-;;   haskell-compile-cabal-build-command
-;;   haskell-compile-cabal-build-command-alt
 ;;
 ;; haskell-cabal-visit-file
 ;;
@@ -162,18 +153,21 @@ line.  Examples:
 
 (defhydra hydra-haskell (:hint nil)
   "
-^Imports^     ^GHCi^
----------     ------
-_i_: jump     _g_: ghci
-_I_: return   _r_: reload
-_s_: sort     _t_: type
+^Imports^     ^GHCi^        ^Insert^            ^Run
+^^^^^^^^^----------------------------------------------------
+_i_: jump     _g_: ghci     _S_: cost center    _c_: compile
+_I_: return   _r_: reload   ^ ^                 _R_: run
+_s_: sort     _t_: type     ^ ^
 "
   ("i" haskell-navigate-imports)
   ("I" haskell-navigate-imports-return :color blue)
   ("s" haskell-sort-imports)
   ("g" haskell-interactive-switch :color blue)
   ("r" haskell-process-reload)
-  ("t" haskell-process-do-type :color blue))
+  ("t" haskell-process-do-type :color blue)
+  ("S" haskell-mode-toggle-scc-at-point :color blue)
+  ("c" pjones:haskell-compile :color blue)
+  ("R" projectile-run-project :color blue))
 
 (defun pjones:haskell-mode-hook ()
   "Hook run on new Haskell buffers."
@@ -196,6 +190,7 @@ _s_: sort     _t_: type
         projectile-project-compilation-cmd "nix-hs-build"
         ghc-module-command "nix-hs-ghc-mod"
 
+        haskell-compile-cabal-build-command "nix-hs-build"
         haskell-process-type 'cabal-repl
         haskell-process-suggest-language-pragmas t
         haskell-process-suggest-remove-import-lines t
@@ -216,19 +211,16 @@ _s_: sort     _t_: type
 
   ;; And add some of my own (Note: "C-c TAB" is really "C-c i")
   (let ((map haskell-mode-map))
-    (define-key map (kbd "C-c h") 'hydra-haskell/body)
-    (define-key map (kbd "C-c TAB") 'haskell-navigate-imports)
+    (define-key map (kbd "C-c h")   'hydra-haskell/body)
     (define-key map (kbd "C-c C-c") 'pjones:haskell-compile)
     (define-key map (kbd "C-c C-e") 'pjones:haskell-edit-cabal-file)
-    (define-key map (kbd "C-c C-s") 'pjones:haskell-sort-imports)
-    (define-key map (kbd "C-c C-v") 'pjones:haskell-lint-all)
     (define-key map (kbd "C-c M-m") 'pjones:haskell-new-module)
     (define-key map (kbd "C-c M-w") 'pjones:haskell-module-name-to-kill-ring)
     (define-key map (kbd "M-RET")   'pjones:haskell-smart-newline)))
 
-(add-hook 'haskell-mode-hook 'pjones:haskell-mode-hook)
 (add-hook 'haskell-mode-hook 'haskell-indentation-mode)
 (add-hook 'haskell-mode-hook 'interactive-haskell-mode)
+(add-hook 'haskell-mode-hook 'pjones:haskell-mode-hook)
 (add-hook 'haskell-cabal-mode-hook 'pjones:prog-mode-hook)
 
 ;; Local Variables:
