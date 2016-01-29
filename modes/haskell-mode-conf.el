@@ -129,18 +129,7 @@ line.  Examples:
              (newline)
              (insert text))))))
 
-(defun pjones:haskell-auto-fill-function ()
-  "Fix the busted haskell-indentation-auto-fill-function."
-  (when (> (current-column) fill-column)
-    (while (> (current-column) fill-column)
-      (skip-syntax-backward "-")
-      (skip-syntax-backward "^-"))
-    (comment-indent-new-line)
-    (end-of-line)))
-
 ;; TODO:
-;; * Need a better key for completions.
-;;
 ;; * Remove whitespace at end of line while typing?
 ;;
 ;; * which-func-mode
@@ -169,14 +158,15 @@ _s_: sort     _t_: type     ^ ^
   ("c" pjones:haskell-compile :color blue)
   ("R" projectile-run-project :color blue))
 
+(define-skeleton pjones:haskell-insert-pragma
+  "Add the pragma comment syntax." nil "{-# " _ " #-}")
+
 (defun pjones:haskell-mode-hook ()
   "Hook run on new Haskell buffers."
   (make-local-variable 'tab-always-indent)
-  (make-local-variable 'normal-auto-fill-function)
 
   ;; These need to be set before calling `pjones:prog-mode-hook'.
   (setq tab-always-indent t
-        normal-auto-fill-function 'pjones:haskell-auto-fill-function
         haskell-stylish-on-save nil
         haskell-completing-read-function 'ivy-completing-read
         haskell-indentation-layout-offset 0
@@ -201,7 +191,12 @@ _s_: sort     _t_: type     ^ ^
 
   (pjones:prog-mode-hook)
   (subword-mode)
+  (abbrev-mode)
   (ghc-init)
+
+  (define-abbrev-table 'haskell-mode-abbrev-table
+    '(("_P" "" pjones:haskell-insert-pragma)))
+  (setq local-abbrev-table haskell-mode-abbrev-table)
 
   ;; Undo some stupid haskell-mode bindings.
   (let ((map haskell-indentation-mode-map))

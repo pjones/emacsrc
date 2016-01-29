@@ -27,6 +27,9 @@
 (global-set-key (kbd "M-z")     'zap-up-to-char)
 (global-set-key (kbd "M-S-z")   'zap-to-char)
 (global-set-key (kbd "C-`")     'next-error)
+(global-set-key (kbd "M-/")     'company-complete)
+(global-set-key (kbd "M-SPC")   'company-complete)
+(global-set-key (kbd "C-M-SPC") 'just-one-space)
 
 ;; Remapping existing keys.
 (global-set-key [remap goto-line] 'pjones:goto-line-with-feedback)
@@ -62,7 +65,6 @@
 (global-set-key (kbd "C-c w u") 'winner-undo)
 (global-set-key (kbd "C-c w r") 'winner-redo)
 (global-set-key (kbd "C-c w t") 'pjones:transpose-windows)
-(global-set-key (kbd "C-c SPC") 'company-complete)
 
 ;; C-z is used by my window manager.
 (global-set-key (kbd "C-z") nil)

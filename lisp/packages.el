@@ -11,6 +11,7 @@
   '( bbdb
      bm
      company
+     company-flx
      company-ghc
      counsel
      dictionary
