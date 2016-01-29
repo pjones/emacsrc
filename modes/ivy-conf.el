@@ -10,5 +10,11 @@
         (counsel-describe-variable . ivy--regex-plus)
         (t                         . ivy--regex-fuzzy)))
 
-(define-key ivy-minibuffer-map (kbd "C-w")   'ivy-backward-kill-word)
-(define-key ivy-minibuffer-map (kbd "C-c h") 'hydra-ivy/body)
+(let ((map ivy-minibuffer-map))
+  (define-key map (kbd "TAB")   'ivy-partial)
+  (define-key map (kbd "C-j")   'ivy-immediate-done)
+  (define-key map (kbd "C-m")   'ivy-done)
+  (define-key map (kbd "C-w")   'ivy-backward-kill-word)
+  (define-key map (kbd "C-c h") 'hydra-ivy/body))
+
+;; (provide 'ivy-config)

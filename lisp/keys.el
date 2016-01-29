@@ -19,7 +19,7 @@
 (global-set-key (kbd "C-x m")   'magit-status)
 (global-set-key (kbd "C-o")     'pjones:open-line-above)
 (global-set-key (kbd "M-o")     'pjones:open-line-below)
-(global-set-key (kbd "C-s")     'swiper)
+(global-set-key (kbd "C-s")     'isearch-forward-regexp)
 (global-set-key (kbd "C-r")     'isearch-backward-regexp)
 (global-set-key (kbd "C-M-s")   'isearch-forward)
 (global-set-key (kbd "C-M-r")   'isearch-backward)

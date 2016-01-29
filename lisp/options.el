@@ -49,8 +49,21 @@
       custom-file "~/.emacs.d/pjones/lisp/custom.el") ; To keep Emacs happy
 
 ;; Frame setup (which buffers get a new frame):
-(add-to-list 'special-display-regexps "compilation")
-(add-to-list 'special-display-regexps "grep")
+(defun pjones:place-buffer-in-new-frame (name action)
+  "Called by `display-buffer' to decide if a new buffer should be
+placed into a different frame than the current one."
+  (cond
+    ((string= name "*compilation*") t)
+    ((string= name "*grep*") t)
+    ((with-current-buffer name
+        (string= major-mode "haskell-interactive-mode")) t)))
+
+(add-to-list 'display-buffer-alist
+  '(pjones:place-buffer-in-new-frame
+    (display-buffer-reuse-window display-buffer-pop-up-frame)
+    (reusable-frames      . t)
+    (inhibit-same-window  . nil)
+    (inhibit-switch-frame . t)))
 
 (defun pjones:frame-title-file-name ()
   (let* ((home (expand-file-name "~"))

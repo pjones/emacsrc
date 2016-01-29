@@ -6,10 +6,6 @@
 ;; I don't want to type "yes".
 (defalias 'yes-or-no-p 'y-or-n-p)
 
-;; ido mode for mini-buffer completion (see also modes/ido-conf.el)
-(require 'ido)
-(ido-mode t)
-
 ;; What to do with the tab key.
 (setq tab-always-indent t)
 
@@ -36,3 +32,6 @@
 
 ;; Minibuffer completion:
 (ivy-mode 1)
+
+;; Key helpers (completion):
+(require 'hydra)

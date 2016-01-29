@@ -7,13 +7,6 @@
   (require 'haskell-indentation)
   (require 'haskell-mode))
 
-;;; TO-DO List:
-;;
-;; * Figure out a better way to do completions.
-;; * Need a better key for completions.
-;; * Remove whitespace at end of line while typing?
-
-
 (defun pjones:haskell-find-cabal-file ()
   "Return the full path to the *.cabal file for the current project."
   (let* ((dir default-directory)
@@ -146,6 +139,10 @@ line.  Examples:
     (end-of-line)))
 
 ;; TODO:
+;; * Need a better key for completions.
+;;
+;; * Remove whitespace at end of line while typing?
+;;
 ;; haskell-mode-contextual-space (needs haskell-interactive-mode)
 ;;
 ;; haskell-mode-toggle-scc-at-point
@@ -155,25 +152,28 @@ line.  Examples:
 ;;      (eval-after-load "which-func"
 ;;       '(add-to-list 'which-func-modes 'haskell-mode))
 ;;
-;; (speedbar-add-supported-extension ".hs")
-;;
 ;; haskell-compile and:
 ;;   haskell-compile-cabal-build-command
 ;;   haskell-compile-cabal-build-command-alt
 ;;
 ;; haskell-cabal-visit-file
+;;
+;; close frames when using q (think *grep* or *compilation*)
 
 (defhydra hydra-haskell (:hint nil)
   "
-^Imports^
----------
-_i_: jump
-_r_: return
-_s_: sort
+^Imports^     ^GHCi^
+---------     ------
+_i_: jump     _g_: ghci
+_I_: return   _r_: reload
+_s_: sort     _t_: type
 "
   ("i" haskell-navigate-imports)
-  ("r" haskell-navigate-imports-return :color blue)
-  ("s" haskell-sort-imports))
+  ("I" haskell-navigate-imports-return :color blue)
+  ("s" haskell-sort-imports)
+  ("g" haskell-interactive-switch :color blue)
+  ("r" haskell-process-reload)
+  ("t" haskell-process-do-type :color blue))
 
 (defun pjones:haskell-mode-hook ()
   "Hook run on new Haskell buffers."
@@ -183,6 +183,8 @@ _s_: sort
   ;; These need to be set before calling `pjones:prog-mode-hook'.
   (setq tab-always-indent t
         normal-auto-fill-function 'pjones:haskell-auto-fill-function
+        haskell-stylish-on-save nil
+        haskell-completing-read-function 'ivy-completing-read
         haskell-indentation-layout-offset 0
         haskell-indentation-starter-offset 2
         haskell-indentation-left-offset 2
@@ -192,7 +194,15 @@ _s_: sort
         beginning-of-defun-function 'pjones:haskell-beginning-of-defun
         end-of-defun-function 'pjones:haskell-end-of-defun
         projectile-project-compilation-cmd "nix-hs-build"
-        ghc-module-command "nix-hs-ghc-mod")
+        ghc-module-command "nix-hs-ghc-mod"
+
+        haskell-process-type 'cabal-repl
+        haskell-process-suggest-language-pragmas t
+        haskell-process-suggest-remove-import-lines t
+        haskell-interactive-popup-errors nil
+        haskell-process-wrapper-function ; Run commands via nix-hs-shell:
+          (lambda (argv) (append (list "nix-hs-shell" "--run")
+                                 (list (mapconcat 'identity argv " ")))))
 
   (pjones:prog-mode-hook)
   (subword-mode)
@@ -218,6 +228,7 @@ _s_: sort
 
 (add-hook 'haskell-mode-hook 'pjones:haskell-mode-hook)
 (add-hook 'haskell-mode-hook 'haskell-indentation-mode)
+(add-hook 'haskell-mode-hook 'interactive-haskell-mode)
 (add-hook 'haskell-cabal-mode-hook 'pjones:prog-mode-hook)
 
 ;; Local Variables:
