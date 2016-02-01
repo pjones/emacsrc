@@ -63,7 +63,9 @@ placed into a different frame than the current one."
     (display-buffer-reuse-window display-buffer-pop-up-frame)
     (reusable-frames      . t)
     (inhibit-same-window  . nil)
-    (inhibit-switch-frame . t)))
+    (inhibit-switch-frame . t)
+    (pop-up-frame-parameters .
+      ((unsplittable . t)))))
 
 (defun pjones:frame-title-file-name ()
   (let* ((home (expand-file-name "~"))
@@ -76,6 +78,16 @@ placed into a different frame than the current one."
           (dired-directory
            (if (listp dired-directory) (car dired-directory) dired-directory))
           (t (buffer-name)))))
+
+(defun pjones:maybe-dedicate-frame (frame)
+  "If a new frame only contains a window for which
+'pjones:place-buffer-in-new-frame' returns non-nil, make the
+window dedicated."
+  (let ((wins (window-list frame nil)))
+    (when (and (= (length wins) 1)
+               (pjones:place-buffer-in-new-frame
+                (buffer-name (window-buffer (car wins))) nil))
+      (set-window-dedicated-p (car wins) t))))
 
 (defun pjones:configure-new-frame (&optional frame)
   "Hook to configure a new frame."
@@ -90,6 +102,7 @@ placed into a different frame than the current one."
 
 (add-hook 'after-init-hook 'pjones:configure-new-frame)
 (add-hook 'after-make-frame-functions 'pjones:configure-new-frame)
+(add-hook 'after-make-frame-functions 'pjones:maybe-dedicate-frame)
 (add-hook 'after-init-hook #'global-flycheck-mode)
 
 ;; Control how Emacs makes buffer names unique.

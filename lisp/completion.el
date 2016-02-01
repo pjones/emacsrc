@@ -31,7 +31,7 @@
 (add-to-list 'company-backends 'company-ghc)
 
 ;; Minibuffer completion:
-(ivy-mode 1)
+(ido-mode)
 
 ;; Key helpers (completion):
 (require 'hydra)

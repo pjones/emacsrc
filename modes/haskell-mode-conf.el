@@ -12,7 +12,7 @@
 (custom-set-variables
   '(haskell-stylish-on-save nil)
   '(haskell-tags-on-save nil)
-  '(haskell-completing-read-function 'ivy-completing-read)
+  '(haskell-completing-read-function 'ido-completing-read)
   '(haskell-indentation-layout-offset 0)
   '(haskell-indentation-starter-offset 2)
   '(haskell-indentation-left-offset 2)

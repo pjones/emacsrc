@@ -12,9 +12,8 @@
 ;; Overriding default key bindings
 (global-set-key [escape] (lambda () (interactive) (message "WTF: ESC")))
 (global-set-key (kbd "C-x C-c") 'pjones:maybe-save-buffers-kill-terminal)
-(global-set-key (kbd "C-x C-m") 'counsel-M-x)
+(global-set-key (kbd "C-x C-m") 'smex)
 (global-set-key (kbd "C-x C-b") 'ibuffer)
-(global-set-key (kbd "C-x C-f") 'counsel-find-file)
 (global-set-key (kbd "C-x l")   'pjones:switch-to-previous-buffer)
 (global-set-key (kbd "C-x m")   'magit-status)
 (global-set-key (kbd "C-o")     'pjones:open-line-above)
@@ -43,7 +42,6 @@
 (global-set-key (kbd "C-c c")   'quick-calc)
 (global-set-key (kbd "C-c d")   'dictionary-lookup-definition)
 (global-set-key (kbd "C-c D")   'pjones:toggle-dictionary)
-(global-set-key (kbd "C-c f")   'counsel-git)
 (global-set-key (kbd "C-c F")   'pjones:kill-file-name)
 (global-set-key (kbd "C-c g")   'pjones:project-grep-or-rgrep)
 ;                     C-c h      Mode-specific hydra.

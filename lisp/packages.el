@@ -13,10 +13,10 @@
      company
      company-flx
      company-ghc
-     counsel
      dictionary
      flycheck
      flx
+     flx-ido
      gist
      haskell-mode
      htmlize
@@ -29,7 +29,7 @@
      nix-mode
      projectile
      ruby-end
-     swiper
+     smex
      yaml-mode )
   "A list of packages to ensure are installed at launch.")
 
