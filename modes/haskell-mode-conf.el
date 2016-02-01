@@ -176,6 +176,13 @@ with my custom nix-hs-shell script."
   (append (list "nix-hs-shell" "--run")
           (list (mapconcat 'identity argv " "))))
 
+(defun pjones:start-interactive-haskell-mode ()
+  "Hack around a bug in ghc-mod."
+  (let* ((cabal-file (pjones:haskell-find-cabal-file))
+         (default-directory (file-name-directory cabal-file)))
+    (call-process "hs-clone-stack-yaml")
+    (interactive-haskell-mode)))
+
 (defun pjones:haskell-mode-hook ()
   "Hook run on new Haskell buffers."
   (make-local-variable 'tab-always-indent)
@@ -189,6 +196,8 @@ with my custom nix-hs-shell script."
         projectile-project-run-cmd         "make run"
         ghc-module-command "ghc-mod")
 
+  (haskell-indentation-mode)
+  (pjones:start-interactive-haskell-mode)
   (pjones:prog-mode-hook)
   (subword-mode)
   (abbrev-mode)
@@ -209,8 +218,6 @@ with my custom nix-hs-shell script."
     (define-key map (kbd "C-c h") 'hydra-haskell/body)
     (define-key map (kbd "M-RET") 'pjones:haskell-smart-newline)))
 
-(add-hook 'haskell-mode-hook 'haskell-indentation-mode)
-(add-hook 'haskell-mode-hook 'interactive-haskell-mode)
 (add-hook 'haskell-mode-hook 'pjones:haskell-mode-hook)
 (add-hook 'haskell-cabal-mode-hook 'pjones:prog-mode-hook)
 
