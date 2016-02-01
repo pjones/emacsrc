@@ -8,6 +8,23 @@
   (require 'haskell-indentation)
   (require 'haskell-mode))
 
+;; Settings for haskell-mode and friends:
+(custom-set-variables
+  '(haskell-stylish-on-save nil)
+  '(haskell-completing-read-function 'ivy-completing-read)
+  '(haskell-indentation-layout-offset 0)
+  '(haskell-indentation-starter-offset 2)
+  '(haskell-indentation-left-offset 2)
+  '(haskell-indentation-ifte-offset 2)
+  '(haskell-indentation-where-pre-offset 2)
+  '(haskell-indentation-where-post-offset 2)
+  '(haskell-compile-cabal-build-command "make")
+  '(haskell-process-type 'stack-ghci)
+  '(haskell-process-suggest-language-pragmas t)
+  '(haskell-process-suggest-remove-import-lines t)
+  '(haskell-interactive-popup-errors nil)
+  '(haskell-process-wrapper-function 'identity))
+
 (defun pjones:haskell-find-cabal-file ()
   "Return the full path to the *.cabal file for the current project."
   (let* ((dir default-directory)
@@ -24,7 +41,8 @@
   (find-file (pjones:haskell-find-cabal-file)))
 
 (defun pjones:haskell-compile ()
-  "Compile the current project using `nix-hs-build'."
+  "Compile the current project using
+`haskell-compile-cabal-build-command'."
   (interactive)
   (let* ((cabal-file (pjones:haskell-find-cabal-file))
          (default-directory (file-name-directory cabal-file)))
@@ -67,20 +85,6 @@
   "Save the module name of the current buffer to the kill ring."
   (interactive)
   (kill-new (pjones:haskell-module-name)))
-
-(defun pjones:haskell-lint-all ()
-  "Run hlint from a directory containing a .cabal file."
-  (interactive)
-  (let* ((dir (pjones:haskell-find-cabal-file))
-         (files (cl-remove-if
-                 (lambda (f)
-                   (or (string-match "^\\." (file-name-base f))
-                       (string= "dist"      (file-name-base f))
-                       (string= "cabal-dev" (file-name-base f))
-                       (and (not (file-directory-p f))
-                            (not (string= "hs" (file-name-extension f))))))
-                 (directory-files dir t))))
-    (haskell-check (concat "hlint " (mapconcat 'identity files " ")))))
 
 (defun pjones:haskell-smart-newline ()
   "Insert a new line below point that looks like the current
@@ -142,24 +146,35 @@ line.  Examples:
 
 (defhydra hydra-haskell (:hint nil)
   "
-^Imports^     ^GHCi^        ^Insert^            ^Run
+^Imports^     ^GHCi^        ^Insert/Edit^       ^Run
 ^^^^^^^^^----------------------------------------------------
 _i_: jump     _g_: ghci     _S_: cost center    _c_: compile
-_I_: return   _r_: reload   ^ ^                 _R_: run
-_s_: sort     _t_: type     ^ ^
+_I_: return   _r_: reload   _m_: new module     _R_: run
+_s_: sort     _t_: type     _M_: kill module
+^ ^           ^ ^           _e_: edit cabal
 "
-  ("i" haskell-navigate-imports)
   ("I" haskell-navigate-imports-return :color blue)
-  ("s" haskell-sort-imports)
-  ("g" haskell-interactive-switch :color blue)
-  ("r" haskell-process-reload)
-  ("t" haskell-process-do-type :color blue)
+  ("M" pjones:haskell-module-name-to-kill-ring :color blue)
+  ("R" projectile-run-project :color blue)
   ("S" haskell-mode-toggle-scc-at-point :color blue)
   ("c" pjones:haskell-compile :color blue)
-  ("R" projectile-run-project :color blue))
+  ("e" pjones:haskell-edit-cabal-file :color blue)
+  ("g" haskell-interactive-switch :color blue)
+  ("i" haskell-navigate-imports)
+  ("m" pjones:haskell-new-module :color blue)
+  ("r" haskell-process-reload)
+  ("s" haskell-sort-imports)
+  ("t" haskell-process-do-type :color blue))
 
 (define-skeleton pjones:haskell-insert-pragma
   "Add the pragma comment syntax." nil "{-# " _ " #-}")
+
+(defun pjones:haskell-nixpkgs-wrapper-function (argv)
+  "Function that can be used with the
+`haskell-process-wrapper-function' variable to force building
+with my custom nix-hs-shell script."
+  (append (list "nix-hs-shell" "--run")
+          (list (mapconcat 'identity argv " "))))
 
 (defun pjones:haskell-mode-hook ()
   "Hook run on new Haskell buffers."
@@ -167,27 +182,12 @@ _s_: sort     _t_: type     ^ ^
 
   ;; These need to be set before calling `pjones:prog-mode-hook'.
   (setq tab-always-indent t
-        haskell-stylish-on-save nil
-        haskell-completing-read-function 'ivy-completing-read
-        haskell-indentation-layout-offset 0
-        haskell-indentation-starter-offset 2
-        haskell-indentation-left-offset 2
-        haskell-indentation-ifte-offset 2
-        haskell-indentation-where-pre-offset 2
-        haskell-indentation-where-post-offset 2
         beginning-of-defun-function 'pjones:haskell-beginning-of-defun
         end-of-defun-function 'pjones:haskell-end-of-defun
-        projectile-project-compilation-cmd "nix-hs-build"
-        ghc-module-command "nix-hs-ghc-mod"
-
-        haskell-compile-cabal-build-command "nix-hs-build"
-        haskell-process-type 'cabal-repl
-        haskell-process-suggest-language-pragmas t
-        haskell-process-suggest-remove-import-lines t
-        haskell-interactive-popup-errors nil
-        haskell-process-wrapper-function ; Run commands via nix-hs-shell:
-          (lambda (argv) (append (list "nix-hs-shell" "--run")
-                                 (list (mapconcat 'identity argv " ")))))
+        projectile-project-compilation-cmd "make"
+        projectile-project-test-cmd        "make test"
+        projectile-project-run-cmd         "make run"
+        ghc-module-command "ghc-mod")
 
   (pjones:prog-mode-hook)
   (subword-mode)
@@ -206,12 +206,8 @@ _s_: sort     _t_: type     ^ ^
 
   ;; And add some of my own (Note: "C-c TAB" is really "C-c i")
   (let ((map haskell-mode-map))
-    (define-key map (kbd "C-c h")   'hydra-haskell/body)
-    (define-key map (kbd "C-c C-c") 'pjones:haskell-compile)
-    (define-key map (kbd "C-c C-e") 'pjones:haskell-edit-cabal-file)
-    (define-key map (kbd "C-c M-m") 'pjones:haskell-new-module)
-    (define-key map (kbd "C-c M-w") 'pjones:haskell-module-name-to-kill-ring)
-    (define-key map (kbd "M-RET")   'pjones:haskell-smart-newline)))
+    (define-key map (kbd "C-c h") 'hydra-haskell/body)
+    (define-key map (kbd "M-RET") 'pjones:haskell-smart-newline)))
 
 (add-hook 'haskell-mode-hook 'haskell-indentation-mode)
 (add-hook 'haskell-mode-hook 'interactive-haskell-mode)
