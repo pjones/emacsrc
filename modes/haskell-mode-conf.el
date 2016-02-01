@@ -11,6 +11,7 @@
 ;; Settings for haskell-mode and friends:
 (custom-set-variables
   '(haskell-stylish-on-save nil)
+  '(haskell-tags-on-save nil)
   '(haskell-completing-read-function 'ivy-completing-read)
   '(haskell-indentation-layout-offset 0)
   '(haskell-indentation-starter-offset 2)
@@ -23,6 +24,7 @@
   '(haskell-process-suggest-language-pragmas t)
   '(haskell-process-suggest-remove-import-lines t)
   '(haskell-interactive-popup-errors nil)
+  '(haskell-interactive-mode-eval-mode 'haskell-mode)
   '(haskell-process-wrapper-function 'identity))
 
 (defun pjones:haskell-find-cabal-file ()
