@@ -14,12 +14,13 @@ class RemoteEmacs
 
   ##############################################################################
   DEFAULT_OPTIONS = {
-    'verbose' => false,
-    'server'  => nil,
-    'version' => false,
-    'tty'     => false,
-    'frame'   => false,
     'eval'    => false,
+    'frame'   => false,
+    'restart' => false,
+    'server'  => nil,
+    'tty'     => false,
+    'verbose' => false,
+    'version' => false,
     'wait'    => false,
   }
 
@@ -31,23 +32,35 @@ class RemoteEmacs
     @options = OptionProxy.new(*DEFAULT_OPTIONS.keys.sort.map {|k| DEFAULT_OPTIONS[k]})
 
     OptionParser.new do |p|
-      p.on('-h', '--help', 'This message.') {$stdout.puts(p); exit}
       p.on('-V', '--version', 'Show Emacs version information') {|v| @options.version = v}
-      p.on('--verbose', 'Enable verbose messages') {|v| @options.verbose = v}
-      p.on('-t', '--tty', 'Open a new frame on the current terminal') {|t| @options.tty = t}
       p.on('-c', '--create-frame', 'Create a new Emacs frame') {|f| @options.frame = f}
       p.on('-e', '--eval', 'Eval the file argument as lisp') {|e| @options.eval = e}
+      p.on('-h', '--help', 'This message.') {$stdout.puts(p); exit}
       p.on('-n', '--no-wait', 'Don\'t wait for Emacs [default]') {@options.wait = false}
-      p.on('-w', '--wait', 'Wait for Emacs to finish') {@options.wait = true}
+      p.on('-r', '--restart', 'Restart the Emacs server') {@options.restart = true}
       p.on('-s', '--server=NAME', 'Set the server name to use') {|s| @options.server = s}
+      p.on('-t', '--tty', 'Open a new frame on the current terminal') {|t| @options.tty = t}
+      p.on('-v', '--verbose', 'Enable verbose messages') {|v| @options.verbose = v}
+      p.on('-w', '--wait', 'Wait for Emacs to finish') {@options.wait = true}
     end.parse!(ARGV)
 
-    @emacsclient = ['emacsclient']
-    @socket_file = server_file || File.expand_path(LOCAL_SERVER_DIR + '/server')
+    @emacsclient    = ['emacsclient']
+    @options.server = get_server_name
+    @socket_file    = File.expand_path(File.join(LOCAL_SERVER_DIR, @options.server))
   end
 
   ##############################################################################
   def run
+    start_server if !File.exist?(@socket_file) || @options.restart
+
+    if !@options.frame &&
+       !@options.tty   &&
+       !@options.eval  &&
+       ARGV.empty?
+    then
+      @options.frame = true
+    end
+
     @emacsclient << '--quiet'        if !@options.verbose
     @emacsclient << '--version'      if @options.version
     @emacsclient << '--tty'          if @options.tty
@@ -62,11 +75,7 @@ class RemoteEmacs
       @emacsclient << '--no-wait'
     end
 
-    if !File.exist?(@socket_file)
-      prepare_for_remote_send
-    else
-      @emacsclient << "--server-file=#{@socket_file}"
-    end
+    @emacsclient << "--server-file=#{@socket_file}"
 
     @emacsclient.concat(ARGV)
     $stdout.puts(@emacsclient.join(' ')) if @options.verbose
@@ -77,36 +86,25 @@ class RemoteEmacs
   private
 
   ##############################################################################
-  # Help find the server file matching the command line arguments or env.
-  def server_file
-    base = '~/.emacs.d/server/'
-
+  # Figure out what server name to use.
+  def get_server_name
     [ @options.server,
       ENV['EMACS_SERVER'],
-      `tmux display-message -p '#S' 2> /dev/null`.chomp,
-    ].inject([]) do |a, f|
-      next a if f.nil? or f.match(/\A[[:space:]]*\z/)
-      file = File.expand_path(File.join(LOCAL_SERVER_DIR, f))
-      a << file if File.exist?(file); a
-    end.first
+      ENV['DISPLAY'] && `wmctrl -d | awk '($2 ~ /\*/) {print $NF}'`.chomp,
+      'server',
+    ].find {|name| !name.nil?}
   end
 
   ##############################################################################
-  def prepare_for_remote_send
-    details = File.read(REMOTE_SERVER_FILE).
-      sub('0.0.0.0', ENV['SSH_CLIENT'].split.first)
-    File.open(REMOTE_SERVER_FILE, 'w') {|f| f.write(details)}
+  # Start (or restart) an Emacs server.
+  def start_server
+    command = ['emacs', "--daemon=#{@options.server}"]
 
-    @emacsclient << "--server-file=#{REMOTE_SERVER_FILE}"
-    return if @options.eval
-
-    host  = `hostname`.chomp
-    mount = File.expand_path('~/develop')
-
-    ARGV.map! do |arg|
-      file = File.expand_path(arg)
-      file.sub(mount, "/home/pjones/develop/hosts/#{host}")
+    if @options.restart
+      system('pkill', '-f', command.join(' '))
     end
+
+    system(*command) || raise("failed to start Emacs!")
   end
 end
 
