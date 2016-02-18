@@ -4,6 +4,7 @@
   (require 'cl)
   (require 'ghc)
   (require 'projectile)
+  (require 'haskell)
   (require 'haskell-compile)
   (require 'haskell-indentation)
   (require 'haskell-mode))
@@ -150,7 +151,7 @@ line.  Examples:
   "
 ^Imports^     ^GHCi^        ^Insert/Edit^       ^Run
 ^^^^^^^^^----------------------------------------------------
-_i_: jump     _g_: ghci     _S_: cost center    _c_: compile
+_i_: jump     _g_: ghci     _S_: cost center    _C-c C-c_: compile
 _I_: return   _r_: reload   _m_: new module     _R_: run
 _s_: sort     _t_: type     _M_: kill module
 ^ ^           ^ ^           _e_: edit cabal
@@ -159,7 +160,7 @@ _s_: sort     _t_: type     _M_: kill module
   ("M" pjones:haskell-module-name-to-kill-ring :color blue)
   ("R" projectile-run-project :color blue)
   ("S" haskell-mode-toggle-scc-at-point :color blue)
-  ("c" pjones:haskell-compile :color blue)
+  ("C-c C-c" pjones:haskell-compile :color blue)
   ("e" pjones:haskell-edit-cabal-file :color blue)
   ("g" haskell-interactive-switch :color blue)
   ("i" haskell-navigate-imports)
@@ -215,10 +216,17 @@ with my custom nix-hs-shell script."
     (define-key map [?\r]         'newline-and-indent)
     (define-key map [backspace]   'backward-delete-char-untabify))
 
-  ;; And add some of my own (Note: "C-c TAB" is really "C-c i")
+  ;; And add some of my own.
   (let ((map haskell-mode-map))
-    (define-key map (kbd "C-c h") 'hydra-haskell/body)
-    (define-key map (kbd "M-RET") 'pjones:haskell-smart-newline)))
+    (define-key map (kbd "C-c C-c") 'pjones:haskell-compile)
+    (define-key map (kbd "C-c h")   'hydra-haskell/body)
+    (define-key map (kbd "M-RET")   'pjones:haskell-smart-newline))
+
+  ;; And yet another mode map!
+  (let ((map interactive-haskell-mode-map))
+    (define-key map (kbd "C-c C-c") 'pjones:haskell-compile)))
+
+
 
 (add-hook 'haskell-mode-hook 'pjones:haskell-mode-hook)
 (add-hook 'haskell-cabal-mode-hook 'pjones:prog-mode-hook)
