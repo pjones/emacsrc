@@ -60,7 +60,7 @@ current dired buffer.  Otherwise visit the file under point."
 find-file."
   (interactive)
   (let ((default-directory (dired-current-directory)))
-    (counsel-find-file)))
+    (ido-find-file)))
 
 (defun pjones:dired-load-hook ()
   (dired-hide-details-mode) ;; Hide details by default
