@@ -1,5 +1,9 @@
 ;;; js-conf.el -- Configuration options for js-mode (JavaScript).
+;;; Commentary:
+;;; Code:
 (eval-when-compile
+  (load "../lisp/packages.el")
+  (require 'kite)
   (require 'js))
 
 ;; JavaScript mode settings
@@ -33,9 +37,24 @@ https://github.com/technomancy/emacs-starter-kit")
     (setq pjones:js-keywords-enabled (not pjones:js-keywords-enabled))
     (set-buffer-modified-p modified)))
 
+(defun pjones:js-eval-with-kite (start end &optional show)
+  "Send the JavaScript between START and END to kite."
+  (let ((input (buffer-substring-no-properties start end)))
+    (kite-console nil)
+    (insert (if show input "/* Pasted code running... */"))
+    (comint-send-input)
+    (comint-add-to-input-history input)
+    (kite-console-eval-input input)))
+
+(defun pjones:js-eval-region-with-kite (show)
+  "Send the current region to kite."
+  (interactive "P")
+  (pjones:js-eval-with-kite (region-beginning) (region-end) show))
+
 (defun pjones:js-mode-hook ()
   "Configure JS mode and key bindings."
-  (local-set-key (kbd "C-c C-k")   'pjones:js-extra-keywords))
+  (local-set-key (kbd "C-c C-k") 'pjones:js-extra-keywords)
+  (local-set-key (kbd "C-c C-e") 'pjones:js-eval-region-with-kite))
 
 (add-hook 'js-mode-hook 'pjones:js-mode-hook)
 

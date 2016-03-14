@@ -23,7 +23,7 @@
      http
      hydra
      inf-ruby
-     kite-mini
+     kite
      magit
      markdown-mode
      nix-mode

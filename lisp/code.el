@@ -1,10 +1,7 @@
 ;;; code.El -- Settings and functions for programming modes
 (eval-when-compile
   (require 'saveplace)
-  (require 'kite-mini))
-
-;; Silence compiler warnings
-(declare-function kite-mini-reload "kite-mini")
+  (require 'kite))
 
 ;; Create some faces
 (defface pjones:fixme-face
@@ -63,9 +60,13 @@
 (defun pjones:add-programming-hook (mode-hook)
   (add-hook mode-hook 'pjones:prog-mode-hook))
 
-(defun pjones:after-save-reload-browser ()
-  (when kite-mini-socket
-    (kite-mini-reload)))
+(defun pjones:after-save-reload-browser ())
+
+(defun pjones:kite-start ()
+  "Start a kite session."
+  (interactive)
+  (kite-dom nil)
+  (kite-console nil))
 
 (provide 'code)
 ;;; code.el ends here
