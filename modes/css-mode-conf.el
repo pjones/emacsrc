@@ -2,14 +2,17 @@
 (eval-when-compile
   (load "../lisp/code.el")
   (require 'css-mode)
-  (require 'kite-mini))
+  (require 'company))
 
 (declare-function pjones:add-programming-hook "code.el")
 
 (defun pjones:css-mode-hook ()
   "Settings and overrides for css-mode."
+  ;; Completion:
+  (make-local-variable 'company-backends)
+  (add-to-list 'company-backends 'company-css)
+
   (setq css-indent-offset 2)
-  (kite-mini-mode)
   (add-hook 'after-save-hook 'pjones:after-save-reload-browser nil t))
 
 (pjones:add-programming-hook 'css-mode-hook)

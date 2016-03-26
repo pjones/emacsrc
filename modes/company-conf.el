@@ -8,15 +8,11 @@
   '(company-show-numbers t)
   '(company-selection-wrap-around t)
   '(company-lighter-base "")
-  '(company-backends
-     (quote (company-ghc
-             company-bbdb
-             company-nxml
-             company-css
-             company-clang
-             company-capf
-             (company-dabbrev-code company-gtags company-etags company-keywords)
-             company-files company-dabbrev))))
+  '(company-dabbrev-ignore-case nil)
+  '(company-dabbrev-downcase nil)
+  '(company-backends '((company-abbrev
+                        company-dabbrev
+                        company-files))))
 
 (defun pjones:company-mode-hook ()
   (let ((map company-active-map))

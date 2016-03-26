@@ -1,7 +1,8 @@
 ;;; code.El -- Settings and functions for programming modes
 (eval-when-compile
   (require 'saveplace)
-  (require 'kite))
+  (require 'kite)
+  (require 'company))
 
 ;; Create some faces
 (defface pjones:fixme-face
@@ -43,6 +44,13 @@
                                  1 'pjones:fixme-face t))))
 (defun pjones:prog-mode-hook ()
   "Settings and bindings for programming modes."
+  ;; Completion:
+  (make-local-variable 'company-backends)
+  (add-to-list 'company-backends '(company-dabbrev-code
+                                   company-gtags
+                                   company-etags
+                                   company-keywords))
+
   (setq save-place t
         comment-empty-lines t)
   (set (make-local-variable 'comment-auto-fill-only-comments) t)

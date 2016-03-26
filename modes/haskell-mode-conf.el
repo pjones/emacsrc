@@ -1,6 +1,7 @@
 ;;; haskell-mode-conf.el -- Settings for Haskell mode.
 (eval-when-compile
   (load "../lisp/code.el")
+  (load "../lisp/functions.el")
   (require 'cl)
   (require 'ghc)
   (require 'projectile)
@@ -43,13 +44,15 @@
   (interactive)
   (find-file (pjones:haskell-find-cabal-file)))
 
-(defun pjones:haskell-compile ()
+(defun pjones:haskell-compile (&optional arg)
   "Compile the current project using
-`haskell-compile-cabal-build-command'."
-  (interactive)
+`haskell-compile-cabal-build-command'.  With ARG tack on the word
+test to the compile command."
+  (interactive "P")
   (let* ((cabal-file (pjones:haskell-find-cabal-file))
-         (default-directory (file-name-directory cabal-file)))
-    (compile haskell-compile-cabal-build-command)))
+         (default-directory (file-name-directory cabal-file))
+         (command haskell-compile-cabal-build-command))
+    (compile (if arg (concat command " test") command))))
 
 (defun pjones:haskell-beginning-of-defun (&optional arg)
   "Move to the beginning of the current function."
@@ -136,6 +139,24 @@ line.  Examples:
              (newline)
              (insert text))))))
 
+(defun pjones:haskell-sort-imports ()
+  "If point is in a block of import statements then sort them.
+Otherwise go totally crazy."
+  (interactive)
+  (let ((b (save-excursion
+             (move-beginning-of-line nil)
+             (while (looking-at "^import") (forward-line -1))
+             (forward-line 1)
+             (point)))
+        (e (save-excursion
+             (move-beginning-of-line nil)
+             (while (looking-at "^import") (forward-line 1))
+             (forward-line -1)
+             (move-end-of-line nil)
+             (point))))
+    (sort-regexp-fields
+       nil "^import +\\(qualified \\)?\\(.+\\)$" "\\2" b e)))
+
 ;; TODO:
 ;; * Remove whitespace at end of line while typing?
 ;;
@@ -143,31 +164,29 @@ line.  Examples:
 ;;     (eval-after-load "which-func"
 ;;       '(add-to-list 'which-func-modes 'haskell-mode))
 ;;
-;; haskell-cabal-visit-file
 ;;
 ;; close frames when using q (think *grep* or *compilation*)
 
 (defhydra hydra-haskell (:hint nil)
   "
-^Imports^     ^GHCi^        ^Insert/Edit^       ^Run
-^^^^^^^^^----------------------------------------------------
-_i_: jump     _g_: ghci     _S_: cost center    _C-c C-c_: compile
-_I_: return   _r_: reload   _m_: new module     _R_: run
-_s_: sort     _t_: type     _M_: kill module
-^ ^           ^ ^           _e_: edit cabal
+^Imports^          ^GHCi^              ^Insert/Edit^          ^Run
+^^^^^^^^^-------------------------------------------------------------------------
+_C-c C-i_: jump    _C-c C-g_: ghci     _C-c C-0_: cost center  _C-c C-c_: compile
+_C-c C-l_: return  _C-c C-r_: reload   _C-c C-p_: new module
+_C-c C-s_: sort    _C-c C-t_: type     _C-c C-n_: kill module
+^ ^                ^ ^                 _C-c C-e_: edit cabal
 "
-  ("I" haskell-navigate-imports-return :color blue)
-  ("M" pjones:haskell-module-name-to-kill-ring :color blue)
-  ("R" projectile-run-project :color blue)
-  ("S" haskell-mode-toggle-scc-at-point :color blue)
+  ("C-c C-0" haskell-mode-toggle-scc-at-point :color blue)
   ("C-c C-c" pjones:haskell-compile :color blue)
-  ("e" pjones:haskell-edit-cabal-file :color blue)
-  ("g" haskell-interactive-switch :color blue)
-  ("i" haskell-navigate-imports)
-  ("m" pjones:haskell-new-module :color blue)
-  ("r" haskell-process-reload)
-  ("s" haskell-sort-imports)
-  ("t" haskell-process-do-type :color blue))
+  ("C-c C-e" pjones:haskell-edit-cabal-file :color blue)
+  ("C-c C-g" haskell-interactive-switch :color blue)
+  ("C-c C-i" haskell-navigate-imports)
+  ("C-c C-l" haskell-navigate-imports-return :color blue)
+  ("C-c C-n" pjones:haskell-module-name-to-kill-ring :color blue)
+  ("C-c C-p" pjones:haskell-new-module :color blue)
+  ("C-c C-r" haskell-process-reload)
+  ("C-c C-s" pjones:haskell-sort-imports)
+  ("C-c C-t" haskell-process-do-type :color blue))
 
 (define-skeleton pjones:haskell-insert-pragma
   "Add the pragma comment syntax." nil "{-# " _ " #-}")
@@ -206,27 +225,29 @@ with my custom nix-hs-shell script."
   (abbrev-mode)
   (ghc-init)
 
+  ;; Configure completion:
+  (make-local-variable 'company-backends)
+  (add-to-list 'company-backends '(company-ghc company-dabbrev company-abbrev))
+
   (define-abbrev-table 'haskell-mode-abbrev-table
     '(("_P" "" pjones:haskell-insert-pragma)))
   (setq local-abbrev-table haskell-mode-abbrev-table)
 
   ;; Undo some stupid haskell-mode bindings.
   (let ((map haskell-indentation-mode-map))
-    (define-key map (kbd "RET")   'newline-and-indent)
-    (define-key map [?\r]         'newline-and-indent)
-    (define-key map [backspace]   'backward-delete-char-untabify))
+    (define-key map (kbd "RET") 'newline-and-indent)
+    (define-key map [?\r]       'newline-and-indent)
+    (define-key map [backspace] 'backward-delete-char-untabify))
 
   ;; And add some of my own.
   (let ((map haskell-mode-map))
-    (define-key map (kbd "C-c C-c") 'pjones:haskell-compile)
-    (define-key map (kbd "C-c h")   'hydra-haskell/body)
-    (define-key map (kbd "M-RET")   'pjones:haskell-smart-newline))
+    (define-key map (kbd "C-c h") 'hydra-haskell/body)
+    (define-key map (kbd "M-RET") 'pjones:haskell-smart-newline)
+    (pjones:define-keys-from-hydra map hydra-haskell/heads))
 
   ;; And yet another mode map!
   (let ((map interactive-haskell-mode-map))
-    (define-key map (kbd "C-c C-c") 'pjones:haskell-compile)))
-
-
+    (pjones:define-keys-from-hydra map hydra-haskell/heads)))
 
 (add-hook 'haskell-mode-hook 'pjones:haskell-mode-hook)
 (add-hook 'haskell-cabal-mode-hook 'pjones:prog-mode-hook)

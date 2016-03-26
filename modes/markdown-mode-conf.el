@@ -2,7 +2,8 @@
 (eval-when-compile
   (load "../lisp/code.el")
   (require 'markdown-mode)
-  (require 'whitespace))
+  (require 'whitespace)
+  (require 'company))
 
 ;; Basic settings.
 (setq markdown-command "pandoc -f markdown -t html")
@@ -47,6 +48,11 @@
   (whitespace-mode)
   (orgstruct-mode)
   (pjones:add-fixme-lock)
+
+  ;; Completion configuration:
+  (make-local-variable 'company-backends)
+  (add-to-list 'company-backends '(company-ispell
+                                   company-dabbrev))
 
   (define-abbrev-table 'markdown-mode-abbrev-table
     '(("nt" "" pjones:markdown-slide-notes)
