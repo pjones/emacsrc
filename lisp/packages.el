@@ -28,6 +28,7 @@
      markdown-mode
      nix-mode
      projectile
+     rhtml-mode
      ruby-end
      smex
      yaml-mode )
