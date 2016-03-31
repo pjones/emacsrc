@@ -104,6 +104,7 @@ window dedicated."
 (add-hook 'after-make-frame-functions 'pjones:configure-new-frame)
 (add-hook 'after-make-frame-functions 'pjones:maybe-dedicate-frame)
 (add-hook 'after-init-hook #'global-flycheck-mode)
+(add-hook 'after-init-hook 'mode-icons-mode)
 
 ;; Control how Emacs makes buffer names unique.
 (require 'uniquify)

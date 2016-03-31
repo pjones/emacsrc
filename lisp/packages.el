@@ -26,6 +26,7 @@
      kite
      magit
      markdown-mode
+     mode-icons
      nix-mode
      projectile
      rhtml-mode
