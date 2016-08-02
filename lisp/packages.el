@@ -30,6 +30,7 @@
      projectile
      rhtml-mode
      ruby-end
+     scad-mode
      smex
      yaml-mode )
   "A list of packages to ensure are installed at launch.")
