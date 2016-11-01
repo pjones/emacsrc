@@ -4,7 +4,6 @@
   (load "../lisp/functions.el")
   (require 'cl)
   (require 'ghc)
-  (require 'projectile)
   (require 'haskell)
   (require 'haskell-compile)
   (require 'haskell-indentation)
@@ -213,21 +212,18 @@ with my custom nix-hs-shell script."
   (setq tab-always-indent t
         beginning-of-defun-function 'pjones:haskell-beginning-of-defun
         end-of-defun-function 'pjones:haskell-end-of-defun
-        projectile-project-compilation-cmd "make"
-        projectile-project-test-cmd        "make test"
-        projectile-project-run-cmd         "make run"
-        ghc-module-command "ghc-mod")
+        ghc-module-command nil)
 
   (haskell-indentation-mode)
   (pjones:start-interactive-haskell-mode)
   (pjones:prog-mode-hook)
   (subword-mode)
   (abbrev-mode)
-  (ghc-init)
+  ;; (ghc-init)
 
   ;; Configure completion:
   (make-local-variable 'company-backends)
-  (add-to-list 'company-backends '(company-ghc company-dabbrev company-abbrev))
+  (add-to-list 'company-backends '(company-dabbrev company-abbrev))
 
   (define-abbrev-table 'haskell-mode-abbrev-table
     '(("_P" "" pjones:haskell-insert-pragma)))
