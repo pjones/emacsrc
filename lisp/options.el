@@ -65,7 +65,7 @@ placed into a different frame than the current one."
     (inhibit-same-window  . nil)
     (inhibit-switch-frame . t)
     (pop-up-frame-parameters .
-      ((unsplittable . t)))))
+      ((unsplittable . t) (name . "emacs-popup")))))
 
 (defun pjones:frame-title-file-name ()
   (let* ((home (expand-file-name "~"))
