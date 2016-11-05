@@ -3,6 +3,14 @@
   (require 'server)
   (require 'projectile))
 
+;; TODO:
+;;
+;; 1) Remove projectile
+;; 2) Add `compile' command that can be used from the command line
+;; 3) Add a `diff' command just like the above
+;; 4) Add a `man' command just like above
+
+
 ;; Projectile is used to manage projects:
 ;; Need to fix the key binding before loading!
 (setq projectile-keymap-prefix (kbd "C-c C-p"))

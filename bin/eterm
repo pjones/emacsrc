@@ -1,0 +1,4 @@
+#!/bin/sh -eu
+
+# Open an Emacs terminal.
+e -ne '(pjones:terminal "'`pwd`'")'

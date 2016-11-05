@@ -57,7 +57,6 @@
 (global-set-key (kbd "C-c r")   'pjones:register-get-set)
 (global-set-key (kbd "C-c R")   'revert-buffer)
 (global-set-key (kbd "C-c s")   'sort-lines)
-(global-set-key (kbd "C-c t")   'pjones:start-term-here)
 (global-set-key (kbd "C-c u")   'goto-last-change)
 ;                     C-c t     Insert comment bar in source code file
 (global-set-key (kbd "C-c w w") 'pjones:window-config)

@@ -7,6 +7,7 @@
   (require 'rcirc)
   (require 'server)
   (require 'subword)
+  (require 'term)
   (require 'projectile))
 
 (defun pjones:maybe-save-buffers-kill-terminal (&optional arg)
@@ -253,10 +254,19 @@ number input."
   (call-interactively
    (if (projectile-project-p) 'projectile-grep 'rgrep)))
 
-(defun pjones:start-term-here ()
-  "Start a terminal in the current dir."
-  (interactive)
-  (term (getenv "SHELL")))
+(defun pjones:terminal (directory)
+  "Create a new (unique) terminal frame optionally in DIRECTORY."
+  (require 'term)
+  (let ((frame (make-frame '((name . "eterm") (window-system . x)))))
+    (with-selected-frame frame
+      (let ((buffer (get-buffer-create (concat "*temp-term-name*"))))
+        (with-current-buffer buffer
+          (cd directory)
+          (term-mode)
+          (term-exec buffer (rename-buffer "*eterm*" t) (getenv "SHELL") nil nil)
+          (term-char-mode))
+        (switch-to-buffer buffer)
+        (delete-other-windows)))))
 
 (defun pjones:uuid ()
   "Create a UUID, add it to the kill ring, and insert it into the

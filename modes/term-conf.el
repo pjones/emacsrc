@@ -9,24 +9,36 @@
  '(term-input-ignoredups t)
  '(term-scroll-to-bottom-on-output nil))
 
-(defvar pjones:term-last-position nil
-  "Last position of point before switching term sub-modes.")
-
 (defun pjones:term-line-mode ()
   "Go to term-line-mode."
   (interactive)
-  (setq pjones:term-last-position (point))
   (term-line-mode))
 
 (defun pjones:term-char-mode ()
   "Return to raw/character mode."
   (interactive)
-  (goto-char (or pjones:term-last-position (point-max)))
-  (term-char-mode))
+  (term-char-mode)
+  (let ((proc (get-buffer-process (current-buffer))))
+    (goto-char (process-mark proc))))
+
+(defun pjones:term-send-control-c ()
+  "Send a C-c to the terminal."
+  (interactive)
+  (term-send-raw-string (make-string 1 ?\C-c)))
 
 (defun pjones:remove-dead-term (&rest args)
   "Clean up after a dead terminal."
-  (kill-buffer))
+  (let* ((buffer (current-buffer))
+         (window (get-buffer-window buffer))
+         (frame  (window-frame window)))
+    (delete-frame frame)
+    (kill-buffer buffer)))
+
+(defun pjones:term-quoted-insert (count)
+  "Read next input character and send it directly to the terminal."
+  (interactive "*p")
+  (let ((char (read-char)))
+    (term-send-raw-string (make-string count char))))
 
 (defun pjones:term-mode-hook ()
   "Hook run after a terminal starts"
@@ -50,13 +62,20 @@
     (define-key map (kbd "C-q") nil)
     (define-key map (kbd "C-x") nil))
 
+  (let ((map term-mode-map))
+    (define-key map (kbd "C-c") nil)
+    (define-key map (kbd "C-c C-t") 'pjones:term-char-mode)
+    (define-key map (kbd "RET")     'pjones:term-char-mode))
+
   (let ((map term-raw-map))
     (define-key map (kbd "C-c") nil)
-    (define-key map (kbd "C-c C-l") 'pjones:term-line-mode)
-    (define-key map (kbd "C-c C-r") 'pjones:term-char-mode)
+    (define-key map (kbd "C-c C-t") 'pjones:term-line-mode)
+    (define-key map (kbd "C-c C-c") 'pjones:term-send-control-c)
+    (define-key map (kbd "C-q")     'pjones:term-quoted-insert)
+    (define-key map (kbd "C-u")     'universal-argument)
     (define-key map (kbd "C-y")     'term-paste)))
 
-(advice-add 'pjones:remove-dead-term :after 'term-handle-exit)
+(advice-add 'term-handle-exit :after 'pjones:remove-dead-term)
 (add-hook 'term-mode-hook 'pjones:term-mode-hook)
 
 ;; Local Variables:
