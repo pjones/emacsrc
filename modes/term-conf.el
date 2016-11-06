@@ -7,7 +7,9 @@
 (custom-set-variables
  '(term-input-autoexpand t)
  '(term-input-ignoredups t)
- '(term-scroll-to-bottom-on-output nil))
+ '(term-scroll-to-bottom-on-output t)
+ '(term-scroll-show-maximum-output t)
+ '(term-suppress-hard-newline t))
 
 (defun pjones:term-line-mode ()
   "Go to term-line-mode."
@@ -54,6 +56,7 @@
 
   ;; Keep things Emacs-like:
   (term-set-escape-char ?\C-x)
+  (toggle-truncate-lines -1)
 
   (let ((map term-raw-escape-map))
     (define-key map (kbd "C-c") nil)
