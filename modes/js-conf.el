@@ -22,20 +22,20 @@ https://github.com/technomancy/emacs-starter-kit")
   "Internal variable used to keep track of
   `pjones:js-keywords`.")
 
-(defun pjones:js-extra-keywords ()
-  "Toggle adding some extra keywords to JavaScript buffers."
-  (interactive)
-  (let ((modified (buffer-modified-p)))
-    (if (not pjones:js-keywords-enabled)
-        (font-lock-add-keywords 'js-mode pjones:js-keywords)
-      (font-lock-remove-keywords 'js-mode pjones:js-keywords)
-      (save-excursion
-        (goto-char (point-min))
-        (while (re-search-forward (caar pjones:js-keywords) nil t)
-          (decompose-region (match-beginning 1) (match-end 1)))))
-    (font-lock-fontify-buffer)
-    (setq pjones:js-keywords-enabled (not pjones:js-keywords-enabled))
-    (set-buffer-modified-p modified)))
+;; (defun pjones:js-extra-keywords ()
+;;   "Toggle adding some extra keywords to JavaScript buffers."
+;;   (interactive)
+;;   (let ((modified (buffer-modified-p)))
+;;     (if (not pjones:js-keywords-enabled)
+;;         (font-lock-add-keywords 'js-mode pjones:js-keywords)
+;;       (font-lock-remove-keywords 'js-mode pjones:js-keywords)
+;;       (save-excursion
+;;         (goto-char (point-min))
+;;         (while (re-search-forward (caar pjones:js-keywords) nil t)
+;;           (decompose-region (match-beginning 1) (match-end 1)))))
+;;     (font-lock-fontify-buffer)
+;;     (setq pjones:js-keywords-enabled (not pjones:js-keywords-enabled))
+;;     (set-buffer-modified-p modified)))
 
 (defun pjones:js-eval-with-kite (start end &optional show)
   "Send the JavaScript between START and END to kite."

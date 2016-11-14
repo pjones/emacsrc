@@ -51,8 +51,7 @@
                                    company-etags
                                    company-keywords))
 
-  (setq save-place t
-        comment-empty-lines t)
+  (setq comment-empty-lines t)
   (set (make-local-variable 'comment-auto-fill-only-comments) t)
   (local-set-key (kbd "C-c <tab>") 'pjones:comment-bar)
   (local-set-key (kbd "RET") 'reindent-then-newline-and-indent)
@@ -61,6 +60,7 @@
   (auto-fill-mode)
   (flyspell-prog-mode)
   (electric-pair-mode)
+  (save-place-mode)
   (pjones:add-fixme-lock)
   (add-hook 'after-save-hook
             'executable-make-buffer-file-executable-if-script-p))

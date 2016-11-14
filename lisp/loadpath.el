@@ -12,7 +12,7 @@
 
 (defvar pjones:lisp-files
   '("packages" "code" "modes" "options" "autoload" "automode"
-    "functions" "interactive" "completion" "keys" "gnus"
+    "functions" "interactive" "completion" "keys" "gnus-init"
     "projector" "projects")
   "A list of my config files to load in the correct order.")
 

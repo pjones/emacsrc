@@ -196,7 +196,7 @@ between two points."
   (require 'etags)
   (let ((mark (point-marker)))
     (if jump (pop-tag-mark))
-    (ring-insert find-tag-marker-ring mark)))
+    (xref-push-marker-stack mark)))
 
 (defun pjones:jump-back-and-forth (&optional record)
   "Jump between two points.  With a prefix argument, set the

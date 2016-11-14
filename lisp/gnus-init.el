@@ -16,6 +16,3 @@
       message-directory (concat mail-default-directory "mail")
       nnfolder-directory (concat mail-default-directory "mail")
       nndraft-directory (concat mail-default-directory "mail"))
-
-;; Load the Gnus that isn't part of Emacs
-(require 'gnus-load)

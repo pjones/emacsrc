@@ -117,7 +117,7 @@ agenda buffer."
   (org-defkey org-mode-map [(shift meta return)] 'pjones:org-list-append-with-checkbox)
 
   ;; Buffer Settings
-  (setq save-place nil)
+  (save-place-mode -1)
 
   ;; Exporting
   ;;(setq org-export-html-link-org-files-as-html nil

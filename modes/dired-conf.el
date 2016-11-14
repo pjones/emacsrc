@@ -25,8 +25,8 @@
   "Toggle adding some extra keywords to dired buffers."
   (interactive)
   (let ((modified (buffer-modified-p)))
-    (font-lock-add-keywords 'dired-mode pjones:dired-keywords t)
-    (font-lock-fontify-buffer)
+    ;; (font-lock-add-keywords 'dired-mode pjones:dired-keywords t)
+    ;; (font-lock-fontify-buffer)
     (set-buffer-modified-p modified)))
 
 (defun pjones:dired-insert-or-visit ()
