@@ -201,7 +201,7 @@ with my custom nix-hs-shell script."
   "Hack around a bug in ghc-mod."
   (let* ((cabal-file (pjones:haskell-find-cabal-file))
          (default-directory (file-name-directory cabal-file)))
-    (call-process "hs-clone-stack-yaml")
+    ;;(call-process "hs-clone-stack-yaml")
     (interactive-haskell-mode)))
 
 (defun pjones:haskell-mode-hook ()
