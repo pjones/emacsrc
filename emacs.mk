@@ -2,6 +2,7 @@
 SRC	 ?= $(wildcard *.el)
 COMPILED  = $(patsubst %.el,$(DEST)/%.elc,$(SRC))
 PMADE_LOAD_PATH ?= $(CURDIR)/../lisp/loadpath.el
+IGNORE_EMACS_WARNINGS ?= YES
 
 ##############################################################################
 EMACS = emacs
@@ -38,6 +39,8 @@ ifeq ($(IGNORE_EMACS_WARNINGS),)
 	@ if [ `$(CHECK_EMACS_OUTPUT) < $(EMACS_OUTPUT_FILE)` -ne 0 ]; then \
 	    cat $(EMACS_OUTPUT_FILE); exit 1; \
 	  fi
+else
+	@ cat $(EMACS_OUTPUT_FILE)
 endif
 	@ rm $(EMACS_OUTPUT_FILE)
 	@ mv $(<:.el=.elc) $@
