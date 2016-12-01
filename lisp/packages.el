@@ -28,6 +28,7 @@
      markdown-mode
      nix-mode
      projectile
+     no-littering
      rhtml-mode
      ruby-end
      scad-mode
