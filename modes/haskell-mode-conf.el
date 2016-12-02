@@ -3,11 +3,13 @@
   (load "../lisp/code.el")
   (load "../lisp/functions.el")
   (require 'cl)
-  (require 'ghc)
-  (require 'haskell)
-  (require 'haskell-compile)
-  (require 'haskell-indentation)
   (require 'haskell-mode))
+
+(require 'ghc)
+(require 'haskell)
+(require 'haskell-compile)
+(require 'haskell-indentation)
+(require 'flycheck)
 
 ;; Settings for haskell-mode and friends:
 (custom-set-variables
@@ -20,13 +22,13 @@
   '(haskell-indentation-ifte-offset 2)
   '(haskell-indentation-where-pre-offset 2)
   '(haskell-indentation-where-post-offset 2)
-  '(haskell-compile-cabal-build-command "make")
-  '(haskell-process-type 'stack-ghci)
+  '(haskell-compile-cabal-build-command "nix-hs-build")
+  '(haskell-process-type 'cabal-repl)
+  '(haskell-process-wrapper-function 'pjones-haskell-process-wrapper-function)
   '(haskell-process-suggest-language-pragmas t)
   '(haskell-process-suggest-remove-import-lines t)
-  '(haskell-interactive-popup-errors nil)
-  '(haskell-interactive-mode-eval-mode 'haskell-mode)
-  '(haskell-process-wrapper-function 'identity))
+  '(haskell-interactive-popup-errors t)
+  '(haskell-interactive-mode-eval-mode 'haskell-mode))
 
 (defun pjones:haskell-find-cabal-file ()
   "Return the full path to the *.cabal file for the current project."
@@ -190,13 +192,6 @@ _C-c C-s_: sort    _C-c C-t_: type     _C-c C-n_: kill module
 (define-skeleton pjones:haskell-insert-pragma
   "Add the pragma comment syntax." nil "{-# " _ " #-}")
 
-(defun pjones:haskell-nixpkgs-wrapper-function (argv)
-  "Function that can be used with the
-`haskell-process-wrapper-function' variable to force building
-with my custom nix-hs-shell script."
-  (append (list "nix-hs-shell" "--run")
-          (list (mapconcat 'identity argv " "))))
-
 (defun pjones:start-interactive-haskell-mode ()
   "Hack around a bug in ghc-mod."
   (let* ((cabal-file (pjones:haskell-find-cabal-file))
@@ -204,15 +199,33 @@ with my custom nix-hs-shell script."
     ;;(call-process "hs-clone-stack-yaml")
     (interactive-haskell-mode)))
 
+(defun pjones-haskell-process-wrapper-function (argv)
+  "Run Haskell tools through nix-shell by modifying ARGV.
+See `haskell-process-wrapper-function' for details."
+  (append (list "nix-hs-shell" "--command")
+          (list (mapconcat 'identity argv " "))))
+
+(defun pjones-flycheck-executable-find (name)
+  "Trick flycheck into running nix-shell instead of NAME."
+  (executable-find "nix-shell"))
+
 (defun pjones:haskell-mode-hook ()
   "Hook run on new Haskell buffers."
   (make-local-variable 'tab-always-indent)
+  (make-local-variable 'flycheck-command-wrapper-function)
+  (make-local-variable 'flycheck-executable-find)
 
   ;; These need to be set before calling `pjones:prog-mode-hook'.
   (setq tab-always-indent t
+        flycheck-command-wrapper-function 'pjones-haskell-process-wrapper-function
+        flycheck-executable-find 'pjones-flycheck-executable-find
         beginning-of-defun-function 'pjones:haskell-beginning-of-defun
         end-of-defun-function 'pjones:haskell-end-of-defun
         ghc-module-command nil)
+
+
+  (flycheck-mode -1) ;; FIXME: This isn't working
+  ;; (flycheck-select-checker 'haskell-ghc)
 
   (haskell-indentation-mode)
   (pjones:start-interactive-haskell-mode)
