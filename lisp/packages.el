@@ -36,16 +36,15 @@
      yaml-mode )
   "A list of packages to ensure are installed at launch.")
 
-(dolist (archive pjones:package-archives)
-  (add-to-list 'package-archives archive t))
-
 ;; Prepare package management
 (package-initialize)
-(when (not package-archive-contents)
-  (package-refresh-contents))
+
+(dolist (archive pjones:package-archives)
+  (add-to-list 'package-archives archive))
 
 ;; Make sure all the packages are installed
 (defun pjones:install-packages ()
+  (package-refresh-contents)
   (dolist (p pjones:packages)
     (when (not (package-installed-p p))
-      (package-install p))))
+      (package-install p t))))

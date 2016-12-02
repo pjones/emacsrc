@@ -6,7 +6,7 @@ IGNORE_EMACS_WARNINGS ?= YES
 
 ##############################################################################
 EMACS = emacs
-EMACS_FLAGS = -q --no-site-file --batch
+EMACS_FLAGS = --quick --batch
 EMACS_FLAGS += --eval "(add-to-list 'load-path \".\")"
 EMACS_FLAGS += --eval "(setq max-lisp-eval-depth 1200)"
 EMACS_FLAGS += -l $(PMADE_LOAD_PATH)
@@ -45,8 +45,8 @@ endif
 	@ rm $(EMACS_OUTPUT_FILE)
 	@ mv $(<:.el=.elc) $@
 	@ if [ "$(EMACS_INSTALL_PACKAGES)" = "$<" ]; then \
-		echo emacs packages install; \
-		$(EMACS) --batch -l $(PMADE_LOAD_PATH) -l $< -f "pjones:install-packages"; \
+	    echo emacs packages install; \
+	    $(EMACS) -Q --batch -l $(PMADE_LOAD_PATH) -l $< -f "pjones:install-packages"; \
 	  fi
 
 ##############################################################################
