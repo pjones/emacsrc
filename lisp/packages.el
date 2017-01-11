@@ -14,9 +14,9 @@
      company-flx
      company-ghc
      dictionary
-     flycheck
      flx
      flx-ido
+     flycheck
      gist
      haskell-mode
      htmlize
@@ -27,8 +27,9 @@
      magit
      markdown-mode
      nix-mode
-     projectile
      no-littering
+     passmm
+     projectile
      rhtml-mode
      ruby-end
      scad-mode
