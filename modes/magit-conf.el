@@ -5,7 +5,7 @@
   (require 'magit))
 
 (custom-set-variables
- '(magit-popup-use-prefix-argument default))
+ '(magit-popup-use-prefix-argument 'default))
 
 ;; Shamelessly stolen from http://whattheemacsd.com/.
 (defadvice magit-status (around magit-fullscreen activate)

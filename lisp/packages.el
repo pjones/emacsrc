@@ -18,6 +18,7 @@
      flx-ido
      flycheck
      gist
+     google-contacts
      haskell-mode
      htmlize
      http
