@@ -54,9 +54,12 @@
 placed into a different frame than the current one."
   (cond
     ((string= name "*compilation*") t)
-    ((string= name "*grep*") t)
-    ((with-current-buffer name
-        (string= major-mode "haskell-interactive-mode")) t)))
+    ((string= name "*grep*") t)))
+
+(defun pjones:circe-windows-no-splitting (name action)
+  "Keep Circe from splitting windows."
+  (with-current-buffer name
+    (string-match "^circe-" (symbol-name major-mode))))
 
 (add-to-list 'display-buffer-alist
   '(pjones:place-buffer-in-new-frame
@@ -66,6 +69,10 @@ placed into a different frame than the current one."
     (inhibit-switch-frame . t)
     (pop-up-frame-parameters .
       ((unsplittable . t) (name . "emacs-popup")))))
+
+(add-to-list 'display-buffer-alist
+  '(pjones:circe-windows-no-splitting
+    (display-buffer-reuse-window display-buffer-same-window)))
 
 (defun pjones:frame-title-file-name ()
   (let* ((home (expand-file-name "~"))

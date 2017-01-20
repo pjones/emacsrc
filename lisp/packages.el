@@ -9,6 +9,8 @@
 (defvar pjones:packages
   '( bbdb
      bm
+     circe
+     circe-notifications
      company
      company-flx
      company-ghc

@@ -68,12 +68,10 @@ of the Emacs server."
   "Start IRC client.  With an argument only start a connection to
 the local bitlbee instance."
   (interactive "P")
-  (require 'rcirc) ; Loads in my rcirc-conf.el file
-  (if local-only
-      ;; Restrict to first server in the list.
-      (let ((rcirc-server-alist (list (car rcirc-server-alist))))
-        (rcirc nil))
-    (rcirc nil)))
+  (require 'circe) ; Loads in my rcirc-conf.el file
+  (if local-only (circe-maybe-connect "bitlbee")
+    (circe-maybe-connect "bitlbee")
+    (circe-maybe-connect "freenode")))
 
 (defun pjones:pwgen (&optional kill-only)
   "Generate and insert a password."
