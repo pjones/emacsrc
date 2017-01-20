@@ -17,6 +17,9 @@
 (defvar pjones-irc-password nil
   "My password for connecting to ZNC.")
 
+(defvar pjones-ignored-buffers nil
+  "List of buffer names that are ignored for IRC tracking.")
+
 ;; Load passwords from a private file
 (load "~/keys/emacs/secrets.el")
 
@@ -33,9 +36,10 @@
  '(circe-notifications-alert-style 'libnotify)
  '(circe-notifications-notify-function 'pjones:circe-notifications-notify-function)
 
- '(tracking-ignored-buffers '(("^#" circe-highlight-nick-face)))
+ '(tracking-ignored-buffers '((pjones:ignored-buffer-p)))
  '(tracking-faces-priorities '(circe-highlight-nick-face))
  '(tracking-position 'end)
+ '(tracking-frame-behavior t)
 
  '(lui-track-bar-behavior 'after-sending)
  '(lui-time-stamp-format "%H:%M")
@@ -43,7 +47,8 @@
  '(lui-fill-type nil))
 
 (custom-set-faces
- '(circe-prompt-face ((t (:weight bold :foreground "#2aa198")))))
+ '(circe-prompt-face ((t (:inherit 'font-lock-variable-name-face :weight bold))))
+ '(circe-my-message-face ((t (:inherit 'font-lock-builtin-face)))))
 
 (setq circe-network-options
   `(("freenode"
@@ -56,6 +61,9 @@
      :user "pjones/bitlbee"    :nick "pjones"
      :pass ,pjones-irc-password)))
 
+;; Ignore KEEPALIVE requests: (not sure where these come from)
+(circe-set-display-handler "irc.ctcp.KEEPALIVE" 'circe-display-ignore)
+
 (defun pjones:circe-notifications-notify-function (nick body channel)
   "Handle notifications from circe.
 
@@ -65,12 +73,35 @@ BODY, and CHANNEL through to the default notification system."
     (pjones:urgency-hint (selected-frame) t)
     (circe-notifications-notify nick body channel)))
 
+(defun pjones:ignore-buffer (&optional name)
+  "Start ignoring the buffer with NAME or the current buffer."
+  (interactive)
+  (let ((buf (or name (buffer-name))))
+    (add-to-list 'pjones-ignored-buffers buf)))
+
+(defun pjones:track-buffer (&optional name)
+  "Start tracking the buffer with NAME or the current buffer."
+  (interactive)
+  (let ((buf (or name (buffer-name))))
+    (setq pjones-ignored-buffers
+          (remove buf 'pjones-ignored-buffers))))
+
+(defun pjones:ignored-buffer-p (name)
+  "Returns non-nil if NAME is being ignored."
+  (member name pjones-ignored-buffers))
+
 (defun pjones:circe-chat-mode-hook ()
   "Configure circe-mode."
   (tracking-mode)
 
   (let ((map circe-chat-mode-map))
-    (define-key map (kbd "C-c C-q") 'circe-command-QUERY)))
+    (define-key map (kbd "C-c C-q") 'circe-command-QUERY)
+    (define-key map (kbd "C-c C-t") 'pjones:track-buffer)
+    (define-key map (kbd "C-c C-i") 'pjones:ignore-buffer)))
+
+(defun pjones:circe-channel-mode-hook ()
+  "Configure circe-channel-mode."
+  (pjones:ignore-buffer))
 
 (defun pjones:lui-mode-hook ()
   "Configure lui-mode."
@@ -92,22 +123,20 @@ BODY, and CHANNEL through to the default notification system."
   ;; Disable fringe indicators:
   (setf (cdr (assoc 'continuation fringe-indicator-alist)) nil))
 
+(defadvice circe-command-SAY (after pjones:circe-unignore-target)
+  (let ((buf (buffer-name)))
+    (when (pjones:ignored-buffer-p buf)
+      (pjones:track-buffer buf)
+      (message "This buffer will now be tracked."))))
+(ad-activate 'circe-command-SAY)
 
+(add-hook 'circe-channel-mode-hook 'pjones:circe-channel-mode-hook)
 (add-hook 'circe-chat-mode-hook 'pjones:circe-chat-mode-hook)
 (add-hook 'lui-mode-hook 'pjones:lui-mode-hook)
 (add-hook 'circe-server-connected-hook 'enable-circe-notifications)
 
 ;###############################################################################
 ;;; Stolen code below.....
-
-(defadvice circe-command-SAY (after jjf-circe-unignore-target)
-  (let ((ignored (tracking-ignored-p (current-buffer) nil)))
-    (when ignored
-      (setq tracking-ignored-buffers
-            (remove ignored tracking-ignored-buffers))
-      (message "This buffer will now be tracked."))))
-
-(ad-activate 'circe-command-SAY)
 
 ;; Taken from: https://github.com/jorgenschaefer/circe/wiki/Configuration
 (defun circe-network-connected-p (network)
