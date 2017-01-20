@@ -7,9 +7,9 @@
 
 (require 'ghc)
 (require 'haskell)
-(require 'haskell-compile)
 (require 'haskell-indentation)
 (require 'flycheck)
+(require 'dante)
 
 ;; Settings for haskell-mode and friends:
 (custom-set-variables
@@ -22,13 +22,7 @@
   '(haskell-indentation-ifte-offset 2)
   '(haskell-indentation-where-pre-offset 2)
   '(haskell-indentation-where-post-offset 2)
-  '(haskell-compile-cabal-build-command "nix-hs-build")
-  '(haskell-process-type 'cabal-repl)
-  '(haskell-process-wrapper-function 'pjones-haskell-process-wrapper-function)
-  '(haskell-process-suggest-language-pragmas t)
-  '(haskell-process-suggest-remove-import-lines t)
-  '(haskell-interactive-popup-errors t)
-  '(haskell-interactive-mode-eval-mode 'haskell-mode))
+  '(dante-repl-command-line '("nix-hs-shell" "--command" "cabal new-repl")))
 
 (defun pjones:haskell-find-cabal-file ()
   "Return the full path to the *.cabal file for the current project."
@@ -46,13 +40,13 @@
   (find-file (pjones:haskell-find-cabal-file)))
 
 (defun pjones:haskell-compile (&optional arg)
-  "Compile the current project using
-`haskell-compile-cabal-build-command'.  With ARG tack on the word
-test to the compile command."
+  "Compile the current project.
+
+With ARG tack on the word test to the compile command."
   (interactive "P")
   (let* ((cabal-file (pjones:haskell-find-cabal-file))
          (default-directory (file-name-directory cabal-file))
-         (command haskell-compile-cabal-build-command))
+         (command "nix-hs-build"))
     (compile (if arg (concat command " test") command))))
 
 (defun pjones:haskell-beginning-of-defun (&optional arg)
@@ -161,43 +155,31 @@ Otherwise go totally crazy."
 ;; TODO:
 ;; * Remove whitespace at end of line while typing?
 ;;
-;; * which-func-mode
-;;     (eval-after-load "which-func"
-;;       '(add-to-list 'which-func-modes 'haskell-mode))
-;;
-;;
 ;; close frames when using q (think *grep* or *compilation*)
 
 (defhydra hydra-haskell (:hint nil)
   "
 ^Imports^          ^GHCi^              ^Insert/Edit^          ^Run
 ^^^^^^^^^-------------------------------------------------------------------------
-_C-c C-i_: jump    _C-c C-g_: ghci     _C-c C-0_: cost center  _C-c C-c_: compile
+_C-c C-i_: jump    _C-c C-;_: info     _C-c C-0_: cost center  _C-c C-c_: compile
 _C-c C-l_: return  _C-c C-r_: reload   _C-c C-p_: new module
 _C-c C-s_: sort    _C-c C-t_: type     _C-c C-n_: kill module
 ^ ^                ^ ^                 _C-c C-e_: edit cabal
 "
+  ("C-c C-;" dante-info)
   ("C-c C-0" haskell-mode-toggle-scc-at-point :color blue)
   ("C-c C-c" pjones:haskell-compile :color blue)
   ("C-c C-e" pjones:haskell-edit-cabal-file :color blue)
-  ("C-c C-g" haskell-interactive-switch :color blue)
   ("C-c C-i" haskell-navigate-imports)
   ("C-c C-l" haskell-navigate-imports-return :color blue)
   ("C-c C-n" pjones:haskell-module-name-to-kill-ring :color blue)
   ("C-c C-p" pjones:haskell-new-module :color blue)
-  ("C-c C-r" haskell-process-reload)
+  ("C-c C-r" dante-restart)
   ("C-c C-s" pjones:haskell-sort-imports)
-  ("C-c C-t" haskell-process-do-type :color blue))
+  ("C-c C-t" dante-type-at :color blue))
 
 (define-skeleton pjones:haskell-insert-pragma
   "Add the pragma comment syntax." nil "{-# " _ " #-}")
-
-(defun pjones:start-interactive-haskell-mode ()
-  "Hack around a bug in ghc-mod."
-  (let* ((cabal-file (pjones:haskell-find-cabal-file))
-         (default-directory (file-name-directory cabal-file)))
-    ;;(call-process "hs-clone-stack-yaml")
-    (interactive-haskell-mode)))
 
 (defun pjones-haskell-process-wrapper-function (argv)
   "Run Haskell tools through nix-shell by modifying ARGV.
@@ -205,34 +187,21 @@ See `haskell-process-wrapper-function' for details."
   (append (list "nix-hs-shell" "--command")
           (list (mapconcat 'identity argv " "))))
 
-(defun pjones-flycheck-executable-find (name)
-  "Trick flycheck into running nix-shell instead of NAME."
-  (executable-find "nix-shell"))
-
 (defun pjones:haskell-mode-hook ()
   "Hook run on new Haskell buffers."
   (make-local-variable 'tab-always-indent)
-  (make-local-variable 'flycheck-command-wrapper-function)
-  (make-local-variable 'flycheck-executable-find)
 
   ;; These need to be set before calling `pjones:prog-mode-hook'.
   (setq tab-always-indent t
-        flycheck-command-wrapper-function 'pjones-haskell-process-wrapper-function
-        flycheck-executable-find 'pjones-flycheck-executable-find
         beginning-of-defun-function 'pjones:haskell-beginning-of-defun
-        end-of-defun-function 'pjones:haskell-end-of-defun
-        ghc-module-command nil)
-
-
-  (flycheck-mode -1) ;; FIXME: This isn't working
-  ;; (flycheck-select-checker 'haskell-ghc)
+        end-of-defun-function 'pjones:haskell-end-of-defun)
 
   (haskell-indentation-mode)
-  (pjones:start-interactive-haskell-mode)
+  (dante-mode)
+  (flycheck-mode)
   (pjones:prog-mode-hook)
   (subword-mode)
   (abbrev-mode)
-  ;; (ghc-init)
 
   ;; Configure completion:
   (make-local-variable 'company-backends)
@@ -252,10 +221,6 @@ See `haskell-process-wrapper-function' for details."
   (let ((map haskell-mode-map))
     (define-key map (kbd "C-c h") 'hydra-haskell/body)
     (define-key map (kbd "M-RET") 'pjones:haskell-smart-newline)
-    (pjones:define-keys-from-hydra map hydra-haskell/heads))
-
-  ;; And yet another mode map!
-  (let ((map interactive-haskell-mode-map))
     (pjones:define-keys-from-hydra map hydra-haskell/heads)))
 
 (add-hook 'haskell-mode-hook 'pjones:haskell-mode-hook)

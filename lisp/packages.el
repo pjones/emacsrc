@@ -2,8 +2,7 @@
 (require 'package)
 
 (defvar pjones:package-archives
-  '(("org"       . "http://orgmode.org/elpa/")
-    ("melpa"     . "http://melpa.org/packages/")
+  '(("melpa"     . "http://melpa.org/packages/")
     ("marmalade" . "http://marmalade-repo.org/packages/"))
   "List of package archives to use with Emacs.")
 
@@ -13,6 +12,7 @@
      company
      company-flx
      company-ghc
+     dante
      dictionary
      flx
      flx-ido
