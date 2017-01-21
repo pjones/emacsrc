@@ -4,7 +4,6 @@
   (require 'etags)
   (require 'flyspell)
   (require 'ispell)
-  (require 'rcirc)
   (require 'server)
   (require 'subword)
   (require 'term)
@@ -68,7 +67,7 @@ of the Emacs server."
   "Start IRC client.  With an argument only start a connection to
 the local bitlbee instance."
   (interactive "P")
-  (require 'circe) ; Loads in my rcirc-conf.el file
+  (require 'circe) ; Loads in my circe-conf.el file
   (if local-only (circe-maybe-connect "bitlbee")
     (circe-maybe-connect "bitlbee")
     (circe-maybe-connect "freenode")))

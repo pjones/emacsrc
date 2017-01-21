@@ -9,11 +9,16 @@
 ;; What to do with the tab key.
 (setq tab-always-indent t)
 
-;; Replace completion-at-point with hippie expand
-(defun pjones:hippie-expand () (hippie-expand nil))
-(defalias 'completion-at-point 'pjones:hippie-expand)
+;; In buffer completion:
+(require 'company)
+(add-hook 'after-init-hook 'global-company-mode)
+(add-to-list 'company-backends 'company-ghc)
+(add-to-list 'company-backends 'company-capf)
 
-;; Hippie expand functions
+;; Replace completion-at-point with company mode:
+(defalias 'completion-at-point 'company-complete)
+
+;; Settings for older code still using hippie expand:
 (setq hippie-expand-try-functions-list
       '(try-expand-dabbrev
         try-expand-dabbrev-all-buffers
@@ -24,11 +29,6 @@
         try-complete-file-name
         try-expand-whole-kill
         try-expand-line))
-
-;; In buffer completion:
-(require 'company)
-(add-hook 'after-init-hook 'global-company-mode)
-(add-to-list 'company-backends 'company-ghc)
 
 ;; Minibuffer completion:
 (ido-mode)

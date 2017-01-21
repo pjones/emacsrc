@@ -16,7 +16,8 @@
 
 (defun pjones:company-mode-hook ()
   (let ((map company-active-map))
-    (define-key map (kbd "C-w") 'pjones:kill-region-or-backward-kill-word)
+    (define-key map (kbd "M-SPC") 'company-filter-candidates)
+    (define-key map (kbd "C-w")   'pjones:kill-region-or-backward-kill-word)
     (define-key map (kbd "<tab>") 'company-complete-common-or-cycle))
 
   ;; Enable fuzzy (flx) matching in company-mode.
