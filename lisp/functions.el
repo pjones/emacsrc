@@ -2,6 +2,10 @@
 ;;; Commentary:
 ;;; Code:
 
+;; Load some libraries:
+(require 'linum)
+(provide 'face-remap) ;; for text-scale-mode
+
 ;; Silence a compiler warning
 ;; (declare-function org-clock-get-clock-string "org")
 ;; (declare-function festival-say-region "festival")
@@ -33,6 +37,20 @@
   "Define keys in KEYMAP from HEADS."
   (dolist (head heads)
     (define-key keymap (kbd (car head)) (cadr head))))
+
+(defun pjones:scale-margin-with-text (&rest args)
+  "Correctly scale margins with the text scale.  Ingore ARGS."
+  (let* ((win (selected-window))
+         (step (if (boundp 'text-scale-mode-step)
+                   (expt text-scale-mode-step text-scale-mode-amount) 1))
+         (margins (window-margins win))
+         (left (if (car margins) (car margins) 1))
+         (right (if (cdr margins) (cdr margins) 1)))
+    (set-window-margins win (ceiling (* step left))
+                            (ceiling (* step right)))))
+
+;; (advice-add #'text-scale-increase :after #'pjones:scale-margin-with-text)
+
 
 (provide 'functions)
 ;;; functions.el ends here
