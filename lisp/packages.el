@@ -37,6 +37,7 @@
      ruby-end
      scad-mode
      smex
+     smtpmail-multi
      yaml-mode )
   "A list of packages to ensure are installed at launch.")
 
