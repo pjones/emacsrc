@@ -77,14 +77,16 @@ BODY, and CHANNEL through to the default notification system."
   "Start ignoring the buffer with NAME or the current buffer."
   (interactive)
   (let ((buf (or name (buffer-name))))
+    (message "Ignoring buffer %s" buf)
     (add-to-list 'pjones-ignored-buffers buf)))
 
 (defun pjones:track-buffer (&optional name)
   "Start tracking the buffer with NAME or the current buffer."
   (interactive)
   (let ((buf (or name (buffer-name))))
+    (message "Tracking buffer %s" buf)
     (setq pjones-ignored-buffers
-          (remove buf 'pjones-ignored-buffers))))
+          (remq buf pjones-ignored-buffers))))
 
 (defun pjones:ignored-buffer-p (name)
   "Returns non-nil if NAME is being ignored."
@@ -93,6 +95,7 @@ BODY, and CHANNEL through to the default notification system."
 (defun pjones:circe-chat-mode-hook ()
   "Configure circe-mode."
   (tracking-mode)
+  (flyspell-mode)
 
   (let ((map circe-chat-mode-map))
     (define-key map (kbd "C-c C-q") 'circe-command-QUERY)
