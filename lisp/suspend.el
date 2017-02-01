@@ -20,11 +20,12 @@
 
 (defun pjones:close-encrypted-buffers ()
   "Close all buffers showing encrypted content."
+  (require 'epa-hook)
   (dolist (buf (buffer-list))
     (with-current-buffer buf
-      (when (and (boundp 'auto-encryption-mode) auto-encryption-mode)
-        (when (and buffer-file-name (buffer-modified-p buf))
-          (basic-save-buffer))
+      (when (and buffer-file-name
+                 (string-match epa-file-name-regexp buffer-file-name))
+        (when (buffer-modified-p buf) (basic-save-buffer))
         (kill-buffer buf)))))
 
 ;; Once bug #282 is fixed this can become a simple wrapper around
@@ -35,7 +36,7 @@
   (require 'circe)
   (dolist (buf (circe-server-buffers))
     (with-current-buffer buf
-      (irc-send-QUIT circe-server-process "Bye."))))
+      (circe-command-QUIT circe-default-quit-message))))
 
 (defun pjones:gnus-quit ()
   "Disconnect from all mail servers."

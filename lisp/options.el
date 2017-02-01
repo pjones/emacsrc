@@ -107,10 +107,20 @@ window dedicated."
 (setq default-frame-alist '((cursor-type  . bar))
       frame-title-format '(:eval (pjones:frame-title-file-name)))
 
+(defun pjones:find-file-hook ()
+  "Hook called after a file is loaded into a buffer."
+  ;; Encrypted files should start as read-only:
+  (require 'epa-hook)
+  (when (and buffer-file-name
+             (string-match epa-file-name-regexp buffer-file-name))
+    (read-only-mode 1)))
+
+;; Add all of the hooks from above.
 (add-hook 'after-init-hook 'pjones:configure-new-frame)
 (add-hook 'after-make-frame-functions 'pjones:configure-new-frame)
 (add-hook 'after-make-frame-functions 'pjones:maybe-dedicate-frame)
 (add-hook 'after-init-hook #'global-flycheck-mode)
+(add-hook 'find-file-hook 'pjones:find-file-hook)
 
 ;; Control how Emacs makes buffer names unique.
 (require 'uniquify)
