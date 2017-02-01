@@ -28,9 +28,13 @@
  '(circe-default-user "pmade")
  '(circe-default-realname "Peter J. Jones")
  '(circe-reduce-lurker-spam t)
- '(circe-server-auto-join-default-type :after-auth)
- '(circe-format-say "< {nick}: {body}")
+ '(circe-server-auto-join-default-type :immediate)
+ '(circe-format-self-say "◀ {nick}: {body}")
+ '(circe-format-say "▶ {nick}: {body}")
  `(circe-prompt-string ,(concat (propertize "❯" 'face 'circe-prompt-face) " "))
+ '(circe-default-quit-message "Bye")
+ '(circe-server-killed-confirmation nil)
+ '(circe-channel-killed-confirmation nil)
 
  '(circe-notifications-watch-strings '("pjones" "peter"))
  '(circe-notifications-alert-style 'libnotify)
@@ -48,7 +52,8 @@
 
 (custom-set-faces
  '(circe-prompt-face ((t (:inherit 'font-lock-variable-name-face :weight bold))))
- '(circe-my-message-face ((t (:inherit 'font-lock-builtin-face)))))
+ '(circe-my-message-face ((t (:inherit 'font-lock-builtin-face))))
+ '(circe-originator-face ((t (:inherit 'font-lock-keyword-face)))))
 
 (setq circe-network-options
   `(("freenode"
@@ -59,7 +64,8 @@
     ("bitlbee"
      :host "bitlbee.pmade.com" :port 6697 :use-tls t
      :user "pjones/bitlbee"    :nick "pjones"
-     :pass ,pjones-irc-password)))
+     :pass ,pjones-irc-password
+     :channels ("&bitlbee"))))
 
 ;; Ignore KEEPALIVE requests: (not sure where these come from)
 (circe-set-display-handler "irc.ctcp.KEEPALIVE" 'circe-display-ignore)
@@ -116,7 +122,7 @@ BODY, and CHANNEL through to the default notification system."
         right-margin-width 5
         truncate-lines nil
         word-wrap t
-        wrap-prefix "    ")
+        wrap-prefix "  ")
 
   ;; Simple mode-line for Circe buffers:
   (setq mode-line-format
