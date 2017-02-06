@@ -22,7 +22,7 @@
   '(haskell-indentation-ifte-offset 2)
   '(haskell-indentation-where-pre-offset 2)
   '(haskell-indentation-where-post-offset 2)
-  '(dante-repl-command-line '("nix-hs-shell" "--command" "cabal new-repl")))
+  '(dante-repl-command-line '("nix-hs" "-s" "--" "--command" "cabal new-repl")))
 
 (defun pjones:haskell-find-cabal-file ()
   "Return the full path to the *.cabal file for the current project."
@@ -46,7 +46,7 @@ With ARG tack on the word test to the compile command."
   (interactive "P")
   (let* ((cabal-file (pjones:haskell-find-cabal-file))
          (default-directory (file-name-directory cabal-file))
-         (command "nix-hs-build"))
+         (command "nix-hs"))
     (compile (if arg (concat command " test") command))))
 
 (defun pjones:haskell-beginning-of-defun (&optional arg)
@@ -184,7 +184,7 @@ _C-c C-s_: sort    _C-c C-t_: type     _C-c C-n_: kill module
 (defun pjones-haskell-process-wrapper-function (argv)
   "Run Haskell tools through nix-shell by modifying ARGV.
 See `haskell-process-wrapper-function' for details."
-  (append (list "nix-hs-shell" "--command")
+  (append (list "nix-hs" "-s" "--" "--command")
           (list (mapconcat 'identity argv " "))))
 
 (defun pjones:haskell-mode-hook ()
