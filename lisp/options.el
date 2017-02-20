@@ -78,13 +78,15 @@ placed into a different frame than the current one."
   (let* ((home (expand-file-name "~"))
          (end (length home))
          (start (and buffer-file-name (substring buffer-file-name 0 end)))
-         (under-home (and start (string= home start))))
-    (cond (under-home
-           (concat "~/" (file-relative-name buffer-file-name "~")))
-          (buffer-file-name buffer-file-name)
-          (dired-directory
-           (if (listp dired-directory) (car dired-directory) dired-directory))
-          (t (buffer-name)))))
+         (under-home (and start (string= home start)))
+         (server (and server-name (concat " [" server-name "]")))
+         (name (cond (under-home
+                      (concat "~/" (file-relative-name buffer-file-name "~")))
+                     (buffer-file-name buffer-file-name)
+                     (dired-directory
+                      (if (listp dired-directory) (car dired-directory) dired-directory))
+                     (t (buffer-name)))))
+    (concat name server)))
 
 (defun pjones:maybe-dedicate-frame (frame)
   "If a new frame only contains a window for which
@@ -102,7 +104,11 @@ window dedicated."
     (if (fboundp mode) (funcall mode -1)))
   (blink-cursor-mode)
   (require 'fringe)
-  (fringe-mode 10))
+  (fringe-mode 10)
+  ;; Reset the `title' frame parameter as it may have been set on the
+  ;; command line when the frame name was set.
+  (set-frame-parameter frame 'title nil)
+  (set-frame-parameter frame 'name  nil))
 
 (setq default-frame-alist '((cursor-type  . bar))
       frame-title-format '(:eval (pjones:frame-title-file-name)))
