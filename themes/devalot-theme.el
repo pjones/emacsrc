@@ -123,9 +123,9 @@
      (minibuffer-prompt ((t (:foreground ,magenta :weight bold))))
 
      ;; Modeline and Things in the Modeline
-     (mode-line ((,class (:background ,green :foreground ,bg-normal :box (:line-width 1 :style released-button)))
+     (mode-line ((,class (:background ,bg-normal :foreground ,blue :box (:line-width 1)))
                  (t (:background "green" :foreground "black"))))
-     (mode-line-inactive ((t (:background ,bg-low :foreground ,fg-low :box (:line-width 1 :style released-button)))))
+     (mode-line-inactive ((t (:background ,bg-low :foreground ,fg-low :box (:line-width 1)))))
      (modeline-mousable ((t (:background ,bg-high :foreground ,fg-normal))))
      (modeline-mousable-minor-mode ((t (:background ,bg-high :foreground ,bg-high))))
 
