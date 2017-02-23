@@ -33,6 +33,7 @@
      no-littering
      passmm
      projectile
+     rainbow-mode
      rhtml-mode
      ruby-end
      scad-mode

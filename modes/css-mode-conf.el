@@ -12,6 +12,9 @@
   (make-local-variable 'company-backends)
   (add-to-list 'company-backends 'company-css)
 
+  ;; Other modes:
+  (rainbow-mode)
+
   (setq css-indent-offset 2)
   (add-hook 'after-save-hook 'pjones:after-save-reload-browser nil t))
 
