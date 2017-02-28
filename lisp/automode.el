@@ -4,7 +4,8 @@
 (add-to-list 'auto-mode-alist '("\\.css\\.scss" . css-mode))
 
 ;; JavaScript
-(add-to-list 'auto-mode-alist '("\\.js\\.erb$" . js-mode))
+(add-to-list 'auto-mode-alist '("\\.js$"       . js2-mode))
+(add-to-list 'auto-mode-alist '("\\.js\\.erb$" . js2-mode))
 
 ;; Markdown
 (add-to-list 'auto-mode-alist '("\\.txt$"            . markdown-mode))

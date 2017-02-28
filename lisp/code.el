@@ -1,7 +1,6 @@
 ;;; code.El -- Settings and functions for programming modes
 (eval-when-compile
   (require 'saveplace)
-  (require 'kite)
   (require 'company))
 
 ;; Create some faces
@@ -70,11 +69,11 @@
 
 (defun pjones:after-save-reload-browser ())
 
-(defun pjones:kite-start ()
-  "Start a kite session."
+(defun pjones:jade-start ()
+  "Start a Jade session."
   (interactive)
-  (kite-dom nil)
-  (kite-console nil))
+  (require 'jade)
+  (call-interactively 'jade-connect-to-chrome))
 
 (provide 'code)
 ;;; code.el ends here

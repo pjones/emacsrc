@@ -26,7 +26,8 @@
      http
      hydra
      inf-ruby
-     kite
+     jade
+     js2-mode
      magit
      markdown-mode
      nix-mode
