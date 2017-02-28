@@ -43,7 +43,7 @@
 (global-set-key (kbd "C-c d")   'dictionary-lookup-definition)
 (global-set-key (kbd "C-c D")   'pjones:toggle-dictionary)
 (global-set-key (kbd "C-c F")   'pjones:kill-file-name)
-(global-set-key (kbd "C-c g")   'pjones:project-grep-or-rgrep)
+(global-set-key (kbd "C-c g")   'rgrep)
 ;                     C-c h      Mode-specific hydra.
 (global-set-key (kbd "C-c H")   'highline-mode)
 (global-set-key (kbd "C-c i")   'pjones:uuid)
@@ -68,9 +68,6 @@
 (global-set-key (kbd "C-z") nil)
 
 ;; Super key bindings
-(global-set-key (kbd "s-c") 'projectile-compile-project)
-(global-set-key (kbd "s-t") 'projectile-test-project)
-(global-set-key (kbd "s-r") 'projectile-run-project)
 (global-set-key (kbd "s-g") 'pjones:start-primary-app)
 (global-set-key (kbd "s-p") 'pjones:text-to-speech-para)
 (global-set-key (kbd "s-u") 'browse-url)

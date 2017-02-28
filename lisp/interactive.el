@@ -6,8 +6,7 @@
   (require 'ispell)
   (require 'server)
   (require 'subword)
-  (require 'term)
-  (require 'projectile))
+  (require 'term))
 
 (defun pjones:maybe-save-buffers-kill-terminal (&optional arg)
   "Save me from myself.  I somehow keep hitting C-x C-c when I
@@ -243,13 +242,6 @@ number input."
   (interactive)
   (dired (expand-file-name "~/.password-store")
          (concat dired-listing-switches " -R")))
-
-(defun pjones:project-grep-or-rgrep ()
-  "If in a project use `projectile-grep' otherwise just use
-`rgrep'."
-  (interactive)
-  (call-interactively
-   (if (projectile-project-p) 'projectile-grep 'rgrep)))
 
 (defun pjones:terminal (directory)
   "Create a new (unique) terminal frame optionally in DIRECTORY."
