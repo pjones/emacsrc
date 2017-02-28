@@ -1,4 +1,4 @@
-;;; devalot-theme-light.el --- Solarized-based custom theme for faces.
+;;; devalot-light-theme.el --- Solarized-based custom theme for faces.
 ;;
 ;; Copyright (C) 2007-2015 Peter Jones <pjones@pmade.com>
 ;;
@@ -21,7 +21,7 @@
 ;; OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 ;; WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ;;
-;;; Commentary
+;;; Commentary:
 ;;
 ;; The majority of the colors in this theme come from the Solarized
 ;; palette, which is released under a MIT license:
@@ -54,17 +54,15 @@
     (cyan-high    "#4aa19a")
     (green        "#859900")
     (green-high   "#88b324")
-;;    (bg-normal    "#222222")
-    (bg-normal    "#002b36")
-;;    (bg-off       "#003340")
+    (bg-normal    "#fdf6e3")
     (bg-off       "#073642")
-    (bg-high      "#000000")
-    (bg-low       "#2a2a2a")
-    (bg-inverse   "#fdf6e3")
-    (fg-normal    "#839496")
+    (bg-high      "#fff8e5")
+    (bg-low       "#eee8d5")
+    (bg-inverse   "#222222")
+    (fg-normal    "#657b83")
     (fg-low       "#586e75")
     (fg-high      "#93a1a1")
-    (fg-inverse   "#657b83")
+    (fg-inverse   "#222222")
     (class        ((class color) (min-colors 89))))
   "Colors for the light version of the Devalot theme.")
 
@@ -77,4 +75,5 @@
                (file-name-as-directory (file-name-directory load-file-name))))
 
 (provide-theme 'devalot-light)
-;; -*- coding: utf-8; lexical-binding:t -*-
+;;; -*- coding: utf-8; lexical-binding:t -*-
+;;; devalot-light-theme.el ends here

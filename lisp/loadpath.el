@@ -1,4 +1,4 @@
-;;; loadpath.el -- Correctly set my load-path variable.
+;;; loadpath.el -- Correctly set my load-path variable. <
 
 ;; Some basic variables used by my other configuration files.
 (defvar pjones:lisp-dir (concat user-emacs-directory "pjones/lisp/")
@@ -35,6 +35,8 @@
 
 ;; Set up the custom theme path.
 (add-to-list 'custom-theme-load-path pjones:theme-files)
+(load-theme 'devalot t t)
+(load-theme 'devalot-light t t)
 
 (defun pjones:load-configuration-files ()
   "Load all of my lisp configuration files."

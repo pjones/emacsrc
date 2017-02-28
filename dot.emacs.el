@@ -1,4 +1,4 @@
 ;; Load other configuration files
 (load (concat user-emacs-directory "pjones/lisp/loadpath"))
-(load-theme pjones:default-theme t)
+(enable-theme pjones:default-theme)
 (pjones:load-configuration-files)

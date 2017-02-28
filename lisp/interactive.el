@@ -265,6 +265,11 @@ current buffer after point."
     (kill-new uuid)
     (insert uuid)))
 
+(defun pjones:toggle-theme ()
+  "Switch between my dark theme and my light theme."
+  (interactive)
+  (enable-theme (cadr custom-enabled-themes)))
+
 ;; Local Variables:
 ;; byte-compile-warnings: (not noruntime)
 ;; End:

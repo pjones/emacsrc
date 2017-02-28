@@ -70,10 +70,11 @@
   "Return a list suitable for `custom-theme-set-faces'."
   ; this is hack right now
   (let ((max-lisp-eval-depth 800) ;; There are a lot of faces in here!
-        yellow yellow-high orange orange-high red red-high
-        magenta magenta-high violet violet-high blue blue-high cyan
-        cyan-high green green-high bg-normal bg-off bg-high bg-low
-        bg-inverse fg-normal fg-low fg-high fg-inverse class)
+        yellow yellow-high orange orange-high red red-high magenta magenta-high
+        violet violet-high blue blue-high cyan cyan-high green green-high
+        bg-normal bg-off bg-high bg-low bg-inverse
+        fg-normal fg-low fg-high fg-inverse
+        class)
 
     (mapc (lambda (color)
             (set (car color) (cadr color)))
@@ -84,7 +85,7 @@
       `(ansi-color-names-vector [,fg-low ,red ,green-high ,yellow-high
                                 ,blue ,magenta-high ,cyan-high ,fg-high]))
 
-    `((default        ((((type graphic)) (:background ,bg-normal :foreground ,fg-normal))))
+    `((default       ((((type graphic)) (:background ,bg-normal :foreground ,fg-normal))))
      (cursor         ((t (:background ,magenta-high :foreground ,bg-normal))))
      (error          ((t (:foreground ,red-high))))
      (warning        ((t (:foreground ,yellow-high))))
@@ -123,7 +124,7 @@
      (minibuffer-prompt ((t (:foreground ,magenta :weight bold))))
 
      ;; Modeline and Things in the Modeline
-     (mode-line ((,class (:background ,bg-normal :foreground ,blue :box (:line-width 1)))
+     (mode-line ((,class (:background ,bg-normal :foreground ,blue :box (:line-width 1 :color ,fg-low)))
                  (t (:background "green" :foreground "black"))))
      (mode-line-inactive ((t (:background ,bg-low :foreground ,fg-low :box (:line-width 1)))))
      (modeline-mousable ((t (:background ,bg-high :foreground ,fg-normal))))
