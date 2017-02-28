@@ -35,8 +35,8 @@
 
 ;; Set up the custom theme path.
 (add-to-list 'custom-theme-load-path pjones:theme-files)
-(load-theme 'devalot t t)
-(load-theme 'devalot-light t t)
+(load-theme 'devalot t nil)
+(load-theme 'devalot-light t nil)
 
 (defun pjones:load-configuration-files ()
   "Load all of my lisp configuration files."
