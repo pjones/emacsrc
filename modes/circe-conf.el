@@ -36,7 +36,6 @@
  '(circe-server-killed-confirmation nil)
  '(circe-channel-killed-confirmation nil)
 
- '(circe-notifications-watch-strings '("pjones" "peter"))
  '(circe-notifications-alert-style 'libnotify)
  '(circe-notifications-notify-function 'pjones:circe-notifications-notify-function)
 
