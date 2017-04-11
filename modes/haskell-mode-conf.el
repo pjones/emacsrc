@@ -197,11 +197,14 @@ See `haskell-process-wrapper-function' for details."
         end-of-defun-function 'pjones:haskell-end-of-defun)
 
   (haskell-indentation-mode)
-  (dante-mode)
-  (flycheck-mode)
   (pjones:prog-mode-hook)
   (subword-mode)
   (abbrev-mode)
+
+  ;; Linting and checking:
+  (dante-mode)
+  (flycheck-mode)
+  (flycheck-add-next-checker 'haskell-dante '(warning . haskell-hlint))
 
   ;; Configure completion:
   (make-local-variable 'company-backends)
