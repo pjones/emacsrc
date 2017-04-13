@@ -146,24 +146,23 @@ BODY, and CHANNEL through to the default notification system."
 ;###############################################################################
 ;;; Stolen code below.....
 
-;; Taken from: https://github.com/jorgenschaefer/circe/wiki/Configuration
+;; Modified from: https://github.com/jorgenschaefer/circe/wiki/Configuration
 (defun circe-network-connected-p (network)
-  "Return non-nil if there's any Circe server-buffer whose
-`circe-server-netwok' is NETWORK."
+  "Return server buffer for NETWORK."
   (catch 'return
     (dolist (buffer (circe-server-buffers))
       (with-current-buffer buffer
         (if (string= network circe-network)
-            (throw 'return t))))))
+            (throw 'return buffer))))))
 
-;; Taken from: https://github.com/jorgenschaefer/circe/wiki/Configuration
+;; Modified from: https://github.com/jorgenschaefer/circe/wiki/Configuration
 (defun circe-maybe-connect (network)
-  "Connect to NETWORK, but ask user for confirmation if it's
-already been connected to."
+  "Connect or reconnect to NETWORK."
   (interactive "sNetwork: ")
-  (if (or (not (circe-network-connected-p network))
-          (y-or-n-p (format "Already connected to %s, reconnect?" network)))
-      (circe network)))
+  (let ((existing (circe-network-connected-p network)))
+    (if existing (with-current-buffer existing
+                   (call-interactively 'circe-reconnect))
+      (circe network))))
 
 (provide 'circe-conf)
 ;;; circe-conf.el ends here
