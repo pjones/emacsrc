@@ -9,17 +9,17 @@
  '(magit-status-margin '(t age magit-log-margin-width nil 18))
  '(magit-status-show-hashes-in-headers t))
 
-;; Shamelessly stolen from http://whattheemacsd.com/.
-;; (defadvice magit-status (around magit-fullscreen activate)
-;;   (window-configuration-to-register :magit-fullscreen)
-;;   ad-do-it
-;;   (delete-other-windows))
-;;
-;; (defun pjones:magit-quit-session ()
-;;   "Restore the previous window configuration and kill the magit
-;; buffer."
-;;   (interactive)
-;;   (kill-buffer)
-;;   (jump-to-register :magit-fullscreen))
-;;
-;; (define-key magit-status-mode-map (kbd "q") 'pjones:magit-quit-session)
+(defun pjones:magit-quit ()
+  "Quit magit and close the frame."
+  (interactive)
+  (let ((buffer (current-buffer)))
+    (when (eq major-mode 'magit-status-mode)
+      (delete-frame nil t))
+    (with-current-buffer buffer
+      (magit-mode-bury-buffer))))
+
+(defun pjones:magit-mode-hook ()
+  (let ((map magit-mode-map))
+    (define-key map (kbd "q") 'pjones:magit-quit)))
+
+(add-hook 'magit-mode-hook 'pjones:magit-mode-hook)
