@@ -232,10 +232,11 @@ file.  With a prefix argument kill the entire path for the file."
   "Show line numbers temporarily while prompting for the line
 number input."
   (interactive)
-  (unwind-protect
-      (progn (linum-mode 1)
-             (call-interactively 'goto-line))
-    (linum-mode -1)))
+  (let ((showing-line-numbers linum-mode))
+    (unwind-protect (progn
+      (unless showing-line-numbers (linum-mode 1))
+      (call-interactively 'goto-line))
+      (unless showing-line-numbers (linum-mode -1)))))
 
 (defun pjones:password-list ()
   "Show a list of password names."
