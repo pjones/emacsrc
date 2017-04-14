@@ -1,15 +1,27 @@
-;;; projector.el -- Functions for projecting.
+;;; projector.el -- A minor mode and some functions for presentations.
+;;
+;;; Commentary:
+;;
+;;
+;;; Code:
 (eval-when-compile
   (require 'highline))
 
 (defvar pjones:projector-font-big
-  "-unknown-DejaVu Sans Mono-normal-normal-normal-*-32-*-*-*-m-0-iso10646-1"
+  "Dejavu Sans Mono-28"
   "A large font to use for projectors.")
 
-(defun pjones:projector-font ()
-  "Switch the current frame to a big font."
+(defvar pjones:projector-font-prev
+  "Dejavu Sans Mono-9"
+  "Intial font used.")
+
+(defvar pjones:projector-scratch-mode-line nil
+  "The `mode-line-format' in *scratch* before we fuck it up.")
+
+(defun pjones:projector-font (&optional font)
+  "Switch the current frame to FONT or a big font."
   (interactive)
-  (set-frame-font pjones:projector-font-big))
+  (set-frame-font (or font pjones:projector-font-big)))
 
 (defun pjones:projector-highline ()
   "Toggle highline mode from outside Emacs."
@@ -40,6 +52,26 @@ Emacs."
   (select-window (next-window nil 0 'visible))
   (if highline-mode (highline-highlight-current-line)))
 
+
+(define-minor-mode projector-mode
+  "Global minor mode that makes things look nice on a projector."
+  :global t
+  (if projector-mode
+      (progn (setq pjones:projector-font-prev
+                   (or (alist-get 'fonts default-frame-alist)
+                       pjones:projector-font-prev))
+             (with-current-buffer "*scratch*"
+               (setq pjones:projector-scratch-mode-line mode-line-format
+                     mode-line-format nil))
+             (pjones:projector-font)
+             (global-linum-mode 1))
+    (with-current-buffer "*scratch*"
+      (setq mode-line-format pjones:projector-scratch-mode-line))
+    (pjones:projector-font pjones:projector-font-prev)
+    (global-linum-mode -1)))
+
 ;; Local Variables:
 ;; byte-compile-warnings: (not noruntime)
 ;; End:
+(provide 'projector)
+;;; projector.el ends here
