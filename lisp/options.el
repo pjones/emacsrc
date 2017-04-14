@@ -124,8 +124,9 @@ window dedicated."
   (set-frame-parameter frame 'title nil)
   (set-frame-parameter frame 'name  nil))
 
-(setq default-frame-alist '((cursor-type  . bar))
-      frame-title-format '(:eval (pjones:frame-title-file-name)))
+(add-to-list 'default-frame-alist '(cursor-type  . bar))
+(add-to-list 'default-frame-alist '(font . "Dejavu Sans Mono-9"))
+(setq frame-title-format '(:eval (pjones:frame-title-file-name)))
 
 (defun pjones:find-file-hook ()
   "Hook called after a file is loaded into a buffer."
