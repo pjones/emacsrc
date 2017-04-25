@@ -6,7 +6,7 @@ IGNORE_EMACS_WARNINGS ?= YES
 
 ##############################################################################
 EMACS = emacs
-EMACS_FLAGS = --quick --batch
+EMACS_FLAGS = -Q --quick --batch
 EMACS_FLAGS += --eval "(add-to-list 'load-path \".\")"
 EMACS_FLAGS += --eval "(setq max-lisp-eval-depth 1200)"
 EMACS_FLAGS += -l $(PMADE_LOAD_PATH)

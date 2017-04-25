@@ -21,12 +21,12 @@
      flycheck
      gist
      google-contacts
+     indium
      haskell-mode
      htmlize
      http
      hydra
      inf-ruby
-     jade
      js2-mode
      magit
      markdown-mode
