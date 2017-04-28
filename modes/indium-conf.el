@@ -2,10 +2,15 @@
 (eval-when-compile
   (require 'indium))
 
-(defun pjones:indium-eval-last-and-close ()
+(defun pjones:indium-eval-buffer ()
+  "Eval the entire buffer."
+  (interactive)
+  (indium-eval (buffer-substring-no-properties (point-min) (point-max))))
+
+(defun pjones:indium-eval-buffer-and-close ()
   "Eval the last expression and close indium-scratch."
   (interactive)
-  (indium-eval-last-node nil)
+  (pjones:indium-eval-buffer)
   (delete-window))
 
 (defun pjones:indium-repl-mode-hook ()
@@ -20,7 +25,8 @@
   (let ((map indium-interaction-mode-map))
     (define-key map (kbd "C-M-x")   'indium-eval-last-node)
     (define-key map (kbd "C-x C-s") 'indium-eval-last-node)
-    (define-key map (kbd "C-c C-c") 'pjones:indium-eval-last-and-close)
+    (define-key map (kbd "C-c C-c") 'pjones:indium-eval-buffer-and-close)
+    (define-key map (kbd "C-c C-b") 'pjones:indium-eval-buffer)
     (define-key map (kbd "C-c C-p") 'indium-inspect-last-node)))
 
 ;; Install Hooks:

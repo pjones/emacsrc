@@ -69,11 +69,11 @@
 
 (defun pjones:after-save-reload-browser ())
 
-(defun pjones:jade-start ()
+(defun pjones:indium-start ()
   "Start a Jade session."
   (interactive)
-  (require 'jade)
-  (call-interactively 'jade-connect-to-chrome))
+  (require 'indium)
+  (call-interactively 'indium-connect-to-chrome))
 
 (provide 'code)
 ;;; code.el ends here
