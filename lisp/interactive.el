@@ -54,6 +54,13 @@ placing it in the kill ring)."
   (newline)
   (indent-according-to-mode))
 
+(defun pjones:move-beginning-of-line ()
+  "Move back to indentation or the first column."
+  (interactive)
+  (let ((start (point)))
+    (back-to-indentation)
+    (when (= start (point)) (move-beginning-of-line 1))))
+
 (defun pjones:start-primary-app (arg)
   "Start an application like Gnus or IRC client based on the name
 of the Emacs server."
