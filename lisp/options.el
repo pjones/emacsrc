@@ -94,13 +94,12 @@ placed into a different frame than the current one."
          (start (and buffer-file-name (substring buffer-file-name 0 end)))
          (under-home (and start (string= home start)))
          (server (and server-name (concat " [" server-name "]")))
-         (name (cond (under-home
+         (file (cond (under-home
                       (concat "~/" (file-relative-name buffer-file-name "~")))
                      (buffer-file-name buffer-file-name)
                      (dired-directory
-                      (if (listp dired-directory) (car dired-directory) dired-directory))
-                     (t (buffer-name)))))
-    (concat name server)))
+                      (if (listp dired-directory) (car dired-directory) dired-directory)))))
+    (concat "Emacs: " (buffer-name) " " file server)))
 
 (defun pjones:maybe-dedicate-frame (frame)
   "If a new frame only contains a window for which
