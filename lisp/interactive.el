@@ -245,11 +245,21 @@ number input."
       (call-interactively 'goto-line))
       (unless showing-line-numbers (linum-mode -1)))))
 
-(defun pjones:password-list ()
-  "Show a list of password names."
-  (interactive)
-  (dired (expand-file-name "~/.password-store")
-         (concat dired-listing-switches " -R")))
+(defun pjones:zap-to-quote (&optional backward)
+  "Delete characters up to next/previous quote based on BACKWARD.
+
+If BACKWARD is non-nil delete backward instead of forward."
+  (interactive "P")
+  (let* ((re "\\('\\|\"\\)")
+         (start (point))
+         (end (save-excursion
+                (if backward (progn (search-backward-regexp re nil t)
+                                    (forward-char 1))
+                  (search-forward-regexp re nil t)
+                  (backward-char 1))
+                (point))))
+    (if backward (kill-region end start)
+      (kill-region start end))))
 
 (defun pjones:terminal (directory)
   "Create a new (unique) terminal frame optionally in DIRECTORY."

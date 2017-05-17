@@ -28,6 +28,7 @@
 (global-set-key (kbd "M-S-z")   'zap-to-char)
 (global-set-key (kbd "C-`")     'next-error)
 (global-set-key (kbd "M-/")     'company-complete)
+(global-set-key (kbd "M-'")     'pjones:zap-to-quote)
 (global-set-key (kbd "M-SPC")   'company-complete)
 (global-set-key (kbd "C-M-SPC") 'just-one-space)
 
