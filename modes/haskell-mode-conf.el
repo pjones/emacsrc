@@ -226,8 +226,14 @@ See `haskell-process-wrapper-function' for details."
     (define-key map (kbd "M-RET") 'pjones:haskell-smart-newline)
     (pjones:define-keys-from-hydra map hydra-haskell/heads)))
 
-(add-hook 'haskell-mode-hook 'pjones:haskell-mode-hook)
-(add-hook 'haskell-cabal-mode-hook 'pjones:prog-mode-hook)
+(defun pjones:dante-mode-hook ()
+  "Peter's hook for Dante."
+  (let ((map dante-mode-map))
+    (define-key map (kbd "C-c ,") nil)))
+
+(add-hook 'haskell-mode-hook #'pjones:haskell-mode-hook)
+(add-hook 'haskell-cabal-mode-hook #'pjones:prog-mode-hook)
+(add-hook 'dante-mode-hook #'pjones:dante-mode-hook)
 
 ;; Local Variables:
 ;; byte-compile-warnings: (not noruntime)
