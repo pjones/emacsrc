@@ -37,7 +37,7 @@
 
 ;; User Key Bindings (using the C-c prefix)
 (global-set-key (kbd "C-c ;")   'pjones:auto-correct-previous-word)
-(global-set-key (kbd "C-c .")   'pjones:push-tag-mark)
+(global-set-key (kbd "C-c ,")   'pjones:push-tag-mark)
 (global-set-key (kbd "C-c a")   'align)
 (global-set-key (kbd "C-c A")   'align-regexp)
 (global-set-key (kbd "C-c b")   'pjones:bookmark)

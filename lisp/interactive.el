@@ -192,7 +192,7 @@ configuration."
 
 (defun pjones:push-tag-mark (&optional jump)
   "Pushes the current location of point onto the tags mark ring
-so you can pop back later with `M-.'.  When JUMP is non-nil jump
+so you can pop back later with `M-,'.  When JUMP is non-nil jump
 to the previous tag mark.  This allows you to jump back and forth
 between two points."
   (interactive "P")
