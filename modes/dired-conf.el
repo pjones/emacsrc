@@ -1,6 +1,7 @@
 ;;; dired-conf.el -- Settings for dired-mode
 (eval-when-compile
-  (require 'dired))
+  (require 'dired)
+  (require 'dired-collapse))
 
 ;; Load dired-aux at runtime.
 (require 'dired-aux)
@@ -64,6 +65,7 @@ find-file."
 
 (defun pjones:dired-load-hook ()
   (dired-hide-details-mode) ;; Hide details by default
+  (dired-collapse-mode)     ;; And collapse dirs with one entry
   (pjones:dired-extra-keywords)
 
   (let ((map dired-mode-map))

@@ -16,6 +16,7 @@
      company-ghc
      dante
      dictionary
+     dired-collapse
      flx
      flx-ido
      flycheck
