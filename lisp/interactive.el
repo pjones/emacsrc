@@ -78,13 +78,13 @@ the local bitlbee instance."
     (circe-maybe-connect "bitlbee")
     (circe-maybe-connect "freenode")))
 
-(defun pjones:pwgen (&optional kill-only)
+(defun pjones:pwgen (&optional word)
   "Generate and insert a password."
   (interactive "P")
-  (let ((pw (replace-regexp-in-string "\n" ""
-              (shell-command-to-string "pwgen -cnsyB 15 1"))))
-    (kill-new pw)
-    (if (not kill-only) (insert pw))))
+  (let* ((opts (if word "20 1" "-cnsyB 15 1"))
+         (pw (replace-regexp-in-string "\n" ""
+              (shell-command-to-string (concat "pwgen " opts)))))
+    (insert pw)))
 
 (defun pjones:transpose-windows (&optional keep-cursor)
    "Transpose the buffers shown in two windows.  By default point
