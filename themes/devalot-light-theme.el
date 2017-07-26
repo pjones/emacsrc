@@ -1,6 +1,6 @@
 ;;; devalot-light-theme.el --- Solarized-based custom theme for faces.
 ;;
-;; Copyright (C) 2007-2015 Peter Jones <pjones@pmade.com>
+;; Copyright (C) 2007-201& Peter Jones <pjones@pmade.com>
 ;;
 ;; Permission is hereby granted, free of charge, to any person obtaining
 ;; a copy of this software and associated documentation files (the
@@ -55,14 +55,14 @@
     (green        "#859900")
     (green-high   "#88b324")
     (bg-normal    "#fdf6e3")
-    (bg-off       "#073642")
+    (bg-off       "#eee8d5")
     (bg-high      "#fff8e5")
     (bg-low       "#eee8d5")
-    (bg-inverse   "#222222")
+    (bg-inverse   "#657b83")
     (fg-normal    "#657b83")
     (fg-low       "#586e75")
     (fg-high      "#93a1a1")
-    (fg-inverse   "#222222")
+    (fg-inverse   "#fdf6e3")
     (class        ((class color) (min-colors 89))))
   "Colors for the light version of the Devalot theme.")
 

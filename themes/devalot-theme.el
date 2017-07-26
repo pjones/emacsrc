@@ -1,6 +1,6 @@
 ;;; devalot-theme.el --- Solarized-based custom theme for faces.
 ;;
-;; Copyright (C) 2007-2015 Peter Jones <pjones@pmade.com>
+;; Copyright (C) 2007-2017 Peter Jones <pjones@pmade.com>
 ;;
 ;; Permission is hereby granted, free of charge, to any person obtaining
 ;; a copy of this software and associated documentation files (the
@@ -95,7 +95,7 @@
      (linum          ((t (:background ,bg-low :foreground ,fg-low))))
      (lazy-highlight ((t (:background ,bg-high :foreground ,magenta-high))))
      (isearch        ((t (:background ,magenta :foreground ,bg-inverse :weight bold))))
-     (region         ((t (:background ,bg-high))))
+     (region         ((t (:foreground ,fg-inverse :background ,bg-inverse))))
      (highlight      ((t (:background ,bg-off))))
      (hl-line        ((t (:inherit 'highlight))))
 
@@ -104,7 +104,7 @@
 
 
      ;; Show paren
-     (show-paren-match ((t (:background ,bg-inverse :foreground ,blue :weight bold))))
+     (show-paren-match ((t (:background ,bg-off :weight bold))))
 
      ;; Font-lock
      (font-lock-builtin-face           ((t (:foreground ,fg-low))))
@@ -133,6 +133,16 @@
      ;; Flyspell
      (flyspell-duplicate ((t (:underline (:color ,yellow :style wave)))))
      (flyspell-incorrect ((t (:underline (:color ,red    :style wave)))))
+
+     ;; Company Mode
+     (company-tooltip ((t (:foreground ,fg-high :background ,bg-low))))
+     (company-tooltip-selection ((t (:foreground ,fg-high :background ,bg-high))))
+     (company-tooltip-search ((t :foreground ,magenta :background ,bg-high)))
+     (company-tooltip-search-selection ((t :foreground ,magenta-high :background ,bg-off)))
+     (company-tooltip-common ((t :foreground ,green)))
+     (company-tooltip-annotation ((t :foreground ,fg-normal)))
+     (company-scrollbar-fg ((t :background ,fg-normal)))
+     (company-scrollbar-bg ((t :background ,bg-normal)))
 
      ;; Dired
      (dired-header ((t (:foreground ,orange :background ,bg-off
@@ -218,6 +228,14 @@
      (erb-out-delim-face     ((,class (:foreground ,blue :background ,bg-normal)) (t (:foreground "blue"))))
      (erb-comment-delim-face ((t (:foreground ,fg-low :weight bold))))
      (erb-comment-face       ((t (:foreground ,violet :italic t))))
+
+     ;; JavaScript (JS2)
+     (js2-external-variable ((t (:foreground ,cyan))))
+     (js2-warning           ((t (:underline  (:color ,magenta :style wave)))))
+     (js2-error             ((t (:foreground ,red-high))))
+     (js2-function-param    ((t (:foreground ,fg-low))))
+     (js2-function-call     ((t (:foreground ,orange-high))))
+     (js2-object-property   ((t (:foreground ,fg-high))))
 
      ;; Diff Mode
      (diff-added             ((t (:foreground ,green))))
