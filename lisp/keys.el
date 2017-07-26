@@ -29,7 +29,8 @@
 (global-set-key (kbd "C-`")     'next-error)
 (global-set-key (kbd "M-/")     'company-complete)
 (global-set-key (kbd "M-'")     'pjones:zap-to-quote)
-(global-set-key (kbd "M-SPC")   'company-complete)
+(global-set-key (kbd "C-+")     'text-scale-increase)
+(global-set-key (kbd "C--")     'text-scale-decrease)
 (global-set-key (kbd "C-M-SPC") 'just-one-space)
 
 ;; Remapping existing keys.
