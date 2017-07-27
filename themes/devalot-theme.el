@@ -95,7 +95,7 @@
      (linum          ((t (:background ,bg-low :foreground ,fg-low))))
      (lazy-highlight ((t (:background ,bg-high :foreground ,magenta-high))))
      (isearch        ((t (:background ,magenta :foreground ,bg-inverse :weight bold))))
-     (region         ((t (:foreground ,fg-inverse :background ,bg-inverse))))
+     (region         ((t (:background ,bg-low))))
      (highlight      ((t (:background ,bg-off))))
      (hl-line        ((t (:inherit 'highlight))))
 
