@@ -8,6 +8,7 @@
 
 (defvar pjones:packages
   '( bbdb
+     beginend
      bm
      circe
      circe-notifications
@@ -40,7 +41,9 @@
      scad-mode
      smex
      smtpmail-multi
-     yaml-mode )
+     yaml-mode
+     yasnippet
+   )
   "A list of packages to ensure are installed at launch.")
 
 ;; Prepare package management

@@ -1,4 +1,4 @@
-DIRS = third-party lisp modes themes bin
+DIRS = third-party lisp modes snippets themes bin
 DOTFILE = $(HOME)/.emacs
 MAKE_ARGS = --no-print-directory
 
