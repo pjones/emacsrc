@@ -3,7 +3,6 @@
 ;;; Code:
 
 ;; Load some libraries:
-(require 'linum)
 (require 'face-remap) ;; for text-scale-mode
 
 ;; Silence a compiler warning
@@ -37,22 +36,6 @@
   "Define keys in KEYMAP from HEADS."
   (dolist (head heads)
     (define-key keymap (kbd (car head)) (cadr head))))
-
-(defun pjones:linum-fix-margin-size (win)
-  "Correctly scale `linum-mode' margins for WIN."
-  (let* ((level (if text-scale-mode text-scale-mode-amount 0))
-         (scale (* text-scale-mode-step level))
-         (margins (window-margins win))
-         (current (car margins))
-         ;; Font width-to-height ratio.  FIXME: this should be
-         ;; calculated from the actual font information.
-         (ratio 0.55)
-         (width (ceiling (* current scale ratio))))
-    (when (/= scale 0)
-      (set-window-margins win width (cdr margins)))))
-
-(advice-add 'linum-update-window :after #'pjones:linum-fix-margin-size)
-(advice-add 'text-scale-increase :after (lambda (&rest r) (linum-update-current)))
 
 (provide 'functions)
 ;;; functions.el ends here
