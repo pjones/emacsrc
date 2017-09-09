@@ -8,7 +8,7 @@
   (require 'highline))
 
 (defvar pjones:projector-font-big
-  "Dejavu Sans Mono-28"
+  "Dejavu Sans Mono-18"
   "A large font to use for projectors.")
 
 (defvar pjones:projector-font-prev
