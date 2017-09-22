@@ -16,6 +16,7 @@
      company-flx
      company-ghc
      dante
+     deft
      dictionary
      dired-collapse
      flx
