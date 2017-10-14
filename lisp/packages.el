@@ -27,6 +27,7 @@
      google-contacts
      indium
      haskell-mode
+     highlight-indent-guides
      htmlize
      http
      hydra

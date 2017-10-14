@@ -200,6 +200,7 @@ See `haskell-process-wrapper-function' for details."
   (pjones:prog-mode-hook)
   (subword-mode)
   (abbrev-mode)
+  (highlight-indent-guides-mode)
 
   ;; Linting and checking:
   (dante-mode)
