@@ -29,7 +29,7 @@
  '(circe-default-realname "Peter J. Jones")
  '(circe-reduce-lurker-spam t)
  '(circe-server-auto-join-default-type :immediate)
- '(circe-format-self-say "◀ {nick}: {body}")
+ '(circe-format-self-say "◉ {nick}: {body}")
  '(circe-format-say "▶ {nick}: {body}")
  `(circe-prompt-string ,(concat (propertize "❯" 'face 'circe-prompt-face) " "))
  '(circe-default-quit-message "Bye")
