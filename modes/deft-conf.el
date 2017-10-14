@@ -6,5 +6,5 @@
 (custom-set-variables
   `(deft-directory ,(expand-file-name "~/notes/"))
   '(deft-recursive t)
-  '(deft-extensions ("md" "txt" "org"))
+  '(deft-extensions (quote ("md" "txt" "org")))
   '(deft-auto-save-interval 0))
