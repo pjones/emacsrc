@@ -20,11 +20,14 @@
      deft
      dictionary
      dired-collapse
+     dired-narrow
+     dired-subtree
      flx
      flx-ido
      flycheck
      gist
      google-contacts
+     graphviz-dot-mode
      indium
      haskell-mode
      highlight-indent-guides

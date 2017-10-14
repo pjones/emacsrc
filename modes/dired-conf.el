@@ -1,7 +1,8 @@
 ;;; dired-conf.el -- Settings for dired-mode
 (eval-when-compile
   (require 'dired)
-  (require 'dired-collapse))
+  (require 'dired-narrow)
+  (require 'dired-subtree))
 
 ;; Load dired-aux at runtime.
 (require 'dired-aux)
@@ -35,14 +36,8 @@
 current dired buffer.  Otherwise visit the file under point."
   (interactive)
   (let ((name (dired-get-file-for-visit)))
-    (if (file-directory-p name) (dired-maybe-insert-subdir name)
+    (if (file-directory-p name) (dired-subtree-insert)
       (dired-find-file))))
-
-(defun pjones:dired-show-only-matching-files (regexp)
-  (interactive "sFiles to show (regexp): ")
-  (dired-mark-files-regexp regexp)
-  (dired-toggle-marks)
-  (dired-do-kill-lines))
 
 (defun pjones:dired-remove-total-lines ()
   "Remove those useless \"total\" lines from ls."
@@ -65,14 +60,20 @@ find-file."
 
 (defun pjones:dired-load-hook ()
   (dired-hide-details-mode) ;; Hide details by default
-  (dired-collapse-mode)     ;; And collapse dirs with one entry
   (pjones:dired-extra-keywords)
 
   (let ((map dired-mode-map))
     (define-key map (kbd "C-x C-f")  'pjones:dired-find-file)
+    (define-key map (kbd "C-x n s")  'dired-subtree-narrow)
+    (define-key map (kbd "C-c ^")    'dired-up-directory)
     (define-key map (kbd "C-m")      'pjones:dired-insert-or-visit)
+    (define-key map (kbd "TAB")      'dired-subtree-cycle)
+    (define-key map (kbd "^")        'dired-subtree-up)
     (define-key map (kbd "e")        'dired-toggle-read-only)
-    (define-key map [?%?h]           'pjones:dired-show-only-matching-files)
+    (define-key map (kbd "k")        'dired-subtree-remove)
+    (define-key map (kbd "n")        'dired-subtree-next-sibling)
+    (define-key map (kbd "p")        'dired-subtree-previous-sibling)
+    (define-key map [?%?/]           'dired-narrow-regexp)
     (define-key map
       (vector 'remap 'end-of-buffer) 'pjones:dired-jump-to-bottom)))
 
