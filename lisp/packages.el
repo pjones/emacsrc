@@ -12,6 +12,7 @@
      bm
      circe
      circe-notifications
+     color-theme-sanityinc-tomorrow
      company
      company-flx
      company-ghc
