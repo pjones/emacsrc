@@ -4,6 +4,7 @@
   (require 'etags)
   (require 'flyspell)
   (require 'ispell)
+  (require 'linum)
   (require 'server)
   (require 'subword)
   (require 'term))
@@ -211,14 +212,28 @@ destination for the next jump to point."
       (switch-to-buffer (marker-buffer old))
       (goto-char old))))
 
-(defun pjones:register-get-set (&optional set)
-  "Insert a register into the buffer and move point to the end of
-the insertion.  With a prefix argument set the register instead."
-  (interactive "P")
-  (if set (let ((current-prefix-arg nil))
-            (call-interactively 'copy-to-register))
-    (let ((current-prefix-arg '(4)))
-      (call-interactively 'insert-register))))
+(defun pjones:register-get-set (register start end &optional set)
+  "General purpose register function.
+
+Inserts or jumps to REGISTER, unless SET is non-nil.  If SET is
+non-nil then either set a register or record the current point.
+If the mark is active the use START and END to record the current
+mark in REGISTER.  Otherwise record the current point in
+REGISTER."
+  (interactive (list (register-read-with-preview "Register: ")
+                     (and mark-active (region-beginning))
+                     (and mark-active (region-end))
+                     current-prefix-arg))
+    (cond
+     ((and set mark-active)
+      (set-register register (filter-buffer-substring start end)))
+     (set
+      (set-register register (point-marker)))
+     (t
+      (let ((val (get-register register)))
+        (if (markerp val) (progn (pjones:push-tag-mark)
+                                 (jump-to-register register))
+          (insert-register register t))))))
 
 (defun pjones:kill-file-name (&optional full-path)
   "Create a new kill containing the base name of the buffer's
@@ -239,6 +254,7 @@ file.  With a prefix argument kill the entire path for the file."
   "Show line numbers temporarily while prompting for the line
 number input."
   (interactive)
+  (require 'linum-mode)
   (let ((showing-line-numbers linum-mode))
     (unwind-protect (progn
       (unless showing-line-numbers (linum-mode 1))
