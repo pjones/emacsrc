@@ -254,7 +254,7 @@ file.  With a prefix argument kill the entire path for the file."
   "Show line numbers temporarily while prompting for the line
 number input."
   (interactive)
-  (require 'linum-mode)
+  (require 'linum)
   (let ((showing-line-numbers linum-mode))
     (unwind-protect (progn
       (unless showing-line-numbers (linum-mode 1))
