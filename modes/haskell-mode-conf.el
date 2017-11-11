@@ -196,7 +196,9 @@ See `haskell-process-wrapper-function' for details."
         beginning-of-defun-function 'pjones:haskell-beginning-of-defun
         end-of-defun-function 'pjones:haskell-end-of-defun)
 
+  ;; Indentation.
   (haskell-indentation-mode)
+
   (pjones:prog-mode-hook)
   (subword-mode)
   (abbrev-mode)
@@ -211,9 +213,9 @@ See `haskell-process-wrapper-function' for details."
   (make-local-variable 'company-backends)
   (add-to-list 'company-backends '(company-dabbrev company-abbrev))
 
-  (define-abbrev-table 'haskell-mode-abbrev-table
-    '(("_P" "" pjones:haskell-insert-pragma)))
-  (setq local-abbrev-table haskell-mode-abbrev-table)
+  ;; (define-abbrev-table 'haskell-mode-abbrev-table
+  ;;   '(("_P" "" pjones:haskell-insert-pragma)))
+  ;; (setq local-abbrev-table haskell-mode-abbrev-table)
 
   ;; Undo some stupid haskell-mode bindings.
   (let ((map haskell-indentation-mode-map))
