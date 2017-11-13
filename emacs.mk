@@ -34,6 +34,7 @@ uninstall:
 ##############################################################################
 $(DEST)/%.elc: %.el
 	@ echo emacs compile $<
+	@ mkdir -p $(HOME)/.emacs.d/share/emacs/site-lisp
 	@ $(EMACS) $(EMACS_FLAGS) $< > $(EMACS_OUTPUT_FILE) 2>&1; exit
 ifeq ($(IGNORE_EMACS_WARNINGS),)
 	@ if [ `$(CHECK_EMACS_OUTPUT) < $(EMACS_OUTPUT_FILE)` -ne 0 ]; then \

@@ -2,8 +2,7 @@
 (require 'package)
 
 (defvar pjones:package-archives
-  '(("melpa"     . "http://melpa.org/packages/")
-    ("marmalade" . "http://marmalade-repo.org/packages/"))
+  '(("melpa"     . "http://melpa.org/packages/"))
   "List of package archives to use with Emacs.")
 
 (defvar pjones:packages
