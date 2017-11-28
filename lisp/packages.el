@@ -40,6 +40,8 @@
      markdown-mode
      nix-mode
      no-littering
+     org
+     org-tree-slide
      passmm
      rainbow-mode
      rhtml-mode
