@@ -56,12 +56,12 @@
 
       ;; Emphasis
       org-emphasis-alist
-      `(("_" bold)
-        ("*" italic)
-        ("=" underline)
-        ("`" org-verbatim verbatim)
+      `(("*" bold)
+        ("/" italic)
+        ("_" underline)
+        ("=" org-verbatim verbatim)
         ("~" org-code verbatim)
-        ("+" (:strike-through t)))
+        ("-" (:strike-through t)))
 
       ;; TODO keyword faces
       org-todo-keyword-faces
