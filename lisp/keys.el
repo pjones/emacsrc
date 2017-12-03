@@ -24,6 +24,7 @@
 (global-set-key (kbd "C-M-s")   'isearch-forward)
 (global-set-key (kbd "C-M-r")   'isearch-backward)
 (global-set-key (kbd "C-w")     'pjones:kill-region-or-backward-kill-word)
+(global-set-key (kbd "M-x")     'smex)
 (global-set-key (kbd "M-z")     'zap-up-to-char)
 (global-set-key (kbd "M-S-z")   'zap-to-char)
 (global-set-key (kbd "C-`")     'next-error)

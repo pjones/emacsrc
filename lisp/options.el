@@ -56,13 +56,6 @@ placed into a different frame than the current one."
     ((string= name "*compilation*") t)
     ((string= name "*grep*") t)))
 
-
-(defun pjones:place-buffer-in-new-frame (name action)
-  "Called by `display-buffer' to decide if a new buffer should be
-placed into a different frame than the current one."
-  (cond
-   ((string-match "^\\*magit:" name))))
-
 (defun pjones:circe-windows-no-splitting (name action)
   "Keep Circe from splitting windows."
   (with-current-buffer name
@@ -70,19 +63,13 @@ placed into a different frame than the current one."
 
 (add-to-list 'display-buffer-alist
   '(pjones:place-buffer-in-dedicated-frame
-    (display-buffer-reuse-window display-buffer-pop-up-frame)
+    (display-buffer-reuse-window
+     display-buffer-pop-up-frame)
     (reusable-frames      . t)
     (inhibit-same-window  . nil)
     (inhibit-switch-frame . t)
     (pop-up-frame-parameters .
       ((unsplittable . t) (name . "emacs-popup")))))
-
-(add-to-list 'display-buffer-alist
-  '(pjones:place-buffer-in-new-frame
-    (display-buffer-reuse-window display-buffer-pop-up-frame)
-    (reusable-frames      . t)
-    (inhibit-same-window  . nil)
-    (inhibit-switch-frame . t)))
 
 (add-to-list 'display-buffer-alist
   '(pjones:circe-windows-no-splitting
@@ -100,16 +87,6 @@ placed into a different frame than the current one."
                      (dired-directory
                       (if (listp dired-directory) (car dired-directory) dired-directory)))))
     (concat "Emacs: " (buffer-name) " " file server)))
-
-(defun pjones:maybe-dedicate-frame (frame)
-  "If a new frame only contains a window for which
-'pjones:place-buffer-in-new-frame' returns non-nil, make the
-window dedicated."
-  (let ((wins (window-list frame nil)))
-    (when (and (= (length wins) 1)
-               (pjones:place-buffer-in-new-frame
-                (buffer-name (window-buffer (car wins))) nil))
-      (set-window-dedicated-p (car wins) t))))
 
 (defun pjones:configure-new-frame (&optional frame)
   "Hook to configure a new frame."
@@ -138,7 +115,6 @@ window dedicated."
 ;; Add all of the hooks from above.
 (add-hook 'after-init-hook 'pjones:configure-new-frame)
 (add-hook 'after-make-frame-functions 'pjones:configure-new-frame)
-(add-hook 'after-make-frame-functions 'pjones:maybe-dedicate-frame)
 (add-hook 'after-init-hook #'global-flycheck-mode)
 (add-hook 'find-file-hook 'pjones:find-file-hook)
 
