@@ -34,6 +34,7 @@
      htmlize
      http
      hydra
+     ido-completing-read+
      inf-ruby
      js2-mode
      magit
