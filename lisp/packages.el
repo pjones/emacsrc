@@ -44,6 +44,7 @@
      org
      org-tree-slide
      passmm
+     powerline
      rainbow-mode
      rhtml-mode
      ruby-end
