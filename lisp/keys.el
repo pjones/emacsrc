@@ -52,7 +52,8 @@
 (global-set-key (kbd "C-c g")     'rgrep)
 ;                     C-c h        Mode-specific hydra.
 (global-set-key (kbd "C-c H")     'highline-mode)
-(global-set-key (kbd "C-c i")     'pjones:uuid)
+(global-set-key (kbd "C-c i")     'idomenu)
+(global-set-key (kbd "C-c I")     'pjones:uuid)
 (global-set-key (kbd "C-c j")     'pjones:indium-start)
 (global-set-key (kbd "C-c J")     'pjones:journal)
 (global-set-key (kbd "C-c l")     'pjones:jump-back-and-forth)

@@ -7,7 +7,10 @@
   "List of package archives to use with Emacs.")
 
 (defvar pjones:packages
-  '( bbdb
+  '( all-the-icons
+     all-the-icons-dired
+     all-the-icons-gnus
+     bbdb
      beginend
      bm
      circe
@@ -35,6 +38,7 @@
      http
      hydra
      ido-completing-read+
+     idomenu
      inf-ruby
      js2-mode
      magit

@@ -2,6 +2,7 @@
 (eval-when-compile
   (require 'dired)
   (require 'dired-narrow)
+  (require 'all-the-icons-dired)
   (require 'dired-subtree))
 
 ;; Load dired-aux at runtime.
@@ -79,6 +80,7 @@ find-file."
 
 (add-hook 'dired-mode-hook 'pjones:dired-load-hook)
 (add-hook 'dired-mode-hook 'turn-on-gnus-dired-mode)
+(add-hook 'dired-mode-hook 'all-the-icons-dired-mode)
 (add-hook 'dired-after-readin-hook 'pjones:dired-remove-total-lines)
 
 ;; Local Variables:
