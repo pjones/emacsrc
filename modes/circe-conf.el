@@ -59,7 +59,7 @@
      :host "freenode.pmade.com" :port 6697 :use-tls t
      :user "pjones/freenode"    :nick "pmade"
      :pass ,pjones-irc-password
-     :channels ("#emacs" "#nixos" "#xmonad" "#haskell"))
+     :channels ("#emacs" "#nixos" "#haskell"))
     ("bitlbee"
      :host "bitlbee.pmade.com" :port 6697 :use-tls t
      :user "pjones/bitlbee"    :nick "pjones"
@@ -75,7 +75,9 @@
 First set urgency hints on the current frame then pass the NICK,
 BODY, and CHANNEL through to the default notification system."
   (let ((circe-notifications-notify-function nil))
-    (pjones:urgency-hint (selected-frame) t)
+    (with-current-buffer (or (and (bufferp channel) channel)
+                             (and (bufferp nick) nick))
+      (pjones:urgency-hint (selected-frame) t))
     (circe-notifications-notify nick body channel)))
 
 (defun pjones:ignore-buffer (&optional name)
