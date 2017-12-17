@@ -24,6 +24,7 @@
      dictionary
      dired-collapse
      dired-narrow
+     dired-sidebar
      dired-subtree
      flx
      flx-ido
