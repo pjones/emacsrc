@@ -76,7 +76,8 @@ First set urgency hints on the current frame then pass the NICK,
 BODY, and CHANNEL through to the default notification system."
   (let ((circe-notifications-notify-function nil))
     (with-current-buffer (or (and (bufferp channel) channel)
-                             (and (bufferp nick) nick))
+                             (and (bufferp nick) nick)
+                             (current-buffer))
       (pjones:urgency-hint (selected-frame) t))
     (circe-notifications-notify nick body channel)))
 
