@@ -232,7 +232,7 @@ REGISTER."
      (t
       (let ((val (get-register register)))
         (if (markerp val) (progn (pjones:push-tag-mark)
-                                 (jump-to-register register))
+                                 (switch-to-buffer (marker-buffer val)))
           (insert-register register t))))))
 
 (defun pjones:kill-file-name (&optional full-path)
