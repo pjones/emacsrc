@@ -45,6 +45,7 @@
      magit
      markdown-mode
      nix-mode
+     noccur
      no-littering
      org
      org-tree-slide
