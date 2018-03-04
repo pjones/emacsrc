@@ -9,7 +9,7 @@
   '(ido-enable-flex-matching t)
   '(ido-enable-prefix nil)
   '(ido-max-prospects 10)
-  '(ido-use-filename-at-point nil)
+  '(ido-use-filename-at-point 'guess)
   '(ido-use-virtual-buffers t))
 
 (defun pjones:ido-setup-hook ()
