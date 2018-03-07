@@ -33,11 +33,13 @@
 (global-set-key (kbd "C-+")     'text-scale-increase)
 (global-set-key (kbd "C--")     'text-scale-decrease)
 (global-set-key (kbd "C-M-SPC") 'just-one-space)
+(global-set-key (kbd "M-<tab>") 'hs-toggle-hiding)
 
 ;; Remapping existing keys.
 (global-set-key [remap goto-line] 'pjones:goto-line-with-feedback)
 
 ;; User Key Bindings (using the C-c prefix)
+(global-set-key (kbd "C-c SPC")   'just-one-space)
 (global-set-key (kbd "C-c ;")     'pjones:auto-correct-previous-word)
 (global-set-key (kbd "C-c ,")     'pjones:push-tag-mark)
 (global-set-key (kbd "C-<prior>") 'beginning-of-buffer)
