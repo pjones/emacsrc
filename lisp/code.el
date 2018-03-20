@@ -63,8 +63,8 @@
   (save-place-mode)
   (yas-minor-mode)
   (pjones:add-fixme-lock)
-  (add-hook 'after-save-hook
-            'executable-make-buffer-file-executable-if-script-p))
+  (add-hook 'after-save-hook 'delete-trailing-whitespace)
+  (add-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p))
 
 (defun pjones:add-programming-hook (mode-hook)
   (add-hook mode-hook 'pjones:prog-mode-hook))
@@ -72,7 +72,7 @@
 (defun pjones:after-save-reload-browser ())
 
 (defun pjones:indium-start ()
-  "Start a Jade session."
+  "Start an Indium session."
   (interactive)
   (require 'indium)
   (call-interactively 'indium-connect-to-chrome))

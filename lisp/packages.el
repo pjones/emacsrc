@@ -23,6 +23,7 @@
      deft
      dictionary
      dired-collapse
+     dired-filter
      dired-narrow
      dired-sidebar
      dired-subtree
@@ -30,6 +31,7 @@
      flx-ido
      flycheck
      gist
+     git-annex
      google-contacts
      graphviz-dot-mode
      indium
@@ -43,6 +45,7 @@
      inf-ruby
      js2-mode
      magit
+     magit-annex
      markdown-mode
      nix-mode
      noccur

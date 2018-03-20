@@ -1,6 +1,7 @@
 ;;; dired-conf.el -- Settings for dired-mode
 (eval-when-compile
   (require 'dired)
+  (require 'dired-filter)
   (require 'dired-narrow)
   (require 'all-the-icons-dired)
   (require 'dired-subtree))
@@ -81,6 +82,7 @@ find-file."
 (add-hook 'dired-mode-hook 'pjones:dired-load-hook)
 (add-hook 'dired-mode-hook 'turn-on-gnus-dired-mode)
 (add-hook 'dired-mode-hook 'all-the-icons-dired-mode)
+(add-hook 'dired-mode-hook 'dired-filter-mode)
 (add-hook 'dired-after-readin-hook 'pjones:dired-remove-total-lines)
 
 ;; Local Variables:
