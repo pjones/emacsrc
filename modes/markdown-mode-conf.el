@@ -16,29 +16,52 @@
   "Name of the directory used to hold git-annex files.")
 
 (defvar pjones:markdown-langs
-  '("ruby" "javascript" "html" "css")
+  '("ruby" "javascript" "html" "css" "haskell" "shell" "python")
   "List of pandoc languages I use.")
 
 (define-skeleton pjones:markdown-slide-notes
   "Add a div section for slide notes." nil
   "<div class=\"notes\">"
-  ?\n ?\n "  * " _
+  ?\n ?\n _
   ?\n ?\n "</div>")
 
-(defun pjones:markdown-slide-fenced-code-block (&optional with-insert)
-  "Insert a markdown fenced code block."
+(defun pjones:markdown-collect-token-names (file)
+  "Return a list of Edify token names found in FILE."
+  (let ((tokens nil))
+    (with-temp-buffer
+      (insert-file-contents file)
+      (goto-char (point-min))
+      (while (search-forward-regexp "<<: \\(.+\\)" nil t 1)
+        (setq tokens (append tokens (list (match-string 1)))))
+      tokens)))
+
+(defun pjones:markdown-slide-fenced-code-block (&optional with-insert with-token)
+  "Insert a markdown fenced code block.
+
+If WITH-INSERT is non-nil, prompt for a file path to insert.  If
+WITH-TOKEN is non-nil, prompt for a token name."
   (interactive "P")
   (let* ((indent (- (point) (save-excursion (forward-line 0) (point))))
          (prefix (make-string indent ? ))
-         (lang (ido-completing-read "Lang: " pjones:markdown-langs)))
-    (insert (concat "~~~ {." lang "}\n" prefix "\n" prefix "~~~\n"))
+         (lang (ido-completing-read "Lang: " pjones:markdown-langs))
+         (file (when with-insert
+                 (file-relative-name
+                  (read-file-name "Insert File Path: " nil nil t))))
+         (tokens (if (and with-insert with-token) (pjones:markdown-collect-token-names file)))
+         (token (if (and with-token tokens) (ido-completing-read "Token: " tokens))))
+    (insert (concat "~~~ {." lang
+                    (if with-insert (concat " insert=\"" file "\""))
+                    (if (and with-token token) (concat " token=\"" token "\""))
+                    "}\n" (unless with-insert (concat prefix "\n")) prefix "~~~\n"))
     (forward-line -2)
     (end-of-line)
     t))
 (put 'pjones:markdown-slide-fenced-code-block 'no-self-insert t)
 
 (defun pjones:markdown-slide-fenced-code-insert nil
-  (pjones:markdown-slide-fenced-code-block t))
+  "Wrapper around `pjones:markdown-slide-fenced-code-block'."
+  (interactive)
+  (pjones:markdown-slide-fenced-code-block t t))
 (put 'pjones:markdown-slide-fenced-code-insert 'no-self-insert t)
 
 (defun pjones:markdown-visual-line ()
