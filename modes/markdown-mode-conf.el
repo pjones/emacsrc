@@ -10,7 +10,6 @@
  '(markdown-reference-location 'end)
  '(markdown-command "nix-shell -p pandoc --run 'pandoc -f markdown -t html'"))
 
-
 (defvar pjones:markdown-attachments-directory
   "attachments"
   "Name of the directory used to hold git-annex files.")
@@ -98,10 +97,48 @@ directory.  Optionally renaming FILE to NAME."
      (file-name-nondirectory name)
      (file-relative-name dest))))
 
+(defhydra hydra-markdown (:hint nil) "
+^Links^                ^Cleanup^                 ^Headings^
+-----------------------------------------------------------------------
+   _C-c C-l_: insert   _C-c C-c n_: renumber     _C-c C-f_: down
+   _C-c C-d_: jump     _C-M-f_: demote           _C-c C-b_: up
+ _C-c C-c c_: check    _C-M-b_: promote          _C-c C-n_: down (any)
+   _C-c C-a_: attach   _C-c /_: complete         _C-c C-p_: up (any)
+
+^Render^               ^Insert^
+-----------------------------------------------------------------------
+ _b_: browser          _i_: fence insert
+ _l_: live             _c_: fence block
+ ^ ^                   _n_: note
+"
+  ("C-c C-l" markdown-insert-link :color blue)
+  ("C-c C-d" markdown-do :color blue)
+  ("C-c C-c c" markdown-check-refs :color blue)
+  ("C-c C-a" pjones:markdown-attach-file :color blue)
+  ("C-c C-c n" markdown-cleanup-list-numbers :color blue)
+  ("C-c C-f" markdown-outline-next-same-level :color blue)
+  ("C-c C-b" markdown-outline-previous-same-level :color blue)
+  ("C-c C-n" markdown-outline-next :color blue)
+  ("C-c C-p" markdown-outline-previous :color blue)
+  ("C-M-f" markdown-demote :color blue)
+  ("C-M-b" markdown-promote :color blue)
+  ("C-c /" markdown-complete :color blue)
+  ("b" markdown-preview :color blue)
+  ("l" markdown-live-preview-mode :color blue)
+  ("i" pjones:markdown-slide-fenced-code-insert :color blue)
+  ("c" pjones:markdown-slide-fenced-code-block :color blue)
+  ("n" pjones:markdown-slide-notes :color blue))
+
 (defun pjones:markdown-mode-hook ()
   "Set up key bindings and other crap for markdown-mode."
-  (local-set-key (kbd "C-c C-o") 'markdown-follow-link-at-point)
   (local-set-key (kbd "C-c C-a") 'pjones:markdown-attach-file)
+  (local-set-key (kbd "C-c /") 'markdown-complete)
+  (local-set-key (kbd "C-M-p") 'markdown-move-list-item-up)
+  (local-set-key (kbd "C-M-n") 'markdown-move-list-item-down)
+  (local-set-key (kbd "C-M-f") 'markdown-demote)
+  (local-set-key (kbd "C-M-b") 'markdown-promote)
+  (local-set-key (kbd "C-RET") 'markdown-insert-header-dwim)
+  (local-set-key (kbd "C-c h") 'hydra-markdown/body)
   (abbrev-mode)
   (whitespace-mode)
   (orgstruct-mode)
@@ -113,7 +150,7 @@ directory.  Optionally renaming FILE to NAME."
                                    company-dabbrev))
 
   (define-abbrev-table 'markdown-mode-abbrev-table
-    '(("nt" "" pjones:markdown-slide-notes)
+    '(("fn" "" pjones:markdown-slide-notes)
       ("fc" "" pjones:markdown-slide-fenced-code-block)
       ("fi" "" pjones:markdown-slide-fenced-code-insert)))
   (setq local-abbrev-table markdown-mode-abbrev-table)
