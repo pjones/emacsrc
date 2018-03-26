@@ -71,7 +71,7 @@ WITH-TOKEN is non-nil, prompt for a token name."
   (auto-fill-mode -1)
   (visual-line-mode))
 
-(defun pjones:markdown-attach-file (&optional file name)
+(defun pjones:markdown-attach-file (file &optional name)
   "Attach FILE to the current document.
 
 The given FILE will be attached to the current document by adding
@@ -79,10 +79,11 @@ it as a git-annex file in the `pjones:markdown-attachments-directory'
 directory.  Optionally renaming FILE to NAME."
   (interactive
    (let* ((f (read-file-name "Attach: " nil nil t))
-          (n (if current-prefix-arg (read-string "New Name: ")
-               (file-name-nondirectory f))))
+          (n (if current-prefix-arg
+                 (read-string "New Name: " (file-name-nondirectory f)))))
      (list f n)))
-  (let* ((dir (concat default-directory
+  (let* ((name (or name (file-name-nondirectory file)))
+         (dir (concat default-directory
                       pjones:markdown-attachments-directory))
          (dest (concat (file-name-as-directory dir)
                        (file-name-nondirectory name))))
