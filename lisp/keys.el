@@ -71,6 +71,7 @@
 (global-set-key (kbd "C-c w w")   'pjones:window-config)
 (global-set-key (kbd "C-c w u")   'winner-undo)
 (global-set-key (kbd "C-c w r")   'winner-redo)
+(global-set-key (kbd "C-c w s")   'dired-sidebar-toggle-sidebar)
 (global-set-key (kbd "C-c w t")   'pjones:transpose-windows)
 
 ;; C-z is used by my window manager.
