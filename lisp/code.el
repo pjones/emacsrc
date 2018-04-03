@@ -61,7 +61,6 @@
   (flyspell-prog-mode)
   (electric-pair-mode)
   (save-place-mode)
-  (yas-minor-mode)
   (pjones:add-fixme-lock)
   (add-hook 'after-save-hook 'delete-trailing-whitespace)
   (add-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p))

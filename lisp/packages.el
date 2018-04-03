@@ -7,11 +7,7 @@
   "List of package archives to use with Emacs.")
 
 (defvar pjones:packages
-  '( all-the-icons
-     all-the-icons-dired
-     all-the-icons-gnus
-     bbdb
-     beginend
+  '( beginend
      bm
      circe
      circe-notifications
@@ -19,10 +15,11 @@
      company
      company-flx
      company-ghc
+     company-quickhelp
+     company-statistics
      dante
      deft
      dictionary
-     dired-collapse
      dired-filter
      dired-narrow
      dired-sidebar
@@ -48,20 +45,19 @@
      magit-annex
      markdown-mode
      nix-mode
+     nlinum
      noccur
      no-littering
      org
      org-tree-slide
      passmm
-     powerline
+     projectile
      rainbow-mode
-     rhtml-mode
      ruby-end
      scad-mode
      smex
      smtpmail-multi
      yaml-mode
-     yasnippet
    )
   "A list of packages to ensure are installed at launch.")
 
