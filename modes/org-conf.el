@@ -11,91 +11,84 @@
 (require 'org-id)
 
 ;; General Org Settings
-(setq org-log-done t
-      org-reverse-note-order t
-      org-deadline-warning-days 14
-      org-hide-leading-stars t
-      org-blank-before-new-entry '((heading . auto) (plain-list-item . true))
-      org-list-empty-line-terminates-plain-lists t
-      org-use-fast-todo-selection t
-      org-use-fast-tag-selection 'auto
-      org-fast-tag-selection-single-key t
-      org-special-ctrl-a/e t
-      org-special-ctrl-k t
-      org-M-RET-may-split-line t
-      org-time-clocksum-format "%02d:%02d"
-      org-clock-into-drawer "CLOCK"
-      org-clock-clocked-in-display 'frame-title
-      org-log-into-drawer "LOGBOOK"
-      org-tags-exclude-from-inheritance nil
-      org-completion-use-ido t
-      org-goto-interface 'outline-path-completion
-      org-outline-path-complete-in-steps t
-      org-id-link-to-org-use-id 'create-if-interactive-and-no-custom-id
-      org-edit-src-persistent-message nil
-      org-src-window-setup 'current-window
+(custom-set-variables
+ ;; Visual Settings:
+ '(org-hide-leading-stars t)
 
-      ;; Showing context
-      org-show-hierarchy-above '((default . t))
-      org-show-following-heading '((default . t))
-      org-show-siblings '((default . t))
-      org-show-entry-below '((default . t))
+ ;; Behavior Settings:
+ '(org-log-done (quote note))
+ '(org-reverse-note-order nil)
+ '(org-deadline-warning-days 14)
+ '(org-list-empty-line-terminates-plain-lists nil)
+ '(org-blank-before-new-entry (quote (heading . auto) (plain-list-item . true)))
+ '(org-use-fast-todo-selection t)
+ '(org-use-fast-tag-selection (quote auto))
+ '(org-fast-tag-selection-single-key t)
+ '(org-special-ctrl-a/e t)
+ '(org-special-ctrl-k t)
+ '(org-M-RET-may-split-line t)
+ '(org-time-clocksum-format "%02d:%02d")
+ '(org-clock-into-drawer t)
+ '(org-clock-clocked-in-display (quote both))
+ '(org-log-into-drawer t)
+ '(org-tags-exclude-from-inheritance nil)
+ '(org-completion-use-ido t)
+ '(org-goto-interface 'outline-path-completion)
+ '(org-outline-path-complete-in-steps t)
+ '(org-id-link-to-org-use-id t)
+ '(org-edit-src-persistent-message nil)
+ '(org-src-window-setup (quote current-window))
 
-      ;; Following Links
-      org-link-frame-setup
-      '((vm   . vm-visit-folder-other-frame)
-        (gnus . org-gnus-no-new-news)
-        (file . find-file)
-        (wl   . wl-other-frame))
+ ;; Showing context
+ '(org-show-hierarchy-above t)
+ '(org-show-following-heading t)
+ '(org-show-siblings t)
+ '(org-show-entry-below t)
 
-      org-file-apps
-      '((auto-mode . emacs)
-        ("\\.mm\\'" . default)
-        ("\\.x?html?\\'" . default)
-        ("\\.pdf\\'" . "zathura %s"))
+ ;; Following Links
+ '(org-link-frame-setup (quote ((file . find-file))))
+ '(org-file-apps (quote ((auto-mode . emacs)
+                         ("\\.mm\\'" . default)
+                         ("\\.x?html?\\'" . default)
+                         ("\\.pdf\\'" . "zathura %s"))))
 
-      ;; Emphasis
-      org-emphasis-alist
-      `(("*" bold)
-        ("/" italic)
-        ("_" underline)
-        ("=" org-verbatim verbatim)
-        ("~" org-code verbatim)
-        ("-" (:strike-through t)))
+ ;; TODO keyword faces
+ '(org-todo-keyword-faces
+   (quote (("NEXT"    . (:inherit 'mode-line :background "#268bd2"))
+           ("WAITING" . (:inherit 'mode-line :background "#d33682"))
+           ("DEPENDS" . (:inherit 'mode-line :background "#2aa198")))))
 
-      ;; TODO keyword faces
-      org-todo-keyword-faces
-      '(("NEXT"    . (:inherit 'mode-line :background "#268bd2"))
-        ("DAILY"   . (:inherit 'mode-line :background "#859900"))
-        ("WAITING" . (:inherit 'mode-line :background "#d33682"))
-        ("DEPENDS" . (:inherit 'mode-line :background "#2aa198"))))
+ ;; Stuff for org-agenda.
+ '(org-agenda-files (quote ("~/notes/agenda/projects.org")))
+ '(org-agenda-todo-ignore-with-date t)
+ '(org-agenda-todo-ignore-timestamp t)
+ '(org-agenda-todo-ignore-scheduled t)
+ '(org-agenda-skip-scheduled-if-done t)
+ '(org-agenda-skip-deadline-if-done t)
+ '(org-agenda-start-with-follow-mode t)
+ '(org-agenda-time-leading-zero t)
+ '(org-agenda-span (quote fortnight))
+ '(org-stuck-projects (quote ("+LEVEL=3/-DONE"
+                              ("TODO" "NEXT" "WAITING" "DEPENDS")
+                              nil "")))
+ '(org-agenda-custom-commands
+   (quote (("p" "Projects" ((agenda)
+                            (todo "TODO|NEXT")
+                            (todo "WAITING")
+                            (stuck)))))))
 
-;; Need to tell org-mode to update org-emphasis-alist
-(org-set-emph-re 'org-emphasis-alist org-emphasis-alist)
+;; (defadvice org-agenda (around pjones:agenda-remember-windows activate)
+;;   (window-configuration-to-register :org-agenda-windows)
+;;   ad-do-it
+;;   (jump-to-register :org-agenda-windows)
+;;   (set-window-buffer (selected-window) "*Org Agenda*"))
 
-;; Stuff for org-agenda.
-(setq org-agenda-files '("~/documents/kb/lists/projects.org")
-      org-stuck-projects '("+LEVEL=2/-DONE"
-                           ("TODO" "NEXT" "DAILY" "WAITING" "DEPENDS")
-                           nil "")
-      org-agenda-custom-commands
-      '(("p" "Projects" ((todo "TODO|NEXT")
-                         (todo "DAILY")
-                         (todo "WAITING")
-                         (stuck)))))
-
-(defadvice org-agenda (around pjones:agenda-remember-windows activate)
-  (window-configuration-to-register :org-agenda-windows)
-  ad-do-it
-  (jump-to-register :org-agenda-windows)
-  (set-window-buffer (selected-window) "*Org Agenda*"))
-
-(defun pjones:org-agenda-quit ()
-  "Restores the previous window configuration and kills the
-agenda buffer."
-  (interactive)
-  (org-agenda-quit)
-  (jump-to-register :org-agenda-windows))
+;; (defun pjones:org-agenda-quit ()
+;;   "Restores the previous window configuration and kills the
+;; agenda buffer."
+;;   (interactive)
+;;   (org-agenda-quit)
+;;   (jump-to-register :org-agenda-windows))
 
 (defun pjones:org-mode-hook ()
   ;; Extra Bindings
@@ -133,9 +126,9 @@ agenda buffer."
 
 (add-hook 'org-mode-hook 'pjones:org-mode-hook)
 
-(defun pjones:org-agenda-mode-hook ()
-  (define-key org-agenda-mode-map (kbd "q") 'pjones:org-agenda-quit))
-(add-hook 'org-agenda-mode-hook 'pjones:org-agenda-mode-hook)
+;; (defun pjones:org-agenda-mode-hook ()
+;;   (define-key org-agenda-mode-map (kbd "q") 'pjones:org-agenda-quit))
+;; (add-hook 'org-agenda-mode-hook 'pjones:org-agenda-mode-hook)
 
 (defun pjones:org-hide-others ()
   "Close all headings except the heading at point."
