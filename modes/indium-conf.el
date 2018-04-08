@@ -24,7 +24,7 @@
   "Configure indium-interaction-mode."
   (let ((map indium-interaction-mode-map))
     (define-key map (kbd "C-M-x")   'indium-eval-last-node)
-    (define-key map (kbd "C-x C-s") 'indium-eval-last-node)
+    (define-key map (kbd "C-x C-s") 'pjones:indium-eval-buffer)
     (define-key map (kbd "C-c C-c") 'pjones:indium-eval-buffer-and-close)
     (define-key map (kbd "C-c C-b") 'pjones:indium-eval-buffer)
     (define-key map (kbd "C-c C-p") 'indium-inspect-last-node)))

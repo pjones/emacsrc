@@ -70,11 +70,26 @@
 
 (defun pjones:after-save-reload-browser ())
 
-(defun pjones:indium-start ()
-  "Start an Indium session."
+(defun pjones:indium-start-chrome ()
+  "Start an Indium session for Chrome."
   (interactive)
+  (pjones:indium-start "chrome"))
+
+(defun pjones:indium-start-node ()
+  "Start an Indium session for Node.js."
+  (interactive)
+  (pjones:indium-start "node"))
+
+(defun pjones:indium-start (type)
+  "Start an Indium process for TYPE."
   (require 'indium)
-  (call-interactively 'indium-connect-to-chrome))
+  (cond
+   ((get-buffer "*JS REPL*")
+    (switch-to-buffer "*JS REPL*"))
+   ((string= type "chrome")
+    (indium-run-node "node"))
+   ((string= type "node")
+    (indium-run-node "node"))))
 
 (provide 'code)
 ;;; code.el ends here
