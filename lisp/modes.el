@@ -3,6 +3,7 @@
 
 ;; Global minor modes
 (winner-mode)
+(god-mode)
 
 ;; Atomically load my per-mode configuration files
 (dolist (file (directory-files pjones:modes-dir t))

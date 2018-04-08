@@ -29,6 +29,7 @@
      flycheck
      gist
      git-annex
+     god-mode
      google-contacts
      graphviz-dot-mode
      indium
