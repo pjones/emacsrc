@@ -304,6 +304,40 @@ current buffer after point."
   (interactive)
   (enable-theme (cadr custom-enabled-themes)))
 
+(defun pjones:switch-window-then-delete ()
+  "Interactively delete a window."
+  (interactive)
+  (let ((switch-window-threshold 1))
+    (switch-window-then-delete)))
+
+(defhydra hydra-launch (:hint nil :color blue)
+  "
+^OrgMode^      ^Indium^        ^Other^
+-----------------------------------------
+ _a_: agenda    _j c_: chrome   _g_: app
+ _c_: capture   _j n_: node
+"
+  ("a"   org-agenda)
+  ("c"   org-capture)
+  ("j c" pjones:indium-start-chrome)
+  ("j n" pjones:indium-start-node)
+  ("g"   pjones:start-primary-app))
+
+(defhydra hydra-window-ops (:hint nil :color blue)
+  "
+^Windows^        ^Config^          ^Sidebar^    ^Theme^
+^^^^^^^^^^^-------------------------------------------------
+ _t_: transpose   _u_: undo         _d_: dired   _T_: switch
+ ^ ^              _r_: redo
+ ^ ^              _j_: save/restore
+"
+  ("t" 'pjones:transpose-windows)
+  ("u" 'winner-undo)
+  ("r" 'winner-redo)
+  ("j" 'pjones:window-config)
+  ("d" 'dired-sidebar-toggle-sidebar)
+  ("T" 'pjones:toggle-theme))
+
 ;; Local Variables:
 ;; byte-compile-warnings: (not noruntime)
 ;; End:

@@ -58,6 +58,7 @@
      scad-mode
      smex
      smtpmail-multi
+     switch-window
      yaml-mode
    )
   "A list of packages to ensure are installed at launch.")
