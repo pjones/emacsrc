@@ -20,7 +20,7 @@
  '(org-reverse-note-order nil)
  '(org-deadline-warning-days 14)
  '(org-list-empty-line-terminates-plain-lists nil)
- '(org-blank-before-new-entry (quote (heading . auto) (plain-list-item . true)))
+ '(org-blank-before-new-entry (quote ((heading . true) (plain-list-item . nil))))
  '(org-use-fast-todo-selection t)
  '(org-use-fast-tag-selection (quote auto))
  '(org-fast-tag-selection-single-key t)
@@ -52,14 +52,38 @@
                          ("\\.x?html?\\'" . default)
                          ("\\.pdf\\'" . "zathura %s"))))
 
- ;; TODO keyword faces
+ ;; Tags:
+ '(org-tag-persistent-alist
+   (quote (("@computer"  . ?c)
+           ("@desk"      . ?d)
+           ("@email"     . ?e)
+           ("@home"      . ?h)
+           ("@online"    . ?o)
+           ("@phone"     . ?p)
+           ("@plane"     . ?P)
+           ("@traveling" . ?t)
+           (:startgroup  . nil)
+           ("5m"         . ?5)
+           ("30m"        . ?3)
+           ("1h"         . ?1)
+           (:endgroup    . nil))))
+
+ ;; TODO keywords and faces:
+ '(org-todo-keywords
+   (quote ((sequence "TODO(t)" "|" "DONE(d)")
+           (sequence "NEXT(n)" "WAITING(w)" "DEPENDS(s)" "|" "DONE(d)" "CANCELLED(c)"))))
+
  '(org-todo-keyword-faces
    (quote (("NEXT"    . (:inherit 'mode-line :background "#268bd2"))
            ("WAITING" . (:inherit 'mode-line :background "#d33682"))
            ("DEPENDS" . (:inherit 'mode-line :background "#2aa198")))))
 
  ;; Stuff for org-agenda.
- '(org-agenda-files (quote ("~/notes/agenda/projects.org")))
+ '(org-agenda-files
+   (quote ("~/notes/agenda/projects.org"
+           "~/notes/agenda/inbox.org")))
+
+
  '(org-agenda-todo-ignore-with-date t)
  '(org-agenda-todo-ignore-timestamp t)
  '(org-agenda-todo-ignore-scheduled t)
@@ -98,9 +122,7 @@
   (org-defkey org-mode-map "\C-\M-S-b" 'org-shiftmetaleft)
   (org-defkey org-mode-map "\C-\M-p"   'org-metaup)
   (org-defkey org-mode-map "\C-\M-n"   'org-metadown)
-  (org-defkey org-mode-map "\C-c;"     'flyspell-auto-correct-previous-word)
 
-  (org-defkey org-mode-map "\C-c."               'pjones:push-tag-mark)
   (org-defkey org-mode-map "\C-ce"               'pjones:org-edit-special)
   (org-defkey org-mode-map "\C-c0"               'pjones:org-hide-all)
   (org-defkey org-mode-map "\C-c1"               'pjones:org-hide-others)
