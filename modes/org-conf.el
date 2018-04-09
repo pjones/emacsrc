@@ -20,7 +20,7 @@
  '(org-reverse-note-order nil)
  '(org-deadline-warning-days 14)
  '(org-list-empty-line-terminates-plain-lists nil)
- '(org-blank-before-new-entry (quote ((heading . true) (plain-list-item . nil))))
+ '(org-blank-before-new-entry (quote ((heading . nil) (plain-list-item . nil))))
  '(org-use-fast-todo-selection t)
  '(org-use-fast-tag-selection (quote auto))
  '(org-fast-tag-selection-single-key t)
@@ -50,6 +50,7 @@
  '(org-file-apps (quote ((auto-mode . emacs)
                          ("\\.mm\\'" . default)
                          ("\\.x?html?\\'" . default)
+                         ("\\.mp4\\'" . "vlc %s")
                          ("\\.pdf\\'" . "zathura %s"))))
 
  ;; Tags:
