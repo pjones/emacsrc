@@ -5,6 +5,9 @@
   (require 'whitespace)
   (require 'company))
 
+;; Used for a few things.
+(require 'org)
+
 ;; Basic settings.
 (custom-set-variables
  '(markdown-reference-location 'end)
@@ -70,6 +73,13 @@ WITH-TOKEN is non-nil, prompt for a token name."
   (auto-fill-mode -1)
   (visual-line-mode))
 
+(defun pjones:markdown-follow-thing-at-point (arg)
+  "Call (and pass ARG) to `markdown-follow-thing-at-point'."
+  (interactive "P")
+  (cl-letf (((symbol-function 'find-file)
+             (lambda (name) (org-open-file name))))
+    (markdown-follow-thing-at-point arg)))
+
 (defun pjones:markdown-attach-file (file &optional name)
   "Attach FILE to the current document.
 
@@ -132,13 +142,14 @@ directory.  Optionally renaming FILE to NAME."
 (defun pjones:markdown-mode-hook ()
   "Set up key bindings and other crap for markdown-mode."
   (local-set-key (kbd "C-c C-a") 'pjones:markdown-attach-file)
-  (local-set-key (kbd "C-c /") 'markdown-complete)
-  (local-set-key (kbd "C-M-p") 'markdown-move-list-item-up)
-  (local-set-key (kbd "C-M-n") 'markdown-move-list-item-down)
-  (local-set-key (kbd "C-M-f") 'markdown-demote)
-  (local-set-key (kbd "C-M-b") 'markdown-promote)
-  (local-set-key (kbd "C-RET") 'markdown-insert-header-dwim)
-  (local-set-key (kbd "C-c h") 'hydra-markdown/body)
+  (local-set-key (kbd "C-c C-o") 'pjones:markdown-follow-thing-at-point)
+  (local-set-key (kbd "C-c /")   'markdown-complete)
+  (local-set-key (kbd "C-M-p")   'markdown-move-list-item-up)
+  (local-set-key (kbd "C-M-n")   'markdown-move-list-item-down)
+  (local-set-key (kbd "C-M-f")   'markdown-demote)
+  (local-set-key (kbd "C-M-b")   'markdown-promote)
+  (local-set-key (kbd "C-RET")   'markdown-insert-header-dwim)
+  (local-set-key (kbd "C-c h")   'hydra-markdown/body)
   (abbrev-mode)
   (whitespace-mode)
   (orgstruct-mode)

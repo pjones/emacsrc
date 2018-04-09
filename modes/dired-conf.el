@@ -4,6 +4,7 @@
   (require 'dired-subtree))
 
 ;; Load dired-aux at runtime.
+(require 'org)
 (require 'dired-x)
 (require 'dired-aux)
 (require 'dired-filter)
@@ -49,7 +50,7 @@ current dired buffer.  Otherwise visit the file under point."
   (interactive)
   (let ((name (dired-get-file-for-visit)))
     (if (file-directory-p name) (dired-subtree-insert)
-      (dired-find-file))))
+      (org-open-file name))))
 
 (defun pjones:dired-remove-total-lines ()
   "Remove those useless \"total\" lines from ls."
