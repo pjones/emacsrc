@@ -14,11 +14,12 @@
 (custom-set-variables
  ;; Visual Settings:
  '(org-hide-leading-stars t)
+ '(org-time-clocksum-format "%02d:%02d")
+ '(org-clock-clocked-in-display (quote both))
 
  ;; Behavior Settings:
  '(org-log-done (quote note))
  '(org-reverse-note-order nil)
- '(org-deadline-warning-days 14)
  '(org-list-empty-line-terminates-plain-lists nil)
  '(org-blank-before-new-entry (quote ((heading . nil) (plain-list-item . nil))))
  '(org-use-fast-todo-selection t)
@@ -27,9 +28,7 @@
  '(org-special-ctrl-a/e t)
  '(org-special-ctrl-k t)
  '(org-M-RET-may-split-line t)
- '(org-time-clocksum-format "%02d:%02d")
  '(org-clock-into-drawer t)
- '(org-clock-clocked-in-display (quote both))
  '(org-log-into-drawer t)
  '(org-tags-exclude-from-inheritance nil)
  '(org-completion-use-ido t)
@@ -46,12 +45,14 @@
  '(org-show-entry-below t)
 
  ;; Following Links
- '(org-link-frame-setup (quote ((file . find-file))))
- '(org-file-apps (quote ((auto-mode . emacs)
-                         ("\\.mm\\'" . default)
+ '(org-file-apps (quote ((auto-mode       . emacs)
+                         ("\\.mm\\'"      . default)
                          ("\\.x?html?\\'" . default)
-                         ("\\.mp4\\'" . "vlc %s")
-                         ("\\.pdf\\'" . "zathura %s"))))
+                         ("\\.mp4\\'"     . "vlc %s")
+                         ("\\.pdf\\'"     . "zathura %s"))))
+
+ '(org-link-frame-setup
+   (quote ((file . find-file))))
 
  ;; Tags:
  '(org-tag-persistent-alist
@@ -82,38 +83,54 @@
  ;; Stuff for org-agenda.
  '(org-agenda-files
    (quote ("~/notes/agenda/projects.org"
-           "~/notes/agenda/inbox.org")))
+           "~/notes/agenda/tasks.org"
+           "~/notes/agenda/calendar.org")))
 
-
+ '(org-agenda-window-setup (quote current-window))
  '(org-agenda-todo-ignore-with-date t)
  '(org-agenda-todo-ignore-timestamp t)
  '(org-agenda-todo-ignore-scheduled t)
  '(org-agenda-skip-scheduled-if-done t)
  '(org-agenda-skip-deadline-if-done t)
- '(org-agenda-start-with-follow-mode t)
+ '(org-agenda-start-with-follow-mode nil)
  '(org-agenda-time-leading-zero t)
  '(org-agenda-span (quote fortnight))
- '(org-stuck-projects (quote ("+LEVEL=3/-DONE"
-                              ("TODO" "NEXT" "WAITING" "DEPENDS")
-                              nil "")))
+ '(org-deadline-warning-days 14)
+
+ '(org-stuck-projects
+   (quote ("+project+LEVEL=3/-DONE"
+           ("TODO" "NEXT" "WAITING" "DEPENDS")
+           nil "")))
+
  '(org-agenda-custom-commands
    (quote (("p" "Projects" ((agenda)
                             (todo "TODO|NEXT")
                             (todo "WAITING")
-                            (stuck)))))))
+                            (stuck))))))
 
-;; (defadvice org-agenda (around pjones:agenda-remember-windows activate)
-;;   (window-configuration-to-register :org-agenda-windows)
-;;   ad-do-it
-;;   (jump-to-register :org-agenda-windows)
-;;   (set-window-buffer (selected-window) "*Org Agenda*"))
+ ;; Stuff for org-capture and org-refile:
+ '(org-default-notes-file "~/notes/agenda/tasks.org")
+ '(org-refile-use-outline-path t)
+ '(org-refile-allow-creating-parent-nodes t)
+ '(org-log-refile (quote time))
+ '(org-archive-location "~/notes/agenda/archive/%s::")
 
-;; (defun pjones:org-agenda-quit ()
-;;   "Restores the previous window configuration and kills the
-;; agenda buffer."
-;;   (interactive)
-;;   (org-agenda-quit)
-;;   (jump-to-register :org-agenda-windows))
+ '(org-refile-targets
+   (quote (("~/notes/agenda/projects.org" :level . 3)
+           ("~/notes/agenda/tasks.org" :level . 1)
+           ("~/notes/agenda/calendar.org" :level . 1))))
+
+ '(org-capture-templates
+   (quote (("i" "Inbox" entry (id "9a053ee1-ade2-43af-af63-ea3e28fcc639")
+            (file "~/notes/etc/templates/orgmode/inbox.org"))
+           ("t" "Standalone Task" entry (id "f058299a-ab32-4374-9d38-2ef744c3f306")
+            (file "~/notes/etc/templates/orgmode/task.org"))
+           ("o" "Prep for Upcoming Offline" entry (id "6224680c-d1c7-4e3a-825e-affa4a065345")
+            (file "~/notes/etc/templates/orgmode/task.org"))
+           ("r" "Respond to Email" entry (id "3ef415be-890a-407b-8a3e-21814810790e")
+            (file "~/notes/etc/templates/orgmode/mail.org"))
+           ("c" "New Training Class" entry (id "09727f4a-aa01-4429-8408-d40511c19657")
+            (file "~/notes/etc/templates/orgmode/training.org"))))))
 
 (defun pjones:org-mode-hook ()
   ;; Extra Bindings
