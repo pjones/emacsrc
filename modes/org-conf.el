@@ -24,7 +24,7 @@
  '(org-blank-before-new-entry (quote ((heading . nil) (plain-list-item . nil))))
  '(org-use-fast-todo-selection t)
  '(org-use-fast-tag-selection (quote auto))
- '(org-fast-tag-selection-single-key t)
+ '(org-fast-tag-selection-single-key nil)
  '(org-special-ctrl-a/e t)
  '(org-special-ctrl-k t)
  '(org-M-RET-may-split-line t)
@@ -56,18 +56,23 @@
 
  ;; Tags:
  '(org-tag-persistent-alist
-   (quote (("@computer"  . ?c)
+   (quote ((:startgroup  . nil)
+           ("@computer"  . ?c)
            ("@desk"      . ?d)
-           ("@email"     . ?e)
            ("@home"      . ?h)
-           ("@online"    . ?o)
+           ("@email"     . ?e)
            ("@phone"     . ?p)
-           ("@plane"     . ?P)
-           ("@traveling" . ?t)
+           ("@errand"    . ?E)
+           (:endgroup    . nil)
+           (:startgroup  . nil)
+           ("@online"    . ?o)
+           ("@offline"   . ?O)
+           (:endgroup    . nil)
            (:startgroup  . nil)
            ("5m"         . ?5)
            ("30m"        . ?3)
            ("1h"         . ?1)
+           ("4h"         . ?4)
            (:endgroup    . nil))))
 
  ;; TODO keywords and faces:
@@ -76,9 +81,9 @@
            (sequence "NEXT(n)" "WAITING(w)" "DEPENDS(s)" "|" "DONE(d)" "CANCELLED(c)"))))
 
  '(org-todo-keyword-faces
-   (quote (("NEXT"    . (:inherit 'mode-line :background "#268bd2"))
-           ("WAITING" . (:inherit 'mode-line :background "#d33682"))
-           ("DEPENDS" . (:inherit 'mode-line :background "#2aa198")))))
+   (quote (("NEXT"    . (:inherit mode-line :background "#268bd2"))
+           ("WAITING" . (:inherit mode-line :background "#d33682"))
+           ("DEPENDS" . (:inherit mode-line :background "#2aa198")))))
 
  ;; Stuff for org-agenda.
  '(org-agenda-files
@@ -87,26 +92,40 @@
            "~/notes/agenda/calendar.org")))
 
  '(org-agenda-window-setup (quote current-window))
- '(org-agenda-todo-ignore-with-date t)
- '(org-agenda-todo-ignore-timestamp t)
- '(org-agenda-todo-ignore-scheduled t)
+ '(org-agenda-todo-ignore-with-date nil)
+ '(org-agenda-todo-ignore-timestamp nil)
+ '(org-agenda-todo-ignore-deadlines (quote near))
+ '(org-agenda-todo-ignore-scheduled (quote future))
  '(org-agenda-skip-scheduled-if-done t)
  '(org-agenda-skip-deadline-if-done t)
+ '(org-agenda-tags-todo-honor-ignore-options t)
  '(org-agenda-start-with-follow-mode nil)
  '(org-agenda-time-leading-zero t)
+ '(org-agenda-show-inherited-tags nil)
  '(org-agenda-span (quote fortnight))
  '(org-deadline-warning-days 14)
 
  '(org-stuck-projects
-   (quote ("+project+LEVEL=3/-DONE"
-           ("TODO" "NEXT" "WAITING" "DEPENDS")
-           nil "")))
+   (quote ("+project+LEVEL=3|+tasks+LEVEL=3-inbox"
+           ("*") nil "")))
 
  '(org-agenda-custom-commands
-   (quote (("p" "Projects" ((agenda)
-                            (todo "TODO|NEXT")
-                            (todo "WAITING")
-                            (stuck))))))
+   (quote (("p" "Project Status"
+            ((agenda)
+             (tags-todo "@phone")
+             (tags-todo "@email")
+             (todo "WAITING")
+             (stuck)
+             (tags "+inbox+LEVEL=2"))
+            ((org-agenda-todo-ignore-deadlines (quote all))
+             (org-agenda-todo-ignore-scheduled (quote all))))
+           ("o" "Offline Tasks"
+            ((tags-todo "+@offline")))
+           ("e" "Tasks by Energy Level"
+            ((tags-todo "5m")
+             (tags-todo "30m")
+             (tags-todo "1h"))
+            ((org-agenda-todo-ignore-deadlines nil))))))
 
  ;; Stuff for org-capture and org-refile:
  '(org-default-notes-file "~/notes/agenda/tasks.org")
