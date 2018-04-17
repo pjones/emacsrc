@@ -81,9 +81,10 @@
            (sequence "NEXT(n)" "WAITING(w)" "DEPENDS(s)" "|" "DONE(d)" "CANCELLED(c)"))))
 
  '(org-todo-keyword-faces
-   (quote (("NEXT"    . (:inherit mode-line :background "#268bd2"))
-           ("WAITING" . (:inherit mode-line :background "#d33682"))
-           ("DEPENDS" . (:inherit mode-line :background "#2aa198")))))
+   (quote (("TODO"    . (:foreground "#66cccc" :weight bold))
+           ("NEXT"    . (:foreground "#66cccc" :weight bold))
+           ("WAITING" . (:foreground "#cc99cc" :weight bold))
+           ("DEPENDS" . (:inherit org-agenda-dimmed-todo-face)))))
 
  ;; Stuff for org-agenda.
  '(org-agenda-files
@@ -106,11 +107,11 @@
  '(org-deadline-warning-days 14)
 
  '(org-stuck-projects
-   (quote ("+project+LEVEL=3|+tasks+LEVEL=3-inbox"
+   (quote ("+project+LEVEL=3|+tasks+LEVEL=3-inbox-TODO=\"DONE\""
            ("*") nil "")))
 
  '(org-agenda-custom-commands
-   (quote (("p" "Project Status"
+   (quote (("c" "Current Status"
             ((agenda)
              (tags-todo "@phone")
              (tags-todo "@email")
@@ -119,13 +120,18 @@
              (tags "+inbox+LEVEL=2"))
             ((org-agenda-todo-ignore-deadlines (quote all))
              (org-agenda-todo-ignore-scheduled (quote all))))
-           ("o" "Offline Tasks"
-            ((tags-todo "+@offline")))
+           ("p" "Project List"
+            ((tags "+project+LEVEL=3")))
            ("e" "Tasks by Energy Level"
             ((tags-todo "5m")
              (tags-todo "30m")
              (tags-todo "1h"))
-            ((org-agenda-todo-ignore-deadlines nil))))))
+            ((org-agenda-todo-ignore-deadlines nil)))
+           ("o" "Offline Tasks"
+            ((tags-todo "+@offline")))
+           ("T" "Travel Schedule"
+            ((tags "+travel+TIMESTAMP>=\"<now>\""))
+            ((org-agenda-view-columns-initially t))))))
 
  ;; Stuff for org-capture and org-refile:
  '(org-default-notes-file "~/notes/agenda/tasks.org")
