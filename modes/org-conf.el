@@ -16,12 +16,14 @@
  '(org-hide-leading-stars t)
  '(org-time-clocksum-format "%02d:%02d")
  '(org-clock-clocked-in-display (quote both))
+ '(org-show-context-detail (quote ((default . tree))))
 
  ;; Behavior Settings:
  '(org-log-done (quote note))
  '(org-reverse-note-order nil)
  '(org-list-empty-line-terminates-plain-lists nil)
  '(org-blank-before-new-entry (quote ((heading . nil) (plain-list-item . nil))))
+ '(org-tags-column 0)
  '(org-use-fast-todo-selection t)
  '(org-use-fast-tag-selection (quote auto))
  '(org-fast-tag-selection-single-key nil)
@@ -59,10 +61,11 @@
    (quote ((:startgroup  . nil)
            ("@computer"  . ?c)
            ("@desk"      . ?d)
-           ("@home"      . ?h)
            ("@email"     . ?e)
-           ("@phone"     . ?p)
            ("@errand"    . ?E)
+           ("@home"      . ?h)
+           ("@kindle"    . ?k)
+           ("@phone"     . ?p)
            (:endgroup    . nil)
            (:startgroup  . nil)
            ("@online"    . ?o)
@@ -90,6 +93,7 @@
  '(org-agenda-files
    (quote ("~/notes/agenda/projects.org"
            "~/notes/agenda/tasks.org"
+           "~/notes/agenda/review.org"
            "~/notes/agenda/calendar.org")))
 
  '(org-agenda-window-setup (quote current-window))
@@ -103,8 +107,10 @@
  '(org-agenda-start-with-follow-mode nil)
  '(org-agenda-time-leading-zero t)
  '(org-agenda-show-inherited-tags nil)
- '(org-agenda-span (quote fortnight))
  '(org-deadline-warning-days 14)
+ '(org-agenda-span 14)
+ '(org-agenda-start-on-weekday nil)
+ '(org-agenda-start-day nil)
 
  '(org-stuck-projects
    (quote ("+project+LEVEL=3|+tasks+LEVEL=3-inbox-TODO=\"DONE\""
@@ -143,6 +149,7 @@
  '(org-refile-targets
    (quote (("~/notes/agenda/projects.org" :level . 3)
            ("~/notes/agenda/tasks.org" :level . 1)
+           ("~/notes/agenda/review.org" :level . 2)
            ("~/notes/agenda/calendar.org" :level . 1))))
 
  '(org-capture-templates
@@ -198,8 +205,10 @@
 (defun pjones:org-hide-others ()
   "Close all headings except the heading at point."
   (interactive)
+  (org-back-to-heading)
   (org-overview)
-  (org-reveal))
+  (org-show-set-visibility 'tree)
+  (org-show-entry))
 
 (defun pjones:org-hide-all ()
   "Close all headings, move to bob."

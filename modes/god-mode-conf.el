@@ -13,5 +13,9 @@
 (define-key isearch-mode-map (kbd "<escape>") 'god-mode-isearch-activate)
 (define-key god-mode-isearch-map (kbd "<escape>") 'god-mode-isearch-disable)
 
+;; Modes where God should be disabled by default:
+(add-to-list 'god-exempt-major-modes 'org-agenda-mode)
+
+;; Hooks:
 (add-hook 'god-mode-enabled-hook 'pjones:god-update-cursor)
 (add-hook 'god-mode-disabled-hook 'pjones:god-update-cursor)
