@@ -331,12 +331,12 @@ current buffer after point."
  ^ ^              _r_: redo
  ^ ^              _j_: save/restore
 "
-  ("t" 'pjones:transpose-windows)
-  ("u" 'winner-undo)
-  ("r" 'winner-redo)
-  ("j" 'pjones:window-config)
-  ("d" 'dired-sidebar-toggle-sidebar)
-  ("T" 'pjones:toggle-theme))
+  ("t" pjones:transpose-windows)
+  ("u" winner-undo)
+  ("r" winner-redo)
+  ("j" pjones:window-config)
+  ("d" dired-sidebar-toggle-sidebar)
+  ("T" pjones:toggle-theme))
 
 ;; Local Variables:
 ;; byte-compile-warnings: (not noruntime)
