@@ -18,6 +18,9 @@
 (add-to-list 'projectile-mode-hook 'pjones:projectile-mode-hook)
 (projectile-mode)
 
+(projectile-register-project-type 'edify '("default.nix" "courses" "content")
+                                  :compile "nix-shell --run 'edify build courses/*'")
+
 ;; Project settings (when I can't use a .dir-locals.el file):
 ;; (dir-locals-set-class-variables 'cltc-new-project
 ;;    '((nil . ((projectile-project-run-cmd  "bundle install")
