@@ -1,3 +1,5 @@
 ;;; server-conf.el -- Settings for Emacs daemon.
 (eval-when-compile (require 'server))
-(setq server-use-tcp nil)
+
+(custom-set-variables
+  '(server-use-tcp t)) ; Create local socket files.
