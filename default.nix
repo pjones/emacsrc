@@ -91,7 +91,6 @@ let
       ruby-end
       scad-mode
       smex
-      smtpmail-multi
       switch-window
       yaml-mode
 

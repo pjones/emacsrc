@@ -7,7 +7,7 @@ require('optparse')
 class RemoteEmacs
 
   ##############################################################################
-  LOCAL_SERVER_DIR = File.expand_path('~/.emacs.d/server/')
+  LOCAL_SERVER_DIR = File.expand_path('~/.cache/emacs/server/')
 
   ##############################################################################
   REMOTE_SERVER_FILE = File.expand_path('~/develop/emacs.server')
