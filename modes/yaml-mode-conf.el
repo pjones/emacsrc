@@ -1,7 +1,5 @@
 ;;; yaml-mode-conf.el -- Settings for yaml-mode.
 (eval-when-compile
-  (load "../lisp/packages.el")
-  (load "../lisp/code.el")
   (require 'yaml-mode))
 
 (declare-function pjones:add-programming-hook "code.el")

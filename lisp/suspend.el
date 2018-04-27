@@ -1,6 +1,5 @@
 ;;; suspend.el --- Secure Emacs on a system suspend, sleep, lock, etc.
 (eval-when-compile
-  (load "./packages.el")
   (require 'circe))
 
 ;; Require libraries at run time.

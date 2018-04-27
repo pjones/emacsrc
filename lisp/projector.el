@@ -4,9 +4,6 @@
 ;;
 ;;
 ;;; Code:
-(eval-when-compile
-  (require 'highline))
-
 (defvar pjones:projector-font-big
   "Dejavu Sans Mono-18"
   "A large font to use for projectors.")
@@ -24,34 +21,29 @@
   (set-frame-font (or font pjones:projector-font-big)))
 
 (defun pjones:projector-highline ()
-  "Toggle highline mode from outside Emacs."
+  "Toggle hl-line-mode mode from outside Emacs."
   (with-current-buffer (window-buffer (selected-window))
-    (call-interactively 'highline-mode)))
+    (call-interactively 'hi-line-mode)))
 
 (defun pjones:projector-next-line ()
   "Move to the next line from outside Emacs."
   (with-current-buffer (window-buffer (selected-window))
-    (call-interactively 'next-line)
-    (if highline-mode (highline-highlight-current-line))))
+    (call-interactively 'next-line)))
 
 (defun pjones:projector-prev-line ()
   "Move to the previous line from outside Emacs."
   (with-current-buffer (window-buffer (selected-window))
-    (call-interactively 'previous-line)
-    (if highline-mode (highline-highlight-current-line))))
+    (call-interactively 'previous-line)))
 
 (defun pjones:projector-recenter ()
   "Places the current line at the top of the window from outside
 Emacs."
   (with-current-buffer (window-buffer (selected-window))
-    (recenter 0)
-    (if highline-mode (highline-highlight-current-line))))
+    (recenter 0)))
 
 (defun pjones:projector-other-window ()
   "Move to the other window from outside Emacs."
-  (select-window (next-window nil 0 'visible))
-  (if highline-mode (highline-highlight-current-line)))
-
+  (select-window (next-window nil 0 'visible)))
 
 (define-minor-mode projector-mode
   "Global minor mode that makes things look nice on a projector."

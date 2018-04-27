@@ -1,7 +1,5 @@
 ;;; circe-conf.el -- Settings for circe.el
 (eval-when-compile
-  (load "../lisp/packages.el")
-  (load "../lisp/functions.el")
   (require 'circe))
 
 (require 'circe-notifications)

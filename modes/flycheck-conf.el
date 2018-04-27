@@ -1,6 +1,5 @@
 ;;; flycheck-conf.el -- Configuration for flycheck.
 (eval-when-compile
-  (load "../lisp/packages.el")
   (require 'flycheck))
 
 (custom-set-variables

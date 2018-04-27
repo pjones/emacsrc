@@ -1,7 +1,5 @@
 ;;; haskell-mode-conf.el -- Settings for Haskell mode.
 (eval-when-compile
-  (load "../lisp/code.el")
-  (load "../lisp/functions.el")
   (require 'cl)
   (require 'haskell-mode))
 

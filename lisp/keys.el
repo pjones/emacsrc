@@ -64,7 +64,7 @@
 (define-key pjones:z-map (kbd "e")   'hydra-launch/body)
 (define-key pjones:z-map (kbd "f")   'pjones:kill-file-name)
 (define-key pjones:z-map (kbd "g")   'rgrep)
-(define-key pjones:z-map (kbd "H")   'highline-mode)
+(define-key pjones:z-map (kbd "h")   'hl-line-mode)
 (define-key pjones:z-map (kbd "i")   'idomenu)
 (define-key pjones:z-map (kbd "I")   'pjones:uuid)
 (define-key pjones:z-map (kbd "J")   'pjones:journal)

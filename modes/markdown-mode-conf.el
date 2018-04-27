@@ -1,6 +1,5 @@
 ;;; markdown-conf.el -- Settings for markdown-mode.
 (eval-when-compile
-  (load "../lisp/code.el")
   (require 'markdown-mode)
   (require 'whitespace)
   (require 'company))

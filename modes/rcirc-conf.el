@@ -1,6 +1,5 @@
 ;;; rcirc-conf.el -- Settings for rcirc.
 (eval-when-compile
-  (load "../lisp/functions.el")
   (require 'cl)
   (require 'rcirc))
 

@@ -2,7 +2,6 @@
 ;;; Commentary:
 ;;; Code:
 (eval-when-compile
-  (load "../lisp/code.el")
   (require 'company))
 
 (defun pjones:sgml-mode-hook ()

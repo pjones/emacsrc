@@ -1,6 +1,5 @@
 ;;; css-mode-conf.el -- Settings for css-mode.
 (eval-when-compile
-  (load "../lisp/code.el")
   (require 'css-mode)
   (require 'company))
 

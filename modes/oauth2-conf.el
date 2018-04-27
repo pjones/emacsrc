@@ -1,6 +1,5 @@
 ;;; oauth2-conf.el -- OAuth Configuration.
 (eval-when-compile
-  (load "../lisp/packages.el")
   (require 'oauth2))
 
 (custom-set-variables

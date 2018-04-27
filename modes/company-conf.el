@@ -1,10 +1,8 @@
 ;;; company-conf.el --- company-mode configuration.
 (eval-when-compile
-  (load "../lisp/packages.el")
   (require 'company)
   (require 'company-quickhelp)
-  (require 'company-statistics)
-  (require 'company-flx))
+  (require 'company-statistics))
 
 ;; Settings for company-mode:
 (custom-set-variables
@@ -39,8 +37,6 @@
     (define-key map (kbd "M-h")   #'company-quickhelp-manual-begin)
     (define-key map (kbd "<tab>") #'company-complete-common-or-cycle))
 
-  ;; Enable fuzzy (flx) matching in company-mode.
-  (company-flx-mode +1)
   (company-quickhelp-mode +1)
   (company-statistics-mode))
 

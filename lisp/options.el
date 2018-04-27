@@ -2,7 +2,6 @@
 ;;; Commentary:
 ;;; Code:
 (eval-when-compile
-  (load "./packages")
   (require 'server))
 
 ;; Personal information

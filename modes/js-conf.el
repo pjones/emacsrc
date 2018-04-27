@@ -2,7 +2,6 @@
 ;;; Commentary:
 ;;; Code:
 (eval-when-compile
-  (load "../lisp/packages.el")
   (require 'js))
 
 ;; JavaScript mode settings

@@ -1,6 +1,5 @@
 ;;; plstore-conf.el -- Settings for plstore.el.
 (eval-when-compile
-  (load "../lisp/packages.el")
   (require 'plstore))
 
 (custom-set-variables

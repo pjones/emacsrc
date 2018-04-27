@@ -2,7 +2,6 @@
 (eval-when-compile
   (require 'deft))
 
-
 (custom-set-variables
   `(deft-directory ,(expand-file-name "~/notes/"))
   '(deft-recursive t)

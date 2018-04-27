@@ -1,5 +1,4 @@
 ;;; modes.el -- Load files from ~/.emacs.d/pjones/modes on demand.
-(eval-when-compile (load "loadpath.el"))
 
 ;; Global minor modes
 (winner-mode)
