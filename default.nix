@@ -103,6 +103,9 @@ let
     ]) ++ (with epkgs; [
       pdf-tools
 
+    ]) ++ (with pkgs; [
+      mu
+
     ]));
 
 in pjones
