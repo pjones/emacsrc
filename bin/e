@@ -1,117 +1,54 @@
-#!/usr/bin/env ruby
+#!/bin/bash
 
 ################################################################################
-require('optparse')
+# A very simple wrapper around emacsclient.
+set -e
 
 ################################################################################
-class RemoteEmacs
-
-  ##############################################################################
-  LOCAL_SERVER_DIR = File.expand_path('~/.cache/emacs/server/')
-
-  ##############################################################################
-  REMOTE_SERVER_FILE = File.expand_path('~/develop/emacs.server')
-
-  ##############################################################################
-  DEFAULT_OPTIONS = {
-    'eval'    => false,
-    'frame'   => false,
-    'restart' => false,
-    'server'  => nil,
-    'tty'     => false,
-    'verbose' => false,
-    'version' => false,
-    'wait'    => false,
-  }
-
-  ##############################################################################
-  OptionProxy = Struct.new(*DEFAULT_OPTIONS.keys.sort.map {|k| k.to_sym})
-
-  ##############################################################################
-  def initialize
-    @options = OptionProxy.new(*DEFAULT_OPTIONS.keys.sort.map {|k| DEFAULT_OPTIONS[k]})
-
-    OptionParser.new do |p|
-      p.on('-V', '--version', 'Show Emacs version information') {|v| @options.version = v}
-      p.on('-c', '--create-frame', 'Create a new Emacs frame') {|f| @options.frame = f}
-      p.on('-e', '--eval', 'Eval the file argument as lisp') {|e| @options.eval = e}
-      p.on('-h', '--help', 'This message.') {$stdout.puts(p); exit}
-      p.on('-n', '--no-wait', 'Don\'t wait for Emacs [default]') {@options.wait = false}
-      p.on('-r', '--restart', 'Restart the Emacs server') {@options.restart = true}
-      p.on('-s', '--server=NAME', 'Set the server name to use') {|s| @options.server = s}
-      p.on('-t', '--tty', 'Open a new frame on the current terminal') {|t| @options.tty = t}
-      p.on('-v', '--verbose', 'Enable verbose messages') {|v| @options.verbose = v}
-      p.on('-w', '--wait', 'Wait for Emacs to finish') {@options.wait = true}
-    end.parse!(ARGV)
-
-    @emacsclient    = ['emacsclient']
-    @options.server = get_server_name
-    @socket_file    = File.expand_path(File.join(LOCAL_SERVER_DIR, @options.server))
-  end
-
-  ##############################################################################
-  def run
-    start_server if !File.exist?(@socket_file) || @options.restart
-
-    if !@options.frame &&
-       !@options.tty   &&
-       !@options.eval  &&
-       ARGV.empty?
-    then
-      @options.frame = true
-    end
-
-    @emacsclient << '--quiet'        if !@options.verbose
-    @emacsclient << '--version'      if @options.version
-    @emacsclient << '--tty'          if @options.tty
-    @emacsclient << '--create-frame' if @options.frame
-    @emacsclient << '--eval'         if @options.eval
-
-    if !@options.wait    and
-       !@options.tty     and
-       !@options.eval    and
-       !@options.version
-    then
-      @emacsclient << '--no-wait'
-    end
-
-    @emacsclient << "--server-file=#{@socket_file}"
-
-    @emacsclient.concat(ARGV)
-    $stdout.puts(@emacsclient.join(' ')) if @options.verbose
-    exec(*@emacsclient) || raise('emacsclient failed')
-  end
-
-  ##############################################################################
-  private
-
-  ##############################################################################
-  # Figure out what server name to use.
-  def get_server_name
-    [ @options.server,
-      ENV['EMACS_SERVER'],
-      ENV['DISPLAY'] && `wmctrl -d | awk '($2 ~ /\*/) {print $NF}'`.chomp,
-      'server',
-    ].find {|name| !name.nil?}
-  end
-
-  ##############################################################################
-  # Start (or restart) an Emacs server.
-  def start_server
-    command = ['emacs', "--daemon=#{@options.server}"]
-
-    if @options.restart
-      system('pkill', '-f', command.join(' '))
-    end
-
-    system(*command) || raise("failed to start Emacs!")
-  end
-end
+option_server_name="server"
+option_server_path="$HOME/.cache/emacs/server/"
+option_emacs_opts=()
 
 ################################################################################
-begin
-  RemoteEmacs.new.run
-rescue RuntimeError => e
-  $stderr.puts(File.basename($0) + ": ERROR: #{e}")
-  exit(1)
-end
+usage () {
+cat <<EOF
+Usage: e [options] [file] -- [emacsclient options]
+
+  -c      Open a new frame
+  -h      This message
+  -s NAME Connect to server NAME
+  -t      Open a new TTY
+EOF
+}
+
+################################################################################
+while getopts "chs:t" o; do
+  case "${o}" in
+    c) option_emacs_opts+=("--create-frame" "--no-wait")
+       ;;
+
+    h) usage
+       exit
+       ;;
+
+    s) option_server_name=$OPTARG
+       ;;
+
+    t) option_emacs_opts+=("--tty")
+       ;;
+
+    *) exit 1
+       ;;
+  esac
+done
+
+shift $((OPTIND-1))
+
+################################################################################
+if [ ! -e "${option_server_path}${option_server_name}" ]; then
+  emacs --daemon="$option_server_name"
+fi
+
+################################################################################
+emacsclient --server-file="${option_server_path}${option_server_name}" \
+            "${option_emacs_opts[@]}" "$@"

@@ -4,4 +4,4 @@
 # execute commands without arguments.  It invokes emacsclient with
 # flags to open a new frame, and wait for the file to be done being
 # edited.
-e --wait -c "$@"
+e -- --create-frame "$@"

@@ -62,15 +62,13 @@ placing it in the kill ring)."
     (back-to-indentation)
     (when (= start (point)) (move-beginning-of-line 1))))
 
-(defun pjones:start-primary-app (arg)
-  "Start an application like Gnus or IRC client based on the name
-of the Emacs server."
-  (interactive "P")
-  (cond
-   ((string= "gnus" server-name) (gnus arg))
-   ((string= "irc"  server-name) (pjones:irc arg))))
+(defun pjones:start-mail ()
+  "Start an instance of mu4e."
+  (interactive)
+  (require 'mu4e)
+  (mu4e))
 
-(defun pjones:irc (&optional local-only)
+(defun pjones:start-irc (&optional local-only)
   "Start IRC client.  With an argument only start a connection to
 the local bitlbee instance."
   (interactive "P")
@@ -78,6 +76,12 @@ the local bitlbee instance."
   (if local-only (circe-maybe-connect "bitlbee")
     (circe-maybe-connect "bitlbee")
     (circe-maybe-connect "freenode")))
+
+(defun pjones:start-term ()
+  "Start a new terminal buffer."
+  (interactive)
+  (term "zsh")
+  (rename-buffer (generate-new-buffer-name "term")))
 
 (defun pjones:pwgen (&optional word)
   "Generate and insert a password."
@@ -247,7 +251,7 @@ file.  With a prefix argument kill the entire path for the file."
   "Start org-agenda with my custom agenda view"
   (interactive)
   (require 'org)
-  (org-agenda nil "p"))
+  (org-agenda nil "c"))
 
 ;; Stolen from: http://whattheemacsd.com//key-bindings.el-01.html
 (defun pjones:goto-line-with-feedback ()
@@ -277,20 +281,6 @@ If BACKWARD is non-nil delete backward instead of forward."
     (if backward (kill-region end start)
       (kill-region start end))))
 
-(defun pjones:terminal (directory)
-  "Create a new (unique) terminal frame optionally in DIRECTORY."
-  (require 'term)
-  (let ((frame (make-frame '((name . "eterm") (window-system . x)))))
-    (with-selected-frame frame
-      (let ((buffer (get-buffer-create (concat "*temp-term-name*"))))
-        (with-current-buffer buffer
-          (cd directory)
-          (term-mode)
-          (term-exec buffer (rename-buffer "*eterm*" t) (getenv "SHELL") nil nil)
-          (term-char-mode))
-        (switch-to-buffer buffer)
-        (delete-other-windows)))))
-
 (defun pjones:uuid ()
   "Create a UUID, add it to the kill ring, and insert it into the
 current buffer after point."
@@ -314,14 +304,15 @@ current buffer after point."
   "
 ^OrgMode^      ^Indium^        ^Other^
 -----------------------------------------
- _a_: agenda    _j c_: chrome   _g_: app
- _c_: capture   _j n_: node
+ _a_: agenda    _j c_: chrome   _m_: mail
+ _c_: capture   _j n_: node     _i_: irc
 "
-  ("a"   org-agenda)
+  ("a"   pjones:agenda)
   ("c"   org-capture)
   ("j c" pjones:indium-start-chrome)
   ("j n" pjones:indium-start-node)
-  ("g"   pjones:start-primary-app))
+  ("m"   pjones:start-mail)
+  ("i"   pjones:start-irc))
 
 (defhydra hydra-window-ops (:hint nil :color blue)
   "
