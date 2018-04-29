@@ -13,9 +13,10 @@ let
     name = "emacsrc";
     src = ./.;
 
-    phases = [ "installPhase" ];
-    buildInputs = [ emacs'
-                    pkgs.gitAndTools.gitFull # needed to compile magit config
+    phases = [ "installPhase" "fixupPhase" ];
+
+    buildInputs = [ emacs' # Customized Emacs
+                    pkgs.gitAndTools.gitFull # Needed to compile magit config
                   ];
 
     installPhase = ''
