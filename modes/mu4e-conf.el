@@ -7,7 +7,6 @@
 (custom-set-variables
   '(message-send-mail-function 'smtpmail-send-it)
   '(message-kill-buffer-on-exit t)
-  '(smtpmail-stream-type 'ssl)
 
   '(mu4e-maildir "~/mail")
   '(mu4e-mu-home "~/.cache/mu")
@@ -73,12 +72,13 @@
                  (mu4e-compose-signature      . ,(pjones:mu4e-read-signature "devalot"))
                  (smtpmail-smtp-server        . "mail.pmade.com")
                  (smtpmail-smtp-service       . 465)
+                 (smtpmail-stream-type        . ssl)
                  (smtpmail-smtp-user          . "pjones")))
         (make-mu4e-context
          :name "RFA"
          :match-func #'pjones:mu4e-match-func-rfa
          :vars `((user-mail-address           . "peter.jones@rfa.sc.gov")
-                 (mu4e-user-mail-address-list . '("peter.jones@rfa.sc.gov"))
+                 (mu4e-user-mail-address-list . ("peter.jones@rfa.sc.gov"))
                  (mu4e-sent-folder            . "/rfa/Sent Items")
                  (mu4e-drafts-folder          . "/rfa/Drafts")
                  (mu4e-trash-folder           . "/rfa/Deleted Items")
@@ -86,4 +86,5 @@
                  (mu4e-compose-signature      . (pjones:mu4e-read-signature "scors"))
                  (smtpmail-smtp-server        . "outlook.office365.com")
                  (smtpmail-smtp-service       . 587)
+                 (smtpmail-stream-type        . starttls)
                  (smtpmail-smtp-user          . "peter.jones@rfa.sc.gov")))))
