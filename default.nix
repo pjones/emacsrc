@@ -42,7 +42,7 @@ let
   };
 
   emacs' =
-    emacsWithPackages (epkgs: (with epkgs.melpaPackages; [
+    emacsWithPackages (epkgs: (with epkgs.melpaStablePackages; [
       beginend
       bm
       circe
@@ -58,23 +58,15 @@ let
       # FIXME:
       # dictionary broken :(
 
-      dired-filter
-      dired-narrow
-      dired-sidebar
-      dired-subtree
       flx
       flx-ido
       flycheck
       git-annex
-      god-mode
-      google-contacts
       goto-chg
       graphviz-dot-mode
       indium
       haskell-mode
-      highlight-indent-guides
       htmlize
-      http
       hydra
       ido-completing-read-plus
       idomenu
@@ -90,10 +82,21 @@ let
       passmm
       projectile
       ruby-end
-      scad-mode
       smex
       switch-window
       yaml-mode
+
+    ]) ++ (with epkgs.melpaPackages; [
+      # No stable versions yet :(
+      dired-filter
+      dired-narrow
+      dired-sidebar
+      dired-subtree
+      god-mode
+      google-contacts
+      highlight-indent-guides
+      http
+      scad-mode
 
     ]) ++ (with epkgs.elpaPackages; [
       rainbow-mode
