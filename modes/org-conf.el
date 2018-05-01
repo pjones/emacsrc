@@ -16,6 +16,7 @@
  '(org-hide-leading-stars t)
  '(org-time-clocksum-format "%02d:%02d")
  '(org-clock-clocked-in-display (quote both))
+ '(org-clock-mode-line-total 'current)
  '(org-show-context-detail (quote ((default . tree))))
 
  ;; Behavior Settings:
