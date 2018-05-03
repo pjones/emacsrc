@@ -83,6 +83,13 @@ the local bitlbee instance."
   (term "zsh")
   (rename-buffer (generate-new-buffer-name "term")))
 
+(defun pjones:start-http ()
+  "Create a new buffer running `http-mode'."
+  (interactive)
+  (let ((buf (get-buffer-create "*http*")))
+    (with-current-buffer buf (http-mode))
+    (switch-to-buffer buf)))
+
 (defun pjones:pwgen (&optional word)
   "Generate and insert a password."
   (interactive "P")
@@ -306,13 +313,16 @@ current buffer after point."
 -----------------------------------------
  _a_: agenda    _j c_: chrome   _m_: mail
  _c_: capture   _j n_: node     _i_: irc
+ _s_: store     ^ ^             _h_: http
 "
   ("a"   pjones:agenda)
   ("c"   org-capture)
+  ("s"   org-store-link)
   ("j c" pjones:indium-start-chrome)
   ("j n" pjones:indium-start-node)
   ("m"   pjones:start-mail)
-  ("i"   pjones:start-irc))
+  ("i"   pjones:start-irc)
+  ("h"   pjones:start-http))
 
 (defhydra hydra-window-ops (:hint nil :color blue)
   "
