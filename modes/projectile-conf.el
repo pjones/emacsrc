@@ -18,3 +18,6 @@
 (projectile-register-project-type
    'edify '("default.nix" "courses" "content")
    "nix-shell --run 'edify build courses/*'")
+
+(projectile-register-project-type
+   'haskell '("default.nix" "Setup.hs") "nix-hs")

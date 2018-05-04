@@ -121,10 +121,5 @@ placed into a different frame than the current one."
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'post-forward-angle-brackets)
 
-;; Libraries used throughout my Emacs session
-(require 'saveplace)                    ; Saves your location in files
-(require 'dired-x)                      ; Extra features for dired-mode
-(require 'align)                        ; Align things
-
 (provide 'options)
 ;;; options.el ends here

@@ -51,8 +51,7 @@
  '(org-file-apps (quote ((auto-mode       . emacs)
                          ("\\.mm\\'"      . default)
                          ("\\.x?html?\\'" . default)
-                         ("\\.mp4\\'"     . "vlc %s")
-                         ("\\.pdf\\'"     . "zathura %s"))))
+                         ("\\.mp4\\'"     . "vlc %s"))))
 
  '(org-link-frame-setup
    (quote ((file . find-file))))
@@ -120,13 +119,17 @@
  '(org-agenda-custom-commands
    (quote (("c" "Current Status"
             ((agenda)
-             (tags-todo "@phone")
-             (tags-todo "@email")
-             (todo "WAITING")
+             (tags-todo "@phone"
+                   ((org-agenda-todo-ignore-deadlines (quote all))
+                    (org-agenda-todo-ignore-scheduled (quote all))))
+             (tags-todo "@email"
+                   ((org-agenda-todo-ignore-deadlines (quote all))
+                    (org-agenda-todo-ignore-scheduled (quote all))))
+             (todo "WAITING"
+                   ((org-agenda-todo-ignore-deadlines (quote future))
+                    (org-agenda-todo-ignore-scheduled (quote future))))
              (stuck)
-             (tags "+inbox+LEVEL=2"))
-            ((org-agenda-todo-ignore-deadlines (quote all))
-             (org-agenda-todo-ignore-scheduled (quote all))))
+             (tags "+inbox+LEVEL=2")))
            ("p" "Project List"
             ((tags "+project+LEVEL=3")))
            ("e" "Tasks by Energy Level"

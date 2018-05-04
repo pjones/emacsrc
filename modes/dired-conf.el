@@ -18,7 +18,9 @@
   '(dired-filter-prefix "/")
   '(dired-filter-mark-prefix "M")
   '(dired-sidebar-theme (quote nerd))
-  '(dired-sidebar-follow-file-idle-delay 0.5)
+  '(dired-sidebar-refresh-on-special-commands nil)
+  '(dired-sidebar-follow-file-idle-delay 1)
+  '(dired-sidebar-tui-update-delay 0.5)
   '(dired-sidebar-pop-to-sidebar-on-toggle-open nil)
   '(dired-sidebar-should-follow-file t))
 

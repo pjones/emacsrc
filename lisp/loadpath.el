@@ -11,6 +11,7 @@
 
 (defvar pjones:lisp-files
   '( "themes"
+     "mode-line"
      "code"
      "modes"
      "options"
@@ -20,7 +21,6 @@
      "completion"
      "keys"
      "projector"
-     "projects"
      "suspend"
     )
   "A list of my config files to load in the correct order.")

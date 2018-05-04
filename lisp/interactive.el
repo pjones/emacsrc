@@ -36,7 +36,9 @@ placing it in the kill ring)."
 (defun pjones:switch-to-previous-buffer ()
   "Switch back to the last buffer shown in this window."
   (interactive)
-  (switch-to-buffer (other-buffer)))
+  (let ((ido-process-ignore-lists t)
+        (ido-ignored-list nil))
+    (switch-to-buffer (car (ido-make-buffer-list nil)))))
 
 (defun pjones:open-line-above (stay)
   "Open a line above point and move there if STAY is nil."
@@ -97,17 +99,6 @@ the local bitlbee instance."
          (pw (replace-regexp-in-string "\n" ""
               (shell-command-to-string (concat "pwgen " opts)))))
     (insert pw)))
-
-(defun pjones:transpose-windows (&optional keep-cursor)
-   "Transpose the buffers shown in two windows.  By default point
-stays in the currently active buffer.  When KEEP-CURSOR is
-non-nil keep the cursor in the currently active window."
-   (interactive "P")
-   (let ((this-win (window-buffer))
-         (next-win (window-buffer (next-window))))
-     (set-window-buffer (selected-window) next-win)
-     (set-window-buffer (next-window) this-win)
-     (unless keep-cursor (select-window (next-window)))))
 
 (defvar pjones:last-dictionary nil
   "The last non-English dictionary used by `pjones:toggle-dictionary'.")
@@ -329,15 +320,16 @@ current buffer after point."
 ^Windows^        ^Config^          ^Sidebar^    ^Theme^
 ^^^^^^^^^^^-------------------------------------------------
  _t_: transpose   _u_: undo         _d_: dired   _T_: switch
- ^ ^              _r_: redo
+ _r_: rotate      _U_: redo
  ^ ^              _j_: save/restore
 "
-  ("t" pjones:transpose-windows)
-  ("u" winner-undo)
-  ("r" winner-redo)
-  ("j" pjones:window-config)
+  ("T" pjones:toggle-theme)
+  ("U" winner-redo)
   ("d" dired-sidebar-toggle-sidebar)
-  ("T" pjones:toggle-theme))
+  ("j" pjones:window-config)
+  ("r" rotate-layout)
+  ("t" rotate-window)
+  ("u" winner-undo))
 
 ;; Local Variables:
 ;; byte-compile-warnings: (not noruntime)

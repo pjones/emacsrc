@@ -2,9 +2,10 @@
 
 let
   emacs = pkgs.emacs.override {
-    withX    = true;
-    withGTK2 = false;
-    withGTK3 = false;
+    withX       = true;
+    withGTK2    = false;
+    withGTK3    = false;
+    imagemagick = pkgs.imagemagick;
   };
 
   emacsWithPackages = (pkgs.emacsPackagesNgGen emacs).emacsWithPackages;
@@ -17,6 +18,7 @@ let
 
     buildInputs = [ emacs' # Customized Emacs
                     pkgs.gitAndTools.gitFull # Needed to compile magit config
+                    pkgs.imagemagick # For image-mode and eimp-mode
                   ];
 
     installPhase = ''
@@ -45,6 +47,7 @@ let
     emacsWithPackages (epkgs: (with epkgs.melpaStablePackages; [
       beginend
       bm
+      browse-kill-ring
       circe
       circe-notifications
       color-theme-sanityinc-tomorrow
@@ -54,6 +57,7 @@ let
       company-statistics
       dante
       deft
+      dim
 
       # FIXME:
       # dictionary broken :(
@@ -64,24 +68,26 @@ let
       git-annex
       goto-chg
       graphviz-dot-mode
-      indium
       haskell-mode
       htmlize
       hydra
+      ialign
       ido-completing-read-plus
       idomenu
+      indium
       inf-ruby
       js2-mode
       magit
       magit-annex
       markdown-mode
       nix-mode
-      noccur
       no-littering
+      noccur
       org-tree-slide
       passmm
       projectile
       ruby-end
+      shackle
       smex
       switch-window
       yaml-mode
@@ -92,10 +98,13 @@ let
       dired-narrow
       dired-sidebar
       dired-subtree
+      eimp
       god-mode
       google-contacts
       highlight-indent-guides
       http
+      mu4e-query-fragments
+      rotate
       scad-mode
 
     ]) ++ (with epkgs.elpaPackages; [
