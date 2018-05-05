@@ -47,33 +47,6 @@
 (setq epa-file-encrypt-to "204284CB"                  ; Default GPG key to use
       custom-file "~/.emacs.d/pjones/lisp/custom.el") ; To keep Emacs happy
 
-;; Frame setup (which buffers get a new frame):
-(defun pjones:place-buffer-in-dedicated-frame (name action)
-  "Called by `display-buffer' to decide if a new buffer should be
-placed into a different frame than the current one."
-  (cond
-    ((string= name "*compilation*") t)
-    ((string= name "*grep*") t)))
-
-(defun pjones:circe-windows-no-splitting (name action)
-  "Keep Circe from splitting windows."
-  (with-current-buffer name
-    (string-match "^circe-" (symbol-name major-mode))))
-
-(add-to-list 'display-buffer-alist
-  '(pjones:place-buffer-in-dedicated-frame
-    (display-buffer-reuse-window
-     display-buffer-pop-up-frame)
-    (reusable-frames      . t)
-    (inhibit-same-window  . nil)
-    (inhibit-switch-frame . t)
-    (pop-up-frame-parameters .
-      ((unsplittable . t) (name . "emacs-popup")))))
-
-(add-to-list 'display-buffer-alist
-  '(pjones:circe-windows-no-splitting
-    (display-buffer-reuse-window display-buffer-same-window)))
-
 (defun pjones:frame-title-file-name ()
   (let* ((home (expand-file-name "~"))
          (end (length home))
