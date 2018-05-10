@@ -1,5 +1,5 @@
 ;; Important load settings:
-(setq user-emacs-directory (expand-file-name "~/.cache/emacs"))
+(setq user-emacs-directory (expand-file-name "~/.cache/emacs/"))
 
 ;; Prepare package management
 (package-initialize)

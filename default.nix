@@ -45,12 +45,12 @@ let
 
   emacs' =
     emacsWithPackages (epkgs: (with epkgs.melpaStablePackages; [
+      alect-themes
       beginend
       bm
       browse-kill-ring
       circe
       circe-notifications
-      color-theme-sanityinc-tomorrow
       company
       company-ghc
       company-quickhelp
@@ -86,6 +86,7 @@ let
       org-tree-slide
       passmm
       projectile
+      resize-window
       ruby-end
       shackle
       smex
@@ -108,6 +109,7 @@ let
       scad-mode
 
     ]) ++ (with epkgs.elpaPackages; [
+      exwm
       rainbow-mode
 
     ]) ++ (with epkgs.orgPackages; [

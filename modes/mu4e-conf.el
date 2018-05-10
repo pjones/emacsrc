@@ -7,6 +7,39 @@
 (require 'org-mu4e)
 (require 'mu4e-query-fragments)
 
+;; Functions:
+(defun pjones:mu4e-match-func-devalot (msg)
+  "Return non-nil if MSG is associated with the Devalot account."
+  (when msg
+    (string-prefix-p "/devalot" (mu4e-message-field msg :maildir))))
+
+(defun pjones:mu4e-match-func-rfa (msg)
+  "Return non-nil if MSG is associated with the RFA account."
+  (when msg
+    (string-prefix-p "/rfa" (mu4e-message-field msg :maildir))))
+
+(defun pjones:mu4e-read-signature (name)
+  "Return a mail signature from file NAME."
+  (let ((sig-dir "~/core/privaterc/signatures/"))
+    (with-temp-buffer
+      (insert-file-contents (expand-file-name (concat sig-dir name)))
+      (buffer-string))))
+
+(defun pjones:mu4e-make-queue-directory ()
+  "Ensure the send queue directory exists."
+  (let* ((cur (expand-file-name smtpmail-queue-dir))
+         (dir (file-name-directory (directory-file-name cur))))
+    (unless (file-exists-p cur)
+      (call-process "mu" nil nil nil "mkdir" dir)
+      (call-process "touch" nil nil nil (concat dir ".noindex")))))
+
+(defun pjones-mu4e-short-maildir (msg)
+  "Format the maildir of MSG so it's as short as possible."
+  (let* ((maildir (or (mu4e-message-field msg :maildir) ""))
+         (prefix (substring maildir 1 2))
+         (dir (file-name-nondirectory maildir)))
+    (concat prefix "/" dir)))
+
 ;; General Settings:
 (custom-set-variables
   '(mail-user-agent 'mu4e-user-agent)
@@ -17,7 +50,7 @@
   '(mu4e-maildir "~/mail")
   '(mu4e-mu-home "~/.cache/mu")
   '(mu4e-change-filenames-when-moving t)
-  '(mu4e-context-policy 'ask)
+  '(mu4e-context-policy 'pick-first)
   '(mu4e-compose-context-policy 'ask-if-none)
   '(mu4e-use-fancy-chars t)
   '(mu4e-headers-sort-field :date)
@@ -73,12 +106,11 @@
                  (mu4e-drafts-folder          . "/rfa/Drafts")
                  (mu4e-trash-folder           . "/rfa/Deleted Items")
                  (mu4e-refile-folder          . "/rfa/Archive")
-                 (mu4e-compose-signature      . (pjones:mu4e-read-signature "scors"))
+                 (mu4e-compose-signature      . ,(pjones:mu4e-read-signature "scors"))
                  (smtpmail-smtp-server        . "outlook.office365.com")
                  (smtpmail-smtp-service       . 587)
                  (smtpmail-stream-type        . starttls)
                  (smtpmail-smtp-user          . "peter.jones@rfa.sc.gov")))))
-
 
 ;; Extra Headers:
 (add-to-list 'mu4e-header-info-custom
@@ -101,36 +133,5 @@
 (add-to-list 'mu4e-view-actions '("open in browser" . mu4e-action-view-in-browser) t)
 (add-to-list 'mu4e-view-actions '("tag message"     . mu4e-action-retag-message) t)
 
-(defun pjones:mu4e-match-func-devalot (msg)
-  "Return non-nil if MSG is associated with the Devalot account."
-  (when msg
-    (string-prefix-p "/devalot" (mu4e-message-field msg :maildir))))
-
-(defun pjones:mu4e-match-func-rfa (msg)
-  "Return non-nil if MSG is associated with the RFA account."
-  (when msg
-    (string-prefix-p "/rfa" (mu4e-message-field msg :maildir))))
-
-(defun pjones:mu4e-read-signature (name)
-  "Return a mail signature from file NAME."
-  (let ((sig-dir "~/core/privaterc/signatures/"))
-    (with-temp-buffer
-      (insert-file-contents (expand-file-name (concat sig-dir name)))
-      (buffer-string))))
-
-(defun pjones:mu4e-make-queue-directory ()
-  "Ensure the send queue directory exists."
-  (let* ((cur (expand-file-name smtpmail-queue-dir))
-         (dir (file-name-directory (directory-file-name cur))))
-    (unless (file-exists-p cur)
-      (call-process "mu" nil nil nil "mkdir" dir)
-      (call-process "touch" nil nil nil (concat dir ".noindex")))))
-
-(defun pjones-mu4e-short-maildir (msg)
-  "Format the maildir of MSG so it's as short as possible."
-  (let* ((maildir (or (mu4e-message-field msg :maildir) ""))
-         (prefix (substring maildir 1 2))
-         (dir (file-name-nondirectory maildir)))
-    (concat prefix "/" dir)))
-
+;; Hooks
 (add-hook 'mu4e-compose-pre-hook #'pjones:mu4e-make-queue-directory)

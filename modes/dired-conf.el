@@ -9,6 +9,7 @@
 (require 'dired-aux)
 (require 'dired-filter)
 (require 'dired-narrow)
+(require 'dired-sidebar)
 
 (custom-set-variables
   '(dired-listing-switches "-lhA --ignore=.git --group-directories-first")

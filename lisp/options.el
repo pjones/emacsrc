@@ -14,10 +14,11 @@
   (add-hook mode-hook 'font-lock-mode)
   (add-hook mode-hook 'auto-fill-mode)
   (add-hook mode-hook 'flyspell-mode)
+  (add-hook mode-hook 'line-number-mode)
   (add-hook mode-hook 'column-number-mode))
 
 (pjones:add-basic-mode-hook 'text-mode-hook)
-(pjones:add-basic-mode-hook 'fundamental-mode-hook)
+(pjones:add-basic-mode-hook 'prog-mode-hook)
 
 ;; Variables defined in Emacs' C source
 (setq max-lisp-eval-depth 1200           ; My theme is too deep
@@ -44,8 +45,8 @@
               truncate-lines t)                     ; Don't wrap lines
 
 ;; Settings not worth their own file in the modes directory:
-(setq epa-file-encrypt-to "204284CB"                  ; Default GPG key to use
-      custom-file "~/.emacs.d/pjones/lisp/custom.el") ; To keep Emacs happy
+(setq epa-file-encrypt-to "204284CB"    ; Default GPG key to use
+      custom-file (concat user-emacs-directory "custom.el" )) ; To keep Emacs happy
 
 (defun pjones:frame-title-file-name ()
   (let* ((home (expand-file-name "~"))

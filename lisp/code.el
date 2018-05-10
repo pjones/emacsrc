@@ -87,7 +87,7 @@
    ((get-buffer "*JS REPL*")
     (switch-to-buffer "*JS REPL*"))
    ((string= type "chrome")
-    (indium-run-node "node"))
+    (indium-connect-to-chrome))
    ((string= type "node")
     (indium-run-node "node"))))
 

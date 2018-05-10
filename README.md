@@ -37,6 +37,6 @@ existing configuartion in any way?
 
   3. Start Emacs:
 
-         ./result/bin/emacs -q --load ./result/dot.emacs.el -f pjones:configure-new-frame
+         ./result/bin/emacs -q --load ./result/dot.emacs.el --eval "(run-hooks 'after-init-hook)"
 
 [emacs]: http://www.gnu.org/software/emacs/

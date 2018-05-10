@@ -3,5 +3,7 @@
   (require 'switch-window))
 
 (custom-set-variables
- '(switch-window-timeout 30)
+ '(switch-window-shortcut-style 'qwerty)
+ '(switch-window-increase 8)
+ '(switch-window-timeout 5)
  '(switch-window-threshold 2))
