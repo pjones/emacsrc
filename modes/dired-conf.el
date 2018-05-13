@@ -1,7 +1,6 @@
 ;;; dired-conf.el -- Settings for dired-mode
 (eval-when-compile
-  (require 'dired)
-  (require 'dired-subtree))
+  (require 'dired))
 
 ;; Load dired-aux at runtime.
 (require 'org)
@@ -10,6 +9,7 @@
 (require 'dired-filter)
 (require 'dired-narrow)
 (require 'dired-sidebar)
+(require 'dired-subtree)
 
 (custom-set-variables
   '(dired-listing-switches "-lhA --ignore=.git --group-directories-first")
@@ -18,6 +18,8 @@
   '(dired-hide-details-hide-symlink-targets nil)
   '(dired-filter-prefix "/")
   '(dired-filter-mark-prefix "M")
+  '(dired-subtree-use-backgrounds nil)
+  '(dired-subtree-line-prefix-face nil)
   '(dired-sidebar-theme (quote nerd))
   '(dired-sidebar-refresh-on-special-commands nil)
   '(dired-sidebar-follow-file-idle-delay 1)
