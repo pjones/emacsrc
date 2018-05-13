@@ -52,7 +52,7 @@
   '(mu4e-change-filenames-when-moving t)
   '(mu4e-context-policy 'pick-first)
   '(mu4e-compose-context-policy 'ask-if-none)
-  '(mu4e-use-fancy-chars t)
+  '(mu4e-use-fancy-chars nil)
   '(mu4e-headers-sort-field :date)
   '(mu4e-headers-sort-direction 'ascending)
   '(mu4e-headers-results-limit -1)
