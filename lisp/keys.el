@@ -20,6 +20,8 @@
 ;; Overriding default key bindings
 (global-set-key (kbd "C-x C-c")   'pjones:maybe-save-buffers-kill-terminal)
 (global-set-key (kbd "C-x C-b")   'ibuffer)
+(global-set-key (kbd "C-x C-f")   'helm-find-files)
+(global-set-key (kbd "C-x b")     'helm-mini)
 (global-set-key (kbd "C-x o")     'switch-window)
 (global-set-key (kbd "C-x O")     'resize-window)
 (global-set-key (kbd "C-x M-o")   'pjones:switch-window-then-delete)
@@ -31,8 +33,8 @@
 (global-set-key (kbd "C-M-s")     'isearch-forward)
 (global-set-key (kbd "C-M-r")     'isearch-backward)
 (global-set-key (kbd "C-w")       'pjones:kill-region-or-backward-kill-word)
-(global-set-key (kbd "M-x")       'smex)
-(global-set-key (kbd "M-y")       'browse-kill-ring)
+(global-set-key (kbd "M-x")       'helm-M-x)
+(global-set-key (kbd "M-y")       'helm-show-kill-ring)
 (global-set-key (kbd "M-z")       'zap-up-to-char)
 (global-set-key (kbd "M-S-z")     'zap-to-char)
 (global-set-key (kbd "M-/")       'company-complete)
@@ -62,13 +64,13 @@
 (define-key pjones:z-map (kbd "b")   'pjones:bookmark)
 (define-key pjones:z-map (kbd "c")   'projectile-compile-project)
 (define-key pjones:z-map (kbd "d")   'projectile-dired)
-(define-key pjones:z-map (kbd "D")   'dictionary-lookup-definition)
+;; (define-key pjones:z-map (kbd "D")   'helm-dictionary)
 (define-key pjones:z-map (kbd "e")   'hydra-launch/body)
 (define-key pjones:z-map (kbd "f")   'pjones:kill-file-name)
 (define-key pjones:z-map (kbd "g")   'rgrep)
 (define-key pjones:z-map (kbd "h")   'hl-line-mode)
 (define-key pjones:z-map (kbd "H")   'highlight-regexp)
-(define-key pjones:z-map (kbd "i")   'idomenu)
+(define-key pjones:z-map (kbd "i")   'helm-semantic-or-imenu)
 (define-key pjones:z-map (kbd "I")   'pjones:uuid)
 (define-key pjones:z-map (kbd "J")   'pjones:journal)
 (define-key pjones:z-map (kbd "l")   'pjones:jump-back-and-forth)
@@ -83,6 +85,9 @@
 (define-key pjones:z-map (kbd "w")   'hydra-window-ops/body)
 (define-key pjones:z-map (kbd "z")   'pjones:switch-to-previous-buffer)
 (define-key pjones:z-map (kbd "C-z") 'pjones:switch-to-previous-buffer)
+
+;; Super key for Exwm:
+(global-set-key (kbd "s-SPC") 'helm-run-external-command)
 
 (provide 'keys)
 ;;; keys.el ends here

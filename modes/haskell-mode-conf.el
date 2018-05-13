@@ -3,11 +3,12 @@
   (require 'cl)
   (require 'haskell-mode))
 
+(require 'company-ghc)
+(require 'dante)
+(require 'flycheck)
 (require 'ghc)
 (require 'haskell)
 (require 'haskell-indentation)
-(require 'flycheck)
-(require 'dante)
 
 ;; Settings for haskell-mode and friends:
 (custom-set-variables
@@ -209,7 +210,7 @@ See `haskell-process-wrapper-function' for details."
 
   ;; Configure completion:
   (make-local-variable 'company-backends)
-  (add-to-list 'company-backends '(company-dabbrev company-abbrev))
+  (add-to-list 'company-backends '(company-ghc company-dabbrev company-abbrev))
 
   ;; (define-abbrev-table 'haskell-mode-abbrev-table
   ;;   '(("_P" "" pjones:haskell-insert-pragma)))

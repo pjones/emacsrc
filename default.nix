@@ -58,22 +58,16 @@ let
       dante
       deft
       dim
-
-      # FIXME:
-      # dictionary broken :(
-
-      flx
-      flx-ido
       flycheck
       git-annex
       goto-chg
       graphviz-dot-mode
       haskell-mode
+      helm
+      helm-circe # https://github.com/lesharris/helm-circe
       htmlize
       hydra
       ialign
-      ido-completing-read-plus
-      idomenu
       indium
       inf-ruby
       js2-mode
@@ -89,7 +83,6 @@ let
       resize-window
       ruby-end
       shackle
-      smex
       switch-window
       yaml-mode
 
@@ -102,6 +95,8 @@ let
       eimp
       god-mode
       google-contacts
+      helm-hoogle # https://github.com/jwiegley/helm-hoogle
+      helm-pass # https://github.com/jabranham/helm-pass
       highlight-indent-guides
       http
       mu4e-query-fragments

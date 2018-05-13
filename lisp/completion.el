@@ -1,7 +1,7 @@
 ;;; completion.el -- Configuration for completion, abbreviations, and shortcuts.
-(eval-when-compile
-  (require 'company)
-  (require 'company-ghc))
+(require 'company)
+(require 'helm)
+(require 'hydra)
 
 ;; I don't want to type "yes".
 (defalias 'yes-or-no-p 'y-or-n-p)
@@ -12,7 +12,6 @@
 ;; In buffer completion:
 (require 'company)
 (add-hook 'after-init-hook 'global-company-mode)
-(add-to-list 'company-backends 'company-ghc)
 (add-to-list 'company-backends 'company-capf)
 
 ;; Replace completion-at-point with company mode:
@@ -30,8 +29,5 @@
         try-expand-whole-kill
         try-expand-line))
 
-;; Minibuffer completion:
-(ido-mode)
-
 ;; Key helpers (completion):
-(require 'hydra)
+(helm-mode)

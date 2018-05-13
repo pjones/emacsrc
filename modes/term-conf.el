@@ -30,10 +30,7 @@
 
 (defun pjones:remove-dead-term (&rest args)
   "Clean up after a dead terminal."
-  (let* ((buffer (current-buffer))
-         (window (get-buffer-window buffer))
-         (frame  (window-frame window)))
-    (delete-frame frame)
+  (let ((buffer (current-buffer)))
     (kill-buffer buffer)))
 
 (defun pjones:term-quoted-insert (count)
@@ -76,7 +73,8 @@
     (define-key map (kbd "C-c C-c") 'pjones:term-send-control-c)
     (define-key map (kbd "C-q")     'pjones:term-quoted-insert)
     (define-key map (kbd "C-u")     'universal-argument)
-    (define-key map (kbd "C-y")     'term-paste)))
+    (define-key map (kbd "C-y")     'term-paste)
+    (define-key map (kbd "C-z")     pjones:z-map)))
 
 (advice-add 'term-handle-exit :after 'pjones:remove-dead-term)
 (add-hook 'term-mode-hook 'pjones:term-mode-hook)

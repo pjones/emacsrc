@@ -11,6 +11,7 @@
 (dim-minor-names
  '((auto-fill-function  " ↵" "Fill")
    (auto-revert-mode    ""   "Revert")
+   (helm-mode           ""   "Helm")
    (global-auto-revert-mode "" "Revert")
    (flyspell-mode       ""   "Flyspell")
    (hs-minor-mode       ""   "HS")
