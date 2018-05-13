@@ -13,11 +13,8 @@
   (exwm-workspace-rename-buffer exwm-class-name))
 
 (custom-set-variables
-   ;; Move minibuffer to the top of the screen and auto hide:
-   '(exwm-workspace-minibuffer-position 'top)
-
    ;; Number of workspaces:
-  '(exwm-workspace-number 9)
+  '(exwm-workspace-number 10)
 
   ;; RandR settings:
   '(exwm-randr-workspace-output-plist '(0 "eDP1"))
