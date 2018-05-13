@@ -43,19 +43,13 @@ placing it in the kill ring)."
 (defun pjones:open-line-above (stay)
   "Open a line above point and move there if STAY is nil."
   (interactive "P")
-  (let ((already-bol (bolp)))
+  (let ((already-bol (bolp))
+        (loc (set-marker (make-marker) (point))))
     (move-beginning-of-line nil)
     (open-line 1)
-    (if stay (move-end-of-line 2))
-    (when (not already-bol)
-      (indent-according-to-mode))))
-
-(defun pjones:open-line-below ()
-  "Open a line below the point, and move there"
-  (interactive)
-  (move-end-of-line 1)
-  (newline)
-  (indent-according-to-mode))
+    (if stay (goto-char (marker-position loc))
+      (when (not already-bol)
+        (indent-according-to-mode)))))
 
 (defun pjones:move-beginning-of-line ()
   "Move back to indentation or the first column."
