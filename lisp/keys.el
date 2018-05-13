@@ -25,7 +25,7 @@
 (global-set-key (kbd "C-x M-o")   'pjones:switch-window-then-delete)
 (global-set-key (kbd "C-a")       'pjones:move-beginning-of-line)
 (global-set-key (kbd "C-o")       'pjones:open-line-above)
-(global-set-key (kbd "M-o")       'pjones:open-line-below)
+(global-set-key (kbd "M-o")       (lambda () (interactive) (pjones:open-line-above t)))
 (global-set-key (kbd "C-s")       'isearch-forward-regexp)
 (global-set-key (kbd "C-r")       'isearch-backward-regexp)
 (global-set-key (kbd "C-M-s")     'isearch-forward)
