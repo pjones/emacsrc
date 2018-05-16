@@ -86,8 +86,9 @@
 (define-key pjones:z-map (kbd "z")   'pjones:switch-to-previous-buffer)
 (define-key pjones:z-map (kbd "C-z") 'pjones:switch-to-previous-buffer)
 
-;; Super key for Exwm:
-(global-set-key (kbd "s-SPC") 'helm-run-external-command)
+;; Super key for Exwm and elscreen:
+(global-set-key (kbd "s-x")   'helm-run-external-command)
+(global-set-key (kbd "s-SPC") 'helm-elscreen)
 
 (provide 'keys)
 ;;; keys.el ends here
