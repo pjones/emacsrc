@@ -24,8 +24,6 @@
 
 (defun pjones:ido-setup-hook ()
   "Override some weird ido stuff using the set up hook."
-  (flx-ido-mode 1)
-  (ido-everywhere)
   (define-key ido-completion-map (kbd "C-w") 'ido-delete-backward-word-updir))
 
 ;; Insert my set up hook.

@@ -62,6 +62,7 @@
   '(mu4e-view-date-format "%c")
   '(mu4e-view-scroll-to-next nil)
   '(mu4e-attachment-dir "~/download")
+  '(mu4e-completing-read-function 'completing-read)
 
   '(mu4e-headers-fields
     (quote ((:human-date    . 12)
@@ -70,14 +71,17 @@
             (:from          . 22)
             (:thread-subject))))
 
+  '(mu4e-maildir-shortcuts
+    (quote (("/devalot/Inbox" . ?i)
+            ("/devalot/Junk"  . ?j)
+            ("/rfa/Inbox"     . ?I))))
+
   '(mu4e-query-fragments-list
     (quote (("%trash" . "( maildir:/devalot/Trash OR maildir:/rfa/\"Deleted Items\" )")
             ("%list"  . "maildir:/devalot/mlists/*"))))
 
   '(mu4e-bookmarks
-    (quote (("maildir:/devalot/Inbox" "Devalot Inbox" ?i)
-            ("maildir:/rfa/Inbox" "RFA Inbox" ?I)
-            ("flag:unread AND NOT %trash AND NOT %list" "Unread messages" ?u)
+    (quote (("flag:unread AND NOT %trash AND NOT %list" "Unread messages" ?u)
             ("flag:unread AND %list" "Unread lists" ?l)
             ("flag:flagged AND NOT %trash" "Flagged messages" ?f)))))
 
