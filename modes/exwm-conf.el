@@ -6,18 +6,18 @@
 
 ;; Load optional EXWM features:
 (require 'exwm-randr)
-(require 'exwm-systemtray)
 
 (defun pjones:exwm-update-class-hook ()
   "Update shit after a class name changes."
   (exwm-workspace-rename-buffer exwm-class-name))
 
 (custom-set-variables
-   ;; Number of workspaces:
-  '(exwm-workspace-number 10)
+   ;; Workspace settings:
+  '(exwm-workspace-number 2)
+  '(exwm-workspace-show-all-buffers nil)
 
   ;; RandR settings:
-  '(exwm-randr-workspace-output-plist '(0 "eDP1"))
+  '(exwm-randr-workspace-output-plist '(0 "eDP1" 9 "DP1"))
 
   ;; Simulated key presses to X Windows:
   '(exwm-input-simulation-keys
@@ -37,7 +37,6 @@
 
 ;; Activate optional features:
 (exwm-randr-enable)
-(exwm-systemtray-enable)
 
 ;; Insert some hooks:
 (add-hook 'exwm-update-class-hook #'pjones:exwm-update-class-hook)
