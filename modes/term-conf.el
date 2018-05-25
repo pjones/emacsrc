@@ -1,7 +1,9 @@
 ;;; term-conf.el -- Settings for term-mode.
 
 (eval-when-compile
-  (require 'term))
+  (require 'term)
+  (require 'projectile)
+  (require 'elscreen))
 
 ;; Settings for term-mode:
 (custom-set-variables
@@ -10,6 +12,15 @@
  '(term-scroll-to-bottom-on-output nil)
  '(term-scroll-show-maximum-output nil)
  '(term-suppress-hard-newline t))
+
+(defun pjones:term-rename ()
+  "Rename a terminal using the current project name."
+  (interactive)
+  (let ((suffix (if (projectile-project-p) (projectile-project-name)
+                  (elscreen-get-screen-nickname
+                   (elscreen-get-current-screen)))))
+    (rename-buffer (generate-new-buffer-name
+                     (concat "term:" suffix)))))
 
 (defun pjones:term-line-mode ()
   "Go to term-line-mode."
@@ -71,6 +82,7 @@
     (define-key map (kbd "C-c") nil)
     (define-key map (kbd "C-c C-t") 'pjones:term-line-mode)
     (define-key map (kbd "C-c C-c") 'pjones:term-send-control-c)
+    (define-key map (kbd "C-c C-r") 'pjones:term-rename)
     (define-key map (kbd "C-q")     'pjones:term-quoted-insert)
     (define-key map (kbd "C-u")     'universal-argument)
     (define-key map (kbd "C-y")     'term-paste)

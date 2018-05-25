@@ -101,6 +101,7 @@
 ;; Super key for EXWM and elscreen:
 (global-set-key (kbd "s-x")   #'helm-run-external-command)
 (global-set-key (kbd "s-SPC") #'helm-elscreen)
+(global-set-key (kbd "s-RET") #'pjones:start-term)
 
 (provide 'keys)
 ;;; keys.el ends here

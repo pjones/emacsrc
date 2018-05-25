@@ -77,7 +77,7 @@ the local bitlbee instance."
   "Start a new terminal buffer."
   (interactive)
   (term "zsh")
-  (rename-buffer (generate-new-buffer-name "term")))
+  (pjones:term-rename))
 
 (defun pjones:start-http ()
   "Create a new buffer running `http-mode'."
