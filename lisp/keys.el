@@ -77,7 +77,7 @@
 (define-key pjones:z-map (kbd "m")   'magit-status)
 (define-key pjones:z-map (kbd "n")   'pjones:insert-italian-name)
 (define-key pjones:z-map (kbd "o")   'browse-url)
-(define-key pjones:z-map (kbd "p")   'helm-pass)
+(define-key pjones:z-map (kbd "p")   'passmm-helm)
 (define-key pjones:z-map (kbd "P")   'pjones:pwgen)
 (define-key pjones:z-map (kbd "r")   'pjones:register-get-set)
 (define-key pjones:z-map (kbd "R")   'revert-buffer)

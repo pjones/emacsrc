@@ -15,10 +15,35 @@ let
   emacsWithPackages = (pkgs.emacsPackagesNgGen emacs).emacsWithPackages;
 
   ##############################################################################
-  # Access to the generic Emacs builder so we can override some packages.
+  # Access to the trivial Emacs builder so we can override some packages.
   pkgBuilder = import <nixpkgs/pkgs/build-support/emacs/trivial.nix> {
     inherit (pkgs) lib stdenv texinfo;
     inherit emacs;
+  };
+
+  ##############################################################################
+  # Access to the MELPA Emacs builder.
+  melpaBuild = import <nixpkgs/pkgs/build-support/emacs/melpa.nix> {
+    inherit (pkgs) lib stdenv fetchurl texinfo;
+    inherit emacs;
+  };
+
+  ##############################################################################
+  # Latest version of passmm:
+  passmmLatest = melpaPackages: melpaBuild {
+    pname = "passmm";
+    version = "20170113.837";
+    src = pkgs.fetchgit {
+      url = "git://git.devalot.com/passmm.git";
+      rev = "2e0cd4e8ef7e6017dbc295664c925d32d6fdc688";
+      sha256 = "0va9rg8nsi561x78qffr2piwprk9pq9k6zghg9yd4ldh834ccp6z";
+    };
+    recipeFile = pkgs.fetchurl {
+      url = "https://raw.githubusercontent.com/milkypostman/melpa/8ae2a1e10375f9cd55d19502c9740b2737eba209/recipes/passmm";
+      sha256 = "0p6qps9ww7s6w5x7p6ha26xj540pk4bjkr629lcicrvnfr5jsg4b";
+      name = "passmm";
+    };
+    packageRequires = [ melpaPackages.password-store ];
   };
 
   ##############################################################################
@@ -123,7 +148,6 @@ let
       no-littering
       noccur
       org-tree-slide
-      passmm
       projectile
       resize-window
       ruby-end
@@ -142,7 +166,6 @@ let
       god-mode
       helm-elscreen
       helm-hoogle # https://github.com/jwiegley/helm-hoogle
-      helm-pass # https://github.com/jabranham/helm-pass
       highlight-indent-guides
       http
       mu4e-query-fragments
@@ -160,6 +183,7 @@ let
 
     ]) ++ (with pkgs; [
       (exwmLatest epkgs.elpaPackages)
+      (passmmLatest epkgs.melpaPackages)
       mu
 
     ]));

@@ -46,6 +46,7 @@
 
 ;; Settings not worth their own file in the modes directory:
 (setq epa-file-encrypt-to "204284CB"    ; Default GPG key to use
+      epa-pinentry-mode 'loopback       ; Needed for EXWM.
       custom-file (concat user-emacs-directory "custom.el" )) ; To keep Emacs happy
 
 (defun pjones:frame-title-file-name ()
