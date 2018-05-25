@@ -1,6 +1,8 @@
 { pkgs ? (import <nixpkgs> {}).pkgs }:
 
 let
+  ##############################################################################
+  # Custom build of Emacs with the settings I like.
   emacs = pkgs.emacs.override {
     withX       = true;
     withGTK2    = false;
@@ -8,8 +10,47 @@ let
     imagemagick = pkgs.imagemagick;
   };
 
+  ##############################################################################
+  # Function for selecting which packages go into Emacs.
   emacsWithPackages = (pkgs.emacsPackagesNgGen emacs).emacsWithPackages;
 
+  ##############################################################################
+  # Access to the generic Emacs builder so we can override some packages.
+  pkgBuilder = import <nixpkgs/pkgs/build-support/emacs/trivial.nix> {
+    inherit (pkgs) lib stdenv texinfo;
+    inherit emacs;
+  };
+
+  ##############################################################################
+  # Latest version of xelb:
+  xelbLatest = elpaPkgs: pkgBuilder {
+    pname = "xelb";
+    version = "git";
+    src = pkgs.fetchFromGitHub {
+      owner = "ch11ng";
+      repo  = "xelb";
+      rev   = "8ac915ba1a836d3752ee8de4eb125da7af4dd299";
+      sha256 = "1rd2702kygb8g0kpnnr48in6qywad52b1davigkv5p9wmrvm75jd";
+    };
+    packageRequires = [ elpaPkgs.cl-generic emacs ];
+  };
+
+  ##############################################################################
+  # Latest version of exwm:
+  exwmLatest = elpaPkgs: pkgBuilder {
+    pname = "exwm";
+    version = "git";
+    src = pkgs.fetchFromGitHub {
+      owner  = "ch11ng";
+      repo   = "exwm";
+      rev    = "df8de921132520cccf4236906bcd37aec83fa0ce";
+      sha256 = "01j3s7l4hls5hbsci3af65p0pp8sy3cc5wy9snmz7jadzqg14ll5";
+    };
+    packageRequires = [ (xelbLatest elpaPkgs) ];
+  };
+
+  ##############################################################################
+  # The derivation for building Emacs with packages and my config.
   pjones = pkgs.stdenv.mkDerivation rec {
     name = "emacsrc";
     src = ./.;
@@ -21,19 +62,21 @@ let
                     pkgs.imagemagick # For image-mode and eimp-mode
                   ];
 
+    propagatedUserEnvPkgs = [ emacs' ];
+
     installPhase = ''
       mkdir -p "$out/bin" "$out/emacs.d"
 
       export loadpathel="$out/emacs.d/lisp/loadpath.el"
+      export emacspath="${emacs'}/bin"
+
       substituteAll ${src}/dot.emacs.el "$out/dot.emacs.el"
-
       cp -r ${src}/lisp ${src}/modes "$out/emacs.d/"
-      cp -r ${src}/bin/* "$out/bin/"
       chmod u+w "$out"/emacs.d/*
-      chmod 0555 "$out"/bin/*
 
-      for f in ${emacs'}/bin/*; do
-        ln -nfs "$f" "$out/bin/"
+      for f in ${src}/bin/*; do
+        substituteAll "$f" "$out/bin/$(basename "$f")"
+        chmod 0555 "$out/bin/$(basename "$f")"
       done
 
       for f in $(find "$out/emacs.d" -type f -name "*.el"); do
@@ -43,6 +86,8 @@ let
     '';
   };
 
+  ##############################################################################
+  # List of Emacs packages I use.
   emacs' =
     emacsWithPackages (epkgs: (with epkgs.melpaStablePackages; [
       alect-themes
@@ -105,7 +150,6 @@ let
       scad-mode
 
     ]) ++ (with epkgs.elpaPackages; [
-      exwm
       rainbow-mode
 
     ]) ++ (with epkgs.orgPackages; [
@@ -115,8 +159,11 @@ let
       pdf-tools
 
     ]) ++ (with pkgs; [
+      (exwmLatest epkgs.elpaPackages)
       mu
 
     ]));
 
+################################################################################
+# It all boils down to the derivation.
 in pjones

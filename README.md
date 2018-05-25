@@ -37,6 +37,6 @@ existing configuartion in any way?
 
   3. Start Emacs:
 
-         ./result/bin/emacs -q --load ./result/dot.emacs.el --eval "(run-hooks 'after-init-hook)"
+         ./result/bin/e -f
 
 [emacs]: http://www.gnu.org/software/emacs/

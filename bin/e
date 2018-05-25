@@ -7,6 +7,7 @@ set -e
 ################################################################################
 option_server_name="server"
 option_server_path="$HOME/.cache/emacs/server/"
+option_fresh=0
 option_emacs_opts=()
 
 ################################################################################
@@ -15,6 +16,7 @@ cat <<EOF
 Usage: e [options] [file] -- [emacsclient options]
 
   -c      Open a new frame
+  -f      Force a fresh Emacs to be started
   -h      This message
   -s NAME Connect to server NAME
   -t      Open a new TTY
@@ -22,9 +24,12 @@ EOF
 }
 
 ################################################################################
-while getopts "chs:t" o; do
+while getopts "cfhs:t" o; do
   case "${o}" in
     c) option_emacs_opts+=("--create-frame" "--no-wait")
+       ;;
+
+    f) option_fresh=1
        ;;
 
     h) usage
@@ -45,10 +50,17 @@ done
 shift $((OPTIND-1))
 
 ################################################################################
-if [ ! -e "${option_server_path}${option_server_name}" ]; then
-  emacs --daemon="$option_server_name"
+if [ "$option_fresh" -eq 1 ]; then
+  export EMACSLOADPATH=""
+  exec @emacspath@/emacs -q --load @out@/dot.emacs.el \
+         --eval "(run-hooks 'after-init-hook)" "$@"
 fi
 
 ################################################################################
-emacsclient --server-file="${option_server_path}${option_server_name}" \
-            "${option_emacs_opts[@]}" "$@"
+if [ ! -e "${option_server_path}${option_server_name}" ]; then
+  @emacspath@/emacs --daemon="$option_server_name"
+fi
+
+################################################################################
+@emacspath@/emacsclient --server-file="${option_server_path}${option_server_name}" \
+   "${option_emacs_opts[@]}" "$@"
