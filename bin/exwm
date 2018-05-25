@@ -12,4 +12,4 @@ xhost "+SI:localuser:$USER"
 export _JAVA_AWT_WM_NONREPARENTING=1
 
 # Start Emacs:
-exec emacs --eval "(require 'exwm)" -f server-start -f exwm-enable
+exec @emacspath@/emacs --eval "(require 'exwm)" -f server-start -f exwm-enable
