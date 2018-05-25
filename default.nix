@@ -95,8 +95,7 @@ let
       eimp
       elscreen # https://github.com/knu/elscreen
       god-mode
-      google-contacts
-      helm-elscreen # https://github.com/emacs-helm/helm-elscreen
+      helm-elscreen
       helm-hoogle # https://github.com/jwiegley/helm-hoogle
       helm-pass # https://github.com/jabranham/helm-pass
       highlight-indent-guides
