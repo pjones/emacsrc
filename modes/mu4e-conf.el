@@ -49,6 +49,7 @@
 
   '(mu4e-maildir "~/mail")
   '(mu4e-mu-home "~/.cache/mu")
+  '(mu4e-get-mail-command "mbsync-pjones")
   '(mu4e-change-filenames-when-moving t)
   '(mu4e-context-policy 'pick-first)
   '(mu4e-compose-context-policy 'ask-if-none)
