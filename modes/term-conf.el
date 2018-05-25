@@ -5,10 +5,10 @@
 
 ;; Settings for term-mode:
 (custom-set-variables
- '(term-input-autoexpand t)
- '(term-input-ignoredups t)
- '(term-scroll-to-bottom-on-output t)
- '(term-scroll-show-maximum-output t)
+ '(term-input-autoexpand nil)
+ '(term-input-ignoredups nil)
+ '(term-scroll-to-bottom-on-output nil)
+ '(term-scroll-show-maximum-output nil)
  '(term-suppress-hard-newline t))
 
 (defun pjones:term-line-mode ()
