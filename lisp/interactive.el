@@ -281,11 +281,6 @@ current buffer after point."
     (kill-new uuid)
     (insert uuid)))
 
-(defun pjones:toggle-theme ()
-  "Switch between my dark theme and my light theme."
-  (interactive)
-  (enable-theme (cadr custom-enabled-themes)))
-
 (defun pjones:switch-window-then-delete ()
   "Interactively delete a window."
   (interactive)
@@ -317,7 +312,7 @@ current buffer after point."
  _r_: rotate      _U_: redo
  ^ ^              _j_: save/restore
 "
-  ("T" pjones:toggle-theme)
+  ("T" pjones:load-theme)
   ("U" winner-redo)
   ("d" dired-sidebar-toggle-sidebar)
   ("j" pjones:window-config)
