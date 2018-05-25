@@ -9,6 +9,26 @@
   "Face to style FIXME and TODO with."
   :group 'faces)
 
+(defun pjones:compilation-buffer-name-function (mode-name)
+  "Per-project compilation buffers for MODE-NAME."
+  (concat "*" (downcase mode-name)
+          (if (projectile-project-p)
+              (concat ":" (projectile-project-name))
+            "")
+          "*"))
+
+(defun pjones:projectile-compile-project (ask)
+  "Compile a project forcing a unique compilation buffer.
+
+If ASK is non-nil, prompt for a compile command even if it has
+already been cached."
+  (interactive "P")
+  (let* ((compilation-buffer-name-function 'pjones:compilation-buffer-name-function)
+         (default-directory (projectile-compilation-dir))
+         (compile-command (projectile-compilation-command default-directory))
+         (compilation-read-command (or ask (null compile-command))))
+    (call-interactively 'compile)))
+
 (defun pjones:comment-bar (&optional without-newline)
   "Create a comment bar based on the current mode."
   (interactive "P")

@@ -62,7 +62,7 @@
 (define-key pjones:z-map (kbd "a")   'align)
 (define-key pjones:z-map (kbd "A")   'ialign)
 (define-key pjones:z-map (kbd "b")   'pjones:bookmark)
-(define-key pjones:z-map (kbd "c")   'projectile-compile-project)
+(define-key pjones:z-map (kbd "c")   'pjones:projectile-compile-project)
 (define-key pjones:z-map (kbd "d")   'projectile-dired)
 ;; (define-key pjones:z-map (kbd "D")   'helm-dictionary)
 (define-key pjones:z-map (kbd "e")   'hydra-launch/body)
