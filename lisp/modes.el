@@ -12,6 +12,7 @@
 (projectile-global-mode)                ; Project tool
 (global-auto-revert-mode)               ; External changes cause a revert
 (shackle-mode)                          ; Control pop-up windows.
+(default-text-scale-mode)               ; Frame text scaling.
 
 ;; Other modes that need to be activated:
 (pdf-tools-install)                     ; Internal PDF viewer

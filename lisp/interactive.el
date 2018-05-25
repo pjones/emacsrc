@@ -306,11 +306,13 @@ current buffer after point."
 
 (defhydra hydra-window-ops (:hint nil :color blue)
   "
-^Windows^        ^Config^          ^Sidebar^    ^Theme^
-^^^^^^^^^^^-------------------------------------------------
- _t_: transpose   _u_: undo         _d_: dired   _T_: switch
- _r_: rotate      _U_: redo
- ^ ^              _j_: save/restore
+^Windows^           ^Config^             ^Screens^       ^Themes/Fonts^
+^^^----------------------------------------------------------------------------
+ _t_: transpose      _u_: undo            _c_: create     _T_: switch theme
+ _r_: rotate         _U_: redo            _C_: clone      _p_: frame scale up
+ _d_: dired sidbar   _j_: save/restore    _R_: rename     _n_: frame scale down
+ ^ ^                 ^ ^                  ^ ^             _P_: buffer scale up
+ ^ ^                 ^ ^                  ^ ^             _N_: buffer scale down
 "
   ("T" pjones:load-theme)
   ("U" winner-redo)
@@ -318,7 +320,14 @@ current buffer after point."
   ("j" pjones:window-config)
   ("r" rotate-layout)
   ("t" rotate-window)
-  ("u" winner-undo))
+  ("u" winner-undo)
+  ("c" elscreen-create)
+  ("C" elscreen-clone)
+  ("R" elscreen-screen-nickname)
+  ("p" default-text-scale-increase :color red)
+  ("n" default-text-scale-decrease :color red)
+  ("P" text-scale-increase :color red)
+  ("N" text-scale-decrease :color red))
 
 ;; Local Variables:
 ;; byte-compile-warnings: (not noruntime)

@@ -157,6 +157,7 @@ let
 
     ]) ++ (with epkgs.melpaPackages; [
       # No stable versions yet :(
+      default-text-scale
       dired-filter
       dired-narrow
       dired-sidebar
