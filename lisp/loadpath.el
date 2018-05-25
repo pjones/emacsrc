@@ -20,7 +20,6 @@
      "interactive"
      "completion"
      "keys"
-     "projector"
      "suspend"
     )
   "A list of my config files to load in the correct order.")
