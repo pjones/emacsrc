@@ -2,9 +2,20 @@
 (eval-when-compile
   (require 'shackle))
 
+;; https://github.com/wasamasa/shackle
+
+(defun pjones:shackle-split (buffer _alist _plist)
+  "Split the current window."
+  (let ((window (split-window)))
+    (when window (set-window-buffer window buffer))))
+
 (custom-set-variables
  '(shackle-default-rule (quote (:select t)))
  '(shackle-rules nil))
+
+;; Helm windows should display above the echo area:
+(add-to-list 'shackle-rules
+  '("\\`\\*helm.*?\\*\\'" :regexp t :align below :size 0.33))
 
 ;; Compilation buffers get a new frame:
 (add-to-list 'shackle-rules '(compilation-mode :noselect t))
@@ -15,6 +26,8 @@
 ;; When asking for completions:
 (add-to-list 'shackle-rules '("*Completions*" :size 0.3 :align t))
 
+(add-to-list 'shackle-rules '(calendar-mode :size 0.2 :align below))
+
 ;; Don't select grep buffers:
 (add-to-list 'shackle-rules '(grep-mode :noselect t))
 
@@ -23,9 +36,12 @@
 (add-to-list 'shackle-rules '(magit-diff-mode :noselect t))
 
 ;; Circe buffers shouldn't split the frame:
-(add-to-list 'shackle-rules '(:custom pjones:circe-windows :same t))
+(add-to-list 'shackle-rules '("^circe-" :regexp t :same t))
 
-(defun pjones:circe-windows (buffer _alist _plist)
-  "Return non-nil if BUFFER is a Circe buffer."
-  (with-current-buffer buffer
-    (string-match "^circe-" (symbol-name major-mode))))
+;; PDF Outline windows should always split the current window:
+(add-to-list 'shackle-rules
+  '(pdf-outline-buffer-mode :custom pjones:shackle-split))
+
+;; Magit pop-up windows should always split the current window:
+(add-to-list 'shackle-rules
+  '("\\*magit-.*popup" :regexp t :custom pjones:shackle-split))
