@@ -16,8 +16,23 @@
   '(exwm-workspace-number 2)
   '(exwm-workspace-show-all-buffers nil)
 
+  ;; Floating windows:
+  '(exwm-floating-border-width 3)
+  '(exwm-floating-border-color "#ff52bb")
+
   ;; RandR settings:
-  '(exwm-randr-workspace-output-plist '(0 "eDP1" 9 "DP1"))
+  '(exwm-randr-workspace-output-plist '(0 "eDP1" 1 "DP1"))
+
+  ;; Global key bindings:
+  '(exwm-input-prefix-keys
+    (list ?\C-x ?\C-u ?\C-h ?\C-z ?\M-x ?\M-& ?\M-:))
+
+  `(exwm-input-global-keys
+    (quote ((,(kbd "s-SPC")      . helm-elscreen)
+            (,(kbd "<s-return>") . pjones:start-term)
+            (,(kbd "s-r")        . exwm-reset)
+            (,(kbd "s-w")        . exwm-workspace-switch)
+            (,(kbd "s-x")        . helm-run-external-command))))
 
   ;; Simulated key presses to X Windows:
   '(exwm-input-simulation-keys
@@ -30,10 +45,10 @@
       ([?\M-v] . [prior])
       ([?\C-v] . [next])
       ([?\C-d] . [delete])
-      ([?\C-k] . [S-end delete]))))
-
-(exwm-input-set-key (kbd "s-r") #'exwm-reset)
-(exwm-input-set-key (kbd "s-w") #'exwm-workspace-switch)
+      ([?\C-k] . [S-end delete])
+      ([?\C-w] . [?\C-x])
+      ([?\M-w] . [?\C-c])
+      ([?\C-y] . [?\C-v]))))
 
 ;; Activate optional features:
 (exwm-randr-enable)
