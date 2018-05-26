@@ -98,6 +98,7 @@
 (define-key pjones:z-map      "9"    'elscreen-jump)
 
 ;; Super key for EXWM and elscreen:
+(global-set-key (kbd "s-t")   #'elscreen-toggle)
 (global-set-key (kbd "s-x")   #'helm-run-external-command)
 (global-set-key (kbd "s-SPC") #'helm-elscreen)
 (global-set-key (kbd "s-RET") #'pjones:start-term)

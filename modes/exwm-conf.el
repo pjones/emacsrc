@@ -31,6 +31,7 @@
     (quote ((,(kbd "s-SPC")      . helm-elscreen)
             (,(kbd "<s-return>") . pjones:start-term)
             (,(kbd "s-r")        . exwm-reset)
+            (,(kbd "s-t")        . elscreen-toggle)
             (,(kbd "s-w")        . exwm-workspace-switch)
             (,(kbd "s-x")        . helm-run-external-command))))
 
