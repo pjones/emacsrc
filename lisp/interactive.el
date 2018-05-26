@@ -309,7 +309,7 @@ current buffer after point."
 ^Windows^           ^Config^             ^Screens^       ^Themes/Fonts^
 ^^^----------------------------------------------------------------------------
  _t_: transpose      _u_: undo            _c_: create     _T_: switch theme
- _r_: rotate         _U_: redo            _C_: clone      _p_: frame scale up
+ _r_: rotate         _U_: redo            ^ ^             _p_: frame scale up
  _d_: dired sidbar   _j_: save/restore    _R_: rename     _n_: frame scale down
  ^ ^                 ^ ^                  ^ ^             _P_: buffer scale up
  ^ ^                 ^ ^                  ^ ^             _N_: buffer scale down
@@ -321,8 +321,7 @@ current buffer after point."
   ("r" rotate-layout)
   ("t" rotate-window)
   ("u" winner-undo)
-  ("c" elscreen-create)
-  ("C" elscreen-clone)
+  ("c" pjones:elscreen-create)
   ("R" elscreen-screen-nickname)
   ("p" default-text-scale-increase :color red)
   ("n" default-text-scale-decrease :color red)
