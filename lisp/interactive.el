@@ -76,8 +76,11 @@ the local bitlbee instance."
 (defun pjones:start-term ()
   "Start a new terminal buffer."
   (interactive)
-  (term "zsh")
-  (pjones:term-rename))
+  (let ((default-directory (if (projectile-project-p)
+                               (projectile-project-root)
+                             default-directory)))
+    (term (getenv "SHELL"))
+    (pjones:term-rename)))
 
 (defun pjones:start-http ()
   "Create a new buffer running `http-mode'."

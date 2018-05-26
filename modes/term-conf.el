@@ -75,12 +75,12 @@
 
   (let ((map term-mode-map))
     (define-key map (kbd "C-c") nil)
-    (define-key map (kbd "C-c C-t") 'pjones:term-char-mode)
+    (define-key map (kbd "C-c C-k") 'pjones:term-char-mode)
     (define-key map (kbd "RET")     'pjones:term-char-mode))
 
   (let ((map term-raw-map))
     (define-key map (kbd "C-c") nil)
-    (define-key map (kbd "C-c C-t") 'pjones:term-line-mode)
+    (define-key map (kbd "C-c C-k") 'pjones:term-line-mode)
     (define-key map (kbd "C-c C-c") 'pjones:term-send-control-c)
     (define-key map (kbd "C-c C-r") 'pjones:term-rename)
     (define-key map (kbd "C-q")     'pjones:term-quoted-insert)
