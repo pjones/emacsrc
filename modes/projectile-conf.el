@@ -16,8 +16,9 @@
 (add-to-list 'projectile-project-root-files-bottom-up ".dir-locals.el")
 
 (projectile-register-project-type
-   'edify '("default.nix" "courses" "content")
-   "nix-shell --run 'edify build courses/*'")
+ 'edify '("default.nix" "courses" "content")
+ :compile "nix-shell --run 'edify build courses/*'")
 
 (projectile-register-project-type
-   'haskell '("default.nix" "Setup.hs") "nix-hs")
+ 'haskell '("default.nix" "Setup.hs")
+ :compile "nix-hs")
