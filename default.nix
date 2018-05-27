@@ -146,6 +146,7 @@ let
       helm
       helm-circe # https://github.com/lesharris/helm-circe
       helm-elscreen
+      helm-exwm
       helm-hoogle # https://github.com/jwiegley/helm-hoogle
       highlight-indent-guides
       htmlize
