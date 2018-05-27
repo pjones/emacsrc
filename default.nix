@@ -15,13 +15,6 @@ let
   emacsWithPackages = (pkgs.emacsPackagesNgGen emacs).emacsWithPackages;
 
   ##############################################################################
-  # Access to the trivial Emacs builder so we can override some packages.
-  pkgBuilder = import <nixpkgs/pkgs/build-support/emacs/trivial.nix> {
-    inherit (pkgs) lib stdenv texinfo;
-    inherit emacs;
-  };
-
-  ##############################################################################
   # Access to the MELPA Emacs builder.
   melpaBuild = import <nixpkgs/pkgs/build-support/emacs/melpa.nix> {
     inherit (pkgs) lib stdenv fetchurl texinfo;
@@ -48,9 +41,9 @@ let
 
   ##############################################################################
   # Latest version of xelb:
-  xelbLatest = elpaPkgs: pkgBuilder {
+  xelbLatest = elpaPkgs: melpaBuild {
     pname = "xelb";
-    version = "git";
+    version = "0.15";
     src = pkgs.fetchFromGitHub {
       owner = "ch11ng";
       repo  = "xelb";
@@ -62,9 +55,9 @@ let
 
   ##############################################################################
   # Latest version of exwm:
-  exwmLatest = elpaPkgs: pkgBuilder {
+  exwmLatest = elpaPkgs: melpaBuild {
     pname = "exwm";
-    version = "git";
+    version = "0.19";
     src = pkgs.fetchFromGitHub {
       owner  = "ch11ng";
       repo   = "exwm";
