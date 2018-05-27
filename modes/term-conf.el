@@ -60,7 +60,8 @@
 
   ;; Variables for configuration:
   (setq term-prompt-regexp "❯ "
-        mode-line-format '("  %b    [term" mode-line-process "]"))
+        mode-line-format '("  " mode-line-buffer-identification
+                           "    [term" mode-line-process "]"))
 
   ;; Keep things Emacs-like:
   (term-set-escape-char ?\C-x)

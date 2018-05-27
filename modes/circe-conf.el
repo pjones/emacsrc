@@ -126,8 +126,9 @@ BODY, and CHANNEL through to the default notification system."
 
   ;; Simple mode-line for Circe buffers:
   (setq mode-line-format
-        '("  %b " global-mode-string
-                  tracking-mode-line-buffers))
+        '("  " mode-line-buffer-identification
+          "  " global-mode-string
+               tracking-mode-line-buffers))
 
   ;; Disable fringe indicators:
   (setf (cdr (assoc 'continuation fringe-indicator-alist)) nil))
