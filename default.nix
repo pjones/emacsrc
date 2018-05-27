@@ -129,7 +129,6 @@ let
       dired-subtree
       eimp
       elscreen # https://github.com/knu/elscreen
-      exwm-surf
       flycheck
       git-annex
       god-mode
@@ -139,7 +138,6 @@ let
       helm
       helm-circe # https://github.com/lesharris/helm-circe
       helm-elscreen
-      helm-exwm
       helm-hoogle # https://github.com/jwiegley/helm-hoogle
       highlight-indent-guides
       htmlize

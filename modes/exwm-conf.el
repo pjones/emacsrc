@@ -2,8 +2,7 @@
 ;;
 ;; https://github.com/ch11ng/exwm
 (eval-when-compile
-  (require 'exwm)
-  (require 'exwm-surf))
+  (require 'exwm))
 
 ;; Load optional EXWM features:
 (require 'exwm-randr)
@@ -16,7 +15,7 @@
           ") " exwm-title))
   ;; Per-application settings:
   (cond
-   ((string= exwm-class-name "Surf") (exwm-surf-init))))
+   ((string= exwm-class-name "Surf") t)))
 
 (defun pjones:exwm-update-class-hook ()
   "Hook run when a window's class name changed."
