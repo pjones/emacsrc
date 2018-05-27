@@ -2,13 +2,24 @@
 ;;
 ;; https://github.com/ch11ng/exwm
 (eval-when-compile
-  (require 'exwm))
+  (require 'exwm)
+  (require 'exwm-surf))
 
 ;; Load optional EXWM features:
 (require 'exwm-randr)
 
+(defun pjones:exwm-manage-finish-hook ()
+  "Hook run when a new X window is managed by EXWM."
+  (setq mode-line-format
+        '("  " mode-line-buffer-identification
+          " (" mode-name mode-line-process
+          ") " exwm-title))
+  ;; Per-application settings:
+  (cond
+   ((string= exwm-class-name "Surf") (exwm-surf-init))))
+
 (defun pjones:exwm-update-class-hook ()
-  "Update shit after a class name changes."
+  "Hook run when a window's class name changed."
   (exwm-workspace-rename-buffer exwm-class-name))
 
 (custom-set-variables
@@ -55,4 +66,5 @@
 (exwm-randr-enable)
 
 ;; Insert some hooks:
-(add-hook 'exwm-update-class-hook #'pjones:exwm-update-class-hook)
+(add-hook 'exwm-update-class-hook  #'pjones:exwm-update-class-hook)
+(add-hook 'exwm-manage-finish-hook #'pjones:exwm-manage-finish-hook)

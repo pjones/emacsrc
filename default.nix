@@ -114,8 +114,9 @@ let
   ##############################################################################
   # List of Emacs packages I use.
   emacs' =
-    emacsWithPackages (epkgs: (with epkgs.melpaStablePackages; [
+    emacsWithPackages (epkgs: (with epkgs.melpaPackages; [
       alect-themes
+      async
       beginend
       bm
       browse-kill-ring
@@ -126,16 +127,29 @@ let
       company-quickhelp
       company-statistics
       dante
+      default-text-scale
       deft
       dim
+      dired-filter
+      dired-narrow
+      dired-sidebar
+      dired-subtree
+      eimp
+      elscreen # https://github.com/knu/elscreen
+      exwm-surf
       flycheck
       git-annex
+      god-mode
       goto-chg
       graphviz-dot-mode
       haskell-mode
       helm
       helm-circe # https://github.com/lesharris/helm-circe
+      helm-elscreen
+      helm-hoogle # https://github.com/jwiegley/helm-hoogle
+      highlight-indent-guides
       htmlize
+      http
       hydra
       ialign
       indium
@@ -144,34 +158,19 @@ let
       magit
       magit-annex
       markdown-mode
+      mu4e-query-fragments
       nix-mode
       no-littering
       noccur
       org-tree-slide
       projectile
       resize-window
+      rotate
       ruby-end
+      scad-mode
       shackle
       switch-window
       yaml-mode
-
-    ]) ++ (with epkgs.melpaPackages; [
-      # No stable versions yet :(
-      default-text-scale
-      dired-filter
-      dired-narrow
-      dired-sidebar
-      dired-subtree
-      eimp
-      elscreen # https://github.com/knu/elscreen
-      god-mode
-      helm-elscreen
-      helm-hoogle # https://github.com/jwiegley/helm-hoogle
-      highlight-indent-guides
-      http
-      mu4e-query-fragments
-      rotate
-      scad-mode
 
     ]) ++ (with epkgs.elpaPackages; [
       rainbow-mode
