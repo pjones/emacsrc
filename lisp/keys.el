@@ -8,6 +8,8 @@
 
 ;; Emacs nonstandard editing commands
 (autoload 'zap-up-to-char "misc" nil t)
+(autoload 'pjones:browse-url (concat pjones:modes-dir "browse-url-conf") nil t)
+(autoload 'pjones:browse-url-shortcut (concat pjones:modes-dir "browse-url-conf") nil t)
 
 (defvar pjones:z-map (make-sparse-keymap)
   "A map of key bindings under z.")
@@ -78,7 +80,8 @@
 (define-key pjones:z-map (kbd "l")   'pjones:jump-back-and-forth)
 (define-key pjones:z-map (kbd "m")   'magit-status)
 (define-key pjones:z-map (kbd "n")   'pjones:insert-italian-name)
-(define-key pjones:z-map (kbd "o")   'browse-url)
+(define-key pjones:z-map (kbd "o")   'pjones:browse-url)
+(define-key pjones:z-map (kbd "O")   'pjones:browse-url-shortcut)
 (define-key pjones:z-map (kbd "p")   'passmm-helm)
 (define-key pjones:z-map (kbd "P")   'pjones:pwgen)
 (define-key pjones:z-map (kbd "r")   'pjones:register-get-set)
