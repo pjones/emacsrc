@@ -1,9 +1,17 @@
 ;;; helm-conf.el -- Settings for Helm.
+;;
+;;; Commentary:
+;;
+;;; Code:
+(eval-when-compile
+  (require 'helm))
 
 (custom-set-variables
- '(helm-mode-fuzzy-match t)
- '(helm-completion-in-region-fuzzy-match t)
- '(helm-display-function #'helm-default-display-buffer)
- '(helm-display-buffer-width 100)
- '(helm-display-buffer-height 20)
- `(helm-candidate-separator ,(make-string 70 ?─)))
+ '(helm-echo-input-in-header-line t)
+ '(helm-follow-mode-persistent t)
+ `(helm-candidate-separator ,(make-string 78 ?─)))
+
+;;; Hooks:
+(add-hook 'helm-minibuffer-set-up-hook #'helm-hide-minibuffer-maybe)
+
+;;; helm-conf.el ends here

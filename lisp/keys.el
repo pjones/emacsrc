@@ -25,6 +25,8 @@
 (global-set-key (kbd "C-x o")     'switch-window)
 (global-set-key (kbd "C-x O")     'resize-window)
 (global-set-key (kbd "C-x M-o")   'pjones:switch-window-then-delete)
+(global-set-key (kbd "C-h m")     'helm-man-woman)
+(global-set-key (kbd "C-h M")     'describe-mode)
 (global-set-key (kbd "C-a")       'pjones:move-beginning-of-line)
 (global-set-key (kbd "C-o")       'pjones:open-line-above)
 (global-set-key (kbd "M-o")       (lambda () (interactive) (pjones:open-line-above t)))
