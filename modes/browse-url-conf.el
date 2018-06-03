@@ -39,7 +39,7 @@ Other arguments in ARGS are ignored."
        ((string= exwm-class-name "Surf")
         (exwm-surf-set-prop "_SURF_GO" (exwm--buffer->id (current-buffer)) url))
        (t (async-start-process "surf" "surf" nil url)))
-  (async-start-process "surf" "surf" nil url)))
+  (async-start-process "chromium" "chromium" nil url)))
 
 (defun pjones:extract-url-from-surf ()
   "Extract the URL from the Surf window.
