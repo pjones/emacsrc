@@ -16,7 +16,7 @@
 
 ;; Key bindings relating to god-mode.
 (require 'god-mode)
-(global-set-key (kbd "<escape>") 'god-mode)
+(global-set-key (kbd "<escape>") 'god-mode-all)
 (define-key god-local-mode-map (kbd "z") pjones:z-map)
 
 ;; Overriding default key bindings

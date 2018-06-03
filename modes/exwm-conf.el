@@ -104,9 +104,11 @@
     (quote ((,(kbd "s-SPC")      . helm-elscreen)
             (,(kbd "<s-return>") . pjones:start-term)
             (,(kbd "s-r")        . exwm-reset)
+            (,(kbd "s-s")        . other-frame)
             (,(kbd "s-t")        . elscreen-toggle)
             (,(kbd "s-w")        . exwm-workspace-switch)
-            (,(kbd "s-x")        . helm-run-external-command))))
+            (,(kbd "s-x")        . helm-run-external-command)
+            (,(kbd "<escape>")   . god-mode-all))))
 
   ;; Simulated key presses to X Windows:
   '(exwm-input-simulation-keys
