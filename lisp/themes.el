@@ -20,7 +20,9 @@
            (font-lock-comment-delimiter-face ((t :foreground bg
                                                  :weight bold)))))))
 
-(alect-set-color 'dark 'bg-1 "#333333")
+(alect-set-color 'dark  'bg-1     "#333333")
+(alect-set-color 'light 'bg-1     "#ffffff")
+(alect-set-color 'light 'yellow-1 "#b58900")
 (load-theme 'alect-dark t)
 
 ;; Stolen from: https://github.com/alezost/emacs-config
