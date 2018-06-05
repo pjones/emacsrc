@@ -3,6 +3,9 @@
   (require 'saveplace)
   (require 'company))
 
+;;; Dependencies:
+(require 'projectile)
+
 ;; Create some faces
 (defface pjones:fixme-face
   '((t (:inherit 'font-lock-warning-face)))
@@ -25,9 +28,14 @@ already been cached."
   (interactive "P")
   (let* ((compilation-buffer-name-function 'pjones:compilation-buffer-name-function)
          (default-directory (projectile-compilation-dir))
-         (compile-command (projectile-compilation-command default-directory))
-         (compilation-read-command (or ask (null compile-command))))
-    (call-interactively 'compile)))
+         (default-command (projectile-compilation-command default-directory))
+         (compilation-read-command nil)
+         (compile-command (if (or ask (null default-command))
+                              (compilation-read-command default-command)
+                            default-command)))
+    (save-excursion
+      (puthash default-directory compile-command projectile-compilation-cmd-map)
+      (compile compile-command))))
 
 (defun pjones:comment-bar (&optional without-newline)
   "Create a comment bar based on the current mode."
