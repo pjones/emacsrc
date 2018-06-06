@@ -6,6 +6,7 @@
 
 ;; Used for a few things.
 (require 'org)
+(require 'hydra)
 
 ;; Basic settings.
 (custom-set-variables
@@ -65,6 +66,21 @@ WITH-TOKEN is non-nil, prompt for a token name."
   (pjones:markdown-slide-fenced-code-block t t))
 (put 'pjones:markdown-slide-fenced-code-insert 'no-self-insert t)
 
+(defun pjones:markdown-insert-list-item (&optional arg)
+  "Insert a new list item.
+
+Unlike the markdown version of this function, leave a blank line
+between the old and new list items.
+
+With a \\[universal-argument] prefix (i.e., when ARG is (4)),
+decrease the indentation by one level.
+
+With two \\[universal-argument] prefixes (i.e., when ARG is (16)),
+increase the indentation by one level."
+  (interactive "p")
+  (markdown-insert-list-item arg)
+  (pjones:open-line-above t))
+
 (defun pjones:markdown-visual-line ()
   "Don't wrap lines.  Needed for most web forms."
   (interactive)
@@ -106,64 +122,58 @@ directory.  Optionally renaming FILE to NAME."
      (file-name-nondirectory name)
      (file-relative-name dest))))
 
-(defhydra hydra-markdown (:hint nil) "
-^Links^                ^Cleanup^                 ^Headings^
------------------------------------------------------------------------
-   _C-c C-l_: insert   _C-c C-c n_: renumber     _C-c C-f_: down
-   _C-c C-d_: jump     _C-M-f_: demote           _C-c C-b_: up
- _C-c C-c c_: check    _C-M-b_: promote          _C-c C-n_: down (any)
-   _C-c C-a_: attach   _C-c /_: complete         _C-c C-p_: up (any)
+(defhydra hydra-markdown (:hint nil :color blue) "
+^Links^                ^Cleanup^            ^Headings and Lists^
+-----------------------------------------------------------------
+_i_: insert            _r_: renumber        _f_: demote
+_j_: jump              _/_: complete        _b_: promote
+_c_: check             ^ ^                  _n_: down
+_a_: attach            ^ ^                  _p_: up
+^ ^                    ^ ^                  _N_: move down
+^ ^                    ^ ^                  _P_: move up
 
 ^Render^               ^Insert^
------------------------------------------------------------------------
- _b_: browser          _i_: fence insert
- _l_: live             _c_: fence block
- ^ ^                   _n_: note
+-----------------------------------------------------------------
+_l_: preview           _; i_: fence insert
+_L_: live              _; c_: fence block
+^ ^                    _; n_: note
+^ ^                    ^   ^
 "
-  ("C-c C-l" markdown-insert-link :color blue)
-  ("C-c C-d" markdown-do :color blue)
-  ("C-c C-c c" markdown-check-refs :color blue)
-  ("C-c C-a" pjones:markdown-attach-file :color blue)
-  ("C-c C-c n" markdown-cleanup-list-numbers :color blue)
-  ("C-c C-f" markdown-outline-next-same-level :color blue)
-  ("C-c C-b" markdown-outline-previous-same-level :color blue)
-  ("C-c C-n" markdown-outline-next :color blue)
-  ("C-c C-p" markdown-outline-previous :color blue)
-  ("C-M-f" markdown-demote :color blue)
-  ("C-M-b" markdown-promote :color blue)
-  ("C-c /" markdown-complete :color blue)
-  ("b" markdown-preview :color blue)
-  ("l" markdown-live-preview-mode :color blue)
-  ("i" pjones:markdown-slide-fenced-code-insert :color blue)
-  ("c" pjones:markdown-slide-fenced-code-block :color blue)
-  ("n" pjones:markdown-slide-notes :color blue))
+  ("i" markdown-insert-link)
+  ("j" markdown-do)
+  ("c" markdown-check-refs)
+  ("a" pjones:markdown-attach-file)
+  ("r" markdown-cleanup-list-numbers)
+  ("n" markdown-outline-next :color red)
+  ("p" markdown-outline-previous :color red)
+  ("f" markdown-demote :color red)
+  ("b" markdown-promote :color red)
+  ("N" markdown-move-down :color red)
+  ("P" markdown-move-up :color red)
+  ("/" markdown-complete)
+  ("l" markdown-preview)
+  ("L" markdown-live-preview-mode)
+  ("; i" pjones:markdown-slide-fenced-code-insert)
+  ("; c" pjones:markdown-slide-fenced-code-block)
+  ("; n" pjones:markdown-slide-notes))
 
 (defun pjones:markdown-mode-hook ()
   "Set up key bindings and other crap for markdown-mode."
-  (local-set-key (kbd "C-c C-a") 'pjones:markdown-attach-file)
-  (local-set-key (kbd "C-c C-o") 'pjones:markdown-follow-thing-at-point)
-  (local-set-key (kbd "C-c /")   'markdown-complete)
-  (local-set-key (kbd "C-M-p")   'markdown-move-list-item-up)
-  (local-set-key (kbd "C-M-n")   'markdown-move-list-item-down)
-  (local-set-key (kbd "C-M-f")   'markdown-demote)
-  (local-set-key (kbd "C-M-b")   'markdown-promote)
-  (local-set-key (kbd "C-RET")   'markdown-insert-header-dwim)
-  (local-set-key (kbd "C-c h")   'hydra-markdown/body)
-  (abbrev-mode)
+  (local-set-key (kbd "C-c C-a")    #'pjones:markdown-attach-file)
+  (local-set-key (kbd "C-c C-o")    #'pjones:markdown-follow-thing-at-point)
+  (local-set-key (kbd "C-c /")      #'markdown-complete)
+  (local-set-key (kbd "C-<return>") #'markdown-insert-header-dwim)
+  (local-set-key (kbd "M-<return>") #'pjones:markdown-insert-list-item)
+  (local-set-key (kbd "C-c C-h")    #'hydra-markdown/body)
   (whitespace-mode)
   (orgstruct-mode)
+  (orgtbl-mode)
   (pjones:add-fixme-lock)
 
   ;; Completion configuration:
   (make-local-variable 'company-backends)
   (add-to-list 'company-backends '(company-ispell
                                    company-dabbrev))
-
-  (define-abbrev-table 'markdown-mode-abbrev-table
-    '(("fn" "" pjones:markdown-slide-notes)
-      ("fc" "" pjones:markdown-slide-fenced-code-block)
-      ("fi" "" pjones:markdown-slide-fenced-code-insert)))
-  (setq local-abbrev-table markdown-mode-abbrev-table)
 
   ;; Files in /tmp that are *.txt are from my browser and most
   ;; websites don't like it when text you submit has newlines.
@@ -175,3 +185,5 @@ directory.  Optionally renaming FILE to NAME."
 ;; Local Variables:
 ;; byte-compile-warnings: (not noruntime)
 ;; End:
+
+;;; markdown-mode-conf.el ends here
