@@ -9,6 +9,9 @@
   (require 'subword)
   (require 'term))
 
+;; Dependencies:
+(require 'hydra)
+
 (defun pjones:maybe-save-buffers-kill-terminal (&optional arg)
   "Save me from myself.  I somehow keep hitting C-x C-c when I
 don't want to."
@@ -168,6 +171,14 @@ a bookmark instead."
   (if set (call-interactively 'bookmark-set)
     (call-interactively 'bookmark-jump)))
 
+(defun pjones:bm-bookmark (&optional toggle)
+  "Quick access to bm.el.
+
+If TOGGLE is non-nil, show the bookmark hydra.  Otherwise, when
+TOGGLE is nil, jump to the next bookmark."
+  (interactive "P")
+  (if toggle (hydra-bookmarks/body) (bm-next)))
+
 (defun pjones:inc-file ()
   "Given that the current file name is a number, increment that
 number and open a file with the incremented number as a name."
@@ -200,16 +211,6 @@ between two points."
   (let ((mark (point-marker)))
     (if jump (pop-tag-mark))
     (xref-push-marker-stack mark)))
-
-(defun pjones:jump-back-and-forth (&optional record)
-  "Jump between two points.  With a prefix argument, set the
-destination for the next jump to point."
-  (interactive "P")
-  (if record (point-to-register ?~)
-    (let ((old (get-register ?~)))
-      (point-to-register ?~)
-      (switch-to-buffer (marker-buffer old))
-      (goto-char old))))
 
 (defun pjones:register-get-set (register start end &optional set)
   "General purpose register function.
@@ -284,6 +285,14 @@ current buffer after point."
     (kill-new uuid)
     (insert uuid)))
 
+(defun pjones:lock-screen ()
+  "Lock the screen."
+  (interactive)
+  (start-process "lock-screen" nil
+                 "qdbus" "org.freedesktop.ScreenSaver"
+                 "/ScreenSaver"
+                 "Lock"))
+
 (defun pjones:switch-window-then-delete ()
   "Interactively delete a window."
   (interactive)
@@ -292,11 +301,12 @@ current buffer after point."
 
 (defhydra hydra-launch (:hint nil :color blue)
   "
-^OrgMode^      ^Indium^        ^Other^
+^OrgMode^      ^Indium^        ^Apps^
 -----------------------------------------
  _a_: agenda    _j c_: chrome   _m_: mail
  _c_: capture   _j n_: node     _i_: irc
  _s_: store     ^ ^             _h_: http
+ ^ ^            ^ ^             _l_: lock
 "
   ("a"   pjones:agenda)
   ("c"   org-capture)
@@ -305,7 +315,8 @@ current buffer after point."
   ("j n" pjones:indium-start-node)
   ("m"   pjones:start-mail)
   ("i"   pjones:start-irc)
-  ("h"   pjones:start-http))
+  ("h"   pjones:start-http)
+  ("l"   pjones:lock-screen))
 
 (defhydra hydra-window-ops (:hint nil :color blue)
   "
@@ -332,6 +343,32 @@ current buffer after point."
   ("n" default-text-scale-decrease :color red)
   ("P" text-scale-increase :color red)
   ("N" text-scale-decrease :color red))
+
+(defhydra hydra-bookmarks (:hint nil :color blue)
+  "
+^Setting^              ^Movement^           ^Listing^           ^Annotate^
+-------------------------------------------------------------------------------------
+_t_: toggle            _n_: next (buffer)   _s_: show (buffer)  _a_: annotate
+_r_: rm all (buffer)   _p_: prev (buffer)   _S_: show (global)  _A_: show annotation
+_R_: rm all (global)   _N_: next (global)
+_w_: write to disk     _P_: prev (global)
+_l_: load from disk    _g_: pop global mark
+^ ^
+"
+  ("t" bm-toggle)
+  ("r" bm-remove-all-current-buffer)
+  ("R" bm-remove-all-all-buffers)
+  ("n" bm-next :color red)
+  ("p" bm-previous :color red)
+  ("N" bm-first-in-next-buffer :color red)
+  ("P" bm-last-in-previous-buffer :color red)
+  ("s" bm-show)
+  ("S" bm-show-all)
+  ("w" bm-save)
+  ("l" bm-load-and-restore)
+  ("a" bm-bookmark-annotate)
+  ("A" bm-bookmark-show-annotation)
+  ("g" pop-global-mark))
 
 ;; Local Variables:
 ;; byte-compile-warnings: (not noruntime)
