@@ -62,9 +62,11 @@
 (defun pjones:exwm-manage-finish-hook ()
   "Hook run when a new X window is managed by EXWM."
   (setq mode-line-format
-        '("  " mode-line-buffer-identification
-          " (" mode-name mode-line-process
-          ") " exwm-title))
+        '("" mode-line-front-space
+          (:eval (pjones:mode-line-status))
+          "   " mode-line-buffer-identification
+          " ("  mode-name mode-line-process
+          ") "  exwm-title))
   ;; Per-application settings:
   (cond
    ((string= exwm-class-name "Surf") t)))
