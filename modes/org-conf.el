@@ -202,9 +202,11 @@
 
 (add-hook 'org-mode-hook 'pjones:org-mode-hook)
 
-;; (defun pjones:org-agenda-mode-hook ()
-;;   (define-key org-agenda-mode-map (kbd "q") 'pjones:org-agenda-quit))
-;; (add-hook 'org-agenda-mode-hook 'pjones:org-agenda-mode-hook)
+(defun pjones:org-agenda-mode-hook ()
+  "Hook run after a `org-agenda-mode' buffer is created."
+  (hl-line-mode 1))
+
+(add-hook 'org-agenda-mode-hook 'pjones:org-agenda-mode-hook)
 
 (defun pjones:org-hide-others ()
   "Close all headings except the heading at point."
