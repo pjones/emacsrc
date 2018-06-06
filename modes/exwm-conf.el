@@ -124,6 +124,7 @@
       ([?\C-v] . [next])
       ([?\C-d] . [delete])
       ([?\C-k] . [S-end delete])
+      ([?\C-g] . [escape])
       ([?\C-w] . [?\C-x])
       ([?\M-w] . [?\C-c])
       ([?\C-y] . [?\C-v]))))
