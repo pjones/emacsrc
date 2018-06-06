@@ -1,9 +1,15 @@
 ;;; term-conf.el -- Settings for term-mode.
-
+;;; Commentary:
+;;; Code:
 (eval-when-compile
-  (require 'term)
-  (require 'projectile)
-  (require 'elscreen))
+  (require 'term))
+
+;; Dependencies:
+(require 'projectile)
+(require 'elscreen)
+
+;; Remove some warnings:
+(defvar pjones:z-map nil "Defined in keys.el.")
 
 ;; Settings for term-mode:
 (custom-set-variables
@@ -11,7 +17,10 @@
  '(term-input-ignoredups nil)
  '(term-scroll-to-bottom-on-output nil)
  '(term-scroll-show-maximum-output nil)
- '(term-suppress-hard-newline t))
+
+ ;; WARNING: setting this to `t' triggers a bug where the shell will
+ ;; barf text all over the screen.
+ '(term-suppress-hard-newline nil))
 
 (defun pjones:term-rename ()
   "Rename a terminal using the current project name."
@@ -35,33 +44,42 @@
     (goto-char (process-mark proc))))
 
 (defun pjones:term-send-control-c ()
-  "Send a C-c to the terminal."
+  "Send ^c to the terminal."
   (interactive)
   (term-send-raw-string (make-string 1 ?\C-c)))
 
 (defun pjones:remove-dead-term (&rest args)
-  "Clean up after a dead terminal."
+  "Clean up after a dead terminal.
+
+Ignores ARGS."
   (let ((buffer (current-buffer)))
     (kill-buffer buffer)))
 
+;; FIXME: this doesn't really work. Write a new version based off the
+;; same idea in EXWM.
 (defun pjones:term-quoted-insert (count)
-  "Read next input character and send it directly to the terminal."
+  "Read next input character and send it directly to the terminal.
+
+Sends the next key COUNT times."
   (interactive "*p")
   (let ((char (read-char)))
     (term-send-raw-string (make-string count char))))
 
 (defun pjones:term-mode-hook ()
-  "Hook run after a terminal starts"
+  "Hook run after starting a new terminal."
 
   ;; Some variables that term-mode doesn't initialize but uses :(
   (setq term-ansi-at-dir default-directory
         term-ansi-at-host (system-name)
-        term-ansi-at-user (user-real-login-name))
+        term-ansi-at-user (user-real-login-name)
+        term-prompt-regexp "^[^❯]+❯ *")
 
-  ;; Variables for configuration:
-  (setq term-prompt-regexp "❯ "
-        mode-line-format '("  " mode-line-buffer-identification
-                           "    [term" mode-line-process "]"))
+  ;; Clean mode-line:
+  (setq mode-line-format
+        '("" mode-line-front-space
+          (:eval (pjones:mode-line-status))
+          "   " mode-line-buffer-identification
+          "     [term" mode-line-process "]"))
 
   ;; Keep things Emacs-like:
   (term-set-escape-char ?\C-x)
@@ -84,14 +102,13 @@
     (define-key map (kbd "C-c C-k") 'pjones:term-line-mode)
     (define-key map (kbd "C-c C-c") 'pjones:term-send-control-c)
     (define-key map (kbd "C-c C-r") 'pjones:term-rename)
-    (define-key map (kbd "C-q")     'pjones:term-quoted-insert)
-    (define-key map (kbd "C-u")     'universal-argument)
+    (define-key map (kbd "C-c M-x") 'helm-M-x)
+    (define-key map (kbd "C-c C-q") 'pjones:term-quoted-insert)
+    (define-key map (kbd "C-c C-u") 'universal-argument)
     (define-key map (kbd "C-y")     'term-paste)
     (define-key map (kbd "C-z")     pjones:z-map)))
 
 (advice-add 'term-handle-exit :after 'pjones:remove-dead-term)
 (add-hook 'term-mode-hook 'pjones:term-mode-hook)
 
-;; Local Variables:
-;; byte-compile-warnings: (not noruntime)
-;; End:
+;;; term-conf.el ends here
