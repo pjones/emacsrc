@@ -23,6 +23,7 @@
   (setq exwm-input-line-mode-passthrough nil))
 
 ;; Extra key bindings:
+(define-key god-local-mode-map (kbd "i") 'god-mode-all)
 (define-key god-local-mode-map (kbd ".") #'repeat)
 
 ;; Search mode:

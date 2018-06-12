@@ -307,6 +307,7 @@ current buffer after point."
  _c_: capture   _j n_: node     _i_: irc
  _s_: store     ^ ^             _h_: http
  ^ ^            ^ ^             _l_: lock
+ ^ ^            ^ ^             _t_: term
 "
   ("a"   pjones:agenda)
   ("c"   org-capture)
@@ -316,7 +317,8 @@ current buffer after point."
   ("m"   pjones:start-mail)
   ("i"   pjones:start-irc)
   ("h"   pjones:start-http)
-  ("l"   pjones:lock-screen))
+  ("l"   pjones:lock-screen)
+  ("t"   pjones:start-term))
 
 (defhydra hydra-window-ops (:hint nil :color blue)
   "

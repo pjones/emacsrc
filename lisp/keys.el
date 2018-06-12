@@ -21,9 +21,10 @@
 
 ;; Overriding default key bindings
 (global-set-key (kbd "C-x C-c")   'pjones:maybe-save-buffers-kill-terminal)
-(global-set-key (kbd "C-x C-b")   'ibuffer)
+(global-set-key (kbd "C-x C-b")   'helm-mini)
 (global-set-key (kbd "C-x C-f")   'helm-find-files)
-(global-set-key (kbd "C-x b")     'helm-mini)
+(global-set-key (kbd "C-x b")     'ibuffer)
+(global-set-key (kbd "C-x C-o")   'switch-window)
 (global-set-key (kbd "C-x o")     'switch-window)
 (global-set-key (kbd "C-x O")     'resize-window)
 (global-set-key (kbd "C-x M-o")   'pjones:switch-window-then-delete)
@@ -37,6 +38,10 @@
 (global-set-key (kbd "C-M-s")     'isearch-forward)
 (global-set-key (kbd "C-M-r")     'isearch-backward)
 (global-set-key (kbd "C-w")       'pjones:kill-region-or-backward-kill-word)
+(global-set-key (kbd "M-g C-c")   'goto-char)
+(global-set-key (kbd "M-g C-l")   'goto-line)
+(global-set-key (kbd "M-g C-n")   'next-error)
+(global-set-key (kbd "M-g C-p")   'previous-error)
 (global-set-key (kbd "M-x")       'helm-M-x)
 (global-set-key (kbd "M-y")       'helm-show-kill-ring)
 (global-set-key (kbd "M-z")       'zap-up-to-char)
@@ -59,7 +64,8 @@
 ;; User Key Bindings (using the C-z prefix)
 (global-set-key (kbd "C-z") pjones:z-map)
 
-(define-key pjones:z-map (kbd "SPC") 'just-one-space)
+(define-key pjones:z-map (kbd "SPC") 'helm-elscreen)
+(define-key pjones:z-map (kbd "RET") 'pjones:start-term)
 (define-key pjones:z-map (kbd ";")   'pjones:auto-correct-previous-word)
 (define-key pjones:z-map (kbd ",")   'pjones:push-tag-mark)
 (define-key pjones:z-map (kbd ".")   'quick-calc)
@@ -89,8 +95,9 @@
 (define-key pjones:z-map (kbd "s")   'sort-lines)
 (define-key pjones:z-map (kbd "u")   'goto-last-change)
 (define-key pjones:z-map (kbd "w")   'hydra-window-ops/body)
-(define-key pjones:z-map (kbd "z")   'pjones:switch-to-previous-buffer)
-(define-key pjones:z-map (kbd "C-z") 'pjones:switch-to-previous-buffer)
+(define-key pjones:z-map (kbd "x")   'helm-run-external-command)
+(define-key pjones:z-map (kbd "z")   'elscreen-toggle)
+(define-key pjones:z-map (kbd "C-z") 'elscreen-toggle)
 (define-key pjones:z-map      "0"    'elscreen-jump)
 (define-key pjones:z-map      "1"    'elscreen-jump)
 (define-key pjones:z-map      "2"    'elscreen-jump)
@@ -101,12 +108,6 @@
 (define-key pjones:z-map      "7"    'elscreen-jump)
 (define-key pjones:z-map      "8"    'elscreen-jump)
 (define-key pjones:z-map      "9"    'elscreen-jump)
-
-;; Super key for EXWM and elscreen:
-(global-set-key (kbd "s-t")   #'elscreen-toggle)
-(global-set-key (kbd "s-x")   #'helm-run-external-command)
-(global-set-key (kbd "s-SPC") #'helm-elscreen)
-(global-set-key (kbd "s-RET") #'pjones:start-term)
 
 (provide 'keys)
 ;;; keys.el ends here
