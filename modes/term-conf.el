@@ -11,6 +11,19 @@
 ;; Remove some warnings:
 (defvar pjones:z-map nil "Defined in keys.el.")
 
+;; Custom variables:
+(defconst pjones:term-function-keys
+  '((f1 . "\e[11~")
+    (f2 . "\e[12~")
+    (f3 . "\e[13~")
+    (f4 . "\e[14~")
+    (f5 . "\e[15~")
+    (f6 . "\e[16~")
+    (f7 . "\e[17~")
+    (f8 . "\e[18~")
+    (f9 . "\e[19~"))
+  "Function keys and their escape sequences.")
+
 ;; Settings for term-mode:
 (custom-set-variables
  '(term-input-autoexpand nil)
@@ -65,6 +78,14 @@ Sends the next key COUNT times."
   (let ((char (read-char)))
     (term-send-raw-string (make-string count char))))
 
+;; Stolen from: https://stackoverflow.com/questions/2396680/let-emacs-send-fn-keys-to-programs-in-ansi-term
+(defun pjones:term-send-function-key ()
+  "Translate the last key press into a function key."
+  (interactive)
+  (let* ((char last-input-event)
+         (output (cdr (assoc char pjones:term-function-keys))))
+    (term-send-raw-string output)))
+
 (defun pjones:term-mode-hook ()
   "Hook run after starting a new terminal."
 
@@ -98,14 +119,20 @@ Sends the next key COUNT times."
     (define-key map (kbd "RET")     'pjones:term-char-mode))
 
   (let ((map term-raw-map))
-    (define-key map (kbd "C-c") nil)
-    (define-key map (kbd "C-c C-k") 'pjones:term-line-mode)
-    (define-key map (kbd "C-c C-c") 'pjones:term-send-control-c)
-    (define-key map (kbd "C-c C-r") 'pjones:term-rename)
-    (define-key map (kbd "C-c M-x") 'helm-M-x)
-    (define-key map (kbd "C-c C-q") 'pjones:term-quoted-insert)
-    (define-key map (kbd "C-c C-u") 'universal-argument)
-    (define-key map (kbd "C-y")     'term-paste)
+    ;; Fix the F-keys:
+    (dolist (key pjones:term-function-keys)
+      (define-key map
+        (read-kbd-macro (format "<%s>" (car key)))
+        #'pjones:term-send-function-key))
+
+    (define-key map (kbd "C-c")     nil)
+    (define-key map (kbd "C-c C-k") #'pjones:term-line-mode)
+    (define-key map (kbd "C-c C-c") #'pjones:term-send-control-c)
+    (define-key map (kbd "C-c C-r") #'pjones:term-rename)
+    (define-key map (kbd "C-c M-x") #'helm-M-x)
+    (define-key map (kbd "C-c C-q") #'pjones:term-quoted-insert)
+    (define-key map (kbd "C-c C-u") #'universal-argument)
+    (define-key map (kbd "C-y")     #'term-paste)
     (define-key map (kbd "C-z")     pjones:z-map)))
 
 (advice-add 'term-handle-exit :after 'pjones:remove-dead-term)
