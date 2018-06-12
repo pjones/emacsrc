@@ -37,6 +37,10 @@
     (define-key map (kbd "M-h")   #'company-quickhelp-manual-begin)
     (define-key map (kbd "<tab>") #'company-complete-common-or-cycle))
 
+  (let ((map company-search-map))
+    (define-key map (kbd "C-n") #'company-select-next)
+    (define-key map (kbd "C-p") #'company-select-previous))
+
   (company-quickhelp-mode +1)
   (company-statistics-mode))
 
