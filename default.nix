@@ -40,6 +40,19 @@ let
   };
 
   ##############################################################################
+  # Latest version of exwm-nw:
+  exwmNWLatest = exwm: melpaBuild {
+    pname = "exwm-nw";
+    version = "0.1";
+    src = pkgs.fetchgit {
+      url = "git://git.devalot.com/exwm-nw.git";
+      rev = "1cee4bb7d2b9e8cfff1655316f767b0349cf941b";
+      sha256 = "0xrdxxxv5rwgvy6pzm8sy65h4jsihz7gynznn3vvhi3pj54b27a0";
+    };
+    packageRequires = [ exwm ];
+  };
+
+  ##############################################################################
   # Latest version of xelb:
   xelbLatest = elpaPkgs: melpaBuild {
     pname = "xelb";
@@ -175,6 +188,7 @@ let
     ]) ++ (with pkgs; [
       (exwmLatest epkgs.elpaPackages)
       (passmmLatest epkgs.melpaPackages)
+      (exwmNWLatest (exwmLatest epkgs.elpaPackages))
       mu
 
     ]));

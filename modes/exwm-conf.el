@@ -11,6 +11,7 @@
 
 ;; Load optional EXWM features:
 (require 'exwm-randr)
+(require 'exwm-nw)
 (require 'dash)
 (require 'helm)
 (require 'helm-buffers)
@@ -82,15 +83,19 @@
 ;###############################################################################
 (custom-set-variables
    ;; Workspace settings:
-  '(exwm-workspace-number 2)
-  '(exwm-workspace-show-all-buffers nil)
+  '(exwm-workspace-number 4)
+  '(exwm-workspace-show-all-buffers t)
+  '(exwm-layout-show-all-buffers t)
 
   ;; Floating windows:
   '(exwm-floating-border-width 3)
   '(exwm-floating-border-color "#ff52bb")
 
   ;; RandR settings:
-  '(exwm-randr-workspace-output-plist '(0 "eDP1" 1 "DP1"))
+  `(exwm-randr-workspace-output-plist
+    (quote ,(if (string= (system-name) "medusa")
+                (list 1 "DVI-0" 2 "DVI-1")
+              (list 1 "DP1"))))
 
   ;; Global key bindings:
   '(exwm-input-prefix-keys
@@ -125,12 +130,15 @@
       ([?\M-w] . [?\C-c])
       ([?\C-y] . [?\C-v]))))
 
+(define-key exwm-workspace--switch-map (kbd "C-z C-z") #'exwm-nw-goto-previous)
+
 ;###############################################################################
 ;;
 ;;; Activate optional features:
 ;;
 ;###############################################################################
 (exwm-randr-enable)
+(exwm-nw-mode)
 
 ;###############################################################################
 ;;
