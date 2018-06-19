@@ -28,8 +28,8 @@
 (custom-set-variables
  '(term-input-autoexpand nil)
  '(term-input-ignoredups nil)
- '(term-scroll-to-bottom-on-output nil)
- '(term-scroll-show-maximum-output nil)
+ '(term-scroll-to-bottom-on-output t)
+ '(term-scroll-show-maximum-output t)
 
  ;; WARNING: setting this to `t' triggers a bug where the shell will
  ;; barf text all over the screen.
@@ -47,11 +47,13 @@
 (defun pjones:term-line-mode ()
   "Go to term-line-mode."
   (interactive)
+  (setq term-scroll-to-bottom-on-output nil)
   (term-line-mode))
 
 (defun pjones:term-char-mode ()
   "Return to raw/character mode."
   (interactive)
+  (setq term-scroll-to-bottom-on-output t)
   (term-char-mode)
   (let ((proc (get-buffer-process (current-buffer))))
     (goto-char (process-mark proc))))
