@@ -28,8 +28,8 @@ let
     version = "20170113.837";
     src = pkgs.fetchgit {
       url = "git://git.devalot.com/passmm.git";
-      rev = "2e0cd4e8ef7e6017dbc295664c925d32d6fdc688";
-      sha256 = "0va9rg8nsi561x78qffr2piwprk9pq9k6zghg9yd4ldh834ccp6z";
+      rev = "f6130373b84a2d7180a04f6bd533148aa778d8fc";
+      sha256 = "19sszl0vjsy0wk0bysm938c3sj458faj4dhw8fqb2nhm6l5v194r";
     };
     recipeFile = pkgs.fetchurl {
       url = "https://raw.githubusercontent.com/milkypostman/melpa/8ae2a1e10375f9cd55d19502c9740b2737eba209/recipes/passmm";
@@ -46,8 +46,8 @@ let
     version = "0.1";
     src = pkgs.fetchgit {
       url = "git://git.devalot.com/exwm-nw.git";
-      rev = "1cee4bb7d2b9e8cfff1655316f767b0349cf941b";
-      sha256 = "0xrdxxxv5rwgvy6pzm8sy65h4jsihz7gynznn3vvhi3pj54b27a0";
+      rev = "1941e0ed3b3259791d20c2c308fdc12cd3f333ad";
+      sha256 = "0s1vm3ifn0jsjnnz8amhs9csrzzx5zxsmx038if5sn7bcw6a0l4a";
     };
     packageRequires = [ exwm ];
   };
