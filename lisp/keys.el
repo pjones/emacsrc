@@ -49,11 +49,11 @@
 (global-set-key (kbd "M-/")       'company-complete)
 (global-set-key (kbd "M-'")       'pjones:zap-to-quote)
 (global-set-key (kbd "M-<tab>")   'hs-toggle-hiding)
-(global-set-key (kbd "C-x M-0")   'pjones:switch-window-then-delete)
+(global-set-key (kbd "C-x 0")     'pjones:switch-window-then-delete)
+(global-set-key (kbd "C-x C-0")   'pjones:switch-window-then-delete)
 (global-set-key (kbd "C-x C-1")   'delete-other-windows)
 (global-set-key (kbd "C-x C-2")   'split-window-below)
 (global-set-key (kbd "C-x C-3")   'split-window-right)
-(global-set-key (kbd "C-x C-0")   'delete-window)
 (global-set-key (kbd "<home>")    'beginning-of-buffer)
 (global-set-key (kbd "<end>")     'end-of-buffer)
 
