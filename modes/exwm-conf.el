@@ -132,6 +132,8 @@
       ([?\C-y] . [?\C-v]))))
 
 (define-key exwm-workspace--switch-map (kbd "C-z C-z") #'exwm-nw-goto-previous)
+(define-key exwm-workspace--switch-map (kbd "C-s") #'exwm-nw-find-workspace)
+(define-key exwm-workspace--switch-map (kbd "C-u") #'universal-argument)
 
 ;###############################################################################
 ;;
