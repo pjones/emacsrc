@@ -69,9 +69,10 @@
     (concat "Emacs: " (buffer-name) " " file server)))
 
 (defun pjones:configure-new-frame (&optional frame)
-  "Hook to configure a new frame."
+  "Hook to configure new frame FRAME."
   (dolist (mode '(menu-bar-mode tool-bar-mode scroll-bar-mode))
-    (if (fboundp mode) (funcall mode -1)))
+    (if (and (fboundp mode) (symbol-value mode))
+        (funcall mode -1)))
   (blink-cursor-mode)
   (require 'fringe)
   (fringe-mode 10)
