@@ -88,6 +88,7 @@
   '(exwm-layout-show-all-buffers t)
 
   ;; Floating windows:
+  '(exwm-manage-force-tiling t)
   '(exwm-floating-border-width 3)
   '(exwm-floating-border-color "#ff52bb")
 
