@@ -33,7 +33,6 @@
       disabled-command-function nil      ; Disable novice user protection
       truncate-partial-width-windows nil ; When windows don't fill the frame
       mark-even-if-inactive t            ; Use the mark without a region
-      next-line-add-newlines t           ; Create new lines by moving down
       inhibit-eol-conversion t)          ; Force manual line conversions.
 
 ;; Default variables that become buffer/frame local.
@@ -47,7 +46,14 @@
 ;; Settings not worth their own file in the modes directory:
 (setq epa-file-encrypt-to "204284CB"    ; Default GPG key to use
       epa-pinentry-mode 'loopback       ; Needed for EXWM.
+      compilation-scroll-output 'first-error
       custom-file (concat user-emacs-directory "custom.el" )) ; To keep Emacs happy
+
+;; Settings from simple.el:
+(custom-set-variables
+ '(async-shell-command-buffer 'new-buffer)
+ '(kill-do-not-save-duplicates t)
+ '(next-line-add-newlines t))
 
 (defun pjones:frame-title-file-name ()
   (let* ((home (expand-file-name "~"))
