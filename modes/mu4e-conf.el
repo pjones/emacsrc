@@ -56,7 +56,7 @@
   '(mu4e-use-fancy-chars nil)
   '(mu4e-headers-sort-field :date)
   '(mu4e-headers-sort-direction 'ascending)
-  '(mu4e-headers-results-limit -1)
+  '(mu4e-headers-results-limit 200)
   '(mu4e-date-format-long "%c")
   '(mu4e-view-show-images nil) ;; Disable tracking images!
   '(mu4e-view-show-addresses t)
