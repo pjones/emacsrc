@@ -28,8 +28,8 @@ let
     version = "20170113.837";
     src = pkgs.fetchgit {
       url = "git://git.devalot.com/passmm.git";
-      rev = "f6130373b84a2d7180a04f6bd533148aa778d8fc";
-      sha256 = "19sszl0vjsy0wk0bysm938c3sj458faj4dhw8fqb2nhm6l5v194r";
+      rev = "898709c63130d6c0422af544ebac64eae04d24ac";
+      sha256 = "0skawcv6iksydmw3hprff19ajj4n2yi3wwcc8wlh2gkncwnkkg9k";
     };
     recipeFile = pkgs.fetchurl {
       url = "https://raw.githubusercontent.com/milkypostman/melpa/8ae2a1e10375f9cd55d19502c9740b2737eba209/recipes/passmm";
