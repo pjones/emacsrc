@@ -171,13 +171,21 @@ a bookmark instead."
   (if set (call-interactively 'bookmark-set)
     (call-interactively 'bookmark-jump)))
 
-(defun pjones:bm-bookmark (&optional toggle)
+(defun pjones:bm-bookmark-set (&optional show-hydra)
   "Quick access to bm.el.
 
-If TOGGLE is non-nil, show the bookmark hydra.  Otherwise, when
-TOGGLE is nil, jump to the next bookmark."
+If SHOW-HYDRA is non-nil, show the bookmark hydra.  Otherwise,
+toggle a bookmark on the current line."
   (interactive "P")
-  (if toggle (hydra-bookmarks/body) (bm-next)))
+  (if show-hydra (hydra-bookmarks/body) (bm-toggle)))
+
+(defun pjones:bm-bookmark-jump (&optional set)
+  "Jump to the next bookmark.
+
+If SET is non-nil, set a bookmark before jumping."
+  (interactive "P")
+  (if set (bm-bookmark-add))
+  (bm-next))
 
 (defun pjones:inc-file ()
   "Given that the current file name is a number, increment that
