@@ -67,23 +67,40 @@
           (:eval (pjones:mode-line-status))
           "   " mode-line-buffer-identification
           " ("  mode-name mode-line-process
-          ") "  exwm-title))
-  ;; Per-application settings:
-  (cond
-   ((string= exwm-class-name "Surf") t)))
+          ") "  exwm-title)))
 
 (defun pjones:exwm-update-class-hook ()
   "Hook run when a window's class name changed."
   (exwm-workspace-rename-buffer exwm-class-name))
+
+(defun pjones:exwm-workspace-switch-hook ()
+  "Hook run when changing workspaces."
+  ;; Warp the mouse to the new workspace.  Very useful if the
+  ;; workspace is on another monitor.
+  (start-process
+   "warp-mouse" nil "sh"
+   "-c" "xdotool mousemove --window $(xdotool getwindowfocus) 0 0"))
 
 ;###############################################################################
 ;;
 ;;; Settings:
 ;;
 ;###############################################################################
-(custom-set-variables
+(cond ;; Settings that depend on the machine:
+ ((string= (system-name) "medusa")
+  (custom-set-variables
+   '(exwm-workspace-number 3)
+   '(exwm-randr-workspace-output-plist '(1 "DVI-0" 2 "DVI-1"))))
+ ((string= (system-name) "elphaba")
+  (custom-set-variables
+   '(exwm-workspace-number 2)
+   '(exwm-randr-workspace-output-plist '(1 "DP1"))))
+ (t
+  (custom-set-variables
+   '(exwm-workspace-number 1))))
+
+(custom-set-variables ;; Common settings:
    ;; Workspace settings:
-  '(exwm-workspace-number 4)
   '(exwm-workspace-show-all-buffers t)
   '(exwm-layout-show-all-buffers t)
 
@@ -91,12 +108,6 @@
   '(exwm-manage-force-tiling t)
   '(exwm-floating-border-width 3)
   '(exwm-floating-border-color "#ff52bb")
-
-  ;; RandR settings:
-  `(exwm-randr-workspace-output-plist
-    (quote ,(if (string= (system-name) "medusa")
-                (list 1 "DVI-0" 2 "DVI-1")
-              (list 1 "DP1"))))
 
   ;; Global key bindings:
   '(exwm-input-prefix-keys
@@ -149,7 +160,8 @@
 ;;; Insert some hooks:
 ;;
 ;###############################################################################
-(add-hook 'exwm-update-class-hook  #'pjones:exwm-update-class-hook)
-(add-hook 'exwm-manage-finish-hook #'pjones:exwm-manage-finish-hook)
+(add-hook 'exwm-update-class-hook     #'pjones:exwm-update-class-hook)
+(add-hook 'exwm-manage-finish-hook    #'pjones:exwm-manage-finish-hook)
+(add-hook 'exwm-workspace-switch-hook #'pjones:exwm-workspace-switch-hook)
 
 ;;; exwm-conf.el ends here
