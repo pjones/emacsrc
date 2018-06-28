@@ -46,8 +46,8 @@ let
     version = "0.1";
     src = pkgs.fetchgit {
       url = "git://git.devalot.com/exwm-nw.git";
-      rev = "1941e0ed3b3259791d20c2c308fdc12cd3f333ad";
-      sha256 = "0s1vm3ifn0jsjnnz8amhs9csrzzx5zxsmx038if5sn7bcw6a0l4a";
+      rev = "4d47a3118f748713371d57195b61e5dda6fbfbf2";
+      sha256 = "1xazj9plldzc867bm80cr3qwb2ndyzjf98s4rhkk6i3idwj37hpa";
     };
     packageRequires = [ exwm ];
   };
