@@ -17,7 +17,7 @@
 (add-to-list 'shackle-rules
   '("\\`\\*helm.*?\\*\\'" :regexp t :align below :size 0.33))
 
-;; Compilation buffers get a new frame:
+;; Compilation buffers get a new window:
 (add-to-list 'shackle-rules '(compilation-mode :noselect t))
 
 ;; Man buffers should appear in the current window:
@@ -31,17 +31,23 @@
 ;; Don't select grep buffers:
 (add-to-list 'shackle-rules '(grep-mode :noselect t))
 
-;; Rules for Magit buffers:
-(add-to-list 'shackle-rules '(magit-status-mode :same t))
-(add-to-list 'shackle-rules '(magit-diff-mode :noselect t))
-
 ;; Circe buffers shouldn't split the frame:
-(add-to-list 'shackle-rules '("^circe-" :regexp t :same t))
+(add-to-list 'shackle-rules '(circe-mode :same t))
+(add-to-list 'shackle-rules '(circe-server-mode :same t))
+(add-to-list 'shackle-rules '(circe-chat-mode :same t))
+(add-to-list 'shackle-rules '(circe-channel-mode :same t))
 
 ;; PDF Outline windows should always split the current window:
 (add-to-list 'shackle-rules
   '(pdf-outline-buffer-mode :custom pjones:shackle-split))
 
-;; Magit pop-up windows should always split the current window:
+;; Rules for Magit buffers:
+(add-to-list 'shackle-rules '(magit-status-mode :same t))
+(add-to-list 'shackle-rules '(magit-diff-mode :noselect t))
 (add-to-list 'shackle-rules
   '("\\*magit-.*popup" :regexp t :custom pjones:shackle-split))
+
+;; Async shell command buffers:
+(add-to-list 'shackle-rules '("\\`\\*Async" :regex t :same t))
+
+;;; shackle-conf.el ends here
