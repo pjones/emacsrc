@@ -143,7 +143,9 @@
       ([?\C-y] . [?\C-v]))))
 
 (define-key exwm-workspace--switch-map (kbd "C-z C-z") #'exwm-nw-goto-previous)
-(define-key exwm-workspace--switch-map (kbd "C-c C-n") #'exwm-nw-set)
+(define-key exwm-workspace--switch-map (kbd "C-c C-b") #'exwm-nw-move-left)
+(define-key exwm-workspace--switch-map (kbd "C-c C-f") #'exwm-nw-move-right)
+(define-key exwm-workspace--switch-map (kbd "C-c C-n") #'exwm-nw-set-name)
 (define-key exwm-workspace--switch-map (kbd "C-s")     #'exwm-nw-find-workspace)
 (define-key exwm-workspace--switch-map (kbd "C-u")     #'universal-argument)
 
