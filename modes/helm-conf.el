@@ -8,7 +8,7 @@
 
 ;; Settings:
 (custom-set-variables
- '(helm-ff-fuzzy-matching nil)
+ '(helm-ff-fuzzy-matching t)
  '(helm-echo-input-in-header-line nil)
  '(helm-follow-mode-persistent t)
  '(helm-source-names-using-follow '("Buffers"))
