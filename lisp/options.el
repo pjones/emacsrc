@@ -53,6 +53,7 @@
 (custom-set-variables
  '(async-shell-command-buffer 'new-buffer)
  '(kill-do-not-save-duplicates t)
+ '(set-mark-command-repeat-pop t)
  '(next-line-add-newlines t))
 
 (defun pjones:frame-title-file-name ()

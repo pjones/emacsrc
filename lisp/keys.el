@@ -28,6 +28,7 @@
 (global-set-key (kbd "C-x C-o")   'switch-window)
 (global-set-key (kbd "C-x o")     'switch-window)
 (global-set-key (kbd "C-x M-o")   'resize-window)
+(global-set-key (kbd "C-x C-x")   'pjones:exchange-point-and-mark)
 (global-set-key (kbd "C-h m")     'helm-man-woman)
 (global-set-key (kbd "C-h M-m")   'describe-mode)
 (global-set-key (kbd "C-a")       'pjones:move-beginning-of-line)

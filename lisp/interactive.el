@@ -36,6 +36,17 @@ placing it in the kill ring)."
       (delete-region (point) (progn (funcall forward (- arg))
                                     (point))))))
 
+(defun pjones:exchange-point-and-mark (&optional arg)
+  "Exchange point and mark without changing if the region is active.
+
+If the region is active, keep it active.  If the region is
+inactive, keep it inactive.  When ARG is non-nil, negate this
+behavior."
+  (interactive "P")
+  (exchange-point-and-mark
+   (if (region-active-p) arg
+     (not arg))))
+
 (defun pjones:switch-to-previous-buffer ()
   "Switch back to the last buffer shown in this window."
   (interactive)
