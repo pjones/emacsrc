@@ -9,6 +9,7 @@
 ;; Settings:
 (custom-set-variables
  '(helm-ff-fuzzy-matching t)
+ '(helm-display-header-line nil)
  '(helm-echo-input-in-header-line nil)
  '(helm-follow-mode-persistent t)
  '(helm-source-names-using-follow '("Buffers"))
