@@ -1,4 +1,11 @@
-;;; dired-conf.el -- Settings for dired-mode
+;;; dired-conf.el --- Settings for `dired-mode'.
+
+;;; Commentary:
+;;
+;; Settings for `dired-mode'.
+
+;;; Code:
+
 (eval-when-compile
   (require 'dired))
 
@@ -11,6 +18,11 @@
 (require 'dired-sidebar)
 (require 'dired-subtree)
 
+;; Always run commands asynchronously:
+(autoload 'dired-async-mode "dired-async.el" nil t)
+(dired-async-mode 1)
+
+;; Settings:
 (custom-set-variables
   '(dired-listing-switches "-lhA --ignore=.git --group-directories-first")
   '(dired-auto-revert-buffer t)
@@ -80,7 +92,7 @@ current dired buffer.  Otherwise visit the file under point."
   "Use the current dired directory as a starting point for `find-file'."
   (interactive)
   (let ((default-directory (dired-current-directory)))
-    (call-interactively 'helm-find-files)))
+    (call-interactively 'counsel-find-file)))
 
 (defhydra hydra-dired (:hint nil) "
  ^Narrowing^        ^Marking^           ^Operations^
@@ -137,7 +149,7 @@ current dired buffer.  Otherwise visit the file under point."
     (define-key map (kbd "C-x C-f")  #'pjones:dired-find-file)
     (define-key map (kbd "C-x n s")  #'dired-subtree-narrow)
     (define-key map (kbd "C-c ^")    #'dired-up-directory)
-    (define-key map (kbd "C-c h")    #'hydra-dired/body)
+    (define-key map (kbd "C-c C-h")  #'hydra-dired/body)
     (define-key map (kbd "C-m")      #'pjones:dired-insert-or-visit)
     (define-key map (kbd "TAB")      #'dired-subtree-cycle)
     (define-key map (kbd "^")        #'dired-subtree-up)
@@ -162,3 +174,5 @@ current dired buffer.  Otherwise visit the file under point."
 ;; Local Variables:
 ;; byte-compile-warnings: (not noruntime)
 ;; End:
+
+;;; dired-conf.el ends here

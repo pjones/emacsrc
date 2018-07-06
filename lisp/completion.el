@@ -1,6 +1,5 @@
 ;;; completion.el -- Configuration for completion, abbreviations, and shortcuts.
 (require 'company)
-(require 'helm)
 (require 'hydra)
 
 ;; I don't want to type "yes".
@@ -29,5 +28,4 @@
         try-expand-whole-kill
         try-expand-line))
 
-;; Key helpers (completion):
-(helm-mode)
+;

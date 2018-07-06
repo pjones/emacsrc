@@ -6,6 +6,7 @@
 ;; Dependencies:
 (require 'org-mu4e)
 (require 'mu4e-query-fragments)
+(require 'smtpmail-async)
 
 ;; Functions:
 (defun pjones:mu4e-match-func-devalot (msg)
@@ -43,7 +44,7 @@
 ;; General Settings:
 (custom-set-variables
   '(mail-user-agent 'mu4e-user-agent)
-  '(message-send-mail-function 'smtpmail-send-it)
+  '(message-send-mail-function 'async-smtpmail-send-it)
   '(message-kill-buffer-on-exit t)
   '(smtpmail-queue-dir "~/mail/queue/cur")
 
@@ -84,6 +85,8 @@
   '(mu4e-bookmarks
     (quote (("flag:unread AND NOT %trash AND NOT %list" "Unread messages" ?u)
             ("flag:unread AND %list" "Unread lists" ?l)
+            ("m:/devalot/Sent d:today..now" "Sent today" ?s)
+            ("m:/devalot/Archive d:1w..now" "Archived this week" ?a)
             ("flag:flagged AND NOT %trash" "Flagged messages" ?f)))))
 
 ;; Contexts:

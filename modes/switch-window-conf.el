@@ -7,7 +7,7 @@
  '(switch-window-increase 8)
  '(switch-window-timeout 5)
  '(switch-window-threshold 2)
- '(switch-window-preferred 'helm)
+ '(switch-window-preferred 'ivy)
  '(switch-window-configuration-change-hook-inhibit t))
 
 ;;; switch-window-conf.el ends here

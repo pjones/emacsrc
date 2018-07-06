@@ -131,7 +131,7 @@ Sends the next key COUNT times."
     (define-key map (kbd "C-c C-k") #'pjones:term-line-mode)
     (define-key map (kbd "C-c C-c") #'pjones:term-send-control-c)
     (define-key map (kbd "C-c C-r") #'pjones:term-rename)
-    (define-key map (kbd "C-c M-x") #'helm-M-x)
+    (define-key map (kbd "C-c M-x") #'counsel-M-x)
     (define-key map (kbd "C-c C-q") #'pjones:term-quoted-insert)
     (define-key map (kbd "C-c C-u") #'universal-argument)
     (define-key map (kbd "C-y")     #'term-paste)

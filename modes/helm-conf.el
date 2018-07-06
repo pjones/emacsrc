@@ -6,6 +6,24 @@
 (eval-when-compile
   (require 'helm))
 
+;; Dependencies:
+(require 'cl-lib)
+
+;; Functions:
+(defun pjones:helm-displayed-buffers-last (buffers _source)
+  "Place visible buffers last in BUFFERS.
+
+This function is meant to be used as a filtered-candidate-transformer."
+  (let (visible)
+    (append
+     (cl-loop for i in buffers
+              for buffer = (get-buffer i)
+              for shown  = (get-buffer-window buffer t)
+              if shown
+              do (setq visible (cons i visible))
+              else collect i)
+     visible)))
+
 ;; Settings:
 (custom-set-variables
  '(helm-ff-fuzzy-matching t)

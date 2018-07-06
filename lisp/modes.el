@@ -14,6 +14,8 @@
 (shackle-mode)                          ; Control pop-up windows.
 (default-text-scale-mode)               ; Frame text scaling.
 (desktop-save-mode)                     ; Save window/buffer configs
+(ivy-mode)                              ; Minibuffer completion
+(counsel-mode)
 
 ;; Other modes that need to be activated:
 (pdf-tools-install)                     ; Internal PDF viewer

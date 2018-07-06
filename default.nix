@@ -53,6 +53,19 @@ let
   };
 
   ##############################################################################
+  # Latest version of ivy-exwm:
+  ivyEXWMLatest = exwm: melpaPkgs: melpaBuild {
+    pname = "ivy-exwm";
+    version = "0.1";
+    src = pkgs.fetchgit {
+      url = "git://git.devalot.com/ivy-exwm.git";
+      rev = "32f107374aef01b9ae00f1647233d50b4ea659e0";
+      sha256 = "1shs1zh8nr2lwxlvrhnhxxjn5g0p21vkjxnjgha1sn07pg7v3iqq";
+    };
+    packageRequires = [ exwm melpaPkgs.ivy melpaPkgs.ivy-rich ];
+  };
+
+  ##############################################################################
   # Latest version of xelb:
   xelbLatest = elpaPkgs: melpaBuild {
     pname = "xelb";
@@ -132,6 +145,7 @@ let
       company-ghc
       company-quickhelp
       company-statistics
+      counsel
       dante
       default-text-scale
       deft
@@ -158,6 +172,9 @@ let
       ialign
       indium
       inf-ruby
+      ivy
+      ivy-hydra
+      ivy-rich
       js2-mode
       magit
       magit-annex
@@ -173,6 +190,7 @@ let
       ruby-end
       scad-mode
       shackle
+      swiper
       switch-window
       yaml-mode
 
@@ -189,6 +207,7 @@ let
       (exwmLatest epkgs.elpaPackages)
       (passmmLatest epkgs.melpaPackages)
       (exwmNWLatest (exwmLatest epkgs.elpaPackages))
+      (ivyEXWMLatest (exwmLatest epkgs.elpaPackages) epkgs.melpaPackages)
       mu
 
     ]));

@@ -39,6 +39,8 @@
  '((auto-fill-function  " ↵" "Fill")
    (auto-revert-mode    ""   "Revert")
    (helm-mode           ""   "Helm")
+   (ivy-mode            ""   "ivy")
+   (counsel-mode        ""   "counsel")
    (global-auto-revert-mode "" "Revert")
    (flyspell-mode       ""   "Flyspell")
    (hs-minor-mode       ""   "HS")
