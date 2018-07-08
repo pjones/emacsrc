@@ -24,7 +24,7 @@
 (global-set-key (kbd "C-x C-b")   'ivy-switch-buffer)
 (global-set-key (kbd "C-x b")     'ivy-switch-buffer)
 (global-set-key (kbd "C-x M-b")   'ibuffer)
-(global-set-key (kbd "C-x C-f")   'counsel-find-file)
+(global-set-key (kbd "C-x C-f")   'find-file)
 (global-set-key (kbd "C-x C-o")   'switch-window)
 (global-set-key (kbd "C-x o")     'switch-window)
 (global-set-key (kbd "C-x M-o")   'resize-window)

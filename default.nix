@@ -138,7 +138,6 @@ let
       async
       beginend
       bm
-      browse-kill-ring
       circe
       circe-notifications
       company
@@ -163,7 +162,6 @@ let
       graphviz-dot-mode
       haskell-mode
       helm
-      helm-circe # https://github.com/lesharris/helm-circe
       helm-elscreen
       highlight-indent-guides
       htmlize
@@ -172,8 +170,8 @@ let
       ialign
       indium
       inf-ruby
-      ivy
-      ivy-hydra
+      # ivy
+      # ivy-hydra
       ivy-rich
       js2-mode
       magit
@@ -190,7 +188,7 @@ let
       ruby-end
       scad-mode
       shackle
-      swiper
+      # swiper
       switch-window
       yaml-mode
 
