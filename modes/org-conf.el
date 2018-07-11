@@ -81,6 +81,7 @@
  ;; TODO keywords and faces:
  '(org-todo-keywords
    (quote ((sequence "TODO(t)" "|" "DONE(d)")
+           (sequence "|" "NOTES")
            (sequence "NEXT(n)" "WAITING(w)" "DEPENDS(s)" "|" "DONE(d)" "CANCELLED(c)"))))
 
  '(org-todo-keyword-faces
