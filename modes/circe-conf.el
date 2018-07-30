@@ -40,7 +40,7 @@
  '(tracking-ignored-buffers '((pjones:ignored-buffer-p)))
  '(tracking-faces-priorities '(circe-highlight-nick-face))
  '(tracking-position 'end)
- '(tracking-frame-behavior t)
+ '(tracking-frame-behavior 'visible)
 
  '(lui-track-bar-behavior 'after-sending)
  '(lui-time-stamp-format "%H:%M")
