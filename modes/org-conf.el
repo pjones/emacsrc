@@ -20,7 +20,7 @@
  '(org-show-context-detail (quote ((default . tree))))
 
  ;; Behavior Settings:
- '(org-log-done (quote note))
+ '(org-log-done 'time)
  '(org-reverse-note-order nil)
  '(org-list-empty-line-terminates-plain-lists nil)
  '(org-blank-before-new-entry (quote ((heading . nil) (plain-list-item . nil))))
@@ -109,7 +109,7 @@
  '(org-agenda-time-leading-zero t)
  '(org-agenda-show-inherited-tags nil)
  '(org-deadline-warning-days 14)
- '(org-agenda-span 14)
+ '(org-agenda-span 'day)
  '(org-agenda-start-on-weekday nil)
  '(org-agenda-start-day nil)
 
