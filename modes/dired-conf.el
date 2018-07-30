@@ -92,7 +92,7 @@ current dired buffer.  Otherwise visit the file under point."
   "Use the current dired directory as a starting point for `find-file'."
   (interactive)
   (let ((default-directory (dired-current-directory)))
-    (call-interactively 'counsel-find-file)))
+    (call-interactively 'find-file)))
 
 (defhydra hydra-dired (:hint nil) "
  ^Narrowing^        ^Marking^           ^Operations^
