@@ -167,7 +167,8 @@
       ([?\C-g] . [escape])
       ([?\C-w] . [?\C-x])
       ([?\M-w] . [?\C-c])
-      ([?\C-y] . [?\C-v]))))
+      ([?\C-y] . [?\C-v])
+      ([?\C-/] . [?\C-z]))))
 
 (define-key exwm-workspace--switch-map (kbd "C-z C-z") #'exwm-nw-goto-previous)
 (define-key exwm-workspace--switch-map (kbd "C-c C-b") #'exwm-nw-move-left)
