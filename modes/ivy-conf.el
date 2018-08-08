@@ -27,6 +27,8 @@
  '(counsel-find-file-at-point nil) ; Use M-n instead
  '(counsel-find-file-ignore-regexp "\(?:\‘[#.]\)\|\(?:[#~]\’\)"))
 
+;; Some key binding improvements:
+(define-key ivy-minibuffer-map (kbd "C-l") 'ivy-backward-delete-char)
 
 ;; Enable complementary modes:
 (ivy-exwm-mode 1)
