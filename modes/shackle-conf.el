@@ -32,10 +32,7 @@
 (add-to-list 'shackle-rules '(grep-mode :noselect t))
 
 ;; Circe buffers shouldn't split the frame:
-(add-to-list 'shackle-rules '(circe-mode :same t))
-(add-to-list 'shackle-rules '(circe-server-mode :same t))
-(add-to-list 'shackle-rules '(circe-chat-mode :same t))
-(add-to-list 'shackle-rules '(circe-channel-mode :same t))
+(add-to-list 'shackle-rules '("\\`\\circe" :regex t :same t))
 
 ;; PDF Outline windows should always split the current window:
 (add-to-list 'shackle-rules

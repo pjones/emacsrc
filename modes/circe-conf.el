@@ -49,7 +49,7 @@
 
 (custom-set-faces
  '(circe-prompt-face ((t (:inherit 'font-lock-variable-name-face :weight bold))))
- '(circe-my-message-face ((t (:inherit 'font-lock-builtin-face))))
+ '(circe-my-message-face ((t (:inherit 'circe-fool-face))))
  '(circe-originator-face ((t (:inherit 'font-lock-keyword-face)))))
 
 (setq circe-network-options
