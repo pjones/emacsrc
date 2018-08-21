@@ -149,7 +149,7 @@
   `(exwm-input-global-keys
     (quote ((,(kbd "s-r")        . exwm-reset)
             (,(kbd "s-s")        . other-frame)
-            (,(kbd "s-w")        . exwm-workspace-switch)
+            (,(kbd "s-z")        . exwm-workspace-switch)
             (,(kbd "<escape>")   . god-mode-all))))
 
   ;; Simulated key presses to X Windows:
@@ -170,6 +170,7 @@
       ([?\C-y] . [?\C-v])
       ([?\C-/] . [?\C-z]))))
 
+(define-key exwm-workspace--switch-map (kbd "s-z")     #'exwm-nw-goto-previous)
 (define-key exwm-workspace--switch-map (kbd "C-z C-z") #'exwm-nw-goto-previous)
 (define-key exwm-workspace--switch-map (kbd "C-c C-b") #'exwm-nw-move-left)
 (define-key exwm-workspace--switch-map (kbd "C-c C-f") #'exwm-nw-move-right)
