@@ -24,7 +24,7 @@
 
 ;; Settings:
 (custom-set-variables
-  '(dired-listing-switches "-lhA --ignore=.git --group-directories-first")
+  '(dired-listing-switches "-lhA --literal --ignore=.git --group-directories-first")
   '(dired-auto-revert-buffer t)
   '(dired-isearch-filenames t)
   '(dired-hide-details-hide-symlink-targets nil)
