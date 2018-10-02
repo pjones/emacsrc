@@ -114,7 +114,7 @@
  '(org-agenda-start-day nil)
 
  '(org-stuck-projects
-   (quote ("+project+LEVEL=3|+tasks+LEVEL=3-inbox-TODO=\"DONE\""
+   (quote ("+project+LEVEL=3-notes|+tasks+LEVEL=3-inbox-TODO=\"DONE\""
            ("*") nil "")))
 
  '(org-agenda-custom-commands
