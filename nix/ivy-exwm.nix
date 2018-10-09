@@ -14,6 +14,10 @@ melpaBuild {
     sha256 = "1shs1zh8nr2lwxlvrhnhxxjn5g0p21vkjxnjgha1sn07pg7v3iqq";
   };
 
+  recipe = pkgs.writeText "recipe" ''
+    (ivy-exwm :repo "pjones/ivy-exwm" :fetcher github)
+  '';
+
   packageRequires = [
     self.exwm
     super.ivy

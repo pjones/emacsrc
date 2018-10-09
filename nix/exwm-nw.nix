@@ -14,6 +14,10 @@ melpaBuild {
     sha256 = "1xazj9plldzc867bm80cr3qwb2ndyzjf98s4rhkk6i3idwj37hpa";
   };
 
+  recipe = pkgs.writeText "recipe" ''
+    (exwm-nw :repo "pjones/exwm-nw" :fetcher github)
+  '';
+
   packageRequires = [
     self.exwm
   ];

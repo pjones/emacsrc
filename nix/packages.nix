@@ -7,13 +7,13 @@ let
   ##############################################################################
   # Access to the MELPA Emacs builder:
   melpaBuild = import <nixpkgs/pkgs/build-support/emacs/melpa.nix> {
-    inherit (pkgs) lib stdenv fetchurl texinfo;
+    inherit (pkgs) lib stdenv texinfo fetchFromGitHub;
     inherit emacs;
   };
 
   ##############################################################################
   # Package overrides:
-  overrides = (pkgs.emacsPackagesNgGen emacs).overrideScope (super: self: {
+  overrides = (pkgs.emacsPackagesNgGen emacs).overrideScope' (self: super: {
     # Use unstable versions:
     default-text-scale = self.melpaPackages.default-text-scale;
     projectile = self.melpaPackages.projectile;
@@ -21,6 +21,7 @@ let
     # Newer versions of existing packages:
     exwm = import ./exwm.nix { inherit super self pkgs melpaBuild; };
     xelb = import ./xelb.nix { inherit super self pkgs melpaBuild; };
+    mu4e-query-fragments = import ./mu4e-query-fragments.nix { inherit super self pkgs melpaBuild; };
 
     # My custom packages:
     exwm-nw  = import ./exwm-nw.nix  { inherit super self pkgs melpaBuild; };
