@@ -6,7 +6,7 @@ let
   emacs = pkgs.emacs.override {
     withX       = true;
     withGTK2    = false;
-    withGTK3    = false;
+    withGTK3    = true;
     imagemagick = pkgs.imagemagick;
   };
 

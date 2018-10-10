@@ -130,7 +130,7 @@
    ;; Workspace settings:
   '(exwm-workspace-show-all-buffers t)
   '(exwm-layout-show-all-buffers t)
-  '(exwm-workspace-minibuffer-position 'top)
+  ;'(exwm-workspace-minibuffer-position 'top)
 
   ;; Floating windows:
   '(exwm-manage-force-tiling t)
