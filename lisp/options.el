@@ -29,7 +29,7 @@
       ring-bell-function (lambda ())     ; Kill those damn bells
       visible-bell nil                   ; No visual bell
       enable-recursive-minibuffers t     ; Allow multiple mini buffers
-      echo-keystrokes 0.1                ; Show unfinished keystrokes early
+      echo-keystrokes 1                  ; Show unfinished keystrokes after a pause
       disabled-command-function nil      ; Disable novice user protection
       truncate-partial-width-windows nil ; When windows don't fill the frame
       mark-even-if-inactive t            ; Use the mark without a region

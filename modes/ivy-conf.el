@@ -8,7 +8,7 @@
 
 (custom-set-variables
  ;; Ivy:
- '(ivy-height 5)
+ '(ivy-height 15) ; Maximum window height.
  '(ivy-count-format "(%d/%d) ")
  '(ivy-wrap t)
  '(ivy-action-wrap t)

@@ -101,12 +101,7 @@
   (exwm-workspace-rename-buffer exwm-class-name))
 
 (defun pjones:exwm-workspace-switch-hook ()
-  "Hook run when changing workspaces."
-  ;; Warp the mouse to the new workspace.  Very useful if the
-  ;; workspace is on another monitor.
-  (start-process
-   "warp-mouse" nil "sh"
-   "-c" "xdotool mousemove --window $(xdotool getwindowfocus) 0 0"))
+  "Hook run when changing workspaces.")
 
 ;###############################################################################
 ;;
@@ -130,7 +125,9 @@
    ;; Workspace settings:
   '(exwm-workspace-show-all-buffers t)
   '(exwm-layout-show-all-buffers t)
-  '(exwm-workspace-minibuffer-position 'top)
+  '(exwm-workspace-minibuffer-position 'bottom)
+  '(exwm-workspace-display-echo-area-timeout 1)
+  '(exwm-workspace-warp-cursor t)
 
   ;; Floating windows:
   '(exwm-manage-force-tiling t)
