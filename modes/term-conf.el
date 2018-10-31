@@ -6,7 +6,6 @@
 
 ;; Dependencies:
 (require 'projectile)
-(require 'elscreen)
 
 ;; Remove some warnings:
 (defvar pjones:z-map nil "Defined in keys.el.")
@@ -38,9 +37,7 @@
 (defun pjones:term-rename ()
   "Rename a terminal using the current project name."
   (interactive)
-  (let ((suffix (if (projectile-project-p) (projectile-project-name)
-                  (elscreen-get-screen-nickname
-                   (elscreen-get-current-screen)))))
+  (let ((suffix (when (projectile-project-p) (projectile-project-name))))
     (rename-buffer (generate-new-buffer-name
                      (concat "term:" suffix)))))
 

@@ -60,7 +60,6 @@
 ;; User Key Bindings (using the C-z prefix)
 (global-set-key (kbd "C-z") pjones:z-map)
 
-(define-key pjones:z-map (kbd "SPC") 'helm-elscreen)
 (define-key pjones:z-map (kbd "RET") 'pjones:start-term)
 (define-key pjones:z-map (kbd ";")   'pjones:auto-correct-previous-word)
 (define-key pjones:z-map (kbd ",")   'pjones:push-tag-mark)

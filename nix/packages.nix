@@ -54,7 +54,6 @@ overrides.emacsWithPackages (epkgs: with epkgs; [
   dired-sidebar
   dired-subtree
   eimp
-  elscreen
   exwm
   exwm-nw
   flycheck
@@ -64,7 +63,6 @@ overrides.emacsWithPackages (epkgs: with epkgs; [
   graphviz-dot-mode
   haskell-mode
   helm
-  helm-elscreen
   highlight-indent-guides
   htmlize
   http

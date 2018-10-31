@@ -23,7 +23,6 @@
 (require 'saveplace)                    ; Saves your location in files
 (require 'dired-x)                      ; Extra features for dired-mode
 (require 'align)                        ; Align things
-(require 'elscreen)                     ; Activate elscreen
 
 ;; Defer this until after EXWM starts.
 ;; (desktop-save-mode)                     ; Save window/buffer configs
