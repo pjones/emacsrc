@@ -123,8 +123,8 @@
 
 (custom-set-variables ;; Common settings:
    ;; Workspace settings:
-  '(exwm-workspace-show-all-buffers t)
-  '(exwm-layout-show-all-buffers t)
+  '(exwm-workspace-show-all-buffers nil)
+  '(exwm-layout-show-all-buffers nil)
   '(exwm-workspace-minibuffer-position 'bottom)
   '(exwm-workspace-display-echo-area-timeout 1)
   '(exwm-workspace-warp-cursor t)
@@ -192,5 +192,6 @@
 (add-hook 'exwm-update-class-hook     #'pjones:exwm-update-class-hook)
 (add-hook 'exwm-manage-finish-hook    #'pjones:exwm-manage-finish-hook)
 (add-hook 'exwm-workspace-switch-hook #'pjones:exwm-workspace-switch-hook)
+(add-hook 'exwm-init-hook              'exwm-workspace-attach-minibuffer)
 
 ;;; exwm-conf.el ends here
