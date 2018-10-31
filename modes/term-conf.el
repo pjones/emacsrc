@@ -28,8 +28,8 @@
 (custom-set-variables
  '(term-input-autoexpand nil)
  '(term-input-ignoredups nil)
- '(term-scroll-to-bottom-on-output t)
- '(term-scroll-show-maximum-output t)
+ '(term-scroll-to-bottom-on-output nil)
+ '(term-scroll-show-maximum-output nil)
 
  ;; WARNING: setting this to `t' triggers a bug where the shell will
  ;; barf text all over the screen.
@@ -47,13 +47,11 @@
 (defun pjones:term-line-mode ()
   "Go to term-line-mode."
   (interactive)
-  (setq term-scroll-to-bottom-on-output nil)
   (term-line-mode))
 
 (defun pjones:term-char-mode ()
   "Return to raw/character mode."
   (interactive)
-  (setq term-scroll-to-bottom-on-output t)
   (term-char-mode)
   (let ((proc (get-buffer-process (current-buffer))))
     (goto-char (process-mark proc))))
@@ -95,7 +93,8 @@ Sends the next key COUNT times."
   (setq term-ansi-at-dir default-directory
         term-ansi-at-host (system-name)
         term-ansi-at-user (user-real-login-name)
-        term-prompt-regexp "^[^❯]+❯ *")
+        term-prompt-regexp "^[^❯]+❯ *"
+        term-line-mode-buffer-read-only t)
 
   ;; Clean mode-line:
   (setq mode-line-format
