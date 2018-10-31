@@ -17,7 +17,7 @@
 
 (projectile-register-project-type
  'edify '("default.nix" "courses" "content")
- :compile "nix-shell --run 'edify build courses/*'")
+ :compile "nix-shell --run 'eval \"$buildPhase\"'")
 
 (projectile-register-project-type
  'haskell '("default.nix" "Setup.hs")
