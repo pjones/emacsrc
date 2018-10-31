@@ -10,41 +10,25 @@
     (when window (set-window-buffer window buffer))))
 
 (custom-set-variables
- '(shackle-default-rule (quote (:select t)))
+ '(shackle-default-rule (quote (:same t)))
  '(shackle-rules nil))
 
-;; Helm windows should display above the echo area:
-(add-to-list 'shackle-rules
-  '("\\`\\*helm.*?\\*\\'" :regexp t :align below :size 0.33))
+;; Modes that should get their own selected windows:
+(add-to-list 'shackle-rules '(help-mode :same nil))
+(add-to-list 'shackle-rules '("*JS scratch*" :regex t :same nil))
 
-;; Compilation buffers get a new window:
-(add-to-list 'shackle-rules '(compilation-mode :noselect t))
+;; Modes that should get their own windows, but remain inactive:
+(add-to-list 'shackle-rules '(compilation-mode :same nil :noselect t))
+(add-to-list 'shackle-rules '(grep-mode :same nil :noselect t))
+(add-to-list 'shackle-rules '(magit-diff-mode :same nil :noselect t))
 
-;; Man buffers should appear in the current window:
-(add-to-list 'shackle-rules '("\\`\\*Man " :regexp t :same t))
-
-;; When asking for completions:
-(add-to-list 'shackle-rules '("*Completions*" :size 0.3 :align t))
-
-(add-to-list 'shackle-rules '(calendar-mode :size 0.2 :align below))
-
-;; Don't select grep buffers:
-(add-to-list 'shackle-rules '(grep-mode :noselect t))
-
-;; Circe buffers shouldn't split the frame:
-(add-to-list 'shackle-rules '("\\`\\circe" :regex t :same t))
+;; Windows that should split the entire frame:
+(add-to-list 'shackle-rules '("*Completions*" :same nil :size 0.3 :align below))
+(add-to-list 'shackle-rules '(calendar-mode :same nil :size 0.2 :align below))
+(add-to-list 'shackle-rules '("\\*magit-.*popup" :regexp t :align below))
 
 ;; PDF Outline windows should always split the current window:
 (add-to-list 'shackle-rules
   '(pdf-outline-buffer-mode :custom pjones:shackle-split))
-
-;; Rules for Magit buffers:
-(add-to-list 'shackle-rules '(magit-status-mode :same t))
-(add-to-list 'shackle-rules '(magit-diff-mode :noselect t))
-(add-to-list 'shackle-rules
-  '("\\*magit-.*popup" :regexp t :custom pjones:shackle-split))
-
-;; Async shell command buffers:
-(add-to-list 'shackle-rules '("\\`\\*Async" :regex t :same t))
 
 ;;; shackle-conf.el ends here
