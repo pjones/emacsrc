@@ -57,9 +57,6 @@
 (global-set-key (kbd "<home>")    'beginning-of-buffer)
 (global-set-key (kbd "<end>")     'end-of-buffer)
 
-;; Remapping existing keys.
-(global-set-key [remap goto-line] 'pjones:goto-line-with-feedback)
-
 ;; User Key Bindings (using the C-z prefix)
 (global-set-key (kbd "C-z") pjones:z-map)
 

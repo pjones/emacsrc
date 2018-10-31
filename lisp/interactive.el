@@ -4,7 +4,6 @@
   (require 'etags)
   (require 'flyspell)
   (require 'ispell)
-  (require 'linum)
   (require 'server)
   (require 'subword)
   (require 'term))
@@ -267,18 +266,6 @@ file.  With a prefix argument kill the entire path for the file."
   (interactive)
   (require 'org)
   (org-agenda nil "c"))
-
-;; Stolen from: http://whattheemacsd.com//key-bindings.el-01.html
-(defun pjones:goto-line-with-feedback ()
-  "Show line numbers temporarily while prompting for the line
-number input."
-  (interactive)
-  (require 'linum)
-  (let ((showing-line-numbers linum-mode))
-    (unwind-protect (progn
-      (unless showing-line-numbers (linum-mode 1))
-      (call-interactively 'goto-line))
-      (unless showing-line-numbers (linum-mode -1)))))
 
 (defun pjones:zap-to-quote (&optional backward)
   "Delete characters up to next/previous quote based on BACKWARD.
