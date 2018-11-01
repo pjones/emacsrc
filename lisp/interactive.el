@@ -265,7 +265,8 @@ file.  With a prefix argument kill the entire path for the file."
   "Start org-agenda with my custom agenda view"
   (interactive)
   (require 'org)
-  (org-agenda nil "c"))
+  (let ((default-directory "~/notes"))
+    (org-agenda nil "c")))
 
 (defun pjones:zap-to-quote (&optional backward)
   "Delete characters up to next/previous quote based on BACKWARD.
