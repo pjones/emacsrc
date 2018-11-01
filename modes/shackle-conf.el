@@ -23,9 +23,9 @@
 (add-to-list 'shackle-rules '(magit-diff-mode :same nil :noselect t))
 
 ;; Windows that should split the entire frame:
-(add-to-list 'shackle-rules '("*Completions*" :same nil :size 0.3 :align below))
-(add-to-list 'shackle-rules '(calendar-mode :same nil :size 0.2 :align below))
-(add-to-list 'shackle-rules '("\\*magit-.*popup" :regexp t :align below))
+(add-to-list 'shackle-rules '("*Completions*" :same nil :size 0.3 :align 'below))
+(add-to-list 'shackle-rules '(calendar-mode :same nil :size 0.2 :align 'below))
+(add-to-list 'shackle-rules '("\\*magit-.*popup" :regexp t :align 'below))
 
 ;; PDF Outline windows should always split the current window:
 (add-to-list 'shackle-rules
