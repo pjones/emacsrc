@@ -95,5 +95,6 @@ overrides.emacsWithPackages (epkgs: with epkgs; [
   shackle
   swiper
   switch-window
+  typescript-mode
   yaml-mode
 ])
