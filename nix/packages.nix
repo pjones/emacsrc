@@ -62,7 +62,6 @@ overrides.emacsWithPackages (epkgs: with epkgs; [
   goto-chg
   graphviz-dot-mode
   haskell-mode
-  helm
   highlight-indent-guides
   htmlize
   http

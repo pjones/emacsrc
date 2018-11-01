@@ -13,74 +13,6 @@
 (require 'cl-lib)
 (require 'exwm-nw)
 (require 'exwm-randr)
-(require 'helm)
-(require 'helm-buffers)
-
-;###############################################################################
-;;
-;;; Helm Integration:
-;;
-;###############################################################################
-(defun pjones:helm-limited-string (str)
-  "Truncate or pad string STR."
-  (if (> (string-width str) helm-buffer-max-length)
-      (helm-substring-by-width
-       str helm-buffer-max-length helm-buffers-end-truncated-string)
-    (concat str
-            (make-string
-             (- (+ helm-buffer-max-length
-                   (length
-                    helm-buffers-end-truncated-string))
-                (string-width str))
-             ? ))))
-
-(defun pjones:helm-highlight-exwm-buffers (buffers _source)
-  "Return Helm candidate string for BUFFERS."
-  (cl-loop for i in buffers
-           for buffer = (get-buffer i)
-           for name = (pjones:helm-limited-string (buffer-name buffer))
-           for class = (with-current-buffer buffer (pjones:helm-limited-string exwm-class-name))
-           for title = (with-current-buffer buffer exwm-title)
-           collect (cons (concat
-                          (propertize name 'face 'helm-non-file-buffer)
-                          helm-buffers-column-separator
-                          (propertize class 'face 'helm-buffer-size)
-                          helm-buffers-column-separator
-                          (propertize title 'face 'helm-buffer-process))
-                         buffer)))
-
-(defun pjones:buffers-sans-exwm (buffers _source)
-  "Filter BUFFERS so it doesn't include any EXWM windows."
-  (cl-loop for i in buffers
-           unless (with-current-buffer i (derived-mode-p 'exwm-mode))
-           collect i))
-
-(defun pjones:buffers-only-exwm (buffers _source)
-  "Filter BUFFERS so it only includes EXWM windows."
-  (cl-loop for i in buffers
-           if (with-current-buffer i (derived-mode-p 'exwm-mode))
-           collect i))
-
-(defvar pjones:helm-source-buffers-list-sans-exwm
-  (let ((source (helm-make-source "Buffers" 'helm-source-buffers)))
-    (helm-attrset 'filtered-candidate-transformer
-                  '(pjones:buffers-sans-exwm
-                    helm-skip-boring-buffers
-                    helm-buffers-sort-transformer
-                    helm-highlight-buffers)
-                  source)
-    source)
-  "Helm source of buffers without EXWM windows.")
-
-(defvar pjones:helm-source-buffers-list-only-exwm
-  (let ((source (helm-make-source "EXWM Windows" 'helm-source-buffers)))
-    (helm-attrset 'filtered-candidate-transformer
-                  '(pjones:buffers-only-exwm
-                    helm-buffers-sort-transformer
-                    pjones:helm-highlight-exwm-buffers)
-                  source)
-    source)
-  "Helm source of buffers that only includes EXWM windows.")
 
 ;###############################################################################
 ;;
@@ -137,12 +69,6 @@
   ;; Global key bindings:
   '(exwm-input-prefix-keys
     (list ?\C-x ?\C-u ?\C-h ?\C-z ?\M-x ?\M-& ?\M-:))
-
-  ;; Helm helper:
-  '(helm-mini-default-sources
-    (quote (pjones:helm-source-buffers-list-sans-exwm
-            pjones:helm-source-buffers-list-only-exwm
-            helm-source-recentf)))
 
   `(exwm-input-global-keys
     (quote ((,(kbd "s-r")        . exwm-reset)
