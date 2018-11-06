@@ -86,12 +86,12 @@ the local bitlbee instance."
     (circe-maybe-connect "bitlbee")
     (circe-maybe-connect "freenode")))
 
-(defun pjones:start-term ()
-  "Start a new terminal buffer."
-  (interactive)
-  (let ((default-directory (if (projectile-project-p)
-                               (projectile-project-root)
-                             default-directory)))
+(defun pjones:start-term (&optional dont-ask)
+  "Start a new terminal buffer in the current project.
+
+If DONT-ASK is non-nil, don't prompt for a project."
+  (interactive "P")
+  (let ((default-directory (pjones:projectile-project-root dont-ask)))
     (term (getenv "SHELL"))
     (pjones:term-rename)))
 

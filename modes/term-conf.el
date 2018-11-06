@@ -37,9 +37,15 @@
 (defun pjones:term-rename ()
   "Rename a terminal using the current project name."
   (interactive)
-  (let ((suffix (when (projectile-project-p) (projectile-project-name))))
+  (let ((suffix
+         (cond
+          ((projectile-project-p)
+           (projectile-project-name))
+          ((and (boundp 'exwm--connection) 'exwm--connection)
+           (exwm-nw-get-name (exwm-nw--current)))
+          (t "none"))))
     (rename-buffer (generate-new-buffer-name
-                     (concat "term:" suffix)))))
+                    (concat "term:" suffix)))))
 
 (defun pjones:term-line-mode ()
   "Go to term-line-mode."

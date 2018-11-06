@@ -88,6 +88,7 @@
 (define-key pjones:z-map (kbd "r")   'pjones:register-get-set)
 (define-key pjones:z-map (kbd "R")   'revert-buffer)
 (define-key pjones:z-map (kbd "s")   'sort-lines)
+(define-key pjones:z-map (kbd "t")   'pjones:start-term)
 (define-key pjones:z-map (kbd "u")   'goto-last-change)
 (define-key pjones:z-map (kbd "w")   'hydra-window-ops/body)
 (define-key pjones:z-map (kbd "z")   'exwm-nw-goto-previous)
