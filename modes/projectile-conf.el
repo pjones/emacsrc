@@ -22,3 +22,34 @@
 (projectile-register-project-type
  'haskell '("default.nix" "Setup.hs")
  :compile "nix-hs")
+
+;;; Utility Functions
+
+(defun pjones:projectile-project-root (&optional dont-ask)
+  "Return the root directory of the current project.
+
+When a project is not active and DO NT-ASK is nil, prompt the user
+to select a project.  If DONT-ASK is non-nil then simply return
+the default directory."
+  (cond
+   ((projectile-project-p)
+    (projectile-project-root))
+   ((null dont-ask)
+    (completing-read
+     "Select project: "
+     (projectile-relevant-known-projects)))
+   (t default-directory)))
+
+(defun pjones:projectile-dired (&optional dont-ask)
+  "Open dired for a project.
+
+Similar to `projectile-dired' except if you're not currently in a
+project prompt for which project to use.
+
+If DONT-ASK is non-nil, don't prompt for the project and use the
+default directory instead."
+  (interactive "P")
+  (let ((dir (pjones:projectile-project-root dont-ask)))
+    (dired dir)))
+
+;;; projectile-conf.el ends here

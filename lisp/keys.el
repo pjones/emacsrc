@@ -69,7 +69,7 @@
 (define-key pjones:z-map (kbd "b")   'pjones:bm-bookmark-set)
 (define-key pjones:z-map (kbd "B")   'pjones:bookmark)
 (define-key pjones:z-map (kbd "c")   'pjones:projectile-compile-project)
-(define-key pjones:z-map (kbd "d")   'projectile-dired)
+(define-key pjones:z-map (kbd "d")   'pjones:projectile-dired)
 (define-key pjones:z-map (kbd "e")   'hydra-launch/body)
 (define-key pjones:z-map (kbd "f")   'pjones:kill-file-name)
 (define-key pjones:z-map (kbd "g")   'rgrep)
