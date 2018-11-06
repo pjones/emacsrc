@@ -40,21 +40,10 @@
 ;;; Settings:
 ;;
 ;###############################################################################
-(cond ;; Settings that depend on the machine:
- ((string= (system-name) "medusa")
-  (custom-set-variables
-   '(exwm-workspace-number 3)
-   '(exwm-randr-workspace-output-plist '(1 "DVI-0" 2 "DVI-1"))))
- ((string= (system-name) "elphaba")
-  (custom-set-variables
-   '(exwm-workspace-number 2)
-   '(exwm-randr-workspace-output-plist '(1 "DP1"))))
- (t
-  (custom-set-variables
-   '(exwm-workspace-number 1))))
-
 (custom-set-variables ;; Common settings:
    ;; Workspace settings:
+  '(exwm-workspace-number 10)
+  '(exwm-randr-workspace-output-plist nil)
   '(exwm-workspace-show-all-buffers nil)
   '(exwm-layout-show-all-buffers nil)
   '(exwm-workspace-minibuffer-position 'bottom)
