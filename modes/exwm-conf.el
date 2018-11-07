@@ -35,6 +35,10 @@
 (defun pjones:exwm-workspace-switch-hook ()
   "Hook run when changing workspaces.")
 
+(defmacro pjones:exwm-switch-to (n)
+  "Create a function that will switch to workspace N."
+  `(lambda () (interactive) (exwm-workspace-switch-create ,n)))
+
 ;###############################################################################
 ;;
 ;;; Settings:
@@ -61,9 +65,21 @@
 
   `(exwm-input-global-keys
     (quote ((,(kbd "s-r")        . exwm-reset)
-            (,(kbd "s-s")        . other-frame)
+            (,(kbd "s-o")        . other-frame)
             (,(kbd "s-z")        . exwm-workspace-switch)
-            (,(kbd "<escape>")   . god-mode-all))))
+            (,(kbd "<escape>")   . god-mode-all)
+
+            ;; Switch workspaces with the super key:
+            (,(kbd "s-;") . ,(pjones:exwm-switch-to 0))
+            (,(kbd "s-a") . ,(pjones:exwm-switch-to 1))
+            (,(kbd "s-s") . ,(pjones:exwm-switch-to 2))
+            (,(kbd "s-d") . ,(pjones:exwm-switch-to 3))
+            (,(kbd "s-f") . ,(pjones:exwm-switch-to 4))
+            (,(kbd "s-g") . ,(pjones:exwm-switch-to 5))
+            (,(kbd "s-h") . ,(pjones:exwm-switch-to 6))
+            (,(kbd "s-j") . ,(pjones:exwm-switch-to 7))
+            (,(kbd "s-k") . ,(pjones:exwm-switch-to 8))
+            (,(kbd "s-l") . ,(pjones:exwm-switch-to 9)))))
 
   ;; Simulated key presses to X Windows:
   '(exwm-input-simulation-keys

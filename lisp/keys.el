@@ -94,13 +94,5 @@
 (define-key pjones:z-map (kbd "z")   'exwm-nw-goto-previous)
 (define-key pjones:z-map (kbd "C-z") 'exwm-nw-goto-previous)
 
-;; C-z 0 through C-z 9 jump to EXWM workspaces.
-(dolist (n (number-sequence 0 9))
-  (define-key pjones:z-map (kbd (format "%d" n))
-    `(lambda ()
-       (interactive)
-       (message "here %d" ,n)
-       (exwm-workspace-switch-create ,n))))
-
 (provide 'keys)
 ;;; keys.el ends here
