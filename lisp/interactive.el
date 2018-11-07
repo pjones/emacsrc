@@ -92,7 +92,7 @@ the local bitlbee instance."
 If DONT-ASK is non-nil, don't prompt for a project."
   (interactive "P")
   (let ((default-directory (pjones:projectile-project-root dont-ask)))
-    (term (getenv "SHELL"))
+    (term "tmux")
     (pjones:term-rename)))
 
 (defun pjones:start-http ()
