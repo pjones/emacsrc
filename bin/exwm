@@ -11,5 +11,11 @@ xhost "+SI:localuser:$USER"
 # Make Java applications aware this is a non-reparenting window manager:
 export _JAVA_AWT_WM_NONREPARENTING=1
 
+# How the server name is chosen:
+EMACS_SERVER_NAME=${EMACS_SERVER_NAME:=server}
+
 # Start Emacs:
-exec @emacspath@/emacs --eval "(require 'exwm)" -f server-start -f exwm-enable "$@"
+exec @emacspath@/emacs \
+     --fg-daemon="$EMACS_SERVER_NAME" \
+     --eval "(require 'exwm)" \
+     -f exwm-enable "$@"
