@@ -59,6 +59,13 @@
   (let ((proc (get-buffer-process (current-buffer))))
     (goto-char (process-mark proc))))
 
+(defmacro pjones:term-send-char (chars)
+  "Create a function to send CHARS to the terminal."
+  `(lambda ()
+     (interactive)
+     (seq-doseq (char ,chars)
+       (term-send-raw-string (make-string 1 char)))))
+
 (defun pjones:term-send-control-c ()
   "Send ^c to the terminal."
   (interactive)
@@ -129,15 +136,19 @@ Sends the next key COUNT times."
         (read-kbd-macro (format "<%s>" (car key)))
         #'pjones:term-send-function-key))
 
+    ;; Sending special keys to the terminal:
     (define-key map (kbd "C-c")     nil)
-    (define-key map (kbd "C-c C-k") #'pjones:term-line-mode)
-    (define-key map (kbd "C-c C-c") #'pjones:term-send-control-c)
-    (define-key map (kbd "C-c C-r") #'pjones:term-rename)
-    (define-key map (kbd "C-c M-x") #'counsel-M-x)
+    (define-key map (kbd "C-c C-c") (pjones:term-send-char [?\C-c]))
+    (define-key map (kbd "C-c C-z") (pjones:term-send-char [?\C-z]))
     (define-key map (kbd "C-c C-q") #'pjones:term-quoted-insert)
+
+    ;; Other functions:
+    (define-key map (kbd "C-c C-k") #'pjones:term-line-mode)
+    (define-key map (kbd "C-c C-r") #'pjones:term-rename)
     (define-key map (kbd "C-c C-u") #'universal-argument)
     (define-key map (kbd "C-y")     #'term-paste)
-    (define-key map (kbd "C-z")     pjones:z-map)))
+    (define-key map (kbd "C-z")     pjones:z-map)
+    (define-key map (kbd "M-x")     nil)))
 
 (advice-add 'term-handle-exit :after 'pjones:remove-dead-term)
 (add-hook 'term-mode-hook 'pjones:term-mode-hook)
