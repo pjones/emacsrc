@@ -23,7 +23,7 @@
 
  ;; If either of these two settings are `t' Ivy will break
  ;; minibuffer-only frames.
- '(ivy-fixed-height-minibuffer nil)
+ '(ivy-fixed-height-minibuffer t)
  '(ivy-add-newline-after-prompt nil)
 
  ;; Counsel:

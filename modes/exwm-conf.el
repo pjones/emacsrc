@@ -50,7 +50,7 @@
   '(exwm-randr-workspace-output-plist nil)
   '(exwm-workspace-show-all-buffers nil)
   '(exwm-layout-show-all-buffers nil)
-  '(exwm-workspace-minibuffer-position 'bottom)
+  '(exwm-workspace-minibuffer-position nil)
   '(exwm-workspace-display-echo-area-timeout 1)
   '(exwm-workspace-warp-cursor t)
 
