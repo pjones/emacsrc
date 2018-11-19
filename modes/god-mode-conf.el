@@ -7,20 +7,40 @@
 ;; Dependencies:
 (require 'exwm)
 
-;; Helper functions:
-(defun pjones:god-update-cursor ()
-  "Change the cursor to indicate `god-mode'."
-  (setq cursor-type (if god-local-mode 'box t)))
+;; Variables:
+(defvar pjones:god-orig-cursor-type
+  (default-value 'cursor-type)
+  "The original cursor type.")
 
+(defvar pjones:god-orig-cursor-bg
+  (face-attribute 'cursor :background)
+  "The original cursor background color.")
+
+(defvar pjones:god-mode-on nil
+  "Help track whether God mode is on or not.")
+
+;; Helper functions:
 (defun pjones:god-mode-enabled ()
   "Respond to `god-mode' turning on."
-  (pjones:god-update-cursor)
-  (setq exwm-input-line-mode-passthrough t))
+  ;; Settings for each buffer:
+  (setq exwm-input-line-mode-passthrough t)
+  ;; Settings to apply only once:
+  (unless pjones:god-mode-on
+    (setq pjones:god-mode-on t
+          pjones:god-orig-cursor-type (default-value 'cursor-type)
+          pjones:god-orig-cursor-bg (face-attribute 'cursor :background))
+    (setq-default cursor-type 'box)
+    (set-face-attribute 'cursor nil :background "red")))
 
 (defun pjones:god-mode-disabled ()
   "Respond to `god-mode' turning off."
-  (pjones:god-update-cursor)
-  (setq exwm-input-line-mode-passthrough nil))
+  ;; Settings to apply for each buffer:
+  (setq exwm-input-line-mode-passthrough nil)
+  ;; Settings to apply only once:
+  (when pjones:god-mode-on
+    (setq pjones:god-mode-on nil)
+    (setq-default cursor-type pjones:god-orig-cursor-type)
+    (set-face-attribute 'cursor nil :background pjones:god-orig-cursor-bg)))
 
 ;; Extra key bindings:
 (define-key god-local-mode-map (kbd "i") 'god-mode-all)
