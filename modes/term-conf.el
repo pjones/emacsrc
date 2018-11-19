@@ -140,6 +140,7 @@ Sends the next key COUNT times."
     (define-key map (kbd "C-c")     nil)
     (define-key map (kbd "C-c C-c") (pjones:term-send-char [?\C-c]))
     (define-key map (kbd "C-c C-z") (pjones:term-send-char [?\C-z]))
+    (define-key map (kbd "C-c M-x") (pjones:term-send-char [escape ?x]))
     (define-key map (kbd "C-c C-q") #'pjones:term-quoted-insert)
 
     ;; Other functions:
