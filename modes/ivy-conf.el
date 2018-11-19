@@ -18,7 +18,7 @@
  '(ivy-use-virtual-buffers t)
  '(ivy-display-function nil)
  '(ivy-use-selectable-prompt t)
- '(ivy-format-function 'ivy-format-function-arrow)
+ '(ivy-format-function 'ivy-format-function-default)
  '(ivy-virtual-abbreviate 'abbreviate)
 
  ;; If either of these two settings are `t' Ivy will break
@@ -32,6 +32,10 @@
 
 ;; Some key binding improvements:
 (define-key ivy-minibuffer-map (kbd "C-l") 'ivy-backward-delete-char)
+
+;; Improve some faces too:
+(custom-set-faces
+ '(ivy-current-match ((t (:inherit 'isearch)))))
 
 ;; Enable complementary modes:
 (require 'ivy-exwm)
