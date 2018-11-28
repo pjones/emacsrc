@@ -83,7 +83,7 @@
 (define-key pjones:z-map (kbd "n")   'pjones:insert-italian-name)
 (define-key pjones:z-map (kbd "o")   'pjones:browse-url)
 (define-key pjones:z-map (kbd "O")   'pjones:browse-url-shortcut)
-(define-key pjones:z-map (kbd "p")   'passmm-list-passwords)
+(define-key pjones:z-map (kbd "p")   'passmm-completing-read)
 (define-key pjones:z-map (kbd "P")   'pjones:pwgen)
 (define-key pjones:z-map (kbd "r")   'pjones:register-get-set)
 (define-key pjones:z-map (kbd "R")   'revert-buffer)
