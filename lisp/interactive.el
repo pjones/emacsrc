@@ -78,13 +78,13 @@ behavior."
   (mu4e))
 
 (defun pjones:start-irc (&optional local-only)
-  "Start IRC client.  With an argument only start a connection to
-the local bitlbee instance."
+  "Start IRC clients.
+
+When LOCAL-ONLY is non-nil, only connect to Bitlbee."
   (interactive "P")
-  (require 'circe) ; Loads in my circe-conf.el file
-  (if local-only (circe-maybe-connect "bitlbee")
-    (circe-maybe-connect "bitlbee")
-    (circe-maybe-connect "freenode")))
+  (require 'erc) ; Loads in my erc-conf.el file
+  (pjones:erc-bitlbee)
+  (unless local-only (pjones:erc-bitlbee)))
 
 (defun pjones:start-term (&optional dont-ask)
   "Start a new terminal buffer in the current project.
