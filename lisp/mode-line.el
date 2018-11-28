@@ -11,7 +11,8 @@
    (if god-global-mode (propertize "∄" 'face font-lock-builtin-face) "─")
    (cond
     ((or (derived-mode-p 'term-mode)
-         (derived-mode-p 'comint-mode))
+         (derived-mode-p 'comint-mode)
+         (null (buffer-file-name)))
      "─")
     (buffer-read-only
      "Ø")

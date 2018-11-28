@@ -25,6 +25,7 @@
         '("" mode-line-front-space
           (:eval (pjones:mode-line-status))
           "   " mode-line-buffer-identification
+          "   " mode-line-modes
           " ("  mode-name mode-line-process
           ") "  exwm-title)))
 
