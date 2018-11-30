@@ -84,7 +84,7 @@ When LOCAL-ONLY is non-nil, only connect to Bitlbee."
   (interactive "P")
   (require 'erc) ; Loads in my erc-conf.el file
   (pjones:erc-bitlbee)
-  (unless local-only (pjones:erc-bitlbee)))
+  (unless local-only (pjones:erc-freenode)))
 
 (defun pjones:start-term (&optional dont-ask)
   "Start a new terminal buffer in the current project.

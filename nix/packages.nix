@@ -34,6 +34,7 @@ in
 ################################################################################
 # Emacs package list:
 overrides.emacsWithPackages (epkgs: with epkgs; [
+  adaptive-wrap
   alect-themes
   async
   beginend

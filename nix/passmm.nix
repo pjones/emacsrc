@@ -10,8 +10,8 @@ melpaBuild {
 
   src = pkgs.fetchgit {
     url = "git://git.devalot.com/passmm.git";
-    rev = "a464a3450edff3cb9a20aa763b437d6d339168ef";
-    sha256 = "1qk0glz8c3k55ckflgp5rs41yanjsald3cwpxvabp86p3lbvyqi4";
+    rev = "b25a92048c788a8477cc5ffe14c0c4a4df19d79a";
+    sha256 = "1jg2rs010fmw10ld0bfl6x7af3v9yqfy9ga5ixmam3qpilc8c4fw";
   };
 
   recipe = pkgs.fetchurl {
