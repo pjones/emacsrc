@@ -23,7 +23,7 @@
  '(erc-track-shorten-start 4)
  '(erc-track-shorten-cutoff 4)
  '(erc-track-switch-from-erc nil)
- '(erc-track-when-inactive t)
+ '(erc-track-when-inactive nil)
  '(erc-input-line-position -1)
  '(erc-timestamp-format "[%H:%M] ")
  '(erc-timestamp-format-left "[%H:%M] ")
@@ -45,7 +45,6 @@
                  notifications
                  readonly
                  ring
-                 scrolltobottom
                  spelling
                  stamp
                  track
