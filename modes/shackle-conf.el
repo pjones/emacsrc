@@ -26,7 +26,12 @@
 (add-to-list 'shackle-rules '("*Completions*" :regexp t :size 0.3 :align 'below :noselect t))
 (add-to-list 'shackle-rules '("*Deletions*" :regexp t :size 0.3 :align 'below :noselect t))
 (add-to-list 'shackle-rules '(calendar-mode :size 0.2 :align 'below :noselect t))
+
+;; Windows that should split the current window:
 (add-to-list 'shackle-rules '("\\*magit-.*popup" :same nil :regexp t :custom pjones:shackle-split))
+(add-to-list 'shackle-rules '("magit-diff: " :same nil :regexp t :custom pjones:shackle-split))
+(add-to-list 'shackle-rules '("\\*eww buffers\\*" :same nil :regexp t :custom pjones:shackle-split))
+(add-to-list 'shackle-rules '("\\*HTTP Response.*" :same nil :regexp t :custom pjones:shackle-split))
 
 ;; PDF Outline windows should always split the current window:
 (add-to-list 'shackle-rules
