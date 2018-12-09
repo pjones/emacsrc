@@ -68,7 +68,6 @@
     (quote ((,(kbd "s-r")        . exwm-reset)
             (,(kbd "s-o")        . other-frame)
             (,(kbd "s-z")        . exwm-workspace-switch)
-            (,(kbd "<escape>")   . god-mode-all)
 
             ;; Switch workspaces with the super key:
             (,(kbd "s-;") . ,(pjones:exwm-switch-to 0))

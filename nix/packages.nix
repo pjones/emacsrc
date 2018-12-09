@@ -34,6 +34,16 @@ in
 ################################################################################
 # Emacs package list:
 overrides.emacsWithPackages (epkgs: with epkgs; [
+  evil
+  evil-collection
+  evil-commentary
+  evil-fringe-mark
+  evil-leader
+  evil-magit
+  evil-org
+  spaceline
+  diminish
+
   adaptive-wrap
   alect-themes
   async
@@ -49,7 +59,6 @@ overrides.emacsWithPackages (epkgs: with epkgs; [
   dante
   default-text-scale
   deft
-  dim
   dired-filter
   dired-narrow
   dired-sidebar
@@ -59,7 +68,6 @@ overrides.emacsWithPackages (epkgs: with epkgs; [
   exwm-nw
   flycheck
   git-annex
-  god-mode
   goto-chg
   graphviz-dot-mode
   haskell-mode

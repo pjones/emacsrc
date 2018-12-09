@@ -13,9 +13,6 @@
 (add-hook 'after-init-hook 'global-company-mode)
 (add-to-list 'company-backends 'company-capf)
 
-;; Replace completion-at-point with company mode:
-(defalias 'completion-at-point 'company-complete)
-
 ;; Settings for older code still using hippie expand:
 (setq hippie-expand-try-functions-list
       '(try-expand-dabbrev

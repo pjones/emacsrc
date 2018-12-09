@@ -1,23 +1,18 @@
 ;;; keys.el -- Global key bindings.
 ;;; Commentary:
 ;;; Code:
+;; ;; Emacs nonstandard editing commands
+;; (autoload 'zap-up-to-char "misc" nil t)
+;; (autoload 'pjones:browse-url (concat pjones:modes-dir "browse-url-conf") nil t)
+;; (autoload 'pjones:browse-url-shortcut (concat pjones:modes-dir "browse-url-conf") nil t)
 
-;; For Macintosh Emacs only
-;; (setq mac-option-modifier  'hyper
-;;       mac-command-modifier 'meta))
-
-;; Emacs nonstandard editing commands
-(autoload 'zap-up-to-char "misc" nil t)
-(autoload 'pjones:browse-url (concat pjones:modes-dir "browse-url-conf") nil t)
-(autoload 'pjones:browse-url-shortcut (concat pjones:modes-dir "browse-url-conf") nil t)
-
-(defvar pjones:z-map (make-sparse-keymap)
-  "A map of key bindings under z.")
+;; (defvar pjones:z-map (make-sparse-keymap)
+;;   "A map of key bindings under z.")
 
 ;; Key bindings relating to god-mode.
-(require 'god-mode)
-(global-set-key (kbd "<escape>") 'god-mode-all)
-(define-key god-local-mode-map (kbd "z") pjones:z-map)
+;; (require 'god-mode)
+;; (global-set-key (kbd "<escape>") 'god-mode-all)
+;; (define-key god-local-mode-map (kbd "z") pjones:z-map)
 
 ;; Overriding default key bindings
 (global-set-key (kbd "C-x C-c")   'pjones:maybe-save-buffers-kill-terminal)
@@ -58,41 +53,68 @@
 (global-set-key (kbd "<end>")     'end-of-buffer)
 
 ;; User Key Bindings (using the C-z prefix)
-(global-set-key (kbd "C-z") pjones:z-map)
+;; (global-set-key (kbd "C-z") pjones:z-map)
+;;
+;; (define-key pjones:z-map (kbd "RET") 'pjones:start-term)
+;; (define-key pjones:z-map (kbd ";")   'pjones:auto-correct-previous-word)
+;; (define-key pjones:z-map (kbd ",")   'pjones:push-tag-mark)
+;; (define-key pjones:z-map (kbd ".")   'quick-calc)
+;; (define-key pjones:z-map (kbd "a")   'align)
+;; (define-key pjones:z-map (kbd "A")   'ialign)
+;; (define-key pjones:z-map (kbd "b")   'pjones:bm-bookmark-set)
+;; (define-key pjones:z-map (kbd "B")   'pjones:bookmark)
+;; (define-key pjones:z-map (kbd "c")   'pjones:projectile-compile-project)
+;; (define-key pjones:z-map (kbd "d")   'pjones:projectile-dired)
+;; (define-key pjones:z-map (kbd "e")   'hydra-launch/body)
+;; (define-key pjones:z-map (kbd "f")   'pjones:kill-file-name)
+;; (define-key pjones:z-map (kbd "g")   'rgrep)
+;; (define-key pjones:z-map (kbd "h")   'hl-line-mode)
+;; (define-key pjones:z-map (kbd "H")   'highlight-regexp)
+;; (define-key pjones:z-map (kbd "i")   'counsel-imenu)
+;; (define-key pjones:z-map (kbd "I")   'pjones:uuid)
+;; (define-key pjones:z-map (kbd "j")   'pjones:bm-bookmark-jump)
+;; (define-key pjones:z-map (kbd "J")   'pjones:journal)
+;; (define-key pjones:z-map (kbd "m")   'magit-status)
+;; (define-key pjones:z-map (kbd "n")   'pjones:insert-italian-name)
+;; (define-key pjones:z-map (kbd "o")   'pjones:browse-url)
+;; (define-key pjones:z-map (kbd "O")   'pjones:browse-url-shortcut)
+;; (define-key pjones:z-map (kbd "p")   'passmm-completing-read)
+;; (define-key pjones:z-map (kbd "P")   'pjones:pigeon)
+;; (define-key pjones:z-map (kbd "r")   'pjones:register-get-set)
+;; (define-key pjones:z-map (kbd "R")   'revert-buffer)
+;; (define-key pjones:z-map (kbd "s")   'sort-lines)
+;; (define-key pjones:z-map (kbd "t")   'pjones:start-term)
+;; (define-key pjones:z-map (kbd "u")   'goto-last-change)
+;; (define-key pjones:z-map (kbd "w")   'hydra-window-ops/body)
+;; (define-key pjones:z-map (kbd "z")   'exwm-nw-goto-previou<s)
+;; (define-key pjones:z-map (kbd "C-z") 'exwm-nw-goto-previous)
 
-(define-key pjones:z-map (kbd "RET") 'pjones:start-term)
-(define-key pjones:z-map (kbd ";")   'pjones:auto-correct-previous-word)
-(define-key pjones:z-map (kbd ",")   'pjones:push-tag-mark)
-(define-key pjones:z-map (kbd ".")   'quick-calc)
-(define-key pjones:z-map (kbd "a")   'align)
-(define-key pjones:z-map (kbd "A")   'ialign)
-(define-key pjones:z-map (kbd "b")   'pjones:bm-bookmark-set)
-(define-key pjones:z-map (kbd "B")   'pjones:bookmark)
-(define-key pjones:z-map (kbd "c")   'pjones:projectile-compile-project)
-(define-key pjones:z-map (kbd "d")   'pjones:projectile-dired)
-(define-key pjones:z-map (kbd "e")   'hydra-launch/body)
-(define-key pjones:z-map (kbd "f")   'pjones:kill-file-name)
-(define-key pjones:z-map (kbd "g")   'rgrep)
-(define-key pjones:z-map (kbd "h")   'hl-line-mode)
-(define-key pjones:z-map (kbd "H")   'highlight-regexp)
-(define-key pjones:z-map (kbd "i")   'counsel-imenu)
-(define-key pjones:z-map (kbd "I")   'pjones:uuid)
-(define-key pjones:z-map (kbd "j")   'pjones:bm-bookmark-jump)
-(define-key pjones:z-map (kbd "J")   'pjones:journal)
-(define-key pjones:z-map (kbd "m")   'magit-status)
-(define-key pjones:z-map (kbd "n")   'pjones:insert-italian-name)
-(define-key pjones:z-map (kbd "o")   'pjones:browse-url)
-(define-key pjones:z-map (kbd "O")   'pjones:browse-url-shortcut)
-(define-key pjones:z-map (kbd "p")   'passmm-completing-read)
-(define-key pjones:z-map (kbd "P")   'pjones:pwgen)
-(define-key pjones:z-map (kbd "r")   'pjones:register-get-set)
-(define-key pjones:z-map (kbd "R")   'revert-buffer)
-(define-key pjones:z-map (kbd "s")   'sort-lines)
-(define-key pjones:z-map (kbd "t")   'pjones:start-term)
-(define-key pjones:z-map (kbd "u")   'goto-last-change)
-(define-key pjones:z-map (kbd "w")   'hydra-window-ops/body)
-(define-key pjones:z-map (kbd "z")   'exwm-nw-goto-previous)
-(define-key pjones:z-map (kbd "C-z") 'exwm-nw-goto-previous)
 
-(provide 'keys)
+;; These have to be set before loading Evil.
+(setq evil-leader/leader ","              ; Duh.
+      evil-collection-setup-minibuffer t) ; Consistency.
+
+(require 'evil)
+(require 'evil-leader)
+
+(evil-leader/set-key
+  "a" 'ialign
+  "A" 'align
+  "b" 'ivy-switch-buffer
+  "B" 'ibuffer
+  "c" 'pjones:projectile-compile-project
+  "d" 'pjones:projectile-dired
+  "e" 'hydra-launch/body
+  "f" 'counsel-find-file
+  "k" 'kill-buffer
+  ;; More to come
+  "m" 'magit-status
+  "p" 'passmm-completing-read
+  "P" 'pjones:pwgen
+  "t" 'pjones:start-term)
+
+;; Turn on Evil!
+(global-evil-leader-mode)
+(evil-mode)
+
 ;;; keys.el ends here
