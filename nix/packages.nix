@@ -43,6 +43,7 @@ overrides.emacsWithPackages (epkgs: with epkgs; [
   evil-org
   spaceline
   diminish
+  which-key
 
   adaptive-wrap
   alect-themes
