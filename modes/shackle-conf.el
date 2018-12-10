@@ -32,6 +32,7 @@
 (add-to-list 'shackle-rules '("magit-diff: " :same nil :regexp t :custom pjones:shackle-split))
 (add-to-list 'shackle-rules '("\\*eww buffers\\*" :same nil :regexp t :custom pjones:shackle-split))
 (add-to-list 'shackle-rules '("\\*HTTP Response.*" :same nil :regexp t :custom pjones:shackle-split))
+(add-to-list 'shackle-rules '("\\*Backtrace\\*" :same nil :regexp t :custom pjones:shackle-split))
 
 ;; PDF Outline windows should always split the current window:
 (add-to-list 'shackle-rules
