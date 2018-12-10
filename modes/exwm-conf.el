@@ -21,13 +21,14 @@
 ;###############################################################################
 (defun pjones:exwm-manage-finish-hook ()
   "Hook run when a new X window is managed by EXWM."
-  (setq mode-line-format
-        '("" mode-line-front-space
-          (:eval (pjones:mode-line-status))
-          "   " mode-line-buffer-identification
-          "   " mode-line-modes
-          " ("  mode-name mode-line-process
-          ") "  exwm-title)))
+  ;; (setq mode-line-format
+  ;;       '("" mode-line-front-space
+  ;;         (:eval (pjones:mode-line-status))
+  ;;         "   " mode-line-buffer-identification
+  ;;         "   " mode-line-modes
+  ;;         " ("  mode-name mode-line-process
+  ;;         ") "  exwm-title)))
+ )
 
 (defun pjones:exwm-update-class-hook ()
   "Hook run when a window's class name changed."

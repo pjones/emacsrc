@@ -90,7 +90,10 @@
 ;; (define-key pjones:z-map (kbd "C-z") 'exwm-nw-goto-previous)
 
 
-;; These have to be set before loading Evil.
+
+(defvar pjones:leader-map-e (make-sparse-keymap)
+  "A map of key bindings under e.")
+
 (setq evil-leader/leader ","              ; Duh.
       evil-collection-setup-minibuffer t) ; Consistency.
 
@@ -98,20 +101,41 @@
 (require 'evil-leader)
 
 (evil-leader/set-key
-  "a" 'ialign
   "A" 'align
-  "b" 'ivy-switch-buffer
-  "B" 'ibuffer
+  "a" 'ialign
   "c" 'pjones:projectile-compile-project
   "d" 'pjones:projectile-dired
-  "e" 'hydra-launch/body
-  "f" 'counsel-find-file
-  "k" 'kill-buffer
-  ;; More to come
-  "m" 'magit-status
-  "p" 'passmm-completing-read
-  "P" 'pjones:pwgen
-  "t" 'pjones:start-term)
+  "s" 'sort-lines
+
+  ;; Buffers:
+  "b b" 'ivy-switch-buffer
+  "b i" 'ibuffer
+  "b k" 'kill-buffer
+  "b o" 'counsel-find-file
+  "b r" 'revert-buffer
+  "b s" 'save-buffer
+
+  ;; Execute:
+  "e a"   'pjones:agenda
+  "e c"   'org-capture
+  "e g"   'magit-status
+  "e h"   'pjones:start-http
+  "e i"   'pjones:start-irc
+  "e j c" 'pjones:indium-start-chrome
+  "e j n" 'pjones:indium-start-node
+  "e l"   'pjones:lock-screen
+  "e m"   'pjones:start-mail
+  "e s"   'org-store-link
+  "e t"   'pjones:start-term
+
+  ;; Passwords:
+  "p" nil
+  "p p" 'passmm-completing-read
+  "p g" 'pjones:pwgen
+  "p l" 'passmm-list-passwords
+
+  ;; Windows:
+  "w" 'evil-window-map)
 
 ;; Turn on Evil!
 (global-evil-leader-mode)

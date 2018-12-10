@@ -173,86 +173,6 @@ prompts for the foreign language to use."
       (insert (format-time-string "%% %A, %B %d, %Y\n\n"))
       (insert-file-contents (concat base "template.md")))))
 
-(defun pjones:bookmark (&optional set)
-  "Quicker access to Emacs bookmarks.  Prompts for a bookmark and
-then jumps to that bookmark.  If a prefix argument is given, set
-a bookmark instead."
-  (interactive "P")
-  (if set (call-interactively 'bookmark-set)
-    (call-interactively 'bookmark-jump)))
-
-(defun pjones:bm-bookmark-set (&optional show-hydra)
-  "Quick access to bm.el.
-
-If SHOW-HYDRA is non-nil, show the bookmark hydra.  Otherwise,
-toggle a bookmark on the current line."
-  (interactive "P")
-  (if show-hydra (hydra-bookmarks/body) (bm-toggle)))
-
-(defun pjones:bm-bookmark-jump (&optional set)
-  "Jump to the next bookmark.
-
-If SET is non-nil, set a bookmark before jumping."
-  (interactive "P")
-  (if set (bm-bookmark-add))
-  (bm-next))
-
-(defun pjones:inc-file ()
-  "Given that the current file name is a number, increment that
-number and open a file with the incremented number as a name."
-  (interactive)
-  (let* ((base (file-name-nondirectory buffer-file-name))
-         (dir  (file-name-directory buffer-file-name))
-         (name (file-name-sans-extension base))
-         (ext  (file-name-extension base t))
-         (num  (string-to-number name))
-         (fmt  (concat "%0" (number-to-string (length name)) "d"))
-         (new  (format fmt (1+ num))))
-    (find-file (concat dir new ext))))
-
-(defun pjones:window-config (&optional set)
-  "Simple shortcut for remembering a window configuration and
-then jumping back to it later.  With a prefix argument, save the
-current window configuration.  Otherwise restore the window
-configuration."
-  (interactive "P")
-  (if set (window-configuration-to-register ?.)
-    (jump-to-register ?.)))
-
-(defun pjones:push-tag-mark (&optional jump)
-  "Pushes the current location of point onto the tags mark ring
-so you can pop back later with `M-,'.  When JUMP is non-nil jump
-to the previous tag mark.  This allows you to jump back and forth
-between two points."
-  (interactive "P")
-  (require 'etags)
-  (let ((mark (point-marker)))
-    (if jump (pop-tag-mark))
-    (xref-push-marker-stack mark)))
-
-(defun pjones:register-get-set (register start end &optional set)
-  "General purpose register function.
-
-Inserts or jumps to REGISTER, unless SET is non-nil.  If SET is
-non-nil then either set a register or record the current point.
-If the mark is active the use START and END to record the current
-mark in REGISTER.  Otherwise record the current point in
-REGISTER."
-  (interactive (list (register-read-with-preview "Register: ")
-                     (and mark-active (region-beginning))
-                     (and mark-active (region-end))
-                     current-prefix-arg))
-    (cond
-     ((and set mark-active)
-      (set-register register (filter-buffer-substring start end)))
-     (set
-      (set-register register (point-marker)))
-     (t
-      (let ((val (get-register register)))
-        (if (markerp val) (progn (pjones:push-tag-mark)
-                                 (switch-to-buffer (marker-buffer val)))
-          (insert-register register t))))))
-
 (defun pjones:kill-file-name (&optional full-path)
   "Create a new kill containing the base name of the buffer's
 file.  With a prefix argument kill the entire path for the file."
@@ -267,22 +187,6 @@ file.  With a prefix argument kill the entire path for the file."
   (require 'org)
   (let ((default-directory "~/notes"))
     (org-agenda nil "c")))
-
-(defun pjones:zap-to-quote (&optional backward)
-  "Delete characters up to next/previous quote based on BACKWARD.
-
-If BACKWARD is non-nil delete backward instead of forward."
-  (interactive "P")
-  (let* ((re "\\('\\|\"\\)")
-         (start (point))
-         (end (save-excursion
-                (if backward (progn (search-backward-regexp re nil t)
-                                    (forward-char 1))
-                  (search-forward-regexp re nil t)
-                  (backward-char 1))
-                (point))))
-    (if backward (kill-region end start)
-      (kill-region start end))))
 
 (defun pjones:uuid ()
   "Create a UUID, add it to the kill ring, and insert it into the
@@ -306,27 +210,6 @@ current buffer after point."
   (let ((switch-window-threshold 1))
     (switch-window-then-delete)))
 
-(defhydra hydra-launch (:hint nil :color blue)
-  "
-^OrgMode^      ^Indium^        ^Apps^
------------------------------------------
- _a_: agenda    _j c_: chrome   _m_: mail
- _c_: capture   _j n_: node     _i_: irc
- _s_: store     ^ ^             _h_: http
- ^ ^            ^ ^             _l_: lock
- ^ ^            ^ ^             _t_: term
-"
-  ("a"   pjones:agenda)
-  ("c"   org-capture)
-  ("s"   org-store-link)
-  ("j c" pjones:indium-start-chrome)
-  ("j n" pjones:indium-start-node)
-  ("m"   pjones:start-mail)
-  ("i"   pjones:start-irc)
-  ("h"   pjones:start-http)
-  ("l"   pjones:lock-screen)
-  ("t"   pjones:start-term))
-
 (defhydra hydra-window-ops (:hint nil :color blue)
   "
 ^Windows^           ^Config^             ^Themes/Fonts^
@@ -348,32 +231,6 @@ current buffer after point."
   ("n" default-text-scale-decrease :color red)
   ("P" text-scale-increase :color red)
   ("N" text-scale-decrease :color red))
-
-(defhydra hydra-bookmarks (:hint nil :color blue)
-  "
-^Setting^              ^Movement^           ^Listing^           ^Annotate^
--------------------------------------------------------------------------------------
-_t_: toggle            _n_: next (buffer)   _s_: show (buffer)  _a_: annotate
-_r_: rm all (buffer)   _p_: prev (buffer)   _S_: show (global)  _A_: show annotation
-_R_: rm all (global)   _N_: next (global)
-_w_: write to disk     _P_: prev (global)
-_l_: load from disk    _g_: pop global mark
-^ ^
-"
-  ("t" bm-toggle)
-  ("r" bm-remove-all-current-buffer)
-  ("R" bm-remove-all-all-buffers)
-  ("n" bm-next :color red)
-  ("p" bm-previous :color red)
-  ("N" bm-first-in-next-buffer :color red)
-  ("P" bm-last-in-previous-buffer :color red)
-  ("s" bm-show)
-  ("S" bm-show-all)
-  ("w" bm-save)
-  ("l" bm-load-and-restore)
-  ("a" bm-bookmark-annotate)
-  ("A" bm-bookmark-show-annotation)
-  ("g" pop-global-mark))
 
 ;; Local Variables:
 ;; byte-compile-warnings: (not noruntime)
