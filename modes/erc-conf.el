@@ -18,7 +18,7 @@
  '(erc-prompt "❯")
  '(erc-query-display 'buffer)
  '(erc-auto-query 'bury)
- '(erc-track-visibility selected-visible)
+ '(erc-track-visibility 'selected-visible)
  '(erc-track-exclude-server-buffer t)
  '(erc-track-shorten-start 4)
  '(erc-track-shorten-cutoff 4)
