@@ -63,6 +63,7 @@
 (global-set-key (kbd "C-c h") #'hl-line-mode)
 (global-set-key (kbd "C-c H") #'highlight-regexp)
 (global-set-key (kbd "C-c i") #'counsel-imenu)
+(global-set-key (kbd "C-c m") #'magit-status)
 (global-set-key (kbd "C-c p")   pjones:p-map)
 
 ;; Evil and evil-leader:
