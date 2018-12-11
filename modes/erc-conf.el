@@ -24,6 +24,7 @@
  '(erc-track-shorten-cutoff 4)
  '(erc-track-switch-from-erc nil)
  '(erc-track-when-inactive nil)
+ '(erc-track-exclude '("&bitlbee"))
  '(erc-input-line-position -1)
  '(erc-timestamp-format "[%H:%M] ")
  '(erc-timestamp-format-left "[%H:%M] ")
@@ -72,7 +73,10 @@
   "Hook run in new ERC buffers."
   (setq adaptive-wrap-extra-indent 8)
   (visual-line-mode)
-  (adaptive-wrap-prefix-mode))
+  (adaptive-wrap-prefix-mode)
+  ;; Automatically ignore IRC channels.
+  (when (string-match-p "^#" (erc-default-target))
+    (add-to-list 'erc-track-exclude (erc-default-target))))
 
 (add-hook 'erc-mode-hook #'pjones:erc-mode-hook)
 

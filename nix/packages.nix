@@ -34,29 +34,16 @@ in
 ################################################################################
 # Emacs package list:
 overrides.emacsWithPackages (epkgs: with epkgs; [
-  evil
-  evil-collection
-  evil-commentary
-  evil-fringe-mark
-  evil-leader
-  evil-magit
-  evil-org
-  spaceline
-  diminish
-  which-key
-
   adaptive-wrap
   alect-themes
   async
   beginend
-  bm
-  circe
-  circe-notifications
   company
   company-ghc
   company-quickhelp
   company-statistics
   counsel
+  counsel-projectile
   dante
   default-text-scale
   deft
@@ -65,11 +52,17 @@ overrides.emacsWithPackages (epkgs: with epkgs; [
   dired-sidebar
   dired-subtree
   eimp
+  evil
+  evil-collection
+  evil-commentary
+  evil-fringe-mark
+  evil-leader
+  evil-magit
+  evil-org
   exwm
   exwm-nw
   flycheck
   git-annex
-  goto-chg
   graphviz-dot-mode
   haskell-mode
   highlight-indent-guides
@@ -99,12 +92,13 @@ overrides.emacsWithPackages (epkgs: with epkgs; [
   projectile
   rainbow-mode
   resize-window
-  rotate
   ruby-end
   scad-mode
   shackle
+  spaceline
   swiper
   switch-window
   typescript-mode
+  which-key
   yaml-mode
 ])

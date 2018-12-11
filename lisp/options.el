@@ -36,12 +36,12 @@
       inhibit-eol-conversion t)          ; Force manual line conversions.
 
 ;; Default variables that become buffer/frame local.
-(setq-default cursor-in-non-selected-windows 'hbar  ; Self-explanatory
-              indicate-buffer-boundaries 'left      ; Fringe stuff
-              indicate-empty-lines t                ; Ditto
-              require-final-newline t               ; Always end files with \n
-              indent-tabs-mode nil                  ; Don't use tabs
-              truncate-lines t)                     ; Don't wrap lines
+(setq-default cursor-in-non-selected-windows 'hollow ; Self-explanatory
+              indicate-buffer-boundaries 'left       ; Fringe stuff
+              indicate-empty-lines t                 ; Ditto
+              require-final-newline t                ; Always end files with \n
+              indent-tabs-mode nil                   ; Don't use tabs
+              truncate-lines t)                      ; Don't wrap lines
 
 ;; Settings not worth their own file in the modes directory:
 (setq epa-file-encrypt-to "204284CB"    ; Default GPG key to use
@@ -82,7 +82,7 @@
   (set-frame-parameter frame 'title nil)
   (set-frame-parameter frame 'name  nil))
 
-(add-to-list 'default-frame-alist '(cursor-type  . bar))
+(add-to-list 'default-frame-alist '(cursor-type  . hbar))
 (add-to-list 'default-frame-alist '(font . "Dejavu Sans Mono-9"))
 (setq frame-title-format '(:eval (pjones:frame-title-file-name)))
 

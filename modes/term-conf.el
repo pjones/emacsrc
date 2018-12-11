@@ -107,11 +107,11 @@ Sends the next key COUNT times."
         term-line-mode-buffer-read-only t)
 
   ;; Clean mode-line:
-  (setq mode-line-format
-        '("" mode-line-front-space
-          (:eval (pjones:mode-line-status))
-          "   " mode-line-buffer-identification
-          "     [term" mode-line-process "]"))
+  ;; (setq mode-line-format
+  ;;       '("" mode-line-front-space
+  ;;         (:eval (pjones:mode-line-status))
+  ;;         "   " mode-line-buffer-identification
+  ;;         "     [term" mode-line-process "]"))
 
   ;; Keep things Emacs-like:
   (term-set-escape-char ?\C-x)

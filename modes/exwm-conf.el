@@ -20,15 +20,7 @@
 ;;
 ;###############################################################################
 (defun pjones:exwm-manage-finish-hook ()
-  "Hook run when a new X window is managed by EXWM."
-  ;; (setq mode-line-format
-  ;;       '("" mode-line-front-space
-  ;;         (:eval (pjones:mode-line-status))
-  ;;         "   " mode-line-buffer-identification
-  ;;         "   " mode-line-modes
-  ;;         " ("  mode-name mode-line-process
-  ;;         ") "  exwm-title)))
- )
+  "Hook run when a new X window is managed by EXWM.")
 
 (defun pjones:exwm-update-class-hook ()
   "Hook run when a window's class name changed."
@@ -63,12 +55,13 @@
 
   ;; Global key bindings:
   '(exwm-input-prefix-keys
-    (list ?\C-x ?\C-u ?\C-h ?\C-z ?\M-x ?\M-& ?\M-:))
+    (list ?\C-w ?\C-x ?\C-u ?\C-h ?\C-c ?\M-x ?\M-& ?\M-:))
 
   `(exwm-input-global-keys
     (quote ((,(kbd "s-r")        . exwm-reset)
             (,(kbd "s-o")        . other-frame)
             (,(kbd "s-z")        . exwm-workspace-switch)
+            (,(kbd "s-p")        . exwm-nw-goto-previous)
 
             ;; Switch workspaces with the super key:
             (,(kbd "s-;") . ,(pjones:exwm-switch-to 0))
@@ -83,22 +76,7 @@
             (,(kbd "s-l") . ,(pjones:exwm-switch-to 9)))))
 
   ;; Simulated key presses to X Windows:
-  '(exwm-input-simulation-keys
-    '(([?\C-b] . [left])
-      ([?\C-f] . [right])
-      ([?\C-p] . [up])
-      ([?\C-n] . [down])
-      ([?\C-a] . [home])
-      ([?\C-e] . [end])
-      ([?\M-v] . [prior])
-      ([?\C-v] . [next])
-      ([?\C-d] . [delete])
-      ([?\C-k] . [S-end delete])
-      ([?\C-g] . [escape])
-      ([?\C-w] . [?\C-x])
-      ([?\M-w] . [?\C-c])
-      ([?\C-y] . [?\C-v])
-      ([?\C-/] . [?\C-z]))))
+  '(exwm-input-simulation-keys nil))
 
 (define-key exwm-workspace--switch-map (kbd "s-z")     #'exwm-nw-goto-previous)
 (define-key exwm-workspace--switch-map (kbd "C-z C-z") #'exwm-nw-goto-previous)
