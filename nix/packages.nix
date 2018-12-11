@@ -59,6 +59,7 @@ overrides.emacsWithPackages (epkgs: with epkgs; [
   evil-leader
   evil-magit
   evil-org
+  evil-surround
   exwm
   exwm-nw
   flycheck

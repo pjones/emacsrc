@@ -24,6 +24,7 @@
 (add-hook 'post-command-hook #'pjones:evil-update-cursor)
 (add-hook 'evil-mode-hook 'evil-commentary-mode)
 (add-hook 'evil-mode-hook 'global-evil-fringe-mark-mode)
+(add-hook 'evil-mode-hook 'global-evil-surround-mode)
 (add-hook 'evil-mode-hook 'evil-collection-init)
 
 ;;; evil-conf.el ends here
