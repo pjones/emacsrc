@@ -26,6 +26,17 @@
  '(spaceline-minor-modes-p nil) ; I don't want to see minor modes.
  '(powerline-default-separator 'arrow))
 
+;; Patch this segment so it actually works.
+(spaceline-define-segment erc-track
+  "Show the ERC buffers with new messages. Requires
+`erc-track-mode' to be enabled and
+`erc-track-position-in-mode-line' to be set to true."
+  (when (and (bound-and-true-p erc-track-mode)
+             erc-track-position-in-mode-line
+             erc-modified-channels-object)
+    (s-trim erc-modified-channels-object))
+  :global-override erc-modified-channels-object)
+
 ;; Compile and set the theme:
 (spaceline--theme '((evil-state) :face highlight-face :priority 100)
                   '((buffer-modified buffer-size pjones-buffer-id remote-host)))
