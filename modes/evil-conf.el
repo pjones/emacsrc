@@ -3,7 +3,18 @@
 ;;; Commentary:
 ;;
 ;;; Code:
+(require 'evil)
 (require 'spaceline) ; Load faces.
+
+;; Settings:
+(custom-set-variables
+ '(evil-shift-width 2)
+ '(evil-default-cursor 'box)
+ '(evil-move-beyond-eol t)
+ '(evil-want-fine-undo t)
+ '(evil-want-Y-yank-to-eol t)
+ '(evil-lookup-func #'man)
+ '(evil-symbol-word-search t))
 
 (defun pjones:evil-update-cursor ()
   "Change the cursor to match the evil state."
@@ -21,6 +32,10 @@
     (setq cursor-type (car cursor))
     (set-face-attribute 'cursor nil :foreground fg :background bg)))
 
+;; Additional key bindings:
+(define-key evil-motion-state-map " " #'evil-switch-to-windows-last-buffer)
+
+;; Hooks:
 (add-hook 'post-command-hook #'pjones:evil-update-cursor)
 (add-hook 'evil-mode-hook 'evil-commentary-mode)
 (add-hook 'evil-mode-hook 'global-evil-fringe-mark-mode)

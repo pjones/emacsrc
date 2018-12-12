@@ -76,7 +76,11 @@
             (,(kbd "s-l") . ,(pjones:exwm-switch-to 9)))))
 
   ;; Simulated key presses to X Windows:
-  '(exwm-input-simulation-keys nil))
+  '(exwm-input-simulation-keys
+    '(([?\C-c ?\C-c] . [?\C-c])
+      ([?\C-p]       . [up])
+      ([?\C-n]       . [down]))))
+
 
 (define-key exwm-workspace--switch-map (kbd "s-z")     #'exwm-nw-goto-previous)
 (define-key exwm-workspace--switch-map (kbd "C-z C-z") #'exwm-nw-goto-previous)
