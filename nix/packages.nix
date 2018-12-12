@@ -44,6 +44,7 @@ overrides.emacsWithPackages (epkgs: with epkgs; [
   company-statistics
   counsel
   counsel-projectile
+  counsel-world-clock
   dante
   default-text-scale
   deft
@@ -51,6 +52,7 @@ overrides.emacsWithPackages (epkgs: with epkgs; [
   dired-narrow
   dired-sidebar
   dired-subtree
+  edit-server
   eimp
   evil
   evil-collection
