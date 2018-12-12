@@ -1,27 +1,8 @@
 ;;; term-conf.el -- Settings for term-mode.
 ;;; Commentary:
 ;;; Code:
-(eval-when-compile
-  (require 'term))
-
-;; Dependencies:
+(require 'term)
 (require 'projectile)
-
-;; Remove some warnings:
-(defvar pjones:z-map nil "Defined in keys.el.")
-
-;; Custom variables:
-(defconst pjones:term-function-keys
-  '((f1 . "\e[11~")
-    (f2 . "\e[12~")
-    (f3 . "\e[13~")
-    (f4 . "\e[14~")
-    (f5 . "\e[15~")
-    (f6 . "\e[16~")
-    (f7 . "\e[17~")
-    (f8 . "\e[18~")
-    (f9 . "\e[19~"))
-  "Function keys and their escape sequences.")
 
 ;; Settings for term-mode:
 (custom-set-variables
@@ -55,9 +36,10 @@
 (defun pjones:term-char-mode ()
   "Return to raw/character mode."
   (interactive)
-  (term-char-mode)
   (let ((proc (get-buffer-process (current-buffer))))
-    (goto-char (process-mark proc))))
+    (when proc
+      (term-char-mode)
+      (goto-char (process-mark proc)))))
 
 (defmacro pjones:term-send-char (chars)
   "Create a function to send CHARS to the terminal."
@@ -65,11 +47,6 @@
      (interactive)
      (seq-doseq (char ,chars)
        (term-send-raw-string (make-string 1 char)))))
-
-(defun pjones:term-send-control-c ()
-  "Send ^c to the terminal."
-  (interactive)
-  (term-send-raw-string (make-string 1 ?\C-c)))
 
 (defun pjones:remove-dead-term (&rest args)
   "Clean up after a dead terminal.
@@ -79,7 +56,9 @@ Ignores ARGS."
     (kill-buffer buffer)))
 
 ;; FIXME: this doesn't really work. Write a new version based off the
-;; same idea in EXWM.
+;; same idea in EXWM.  Also, this isn't working with Evil (or maybe
+;; it's default Emacs).  I'm getting an error about the terminal being
+;; read only.
 (defun pjones:term-quoted-insert (count)
   "Read next input character and send it directly to the terminal.
 
@@ -87,14 +66,6 @@ Sends the next key COUNT times."
   (interactive "*p")
   (let ((char (read-char)))
     (term-send-raw-string (make-string count char))))
-
-;; Stolen from: https://stackoverflow.com/questions/2396680/let-emacs-send-fn-keys-to-programs-in-ansi-term
-(defun pjones:term-send-function-key ()
-  "Translate the last key press into a function key."
-  (interactive)
-  (let* ((char last-input-event)
-         (output (cdr (assoc char pjones:term-function-keys))))
-    (term-send-raw-string output)))
 
 (defun pjones:term-mode-hook ()
   "Hook run after starting a new terminal."
@@ -106,36 +77,24 @@ Sends the next key COUNT times."
         term-prompt-regexp "^[^❯]+❯ *"
         term-line-mode-buffer-read-only t)
 
-  ;; Clean mode-line:
-  ;; (setq mode-line-format
-  ;;       '("" mode-line-front-space
-  ;;         (:eval (pjones:mode-line-status))
-  ;;         "   " mode-line-buffer-identification
-  ;;         "     [term" mode-line-process "]"))
-
   ;; Keep things Emacs-like:
   (term-set-escape-char ?\C-x)
   (toggle-truncate-lines -1)
 
-  (let ((map term-raw-escape-map))
-    (define-key map (kbd "C-c") nil)
-    (define-key map (kbd "C-j") nil)
-    (define-key map (kbd "C-k") nil)
-    (define-key map (kbd "C-q") nil)
-    (define-key map (kbd "C-x") nil))
+  ;; But use Evil too:
+  (add-hook 'evil-insert-state-entry-hook #'pjones:term-char-mode)
+  (add-hook 'evil-insert-state-exit-hook  #'pjones:term-line-mode)
 
-  (let ((map term-mode-map))
-    (define-key map (kbd "C-c") nil)
-    (define-key map (kbd "C-c C-k") 'pjones:term-char-mode)
-    (define-key map (kbd "RET")     'pjones:term-char-mode))
+  (evil-collection-define-key 'insert 'term-raw-map
+    ;; NOTE: Make C-o work like it should.  I suppose this might break
+    ;; some terminal applications but I don't care:
+    (kbd "C-o") #'evil-execute-in-normal-state)
+
+  (evil-collection-define-key 'normal 'term-mode-map
+    (kbd "C-c C-k")  #'evil-insert
+    (kbd "<return>") #'evil-insert)
 
   (let ((map term-raw-map))
-    ;; Fix the F-keys:
-    (dolist (key pjones:term-function-keys)
-      (define-key map
-        (read-kbd-macro (format "<%s>" (car key)))
-        #'pjones:term-send-function-key))
-
     ;; Sending special keys to the terminal:
     (define-key map (kbd "C-c")     nil)
     (define-key map (kbd "C-c C-c") (pjones:term-send-char [?\C-c]))
@@ -144,11 +103,8 @@ Sends the next key COUNT times."
     (define-key map (kbd "C-c C-q") #'pjones:term-quoted-insert)
 
     ;; Other functions:
-    (define-key map (kbd "C-c C-k") #'pjones:term-line-mode)
+    (define-key map (kbd "C-c C-k") #'evil-normal-state)
     (define-key map (kbd "C-c C-r") #'pjones:term-rename)
-    (define-key map (kbd "C-c C-u") #'universal-argument)
-    (define-key map (kbd "C-y")     #'term-paste)
-    (define-key map (kbd "C-z")     pjones:z-map)
     (define-key map (kbd "M-x")     nil)))
 
 (advice-add 'term-handle-exit :after 'pjones:remove-dead-term)
