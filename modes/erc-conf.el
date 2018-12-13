@@ -3,10 +3,8 @@
 ;;; Commentary:
 ;;
 ;;; Code:
-(eval-when-compile
-  (require 'erc))
-
 ;; Dependencies:
+(require 'erc)
 (require 'passmm)
 (require 'adaptive-wrap)
 
@@ -73,11 +71,16 @@
   "Hook run in new ERC buffers."
   (setq adaptive-wrap-extra-indent 8)
   (visual-line-mode)
-  (adaptive-wrap-prefix-mode)
+  (adaptive-wrap-prefix-mode))
+
+(defun pjones:erc-join-hook ()
+  "Hook run after a channel join."
   ;; Automatically ignore IRC channels.
-  (when (string-match-p "^#" (erc-default-target))
+  (when (and (erc-default-target)
+             (string-match-p "^#" (erc-default-target)))
     (add-to-list 'erc-track-exclude (erc-default-target))))
 
-(add-hook 'erc-mode-hook #'pjones:erc-mode-hook)
+(add-hook 'erc-mode-hook   #'pjones:erc-mode-hook)
+(add-hook 'erc-join-buffer #'pjones:erc-join-hook)
 
 ;;; erc-conf.el ends here
