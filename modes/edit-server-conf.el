@@ -9,4 +9,7 @@
  '(edit-server-new-frame nil)
  '(edit-server-default-major-mode 'markdown-mode))
 
+;; Fix a really buggy issue with edit-server:
+(define-key edit-server-edit-mode-map (kbd "C-x C-s") #'save-buffer)
+
 ;;; edit-server-conf.el ends here
