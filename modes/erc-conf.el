@@ -5,6 +5,7 @@
 ;;; Code:
 ;; Dependencies:
 (require 'erc)
+(require 'erc-track)
 (require 'passmm)
 (require 'adaptive-wrap)
 
@@ -22,12 +23,12 @@
  '(erc-track-shorten-cutoff 4)
  '(erc-track-switch-from-erc nil)
  '(erc-track-when-inactive nil)
- '(erc-track-exclude '("&bitlbee"))
  '(erc-input-line-position -1)
  '(erc-timestamp-format "[%H:%M] ")
  '(erc-timestamp-format-left "[%H:%M] ")
  '(erc-insert-timestamp-function 'erc-insert-timestamp-left)
  '(erc-insert-away-timestamp-function 'erc-insert-timestamp-left)
+ '(erc-server-auto-reconnect nil)
  '(erc-timestamp-only-if-changed-flag nil)
 
  '(erc-modules '(autoaway
@@ -48,6 +49,9 @@
                  stamp
                  track
                  truncate)))
+
+;; Always ignore the bitlbee control channel.
+(add-to-list 'erc-track-exclude "&bitlbee")
 
 (defun pjones:erc-connect (username)
   "Connect to an IRC network via ERC with USERNAME."
@@ -73,14 +77,13 @@
   (visual-line-mode)
   (adaptive-wrap-prefix-mode))
 
-(defun pjones:erc-join-hook ()
-  "Hook run after a channel join."
-  ;; Automatically ignore IRC channels.
+(defun pjones:erc-ignore-channel ()
+  "Disable ERC tracking for channels."
   (when (and (erc-default-target)
              (string-match-p "^#" (erc-default-target)))
     (add-to-list 'erc-track-exclude (erc-default-target))))
 
-(add-hook 'erc-mode-hook   #'pjones:erc-mode-hook)
-(add-hook 'erc-join-buffer #'pjones:erc-join-hook)
+(add-hook 'erc-mode-hook #'pjones:erc-mode-hook)
+(add-hook 'erc-track-mode-hook #'pjones:erc-ignore-channel)
 
 ;;; erc-conf.el ends here
