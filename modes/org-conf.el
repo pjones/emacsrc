@@ -17,6 +17,9 @@
 (require 'evil-org-agenda)
 (evil-org-agenda-set-keys)
 
+(require 'org-bullets)
+(add-hook 'org-mode-hook #'org-bullets-mode)
+
 ;; General Org Settings
 (custom-set-variables
  ;; Visual Settings:
@@ -174,7 +177,11 @@
            ("r" "Respond to Email" entry (id "3ef415be-890a-407b-8a3e-21814810790e")
             (file "~/notes/etc/templates/orgmode/mail.org"))
            ("c" "New Training Class" entry (id "09727f4a-aa01-4429-8408-d40511c19657")
-            (file "~/notes/etc/templates/orgmode/training.org"))))))
+            (file "~/notes/etc/templates/orgmode/training.org")))))
+
+ ;; Plugin Settings:
+ '(org-mru-clock-completing-read #'ivy-completing-read))
+
 
 (defun pjones:org-mode-hook ()
   ;; Extra Bindings

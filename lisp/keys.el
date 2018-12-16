@@ -65,6 +65,7 @@
 (global-set-key (kbd "C-c i") #'counsel-imenu)
 (global-set-key (kbd "C-c m") #'magit-status)
 (global-set-key (kbd "C-c p")   pjones:p-map)
+(global-set-key (kbd "C-c t") #'org-mru-clock-in)
 
 ;; Evil and evil-leader:
 ;; These need to be set before loading Evil.

@@ -89,6 +89,9 @@ overrides.emacsWithPackages (epkgs: with epkgs; [
   no-littering
   noccur
   org
+  org-bullets
+  org-clock-csv
+  org-mru-clock
   org-tree-slide
   passmm
   pdf-tools
