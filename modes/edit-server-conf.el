@@ -4,6 +4,7 @@
 ;;
 ;;; Code:
 (require 'edit-server)
+(require 'markdown-mode)
 
 (custom-set-variables
  '(edit-server-new-frame nil)
@@ -11,5 +12,8 @@
 
 ;; Fix a really buggy issue with edit-server:
 (define-key edit-server-edit-mode-map (kbd "C-x C-s") #'save-buffer)
+
+;; Put markdown-mode into the right state:
+(add-hook 'edit-server-edit-mode-hook #'pjones:markdown-visual-line)
 
 ;;; edit-server-conf.el ends here
