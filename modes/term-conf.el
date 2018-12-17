@@ -15,19 +15,6 @@
  ;; barf text all over the screen.
  '(term-suppress-hard-newline nil))
 
-(defun pjones:term-rename ()
-  "Rename a terminal using the current project name."
-  (interactive)
-  (let ((suffix
-         (cond
-          ((projectile-project-p)
-           (projectile-project-name))
-          ((and (boundp 'exwm--connection) 'exwm--connection)
-           (exwm-nw-get-name (exwm-nw--current)))
-          (t "none"))))
-    (rename-buffer (generate-new-buffer-name
-                    (concat "term:" suffix)))))
-
 (defun pjones:term-line-mode ()
   "Go to term-line-mode."
   (interactive)
@@ -59,7 +46,6 @@ Ignores ARGS."
 ;; read only.
 (defun pjones:term-quoted-insert (count)
   "Read next input character and send it directly to the terminal.
-
 Sends the next key COUNT times."
   (interactive "*p")
   (let ((char (read-char)))
@@ -102,7 +88,6 @@ Sends the next key COUNT times."
 
     ;; Other functions:
     (define-key map (kbd "C-c C-k") #'evil-normal-state)
-    (define-key map (kbd "C-c C-r") #'pjones:term-rename)
     (define-key map (kbd "M-x")     nil)))
 
 (advice-add 'term-handle-exit :after 'pjones:remove-dead-term)
