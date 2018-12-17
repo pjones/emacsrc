@@ -4,12 +4,13 @@
 
 (custom-set-variables
  '(projectile-switch-project-action 'projectile-dired)
- '(projectile-mode-line
-   '(:eval (format " [%s]" (projectile-project-name)))))
+ '(projectile-completion-system 'ivy))
 
+;; Modes to ignore:
 (add-to-list 'projectile-globally-ignored-modes "mu4e-.*-mode")
 (add-to-list 'projectile-globally-ignored-modes "org-agenda-mode")
 
+;; Files to consider as root project files:
 (add-to-list 'projectile-project-root-files "GNUmakefile")
 (add-to-list 'projectile-project-root-files "Rakefile")
 (add-to-list 'projectile-project-root-files "package.json")
@@ -27,7 +28,6 @@
 
 (defun pjones:projectile-project-root (&optional dont-ask)
   "Return the root directory of the current project.
-
 When a project is not active and DO NT-ASK is nil, prompt the user
 to select a project.  If DONT-ASK is non-nil then simply return
 the default directory."
