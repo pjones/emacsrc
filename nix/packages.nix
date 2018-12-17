@@ -105,6 +105,7 @@ overrides.emacsWithPackages (epkgs: with epkgs; [
   spaceline
   swiper
   switch-window
+  term-projectile
   typescript-mode
   which-key
   yaml-mode

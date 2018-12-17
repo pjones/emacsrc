@@ -50,10 +50,8 @@
 
 (defun pjones:remove-dead-term (&rest args)
   "Clean up after a dead terminal.
-
 Ignores ARGS."
-  (let ((buffer (current-buffer)))
-    (kill-buffer buffer)))
+  (quit-window t))
 
 ;; FIXME: this doesn't really work. Write a new version based off the
 ;; same idea in EXWM.  Also, this isn't working with Evil (or maybe
