@@ -91,13 +91,14 @@ When LOCAL-ONLY is non-nil, only connect to Bitlbee."
 If DONT-ASK is non-nil, don't prompt for a project."
   (interactive "P")
   (let ((default-directory (pjones:projectile-project-root dont-ask)))
-    ;; Replace `getenv' with a version that returns tmux as my shell
-    ;; so that terminals created with this function are running tmux.
-    (cl-letf (((symbol-function 'getenv)
-               (lambda (name)
-                 (if (string= name "SHELL") "tmux"
-                   (getenv name)))))
-      (term-projectile-create-new default-directory))))
+    (term-projectile-create-new default-directory)))
+    ;; ;; Replace `getenv' with a version that returns tmux as my shell
+    ;; ;; so that terminals created with this function are running tmux.
+    ;; (cl-letf (((symbol-function 'getenv)
+    ;;            (lambda (name)
+    ;;              (if (string= name "SHELL") "tmux"
+    ;;                (getenv name)))))
+    ;;   (term-projectile-create-new default-directory))))
 
 (defun pjones:start-http ()
   "Create a new buffer running `http-mode'."
