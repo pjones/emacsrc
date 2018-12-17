@@ -79,6 +79,7 @@
 
 (defun pjones:erc-ignore-channel ()
   "Disable ERC tracking for channels."
+  (interactive)
   (when (and (erc-default-target)
              (string-match-p "^#" (erc-default-target)))
     (add-to-list 'erc-track-exclude (erc-default-target))))
