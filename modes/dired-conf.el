@@ -5,11 +5,7 @@
 ;; Settings for `dired-mode'.
 
 ;;; Code:
-
-(eval-when-compile
-  (require 'dired))
-
-;; Load dired-aux at runtime.
+(require 'dired)
 (require 'org)
 (require 'dired-x)
 (require 'dired-aux)
@@ -42,25 +38,6 @@
 (defvar pjones:dired-subtree-line-prefix "  ·"
   "Subdirectory prefix for dired-subtree.")
 
-(defvar pjones:dired-keywords
-  `((,(concat "\\(" (expand-file-name "~/") "\\)") ;; Replace paths to user's home dir.
-     (0 (pjones:shorten-home-path))))
-  "Extra things in the dired buffer to font-lock.")
-
-(defun pjones:shorten-home-path ()
-  (let ((buffer-read-only nil))
-    (put-text-property (match-beginning 1) (match-end 1)
-                       'display "~/"))
-  nil)
-
-(defun pjones:dired-extra-keywords ()
-  "Toggle adding some extra keywords to dired buffers."
-  (interactive)
-  (let ((modified (buffer-modified-p)))
-    ;; (font-lock-add-keywords 'dired-mode pjones:dired-keywords t)
-    ;; (font-lock-fontify-buffer)
-    (set-buffer-modified-p modified)))
-
 (defun pjones:dired-insert-or-visit ()
   "If point is on a directory, insert that directory into the
 current dired buffer.  Otherwise visit the file under point."
@@ -75,12 +52,6 @@ current dired buffer.  Otherwise visit the file under point."
     (save-excursion
       (goto-char (point-min))
       (flush-lines "^ *total"))))
-
-(defun pjones:dired-jump-to-bottom ()
-  "Jump to the last line in a `dired' buffer."
-  (interactive)
-  (goto-char (point-max))
-  (dired-next-line -1))
 
 (defun pjones:dired-mark-all-files ()
   "Mark all files."
@@ -142,28 +113,18 @@ current dired buffer.  Otherwise visit the file under point."
 (defun pjones:dired-load-hook ()
   "Set up `dired-mode'."
   (dired-hide-details-mode) ;; Hide details by default
-  (pjones:dired-extra-keywords)
   (setq dired-subtree-line-prefix pjones:dired-subtree-line-prefix)
+
+  (evil-collection-define-key 'normal 'dired-mode-map
+    (kbd "<return>") #'pjones:dired-insert-or-visit
+    "gq"             #'dired-do-query-replace-regexp
+    "go"             #'noccur-dired
+    "zc"             #'dired-subtree-remove)
 
   (let ((map dired-mode-map))
     (define-key map (kbd "C-x C-f")  #'pjones:dired-find-file)
     (define-key map (kbd "C-x n s")  #'dired-subtree-narrow)
-    (define-key map (kbd "C-c ^")    #'dired-up-directory)
-    (define-key map (kbd "C-c C-h")  #'hydra-dired/body)
-    (define-key map (kbd "C-m")      #'pjones:dired-insert-or-visit)
-    (define-key map (kbd "TAB")      #'dired-subtree-cycle)
-    (define-key map (kbd "^")        #'dired-subtree-up)
-    (define-key map (kbd "e")        #'dired-toggle-read-only)
-    (define-key map (kbd "k")        #'dired-subtree-remove)
-    (define-key map (kbd "n")        #'dired-subtree-next-sibling)
-    (define-key map (kbd "o")        #'noccur-dired)
-    (define-key map (kbd "p")        #'dired-subtree-previous-sibling)
-    (define-key map (kbd "q")        #'dired-do-query-replace-regexp)
-    (define-key map (kbd "M u")      #'dired-unmark-all-marks)
-    (define-key map (kbd "M a")      #'pjones:dired-mark-all-files)
-    (define-key map [?%?/]           #'dired-narrow-regexp)
-    (define-key map
-      (vector 'remap 'end-of-buffer) 'pjones:dired-jump-to-bottom)))
+    (define-key map (kbd "C-c C-h")  #'hydra-dired/body)))
 
 (add-hook 'dired-mode-hook 'pjones:dired-load-hook)
 (add-hook 'dired-mode-hook 'turn-on-gnus-dired-mode)
