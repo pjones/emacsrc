@@ -91,10 +91,13 @@ When LOCAL-ONLY is non-nil, only connect to Bitlbee."
 If DONT-ASK is non-nil, don't prompt for a project."
   (interactive "P")
   (let* ((default-directory (pjones:projectile-project-root dont-ask))
-         (short (file-relative-name default-directory "~/"))
-         (name (generate-new-buffer-name (concat "term:" short))))
-    (pop-to-buffer
-     (term-ansi-make-term name (getenv "SHELL")))))
+         (short (directory-file-name (file-relative-name default-directory "~/")))
+         (name (generate-new-buffer-name (concat "term:" short)))
+         (buffer (make-term name (getenv "SHELL"))))
+    (with-current-buffer buffer
+      (term-mode)
+      (term-char-mode))
+    (pop-to-buffer buffer)))
 
 (defun pjones:start-http ()
   "Create a new buffer running `http-mode'."
