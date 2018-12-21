@@ -33,10 +33,9 @@
     (set-face-attribute 'cursor nil :foreground fg :background bg)))
 
 ;; Additional key bindings:
-(define-key evil-normal-state-map " "  #'evil-switch-to-windows-last-buffer)
 (define-key evil-normal-state-map "g " #'just-one-space)
-(define-key evil-normal-state-map "zw" #'evil-window-mru)
-(define-key evil-normal-state-map "zb" #'ivy-switch-buffer)
+(define-key evil-normal-state-map "gw" #'evil-window-mru)
+(define-key evil-normal-state-map "gb" #'evil-switch-to-windows-last-buffer)
 
 ;; Hooks:
 (add-hook 'post-command-hook #'pjones:evil-update-cursor)
