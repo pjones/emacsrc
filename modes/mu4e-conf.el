@@ -1,12 +1,12 @@
 ;;; mu4e-conf.el -- Settings for mu4e.
-(eval-when-compile
-  (require 'smtpmail)
-  (require 'mu4e))
-
-;; Dependencies:
+;;
+;;; Commentary:
+;;
+;;; Code:
+(require 'smtpmail)
+(require 'mu4e)
 (require 'org-mu4e)
 (require 'mu4e-query-fragments)
-(require 'smtpmail-async)
 
 ;; Functions:
 (defun pjones:mu4e-match-func-devalot (msg)
@@ -28,11 +28,14 @@
 
 (defun pjones:mu4e-make-queue-directory ()
   "Ensure the send queue directory exists."
-  (let* ((cur (expand-file-name smtpmail-queue-dir))
-         (dir (file-name-directory (directory-file-name cur))))
-    (unless (file-exists-p cur)
-      (call-process "mu" nil nil nil "mkdir" dir)
-      (call-process "touch" nil nil nil (concat dir ".noindex")))))
+  (dolist (ctx mu4e-contexts)
+    (let* ((vars (mu4e-context-vars ctx))
+           (cur (expand-file-name (alist-get 'smtpmail-queue-dir vars)))
+           (dir (file-name-directory (directory-file-name cur))))
+      (unless (file-exists-p cur)
+        (make-directory (file-name-directory dir) t)
+        (call-process "mu" nil nil nil "mkdir" dir)
+        (call-process "touch" nil nil nil (concat dir ".noindex"))))))
 
 (defun pjones-mu4e-short-maildir (msg)
   "Format the maildir of MSG so it's as short as possible."
@@ -44,9 +47,8 @@
 ;; General Settings:
 (custom-set-variables
   '(mail-user-agent 'mu4e-user-agent)
-  '(message-send-mail-function 'async-smtpmail-send-it)
+  '(message-send-mail-function 'smtpmail-send-it)
   '(message-kill-buffer-on-exit t)
-  '(smtpmail-queue-dir "~/mail/queue/cur")
 
   '(mu4e-maildir "~/mail")
   '(mu4e-mu-home "~/.cache/mu")
@@ -101,6 +103,7 @@
                  (mu4e-trash-folder           . "/devalot/Trash")
                  (mu4e-refile-folder          . "/devalot/Archive")
                  (mu4e-compose-signature      . ,(pjones:mu4e-read-signature "devalot"))
+                 (smtpmail-queue-dir          . "~/mail/queue/devalot/cur")
                  (smtpmail-smtp-server        . "mail.pmade.com")
                  (smtpmail-smtp-service       . 465)
                  (smtpmail-stream-type        . ssl)
@@ -115,6 +118,7 @@
                  (mu4e-trash-folder           . "/rfa/Deleted Items")
                  (mu4e-refile-folder          . "/rfa/Archive")
                  (mu4e-compose-signature      . ,(pjones:mu4e-read-signature "scors"))
+                 (smtpmail-queue-dir          . "~/mail/queue/rfa/cur")
                  (smtpmail-smtp-server        . "outlook.office365.com")
                  (smtpmail-smtp-service       . 587)
                  (smtpmail-stream-type        . starttls)
