@@ -39,9 +39,8 @@ in PLIST.  ALIST is passed to display functions."
   (let* ((current (selected-window))
          (window (pjones:shackle-make-window buffer alist plist)))
     (when window
-      (select-window
-       (if (plist-get plist :select)
-           window current)))))
+      (set-window-dedicated-p window (plist-get plist :dedicated))
+      (select-window (if (plist-get plist :select) window current)))))
 
 (defun pjones:shackle-match-edit-server (buffer)
   "Return non-nil when BUFFER is for `edit-server'."
@@ -96,6 +95,7 @@ in PLIST.  ALIST is passed to display functions."
 (add-to-list 'shackle-rules
   '((term-mode)
     :select t
+    :dedicated t
     :custom pjones:shackle-split))
 
 ;; Windows that should split the current window but *not* get focus:
