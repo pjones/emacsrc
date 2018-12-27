@@ -35,6 +35,12 @@
      (seq-doseq (char ,chars)
        (term-send-raw-string (make-string 1 char)))))
 
+(defun pjones:term-insert-directory ()
+  "Prompt for a directory and insert it into the term buffer."
+  (interactive)
+  (let ((dir (read-directory-name "Dir: ")))
+    (term-send-raw-string dir)))
+
 (defun pjones:remove-dead-term (&rest args)
   "Clean up after a dead terminal.
 Ignores ARGS."
@@ -53,12 +59,10 @@ Sends the next key COUNT times."
 
 (defun pjones:term-mode-hook ()
   "Hook run after starting a new terminal."
-
   ;; Some variables that term-mode doesn't initialize but uses :(
   (setq term-ansi-at-dir default-directory
         term-ansi-at-host (system-name)
         term-ansi-at-user (user-real-login-name)
-        term-prompt-regexp "^[^❯]+❯ *"
         term-line-mode-buffer-read-only t)
 
   ;; Keep things Emacs-like:
@@ -72,7 +76,8 @@ Sends the next key COUNT times."
   (evil-collection-define-key 'insert 'term-raw-map
     ;; NOTE: Make C-o work like it should.  I suppose this might break
     ;; some terminal applications but I don't care:
-    (kbd "C-o") #'evil-execute-in-normal-state)
+    (kbd "C-o")     #'evil-execute-in-normal-state
+    (kbd "C-c C-d") #'pjones:term-insert-directory)
 
   (evil-collection-define-key 'normal 'term-mode-map
     (kbd "C-c C-k")  #'evil-insert
@@ -82,6 +87,10 @@ Sends the next key COUNT times."
     ;; Sending special keys to the terminal:
     (define-key map (kbd "C-c")     nil)
     (define-key map (kbd "C-c C-c") (pjones:term-send-char [?\C-c]))
+    (define-key map (kbd "C-c C-d") #'pjones:term-insert-directory)
+    (define-key map (kbd "C-c C-e") (pjones:term-send-char [?\C-x ?\C-e]))
+    (define-key map (kbd "C-c C-o") (pjones:term-send-char [?\C-o]))
+    (define-key map (kbd "C-c C-x") (pjones:term-send-char [?\C-x]))
     (define-key map (kbd "C-c C-z") (pjones:term-send-char [?\C-z]))
     (define-key map (kbd "C-c M-x") (pjones:term-send-char [escape ?x]))
     (define-key map (kbd "C-c C-q") #'pjones:term-quoted-insert)
