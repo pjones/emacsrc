@@ -95,6 +95,7 @@ overrides.emacsWithPackages (epkgs: with epkgs; [
   org-tree-slide
   passmm
   pdf-tools
+  persp-mode
   pkgs.mu
   projectile
   rainbow-mode
