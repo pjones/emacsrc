@@ -100,12 +100,40 @@
 
 ;###############################################################################
 ;;
+;;; Evil integration
+;;
+;###############################################################################
+;; See also: evil-conf.el
+;; FIXME: do some proper evil config here.
+
+;###############################################################################
+;;
+;;; Logging Out
+;;
+;###############################################################################
+(defun pjones:exwm-logout ()
+  "Exit Emacs and logout."
+  (interactive)
+  (when (yes-or-no-p "Really exit EXWM and KDE? ")
+    (save-some-buffers)
+    (run-hooks 'kill-emacs-hook)
+    (start-process-shell-command
+     "logout" nil
+     "qdbus org.kde.ksmserver /KSMServer logout 0 3 3")))
+
+(defun pjones:exwm-set-logout-binding ()
+  "Set up the logout key binding."
+  (global-set-key (kbd "C-x C-c") #'pjones:exwm-logout))
+
+;###############################################################################
+;;
 ;;; Insert some hooks:
 ;;
 ;###############################################################################
 (add-hook 'exwm-update-class-hook     #'pjones:exwm-update-class-hook)
 (add-hook 'exwm-manage-finish-hook    #'pjones:exwm-manage-finish-hook)
 (add-hook 'exwm-workspace-switch-hook #'pjones:exwm-workspace-switch-hook)
-(add-hook 'exwm-init-hook              'exwm-workspace-attach-minibuffer)
+(add-hook 'exwm-init-hook             #'pjones:exwm-set-logout-binding)
+(add-hook 'exwm-init-hook             #'desktop-save-mode)
 
 ;;; exwm-conf.el ends here

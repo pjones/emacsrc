@@ -16,6 +16,9 @@
  '(evil-lookup-func #'man)
  '(evil-symbol-word-search t))
 
+;; EXWM settings:
+(evil-set-initial-state 'exwm-mode 'emacs)
+
 (defun pjones:evil-update-cursor ()
   "Change the cursor to match the evil state."
   (let* ((cursor
@@ -39,10 +42,10 @@
 
 ;; Hooks:
 (add-hook 'post-command-hook #'pjones:evil-update-cursor)
-(add-hook 'evil-mode-hook 'evil-commentary-mode)
-(add-hook 'evil-mode-hook 'global-evil-fringe-mark-mode)
-(add-hook 'evil-mode-hook 'global-evil-surround-mode)
-(add-hook 'evil-mode-hook 'global-evil-quickscope-mode)
-(add-hook 'evil-mode-hook 'evil-collection-init)
+(add-hook 'evil-mode-hook    #'evil-commentary-mode)
+(add-hook 'evil-mode-hook    #'global-evil-fringe-mark-mode)
+(add-hook 'evil-mode-hook    #'global-evil-surround-mode)
+(add-hook 'evil-mode-hook    #'global-evil-quickscope-mode)
+(add-hook 'evil-mode-hook    #'evil-collection-init)
 
 ;;; evil-conf.el ends here

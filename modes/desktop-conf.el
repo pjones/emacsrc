@@ -5,11 +5,11 @@
 ;; Settings for `desktop-save-mode'.
 
 ;;; Code:
-(eval-when-compile
-  (require 'desktop))
+(require 'desktop)
 
 (custom-set-variables
  '(desktop-save t)
- '(desktop-load-locked-desktop t))
+ '(desktop-load-locked-desktop t)
+ `(desktop-dirname ,user-emacs-directory))
 
 ;;; desktop-conf.el ends here
