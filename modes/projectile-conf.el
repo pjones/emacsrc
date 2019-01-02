@@ -1,6 +1,10 @@
 ;;; projectile-conf.el -- Settings for projectile.
-(eval-when-compile
-  (require 'projectile))
+;;
+;;; Commentary:
+;;
+;;; Code:
+(require 'projectile)
+(require 'ivy)
 
 (custom-set-variables
  '(projectile-switch-project-action 'projectile-dired)
@@ -51,5 +55,22 @@ default directory instead."
   (interactive "P")
   (let ((dir (pjones:projectile-project-root dont-ask)))
     (dired dir)))
+
+
+(defun pjones:projectile-switch-to-buffer ()
+  "Call `switch-to-buffer' or `projectile-switch-to-buffer'."
+  (interactive)
+  (call-interactively
+   (if (projectile-project-p)
+       'projectile-switch-to-buffer
+     'switch-to-buffer)))
+
+(defun pjones:projectile-find-file ()
+  "Call `find-file' or `projectile-find-file'."
+  (interactive)
+  (call-interactively
+   (if (projectile-project-p)
+       'projectile-find-file
+     'find-file)))
 
 ;;; projectile-conf.el ends here

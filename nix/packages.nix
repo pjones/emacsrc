@@ -43,7 +43,6 @@ overrides.emacsWithPackages (epkgs: with epkgs; [
   company-quickhelp
   company-statistics
   counsel
-  counsel-projectile
   counsel-world-clock
   dante
   default-text-scale
