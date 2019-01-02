@@ -17,7 +17,6 @@
 (counsel-mode)                          ; More completion via Ivy
 (which-key-mode)                        ; Remind me what keys do.
 (edit-server-start)                     ; Half-baked browser extension.
-(persp-mode 1)                          ; Project workspaces.
 
 ;; Other modes that need to be activated:
 (pdf-tools-install)                     ; Internal PDF viewer
