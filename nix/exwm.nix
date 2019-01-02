@@ -6,13 +6,13 @@
 
 melpaBuild {
   pname = "exwm";
-  version = "0.19.20181003";
+  version = "0.21.20190102";
 
   src = pkgs.fetchFromGitHub {
     owner  = "ch11ng";
     repo   = "exwm";
-    rev    = "472f7cb82b67b98843f10c12e6bda9b8ae7262bc";
-    sha256 = "19gflsrb19aijf2xcw7j2m658qad21nbwziw38s1h2jw66vhk8dj";
+    rev    = "404c94568d581fb66fca5e2524c908d63188388";
+    sha256 = "1081aqlp7g6h7r1lrlkab97npn5w9kmnafh2lmcb9hskp0ydfiym";
   };
 
   recipe = pkgs.writeText "recipe" ''

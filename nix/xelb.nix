@@ -6,13 +6,13 @@
 
 melpaBuild {
   pname = "xelb";
-  version = "0.15.20181003";
+  version = "0.16.20190102";
 
   src = pkgs.fetchFromGitHub {
     owner = "ch11ng";
     repo  = "xelb";
-    rev   = "0494421c858aefbdf544ead22b6037b4877342da";
-    sha256 = "037r7lzfcm3q318r6rgi82m0k9v8dm8xxjyh73gyfmfahy3picar";
+    rev   = "407cce8dd8b0e621449c6c3015c303539f53819";
+    sha256 = "0pf20jbhszv5p0ncd0y3smx0c2im3xslid4r62whr55x1mq27mr9";
   };
 
   recipe = pkgs.writeText "recipe" ''
