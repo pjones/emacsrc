@@ -220,13 +220,12 @@ current buffer after point."
 ^^^------------------------------------------------------------
  _t_: transpose      _u_: undo            _T_: switch theme
  _r_: rotate         _U_: redo            _p_: frame scale up
- _d_: dired sidbar   _j_: save/restore    _n_: frame scale down
+ ^ ^                 _j_: save/restore    _n_: frame scale down
  ^ ^                 ^ ^                  _P_: buffer scale up
  ^ ^                 ^ ^                  _N_: buffer scale down
 "
   ("T" pjones:load-theme)
   ("U" winner-redo)
-  ("d" dired-sidebar-toggle-sidebar)
   ("j" pjones:window-config)
   ("r" rotate-layout)
   ("t" rotate-window)

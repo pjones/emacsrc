@@ -49,7 +49,6 @@ overrides.emacsWithPackages (epkgs: with epkgs; [
   deft
   dired-filter
   dired-narrow
-  dired-sidebar
   dired-subtree
   edit-server
   eimp
@@ -104,6 +103,9 @@ overrides.emacsWithPackages (epkgs: with epkgs; [
   spaceline
   swiper
   switch-window
+  treemacs
+  treemacs-evil
+  treemacs-projectile
   typescript-mode
   which-key
   yaml-mode

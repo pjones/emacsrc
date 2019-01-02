@@ -38,6 +38,7 @@
 (let ((map pjones:e-map))
   (define-key map (kbd "a")   #'pjones:agenda)
   (define-key map (kbd "c")   #'org-capture)
+  (define-key map (kbd "d")   #'treemacs)
   (define-key map (kbd "h")   #'pjones:start-http)
   (define-key map (kbd "i")   #'pjones:start-irc)
   (define-key map (kbd "j c") #'pjones:indium-start-chrome)

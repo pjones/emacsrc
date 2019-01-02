@@ -11,7 +11,6 @@
 (require 'dired-aux)
 (require 'dired-filter)
 (require 'dired-narrow)
-(require 'dired-sidebar)
 (require 'dired-subtree)
 
 ;; Always run commands asynchronously:
@@ -27,13 +26,7 @@
   '(dired-filter-prefix "/")
   '(dired-filter-mark-prefix "M")
   '(dired-subtree-use-backgrounds nil)
-  '(dired-subtree-line-prefix-face nil)
-  '(dired-sidebar-theme (quote nerd))
-  '(dired-sidebar-refresh-on-special-commands nil)
-  '(dired-sidebar-follow-file-idle-delay 1)
-  '(dired-sidebar-tui-update-delay 0.5)
-  '(dired-sidebar-pop-to-sidebar-on-toggle-open nil)
-  '(dired-sidebar-should-follow-file t))
+  '(dired-subtree-line-prefix-face nil))
 
 (defvar pjones:dired-subtree-line-prefix "  ·"
   "Subdirectory prefix for dired-subtree.")
@@ -105,11 +98,6 @@ current dired buffer.  Otherwise visit the file under point."
   ("S" dired-do-relsymlink)
   ("F" find-dired))
 
-(defun pjones:dired-sidebar-mode ()
-  "Set up `dired-sidebar-mode'."
-  ;; Fix an issue caused by late loading of variables.
-  (setq-local dired-subtree-line-prefix pjones:dired-subtree-line-prefix))
-
 (defun pjones:dired-load-hook ()
   "Set up `dired-mode'."
   (dired-hide-details-mode) ;; Hide details by default
@@ -130,7 +118,6 @@ current dired buffer.  Otherwise visit the file under point."
 (add-hook 'dired-mode-hook 'turn-on-gnus-dired-mode)
 (add-hook 'dired-mode-hook 'dired-filter-mode)
 (add-hook 'dired-after-readin-hook 'pjones:dired-remove-total-lines)
-(add-hook 'dired-sidebar-mode-hook 'pjones:dired-sidebar-mode)
 
 ;; Local Variables:
 ;; byte-compile-warnings: (not noruntime)
