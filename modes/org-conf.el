@@ -9,6 +9,7 @@
 (require 'org-clock)
 (require 'org-agenda)
 (require 'org-id)
+(require 'org-clock-csv)
 
 (require 'evil-org)
 (add-hook 'org-mode-hook 'evil-org-mode)

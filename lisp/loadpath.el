@@ -5,10 +5,6 @@
   (file-name-directory load-file-name)
   "The directory where I store my general Emacs configuration files.")
 
-(defvar pjones:modes-dir
-  (concat (file-name-directory (directory-file-name pjones:lisp-dir)) "modes/")
-  "The directory where I keep mode-specific configuration files.")
-
 (defvar pjones:lisp-files
   '( "themes"
      "mode-line"

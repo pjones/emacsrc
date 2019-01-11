@@ -91,7 +91,7 @@ already been cached."
   (save-place-mode)
   (display-line-numbers-mode)
   (pjones:add-fixme-lock)
-  (add-hook 'after-save-hook 'delete-trailing-whitespace)
+  (add-hook 'before-save-hook 'delete-trailing-whitespace)
   (add-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p))
 
 (defun pjones:add-programming-hook (mode-hook)
