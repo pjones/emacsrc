@@ -50,6 +50,7 @@ overrides.emacsWithPackages (epkgs: with epkgs; [
   dired-filter
   dired-narrow
   dired-subtree
+  eyebrowse
   edit-server
   eimp
   evil
