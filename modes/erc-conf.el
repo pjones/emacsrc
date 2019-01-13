@@ -53,23 +53,23 @@
 ;; Always ignore the bitlbee control channel.
 (add-to-list 'erc-track-exclude "&bitlbee")
 
-(defun pjones:erc-connect (username)
-  "Connect to an IRC network via ERC with USERNAME."
+(defun pjones:erc-connect (network)
+  "Connect to an IRC NETWORK via ERC."
   (let ((pass (passmm-get-password "machines/chat.devalot.com/znc")))
-    (erc-tls :server   "chat.devalot.com"
+    (erc-tls :server   (format "%s.pmade.com" network)
              :nick     "pjones"
              :port     6697
-             :password (format "%s:%s" username pass))))
+             :password (format "pjones/%s:%s" network pass))))
 
 (defun pjones:erc-freenode ()
   "Connect to the freenode network."
   (interactive)
-  (pjones:erc-connect "pjones/freenode"))
+  (pjones:erc-connect "freenode"))
 
 (defun pjones:erc-bitlbee ()
   "Connect to the bitlbee network."
   (interactive)
-  (pjones:erc-connect "pjones/bitlbee"))
+  (pjones:erc-connect "bitlbee"))
 
 (defun pjones:erc-mode-hook ()
   "Hook run in new ERC buffers."
