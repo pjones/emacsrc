@@ -134,6 +134,6 @@
 (add-hook 'exwm-manage-finish-hook    #'pjones:exwm-manage-finish-hook)
 (add-hook 'exwm-workspace-switch-hook #'pjones:exwm-workspace-switch-hook)
 (add-hook 'exwm-init-hook             #'pjones:exwm-set-logout-binding)
-(add-hook 'exwm-init-hook             #'desktop-save-mode)
+;; (add-hook 'exwm-init-hook             #'desktop-save-mode)
 
 ;;; exwm-conf.el ends here
