@@ -1,4 +1,9 @@
 ;;; sh-script-conf.el -- Settings for sh-mode.
-(eval-when-compile (require 'sh-script))
-(setq-default sh-basic-offset 2)
-(setq sh-indentation 2)
+;;
+;;; Commentary:
+;;
+;;; Code:
+(custom-set-variables
+ '(sh-basic-offset 2))
+
+;;; sh-script-conf.el ends here

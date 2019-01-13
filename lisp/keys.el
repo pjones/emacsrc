@@ -1,6 +1,24 @@
 ;;; keys.el -- Global key bindings.
+;;
 ;;; Commentary:
+;;
 ;;; Code:
+(declare-function pjones:agenda "./interactive.el")
+(declare-function pjones:indium-start-chrome "./interactive.el")
+(declare-function pjones:indium-start-node "./interactive.el")
+(declare-function pjones:kill-file-name "./interactive.el")
+(declare-function pjones:kill-region-or-backward-kill-word "./interactive.el")
+(declare-function pjones:lock-screen "./interactive.el")
+(declare-function pjones:maybe-save-buffers-kill-terminal "./interactive.el")
+(declare-function pjones:projectile-compile-project "./interactive.el")
+(declare-function pjones:projectile-dired "./interactive.el")
+(declare-function pjones:projectile-find-file "./interactive.el")
+(declare-function pjones:pwgen "./interactive.el")
+(declare-function pjones:start-http "./interactive.el")
+(declare-function pjones:start-irc "./interactive.el")
+(declare-function pjones:start-mail "./interactive.el")
+(declare-function pjones:start-term "./interactive.el")
+(declare-function pjones:switch-window-then-delete "./interactive.el")
 
 ;; Overriding default key bindings
 (global-set-key (kbd "C-h M-m")   #'describe-mode)
@@ -71,10 +89,11 @@
 
 ;; Evil and evil-leader:
 ;; These need to be set before loading Evil.
-(setq evil-leader/leader ","              ; Duh.
-      evil-collection-company-use-tng nil ; Turn that crap off!
-      evil-collection-term-sync-state-and-mode-p nil
-      evil-collection-setup-minibuffer t) ; Consistency.
+(custom-set-variables
+ '(evil-leader/leader ",")              ; Duh.
+ '(evil-collection-company-use-tng nil) ; Turn that crap off!
+ '(evil-collection-term-sync-state-and-mode-p) nil
+ '(evil-collection-setup-minibuffer t)) ; Consistency.
 
 (require 'evil)
 (require 'evil-leader)

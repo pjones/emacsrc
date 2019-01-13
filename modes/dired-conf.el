@@ -12,6 +12,7 @@
 (require 'dired-filter)
 (require 'dired-narrow)
 (require 'dired-subtree)
+(require 'evil-collection)
 
 ;; Always run commands asynchronously:
 (autoload 'dired-async-mode "dired-async.el" nil t)

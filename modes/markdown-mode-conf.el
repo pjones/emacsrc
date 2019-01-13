@@ -1,12 +1,16 @@
 ;;; markdown-conf.el -- Settings for markdown-mode.
-(eval-when-compile
-  (require 'markdown-mode)
-  (require 'whitespace)
-  (require 'company))
-
-;; Used for a few things.
+;;
+;;; Commentary:
+;;
+;;; Code:
+(require 'markdown-mode)
+(require 'whitespace)
+(require 'company)
 (require 'org)
 (require 'hydra)
+
+(declare-function pjones:open-line-above "../lisp/interactive.el")
+(declare-function pjones:add-fixme-lock "../lisp/code.el")
 
 ;; Basic settings.
 (custom-set-variables

@@ -1,8 +1,10 @@
 ;;; options.el -- Emacs settings not tied to any one mode.
+;;
 ;;; Commentary:
+;;
 ;;; Code:
-(eval-when-compile
-  (require 'server))
+(require 'server)
+(require 'epa)
 
 ;; Personal information
 (setq user-full-name "Peter Jones"
@@ -21,33 +23,35 @@
 (pjones:add-basic-mode-hook 'prog-mode-hook)
 
 ;; Variables defined in Emacs' C source
-(setq max-lisp-eval-depth 1200           ; My theme is too deep
-      inhibit-startup-message t          ; I've seen it already
-      initial-scratch-message nil        ; Ditto
-      make-backup-files nil              ; Don't make backup files
-      mouse-yank-at-point t              ; Don't move point when mouse pasting
-      ring-bell-function (lambda ())     ; Kill those damn bells
-      visible-bell nil                   ; No visual bell
-      enable-recursive-minibuffers t     ; Allow multiple mini buffers
-      echo-keystrokes 0.1                ; Show unfinished keystrokes after a pause
-      disabled-command-function nil      ; Disable novice user protection
-      truncate-partial-width-windows nil ; When windows don't fill the frame
-      mark-even-if-inactive t            ; Use the mark without a region
-      inhibit-eol-conversion t)          ; Force manual line conversions.
+(custom-set-variables
+ '(max-lisp-eval-depth 1200)           ; My theme is too deep
+ '(inhibit-startup-message t)          ; I've seen it already
+ '(initial-scratch-message nil)        ; Ditto
+ '(make-backup-files nil)              ; Don't make backup files
+ '(mouse-yank-at-point t)              ; Don't move point when mouse pasting
+ '(visible-bell nil)                   ; No visual bell
+ '(enable-recursive-minibuffers t)     ; Allow multiple mini buffers
+ '(echo-keystrokes 0.1)                ; Show unfinished keystrokes after a pause
+ '(disabled-command-function nil)      ; Disable novice user protection
+ '(truncate-partial-width-windows nil) ; When windows don't fill the frame
+ '(mark-even-if-inactive t)            ; Use the mark without a region
+ '(inhibit-eol-conversion t))          ; Force manual line conversions.
 
 ;; Default variables that become buffer/frame local.
-(setq-default cursor-in-non-selected-windows 'hollow ; Self-explanatory
-              indicate-buffer-boundaries 'left       ; Fringe stuff
-              indicate-empty-lines t                 ; Ditto
-              require-final-newline t                ; Always end files with \n
-              indent-tabs-mode nil                   ; Don't use tabs
-              truncate-lines t)                      ; Don't wrap lines
+(setq-default
+ cursor-in-non-selected-windows 'hollow ; Self-explanatory
+ indicate-buffer-boundaries 'left       ; Fringe stuff
+ indicate-empty-lines t                 ; Ditto
+ require-final-newline t                ; Always end files with \n
+ indent-tabs-mode nil                   ; Don't use tabs
+ truncate-lines t)                      ; Don't wrap lines
 
 ;; Settings not worth their own file in the modes directory:
-(setq epa-file-encrypt-to "204284CB"    ; Default GPG key to use
-      epa-pinentry-mode 'loopback       ; Needed for EXWM.
-      compilation-scroll-output 'first-error
-      custom-file (concat user-emacs-directory "custom.el" )) ; To keep Emacs happy
+(custom-set-variables
+ '(epa-file-encrypt-to "204284CB")    ; Default GPG key to use
+ '(epa-pinentry-mode 'loopback)       ; Needed for EXWM.
+ '(compilation-scroll-output 'first-error)
+ `(custom-file ,(concat user-emacs-directory "custom.el"))) ; To keep Emacs happy
 
 ;; Settings from simple.el:
 (custom-set-variables

@@ -6,10 +6,7 @@
 ;;   https://github.com/ch11ng/exwm
 ;;
 ;;; Code:
-(eval-when-compile
-  (require 'exwm))
-
-;; Load optional EXWM features:
+(require 'exwm)
 (require 'cl-lib)
 (require 'exwm-nw)
 (require 'exwm-randr)

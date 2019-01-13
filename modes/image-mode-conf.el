@@ -1,7 +1,11 @@
 ;;; image-mode-conf.el -- Settings for image-mode.
-(eval-when-compile
-  (require 'cl-macs)
-  (require 'eimp))
+;;
+;;; Commentary:
+;;
+;;; Code:
+(require 'image-mode)
+(require 'cl-macs)
+(require 'eimp)
 
 (defvar-local image-dimensions-minor-mode-dimensions nil
   "Buffer-local image dimensions for `image-dimensions-minor-mode'")

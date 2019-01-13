@@ -19,7 +19,7 @@
   ;; Global minor modes:
   (winner-mode)                           ; Track win conifg changes
   (eyebrowse-mode)                        ; Named window configurations
-  (projectile-global-mode)                ; Project tool
+  (projectile-mode)                       ; Project tool
   (global-auto-revert-mode)               ; External changes cause a revert
   (shackle-mode)                          ; Control pop-up windows.
   (default-text-scale-mode)               ; Frame text scaling.

@@ -6,6 +6,8 @@
 (require 'edit-server)
 (require 'markdown-mode)
 
+(declare-function pjones:markdown-visual-line "./markdown-mode-conf.el")
+
 (custom-set-variables
  '(edit-server-new-frame nil)
  '(edit-server-default-major-mode 'markdown-mode))

@@ -1,14 +1,21 @@
 ;;; haskell-mode-conf.el -- Settings for Haskell mode.
+;;
+;;; Commentary:
+;;
+;;; Code:
 (eval-when-compile
-  (require 'cl)
-  (require 'haskell-mode))
+  (require 'cl))
 
+(require 'haskell-mode)
 (require 'company-ghc)
 (require 'dante)
 (require 'flycheck)
 (require 'ghc)
 (require 'haskell)
 (require 'haskell-indentation)
+
+(declare-function pjones:prog-mode-hook "../lisp/code.el")
+(declare-function pjones:define-keys-from-hydra "../lisp/functions.el")
 
 ;; Settings for haskell-mode and friends:
 (custom-set-variables

@@ -1,15 +1,23 @@
 ;;; interactive.el -- Interactive functions.
-(eval-when-compile
-  (require 'cl)                         ; for plusp (need to replace it)
-  (require 'etags)
-  (require 'flyspell)
-  (require 'ispell)
-  (require 'server)
-  (require 'subword)
-  (require 'term))
-
-;; Dependencies:
+;;
+;;; Commentary:
+;;
+;;; Code:
+(require 'etags)
+(require 'flyspell)
+(require 'ispell)
+(require 'server)
+(require 'subword)
+(require 'term)
 (require 'hydra)
+(require 'mu4e)
+
+(eval-when-compile
+  (require 'cl)) ; for plusp (need to replace it)
+
+(declare-function pjones:erc-freenode "../modes/erc-conf.el")
+(declare-function pjones:erc-bitlbee "../modes/erc-conf.el")
+(declare-function pjones:projectile-project-root "../modes/projectile-conf.el")
 
 (defun pjones:maybe-save-buffers-kill-terminal (&optional arg)
   "Save me from myself.  I somehow keep hitting C-x C-c when I
@@ -213,27 +221,6 @@ current buffer after point."
   (interactive)
   (let ((switch-window-threshold 1))
     (switch-window-then-delete)))
-
-(defhydra hydra-window-ops (:hint nil :color blue)
-  "
-^Windows^           ^Config^             ^Themes/Fonts^
-^^^------------------------------------------------------------
- _t_: transpose      _u_: undo            _T_: switch theme
- _r_: rotate         _U_: redo            _p_: frame scale up
- ^ ^                 _j_: save/restore    _n_: frame scale down
- ^ ^                 ^ ^                  _P_: buffer scale up
- ^ ^                 ^ ^                  _N_: buffer scale down
-"
-  ("T" pjones:load-theme)
-  ("U" winner-redo)
-  ("j" pjones:window-config)
-  ("r" rotate-layout)
-  ("t" rotate-window)
-  ("u" winner-undo)
-  ("p" default-text-scale-increase :color red)
-  ("n" default-text-scale-decrease :color red)
-  ("P" text-scale-increase :color red)
-  ("N" text-scale-decrease :color red))
 
 ;; Local Variables:
 ;; byte-compile-warnings: (not noruntime)

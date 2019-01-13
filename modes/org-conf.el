@@ -262,13 +262,6 @@ is set, add a plain list item with a checkbox."
   (interactive)
   (pjones:org-list-append t))
 
-(defun pjones:org-time-diff (t1 t2)
-  "Returns the difference between t1 and t2.  Expects that times
-are formatted as HH:MM and returns them in that format"
-  (org-minutes-to-clocksum-string
-   (- (org-hh:mm-string-to-minutes t1)
-      (org-hh:mm-string-to-minutes t2))))
-
 (defun pjones:org-goto (&optional alternative-interface)
   "My version of `org-goto' that first widens the buffer (if
 narrowed), jumps to the correct heading via `org-goto', then

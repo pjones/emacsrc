@@ -3,6 +3,8 @@
 ;;; Code:
 (require 'term)
 (require 'projectile)
+(require 'evil)
+(require 'evil-collection)
 
 ;; Settings for term-mode:
 (custom-set-variables

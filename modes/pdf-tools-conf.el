@@ -3,10 +3,7 @@
 ;;; Commentary:
 ;;
 ;;; Code:
-(eval-when-compile
-  (require 'pdf-tools))
-
-;; Dependencies:
+(require 'pdf-tools)
 (require 'pdf-outline)
 
 (defun pjones:pdf-outline-follow-link-and-quit ()

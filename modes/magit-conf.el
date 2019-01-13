@@ -3,10 +3,7 @@
 ;;; Commentary:
 ;;
 ;;; Code:
-(eval-when-compile
-  (defvar magit-last-seen-setup-instructions)
-  (setq magit-last-seen-setup-instructions "1.4.0")
-  (require 'magit))
+(require 'magit)
 
 (custom-set-variables
  '(magit-popup-use-prefix-argument 'default)

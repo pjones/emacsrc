@@ -1,10 +1,10 @@
 ;;; message-conf.el --- composing mail and news messages
 ;;; Commentary:
 ;;; Code:
-(eval-when-compile
-  (require 'company)
-  (require 'mml)
-  (require 'message))
+(require 'company)
+(require 'mml)
+(require 'message)
+(require 'hydra)
 
 (defhydra hydra-message (:hint nil :color blue)
   "

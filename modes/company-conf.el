@@ -1,8 +1,13 @@
 ;;; company-conf.el --- company-mode configuration.
-(eval-when-compile
-  (require 'company)
-  (require 'company-quickhelp)
-  (require 'company-statistics))
+;;
+;;; Commentary:
+;;
+;;; Code:
+(require 'company)
+(require 'company-quickhelp)
+(require 'company-statistics)
+
+(declare-function pjones:kill-region-or-backward-kill-word "../lisp/interactive.el")
 
 ;; Settings for company-mode:
 (custom-set-variables
