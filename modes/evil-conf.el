@@ -45,7 +45,6 @@
 (add-hook 'evil-mode-hook    #'evil-commentary-mode)
 (add-hook 'evil-mode-hook    #'global-evil-fringe-mark-mode)
 (add-hook 'evil-mode-hook    #'global-evil-surround-mode)
-(add-hook 'evil-mode-hook    #'global-evil-quickscope-mode)
 (add-hook 'evil-mode-hook    #'evil-collection-init)
 
 ;;; evil-conf.el ends here

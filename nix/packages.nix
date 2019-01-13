@@ -60,7 +60,6 @@ overrides.emacsWithPackages (epkgs: with epkgs; [
   evil-leader
   evil-magit
   evil-org
-  evil-quickscope
   evil-surround
   exwm
   exwm-nw
