@@ -11,7 +11,7 @@
 (global-set-key (kbd "C-x C-c")   #'pjones:maybe-save-buffers-kill-terminal)
 (global-set-key (kbd "C-x C-f")   #'counsel-find-file)
 (global-set-key (kbd "C-x M-o")   #'resize-window)
-(global-set-key (kbd "C-x b")     #'pjones:projectile-switch-to-buffer)
+(global-set-key (kbd "C-x b")     #'switch-to-buffer)
 (global-set-key (kbd "C-x o")     #'switch-window)
 (global-set-key (kbd "M-/")       #'company-complete)
 (global-set-key (kbd "M-x")       #'counsel-M-x)

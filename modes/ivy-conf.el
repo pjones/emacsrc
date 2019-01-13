@@ -41,4 +41,10 @@
 (require 'ivy-exwm)
 (ivy-exwm-mode 1)
 
+(defun pjones:ivy-ignore-buffers (buffer)
+  "Ignore BUFFER if it is already displayed in a window."
+  (get-buffer-window buffer t))
+
+(add-to-list 'ivy-ignore-buffers #'pjones:ivy-ignore-buffers)
+
 ;;; ivy-conf.el ends here
