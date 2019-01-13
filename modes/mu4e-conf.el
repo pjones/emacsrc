@@ -53,6 +53,8 @@
   '(mu4e-maildir "~/mail")
   '(mu4e-mu-home "~/.cache/mu")
   '(mu4e-get-mail-command "mbsync-pjones")
+  '(mu4e-update-interval nil)
+  '(mu4e-hide-index-messages t)
   '(mu4e-change-filenames-when-moving t)
   '(mu4e-context-policy 'pick-first)
   '(mu4e-compose-context-policy 'ask-if-none)
@@ -82,7 +84,7 @@
 
   '(mu4e-query-fragments-list
     (quote (("%trash" . "( maildir:/devalot/Trash OR maildir:/rfa/\"Deleted Items\" )")
-            ("%list"  . "maildir:/devalot/mlists/*"))))
+            ("%list"  . "maildir:/devalot/mlists"))))
 
   '(mu4e-bookmarks
     (quote (("flag:unread AND NOT %trash AND NOT %list" "Unread messages" ?u)
