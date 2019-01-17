@@ -114,6 +114,7 @@ in PLIST.  ALIST is passed to display functions."
   '((compilation-mode)
     :select nil
     :upper-right t
+    :same-mode t
     :custom pjones:shackle-split))
 
 ;;; shackle-conf.el ends here
