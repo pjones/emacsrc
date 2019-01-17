@@ -49,6 +49,8 @@
   '(mail-user-agent 'mu4e-user-agent)
   '(message-send-mail-function 'smtpmail-send-it)
   '(message-kill-buffer-on-exit t)
+  '(smtpmail-queue-mail nil)
+  '(smtpmail-queue-dir "~/mail/queue/devalot/cur")
 
   '(mu4e-maildir "~/mail")
   '(mu4e-mu-home "~/.cache/mu")
@@ -149,3 +151,33 @@
 
 ;; Hooks
 (add-hook 'mu4e-compose-pre-hook #'pjones:mu4e-make-queue-directory)
+
+;; Bug fixes:
+
+(defun evil-collection-mu4e-new-region-misc ()
+  "Define the evil-mu4e Misc region."
+  (concat
+   (mu4e~main-action-str "\t* [;]Switch focus\n" 'mu4e-context-switch)
+   (mu4e~main-action-str "\t* [u]pdate email & database (Alternatively: gr)\n"
+                         'mu4e-update-mail-and-index)
+
+   ;; show the queue functions if `smtpmail-queue-dir' is defined
+   (if (file-directory-p smtpmail-queue-dir)
+       (mu4e~main-view-queue)
+     "")
+   "\n"
+
+   (mu4e~main-action-str "\t* [N]ews\n" 'mu4e-news)
+   (mu4e~main-action-str "\t* [A]bout mu4e\n" 'mu4e-about)
+   (mu4e~main-action-str "\t* [H]elp\n" 'mu4e-display-manual)
+   (mu4e~main-action-str "\t* [q]uit\n" 'mu4e-quit)))
+
+(defun evil-collection-mu4e-update-main-view ()
+  "Update 'Basic' and 'Misc' regions to reflect the new
+keybindings."
+  (evil-collection-mu4e-replace-region evil-collection-mu4e-new-region-basic
+                                       evil-collection-mu4e-begin-region-basic
+                                       evil-collection-mu4e-end-region-basic)
+  (evil-collection-mu4e-replace-region (evil-collection-mu4e-new-region-misc)
+                                       evil-collection-mu4e-begin-region-misc
+                                       evil-collection-mu4e-end-region-misc))
