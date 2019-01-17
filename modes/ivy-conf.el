@@ -42,8 +42,11 @@
 (ivy-exwm-mode 1)
 
 (defun pjones:ivy-ignore-buffers (buffer)
-  "Ignore BUFFER if it is already displayed in a window."
-  (get-buffer-window buffer t))
+  "Ignore BUFFER if it meets certain criteria."
+  (let* ((buf  (get-buffer buffer))
+         (vars (buffer-local-variables buf)))
+    (or (get-buffer-window buf t)
+        (eq 'fundamental-mode (alist-get 'major-mode vars)))))
 
 (add-to-list 'ivy-ignore-buffers #'pjones:ivy-ignore-buffers)
 
