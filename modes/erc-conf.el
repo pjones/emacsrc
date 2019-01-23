@@ -12,7 +12,7 @@
 (custom-set-variables
  '(erc-nick "pmade")
  '(erc-user-full-name "Peter Jones")
- '(erc-rename-buffers t)
+ '(erc-rename-buffers nil)
  '(erc-network-hide-list '(("freenode" "JOIN" "PART" "QUIT")))
  '(erc-prompt "❯")
  '(erc-query-display 'buffer)
