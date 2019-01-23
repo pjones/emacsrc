@@ -58,6 +58,7 @@
     (quote ((,(kbd "s-r")        . exwm-reset)
             (,(kbd "s-o")        . other-frame)
             (,(kbd "s-z")        . exwm-workspace-switch)
+            (,(kbd "s-q")        . exwm-nw-find-workspace)
             (,(kbd "s-p")        . exwm-nw-goto-previous)
 
             ;; Switch workspaces with the super key:
