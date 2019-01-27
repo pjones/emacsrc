@@ -10,8 +10,8 @@ melpaBuild {
 
   src = pkgs.fetchgit {
     url = "git://git.devalot.com/exwm-nw.git";
-    rev = "4d47a3118f748713371d57195b61e5dda6fbfbf2";
-    sha256 = "1xazj9plldzc867bm80cr3qwb2ndyzjf98s4rhkk6i3idwj37hpa";
+    rev = "ada2cf7874a925d2b83b9735de25594e75520219";
+    sha256 = "0kbbry6fdx4wagn1nhah9cshp7p1yl7fnp35rnvy24k06nibds1a";
   };
 
   recipe = pkgs.writeText "recipe" ''
