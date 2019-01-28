@@ -1,20 +1,6 @@
 ;;; functions.el -- Non-interactive functions
 ;;; Commentary:
 ;;; Code:
-
-;; Load some libraries:
-(require 'face-remap) ;; for text-scale-mode
-
-;; Silence a compiler warning
-;; (declare-function org-clock-get-clock-string "org")
-;; (declare-function festival-say-region "festival")
-
-;; (defun pjones:org-clock-time ()
-;;   "Returns a formatted org clock time if currently clocked in."
-;;   (if (and (fboundp 'org-clocking-p) (org-clocking-p))
-;;       (substring-no-properties (org-clock-get-clock-string)) ""))
-;; (defalias 'pmade:org-clock-time 'pjones:org-clock-time)
-
 (defun pjones:urgency-hint (frame status)
   (let* ((wm-hints (append (x-window-property "WM_HINTS" frame "WM_HINTS" nil nil t) nil))
          (flags (car wm-hints)))
@@ -24,13 +10,17 @@
      frame 0 frame "_NET_WM_STATE" 32
      '(1 "_NET_WM_STATE_DEMANDS_ATTENTION" 0)))
 
-;; (defun pjones:text-to-speech-para ()
-;;   "Read the current paragraph."
-;;   (interactive)
-;;   (save-excursion
-;;     (let* ((r-end (progn (forward-paragraph) (point)))
-;;            (r-start (progn (backward-paragraph) (point))))
-;;       (festival-say-region r-start r-end))))
+(defun pjones:plasmoid-update ()
+  "Update a KDE plasmoid that is blocked reading from a FIFO."
+  (let ((inhibit-message t)
+        (file (concat user-emacs-directory "plasmoid"))
+        (desktop (exwm-nw--format exwm-workspace-current-index))
+        (eyebrowse (let* ((slot (eyebrowse--get 'current-slot))
+                          (cfgs (eyebrowse--get 'window-configs)))
+                     (eyebrowse-format-slot (assoc slot cfgs)))))
+    (with-temp-buffer
+      (insert (concat desktop " | " eyebrowse "\n"))
+      (write-region nil nil file t))))
 
 (defun pjones:define-keys-from-hydra (keymap heads)
   "Define keys in KEYMAP from HEADS."

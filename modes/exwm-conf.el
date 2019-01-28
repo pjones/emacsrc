@@ -24,7 +24,8 @@
   (exwm-workspace-rename-buffer exwm-class-name))
 
 (defun pjones:exwm-workspace-switch-hook ()
-  "Hook run when changing workspaces.")
+  "Hook run when changing workspaces."
+  (pjones:plasmoid-update))
 
 (defmacro pjones:exwm-switch-to (n)
   "Create a function that will switch to workspace N."
@@ -58,8 +59,9 @@
     (quote ((,(kbd "s-r")        . exwm-reset)
             (,(kbd "s-o")        . other-frame)
             (,(kbd "s-z")        . exwm-workspace-switch)
-            (,(kbd "s-q")        . exwm-nw-find-workspace)
-            (,(kbd "s-p")        . exwm-nw-goto-previous)
+            (,(kbd "s-n")        . exwm-nw-set-name)
+            (,(kbd "s-SPC")      . exwm-nw-find-workspace)
+            (,(kbd "s-'")        . exwm-nw-goto-previous)
 
             ;; Switch workspaces with the super key:
             (,(kbd "s-;") . ,(pjones:exwm-switch-to 0))
