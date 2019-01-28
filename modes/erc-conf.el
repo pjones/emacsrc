@@ -13,7 +13,6 @@
  '(erc-nick "pmade")
  '(erc-user-full-name "Peter Jones")
  '(erc-rename-buffers nil)
- '(erc-network-hide-list '(("freenode" "JOIN" "PART" "QUIT")))
  '(erc-prompt "❯")
  '(erc-query-display 'buffer)
  '(erc-auto-query 'bury)
@@ -48,7 +47,13 @@
                  spelling
                  stamp
                  track
-                 truncate)))
+                 truncate))
+
+ '(erc-network-hide-list '(("freenode" "JOIN" "PART" "QUIT")))
+
+ '(erc-track-exclude-types '("JOIN" "NICK" "PART" "QUIT" "MODE"
+                             "324" "329" "332" "333" "353" "477")))
+
 
 ;; Always ignore the bitlbee control channel.
 (add-to-list 'erc-track-exclude "&bitlbee")
