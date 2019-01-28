@@ -14,6 +14,8 @@
 (require 'evil-org)
 (add-hook 'org-mode-hook 'evil-org-mode)
 (evil-org-set-key-theme '(navigation insert textobjects additional calendar))
+(evil-define-key 'normal evil-org-mode-map "gk" #'outline-up-heading)
+(evil-define-key 'motion evil-org-mode-map "gk" #'outline-up-heading)
 
 (require 'evil-org-agenda)
 (evil-org-agenda-set-keys)

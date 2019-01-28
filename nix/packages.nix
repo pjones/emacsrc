@@ -16,6 +16,7 @@ let
   overrides = (pkgs.emacsPackagesNgGen emacs).overrideScope' (self: super: {
     # Use unstable versions:
     default-text-scale = self.melpaPackages.default-text-scale;
+    evil-org = self.melpaPackages.evil-org;
     projectile = self.melpaPackages.projectile;
 
     # Newer versions of existing packages:

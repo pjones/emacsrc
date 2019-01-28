@@ -37,8 +37,10 @@
 
 ;; Additional key bindings:
 (evil-define-key 'normal global-map "g " #'just-one-space)
+(evil-define-key 'normal global-map "g'" #'pjones:switch-to-previous-buffer)
 (evil-define-key 'visual global-map "s"  #'evil-surround-region)
 (evil-define-key 'visual global-map "S"  #'evil-Surround-region)
+(evil-define-key 'normal global-map "z'" #'evil-window-mru)
 
 ;; Hooks:
 (add-hook 'post-command-hook #'pjones:evil-update-cursor)

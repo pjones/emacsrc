@@ -45,6 +45,12 @@
 (defvar pjones:p-map (make-sparse-keymap)
   "A map of password related keys.")
 
+(defvar pjones:w-map (make-sparse-keymap)
+  "A map of workspace related keys.")
+
+(defvar pjones:pipe-map (make-sparse-keymap)
+  "A map used by my keyboard for fast movement.")
+
 (let ((map pjones:b-map))
   (define-key map (kbd "b") #'switch-to-buffer)
   (define-key map (kbd "f") #'find-file)
@@ -73,6 +79,13 @@
   (define-key map (kbd "p") #'passmm-completing-read)
   (define-key map (kbd "l") #'passmm-list-passwords))
 
+(let ((map pjones:w-map))
+  (define-key map (kbd "'")   #'eyebrowse-last-window-config)
+  (define-key map (kbd "SPC") #'eyebrowse-switch-to-window-config)
+  (define-key map (kbd "c")   #'eyebrowse-create-window-config)
+  (define-key map (kbd "n")   #'eyebrowse-rename-window-config)
+  (define-key map (kbd "x")   #'eyebrowse-close-window-config))
+
 ;; User bindings under C-c:
 (global-set-key (kbd "C-c b")   pjones:b-map)
 (global-set-key (kbd "C-c c") #'pjones:projectile-compile-project)
@@ -86,6 +99,7 @@
 (global-set-key (kbd "C-c m") #'magit-status)
 (global-set-key (kbd "C-c p")   pjones:p-map)
 (global-set-key (kbd "C-c t") #'org-mru-clock-in)
+(global-set-key (kbd "C-c w")   pjones:w-map)
 
 ;; Evil and evil-leader:
 ;; These need to be set before loading Evil.
