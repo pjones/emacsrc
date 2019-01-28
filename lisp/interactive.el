@@ -57,9 +57,14 @@ behavior."
 (defun pjones:switch-to-previous-buffer ()
   "Switch back to the last buffer shown in this window."
   (interactive)
-  (let ((ido-process-ignore-lists t)
-        (ido-ignored-list nil))
-    (switch-to-buffer (car (ido-make-buffer-list nil)))))
+  (let ((previous-place (evil-alternate-buffer)))
+    (if previous-place
+        (progn
+          (switch-to-buffer (car previous-place))
+          (goto-char (car (last previous-place))))
+      (let ((ido-process-ignore-lists t)
+            (ido-ignored-list nil))
+        (switch-to-buffer (car (ido-make-buffer-list nil)))))))
 
 (defun pjones:open-line-above (stay)
   "Open a line above point and move there if STAY is nil."
@@ -101,9 +106,10 @@ If DONT-ASK is non-nil, don't prompt for a project."
   (let* ((default-directory (pjones:projectile-project-root dont-ask))
          (short (directory-file-name (file-relative-name default-directory "~/")))
          (name (generate-new-buffer-name (concat "term:" short)))
-         (buffer (make-term name (getenv "SHELL"))))
+         (buffer (get-buffer-create name)))
     (with-current-buffer buffer
       (term-mode)
+      (term-exec buffer name (getenv "SHELL") nil nil)
       (term-char-mode))
     (pop-to-buffer buffer)))
 
