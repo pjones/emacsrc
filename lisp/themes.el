@@ -5,7 +5,9 @@
 ;;    Code to activate my preferred themes.
 ;;
 ;;; Code:
-(load-theme 'doom-city-lights t)
+(if (display-graphic-p)
+    (load-theme 'doom-city-lights t)
+  (load-theme 'doom-one t))
 
 ;; Stolen from: https://github.com/alezost/emacs-config
 (defun pjones:load-theme (theme)

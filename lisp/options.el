@@ -49,7 +49,6 @@
 ;; Settings not worth their own file in the modes directory:
 (custom-set-variables
  '(epa-file-encrypt-to "204284CB")    ; Default GPG key to use
- '(epa-pinentry-mode 'loopback)       ; Needed for EXWM.
  '(compilation-scroll-output 'first-error)
  `(custom-file ,(concat user-emacs-directory "custom.el"))) ; To keep Emacs happy
 

@@ -38,8 +38,8 @@
  '(ivy-current-match ((t (:inherit 'isearch)))))
 
 ;; Enable complementary modes:
-(require 'ivy-exwm)
-(ivy-exwm-mode 1)
+(require 'ivy-rich)
+(ivy-rich-mode 1)
 
 (defun pjones:ivy-ignore-buffers (buffer)
   "Ignore BUFFER if it meets certain criteria."

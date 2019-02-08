@@ -16,9 +16,6 @@
  '(evil-lookup-func #'man)
  '(evil-symbol-word-search t))
 
-;; EXWM settings:
-(evil-set-initial-state 'exwm-mode 'emacs)
-
 (defun pjones:evil-update-cursor ()
   "Change the cursor to match the evil state."
   (let* ((cursor

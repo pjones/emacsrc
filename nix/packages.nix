@@ -20,13 +20,7 @@ let
     projectile = self.melpaPackages.projectile;
 
     # Newer versions of existing packages:
-    exwm = import ./exwm.nix { inherit super self pkgs melpaBuild; };
-    xelb = import ./xelb.nix { inherit super self pkgs melpaBuild; };
     mu4e-query-fragments = import ./mu4e-query-fragments.nix { inherit super self pkgs melpaBuild; };
-
-    # My custom packages:
-    exwm-nw  = import ./exwm-nw.nix  { inherit super self pkgs melpaBuild; };
-    ivy-exwm = import ./ivy-exwm.nix { inherit super self pkgs melpaBuild; };
     passmm   = import ./passmm.nix   { inherit super self pkgs melpaBuild; };
   });
 
@@ -61,9 +55,6 @@ overrides.emacsWithPackages (epkgs: with epkgs; [
   evil-magit
   evil-org
   evil-surround
-  exwm
-  exwm-nw
-  eyebrowse
   flycheck
   git-annex
   graphviz-dot-mode
@@ -76,7 +67,6 @@ overrides.emacsWithPackages (epkgs: with epkgs; [
   indium
   inf-ruby
   ivy
-  ivy-exwm
   ivy-hydra
   ivy-rich
   js2-mode
