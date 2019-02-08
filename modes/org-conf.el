@@ -11,14 +11,6 @@
 (require 'org-id)
 (require 'org-clock-csv)
 
-(require 'evil-org)
-(add-hook 'org-mode-hook 'evil-org-mode)
-(evil-org-set-key-theme '(navigation insert textobjects additional calendar))
-(evil-define-key 'normal evil-org-mode-map "gk" #'outline-up-heading)
-(evil-define-key 'motion evil-org-mode-map "gk" #'outline-up-heading)
-
-(require 'evil-org-agenda)
-(evil-org-agenda-set-keys)
 
 (require 'org-bullets)
 (add-hook 'org-mode-hook #'org-bullets-mode)
@@ -187,6 +179,17 @@
 
 
 (defun pjones:org-mode-hook ()
+  "Hook to hack `org-mode'."
+  ;; Evil:
+  (require 'evil-org)
+  (add-hook 'org-mode-hook 'evil-org-mode)
+  (evil-org-set-key-theme '(navigation insert textobjects additional calendar))
+  (evil-define-key 'normal evil-org-mode-map "gk" #'outline-up-heading)
+  (evil-define-key 'motion evil-org-mode-map "gk" #'outline-up-heading)
+
+  (require 'evil-org-agenda)
+  (evil-org-agenda-set-keys)
+
   ;; Extra Bindings
   (org-defkey org-mode-map "\C-\M-f"   'org-metaright)
   (org-defkey org-mode-map "\C-\M-b"   'org-metaleft)

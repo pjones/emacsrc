@@ -52,8 +52,10 @@ shift $((OPTIND-1))
 ################################################################################
 if [ "$option_fresh" -eq 1 ]; then
   export EMACSLOADPATH=""
-  exec @emacspath@/emacs -q --load @out@/dot.emacs.el \
-         --eval "(run-hooks 'after-init-hook)" "$@"
+  exec @emacspath@/emacs -q \
+       --eval "(toggle-debug-on-error)" \
+       --load @out@/dot.emacs.el \
+       --eval "(run-hooks 'after-init-hook)" "$@"
 fi
 
 ################################################################################

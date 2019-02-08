@@ -36,7 +36,6 @@ in
 # Emacs package list:
 overrides.emacsWithPackages (epkgs: with epkgs; [
   adaptive-wrap
-  alect-themes
   async
   beginend
   company
@@ -51,7 +50,7 @@ overrides.emacsWithPackages (epkgs: with epkgs; [
   dired-filter
   dired-narrow
   dired-subtree
-  eyebrowse
+  doom-themes
   edit-server
   eimp
   evil
@@ -64,6 +63,7 @@ overrides.emacsWithPackages (epkgs: with epkgs; [
   evil-surround
   exwm
   exwm-nw
+  eyebrowse
   flycheck
   git-annex
   graphviz-dot-mode

@@ -6,13 +6,11 @@
 
 ;;; Code:
 (require 'dired)
-(require 'org)
 (require 'dired-x)
 (require 'dired-aux)
 (require 'dired-filter)
 (require 'dired-narrow)
 (require 'dired-subtree)
-(require 'evil-collection)
 
 ;; Always run commands asynchronously:
 (autoload 'dired-async-mode "dired-async.el" nil t)
@@ -38,6 +36,7 @@ current dired buffer.  Otherwise visit the file under point."
   (interactive)
   (let ((name (dired-get-file-for-visit)))
     (if (file-directory-p name) (dired-subtree-insert)
+      (require 'org)
       (org-open-file name))))
 
 (defun pjones:dired-remove-total-lines ()
@@ -104,6 +103,7 @@ current dired buffer.  Otherwise visit the file under point."
   (dired-hide-details-mode) ;; Hide details by default
   (setq dired-subtree-line-prefix pjones:dired-subtree-line-prefix)
 
+  (require 'evil-collection)
   (evil-collection-define-key 'normal 'dired-mode-map
     (kbd "<return>") #'pjones:dired-insert-or-visit
     "gq"             #'dired-do-query-replace-regexp

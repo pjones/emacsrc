@@ -3,15 +3,6 @@
 ;;; Commentary:
 ;;
 ;;; Code:
-(require 'etags)
-(require 'flyspell)
-(require 'ispell)
-(require 'server)
-(require 'subword)
-(require 'term)
-(require 'hydra)
-(require 'mu4e)
-
 (eval-when-compile
   (require 'cl)) ; for plusp (need to replace it)
 
@@ -33,6 +24,7 @@ the kill ring in a similar manner to `kill-region'.  If there
 isn't a region, the word before point will be deleted (without
 placing it in the kill ring)."
   (interactive "p")
+  (require 'subword)
   (let ((forward
     (if (and (boundp 'subword-mode)
              (or subword-mode global-subword-mode))
@@ -103,6 +95,7 @@ When LOCAL-ONLY is non-nil, only connect to Bitlbee."
   "Start a new terminal buffer in the current project.
 If DONT-ASK is non-nil, don't prompt for a project."
   (interactive "P")
+  (require 'term)
   (let* ((default-directory (pjones:projectile-project-root dont-ask))
          (short (directory-file-name (file-relative-name default-directory "~/")))
          (name (generate-new-buffer-name (concat "term:" short)))
@@ -131,32 +124,12 @@ If DONT-ASK is non-nil, don't prompt for a project."
 (defvar pjones:last-dictionary nil
   "The last non-English dictionary used by `pjones:toggle-dictionary'.")
 
-(defun pjones:auto-correct-previous-word ()
-  "Use flyspell to automatically correct the previous word
-without going past the current line."
-  (interactive)
-  (let ((start (save-excursion
-                 (beginning-of-line)
-                 (point)))
-        (end (save-excursion
-               (end-of-line)
-               (point))))
-    (save-restriction
-      ;; Keep flyspell from trying to correct a previous word outside
-      ;; of the region.  It does this when there is no incorrect word
-      ;; within the current region :(
-      (when (and flyspell-auto-correct-previous-pos
-                 (or (> flyspell-auto-correct-previous-pos end)
-                     (< flyspell-auto-correct-previous-pos start)))
-        (setq flyspell-auto-correct-previous-pos nil))
-      (narrow-to-region start end)
-      (flyspell-auto-correct-previous-word (point)))))
-
 (defun pjones:toggle-dictionary (&optional reset)
   "Switch between English and another language easily.  Switches
 the current input method and dictionary.  With a prefix argument
 prompts for the foreign language to use."
   (interactive "P")
+  (require 'ispell)
   (let* ((en "english")
          ;;         Human        Dict       Input Method
          (langs '(("Italian" . ("italian"  "italian-postfix"))
