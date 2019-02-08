@@ -16,6 +16,7 @@
  '(erc-prompt "❯")
  '(erc-query-display 'buffer)
  '(erc-auto-query 'bury)
+ `(erc-notifications-icon ,notifications-application-icon)
  '(erc-track-visibility 'selected-visible)
  '(erc-track-exclude-server-buffer t)
  '(erc-track-shorten-start 4)
@@ -58,6 +59,36 @@
 ;; Always ignore the bitlbee control channel.
 (add-to-list 'erc-track-exclude "&bitlbee")
 
+(defvar pjones:erc-modified-channels-alist nil
+  "A cache of `erc-modified-channels-alist'.")
+
+(defun pjones:erc-set-urgency-hint (buffer)
+  "Set the urgency hint on BUFFER.
+Really, it needs to be set on a frame, so search for the correct frame
+if BUFFER is not currently displayed in a window."
+  (let ((found (car (frame-list)))
+        frame window)
+    (if (setq window (get-buffer-window buffer t))
+        (pjones:urgency-hint (window-frame window) t)
+      ;; Damn, go find it's most recent window:
+      (catch 'pjones:find-frame
+        (dolist (frame (frame-list))
+          (dolist (window (window-list frame))
+            (when (member buffer (mapcar 'car (window-prev-buffers window)))
+              (setq found frame)
+              (throw 'pjones:find-frame t)))))
+      (pjones:urgency-hint found t))))
+
+(defun pjones:erc-maybe-set-urgency-hint ()
+  "Maybe set the urgency hint."
+  (let (channel buffer)
+    (dolist (channel erc-modified-channels-alist)
+      (setq buffer (car channel))
+      (unless (assoc buffer pjones:erc-modified-channels-alist)
+        (pjones:erc-set-urgency-hint buffer))))
+  (setq pjones:erc-modified-channels-alist
+        erc-modified-channels-alist))
+
 (defun pjones:erc-connect (network)
   "Connect to an IRC NETWORK via ERC."
   (let ((pass (passmm-get-password "machines/chat.devalot.com/znc")))
@@ -91,5 +122,9 @@
 
 (add-hook 'erc-mode-hook #'pjones:erc-mode-hook)
 (add-hook 'erc-track-mode-hook #'pjones:erc-ignore-channel)
+(add-hook 'erc-track-list-changed-hook #'pjones:erc-maybe-set-urgency-hint)
+
+;; Make `erc-track' update when a frame gains focus.
+(add-hook 'focus-in-hook #'erc-modified-channels-update)
 
 ;;; erc-conf.el ends here

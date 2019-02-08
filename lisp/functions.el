@@ -8,7 +8,8 @@
     (x-change-window-property "WM_HINTS" wm-hints frame "WM_HINTS" 32 t))
   (x-send-client-message ; This is for Wayland EWHM changes.
      frame 0 frame "_NET_WM_STATE" 32
-     '(1 "_NET_WM_STATE_DEMANDS_ATTENTION" 0)))
+     '(1 "_NET_WM_STATE_DEMANDS_ATTENTION" 0))
+  frame)
 
 (defun pjones:define-keys-from-hydra (keymap heads)
   "Define keys in KEYMAP from HEADS."
