@@ -98,7 +98,7 @@
 (custom-set-variables
  '(evil-leader/leader ",")              ; Duh.
  '(evil-collection-company-use-tng nil) ; Turn that crap off!
- '(evil-collection-term-sync-state-and-mode-p) nil
+ '(evil-collection-term-sync-state-and-mode-p nil)
  '(evil-collection-setup-minibuffer t)) ; Consistency.
 
 (require 'evil)
