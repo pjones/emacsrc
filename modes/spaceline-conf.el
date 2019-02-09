@@ -38,7 +38,11 @@
   :global-override erc-modified-channels-object)
 
 ;; Compile and set the theme:
-(spaceline--theme '((evil-state) :face highlight-face :priority 100)
-                  '((buffer-modified buffer-size pjones-buffer-id remote-host)))
+(defun pjones:spaceline-update ()
+  "Compile and update spaceline."
+  (spaceline--theme '((evil-state) :face highlight-face :priority 100)
+                    '((buffer-modified buffer-size pjones-buffer-id remote-host))))
+
+(pjones:spaceline-update)
 
 ;;; spaceline-conf.el ends here
