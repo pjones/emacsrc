@@ -11,9 +11,13 @@
 (require 'org-id)
 (require 'org-clock-csv)
 
-
 (require 'org-bullets)
 (add-hook 'org-mode-hook #'org-bullets-mode)
+
+(eval-when-compile
+  ;; Access macros for compiling:
+  (require 'evil-core)
+  (require 'evil-org))
 
 ;; General Org Settings
 (custom-set-variables
@@ -182,13 +186,11 @@
   "Hook to hack `org-mode'."
   ;; Evil:
   (require 'evil-org)
-  (add-hook 'org-mode-hook 'evil-org-mode)
+  (evil-org-mode)
   (evil-org-set-key-theme '(navigation insert textobjects additional calendar))
   (evil-define-key 'normal evil-org-mode-map "gk" #'outline-up-heading)
   (evil-define-key 'motion evil-org-mode-map "gk" #'outline-up-heading)
 
-  (require 'evil-org-agenda)
-  (evil-org-agenda-set-keys)
 
   ;; Extra Bindings
   (org-defkey org-mode-map "\C-\M-f"   'org-metaright)
@@ -225,7 +227,9 @@
 
 (defun pjones:org-agenda-mode-hook ()
   "Hook run after a `org-agenda-mode' buffer is created."
-  (hl-line-mode 1))
+  (hl-line-mode 1)
+  (require 'evil-org-agenda)
+  (evil-org-agenda-set-keys))
 
 (add-hook 'org-agenda-mode-hook 'pjones:org-agenda-mode-hook)
 
