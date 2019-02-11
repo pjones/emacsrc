@@ -51,70 +51,64 @@ in PLIST.  ALIST is passed to display functions."
 (custom-set-variables
  '(shackle-inhibit-window-quit-on-same-windows t)
  '(shackle-default-rule (quote (:same t)))
- '(shackle-rules nil))
 
-;; Edit server buffers:
-(add-to-list 'shackle-rules
-  '((:custom pjones:shackle-match-edit-server)
-    :select t
-    :same-mode t
-    :custom pjones:shackle-split))
+ '(shackle-rules
+   '(
+     ;; Edit server buffers:
+     ((:custom pjones:shackle-match-edit-server)
+      :select t
+      :same-mode t
+      :custom pjones:shackle-split)
 
-;; Modes that should get their own windows, but remain inactive:
-(add-to-list 'shackle-rules
-  '((magit-diff-mode)
-    :select nil
-    :same nil))
+     ;; Modes that should get their own windows, but remain inactive:
+     ((magit-diff-mode)
+      :select nil
+      :same nil)
 
-;; Windows that should split the entire frame:
-(add-to-list 'shackle-rules
-  '(("\\*Completions\\*"
-     "\\*Deletions\\*"
-     calendar-mode)
-    :regexp t
-    :size 0.3
-    :align 'below
-    :select nil))
+     ;; Windows that should split the entire frame:
+     (("\\*Completions\\*"
+       "\\*Deletions\\*"
+       calendar-mode)
+      :regexp t
+      :size 0.3
+      :align 'below
+      :select nil)
 
-;; Windows that should split the current window and get focus.  If
-;; there's a window already showing a buffer with the same mode then
-;; reuse that buffer instead of creating a new one.
-(add-to-list 'shackle-rules
-  '(("\\*magit-.*popup"
-     "\\*eww buffers\\*"
-     "\\*Backtrace\\*"
-     "\\*JS scratch\\*"
-     help-mode
-     pdf-outline-buffer-mode)
-    :regexp t
-    :select t
-    :same-mode t
-    :custom pjones:shackle-split))
+     ;; Windows that should split the current window and get focus.  If
+     ;; there's a window already showing a buffer with the same mode then
+     ;; reuse that buffer instead of creating a new one.
+     (("\\*magit-.*popup"
+       "\\*eww buffers\\*"
+       "\\*Backtrace\\*"
+       "\\*JS scratch\\*"
+       help-mode
+       pdf-outline-buffer-mode)
+      :regexp t
+      :select t
+      :same-mode t
+      :custom pjones:shackle-split)
 
-;; Like above, but don't consider the major mode:
-(add-to-list 'shackle-rules
-  '((term-mode)
-    :select t
-    :dedicated t
-    :custom pjones:shackle-split))
+     ;; Like above, but don't consider the major mode:
+     ((term-mode)
+      :select t
+      :dedicated t
+      :custom pjones:shackle-split)
 
-;; Windows that should split the current window but *not* get focus:
-(add-to-list 'shackle-rules
-  '((grep-mode
-     "magit-diff: "
-     "\\*HTTP Response.*")
-    :regexp t
-    :select nil
-    :same-mode t
-    :custom pjones:shackle-split))
+     ;; Windows that should split the current window but *not* get focus:
+     ((grep-mode
+       "magit-diff: "
+       "\\*HTTP Response.*")
+      :regexp t
+      :select nil
+      :same-mode t
+      :custom pjones:shackle-split)
 
-;; A very special rule, windows that should be placed in the upper
-;; right-hand corner of the frame but not take the focus:
-(add-to-list 'shackle-rules
-  '((compilation-mode)
-    :select nil
-    :upper-right t
-    :same-mode t
-    :custom pjones:shackle-split))
+     ;; A very special rule, windows that should be placed in the upper
+     ;; right-hand corner of the frame but not take the focus:
+     ((compilation-mode)
+      :select nil
+      :upper-right t
+      :same-mode t
+      :custom pjones:shackle-split))))
 
 ;;; shackle-conf.el ends here
