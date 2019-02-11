@@ -49,6 +49,7 @@ behavior."
 (defun pjones:switch-to-previous-buffer ()
   "Switch back to the last buffer shown in this window."
   (interactive)
+  (require 'ido)
   (let ((previous-place (evil-alternate-buffer)))
     (if previous-place
         (progn
