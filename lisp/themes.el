@@ -5,9 +5,7 @@
 ;;    Code to activate my preferred themes.
 ;;
 ;;; Code:
-(if (display-graphic-p)
-    (load-theme 'doom-dracula t)
-  (load-theme 'doom-tomorrow-night t))
+(load-theme 'doom-dracula t)
 
 ;; Stolen from: https://github.com/alezost/emacs-config
 (defun pjones:load-theme (theme)
