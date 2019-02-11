@@ -8,6 +8,7 @@
 (require 'erc-track)
 (require 'passmm)
 (require 'adaptive-wrap)
+(require 'notifications)
 
 (custom-set-variables
  '(erc-nick "pmade")
