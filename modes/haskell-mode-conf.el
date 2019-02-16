@@ -12,7 +12,6 @@
 (require 'flycheck)
 (require 'ghc)
 (require 'haskell)
-(require 'haskell-indentation)
 
 (declare-function pjones:prog-mode-hook "../lisp/code.el")
 (declare-function pjones:define-keys-from-hydra "../lisp/functions.el")
@@ -22,12 +21,6 @@
   '(haskell-stylish-on-save nil)
   '(haskell-tags-on-save nil)
   '(haskell-completing-read-function 'ido-completing-read)
-  '(haskell-indentation-layout-offset 0)
-  '(haskell-indentation-starter-offset 2)
-  '(haskell-indentation-left-offset 2)
-  '(haskell-indentation-ifte-offset 2)
-  '(haskell-indentation-where-pre-offset 2)
-  '(haskell-indentation-where-post-offset 2)
   '(dante-repl-command-line '("nix-hs" "repl")))
 
 (defun pjones:haskell-find-cabal-file ()
@@ -184,9 +177,6 @@ _C-c C-s_: sort    _C-c C-t_: type     _C-c C-n_: kill module
   ("C-c C-s" pjones:haskell-sort-imports)
   ("C-c C-t" dante-type-at :color blue))
 
-(define-skeleton pjones:haskell-insert-pragma
-  "Add the pragma comment syntax." nil "{-# " _ " #-}")
-
 (defun pjones-haskell-process-wrapper-function (argv)
   "Run Haskell tools through nix-shell by modifying ARGV.
 See `haskell-process-wrapper-function' for details."
@@ -203,12 +193,12 @@ See `haskell-process-wrapper-function' for details."
         end-of-defun-function 'pjones:haskell-end-of-defun)
 
   ;; Indentation.
-  (haskell-indentation-mode)
+  (haskell-indentation-mode -1)
+  (structured-haskell-mode)
 
   (pjones:prog-mode-hook)
   (subword-mode)
   (abbrev-mode)
-  (highlight-indent-guides-mode)
 
   ;; Linting and checking:
   (dante-mode)
@@ -219,20 +209,9 @@ See `haskell-process-wrapper-function' for details."
   (make-local-variable 'company-backends)
   (add-to-list 'company-backends '(company-ghc company-dabbrev company-abbrev))
 
-  ;; (define-abbrev-table 'haskell-mode-abbrev-table
-  ;;   '(("_P" "" pjones:haskell-insert-pragma)))
-  ;; (setq local-abbrev-table haskell-mode-abbrev-table)
-
-  ;; Undo some stupid haskell-mode bindings.
-  (let ((map haskell-indentation-mode-map))
-    (define-key map (kbd "RET") 'newline-and-indent)
-    (define-key map [?\r]       'newline-and-indent)
-    (define-key map [backspace] 'backward-delete-char-untabify))
-
   ;; And add some of my own.
   (let ((map haskell-mode-map))
     (define-key map (kbd "C-c h") 'hydra-haskell/body)
-    (define-key map (kbd "M-RET") 'pjones:haskell-smart-newline)
     (pjones:define-keys-from-hydra map hydra-haskell/heads)))
 
 (defun pjones:dante-mode-hook ()
