@@ -32,8 +32,7 @@
  '(erc-server-auto-reconnect nil)
  '(erc-timestamp-only-if-changed-flag nil)
 
- '(erc-modules '(autoaway
-                 autojoin
+ '(erc-modules '(autojoin
                  button
                  completion
                  irccontrols
