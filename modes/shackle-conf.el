@@ -31,13 +31,27 @@ functions."
            (pjones:shackle-upper-right buffer alist plist))
       (display-buffer-below-selected buffer alist)))
 
+(defun pjones:shackle-make-frame (buffer alist plist)
+  "Make a frame for BUFFER.
+Follow the rules in `pjones:shackle-make-window' for PLIST and ALIST."
+  (add-to-list 'alist (cons 'reusable-frames 'visible))
+  (unless (plist-get plist :select)
+    (add-to-list 'alist (cons 'inhibit-switch-frame t)))
+  (or (and (plist-get plist :same-mode)
+           (display-buffer-reuse-mode-window buffer alist))
+      (display-buffer-reuse-window buffer alist)
+      (display-buffer-pop-up-frame buffer alist)
+      (pjones:shackle-make-window buffer alist plist)))
+
 (defun pjones:shackle-split (buffer alist plist)
   "Split the current window to display BUFFER.
 This calls `pjones:shackle-make-window' to create a window and then
 decides if the window should be selected by checking the :select key
 in PLIST.  ALIST is passed to display functions."
   (let* ((current (selected-window))
-         (window (pjones:shackle-make-window buffer alist plist)))
+         (window (if (plist-get plist :frame)
+                     (pjones:shackle-make-frame buffer alist plist)
+                   (pjones:shackle-make-window buffer alist plist))))
     (when window
       (set-window-dedicated-p window (plist-get plist :dedicated))
       (select-window (if (plist-get plist :select) window current)))))
@@ -107,8 +121,8 @@ in PLIST.  ALIST is passed to display functions."
      ;; right-hand corner of the frame but not take the focus:
      ((compilation-mode)
       :select nil
-      :upper-right t
       :same-mode t
+      :frame t
       :custom pjones:shackle-split))))
 
 ;;; shackle-conf.el ends here
