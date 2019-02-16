@@ -15,8 +15,8 @@
         `(load ,file)))))
 
 (defun pjones:maybe-start-edit-server ()
-  "Start `edit-server' if we're in the right desktop."
-  (if (string= "browsers" server-name)
+  "Start `edit-server' if this is the main Emacs instance."
+  (if (string= "server" server-name)
       (edit-server-start))) ; Half-baked browser extension.
 
 ;; The reset of the file is only loaded if we're not in --batch mode.
