@@ -15,9 +15,7 @@
                   "Load custom theme: "
                   (mapcar #'symbol-name (custom-available-themes))))))
   (mapc #'disable-theme custom-enabled-themes)
-  (load-theme theme t)
-  (if (fboundp 'pjones:spaceline-update)
-      (pjones:spaceline-update)))
+  (load-theme theme t))
 
 (provide 'themes)
 ;;; themes.el ends here

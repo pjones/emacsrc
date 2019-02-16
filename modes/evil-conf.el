@@ -4,7 +4,6 @@
 ;;
 ;;; Code:
 (require 'evil)
-(require 'spaceline) ; Load faces.
 
 ;; Settings:
 (custom-set-variables
@@ -16,16 +15,52 @@
  '(evil-lookup-func #'man)
  '(evil-symbol-word-search t))
 
+(defface pjones:cursor-normal-face
+  '((t (:background "DarkGoldenrod2"
+        :inherit 'cursor)))
+  "Normal state cursor"
+  :group 'evil)
+
+(defface pjones:cursor-insert-face
+  '((t (:background "chartreuse3"
+        :inherit 'cursor)))
+  "Insert state cursor"
+  :group 'evil)
+
+(defface pjones:cursor-emacs-face
+  '((t (:background "SkyBlue2"
+        :inherit 'cursor)))
+  "Emacs state cursor"
+  :group 'evil)
+
+(defface pjones:cursor-replace-face
+  '((t (:background "chocolate"
+        :inherit 'cursor)))
+  "Replace state cursor"
+  :group 'evil)
+
+(defface pjones:cursor-visual-face
+  '((t (:background "gray"
+        :inherit 'cursor)))
+  "Visual state cursor"
+  :group 'evil)
+
+(defface pjones:cursor-motion-face
+  '((t (:background "plum3"
+        :inherit 'cursor)))
+  "Motion state cursor"
+  :group 'evil)
+
 (defun pjones:evil-update-cursor ()
   "Change the cursor to match the evil state."
   (let* ((cursor
           (cond
-           ((evil-normal-state-p)  '(box  . spaceline-evil-normal))
-           ((evil-insert-state-p)  '(hbar . spaceline-evil-insert))
-           ((evil-emacs-state-p)   '(bar  . spaceline-evil-emacs))
-           ((evil-replace-state-p) '(box  . spaceline-evil-replace))
-           ((evil-visual-state-p)  '(box  . spaceline-evil-visual))
-           ((evil-motion-state-p)  '(box  . spaceline-evil-motion))
+           ((evil-normal-state-p)  '(box  . pjones:cursor-normal-face))
+           ((evil-insert-state-p)  '(hbar . pjones:cursor-insert-face))
+           ((evil-emacs-state-p)   '(bar  . pjones:cursor-emacs-face))
+           ((evil-replace-state-p) '(box  . pjones:cursor-replace-face))
+           ((evil-visual-state-p)  '(box  . pjones:cursor-visual-face))
+           ((evil-motion-state-p)  '(box  . pjones:cursor-motion-face))
            (t                      '(box  . error))))
          (fg (face-attribute (cdr cursor) :foreground))
          (bg (face-attribute (cdr cursor) :background)))

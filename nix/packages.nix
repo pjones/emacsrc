@@ -13,15 +13,20 @@ let
 
   ##############################################################################
   # Package overrides:
-  overrides = (pkgs.emacsPackagesNgGen emacs).overrideScope' (self: super: {
+  overrides = (pkgs.emacsPackagesNgGen emacs).overrideScope' (self: super: rec {
     # Use unstable versions:
     default-text-scale = self.melpaPackages.default-text-scale;
     evil-org = self.melpaPackages.evil-org;
     projectile = self.melpaPackages.projectile;
 
     # Newer versions of existing packages:
+    passmm = import ./passmm.nix   { inherit super self pkgs melpaBuild; };
+    doom-modeline = import ./doom-modeline.nix { inherit self pkgs melpaBuild shrink-path; };
+    doom-themes = import ./doom-themes.nix { inherit self pkgs melpaBuild; };
+
+    # GitLab bugs: https://github.com/NixOS/nixpkgs/issues/48215
     mu4e-query-fragments = import ./mu4e-query-fragments.nix { inherit super self pkgs melpaBuild; };
-    passmm   = import ./passmm.nix   { inherit super self pkgs melpaBuild; };
+    shrink-path = import ./shrink-path.nix { inherit super self pkgs melpaBuild; };
   });
 
 in
@@ -41,9 +46,11 @@ overrides.emacsWithPackages (epkgs: with epkgs; [
   dante
   default-text-scale
   deft
+  dictionary
   dired-filter
   dired-narrow
   dired-subtree
+  doom-modeline
   doom-themes
   edit-server
   eimp
@@ -59,7 +66,7 @@ overrides.emacsWithPackages (epkgs: with epkgs; [
   git-annex
   graphviz-dot-mode
   haskell-mode
-  highlight-indent-guides
+  structured-haskell-mode
   htmlize
   http
   hydra
@@ -91,7 +98,6 @@ overrides.emacsWithPackages (epkgs: with epkgs; [
   ruby-end
   scad-mode
   shackle
-  spaceline
   swiper
   switch-window
   treemacs
