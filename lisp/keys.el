@@ -31,6 +31,8 @@
 (global-set-key (kbd "C-x M-o")   #'resize-window)
 (global-set-key (kbd "C-x b")     #'switch-to-buffer)
 (global-set-key (kbd "C-x o")     #'switch-window)
+(global-set-key (kbd "C-+")       #'text-scale-adjust)
+(global-set-key (kbd "C--")       #'text-scale-adjust)
 (global-set-key (kbd "M-/")       #'company-complete)
 (global-set-key (kbd "M-x")       #'counsel-M-x)
 (global-set-key (kbd "M-y")       #'counsel-yank-pop)
