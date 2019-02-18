@@ -10,7 +10,7 @@
   '(doom-modeline-icon t)
   '(doom-modeline-major-mode-icon t)
   '(doom-modeline-major-mode-color-icon t)
-  '(doom-modeline-minor-modes nil)
+  '(doom-modeline-minor-modes t)
   '(doom-modeline-github nil))
 
 ;;; doom-modeline-conf.el ends here

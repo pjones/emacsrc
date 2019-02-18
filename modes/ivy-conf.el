@@ -3,8 +3,9 @@
 ;;; Commentary:
 
 ;;; Code:
-(eval-when-compile
-  (require 'ivy))
+(require 'ivy)
+(require 'counsel)
+(require 'diminish)
 
 (custom-set-variables
  ;; Ivy:
@@ -48,6 +49,16 @@
     (or (get-buffer-window buf t)
         (eq 'fundamental-mode (alist-get 'major-mode vars)))))
 
+(defun pjones:ivy-mode-hook ()
+  "Hook for `ivy-mode'."
+  (diminish 'ivy-mode))
+
+(defun pjones:counsel-mode-hook ()
+  "Hook for `counsel-mode'."
+  (diminish 'counsel-mode))
+
 (add-to-list 'ivy-ignore-buffers #'pjones:ivy-ignore-buffers)
+(add-hook 'ivy-mode-hook #'pjones:ivy-mode-hook)
+(add-hook 'counsel-mode-hook #'pjones:counsel-mode-hook)
 
 ;;; ivy-conf.el ends here

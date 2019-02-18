@@ -7,6 +7,7 @@
 (require 'ivy)
 
 (custom-set-variables
+ '(projectile-mode-line nil)
  '(projectile-switch-project-action 'projectile-dired)
  '(projectile-completion-system 'ivy))
 
