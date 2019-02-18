@@ -11,7 +11,7 @@
  '(evil-shift-width 2)
  '(evil-default-cursor 'box)
  '(evil-move-beyond-eol t)
- '(evil-want-fine-undo t)
+ '(evil-want-fine-undo nil)
  '(evil-want-Y-yank-to-eol t)
  '(evil-lookup-func #'man)
  '(evil-symbol-word-search t))
