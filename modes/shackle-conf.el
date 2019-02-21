@@ -35,6 +35,8 @@ functions."
   "Make a frame for BUFFER.
 Follow the rules in `pjones:shackle-make-window' for PLIST and ALIST."
   (add-to-list 'alist (cons 'reusable-frames 'visible))
+  (add-to-list 'alist (cons 'pop-up-frame-parameters
+                            (list (cons 'name "popup"))))
   (unless (plist-get plist :select)
     (add-to-list 'alist (cons 'inhibit-switch-frame t)))
   (or (and (plist-get plist :same-mode)
