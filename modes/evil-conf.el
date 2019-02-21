@@ -14,7 +14,14 @@
  '(evil-want-fine-undo nil)
  '(evil-want-Y-yank-to-eol t)
  '(evil-lookup-func #'man)
- '(evil-symbol-word-search t))
+ '(evil-symbol-word-search t)
+ '(evil-fringe-mark-show-special nil) ; `t' breaks evil-visual-block
+ '(evil-fringe-mark-ignore-chars '(?' ?{ ?} ?^ ?.)))
+
+(custom-set-faces
+ '(evil-fringe-mark-local-face ((t (:inherit fringe))))
+ '(evil-fringe-mark-file-face ((t (:inherit fringe))))
+ '(evil-fringe-mark-special-face ((t (:inherit fringe)))))
 
 (defface pjones:cursor-normal-face
   '((t (:background "DarkGoldenrod2"
