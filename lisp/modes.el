@@ -30,6 +30,7 @@
   (ivy-mode)                              ; Minibuffer completion
   (counsel-mode)                          ; More completion via Ivy
   (which-key-mode)                        ; Remind me what keys do.
+  (minions-mode)                          ; Hide some minor modes.
 
   ;; Other modes that need to be activated:
   (pdf-tools-install)                     ; Internal PDF viewer

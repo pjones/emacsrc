@@ -81,6 +81,7 @@ overrides.emacsWithPackages (epkgs: with epkgs; [
   magit
   magit-annex
   markdown-mode
+  minions
   mu4e-query-fragments
   nix-mode
   no-littering
