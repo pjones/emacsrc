@@ -23,6 +23,9 @@ let
     passmm = import ./passmm.nix   { inherit super self pkgs melpaBuild; };
     doom-modeline = import ./doom-modeline.nix { inherit self pkgs melpaBuild shrink-path; };
     doom-themes = import ./doom-themes.nix { inherit self pkgs melpaBuild; };
+    polymode = import ./polymode.nix { inherit pkgs melpaBuild; };
+    poly-markdown = import ./poly-markdown.nix { inherit pkgs melpaBuild self polymode; };
+    poly-erb = import ./poly-erb.nix { inherit pkgs melpaBuild polymode; };
 
     # GitLab bugs: https://github.com/NixOS/nixpkgs/issues/48215
     mu4e-query-fragments = import ./mu4e-query-fragments.nix { inherit super self pkgs melpaBuild; };
@@ -95,6 +98,9 @@ overrides.emacsWithPackages (epkgs: with epkgs; [
   pdf-tools
   pkgs.mu
   projectile
+  polymode
+  poly-erb
+  poly-markdown
   rainbow-mode
   resize-window
   ruby-end
