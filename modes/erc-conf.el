@@ -24,7 +24,7 @@
  '(erc-track-shorten-cutoff 4)
  '(erc-track-switch-from-erc nil)
  '(erc-track-when-inactive nil)
- '(erc-input-line-position -1)
+ '(erc-track-position-in-mode-line t)
  '(erc-timestamp-format "[%H:%M] ")
  '(erc-timestamp-format-left "[%H:%M] ")
  '(erc-insert-timestamp-function 'erc-insert-timestamp-left)
@@ -35,6 +35,7 @@
  '(erc-modules '(autojoin
                  button
                  completion
+                 hl-nicks
                  irccontrols
                  list
                  match
@@ -55,6 +56,11 @@
  '(erc-track-exclude-types '("JOIN" "NICK" "PART" "QUIT" "MODE"
                              "324" "329" "332" "333" "353" "477")))
 
+
+(custom-set-faces
+ '(erc-timestamp-face ((t (:foreground nil :inherit 'mode-line-inactive))))
+ '(erc-input-face ((t (:foreground nil :inherit 'erc-fool-face))))
+ '(erc-my-nick-face ((t (:foreground nil :inherit 'erc-fool-face)))))
 
 ;; Always ignore the bitlbee control channel.
 (add-to-list 'erc-track-exclude "&bitlbee")
@@ -109,7 +115,9 @@ if BUFFER is not currently displayed in a window."
 
 (defun pjones:erc-mode-hook ()
   "Hook run in new ERC buffers."
-  (setq adaptive-wrap-extra-indent 8)
+  (make-local-variable 'scroll-conservatively)
+  (setq scroll-conservatively 1000      ; Don't recenter window
+        adaptive-wrap-extra-indent 8)   ; Leave space for timestamp.
   (visual-line-mode)
   (adaptive-wrap-prefix-mode))
 

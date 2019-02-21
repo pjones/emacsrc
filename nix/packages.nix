@@ -58,6 +58,7 @@ overrides.emacsWithPackages (epkgs: with epkgs; [
   doom-themes
   edit-server
   eimp
+  erc-hl-nicks
   evil
   evil-collection
   evil-commentary
