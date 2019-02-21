@@ -100,6 +100,7 @@ overrides.emacsWithPackages (epkgs: with epkgs; [
   ruby-end
   scad-mode
   shackle
+  smex
   swiper
   switch-window
   treemacs
