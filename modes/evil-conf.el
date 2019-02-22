@@ -4,7 +4,6 @@
 ;;
 ;;; Code:
 (require 'evil)
-(require 'diminish)
 
 ;; Settings:
 (custom-set-variables
@@ -82,23 +81,10 @@
 (evil-define-key 'visual global-map "S"  #'evil-Surround-region)
 (evil-define-key 'normal global-map "z'" #'evil-window-mru)
 
-(defun pjones:evil-commentary-mode-hook ()
-  "Hook for `evil-commentary-mode'."
-  (diminish 'evil-commentary-mode))
-
-(defun pjones:global-evil-fringe-mark-mode-hook ()
-  "Hook for `global-evil-fringe-mark-mode'."
-  (diminish 'global-evil-fringe-mark-mode))
-
 ;; Hooks:
 (add-hook 'post-command-hook #'pjones:evil-update-cursor)
-
 (add-hook 'evil-mode-hook #'evil-commentary-mode)
-(add-hook 'evil-commentary-mode-hook #'pjones:evil-commentary-mode-hook)
-
 (add-hook 'evil-mode-hook #'global-evil-fringe-mark-mode)
-(add-hook 'global-evil-fringe-mark-mode-hook #'pjones:global-evil-fringe-mark-mode-hook)
-
 (add-hook 'evil-mode-hook #'global-evil-surround-mode)
 (add-hook 'evil-mode-hook #'evil-collection-init)
 

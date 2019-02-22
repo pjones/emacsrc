@@ -50,7 +50,6 @@ overrides.emacsWithPackages (epkgs: with epkgs; [
   default-text-scale
   deft
   dictionary
-  diminish
   dired-filter
   dired-narrow
   dired-subtree
