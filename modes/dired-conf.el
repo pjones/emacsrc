@@ -10,11 +10,10 @@
 (require 'dired-aux)
 (require 'dired-filter)
 (require 'dired-narrow)
-(require 'dired-subtree)
+(require 'noccur)
 
-;; Always run commands asynchronously:
-(autoload 'dired-async-mode "dired-async.el" nil t)
-(dired-async-mode 1)
+(declare-function org-open-file "org")
+(declare-function evil-collection-define-key "evil-collection")
 
 ;; Settings:
 (custom-set-variables
@@ -23,19 +22,16 @@
   '(dired-isearch-filenames t)
   '(dired-hide-details-hide-symlink-targets nil)
   '(dired-filter-prefix "/")
-  '(dired-filter-mark-prefix "M")
-  '(dired-subtree-use-backgrounds nil)
-  '(dired-subtree-line-prefix-face nil))
-
-(defvar pjones:dired-subtree-line-prefix "  ·"
-  "Subdirectory prefix for dired-subtree.")
+  '(dired-filter-mark-prefix "M"))
 
 (defun pjones:dired-insert-or-visit ()
-  "If point is on a directory, insert that directory into the
-current dired buffer.  Otherwise visit the file under point."
+  "Visit the file at point.
+
+If point is on a directory, insert that directory into the current
+dired buffer.  Otherwise visit the file under point."
   (interactive)
   (let ((name (dired-get-file-for-visit)))
-    (if (file-directory-p name) (dired-subtree-insert)
+    (if (file-directory-p name) (dired-maybe-insert-subdir name)
       (require 'org)
       (org-open-file name))))
 
@@ -52,68 +48,29 @@ current dired buffer.  Otherwise visit the file under point."
   (dired-unmark-all-marks)
   (dired-toggle-marks))
 
-(defun pjones:dired-find-file ()
-  "Use the current dired directory as a starting point for `find-file'."
-  (interactive)
-  (let ((default-directory (dired-current-directory)))
-    (call-interactively 'find-file)))
-
-(defhydra hydra-dired (:hint nil) "
- ^Narrowing^        ^Marking^           ^Operations^
------------------------------------------------------------
-  _/ n_: name        _M n_: name         _o_: noccur marked
-  _/ r_: regexp      _M r_: regexp       _q_: query replace
-  _/ ._: ext         _M ._: ext          _C_: copy
-  _/ f_: files       _M f_: files        _d_: delete
-  _/ d_: dirs        _M d_: dirs         _R_: rename
-  _/ s_: symlinks    _M s_: symlinks     _T_: touch
-  _/ m_: mode        _M m_: mode         _S_: symlink
-  _/ p_: pop one     _M u_: none         _F_: find
-  _/ /_: pop all     _M a_: all
-"
-  ("/ n" dired-filter-by-name)
-  ("/ r" dired-filter-by-regexp)
-  ("/ ." dired-filter-by-extension)
-  ("/ f" dired-filter-by-file)
-  ("/ d" dired-filter-by-directory)
-  ("/ s" dired-filter-by-symlink)
-  ("/ m" dired-filter-by-mode)
-  ("/ p" dired-filter-pop)
-  ("/ /" dired-filter-pop-all)
-  ("M n" dired-filter-mark-by-name)
-  ("M r" dired-filter-mark-by-regexp)
-  ("M ." dired-filter-mark-by-extension)
-  ("M f" dired-filter-mark-by-file)
-  ("M d" dired-filter-mark-by-directory)
-  ("M s" dired-filter-mark-by-symlink)
-  ("M m" dired-filter-mark-by-mode)
-  ("M u" dired-unmark-all-marks)
-  ("M a" pjones:dired-mark-all-files)
-  ("o" noccur-dired)
-  ("q" dired-do-query-replace-regexp)
-  ("C" dired-do-copy)
-  ("d" dired-flag-file-deletion)
-  ("R" dired-do-rename)
-  ("T" dired-do-touch)
-  ("S" dired-do-relsymlink)
-  ("F" find-dired))
+(defmacro pjones:dired-cwd-do (func)
+  "Call FUNC inside the current file's directory."
+  `(lambda ()
+     (interactive)
+     (let ((default-directory (dired-current-directory)))
+       (call-interactively ,func))))
 
 (defun pjones:dired-load-hook ()
   "Set up `dired-mode'."
   (dired-hide-details-mode) ;; Hide details by default
-  (setq dired-subtree-line-prefix pjones:dired-subtree-line-prefix)
 
   (require 'evil-collection)
   (evil-collection-define-key 'normal 'dired-mode-map
+    "!" (pjones:dired-cwd-do 'dired-do-shell-command)
+    "&" (pjones:dired-cwd-do 'dired-do-async-shell-command)
     (kbd "<return>") #'pjones:dired-insert-or-visit
     "gq"             #'dired-do-query-replace-regexp
-    "go"             #'noccur-dired
-    "zc"             #'dired-subtree-remove)
+    "go"             #'noccur-dired)
 
   (let ((map dired-mode-map))
-    (define-key map (kbd "C-x C-f")  #'pjones:dired-find-file)
-    (define-key map (kbd "C-x n s")  #'dired-subtree-narrow)
-    (define-key map (kbd "C-c C-h")  #'hydra-dired/body)))
+    (define-key map (kbd "!")        (pjones:dired-cwd-do 'dired-do-shell-command))
+    (define-key map (kbd "&")        (pjones:dired-cwd-do 'dired-do-async-shell-command))
+    (define-key map (kbd "C-x C-f")  (pjones:dired-cwd-do 'find-file))))
 
 (add-hook 'dired-mode-hook 'pjones:dired-load-hook)
 (add-hook 'dired-mode-hook 'turn-on-gnus-dired-mode)

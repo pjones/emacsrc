@@ -52,7 +52,6 @@ overrides.emacsWithPackages (epkgs: with epkgs; [
   dictionary
   dired-filter
   dired-narrow
-  dired-subtree
   doom-modeline
   doom-themes
   edit-server
