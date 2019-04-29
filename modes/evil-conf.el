@@ -10,8 +10,9 @@
  '(evil-shift-width 2)
  '(evil-default-cursor 'box)
  '(evil-move-beyond-eol t)
- '(evil-want-fine-undo nil)
+ '(evil-want-fine-undo t)
  '(evil-want-Y-yank-to-eol t)
+ '(evil-cross-lines t)
  '(evil-lookup-func #'man)
  '(evil-symbol-word-search t)
  '(evil-fringe-mark-show-special nil) ; `t' breaks evil-visual-block
@@ -80,6 +81,11 @@
 (evil-define-key 'visual global-map "s"  #'evil-surround-region)
 (evil-define-key 'visual global-map "S"  #'evil-Surround-region)
 (evil-define-key 'normal global-map "z'" #'evil-window-mru)
+
+;; Hybrid evil/Emacs bindings:
+(evil-define-key 'insert global-map (kbd "C-a") #'beginning-of-line)
+(evil-define-key 'insert global-map (kbd "C-e") #'end-of-line)
+(evil-define-key 'insert global-map (kbd "C-k") #'kill-line)
 
 ;; Hooks:
 (add-hook 'post-command-hook #'pjones:evil-update-cursor)
