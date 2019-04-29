@@ -21,6 +21,7 @@
   '(haskell-stylish-on-save nil)
   '(haskell-tags-on-save nil)
   '(haskell-completing-read-function 'ido-completing-read)
+  '(shm-auto-insert-skeletons nil)
   '(dante-repl-command-line '("nix-hs" "repl")))
 
 (defun pjones:haskell-find-cabal-file ()
@@ -37,16 +38,6 @@
   "Open the project's cabal file for editing."
   (interactive)
   (find-file (pjones:haskell-find-cabal-file)))
-
-(defun pjones:haskell-compile (&optional arg)
-  "Compile the current project.
-
-With ARG tack on the word test to the compile command."
-  (interactive "P")
-  (let* ((cabal-file (pjones:haskell-find-cabal-file))
-         (default-directory (file-name-directory cabal-file))
-         (command "nix-hs"))
-    (compile (if arg (concat command " test") command))))
 
 (defun pjones:haskell-beginning-of-defun (&optional arg)
   "Move to the beginning of the current function."
@@ -68,70 +59,16 @@ With ARG tack on the word test to the compile command."
 
 (defun pjones:haskell-module-name ()
   "Return the module name for the current buffer."
-  (let* ((cabal-path (file-name-directory (pjones:haskell-find-cabal-file)))
-         (mod-path   (substring (file-name-sans-extension (buffer-file-name))
-                                (length cabal-path)))
-         (mod-name   (replace-regexp-in-string "/" "." mod-path t t)))
-    (if (string= (substring mod-name 0 4) "src.") (substring mod-name 4)
-      mod-name)))
-
-(defun pjones:haskell-new-module ()
-  "Write out a blank module line."
-  (interactive)
-  (let ((mod-name (pjones:haskell-module-name)))
-    (insert (concat "module " mod-name " () where\n"))))
+  (save-mark-and-excursion
+    (goto-char (point-min))
+    (let ((start (search-forward-regexp "module "))
+          (end (search-forward-regexp "[[:space:]]")))
+      (buffer-substring start (- end 2)))))
 
 (defun pjones:haskell-module-name-to-kill-ring ()
   "Save the module name of the current buffer to the kill ring."
   (interactive)
   (kill-new (pjones:haskell-module-name)))
-
-(defun pjones:haskell-smart-newline ()
-  "Insert a new line below point that looks like the current
-line.  Examples:
-
-  * List item markup in comments
-  * Applicative <$> and <*> lines
-  * Lines that should begin with a pipe
-  * Lines that should begin with a comma (export list, list literals)
-  * Duplicate what's on the line up to a =
-  * Another import statement
-  * Everything on the current line up to point"
-  (interactive)
-  (let ((pt (point)))
-    (beginning-of-line)
-    (cond ((looking-at "\\(--\\s-+\\*\\)")
-           (end-of-line)
-           (newline)
-           (insert (concat (match-string-no-properties 1) " ")))
-          ((looking-at "\\(.*<\\$>\\|\\s-+<\\*>\\)")
-           (end-of-line)
-           (newline)
-           (insert (make-string (- (length (match-string-no-properties 1)) 3) ? ))
-           (insert "<*> "))
-          ((looking-at "\\(data.*=\\|\\s-+|\\)")
-           (end-of-line)
-           (newline)
-           (insert (make-string (- (length (match-string-no-properties 1)) 1) ? ))
-           (insert "| "))
-          ((looking-at "\\(\\s-+[,(]\\|.*[{\\[]\\)")
-           (end-of-line)
-           (newline)
-           (insert (make-string (- (length (match-string-no-properties 1)) 1) ? ))
-           (insert ", "))
-          ((looking-at "\\(.*=\\)")
-           (end-of-line)
-           (newline)
-           (insert (concat (match-string-no-properties 1) " ")))
-          ((looking-at "import\\s-")
-           (end-of-line)
-           (newline)
-           (insert "import "))
-          (t
-           (let ((text (buffer-substring (point) pt)))
-             (end-of-line)
-             (newline)
-             (insert text))))))
 
 (defun pjones:haskell-sort-imports ()
   "If point is in a block of import statements then sort them.
@@ -184,19 +121,31 @@ See `haskell-process-wrapper-function' for details."
   (make-local-variable 'company-backends)
   (add-to-list 'company-backends '(company-ghc company-dabbrev company-abbrev))
 
-  ;; And add some of my own.
+  ;; A few extra key bindings:
   (let ((map haskell-mode-map))
-    (define-key map (kbd "C-c h") 'hydra-haskell/body)
-    (pjones:define-keys-from-hydra map hydra-haskell/heads)))
+    (define-key map (kbd "C-c C-e") #'pjones:haskell-edit-cabal-file)
+    (define-key map (kbd "C-c C-s") #'pjones:haskell-sort-imports)))
 
 (defun pjones:dante-mode-hook ()
   "Peter's hook for Dante."
   (let ((map dante-mode-map))
     (define-key map (kbd "C-c ,") nil)))
 
+(defun pjones:structured-haskell-mode-hook ()
+  "Peter's hook for `structured-haskell-mode'."
+  (let ((map shm-map))
+    (define-key map (kbd "(") nil)
+    (define-key map (kbd ")") nil)
+    (define-key map (kbd "[") nil)
+    (define-key map (kbd "]") nil)
+    (define-key map (kbd "{") nil)
+    (define-key map (kbd "}") nil)
+    (define-key map (kbd "C-c C-e") nil)))
+
 (add-hook 'haskell-mode-hook #'pjones:haskell-mode-hook)
 (add-hook 'haskell-cabal-mode-hook #'pjones:prog-mode-hook)
 (add-hook 'dante-mode-hook #'pjones:dante-mode-hook)
+(add-hook 'structured-haskell-mode-hook #'pjones:structured-haskell-mode-hook)
 
 ;; Local Variables:
 ;; byte-compile-warnings: (not noruntime)
