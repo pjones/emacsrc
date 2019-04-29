@@ -35,17 +35,6 @@ placing it in the kill ring)."
       (delete-region (point) (progn (funcall forward (- arg))
                                     (point))))))
 
-(defun pjones:exchange-point-and-mark (&optional arg)
-  "Exchange point and mark without changing if the region is active.
-
-If the region is active, keep it active.  If the region is
-inactive, keep it inactive.  When ARG is non-nil, negate this
-behavior."
-  (interactive "P")
-  (exchange-point-and-mark
-   (if (region-active-p) arg
-     (not arg))))
-
 (defun pjones:switch-to-previous-buffer ()
   "Switch back to the last buffer shown in this window."
   (interactive)
@@ -201,6 +190,14 @@ current buffer after point."
   (interactive)
   (let ((switch-window-threshold 1))
     (switch-window-then-delete)))
+
+(defun pjones:show-hydra-for-mode ()
+  "Show a hydra for the current mode."
+  (interactive)
+  (let ((func (intern (format "pjones:hydras:%s/body" major-mode))))
+    (if (fboundp func)
+        (call-interactively func)
+      (message "no hydra for %s" major-mode))))
 
 ;; Local Variables:
 ;; byte-compile-warnings: (not noruntime)

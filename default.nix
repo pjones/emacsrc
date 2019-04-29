@@ -38,7 +38,7 @@ pkgs.stdenv.mkDerivation rec {
     export emacspath="${emacsAndPackages}/bin"
 
     substituteAll ${src}/dot.emacs.el "$out/dot.emacs.el"
-    cp -r ${src}/lisp ${src}/modes "$out/emacs.d/"
+    cp -r ${src}/lisp ${src}/modes ${src}/hydras "$out/emacs.d/"
     chmod u+w "$out"/emacs.d/*
 
     for f in ${src}/bin/*; do

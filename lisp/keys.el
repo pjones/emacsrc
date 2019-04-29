@@ -19,8 +19,10 @@
 (declare-function pjones:start-mail "./interactive.el")
 (declare-function pjones:start-term "./interactive.el")
 (declare-function pjones:switch-window-then-delete "./interactive.el")
+(declare-function pjones:show-hydra-for-mode "./interactive.el")
 
 ;; Overriding default key bindings
+(global-set-key (kbd "<f1>")      #'pjones:show-hydra-for-mode)
 (global-set-key (kbd "C-h M-m")   #'describe-mode)
 (global-set-key (kbd "C-r")       #'isearch-backward-regexp)
 (global-set-key (kbd "C-s")       #'isearch-forward-regexp)
