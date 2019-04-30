@@ -21,6 +21,7 @@
   '(dired-auto-revert-buffer t)
   '(dired-isearch-filenames t)
   '(dired-hide-details-hide-symlink-targets nil)
+  '(dired-dwim-target t)
   '(dired-filter-prefix "/")
   '(dired-filter-mark-prefix "M"))
 
