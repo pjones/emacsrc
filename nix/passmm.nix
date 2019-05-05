@@ -9,7 +9,7 @@ melpaBuild {
   version = "20180624.0";
 
   src = pkgs.fetchgit {
-    url = "git://git.devalot.com/passmm.git";
+    url = "https://code.devalot.com/open/passmm.git";
     rev = "b25a92048c788a8477cc5ffe14c0c4a4df19d79a";
     sha256 = "1jg2rs010fmw10ld0bfl6x7af3v9yqfy9ga5ixmam3qpilc8c4fw";
   };
