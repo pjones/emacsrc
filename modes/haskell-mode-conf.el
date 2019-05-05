@@ -6,12 +6,12 @@
 (eval-when-compile
   (require 'cl))
 
-(require 'haskell-mode)
 (require 'company-ghc)
 (require 'dante)
 (require 'flycheck)
 (require 'ghc)
 (require 'haskell)
+(require 'haskell-mode)
 
 (declare-function pjones:prog-mode-hook "../lisp/code.el")
 (declare-function pjones:define-keys-from-hydra "../lisp/functions.el")
@@ -40,7 +40,7 @@
   (find-file (pjones:haskell-find-cabal-file)))
 
 (defun pjones:haskell-beginning-of-defun (&optional arg)
-  "Move to the beginning of the current function."
+  "Move to the beginning of the current function ARG times."
   (dotimes (i (or arg 1))
     (beginning-of-line)
     (while (and (not (bobp)) (or (eolp) (looking-at "^\\s-")))
@@ -49,7 +49,7 @@
         (forward-line -1))) t)
 
 (defun pjones:haskell-end-of-defun (&optional arg)
-  "Move to the end of the current function."
+  "Move to the end of the current function ARG times."
   (dotimes (i (or arg 1))
     (beginning-of-line)
     (while (and (not (eobp)) (looking-at "^\\w"))
@@ -104,15 +104,11 @@ See `haskell-process-wrapper-function' for details."
         beginning-of-defun-function 'pjones:haskell-beginning-of-defun
         end-of-defun-function 'pjones:haskell-end-of-defun)
 
-  ;; Indentation.
-  (haskell-indentation-mode -1)
-  (structured-haskell-mode)
-
+  ;; Load helper packages:
+  (haskell-indentation-mode)
   (pjones:prog-mode-hook)
   (subword-mode)
   (abbrev-mode)
-
-  ;; Linting and checking:
   (dante-mode)
   (flycheck-mode)
   (flycheck-add-next-checker 'haskell-dante '(warning . haskell-hlint))
@@ -131,21 +127,9 @@ See `haskell-process-wrapper-function' for details."
   (let ((map dante-mode-map))
     (define-key map (kbd "C-c ,") nil)))
 
-(defun pjones:structured-haskell-mode-hook ()
-  "Peter's hook for `structured-haskell-mode'."
-  (let ((map shm-map))
-    (define-key map (kbd "(") nil)
-    (define-key map (kbd ")") nil)
-    (define-key map (kbd "[") nil)
-    (define-key map (kbd "]") nil)
-    (define-key map (kbd "{") nil)
-    (define-key map (kbd "}") nil)
-    (define-key map (kbd "C-c C-e") nil)))
-
 (add-hook 'haskell-mode-hook #'pjones:haskell-mode-hook)
 (add-hook 'haskell-cabal-mode-hook #'pjones:prog-mode-hook)
 (add-hook 'dante-mode-hook #'pjones:dante-mode-hook)
-(add-hook 'structured-haskell-mode-hook #'pjones:structured-haskell-mode-hook)
 
 ;; Local Variables:
 ;; byte-compile-warnings: (not noruntime)

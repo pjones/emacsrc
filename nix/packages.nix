@@ -70,7 +70,6 @@ overrides.emacsWithPackages (epkgs: with epkgs; [
   git-annex
   graphviz-dot-mode
   haskell-mode
-  structured-haskell-mode
   htmlize
   http
   hydra
