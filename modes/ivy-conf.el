@@ -14,7 +14,6 @@
  '(ivy-action-wrap t)
  '(ivy-display-style 'fancy)
  '(ivy-on-del-error-function nil)
- '(ivy-extra-directories nil)
  '(ivy-use-virtual-buffers t)
  '(ivy-display-function nil)
  '(ivy-use-selectable-prompt t)
