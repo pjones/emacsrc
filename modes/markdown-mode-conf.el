@@ -3,11 +3,12 @@
 ;;; Commentary:
 ;;
 ;;; Code:
-(require 'markdown-mode)
-(require 'whitespace)
 (require 'company)
-(require 'org)
 (require 'hydra)
+(require 'markdown-mode)
+(require 'org)
+(require 'orgalist)
+(require 'whitespace)
 
 (declare-function pjones:open-line-above "../lisp/interactive.el")
 (declare-function pjones:add-fixme-lock "../lisp/code.el")
@@ -170,7 +171,7 @@ _L_: live              _; c_: fence block
   (local-set-key (kbd "M-<return>") #'pjones:markdown-insert-list-item)
   (local-set-key (kbd "C-c C-h")    #'hydra-markdown/body)
   (whitespace-mode)
-  (orgstruct-mode)
+  (orgalist-mode)
   (orgtbl-mode)
   (pjones:add-fixme-lock)
 

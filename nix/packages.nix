@@ -94,6 +94,7 @@ overrides.emacsWithPackages (epkgs: with epkgs; [
   org-clock-csv
   org-mru-clock
   org-tree-slide
+  orgalist
   passmm
   pdf-tools
   pkgs.mu
