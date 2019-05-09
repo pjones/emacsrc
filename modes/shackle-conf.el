@@ -111,8 +111,7 @@ in PLIST.  ALIST is passed to display functions."
       :custom pjones:shackle-split)
 
      ;; Windows that should split the current window but *not* get focus:
-     ((grep-mode
-       "magit-diff: "
+     (("magit-diff: "
        "\\*HTTP Response.*")
       :regexp t
       :select nil
@@ -121,7 +120,8 @@ in PLIST.  ALIST is passed to display functions."
 
      ;; A very special rule, windows that should be placed in the upper
      ;; right-hand corner of the frame but not take the focus:
-     ((compilation-mode)
+     ((compilation-mode
+       grep-mode)
       :select nil
       :same-mode t
       :frame t
