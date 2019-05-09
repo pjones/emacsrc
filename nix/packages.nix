@@ -64,6 +64,7 @@ overrides.emacsWithPackages (epkgs: with epkgs; [
   evil-fringe-mark
   evil-leader
   evil-magit
+  evil-nl-break-undo
   evil-org
   evil-surround
   flycheck

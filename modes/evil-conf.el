@@ -4,13 +4,14 @@
 ;;
 ;;; Code:
 (require 'evil)
+(require 'evil-nl-break-undo)
 
 ;; Settings:
 (custom-set-variables
  '(evil-shift-width 2)
  '(evil-default-cursor 'box)
  '(evil-move-beyond-eol t)
- '(evil-want-fine-undo t)
+ '(evil-want-fine-undo nil)
  '(evil-want-Y-yank-to-eol t)
  '(evil-cross-lines t)
  '(evil-lookup-func #'man)
@@ -75,6 +76,15 @@
     (setq cursor-type (car cursor))
     (set-face-attribute 'cursor nil :foreground fg :background bg)))
 
+(evil-define-operator pjones:evil-sort (beg end)
+  "Sort text."
+  :move-point nil
+  :type line
+  (save-excursion
+    (condition-case nil
+        (sort-lines nil beg end)
+      (error nil))))
+
 ;; Additional key bindings:
 (evil-define-key 'normal global-map "g " #'just-one-space)
 (evil-define-key 'normal global-map "g'" #'pjones:switch-to-previous-buffer)
@@ -93,5 +103,7 @@
 (add-hook 'evil-mode-hook #'global-evil-fringe-mark-mode)
 (add-hook 'evil-mode-hook #'global-evil-surround-mode)
 (add-hook 'evil-mode-hook #'evil-collection-init)
+(add-hook 'text-mode-hook #'evil-nl-break-undo-mode)
+(add-hook 'prog-mode-hook #'evil-nl-break-undo-mode)
 
 ;;; evil-conf.el ends here

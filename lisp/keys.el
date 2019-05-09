@@ -20,6 +20,7 @@
 (declare-function pjones:start-term "./interactive.el")
 (declare-function pjones:switch-window-then-delete "./interactive.el")
 (declare-function pjones:show-hydra-for-mode "./interactive.el")
+(declare-function pjones:evil-sort "../modes/evil-conf.el")
 
 ;; Overriding default key bindings
 (global-set-key (kbd "<f1>")      #'pjones:show-hydra-for-mode)
@@ -100,7 +101,7 @@
 ;; Evil and evil-leader:
 ;; These need to be set before loading Evil.
 (custom-set-variables
- '(evil-leader/leader ",")              ; Duh.
+ '(evil-leader/leader "SPC")
  '(evil-collection-company-use-tng nil) ; Turn that crap off!
  '(evil-collection-term-sync-state-and-mode-p nil)
  '(evil-collection-setup-minibuffer t)) ; Consistency.
@@ -109,9 +110,17 @@
 (require 'evil-leader)
 
 (evil-leader/set-key
-  "A" #'align
-  "a" #'ialign
-  "s" #'sort-lines)
+  "SPC" #'pjones:switch-to-previous-buffer
+  "A"   #'align
+  "a"   #'ialign
+  "b"   #'ivy-switch-buffer
+  "c"   #'pjones:projectile-compile-project
+  "d"   #'pjones:projectile-dired
+  "f"   #'counsel-find-file
+  "g"   #'next-error
+  "q"   #'kill-this-buffer
+  "s"   #'pjones:evil-sort
+  "w"   #'evil-fill)
 
 ;; Turn on Evil!
 (global-evil-leader-mode)
