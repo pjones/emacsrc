@@ -88,7 +88,6 @@ already been cached."
   (auto-fill-mode)
   (flyspell-prog-mode)
   (electric-pair-mode)
-  (smart-operator-mode)
   (save-place-mode)
   (display-line-numbers-mode)
   (pjones:add-fixme-lock)

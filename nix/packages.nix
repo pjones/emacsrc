@@ -23,7 +23,6 @@ in
 ################################################################################
 # Emacs package list:
 overrides.emacsWithPackages (epkgs: with epkgs; [
-  electric-spacing              # Insert operators with surrounding spaces smartly
   adaptive-wrap                 # Smart line-wrapping with wrap-prefix
   async                         # Asynchronous processing in Emacs
   beginend                      # Redefine M-< and M-> for some modes
