@@ -33,6 +33,8 @@
 ;; The reset of the file is only loaded if we're not in --batch mode.
 (unless noninteractive
   ;; Global minor modes:
+  (global-captain-mode)                   ; Auto capitalization.
+  (global-diff-hl-mode)                   ; Show what changes in a buffer
   (winner-mode)                           ; Track win conifg changes
   (projectile-mode)                       ; Project tool
   (global-auto-revert-mode)               ; External changes cause a revert
@@ -51,7 +53,9 @@
   (require 'saveplace)                    ; Saves your location in files
   (require 'dired-x)                      ; Extra features for dired-mode
   (require 'align)                        ; Align things
+  (require 'vlf-setup)                    ; Deal with large files
 
+  (add-hook 'text-mode-hook           #'abbrev-mode)
   (add-hook 'pjones:after-server-hook #'pjones:maybe-start-edit-server))
 
 ;;; modes.el ends here

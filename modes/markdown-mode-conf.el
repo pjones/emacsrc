@@ -9,6 +9,7 @@
 (require 'org)
 (require 'orgalist)
 (require 'whitespace)
+(require 'darkroom)
 
 (declare-function pjones:open-line-above "../lisp/interactive.el")
 (declare-function pjones:add-fixme-lock "../lisp/code.el")
@@ -89,9 +90,11 @@ increase the indentation by one level."
 (defun pjones:markdown-visual-line ()
   "Don't wrap lines.  Needed for most web forms."
   (interactive)
-  (setq whitespace-style (delq 'lines-tail whitespace-style))
   (auto-fill-mode -1)
-  (visual-line-mode))
+  (whitespace-mode -1)
+  (visual-line-mode)
+  (visual-fill-mode)
+  (darkroom-tentative-mode))
 
 (defun pjones:markdown-follow-thing-at-point (arg)
   "Call (and pass ARG) to `markdown-follow-thing-at-point'."

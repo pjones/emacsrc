@@ -16,6 +16,7 @@
  '(evil-cross-lines t)
  '(evil-lookup-func #'man)
  '(evil-symbol-word-search t)
+ '(evil-search-module 'evil-search)
  '(evil-fringe-mark-show-special nil) ; `t' breaks evil-visual-block
  '(evil-fringe-mark-ignore-chars '(?' ?{ ?} ?^ ?.)))
 

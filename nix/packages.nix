@@ -14,22 +14,8 @@ let
   ##############################################################################
   # Package overrides:
   overrides = (pkgs.emacsPackagesNgGen emacs).overrideScope' (self: super: rec {
-    # Use unstable versions:
-    default-text-scale = self.melpaPackages.default-text-scale;
-    evil-org = self.melpaPackages.evil-org;
-    projectile = self.melpaPackages.projectile;
-
     # Newer versions of existing packages:
     passmm = import ./passmm.nix   { inherit super self pkgs melpaBuild; };
-    doom-modeline = import ./doom-modeline.nix { inherit self pkgs melpaBuild shrink-path; };
-    doom-themes = import ./doom-themes.nix { inherit self pkgs melpaBuild; };
-    polymode = import ./polymode.nix { inherit pkgs melpaBuild; };
-    poly-markdown = import ./poly-markdown.nix { inherit pkgs melpaBuild self polymode; };
-    poly-erb = import ./poly-erb.nix { inherit pkgs melpaBuild polymode; };
-
-    # GitLab bugs: https://github.com/NixOS/nixpkgs/issues/48215
-    mu4e-query-fragments = import ./mu4e-query-fragments.nix { inherit super self pkgs melpaBuild; };
-    shrink-path = import ./shrink-path.nix { inherit super self pkgs melpaBuild; };
   });
 
 in
@@ -37,83 +23,94 @@ in
 ################################################################################
 # Emacs package list:
 overrides.emacsWithPackages (epkgs: with epkgs; [
-  adaptive-wrap
-  async
-  beginend
-  company
-  company-ghc
-  company-quickhelp
-  company-statistics
-  counsel
-  counsel-world-clock
-  dante
-  default-text-scale
-  deft
-  dictionary
-  dired-filter
-  dired-narrow
-  direnv
-  doom-modeline
-  doom-themes
-  edit-server
-  eimp
-  erc-hl-nicks
-  evil
-  evil-collection
-  evil-commentary
-  evil-fringe-mark
-  evil-leader
-  evil-magit
-  evil-nl-break-undo
-  evil-org
-  evil-surround
-  flycheck
-  git-annex
-  graphviz-dot-mode
-  haskell-mode
-  htmlize
-  http
-  hydra
-  ialign
-  indium
-  inf-ruby
-  ivy
-  ivy-hydra
-  ivy-rich
-  js2-mode
-  magit
-  magit-annex
-  markdown-mode
-  minions
-  mu4e-query-fragments
-  nix-mode
-  no-littering
-  noccur
-  org
-  org-bullets
-  org-clock-csv
-  org-mru-clock
-  org-tree-slide
-  orgalist
-  passmm
-  pdf-tools
-  pkgs.mu
-  projectile
-  polymode
-  poly-erb
-  poly-markdown
-  rainbow-mode
-  resize-window
-  ruby-end
-  scad-mode
-  shackle
-  smex
-  swiper
-  switch-window
-  treemacs
-  treemacs-evil
-  treemacs-projectile
-  typescript-mode
-  which-key
-  yaml-mode
+  electric-spacing              # Insert operators with surrounding spaces smartly
+  adaptive-wrap                 # Smart line-wrapping with wrap-prefix
+  async                         # Asynchronous processing in Emacs
+  beginend                      # Redefine M-< and M-> for some modes
+  captain                       # CAPiTalization is Automatic IN emacs
+  company                       # Modular text completion framework
+  company-ghc                   # company-mode ghc-mod backend
+  company-ghci                  # company backend which uses the current ghci process
+  company-quickhelp             # Popup documentation for completion candidates
+  company-statistics            # Sort candidates using completion history
+  counsel                       # Various completion functions using Ivy
+  counsel-world-clock           # Display world clock using Ivy
+  csv-mode                      # Major mode for editing comma/char separated values
+  dante                         # Development mode for Haskell
+  darkroom                      # Remove visual distractions and focus on writing
+  default-text-scale            # Easily adjust the font size in all frames
+  deft                          # quickly browse, filter, and edit plain text notes
+  dictionary                    # Client for rfc2229 dictionary servers
+  diff-hl                       # Highlight uncommitted changes using VC
+  dired-filter                  # Ibuffer-like filtering for dired
+  dired-narrow                  # Live-narrowing of search results for dired
+  direnv                        # direnv support
+  doom-modeline                 # A minimal and modern mode-line
+  doom-themes                   # an opinionated pack of modern color-themes
+  edit-server                   # server that responds to edit requests from Chrome
+  eimp                          # Emacs Image Manipulation Package
+  erc-hl-nicks                  # ERC nick highlighter that ignores uniquifying chars when colorizing
+  evil                          # Extensible Vi layer for Emacs
+  evil-collection               # A set of keybindings for Evil mode
+  evil-commentary               # Comment stuff out. A port of vim-commentary
+  evil-fringe-mark              # Display evil-mode marks in the fringe
+  evil-leader                   # let there be <leader>
+  evil-magit                    # evil-based key bindings for magit
+  evil-nl-break-undo            # Break evil's undo sequence on CR
+  evil-org                      # evil keybindings for org-mode
+  evil-surround                 # emulate surround.vim from Vim
+  evil-textobj-syntax           # Provides syntax text objects
+  flycheck                      # On-the-fly syntax checking
+  git-annex                     # Mode for easy editing of git-annex'd files
+  graphviz-dot-mode             # Mode for the dot-language used by graphviz
+  haskell-mode                  # A Haskell editing mode
+  htmlize                       # Convert buffer text and decorations to HTML
+  http                          # Yet another HTTP client
+  hydra                         # Make bindings that stick around
+  ialign                        # visual align-regexp
+  indium                        # JavaScript Awesome Development Environment
+  inf-ruby                      # Run a Ruby process in a buffer
+  ivy                           # Incremental Vertical completion
+  ivy-hydra                     # Additional key bindings for Ivy
+  ivy-rich                      # More friendly display transformer for ivy
+  js2-mode                      # Improved JavaScript editing mode
+  json-mode                     # Major mode for editing JSON files
+  magit                         # A Git porcelain inside Emacs
+  magit-annex                   # Control git-annex from Magit
+  markdown-mode                 # Major mode for Markdown-formatted text
+  minions                       # A minor-mode menu for the mode line
+  mu4e-query-fragments          # mu4e query fragments extension
+  nix-mode                      # Major mode for editing .nix files
+  no-littering                  # help keeping ~/.emacs.d clean
+  noccur                        # Run multi-occur on project/dired files
+  org                           # Outline-based notes management and organizer
+  org-bullets                   # Show bullets in org-mode as UTF-8 characters
+  org-clock-csv                 # Export `org-mode' clock entries to CSV format
+  org-mru-clock                 # clock in/out of tasks with completion and persistent history
+  org-tree-slide                # A presentation tool for org-mode
+  orgalist                      # Manage Org-like lists in non-Org buffers
+  passmm                        # A minor mode for pass (Password Store).
+  pdf-tools                     # Support library for PDF documents
+  pkgs.mu                       # maildir indexer/searcher + emacs mail client
+  poly-erb                      # Polymode for erb
+  poly-markdown                 # Polymode for markdown-mode
+  polymode                      # Extensible framework for multiple major modes
+  projectile                    # Manage and navigate projects in Emacs easily
+  rainbow-mode                  # Colorize color names in buffers
+  resize-window                 # easily resize windows
+  ruby-end                      # Automatic insertion of end blocks for Ruby
+  scad-mode                     # A major mode for editing OpenSCAD code
+  shackle                       # Enforce rules for popups
+  smartrep                      # Support sequential operation which omitted prefix keys
+  smex                          # M-x interface with Ido-style fuzzy matching
+  swiper                        # Isearch with an overview. Oh, man!
+  switch-window                 # A *visual* way to switch window
+  treemacs                      # A tree style file explorer package
+  treemacs-evil                 # Evil mode integration for treemacs
+  treemacs-projectile           # Projectile integration for treemacs
+  typescript-mode               # Major mode for editing typescript
+  visual-fill                   # Auto-refill paragraphs without modifying the buffer
+  vlf                           # View Large Files
+  which-key                     # Display available keybindings in popup
+  yaml-mode                     # Major mode for editing YAML files
 ])

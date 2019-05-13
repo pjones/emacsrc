@@ -104,7 +104,8 @@
    (quote ("~/notes/agenda/projects.org"
            "~/notes/agenda/tasks.org"
            "~/notes/agenda/review.org"
-           "~/notes/agenda/calendar.org")))
+           "~/notes/agenda/calendar.org"
+           "~/notes/agenda/inbox.org")))
 
  '(org-agenda-window-setup (quote current-window))
  '(org-agenda-todo-ignore-with-date nil)
@@ -139,7 +140,7 @@
                    ((org-agenda-todo-ignore-deadlines (quote future))
                     (org-agenda-todo-ignore-scheduled (quote future))))
              (stuck)
-             (tags "+inbox+LEVEL=2")))
+             (tags "+inbox+LEVEL=2|+orgzly+LEVEL=1")))
            ("p" "Project List"
             ((tags "+project+LEVEL=3")))
            ("e" "Tasks by Energy Level"
