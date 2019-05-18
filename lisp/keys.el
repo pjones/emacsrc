@@ -90,7 +90,7 @@
 (global-set-key (kbd "C-c d") #'pjones:projectile-dired)
 (global-set-key (kbd "C-c e")   pjones:e-map)
 (global-set-key (kbd "C-c f") #'pjones:projectile-find-file)
-(global-set-key (kbd "C-c g") #'projectile-grep)
+(global-set-key (kbd "C-c g") #'deadgrep)
 (global-set-key (kbd "C-c h") #'hl-line-mode)
 (global-set-key (kbd "C-c H") #'highlight-regexp)
 (global-set-key (kbd "C-c i") #'counsel-imenu)

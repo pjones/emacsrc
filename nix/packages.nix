@@ -37,6 +37,7 @@ overrides.emacsWithPackages (epkgs: with epkgs; [
   csv-mode                      # Major mode for editing comma/char separated values
   dante                         # Development mode for Haskell
   darkroom                      # Remove visual distractions and focus on writing
+  deadgrep                      # fast, friendly searching with ripgrep
   default-text-scale            # Easily adjust the font size in all frames
   deft                          # quickly browse, filter, and edit plain text notes
   dictionary                    # Client for rfc2229 dictionary servers
