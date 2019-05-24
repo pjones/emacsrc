@@ -20,6 +20,7 @@
 (add-to-list 'projectile-project-root-files "Rakefile")
 (add-to-list 'projectile-project-root-files "package.json")
 (add-to-list 'projectile-project-root-files-bottom-up ".dir-locals.el")
+(add-to-list 'projectile-project-root-files-bottom-up "Setup.hs")
 
 (projectile-register-project-type
  'edify '("default.nix" "courses" "content")
