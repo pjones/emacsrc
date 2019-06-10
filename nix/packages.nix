@@ -28,8 +28,6 @@ overrides.emacsWithPackages (epkgs: with epkgs; [
   beginend                      # Redefine M-< and M-> for some modes
   captain                       # CAPiTalization is Automatic IN emacs
   company                       # Modular text completion framework
-  company-ghc                   # company-mode ghc-mod backend
-  company-ghci                  # company backend which uses the current ghci process
   company-quickhelp             # Popup documentation for completion candidates
   company-statistics            # Sort candidates using completion history
   counsel                       # Various completion functions using Ivy

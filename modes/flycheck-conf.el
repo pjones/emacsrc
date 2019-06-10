@@ -6,7 +6,7 @@
 (require 'flycheck)
 
 (custom-set-variables
- '(flycheck-disabled-checkers '(javascript-eslint javascript-gjslint))
+ '(flycheck-disabled-checkers '(javascript-gjslint))
  '(flycheck-standard-error-navigation nil)
  '(flymake-no-changes-timeout nil)
  '(flymake-start-syntax-check-on-newline nil)

@@ -110,7 +110,6 @@
 (require 'evil-leader)
 
 (evil-leader/set-key
-  "SPC" #'pjones:switch-to-previous-buffer
   "A"   #'align
   "a"   #'ialign
   "b"   #'ivy-switch-buffer

@@ -11,7 +11,7 @@
 
 ;; Settings for company-mode:
 (custom-set-variables
-  '(company-idle-delay nil)
+  '(company-idle-delay 1)
   '(company-show-numbers nil)
   '(company-selection-wrap-around t)
   '(company-lighter-base "")
@@ -50,7 +50,7 @@
     (define-key map (kbd "M-j")      #'company-select-next)
     (define-key map (kbd "M-k")      #'company-select-previous))
 
-  (company-quickhelp-mode +1)
+  (company-quickhelp-mode)
   (company-statistics-mode))
 
 (add-hook 'company-mode-hook 'pjones:company-mode-hook)
