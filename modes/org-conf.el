@@ -192,6 +192,10 @@
   (evil-define-key 'normal evil-org-mode-map "gk" #'outline-up-heading)
   (evil-define-key 'motion evil-org-mode-map "gk" #'outline-up-heading)
 
+  ;; Makes things prettier:
+  (push '("[ ]" . "☐") prettify-symbols-alist)
+  (push '("[X]" . "☑") prettify-symbols-alist)
+  (push '("[-]" . "❍") prettify-symbols-alist)
 
   ;; Extra Bindings
   (org-defkey org-mode-map "\C-\M-f"   'org-metaright)

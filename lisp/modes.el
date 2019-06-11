@@ -45,6 +45,7 @@
   (which-key-mode)                        ; Remind me what keys do.
   (minions-mode)                          ; Hide some minor modes.
   (direnv-mode)                           ; Respect .envrc files.
+  (global-prettify-symbols-mode)          ; Replace buffer symbols.
 
   ;; Other modes that need to be activated:
   (pdf-tools-install)                     ; Internal PDF viewer
