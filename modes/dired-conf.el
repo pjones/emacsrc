@@ -10,6 +10,7 @@
 (require 'dired-aux)
 (require 'dired-filter)
 (require 'dired-narrow)
+(require 'dired-subtree)
 (require 'noccur)
 
 (declare-function org-open-file "org")
@@ -23,7 +24,9 @@
   '(dired-hide-details-hide-symlink-targets nil)
   '(dired-dwim-target t)
   '(dired-filter-prefix "/")
-  '(dired-filter-mark-prefix "M"))
+  '(dired-filter-mark-prefix "M")
+  '(dired-subtree-line-prefix-face 'subtree)
+  '(dired-subtree-use-backgrounds nil))
 
 (defun pjones:dired-insert-or-visit ()
   "Visit the file at point.
@@ -32,7 +35,7 @@ If point is on a directory, insert that directory into the current
 dired buffer.  Otherwise visit the file under point."
   (interactive)
   (let ((name (dired-get-file-for-visit)))
-    (if (file-directory-p name) (dired-maybe-insert-subdir name)
+    (if (file-directory-p name) (dired-subtree-toggle)
       (require 'org)
       (org-open-file name))))
 
@@ -65,8 +68,12 @@ dired buffer.  Otherwise visit the file under point."
     "!" (pjones:dired-cwd-do 'dired-do-shell-command)
     "&" (pjones:dired-cwd-do 'dired-do-async-shell-command)
     (kbd "<return>") #'pjones:dired-insert-or-visit
+    "gk"             #'dired-subtree-up
+    "gj"             #'dired-subtree-down
     "gq"             #'dired-do-query-replace-regexp
-    "go"             #'noccur-dired)
+    "go"             #'noccur-dired
+    "yn"             #'dired-copy-filename-as-kill
+    "yp"             '(lambda () (interactive) (dired-copy-filename-as-kill '(nil . nil))))
 
   (let ((map dired-mode-map))
     (define-key map (kbd "!")        (pjones:dired-cwd-do 'dired-do-shell-command))

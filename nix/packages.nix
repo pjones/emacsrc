@@ -42,6 +42,7 @@ overrides.emacsWithPackages (epkgs: with epkgs; [
   diff-hl                       # Highlight uncommitted changes using VC
   dired-filter                  # Ibuffer-like filtering for dired
   dired-narrow                  # Live-narrowing of search results for dired
+  dired-subtree                 # Insert subdirectories in a tree-like fashion
   direnv                        # direnv support
   doom-modeline                 # A minimal and modern mode-line
   doom-themes                   # an opinionated pack of modern color-themes
