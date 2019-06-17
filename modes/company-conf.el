@@ -12,24 +12,15 @@
 ;; Settings for company-mode:
 (custom-set-variables
   '(company-idle-delay 1)
-  '(company-show-numbers nil)
+  '(company-show-numbers t)
   '(company-selection-wrap-around t)
-  '(company-lighter-base "")
   '(company-dabbrev-ignore-case nil)
   '(company-dabbrev-downcase nil)
   '(company-dabbrev-code-other-buffers t)
   '(company-tooltip-align-annotations t)
   '(company-require-match 'never)
   '(company-quickhelp-use-propertized-text t)
-  '(company-transformers '(company-sort-by-occurrence))
-  '(company-frontends '(company-pseudo-tooltip-frontend
-                        company-echo-metadata-frontend))
-  '(company-backends '((company-capf
-                        company-abbrev
-                        company-dabbrev
-                        company-keywords
-                        company-files
-                        company-ispell))))
+  '(company-transformers '(company-sort-by-occurrence)))
 
 (defun pjones:company-mode-hook ()
   "Peter's mode hook for company-mode."
