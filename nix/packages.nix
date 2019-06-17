@@ -63,6 +63,7 @@ overrides.emacsWithPackages (epkgs: with epkgs; [
   git-annex                     # Mode for easy editing of git-annex'd files
   graphviz-dot-mode             # Mode for the dot-language used by graphviz
   haskell-mode                  # A Haskell editing mode
+  hasky-extensions              # Toggle Haskell language extensions
   htmlize                       # Convert buffer text and decorations to HTML
   http                          # Yet another HTTP client
   hydra                         # Make bindings that stick around

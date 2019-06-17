@@ -15,10 +15,8 @@
 (require 'direnv)
 (require 'evil-leader)
 (require 'flycheck)
-(require 'haskell)
-(require 'haskell-interactive-mode)
 (require 'haskell-mode)
-(require 'haskell-process)
+(require 'hasky-extensions)
 
 (declare-function pjones:prog-mode-hook "../lisp/code.el")
 
@@ -27,16 +25,22 @@
   '(haskell-stylish-on-save nil)
   '(haskell-tags-on-save t)
   '(haskell-completing-read-function 'ivy-completing-read)
-  '(haskell-process-type 'cabal-new-repl)
-  '(haskell-process-suggest-hoogle-imports t)
-  '(dante-repl-command-line '("cabal" "new-repl")))
+  '(dante-repl-command-line '("nix-hs" "repl")))
 
 ;; A few extra key bindings:
 (evil-leader/set-key-for-mode 'haskell-mode
   "SPC e" #'haskell-cabal-visit-file
   "SPC i" #'haskell-navigate-imports
   "SPC s" #'haskell-sort-imports
-  "SPC t" #'dante-info)
+  "SPC t" #'dante-type-at
+  "SPC x" #'pjones:hasky-extensions
+  "SPC y" #'dante-info)
+
+(evil-leader/set-key-for-mode 'haskell-cabal-mode
+  "SPC s" #'haskell-cabal-subsection-arrange-lines)
+
+(evil-define-key 'normal haskell-cabal-mode-map "gj" #'haskell-cabal-next-section)
+(evil-define-key 'normal haskell-cabal-mode-map "gk" #'haskell-cabal-previous-section)
 
 ;; This overwrite fixes a bug where imports are not sorted because I
 ;; put a comment line above them.
@@ -45,6 +49,16 @@
   (while (looking-at "^import") (forward-line -1))
   (forward-line 1))
 
+(defun pjones:hasky-extensions ()
+  "Wrapper around `hasky-extensions'.
+A version of `hasky-extensions' that doesn't use avy."
+  (interactive)
+  (let* ((exts hasky-extensions)
+         (active (hasky-extensions-list))
+         (name (ivy-completing-read "Extension: " exts nil t)))
+    (if (member name active) (hasky-extensions-remove name)
+      (hasky-extensions-add name))))
+
 (defun pjones:haskell-mode-hook ()
   "Hook run on new Haskell buffers."
   ;; Update environment variables (i.e. PATH) first!
@@ -52,17 +66,11 @@
 
   ;; Boot `haskell-mode':
   (haskell-indentation-mode)
-  (interactive-haskell-mode)
-  (haskell-process-load-file)
-
-  ;; Configure completion:
-  (make-local-variable 'company-backends)
-  (add-to-list 'company-backends '(company-capf company-dabbrev company-abbrev))
+  (dante-mode)
 
   ;; Load helper packages:
   (pjones:prog-mode-hook)
   (flycheck-mode)
-  (dante-mode)
   (subword-mode)
   (abbrev-mode))
 
