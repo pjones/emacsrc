@@ -77,6 +77,11 @@
     (setq cursor-type (car cursor))
     (set-face-attribute 'cursor nil :foreground fg :background bg)))
 
+(defun pjones:evil-mode-hook ()
+  "Hook fun by `evil-mode'."
+  ;; Put buffers back into the correct mode after saving them:
+  (add-hook 'after-save-hook #'evil-change-to-initial-state))
+
 (evil-define-operator pjones:evil-sort (beg end)
   "Sort text."
   :move-point nil
@@ -100,11 +105,12 @@
 
 ;; Hooks:
 (add-hook 'post-command-hook #'pjones:evil-update-cursor)
-(add-hook 'evil-mode-hook #'evil-commentary-mode)
-(add-hook 'evil-mode-hook #'global-evil-fringe-mark-mode)
-(add-hook 'evil-mode-hook #'global-evil-surround-mode)
-(add-hook 'evil-mode-hook #'evil-collection-init)
-(add-hook 'text-mode-hook #'evil-nl-break-undo-mode)
-(add-hook 'prog-mode-hook #'evil-nl-break-undo-mode)
+(add-hook 'evil-mode-hook    #'pjones:evil-mode-hook)
+(add-hook 'evil-mode-hook    #'evil-commentary-mode)
+(add-hook 'evil-mode-hook    #'global-evil-fringe-mark-mode)
+(add-hook 'evil-mode-hook    #'global-evil-surround-mode)
+(add-hook 'evil-mode-hook    #'evil-collection-init)
+(add-hook 'text-mode-hook    #'evil-nl-break-undo-mode)
+(add-hook 'prog-mode-hook    #'evil-nl-break-undo-mode)
 
 ;;; evil-conf.el ends here
