@@ -33,7 +33,6 @@
 ;; The reset of the file is only loaded if we're not in --batch mode.
 (unless noninteractive
   ;; Global minor modes:
-  (global-captain-mode)                   ; Auto capitalization.
   (global-diff-hl-mode)                   ; Show what changes in a buffer
   (winner-mode)                           ; Track win conifg changes
   (projectile-mode)                       ; Project tool

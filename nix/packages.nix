@@ -26,7 +26,6 @@ overrides.emacsWithPackages (epkgs: with epkgs; [
   adaptive-wrap                 # Smart line-wrapping with wrap-prefix
   async                         # Asynchronous processing in Emacs
   beginend                      # Redefine M-< and M-> for some modes
-  captain                       # CAPiTalization is Automatic IN emacs
   company                       # Modular text completion framework
   company-quickhelp             # Popup documentation for completion candidates
   company-statistics            # Sort candidates using completion history
