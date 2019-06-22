@@ -79,7 +79,6 @@ overrides.emacsWithPackages (epkgs: with epkgs; [
   magit-annex                   # Control git-annex from Magit
   markdown-mode                 # Major mode for Markdown-formatted text
   minions                       # A minor-mode menu for the mode line
-  mu4e-query-fragments          # mu4e query fragments extension
   nix-mode                      # Major mode for editing .nix files
   no-littering                  # help keeping ~/.emacs.d clean
   noccur                        # Run multi-occur on project/dired files

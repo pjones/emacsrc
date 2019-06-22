@@ -6,7 +6,6 @@
 (require 'smtpmail)
 (require 'mu4e)
 (require 'org-mu4e)
-(require 'mu4e-query-fragments)
 
 ;; Functions:
 (defun pjones:mu4e-match-func-devalot (msg)
@@ -44,6 +43,14 @@
          (dir (file-name-nondirectory maildir)))
     (concat prefix "/" dir)))
 
+(defvar pjones:mu4e-trash
+  "(maildir:/devalot/Trash OR maildir:/rfa/\"Deleted Items\")"
+  "A mu query for trash folders.")
+
+(defvar pjones:mu4e-mlists
+  "maildir:/devalot/mlists"
+  "A mu query for mailing lists folder.")
+
 ;; General Settings:
 (custom-set-variables
   '(mail-user-agent 'mu4e-user-agent)
@@ -64,6 +71,8 @@
   '(mu4e-headers-sort-field :date)
   '(mu4e-headers-sort-direction 'ascending)
   '(mu4e-headers-results-limit 200)
+  '(mu4e-headers-include-related nil)
+  '(mu4e-headers-show-threads nil)
   '(mu4e-date-format-long "%c")
   '(mu4e-view-show-images nil) ;; Disable tracking images!
   '(mu4e-view-show-addresses t)
@@ -84,16 +93,16 @@
             ("/devalot/Junk"  . ?j)
             ("/rfa/Inbox"     . ?I))))
 
-  '(mu4e-query-fragments-list
-    (quote (("%trash" . "( maildir:/devalot/Trash OR maildir:/rfa/\"Deleted Items\" )")
-            ("%list"  . "maildir:/devalot/mlists"))))
+  `(mu4e-bookmarks
+    (quote ((,(concat "flag:unread AND NOT " pjones:mu4e-trash
+                      " AND NOT " pjones:mu4e-mlists
+                      " AND NOT m:/devalot/Archive")
+             "Unread messages" ?u)
 
-  '(mu4e-bookmarks
-    (quote (("flag:unread AND NOT %trash AND NOT %list" "Unread messages" ?u)
-            ("flag:unread AND %list" "Unread lists" ?l)
+            (,(concat "flag:unread AND " pjones:mu4e-mlists) "Unread lists" ?l)
             ("m:/devalot/Sent d:today..now" "Sent today" ?s)
             ("m:/devalot/Archive d:1w..now" "Archived this week" ?a)
-            ("flag:flagged AND NOT %trash" "Flagged messages" ?f)))))
+            ("flag:flagged" "Flagged messages" ?f)))))
 
 ;; Contexts:
 (setq mu4e-contexts
