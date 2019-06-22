@@ -4,6 +4,7 @@
 ;;
 ;;; Code:
 (require 'magit)
+(require 'forge)
 
 (custom-set-variables
  '(magit-popup-use-prefix-argument 'default)

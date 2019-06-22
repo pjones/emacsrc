@@ -59,6 +59,7 @@ overrides.emacsWithPackages (epkgs: with epkgs; [
   evil-surround                 # emulate surround.vim from Vim
   evil-textobj-syntax           # Provides syntax text objects
   flycheck                      # On-the-fly syntax checking
+  forge                         # Access Git forges from Magit
   git-annex                     # Mode for easy editing of git-annex'd files
   graphviz-dot-mode             # Mode for the dot-language used by graphviz
   haskell-mode                  # A Haskell editing mode
