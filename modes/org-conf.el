@@ -3,13 +3,14 @@
 (declare-function whitespace-mode "whitespace")
 (declare-function org-bookmark-jump-unhide "org")
 
+(require 'dbus)
+(require 'org)
+(require 'org-agenda)
+(require 'org-clock)
+(require 'org-clock-csv)
+(require 'org-id)
 (require 'saveplace)
 (require 'whitespace)
-(require 'org)
-(require 'org-clock)
-(require 'org-agenda)
-(require 'org-id)
-(require 'org-clock-csv)
 
 (require 'org-bullets)
 (add-hook 'org-mode-hook #'org-bullets-mode)
@@ -298,6 +299,35 @@ arrangement."
          (if (display-graphic-p) 'reorganize-frame
            'current-window)))
     (org-edit-special arg)))
+
+(defun pjones:org-clock-update-dbus ()
+  "Broadcast a D-Bus signal with the latest `org-clock' data.
+
+This exposes the current clock's start time and heading to any process
+listening to the correct D-Bus signal.
+
+You can monitor this signal via the following command:
+
+    dbus-monitor type='signal',interface='org.gnu.Emacs.Org.Clock'
+
+Read the code below for the two event names and the signal arguments
+they provide."
+  (if (org-clocking-p)
+      (let ((start-time (floor (float-time org-clock-start-time)))
+            (description org-clock-heading))
+        (dbus-send-signal
+         :session nil dbus-path-emacs
+         (concat dbus-interface-emacs ".Org.Clock") "Started"
+         start-time description))
+    (dbus-send-signal
+     :session nil dbus-path-emacs
+     (concat dbus-interface-emacs ".Org.Clock") "Stopped")))
+
+(let ((hooks '( org-clock-in-hook
+                org-clock-out-hook
+                org-clock-cancel-hook )))
+  (dolist (hook hooks)
+    (add-hook hook #'pjones:org-clock-update-dbus)))
 
 ;; Local Variables:
 ;; byte-compile-warnings: (not noruntime)
