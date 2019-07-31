@@ -166,7 +166,7 @@ file.  With a prefix argument kill the entire path for the file."
   "Start org-agenda with my custom agenda view"
   (interactive)
   (require 'org)
-  (let ((default-directory "~/notes"))
+  (let ((default-directory "~/notes/"))
     (org-agenda nil "c")))
 
 (defun pjones:uuid ()

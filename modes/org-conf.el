@@ -50,6 +50,13 @@
  '(org-id-link-to-org-use-id t)
  '(org-edit-src-persistent-message nil)
  '(org-src-window-setup (quote current-window))
+ '(org-attach-directory "attachments/")
+ '(org-attach-commit nil)
+ '(org-attach-git-annex-cutoff nil)
+ '(org-attach-annex-auto-get nil)
+ '(org-attach-method 'ln)
+ '(org-attach-store-link-p t)
+ '(org-attach-archive-delete t)
 
  ;; Showing context
  '(org-show-hierarchy-above t)
