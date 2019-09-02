@@ -89,6 +89,7 @@ already been cached."
   (electric-pair-mode)
   (save-place-mode)
   (display-line-numbers-mode)
+  (setq display-line-numbers 'relative)
   (pjones:add-fixme-lock)
   (add-hook 'before-save-hook 'delete-trailing-whitespace)
   (add-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p))
