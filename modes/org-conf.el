@@ -138,17 +138,17 @@
  '(org-agenda-custom-commands
    (quote (("c" "Current Status"
             ((agenda)
-             (tags-todo "@phone"
-                   ((org-agenda-todo-ignore-deadlines (quote all))
-                    (org-agenda-todo-ignore-scheduled (quote all))))
-             (tags-todo "@email"
-                   ((org-agenda-todo-ignore-deadlines (quote all))
-                    (org-agenda-todo-ignore-scheduled (quote all))))
              (todo "WAITING"
                    ((org-agenda-todo-ignore-deadlines (quote future))
                     (org-agenda-todo-ignore-scheduled (quote future))))
+             (tags-todo "@phone|@email"
+                   ((org-agenda-todo-ignore-deadlines (quote all))
+                    (org-agenda-todo-ignore-scheduled (quote all))))
              (stuck)
-             (tags "+inbox+LEVEL=2|+orgzly+LEVEL=1")))
+             (tags "+inbox+LEVEL=2|+orgzly+LEVEL=1")
+             (todo "NEXT"
+                   ((org-agenda-todo-ignore-deadlines (quote all))
+                    (org-agenda-todo-ignore-scheduled (quote all))))))
            ("p" "Project List"
             ((tags "+project+LEVEL=3")))
            ("e" "Tasks by Energy Level"
