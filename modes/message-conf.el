@@ -2,45 +2,70 @@
 ;;; Commentary:
 ;;; Code:
 (require 'company)
-(require 'mml)
+(require 'evil-leader)
 (require 'message)
-(require 'hydra)
+(require 'mml)
 
-(defhydra hydra-message (:hint nil :color blue)
-  "
-^Actions^          ^Fields^
----------------------------------
- _b_: body         _f t_: to
- _i_: sig          _f o_: from
- _c_: send         _f b_: bcc
- _s_: strip        _f c_: cc
- _a_: attach       _f s_: subj
- _e_: encrypt
-"
-  ("b"   message-goto-body)
-  ("i"   message-goto-signature)
-  ("c"   message-send-and-exit)
-  ("s"   message-kill-to-signature)
-  ("a"   mml-attach-file)
-  ("e"   mml-secure-message-sign-encrypt)
-  ("f t" message-goto-to)
-  ("f o" message-goto-from)
-  ("f b" message-goto-bcc)
-  ("f c" message-goto-cc)
-  ("f s" message-goto-subject))
+;; A few extra key bindings:
+(evil-leader/set-key-for-mode 'mu4e-compose-mode
+  "SPC b" #'message-goto-body
+  "SPC c" #'message-goto-cc
+  "SPC e" #'mml-secure-message-sign-encrypt
+  "SPC f" #'message-goto-from
+  "SPC h" #'pjones:mu4e-convert-to-html
+  "SPC i" #'message-goto-signature
+  "SPC l" #'message-goto-bcc
+  "SPC s" #'message-goto-subject
+  "SPC t" #'message-goto-to
+  "SPC x" #'message-kill-to-signature)
+
+(defun pjones:mu4e-convert-to-html ()
+  "Turn the current email into HTML using Markdown."
+  (interactive)
+  (save-excursion
+    (message-goto-body)
+    (let* ((sig-point
+            (save-excursion
+              (message-goto-signature)
+              (forward-line -1)
+              (point)))
+           (subject-start
+            (save-excursion
+              (message-goto-subject)
+              (message-beginning-of-line 1)
+              (point)))
+           (subject-text
+            (save-excursion
+              (goto-char subject-start)
+              (move-end-of-line 1)
+              (buffer-substring-no-properties
+               subject-start (point))))
+           (plain-txt (buffer-substring-no-properties (point) (point-max)))
+           (pandoc (concat
+                    "pandoc -f markdown -t html -s -V pagetitle:"
+                    (shell-quote-argument subject-text))))
+
+      ;; Manipulate the signature so it converts to HTML.
+      (save-excursion
+        (goto-char sig-point)
+        (let ((kill-whole-line nil)) (kill-line))
+        (insert "<hr/>")
+        (while (re-search-forward "^" nil t)
+          (replace-match "| " nil nil)))
+
+      (shell-command-on-region (point) (point-max) pandoc nil t)
+      (insert "<#multipart type=alternative>\n")
+      (insert plain-txt)
+      (insert "<#part type=text/html>\n")
+      (exchange-point-and-mark)
+      (insert "<#/multipart>\n"))))
 
 (defun pjones:message-mode-hook ()
   "Configure message mode to my liking."
   ;; Configure completion:
   (make-local-variable 'company-backends)
-  (add-to-list 'company-backends 'company-ispell)
-
-  ;; Key bindings:
-  (local-set-key (kbd "C-c h")   #'hydra-message/body)
-  (local-set-key (kbd "C-c C-s") #'message-kill-to-signature)
-  (local-set-key (kbd "C-c C-e") #'mml-secure-message-sign-encrypt))
+  (add-to-list 'company-backends 'company-ispell))
 
 (add-hook 'message-mode-hook #'pjones:message-mode-hook)
 
-(provide 'message-conf)
 ;;; message-conf.el ends here
