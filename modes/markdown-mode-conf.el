@@ -4,12 +4,13 @@
 ;;
 ;;; Code:
 (require 'company)
-(require 'hydra)
+(require 'darkroom)
+(require 'evil-leader)
 (require 'markdown-mode)
 (require 'org)
 (require 'orgalist)
+(require 'visual-fill)
 (require 'whitespace)
-(require 'darkroom)
 
 (declare-function pjones:open-line-above "../lisp/interactive.el")
 (declare-function pjones:add-fixme-lock "../lisp/code.el")
@@ -17,7 +18,7 @@
 ;; Basic settings.
 (custom-set-variables
  '(markdown-reference-location 'end)
- '(markdown-command "nix-shell -p pandoc --run 'pandoc -f markdown -t html'"))
+ '(markdown-command "pandoc -f markdown -t html"))
 
 (defvar pjones:markdown-attachments-directory
   "attachments"
@@ -130,49 +131,22 @@ directory.  Optionally renaming FILE to NAME."
      (file-name-nondirectory name)
      (file-relative-name dest))))
 
-(defhydra hydra-markdown (:hint nil :color blue) "
-^Links^                ^Cleanup^            ^Headings and Lists^
------------------------------------------------------------------
-_i_: insert            _r_: renumber        _f_: demote
-_j_: jump              _/_: complete        _b_: promote
-_c_: check             ^ ^                  _n_: down
-_a_: attach            ^ ^                  _p_: up
-^ ^                    ^ ^                  _N_: move down
-^ ^                    ^ ^                  _P_: move up
-
-^Render^               ^Insert^
------------------------------------------------------------------
-_l_: preview           _; i_: fence insert
-_L_: live              _; c_: fence block
-^ ^                    _; n_: note
-^ ^                    ^   ^
-"
-  ("i" markdown-insert-link)
-  ("j" markdown-do)
-  ("c" markdown-check-refs)
-  ("a" pjones:markdown-attach-file)
-  ("r" markdown-cleanup-list-numbers)
-  ("n" markdown-outline-next :color red)
-  ("p" markdown-outline-previous :color red)
-  ("f" markdown-demote :color red)
-  ("b" markdown-promote :color red)
-  ("N" markdown-move-down :color red)
-  ("P" markdown-move-up :color red)
-  ("/" markdown-complete)
-  ("l" markdown-preview)
-  ("L" markdown-live-preview-mode)
-  ("; i" pjones:markdown-slide-fenced-code-insert)
-  ("; c" pjones:markdown-slide-fenced-code-block)
-  ("; n" pjones:markdown-slide-notes))
+;; A few extra key bindings:
+(evil-leader/set-key-for-mode 'markdown-mode
+  "SPC a" #'pjones:markdown-attach-file
+  "SPC c" #'pjones:markdown-slide-fenced-code-block
+  "SPC i" #'pjones:markdown-slide-fenced-code-insert
+  "SPC l" #'markdown-live-preview-mode
+  "SPC n" #'pjones:markdown-slide-notes
+  "SPC p" #'markdown-preview
+  "SPC r" #'markdown-cleanup-list-numbers)
 
 (defun pjones:markdown-mode-hook ()
   "Set up key bindings and other crap for markdown-mode."
-  (local-set-key (kbd "C-c C-a")    #'pjones:markdown-attach-file)
   (local-set-key (kbd "C-c C-o")    #'pjones:markdown-follow-thing-at-point)
   (local-set-key (kbd "C-c /")      #'markdown-complete)
   (local-set-key (kbd "C-<return>") #'markdown-insert-header-dwim)
   (local-set-key (kbd "M-<return>") #'pjones:markdown-insert-list-item)
-  (local-set-key (kbd "C-c C-h")    #'hydra-markdown/body)
   (whitespace-mode)
   (orgalist-mode)
   (orgtbl-mode)
