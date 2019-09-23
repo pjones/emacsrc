@@ -101,7 +101,7 @@
 ;; Evil and evil-leader:
 ;; These need to be set before loading Evil.
 (custom-set-variables
- '(evil-leader/leader "SPC")
+ '(evil-leader/leader "C-M-,")
  '(evil-collection-company-use-tng nil) ; Turn that crap off!
  '(evil-collection-term-sync-state-and-mode-p nil)
  '(evil-collection-setup-minibuffer t)) ; Consistency.
@@ -110,13 +110,15 @@
 (require 'evil-leader)
 
 (evil-leader/set-key
-  "A"   #'align
   "a"   #'ialign
   "b"   #'ivy-switch-buffer
   "c"   #'pjones:projectile-compile-project
   "d"   #'pjones:projectile-dired
   "f"   #'counsel-find-file
   "g"   #'next-error
+  "m"   #'magit-status
+  "n"   #'flycheck-next-error
+  "'"   #'pjones:switch-to-previous-buffer
   "q"   #'kill-this-buffer
   "s"   #'pjones:evil-sort
   "w"   #'evil-fill)

@@ -29,15 +29,15 @@
 
 ;; A few extra key bindings:
 (evil-leader/set-key-for-mode 'haskell-mode
-  "SPC e" #'haskell-cabal-visit-file
-  "SPC i" #'haskell-navigate-imports
-  "SPC s" #'haskell-sort-imports
-  "SPC t" #'dante-type-at
-  "SPC x" #'pjones:hasky-extensions
-  "SPC y" #'dante-info)
+  "E" #'haskell-cabal-visit-file
+  "I" #'haskell-navigate-imports
+  "S" #'haskell-sort-imports
+  "T" #'dante-type-at
+  "X" #'pjones:hasky-extensions
+  "Y" #'dante-info)
 
 (evil-leader/set-key-for-mode 'haskell-cabal-mode
-  "SPC s" #'haskell-cabal-subsection-arrange-lines)
+  "S" #'haskell-cabal-subsection-arrange-lines)
 
 (evil-define-key 'normal haskell-cabal-mode-map "gj" #'haskell-cabal-next-section)
 (evil-define-key 'normal haskell-cabal-mode-map "gk" #'haskell-cabal-previous-section)
