@@ -110,6 +110,7 @@ overrides.emacsWithPackages (epkgs: with epkgs; [
   typescript-mode               # Major mode for editing typescript
   visual-fill                   # Auto-refill paragraphs without modifying the buffer
   vlf                           # View Large Files
+  wgrep                         # Writable grep buffer and apply the changes to files
   which-key                     # Display available keybindings in popup
   yaml-mode                     # Major mode for editing YAML files
 ])
