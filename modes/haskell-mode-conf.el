@@ -25,7 +25,7 @@
   '(haskell-stylish-on-save nil)
   '(haskell-tags-on-save t)
   '(haskell-completing-read-function 'ivy-completing-read)
-  '(dante-repl-command-line '("nix-hs" "repl")))
+  '(dante-repl-command-line nil))
 
 ;; A few extra key bindings:
 (evil-leader/set-key-for-mode 'haskell-mode
