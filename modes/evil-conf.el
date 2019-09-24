@@ -5,6 +5,7 @@
 ;;; Code:
 (require 'evil)
 (require 'evil-nl-break-undo)
+(require 'evil-surround)
 
 ;; Settings:
 (custom-set-variables
@@ -94,14 +95,15 @@
 ;; Additional key bindings:
 (evil-define-key 'normal global-map "g "  #'just-one-space)
 (evil-define-key 'normal global-map "g'"  #'pjones:switch-to-previous-buffer)
+(evil-define-key 'normal global-map "gs"  #'evil-surround-edit)
 (evil-define-key 'visual global-map "s"   #'evil-surround-region)
 (evil-define-key 'visual global-map "S"   #'evil-Surround-region)
 (evil-define-key 'normal global-map "z'"  #'evil-window-mru)
 
-(define-key evil-normal-state-map (kbd "SPC") #'evil-scroll-page-down)
-(define-key evil-normal-state-map (kbd "DEL") #'evil-scroll-page-up)
-(define-key evil-motion-state-map (kbd "SPC") #'evil-scroll-page-down)
-(define-key evil-motion-state-map (kbd "DEL") #'evil-scroll-page-up)
+(define-key evil-normal-state-map (kbd "C-SPC") #'evil-scroll-page-down)
+(define-key evil-normal-state-map (kbd "C-DEL") #'evil-scroll-page-up)
+(define-key evil-motion-state-map (kbd "C-SPC") #'evil-scroll-page-down)
+(define-key evil-motion-state-map (kbd "C-DEL") #'evil-scroll-page-up)
 
 ;; Hybrid evil/Emacs bindings:
 (evil-define-key 'insert global-map (kbd "C-a") #'beginning-of-line)

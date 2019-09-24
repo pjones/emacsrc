@@ -8,16 +8,16 @@
 
 ;; A few extra key bindings:
 (evil-leader/set-key-for-mode 'mu4e-compose-mode
-  "SPC b" #'message-goto-body
-  "SPC c" #'message-goto-cc
-  "SPC e" #'mml-secure-message-sign-encrypt
-  "SPC f" #'message-goto-from
-  "SPC h" #'pjones:mu4e-convert-to-html
-  "SPC i" #'message-goto-signature
-  "SPC l" #'message-goto-bcc
-  "SPC s" #'message-goto-subject
-  "SPC t" #'message-goto-to
-  "SPC x" #'message-kill-to-signature)
+  "DEL b" #'message-goto-body
+  "DEL c" #'message-goto-cc
+  "DEL e" #'mml-secure-message-sign-encrypt
+  "DEL f" #'message-goto-from
+  "DEL h" #'pjones:mu4e-convert-to-html
+  "DEL i" #'message-goto-signature
+  "DEL l" #'message-goto-bcc
+  "DEL s" #'message-goto-subject
+  "DEL t" #'message-goto-to
+  "DEL x" #'message-kill-to-signature)
 
 (defun pjones:mu4e-convert-to-html ()
   "Turn the current email into HTML using Markdown."

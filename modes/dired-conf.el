@@ -28,6 +28,35 @@
   '(dired-subtree-line-prefix-face 'subtree)
   '(dired-subtree-use-backgrounds nil))
 
+;; A few extra key bindings:
+(evil-leader/set-key-for-mode 'dired-mode
+  "DEL / n" #'dired-filter-by-name
+  "DEL / r" #'dired-filter-by-regexp
+  "DEL / ." #'dired-filter-by-extension
+  "DEL / f" #'dired-filter-by-file
+  "DEL / d" #'dired-filter-by-directory
+  "DEL / s" #'dired-filter-by-symlink
+  "DEL / m" #'dired-filter-by-mode
+  "DEL / p" #'dired-filter-pop
+  "DEL / /" #'dired-filter-pop-all
+  "DEL m n" #'dired-filter-mark-by-name
+  "DEL m r" #'dired-filter-mark-by-regexp
+  "DEL m ." #'dired-filter-mark-by-extension
+  "DEL m f" #'dired-filter-mark-by-file
+  "DEL m d" #'dired-filter-mark-by-directory
+  "DEL m s" #'dired-filter-mark-by-symlink
+  "DEL m m" #'dired-filter-mark-by-mode
+  "DEL m u" #'dired-unmark-all-marks
+  "DEL m a" #'pjones:dired-mark-all-files
+  "DEL o"   #'noccur-dired
+  "DEL q"   #'dired-do-query-replace-regexp
+  "DEL c"   #'dired-do-copy
+  "DEL d"   #'dired-flag-file-deletion
+  "DEL r"   #'dired-do-rename
+  "DEL T"   #'dired-do-touch
+  "DEL s"   #'dired-do-relsymlink
+  "DEL f"   #'find-dired)
+
 (defun pjones:dired-insert-or-visit ()
   "Visit the file at point.
 

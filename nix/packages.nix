@@ -66,12 +66,10 @@ overrides.emacsWithPackages (epkgs: with epkgs; [
   hasky-extensions              # Toggle Haskell language extensions
   htmlize                       # Convert buffer text and decorations to HTML
   http                          # Yet another HTTP client
-  hydra                         # Make bindings that stick around
   ialign                        # visual align-regexp
   indium                        # JavaScript Awesome Development Environment
   inf-ruby                      # Run a Ruby process in a buffer
   ivy                           # Incremental Vertical completion
-  ivy-hydra                     # Additional key bindings for Ivy
   ivy-rich                      # More friendly display transformer for ivy
   js2-mode                      # Improved JavaScript editing mode
   json-mode                     # Major mode for editing JSON files

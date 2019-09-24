@@ -133,13 +133,13 @@ directory.  Optionally renaming FILE to NAME."
 
 ;; A few extra key bindings:
 (evil-leader/set-key-for-mode 'markdown-mode
-  "A" #'pjones:markdown-attach-file
-  "C" #'pjones:markdown-slide-fenced-code-block
-  "I" #'pjones:markdown-slide-fenced-code-insert
-  "L" #'markdown-live-preview-mode
-  "N" #'pjones:markdown-slide-notes
-  "P" #'markdown-preview
-  "R" #'markdown-cleanup-list-numbers)
+  "DEL a" #'pjones:markdown-attach-file
+  "DEL c" #'pjones:markdown-slide-fenced-code-block
+  "DEL i" #'pjones:markdown-slide-fenced-code-insert
+  "DEL l" #'markdown-live-preview-mode
+  "DEL n" #'pjones:markdown-slide-notes
+  "DEL p" #'markdown-preview
+  "DEL r" #'markdown-cleanup-list-numbers)
 
 (defun pjones:markdown-mode-hook ()
   "Set up key bindings and other crap for markdown-mode."

@@ -1,6 +1,5 @@
 ;;; completion.el -- Configuration for completion, abbreviations, and shortcuts.
 (require 'company)
-(require 'hydra)
 
 ;; I don't want to type "yes".
 (defalias 'yes-or-no-p 'y-or-n-p)

@@ -191,14 +191,6 @@ current buffer after point."
   (let ((switch-window-threshold 1))
     (switch-window-then-delete)))
 
-(defun pjones:show-hydra-for-mode ()
-  "Show a hydra for the current mode."
-  (interactive)
-  (let ((func (intern (format "pjones:hydras:%s/body" major-mode))))
-    (if (fboundp func)
-        (call-interactively func)
-      (message "no hydra for %s" major-mode))))
-
 ;; Local Variables:
 ;; byte-compile-warnings: (not noruntime)
 ;; End:

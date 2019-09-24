@@ -11,10 +11,5 @@
      '(1 "_NET_WM_STATE_DEMANDS_ATTENTION" 0))
   frame)
 
-(defun pjones:define-keys-from-hydra (keymap heads)
-  "Define keys in KEYMAP from HEADS."
-  (dolist (head heads)
-    (define-key keymap (kbd (car head)) (cadr head))))
-
 (provide 'functions)
 ;;; functions.el ends here

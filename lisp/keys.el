@@ -19,11 +19,9 @@
 (declare-function pjones:start-mail "./interactive.el")
 (declare-function pjones:start-term "./interactive.el")
 (declare-function pjones:switch-window-then-delete "./interactive.el")
-(declare-function pjones:show-hydra-for-mode "./interactive.el")
 (declare-function pjones:evil-sort "../modes/evil-conf.el")
 
 ;; Overriding default key bindings
-(global-set-key (kbd "<f1>")      #'pjones:show-hydra-for-mode)
 (global-set-key (kbd "C-h M-m")   #'describe-mode)
 (global-set-key (kbd "C-r")       #'isearch-backward-regexp)
 (global-set-key (kbd "C-s")       #'isearch-forward-regexp)
@@ -101,7 +99,7 @@
 ;; Evil and evil-leader:
 ;; These need to be set before loading Evil.
 (custom-set-variables
- '(evil-leader/leader "C-M-,")
+ '(evil-leader/leader "SPC")
  '(evil-collection-company-use-tng nil) ; Turn that crap off!
  '(evil-collection-term-sync-state-and-mode-p nil)
  '(evil-collection-setup-minibuffer t)) ; Consistency.
@@ -110,6 +108,7 @@
 (require 'evil-leader)
 
 (evil-leader/set-key
+  "SPC" #'pjones:switch-to-previous-buffer
   "a"   #'ialign
   "b"   #'ivy-switch-buffer
   "c"   #'pjones:projectile-compile-project
@@ -118,7 +117,6 @@
   "g"   #'next-error
   "m"   #'magit-status
   "n"   #'flycheck-next-error
-  "'"   #'pjones:switch-to-previous-buffer
   "q"   #'kill-this-buffer
   "s"   #'pjones:evil-sort
   "w"   #'evil-fill)

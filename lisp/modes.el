@@ -7,21 +7,10 @@
   (concat (file-name-directory (directory-file-name (file-name-directory load-file-name))) "modes/")
   "The directory where I keep mode-specific configuration files.")
 
-(defvar pjones:hydras-dir
-  (concat (file-name-directory (directory-file-name pjones:modes-dir)) "hydras/")
-  "The directory where I keep mode-specific hydras.")
-
 ;; Automatically load my per-mode configuration files
 (dolist (file (directory-files pjones:modes-dir t))
   (let ((basename (file-name-nondirectory file)))
     (when (string-match "\\(-conf\\.elc\\)$" basename)
-      (eval-after-load (intern (replace-match "" t t basename))
-        `(load ,file)))))
-
-;; Automatically load my per-mode hydras:
-(dolist (file (directory-files pjones:hydras-dir t))
-  (let ((basename (file-name-nondirectory file)))
-    (when (string-match "\\(\\.elc\\)$" basename)
       (eval-after-load (intern (replace-match "" t t basename))
         `(load ,file)))))
 
