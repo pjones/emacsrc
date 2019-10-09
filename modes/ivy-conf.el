@@ -5,6 +5,7 @@
 ;;; Code:
 (require 'ivy)
 (require 'counsel)
+(require 'ivy-posframe)
 
 (custom-set-variables
  ;; Ivy:
@@ -25,6 +26,9 @@
  '(ivy-fixed-height-minibuffer t)
  '(ivy-add-newline-after-prompt nil)
 
+ ;; Display in a posframe:
+ '(ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-point)))
+
  ;; Counsel:
  '(counsel-find-file-at-point nil) ; Use M-n instead
  '(counsel-find-file-ignore-regexp "\(?:\‘[#.]\)\|\(?:[#~]\’\)"))
@@ -39,6 +43,7 @@
 ;; Enable complementary modes:
 (require 'ivy-rich)
 (ivy-rich-mode 1)
+(ivy-posframe-mode 1)
 
 (defun pjones:ivy-ignore-buffers (buffer)
   "Ignore BUFFER if it meets certain criteria."

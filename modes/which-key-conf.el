@@ -13,4 +13,7 @@
  '(which-key-show-remaining-keys t)
  '(which-key-paging-key "<down>"))
 
+(require 'which-key-posframe)
+(which-key-posframe-mode)
+
 ;;; which-key-conf.el ends here

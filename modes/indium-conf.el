@@ -1,6 +1,9 @@
 ;;; indium-conf.el --- Configuration for indium.el
-(eval-when-compile
-  (require 'indium))
+
+;; FIXME:
+;; Loading this file leads to something trying to touch $HOME which
+;; fails during a nix-build.
+;;(require 'indium)
 
 (defun pjones:indium-eval-buffer ()
   "Eval the entire buffer."

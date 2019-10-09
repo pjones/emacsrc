@@ -44,4 +44,7 @@
   (company-quickhelp-mode)
   (company-statistics-mode))
 
+(require 'company-posframe)
+(company-posframe-mode 1)
+
 (add-hook 'company-mode-hook 'pjones:company-mode-hook)

@@ -4,7 +4,9 @@
 ;;
 ;;; Code:
 (require 'evil)
+(require 'evil-matchit)
 (require 'evil-nl-break-undo)
+(require 'evil-owl)
 (require 'evil-surround)
 
 ;; Settings:
@@ -18,8 +20,12 @@
  '(evil-lookup-func #'man)
  '(evil-symbol-word-search t)
  '(evil-search-module 'evil-search)
- '(evil-fringe-mark-show-special nil) ; `t' breaks evil-visual-block
- '(evil-fringe-mark-ignore-chars '(?' ?{ ?} ?^ ?.)))
+ '(evil-fringe-mark-show-special t)
+ '(evil-fringe-mark-ignore-chars '(?' ?{ ?} ?^ ?.))
+
+ '(evil-owl-display-method 'posframe)
+ '(evil-owl-extra-posframe-args '(:width 50 :height 20))
+ '(evil-owl-max-string-length 50))
 
 (custom-set-faces
  '(evil-fringe-mark-local-face ((t (:inherit fringe))))
@@ -113,11 +119,13 @@
 ;; Hooks:
 (add-hook 'post-command-hook #'pjones:evil-update-cursor)
 (add-hook 'evil-mode-hook    #'pjones:evil-mode-hook)
-(add-hook 'evil-mode-hook    #'evil-commentary-mode)
-(add-hook 'evil-mode-hook    #'global-evil-fringe-mark-mode)
-(add-hook 'evil-mode-hook    #'global-evil-surround-mode)
 (add-hook 'evil-mode-hook    #'evil-collection-init)
-(add-hook 'text-mode-hook    #'evil-nl-break-undo-mode)
+(add-hook 'evil-mode-hook    #'evil-commentary-mode)
+(add-hook 'evil-mode-hook    #'evil-owl-mode)
+(add-hook 'evil-mode-hook    #'global-evil-fringe-mark-mode)
+(add-hook 'evil-mode-hook    #'global-evil-matchit-mode)
+(add-hook 'evil-mode-hook    #'global-evil-surround-mode)
 (add-hook 'prog-mode-hook    #'evil-nl-break-undo-mode)
+(add-hook 'text-mode-hook    #'evil-nl-break-undo-mode)
 
 ;;; evil-conf.el ends here

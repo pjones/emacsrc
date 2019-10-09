@@ -13,7 +13,7 @@ let
 
   ##############################################################################
   # Package overrides:
-  overrides = (pkgs.emacsPackagesNgGen emacs).overrideScope' (self: super: rec {
+  overrides = (pkgs.emacsPackagesFor emacs).overrideScope' (self: super: rec {
     # Newer versions of existing packages:
     passmm = import ./passmm.nix   { inherit super self pkgs melpaBuild; };
   });
@@ -27,6 +27,7 @@ overrides.emacsWithPackages (epkgs: with epkgs; [
   async                         # Asynchronous processing in Emacs
   beginend                      # Redefine M-< and M-> for some modes
   company                       # Modular text completion framework
+  company-posframe              # Use a posframe as company candidate menu
   company-quickhelp             # Popup documentation for completion candidates
   company-statistics            # Sort candidates using completion history
   counsel                       # Various completion functions using Ivy
@@ -53,12 +54,15 @@ overrides.emacsWithPackages (epkgs: with epkgs; [
   evil-commentary               # Comment stuff out. A port of vim-commentary
   evil-fringe-mark              # Display evil-mode marks in the fringe
   evil-leader                   # let there be <leader>
+  evil-matchit                  # Vim matchit ported to Evil
   evil-magit                    # evil-based key bindings for magit
   evil-nl-break-undo            # Break evil's undo sequence on CR
   evil-org                      # evil keybindings for org-mode
+  evil-owl                      # Preview evil registers and marks before using them
   evil-surround                 # emulate surround.vim from Vim
   evil-textobj-syntax           # Provides syntax text objects
   flycheck                      # On-the-fly syntax checking
+  flycheck-posframe             # Show flycheck error messages using posframe.el
   forge                         # Access Git forges from Magit
   git-annex                     # Mode for easy editing of git-annex'd files
   graphviz-dot-mode             # Mode for the dot-language used by graphviz
@@ -70,6 +74,7 @@ overrides.emacsWithPackages (epkgs: with epkgs; [
   indium                        # JavaScript Awesome Development Environment
   inf-ruby                      # Run a Ruby process in a buffer
   ivy                           # Incremental Vertical completion
+  ivy-posframe                  # Using posframe to show Ivy
   ivy-rich                      # More friendly display transformer for ivy
   js2-mode                      # Improved JavaScript editing mode
   json-mode                     # Major mode for editing JSON files
@@ -110,5 +115,6 @@ overrides.emacsWithPackages (epkgs: with epkgs; [
   vlf                           # View Large Files
   wgrep                         # Writable grep buffer and apply the changes to files
   which-key                     # Display available keybindings in popup
+  which-key-posframe            # Using posframe to show which-key
   yaml-mode                     # Major mode for editing YAML files
 ])

@@ -28,7 +28,7 @@
 
 (projectile-register-project-type
  'haskell '("default.nix" "Setup.hs")
- :compile "nix-hs")
+ :compile "cabal build && cabal test")
 
 ;;; Utility Functions
 
