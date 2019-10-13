@@ -94,6 +94,7 @@ in PLIST.  ALIST is passed to display functions."
      ;; there's a window already showing a buffer with the same mode then
      ;; reuse that buffer instead of creating a new one.
      (("\\*magit-.*popup"
+       "\\*transient"
        "\\*eww buffers\\*"
        "\\*Backtrace\\*"
        "\\*JS scratch\\*"
