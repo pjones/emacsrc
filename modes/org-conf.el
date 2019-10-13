@@ -99,13 +99,13 @@
  '(org-todo-keywords
    (quote ((sequence "TODO(t)" "|" "DONE(d)")
            (sequence "|" "NOTES")
-           (sequence "NEXT(n)" "WAITING(w)" "DEPENDS(s)" "|" "DONE(d)" "CANCELLED(c)"))))
+           (sequence "NEXT(n)" "WAITING(w)" "BLOCKED(b)" "|" "DONE(d)" "CANCELLED(c)"))))
 
  '(org-todo-keyword-faces
    (quote (("TODO"    . (:foreground "#66cccc" :weight bold))
            ("NEXT"    . (:foreground "#66cccc" :weight bold))
            ("WAITING" . (:foreground "#cc99cc" :weight bold))
-           ("DEPENDS" . (:inherit org-agenda-dimmed-todo-face)))))
+           ("BLOCKED" . (:inherit org-agenda-dimmed-todo-face)))))
 
  ;; Stuff for org-agenda.
  '(org-agenda-files
@@ -132,8 +132,8 @@
  '(org-agenda-start-day nil)
 
  '(org-stuck-projects
-   (quote ("+project+LEVEL=3-notes|+tasks+LEVEL=3-inbox-TODO=\"DONE\""
-           ("*") nil "")))
+   (quote ("+project+LEVEL=3-notes"
+           ("NEXT" "WAITING" "BLOCKED") nil "")))
 
  '(org-agenda-custom-commands
    (quote (("c" "Current Status"
@@ -145,6 +145,7 @@
                    ((org-agenda-todo-ignore-deadlines (quote all))
                     (org-agenda-todo-ignore-scheduled (quote all))))
              (stuck)
+             (tags "LEVEL=3+TODO=\"BLOCKED\"")
              (tags "+inbox+LEVEL=2|+orgzly+LEVEL=1")
              (todo "NEXT"
                    ((org-agenda-todo-ignore-deadlines (quote all))
