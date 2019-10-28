@@ -119,7 +119,8 @@
   "n"   #'flycheck-next-error
   "q"   #'kill-this-buffer
   "s"   #'pjones:evil-sort
-  "w"   #'evil-fill)
+  "w"   #'save-buffer
+  "x"   #'counsel-M-x)
 
 ;; Turn on Evil!
 (global-evil-leader-mode)
