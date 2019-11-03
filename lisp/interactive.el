@@ -191,6 +191,15 @@ current buffer after point."
   (let ((switch-window-threshold 1))
     (switch-window-then-delete)))
 
+(defun pjones:search-backwards-browse-url (&optional count)
+  "Search backwards for a URL and open it.
+Open the URL COUNT matches above point."
+  (interactive "P")
+  (save-excursion
+    (search-backward-regexp "https?://" nil nil count)
+    (browse-url-at-point)))
+
+
 ;; Local Variables:
 ;; byte-compile-warnings: (not noruntime)
 ;; End:

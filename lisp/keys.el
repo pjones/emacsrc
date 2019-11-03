@@ -65,17 +65,16 @@
 (let ((map pjones:e-map))
   (define-key map (kbd "a")   #'pjones:agenda)
   (define-key map (kbd "c")   #'org-capture)
-  (define-key map (kbd "d")   #'treemacs)
   (define-key map (kbd "h")   #'pjones:start-http)
   (define-key map (kbd "i")   #'pjones:start-irc)
   (define-key map (kbd "j c") #'pjones:indium-start-chrome)
   (define-key map (kbd "j n") #'pjones:indium-start-node)
-  (define-key map (kbd "l")   #'pjones:lock-screen)
   (define-key map (kbd "m")   #'pjones:start-mail)
   (define-key map (kbd "q")   #'quick-calc)
   (define-key map (kbd "r")   #'rgrep)
   (define-key map (kbd "s")   #'org-store-link)
-  (define-key map (kbd "t")   #'pjones:start-term))
+  (define-key map (kbd "t")   #'treemacs)
+  (define-key map (kbd "x")   #'pjones:search-backwards-browse-url))
 
 (let ((map pjones:p-map))
   (define-key map (kbd "g") #'pjones:pwgen)
@@ -108,19 +107,22 @@
 (require 'evil-leader)
 
 (evil-leader/set-key
-  "SPC" #'pjones:switch-to-previous-buffer
-  "a"   #'ialign
-  "b"   #'ivy-switch-buffer
-  "c"   #'pjones:projectile-compile-project
-  "d"   #'pjones:projectile-dired
-  "f"   #'counsel-find-file
-  "g"   #'next-error
-  "m"   #'magit-status
-  "n"   #'flycheck-next-error
-  "q"   #'kill-this-buffer
-  "s"   #'pjones:evil-sort
-  "w"   #'save-buffer
-  "x"   #'counsel-M-x)
+  "SPC"   #'pjones:switch-to-previous-buffer
+  "<tab>" #'pjones:comment-bar
+  "a"     #'ialign
+  "b"     #'ivy-switch-buffer
+  "c"     #'pjones:projectile-compile-project
+  "d"     #'pjones:projectile-dired
+  "e"     pjones:e-map
+  "f"     #'counsel-find-file
+  "g"     #'next-error
+  "j"     #'erc-track-switch-buffer
+  "m"     #'magit-status
+  "n"     #'flycheck-next-error
+  "q"     #'kill-this-buffer
+  "s"     #'pjones:evil-sort
+  "w"     #'save-buffer
+  "x"     #'counsel-M-x)
 
 ;; Turn on Evil!
 (global-evil-leader-mode)
