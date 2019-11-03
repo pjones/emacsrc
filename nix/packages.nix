@@ -48,6 +48,7 @@ overrides.emacsWithPackages (epkgs: with epkgs; [
   doom-themes                   # an opinionated pack of modern color-themes
   edit-server                   # server that responds to edit requests from Chrome
   eimp                          # Emacs Image Manipulation Package
+  elm-mode                      # Elm mode for emacs
   erc-hl-nicks                  # ERC nick highlighter that ignores uniquifying chars when colorizing
   evil                          # Extensible Vi layer for Emacs
   evil-collection               # A set of keybindings for Evil mode
