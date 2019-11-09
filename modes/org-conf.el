@@ -191,6 +191,19 @@
  ;; Plugin Settings:
  '(org-mru-clock-completing-read #'ivy-completing-read))
 
+(evil-leader/set-key-for-mode 'org-mode
+  "DEL d" #'org-time-stamp-inactive
+  "DEL i" #'org-clock-in
+  "DEL o" #'org-clock-out
+  "DEL s" #'org-schedule
+  "DEL t" #'org-todo)
+
+(evil-leader/set-key-for-mode 'org-agenda-mode
+  "w" #'org-save-all-org-buffers
+  "DEL i" #'org-agenda-clock-in
+  "DEL o" #'org-agenda-clock-out
+  "DEL s" #'org-agenda-schedule
+  "DEL t" #'org-agenda-todo)
 
 (defun pjones:org-mode-hook ()
   "Hook to hack `org-mode'."
