@@ -16,6 +16,13 @@
 (declare-function org-open-file "org")
 (declare-function evil-collection-define-key "evil-collection")
 
+(defmacro pjones:dired-cwd-do (func)
+  "Call FUNC inside the current file's directory."
+  `(lambda ()
+     (interactive)
+     (let ((default-directory (dired-current-directory)))
+       (call-interactively ,func))))
+
 ;; Settings:
 (custom-set-variables
   '(dired-listing-switches "-lhA --literal --ignore=.git --group-directories-first")
@@ -30,6 +37,7 @@
 
 ;; A few extra key bindings:
 (evil-leader/set-key-for-mode 'dired-mode
+  "f"       (pjones:dired-cwd-do 'find-file)
   "DEL / n" #'dired-filter-by-name
   "DEL / r" #'dired-filter-by-regexp
   "DEL / ." #'dired-filter-by-extension
@@ -80,13 +88,6 @@ dired buffer.  Otherwise visit the file under point."
   (interactive)
   (dired-unmark-all-marks)
   (dired-toggle-marks))
-
-(defmacro pjones:dired-cwd-do (func)
-  "Call FUNC inside the current file's directory."
-  `(lambda ()
-     (interactive)
-     (let ((default-directory (dired-current-directory)))
-       (call-interactively ,func))))
 
 (defun pjones:dired-load-hook ()
   "Set up `dired-mode'."
