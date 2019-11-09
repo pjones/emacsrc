@@ -132,7 +132,7 @@
  '(org-agenda-start-day nil)
 
  '(org-stuck-projects
-   (quote ("+project+LEVEL=3-notes"
+   (quote ("+project+LEVEL=3-notes-TODO=\"DONE\""
            ("NEXT" "WAITING" "BLOCKED") nil "")))
 
  '(org-agenda-custom-commands
