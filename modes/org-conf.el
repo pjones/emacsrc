@@ -350,6 +350,66 @@ they provide."
   (dolist (hook hooks)
     (add-hook hook #'pjones:org-clock-update-dbus)))
 
+(defun pjones:org-effort-sum (&optional skip-done clock-diff)
+  "Recursively sum the Effort property.
+If SKIP-DONE is non-nil done headings report an effort of 0.  If
+CLOCK-DIFF is non-nil, return the difference between the effort and
+clocked time."
+  (apply '+ (org-map-entries
+    (lambda ()
+      (if (and skip-done (org-entry-is-done-p)) 0
+        (let* ((effort (org-entry-get (point) "Effort"))
+               (mins (if effort (org-duration-to-minutes effort) 0)))
+          (if (and (> mins 0) clock-diff)
+              (- mins (org-clock-sum-current-item))
+            mins))))
+    t 'tree)))
+
+(defun org-dblock-write:pjones-project-review (params)
+  "Create a table for reviewing projects.
+
+PARAMS is a property list of parameters:
+
+`:id' (mandatory) The heading to start at.
+`:hlines' (optional number) Draw a line before this heading level."
+  (let ((id (or (plist-get params :id) (error "Missing :id")))
+        (hlines (or (plist-get params :hlines) 0))
+        base-level table)
+    (insert "| Task | Effort | Clocked | Remaining |\n")
+    (insert "|------|--------|---------|-----------|\n")
+    (save-excursion
+      (let ((m (org-id-find id 'marker)))
+        (unless m
+          (error "Cannot find entry with ID \"%s\"" id))
+        (with-current-buffer (marker-buffer m)
+          (goto-char m)
+          (org-show-context)
+          (setq base-level (org-current-level))
+          (org-map-entries
+           (lambda ()
+             (let* ((level (- (org-current-level) base-level))
+                    (indent (if (> level 0) (concat "\\_" (make-string level ?_))))
+                    (title (concat indent " " (org-get-heading)))
+                    (clock (org-clock-sum-current-item))
+                    (effort (pjones:org-effort-sum))
+                    (left (pjones:org-effort-sum t t))
+                    plist)
+               (setq plist (list
+                 :title title
+                 :level (org-current-level)
+                 :effort (org-duration-from-minutes effort)
+                 :clock (org-duration-from-minutes clock)
+                 :left (org-duration-from-minutes left)))
+               (push plist table)))
+           t 'tree))))
+      (dolist (row (nreverse table))
+        (when (= hlines (plist-get row :level))
+          (insert "|-\n"))
+        (dolist (attr (list :title :effort :clock :left))
+          (insert (concat "| " (plist-get row attr))))
+        (insert "|\n"))
+      (org-table-align)))
+
 ;; Local Variables:
 ;; byte-compile-warnings: (not noruntime)
 ;; End:
