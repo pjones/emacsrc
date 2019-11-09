@@ -5,7 +5,7 @@
 ;;    Code to activate my preferred themes.
 ;;
 ;;; Code:
-(load-theme 'doom-sourcerer t)
+(load-theme 'dracula t)
 
 ;; Stolen from: https://github.com/alezost/emacs-config
 (defun pjones:load-theme (theme)

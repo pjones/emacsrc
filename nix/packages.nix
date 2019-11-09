@@ -33,6 +33,7 @@ overrides.emacsWithPackages (epkgs: with epkgs; [
   counsel                       # Various completion functions using Ivy
   counsel-world-clock           # Display world clock using Ivy
   csv-mode                      # Major mode for editing comma/char separated values
+  cyberpunk-theme               # Cyberpunk Color Theme
   dante                         # Development mode for Haskell
   darkroom                      # Remove visual distractions and focus on writing
   deadgrep                      # fast, friendly searching with ripgrep
@@ -45,7 +46,7 @@ overrides.emacsWithPackages (epkgs: with epkgs; [
   dired-subtree                 # Insert subdirectories in a tree-like fashion
   direnv                        # direnv support
   doom-modeline                 # A minimal and modern mode-line
-  doom-themes                   # an opinionated pack of modern color-themes
+  dracula-theme                 # Dracula Theme
   edit-server                   # server that responds to edit requests from Chrome
   eimp                          # Emacs Image Manipulation Package
   elm-mode                      # Elm mode for emacs
@@ -55,8 +56,8 @@ overrides.emacsWithPackages (epkgs: with epkgs; [
   evil-commentary               # Comment stuff out. A port of vim-commentary
   evil-fringe-mark              # Display evil-mode marks in the fringe
   evil-leader                   # let there be <leader>
-  evil-matchit                  # Vim matchit ported to Evil
   evil-magit                    # evil-based key bindings for magit
+  evil-matchit                  # Vim matchit ported to Evil
   evil-nl-break-undo            # Break evil's undo sequence on CR
   evil-org                      # evil keybindings for org-mode
   evil-owl                      # Preview evil registers and marks before using them
@@ -79,10 +80,12 @@ overrides.emacsWithPackages (epkgs: with epkgs; [
   ivy-rich                      # More friendly display transformer for ivy
   js2-mode                      # Improved JavaScript editing mode
   json-mode                     # Major mode for editing JSON files
+  kaolin-themes                 # A set of eye pleasing themes
   magit                         # A Git porcelain inside Emacs
   magit-annex                   # Control git-annex from Magit
   markdown-mode                 # Major mode for Markdown-formatted text
   minions                       # A minor-mode menu for the mode line
+  monokai-theme                 # A fruity color theme for Emacs
   nix-mode                      # Major mode for editing .nix files
   no-littering                  # help keeping ~/.emacs.d clean
   noccur                        # Run multi-occur on project/dired files
