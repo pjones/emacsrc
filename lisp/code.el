@@ -80,7 +80,7 @@ already been cached."
 
   (setq comment-empty-lines t)
   (set (make-local-variable 'comment-auto-fill-only-comments) t)
-  (local-set-key (kbd "C-c <tab>") 'pjones:comment-bar)
+  (local-set-key (kbd "C-<tab>") 'pjones:comment-bar)
   (hs-minor-mode)
   (show-paren-mode)
   (whitespace-mode)
