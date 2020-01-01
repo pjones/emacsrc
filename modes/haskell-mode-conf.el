@@ -17,6 +17,7 @@
 (require 'flycheck)
 (require 'haskell-mode)
 (require 'hasky-extensions)
+(require 'highlight-indent-guides)
 
 (declare-function pjones:prog-mode-hook "../lisp/code.el")
 
@@ -72,13 +73,15 @@ A version of `hasky-extensions' that doesn't use avy."
   (pjones:prog-mode-hook)
   (flycheck-mode)
   (subword-mode)
-  (abbrev-mode))
+  (abbrev-mode)
+  (highlight-indent-guides-mode))
 
 (defun pjones:dante-mode-hook ()
   "Peter's hook for Dante."
   (flycheck-add-next-checker 'haskell-dante '(warning . haskell-hlint)))
 
 (add-hook 'haskell-mode-hook       #'pjones:haskell-mode-hook)
+(add-hook 'haskell-cabal-mode-hook #'highlight-indent-guides-mode)
 (add-hook 'haskell-cabal-mode-hook #'pjones:prog-mode-hook)
 (add-hook 'dante-mode-hook         #'pjones:dante-mode-hook)
 

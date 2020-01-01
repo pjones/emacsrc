@@ -70,6 +70,7 @@ overrides.emacsWithPackages (epkgs: with epkgs; [
   graphviz-dot-mode             # Mode for the dot-language used by graphviz
   haskell-mode                  # A Haskell editing mode
   hasky-extensions              # Toggle Haskell language extensions
+  highlight-indent-guides       # Minor mode to highlight indentation
   htmlize                       # Convert buffer text and decorations to HTML
   http                          # Yet another HTTP client
   ialign                        # visual align-regexp
