@@ -28,6 +28,7 @@
 
  ;; Display in a posframe:
  '(ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-point)))
+ '(ivy-posframe-parameters '((internal-border-width . 2)))
 
  ;; Counsel:
  '(counsel-find-file-at-point nil) ; Use M-n instead
