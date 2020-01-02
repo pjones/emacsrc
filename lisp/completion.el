@@ -1,11 +1,24 @@
 ;;; completion.el -- Configuration for completion, abbreviations, and shortcuts.
+;;
+;;; Commentary:
+;;
+;;; Code:
 (require 'company)
 
 ;; I don't want to type "yes".
 (defalias 'yes-or-no-p 'y-or-n-p)
 
 ;; What to do with the tab key.
-(setq tab-always-indent t)
+(defun pjones:indent-or-complete (&optional arg)
+  "Indent or complete.
+If the character before point is a space character then indent the
+current line.  Otherwise run the completion command.  ARG is passed to
+`indent-for-tab-command'."
+  (interactive "P")
+  (let ((tab-always-indent t)
+        (n (save-excursion (beginning-of-line) (point))))
+    (if (or (bolp) (looking-back "\\s-" n)) (indent-for-tab-command arg)
+      (company-complete))))
 
 ;; In buffer completion:
 (require 'company)
@@ -24,4 +37,4 @@
         try-expand-whole-kill
         try-expand-line))
 
-;
+;;; completion.el ends here

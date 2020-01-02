@@ -18,7 +18,6 @@
   '(company-dabbrev-downcase nil)
   '(company-dabbrev-code-other-buffers t)
   '(company-tooltip-align-annotations t)
-  '(company-require-match 'never)
   '(company-quickhelp-use-propertized-text t)
   '(company-transformers '(company-sort-by-occurrence)))
 

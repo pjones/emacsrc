@@ -4,6 +4,8 @@
 ;;
 ;;; Code:
 (declare-function pjones:agenda "./interactive.el")
+(declare-function pjones:evil-sort "../modes/evil-conf.el")
+(declare-function pjones:indent-or-complete "./completion.el")
 (declare-function pjones:indium-start-chrome "./interactive.el")
 (declare-function pjones:indium-start-node "./interactive.el")
 (declare-function pjones:kill-file-name "./interactive.el")
@@ -19,7 +21,6 @@
 (declare-function pjones:start-mail "./interactive.el")
 (declare-function pjones:start-term "./interactive.el")
 (declare-function pjones:switch-window-then-delete "./interactive.el")
-(declare-function pjones:evil-sort "../modes/evil-conf.el")
 
 ;; Overriding default key bindings
 (global-set-key (kbd "C-h M-m")   #'describe-mode)
@@ -37,6 +38,7 @@
 (global-set-key (kbd "M-/")       #'company-complete)
 (global-set-key (kbd "M-x")       #'counsel-M-x)
 (global-set-key (kbd "M-y")       #'counsel-yank-pop)
+(global-set-key (kbd "TAB")       #'pjones:indent-or-complete)
 
 ;; Custom bindings under C-c:
 (defvar pjones:b-map (make-sparse-keymap)
