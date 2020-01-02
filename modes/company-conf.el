@@ -11,7 +11,7 @@
 
 ;; Settings for company-mode:
 (custom-set-variables
-  '(company-idle-delay 1)
+  '(company-idle-delay nil)
   '(company-show-numbers t)
   '(company-selection-wrap-around t)
   '(company-dabbrev-ignore-case nil)
