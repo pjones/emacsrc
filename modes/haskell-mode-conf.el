@@ -32,7 +32,7 @@
 (evil-leader/set-key-for-mode 'haskell-mode
   "DEL e" #'haskell-cabal-visit-file
   "DEL i" #'haskell-navigate-imports
-  "DEL s" #'haskell-sort-imports
+  "DEL s" #'pjones:haskell-sort-imports
   "DEL t" #'dante-type-at
   "DEL x" #'pjones:hasky-extensions
   "DEL y" #'dante-info)
@@ -45,10 +45,23 @@
 
 ;; This overwrite fixes a bug where imports are not sorted because I
 ;; put a comment line above them.
-(defun haskell-sort-imports-goto-group-start ()
-  "Overwrite the version from haskell-sort-imports.el."
-  (while (looking-at "^import") (forward-line -1))
-  (forward-line 1))
+(defun pjones:haskell-sort-imports ()
+  "If point is in a block of import statements then sort them.
+Otherwise go totally crazy."
+  (interactive)
+  (let ((b (save-excursion
+             (move-beginning-of-line nil)
+             (while (looking-at "^import") (forward-line -1))
+             (forward-line 1)
+             (point)))
+        (e (save-excursion
+             (move-beginning-of-line nil)
+             (while (looking-at "^import") (forward-line 1))
+             (forward-line -1)
+             (move-end-of-line nil)
+             (point))))
+    (sort-regexp-fields
+       nil "^import +\\(qualified \\)?\\(.+\\)$" "\\2" b e)))
 
 (defun pjones:hasky-extensions ()
   "Wrapper around `hasky-extensions'.
@@ -74,7 +87,16 @@ A version of `hasky-extensions' that doesn't use avy."
   (flycheck-mode)
   (subword-mode)
   (abbrev-mode)
-  (highlight-indent-guides-mode))
+  (highlight-indent-guides-mode)
+
+  ;; Configure completion specific to this mode.  I *think* that Dante
+  ;; inserts itself in this list in a way that prevents merging with
+  ;; other backends and thus breaks completion.  So, I overwrite what
+  ;; Dante does to fix things.
+  (set (make-local-variable 'company-backends)
+       '((dante-company company-capf company-files
+          company-dabbrev-code company-gtags company-etags
+          company-keywords company-dabbrev))))
 
 (defun pjones:dante-mode-hook ()
   "Peter's hook for Dante."
