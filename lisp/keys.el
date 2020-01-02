@@ -50,12 +50,6 @@
 (defvar pjones:p-map (make-sparse-keymap)
   "A map of password related keys.")
 
-(defvar pjones:w-map (make-sparse-keymap)
-  "A map of workspace related keys.")
-
-(defvar pjones:pipe-map (make-sparse-keymap)
-  "A map used by my keyboard for fast movement.")
-
 (let ((map pjones:b-map))
   (define-key map (kbd "b") #'switch-to-buffer)
   (define-key map (kbd "f") #'find-file)
