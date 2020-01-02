@@ -65,8 +65,11 @@ overrides.emacsWithPackages (epkgs: with epkgs; [
   evil-textobj-syntax           # Provides syntax text objects
   flycheck                      # On-the-fly syntax checking
   flycheck-posframe             # Show flycheck error messages using posframe.el
+  flyspell-correct              # Correcting words with flyspell via custom interface
+  flyspell-correct-ivy          # Correcting words with flyspell via ivy interface
   forge                         # Access Git forges from Magit
   git-annex                     # Mode for easy editing of git-annex'd files
+  go-mode                       # Major mode for the Go programming language
   graphviz-dot-mode             # Mode for the dot-language used by graphviz
   haskell-mode                  # A Haskell editing mode
   hasky-extensions              # Toggle Haskell language extensions
@@ -103,6 +106,7 @@ overrides.emacsWithPackages (epkgs: with epkgs; [
   poly-markdown                 # Polymode for markdown-mode
   polymode                      # Extensible framework for multiple major modes
   projectile                    # Manage and navigate projects in Emacs easily
+  purescript-mode               # A PureScript editing mode
   rainbow-mode                  # Colorize color names in buffers
   resize-window                 # easily resize windows
   ruby-end                      # Automatic insertion of end blocks for Ruby
