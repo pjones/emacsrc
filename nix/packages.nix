@@ -122,6 +122,7 @@ overrides.emacsWithPackages (epkgs: with epkgs; [
   typescript-mode               # Major mode for editing typescript
   visual-fill                   # Auto-refill paragraphs without modifying the buffer
   vlf                           # View Large Files
+  w3m                           # an Emacs interface to w3m
   wgrep                         # Writable grep buffer and apply the changes to files
   which-key                     # Display available keybindings in popup
   which-key-posframe            # Using posframe to show which-key

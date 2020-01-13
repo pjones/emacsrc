@@ -31,6 +31,7 @@
 ;; A few extra key bindings:
 (evil-leader/set-key-for-mode 'haskell-mode
   "DEL e" #'haskell-cabal-visit-file
+  "DEL h" #'pjones:hoogle
   "DEL i" #'haskell-navigate-imports
   "DEL s" #'pjones:haskell-sort-imports
   "DEL t" #'dante-type-at
@@ -72,6 +73,22 @@ A version of `hasky-extensions' that doesn't use avy."
          (name (ivy-completing-read "Extension: " exts nil t)))
     (if (member name active) (hasky-extensions-remove name)
       (hasky-extensions-add name))))
+
+(defun pjones:hoogle ()
+  "Run hoogle and display results in ivy."
+  (interactive)
+  (let ((query (read-string "Query: " (thing-at-point 'symbol t))) result)
+    (with-temp-buffer
+      (call-process "hoogle" nil t nil "search" "--link" query)
+      (goto-char (point-min))
+      (while (search-forward-regexp "^\\(.*\\) -- \\(.*\\)$" nil t)
+        (setq result (cons `(,(match-string 1) . ,(match-string 2)) result))))
+    (let* ((choice (ivy-completing-read "Matches: " result nil t))
+           (url (and choice (cdr (assoc choice result)))))
+      (when url
+        (w3m-goto-url (if (string-match-p "/$" url)
+                          (concat url "index.html")
+                        url))))))
 
 (defun pjones:haskell-mode-hook ()
   "Hook run on new Haskell buffers."

@@ -27,6 +27,7 @@ pkgs.stdenv.mkDerivation rec {
   buildInputs = [ emacsAndPackages
                   pkgs.gitAndTools.gitFull # Needed to compile magit config
                   pkgs.imagemagick # For image-mode and eimp-mode
+                  pkgs.w3m
                 ];
 
   propagatedUserEnvPkgs = [ emacsAndPackages ];
