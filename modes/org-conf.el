@@ -145,7 +145,7 @@
                    ((org-agenda-todo-ignore-deadlines (quote all))
                     (org-agenda-todo-ignore-scheduled (quote all))))
              (stuck)
-             (tags "LEVEL=3+TODO=\"BLOCKED\"")
+             (tags "+TODO=\"BLOCKED\"")
              (tags "+inbox+LEVEL=2|+orgzly+LEVEL=1")
              (todo "NEXT"
                    ((org-agenda-todo-ignore-deadlines (quote all))
