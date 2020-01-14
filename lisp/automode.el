@@ -1,4 +1,12 @@
 ;;; automode.el -- Set up the auto-mode-alist variable
+;;
+;;; Commentary:
+;;
+;;; Code:
+
+;; ePub
+;; https://github.com/wasamasa/nov.el
+(add-to-list 'auto-mode-alist '("\\.epub\\'" . nov-mode))
 
 ;; CSS
 (add-to-list 'auto-mode-alist '("\\.css\\.scss" . css-mode))
@@ -38,3 +46,5 @@
 
 ;; Files that trigger complication-mode
 (add-to-list 'auto-mode-alist '("errors\\.out$" . compilation-mode))
+
+;;; automode.el ends here
