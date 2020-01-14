@@ -106,6 +106,42 @@ A version of `hasky-extensions' that doesn't use avy."
   (abbrev-mode)
   (highlight-indent-guides-mode)
 
+  ;; Pretty symbols:
+  ;; https://gist.github.com/m-renaud/2c085d453b1263f1a6ed52d0c90688de
+  (setq prettify-symbols-alist
+    '(("forall" . ?∀)
+      (">>=" .  (?\s (Br . Bl) ?\s (Br . Bl) ?\s
+                     (Bl . Bl) ?> (Bc . Bc) ?>
+                     (Bc . Bl) ?= (Br . Br) ?=))
+      ("=<<" .  (?\s (Br . Bl) ?\s (Br . Bl) ?\s
+                     (Bl . Bl) ?= (Bc . Br) ?= (Bc . Bc) ?<
+                     (Bl . Bl) ?= (Br . Br) ?<))
+      ("=>"  .  (?\s (Br . Bl) ?\s
+                     (Bl . Bl) ?= (Bc . Br) ?= (Bc . Bc) ?=
+                     (Br . Br) ?>))
+      ("->"  .  (?\s (Br . Bl) ?\s
+                     (Bl . Bl) ?- (Bc . Br) ?- (Bc . Bc) ?-
+                     (Bc . Bl) ?- (Br . Br) ?>))
+      ("<-"  .  (?\s (Br . Bl) ?\s
+                     (Bl . Bl) ?< (Bc . Br) ?- (Bc . Bc) ?-
+                     (Bc . Bl) ?- (Br . Br) ?-))
+      ("-<"  .  (?\s (Br . Bl) ?\s
+                     (Bl . Bl) ?- (Bc . Bc) ?- (Br . Br) ?<))
+      (">-"  .  (?\s (Br . Bl) ?\s
+                     (Bl . Bl) ?> (Bc . Bc) ?- (Br . Br) ?-))
+      ("++"  .  (?\s (Br . Bl) ?\s
+                     (Bl . Bl) ?+ (Bc . Br) ?+ (Bc . Bc) ?-
+                     (Bc . Bl) ?+ (Br . Br) ?+))
+      ("=="  .  (?\s (Br . Bl) ?\s
+                     (Bl . Bl) ?= (Bc . Br) ?= (Bc . Bc) ?=
+                     (Bc . Bl) ?= (Br . Br) ?=))
+      ("/="  .  (?\s (Br . Bl) ?\s
+                     (Bl . Bl) ?= (Bc . Br) ?= (Bc . Bc) ?/
+                     (Bc . Bl) ?= (Br . Br) ?=))
+      ("<>"  .  (?\s (Br . Bl) ?\s
+                     (Bl . Bl) ?< (Bc . Br) ?<
+                     (Bc . Bl) ?> (Br . Br) ?>))))
+
   ;; Configure completion specific to this mode.  I *think* that Dante
   ;; inserts itself in this list in a way that prevents merging with
   ;; other backends and thus breaks completion.  So, I overwrite what
