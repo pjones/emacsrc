@@ -19,7 +19,10 @@
   '(company-dabbrev-code-other-buffers t)
   '(company-tooltip-align-annotations t)
   '(company-quickhelp-use-propertized-text t)
-  '(company-transformers '(company-sort-by-occurrence)))
+  '(company-transformers '(company-sort-by-occurrence))
+  '(company-frontends '(company-pseudo-tooltip-frontend
+                        company-preview-frontend
+                        company-echo-metadata-frontend)))
 
 (defun pjones:company-mode-hook ()
   "Peter's mode hook for company-mode."
@@ -47,3 +50,5 @@
 (company-posframe-mode 1)
 
 (add-hook 'company-mode-hook 'pjones:company-mode-hook)
+
+;;; company-conf.el ends here
