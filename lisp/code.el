@@ -1,4 +1,8 @@
-;;; code.El -- Settings and functions for programming modes
+;;; code.el -- Settings and functions for programming modes
+;;
+;;; Commentary:
+;;
+;;; Code:
 (eval-when-compile
   (require 'saveplace)
   (require 'company))
@@ -37,36 +41,47 @@ already been cached."
       (puthash default-directory compile-command projectile-compilation-cmd-map)
       (compile compile-command))))
 
-(defun pjones:comment-bar (&optional without-newline)
+(defun pjones:comment-bar ()
   "Create a comment bar based on the current mode."
-  (interactive "P")
-  (let ((char (cond
-               ((string= comment-start "-- ") ?-)
-               ((string= comment-start "// ") ?*)
-               ((string= comment-start "/* ") ?*)
-               (t ?#)))
-
-        (start (cond
-                ((string= comment-start "# ")  "#")
-                ((string= comment-start "-- ") "-")
-                ((string= comment-start "// ") "/*")
-                ((string= comment-start "/* ") "/*")
-                (t comment-start)))
-
-        (end (cond
-              ((string= comment-start "// ") "*/")
-              ((string= comment-start "/* ") "*/")
-              (t (if (> (length comment-end) 0) comment-end ""))))
-
-        (col (current-column)))
-    (insert start)
-    (insert-char char (- 80 (length start) (length end) col))
-    (insert end)
-    (if without-newline (beginning-of-line)
-      (electric-indent-just-newline 1)
-      (indent-according-to-mode))))
+  (interactive)
+  (let* ((cs (s-trim comment-start))
+         (col (current-column))
+         (info (cond
+                ((string= cs "--") '(?- "-"  ""))
+                ((string= cs "//") '(?* "/*" "*/"))
+                ((string= cs "/*") '(?* "/*" "*/"))
+                ((string= cs "#")  '(?# "#"  "#"))
+                (t (list ?# comment-start
+                         (if (> (length comment-end) 0)
+                             comment-end
+                           "")))))
+         (leading (buffer-substring
+                   (save-excursion
+                     (beginning-of-line)
+                     (point))
+                   (point)))
+         (go (lambda ()
+               (let ((char  (nth 0 info))
+                     (start (nth 1 info))
+                     (end   (nth 2 info)))
+                 (insert start)
+                 (insert-char char (- 80 (length start) (length end) col))
+                 (insert end)))))
+    (if (string-match-p "^\\s-*$" leading)
+        (progn
+          (funcall go)
+          (newline)
+          (insert leading))
+      (save-excursion
+        (back-to-indentation)
+        (setq col (current-column))
+        (beginning-of-line)
+        (open-line 1)
+        (insert-char ?  col)
+        (funcall go)))))
 
 (defun pjones:add-fixme-lock ()
+  "Add todo markers as keywords."
   (font-lock-add-keywords nil '(("\\<\\(FIXME:\\|TODO:\\|NOTE:\\)"
                                  1 'pjones:fixme-face t))))
 (defun pjones:prog-mode-hook ()
@@ -95,6 +110,7 @@ already been cached."
   (add-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p))
 
 (defun pjones:add-programming-hook (mode-hook)
+  "Add the programming hook to the given MODE-HOOK."
   (add-hook mode-hook 'pjones:prog-mode-hook))
 
 (defun pjones:after-save-reload-browser ())
@@ -120,5 +136,4 @@ already been cached."
    ((string= type "node")
     (indium-run-node "node"))))
 
-(provide 'code)
 ;;; code.el ends here
