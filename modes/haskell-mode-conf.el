@@ -79,16 +79,16 @@ A version of `hasky-extensions' that doesn't use avy."
   (interactive)
   (let ((query (read-string "Query: " (thing-at-point 'symbol t))) result)
     (with-temp-buffer
-      (call-process "hoogle" nil t nil "search" "--link" query)
+      (call-process "hoogle" nil t nil "search" "--link" "--count=30" query)
       (goto-char (point-min))
       (while (search-forward-regexp "^\\(.*\\) -- \\(.*\\)$" nil t)
         (setq result (cons `(,(match-string 1) . ,(match-string 2)) result))))
     (let* ((choice (ivy-completing-read "Matches: " result nil t))
            (url (and choice (cdr (assoc choice result)))))
       (when url
-        (w3m-goto-url (if (string-match-p "/$" url)
-                          (concat url "index.html")
-                        url))))))
+        (w3m-browse-url
+         (if (string-match-p "/$" url) (concat url "index.html") url) t)
+        (pjones:w3m-rename-buffer)))))
 
 (defun pjones:haskell-mode-hook ()
   "Hook run on new Haskell buffers."
