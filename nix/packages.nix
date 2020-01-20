@@ -26,6 +26,7 @@ overrides.emacsWithPackages (epkgs: with epkgs; [
   adaptive-wrap                 # Smart line-wrapping with wrap-prefix
   async                         # Asynchronous processing in Emacs
   beginend                      # Redefine M-< and M-> for some modes
+  color-theme-sanityinc-tomorrow # A version of Chris Kempson's "tomorrow" themes
   company                       # Modular text completion framework
   company-posframe              # Use a posframe as company candidate menu
   company-quickhelp             # Popup documentation for completion candidates
@@ -46,6 +47,7 @@ overrides.emacsWithPackages (epkgs: with epkgs; [
   dired-subtree                 # Insert subdirectories in a tree-like fashion
   direnv                        # direnv support
   doom-modeline                 # A minimal and modern mode-line
+  doom-themes                   # an opinionated pack of modern color-themes
   dracula-theme                 # Dracula Theme
   edit-server                   # server that responds to edit requests from Chrome
   eimp                          # Emacs Image Manipulation Package
