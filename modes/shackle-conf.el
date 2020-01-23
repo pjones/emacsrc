@@ -84,6 +84,8 @@ in PLIST.  ALIST is passed to display functions."
      ;; Windows that should split the entire frame:
      (("\\*Completions\\*"
        "\\*Deletions\\*"
+       "\\*Flycheck error"
+       "\\*evil-owl\\*"
        calendar-mode)
       :regexp t
       :size 0.3

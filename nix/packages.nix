@@ -28,7 +28,6 @@ overrides.emacsWithPackages (epkgs: with epkgs; [
   beginend                      # Redefine M-< and M-> for some modes
   color-theme-sanityinc-tomorrow # A version of Chris Kempson's "tomorrow" themes
   company                       # Modular text completion framework
-  company-posframe              # Use a posframe as company candidate menu
   company-quickhelp             # Popup documentation for completion candidates
   company-statistics            # Sort candidates using completion history
   counsel                       # Various completion functions using Ivy
@@ -66,7 +65,6 @@ overrides.emacsWithPackages (epkgs: with epkgs; [
   evil-surround                 # emulate surround.vim from Vim
   evil-textobj-syntax           # Provides syntax text objects
   flycheck                      # On-the-fly syntax checking
-  flycheck-posframe             # Show flycheck error messages using posframe.el
   flyspell-correct              # Correcting words with flyspell via custom interface
   flyspell-correct-ivy          # Correcting words with flyspell via ivy interface
   forge                         # Access Git forges from Magit
@@ -82,7 +80,6 @@ overrides.emacsWithPackages (epkgs: with epkgs; [
   indium                        # JavaScript Awesome Development Environment
   inf-ruby                      # Run a Ruby process in a buffer
   ivy                           # Incremental Vertical completion
-  ivy-posframe                  # Using posframe to show Ivy
   ivy-rich                      # More friendly display transformer for ivy
   js2-mode                      # Improved JavaScript editing mode
   json-mode                     # Major mode for editing JSON files
@@ -128,6 +125,5 @@ overrides.emacsWithPackages (epkgs: with epkgs; [
   w3m                           # an Emacs interface to w3m
   wgrep                         # Writable grep buffer and apply the changes to files
   which-key                     # Display available keybindings in popup
-  which-key-posframe            # Using posframe to show which-key
   yaml-mode                     # Major mode for editing YAML files
 ])

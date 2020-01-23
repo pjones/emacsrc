@@ -12,7 +12,4 @@
  '(flymake-start-syntax-check-on-newline nil)
  '(flycheck-check-syntax-automatically '(save mode-enabled)))
 
-(require 'flycheck-posframe)
-(add-hook 'flycheck-mode-hook #'flycheck-posframe-mode)
-
 ;;; flycheck-conf.el ends here

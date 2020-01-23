@@ -5,7 +5,6 @@
 ;;; Code:
 (require 'ivy)
 (require 'counsel)
-(require 'ivy-posframe)
 
 (custom-set-variables
  ;; Ivy:
@@ -26,13 +25,6 @@
  '(ivy-fixed-height-minibuffer t)
  '(ivy-add-newline-after-prompt nil)
 
- ;; Display in a posframe:
- '(ivy-posframe-hide-minibuffer nil)
- '(ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-point)))
- '(ivy-posframe-parameters '((internal-border-width . 2)))
- '(ivy-posframe-width nil)
- '(ivy-posframe-min-width 80)
-
  ;; Counsel:
  '(counsel-find-file-at-point nil) ; Use M-n instead
  '(counsel-find-file-ignore-regexp "\\(?:\\`\\|[/\\]\\)\\(?:[#.]\\)"))
@@ -47,7 +39,6 @@
 ;; Enable complementary modes:
 (require 'ivy-rich)
 (ivy-rich-mode 1)
-(ivy-posframe-mode 1)
 
 ;; Custom key bindings:
 (define-key ivy-minibuffer-map (kbd "TAB")       'ivy-next-line)

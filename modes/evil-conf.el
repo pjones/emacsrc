@@ -23,8 +23,7 @@
  '(evil-fringe-mark-show-special t)
  '(evil-fringe-mark-ignore-chars '(?' ?{ ?} ?^ ?.))
 
- '(evil-owl-display-method 'posframe)
- '(evil-owl-extra-posframe-args '(:width 50 :height 20))
+ '(evil-owl-display-method 'window)
  '(evil-owl-max-string-length 50))
 
 (custom-set-faces
