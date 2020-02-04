@@ -109,8 +109,7 @@ A version of `hasky-extensions' that doesn't use avy."
   ;; Pretty symbols:
   ;; https://gist.github.com/m-renaud/2c085d453b1263f1a6ed52d0c90688de
   (setq prettify-symbols-alist
-    '(("forall" . ?∀)
-      (">>=" .  (?\s (Br . Bl) ?\s (Br . Bl) ?\s
+    '((">>=" .  (?\s (Br . Bl) ?\s (Br . Bl) ?\s
                      (Bl . Bl) ?> (Bc . Bc) ?>
                      (Bc . Bl) ?= (Br . Br) ?=))
       ("=<<" .  (?\s (Br . Bl) ?\s (Br . Bl) ?\s
