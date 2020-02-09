@@ -32,7 +32,8 @@
 (evil-leader/set-key-for-mode 'haskell-mode
   "DEL e" #'haskell-cabal-visit-file
   "DEL h" #'pjones:hoogle
-  "DEL i" #'haskell-navigate-imports
+  "DEL i" #'pjones:haskell-add-import
+  "DEL I" #'haskell-navigate-imports
   "DEL s" #'pjones:haskell-sort-imports
   "DEL t" #'dante-type-at
   "DEL x" #'pjones:hasky-extensions
@@ -64,6 +65,9 @@ Otherwise go totally crazy."
     (sort-regexp-fields
        nil "^import +\\(qualified \\)?\\(.+\\)$" "\\2" b e)))
 
+;; Redefine the existing function:
+(defalias 'haskell-sort-imports #'pjones:haskell-sort-imports)
+
 (defun pjones:hasky-extensions ()
   "Wrapper around `hasky-extensions'.
 A version of `hasky-extensions' that doesn't use avy."
@@ -74,21 +78,47 @@ A version of `hasky-extensions' that doesn't use avy."
     (if (member name active) (hasky-extensions-remove name)
       (hasky-extensions-add name))))
 
-(defun pjones:hoogle ()
-  "Run hoogle and display results in ivy."
-  (interactive)
-  (let ((query (read-string "Query: " (thing-at-point 'symbol t))) result)
+(defun pjones:haskell-search-hoogle (prompt)
+  "Use PROMPT to prompt the user and search hoogle.
+The match chosen by the user will be returned."
+  (let ((query (read-string prompt (thing-at-point 'symbol t))) result)
     (with-temp-buffer
       (call-process "hoogle" nil t nil "search" "--link" "--count=30" query)
       (goto-char (point-min))
       (while (search-forward-regexp "^\\(.*\\) -- \\(.*\\)$" nil t)
         (setq result (cons `(,(match-string 1) . ,(match-string 2)) result))))
-    (let* ((choice (ivy-completing-read "Matches: " result nil t))
-           (url (and choice (cdr (assoc choice result)))))
-      (when url
-        (w3m-browse-url
-         (if (string-match-p "/$" url) (concat url "index.html") url) t)
-        (pjones:w3m-rename-buffer)))))
+    (cons (assoc (ivy-completing-read "Matches: " result nil t) result)
+          (list query))))
+
+(defun pjones:hoogle ()
+  "Run hoogle and display results in ivy."
+  (interactive)
+  (let* ((choice (pjones:haskell-search-hoogle "Query: "))
+         (url (and choice (cdar choice))))
+    (when url
+      (w3m-browse-url
+       (if (string-match-p "/$" url) (concat url "index.html") url) t)
+      (pjones:w3m-rename-buffer))))
+
+(defun pjones:haskell-add-import ()
+  "Use hoogle to select an import to add."
+  (interactive)
+  (let* ((choice (pjones:haskell-search-hoogle "Module Query: "))
+         (import (and choice
+                      (string-match "^\\(\\S-+\\) " (caar choice))
+                      (match-string 1 (caar choice)))))
+    (when import
+      (message "%s" choice)
+      (save-excursion
+        (goto-char (point-max))
+        (haskell-navigate-imports)
+        (insert (read-string
+                 "Import Line: "
+                 (concat
+                  "import " import
+                  " (" (cadr choice) ")")))
+        (insert "\n")
+        (haskell-sort-imports)))))
 
 (defun pjones:haskell-mode-hook ()
   "Hook run on new Haskell buffers."
