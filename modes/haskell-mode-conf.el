@@ -32,8 +32,10 @@
 (evil-leader/set-key-for-mode 'haskell-mode
   "DEL e" #'haskell-cabal-visit-file
   "DEL h" #'pjones:hoogle
-  "DEL i" #'pjones:haskell-add-import
-  "DEL I" #'haskell-navigate-imports
+  "DEL I" #'pjones:haskell-add-import
+  "DEL i" #'pjones:haskell-add-import-from-hoogle
+  "DEL j" #'haskell-navigate-imports
+  "DEL q" #'pjones:haskell-toggle-qualified
   "DEL s" #'pjones:haskell-sort-imports
   "DEL t" #'dante-type-at
   "DEL x" #'pjones:hasky-extensions
@@ -100,25 +102,71 @@ The match chosen by the user will be returned."
        (if (string-match-p "/$" url) (concat url "index.html") url) t)
       (pjones:w3m-rename-buffer))))
 
-(defun pjones:haskell-add-import ()
+(defun pjones:haskell-toggle-qualified nil
+  "Toggle the 'qualified' modifier on the current line."
+  (interactive)
+  (save-excursion
+    (beginning-of-line)
+    (let ((bol (point))
+          (eol (save-excursion
+                 (end-of-line)
+                 (point))))
+      (cond
+       ((search-forward-regexp
+         (rx ;; A qualified import with optional "as".
+          (and (group "import" (1+ blank))
+               (and "qualified" (1+ blank))
+               (group (1+ (in alnum ?.)))
+               (? (1+ blank) "as" (1+ blank) (1+ (in alnum ?.)))))
+         eol t)
+        (replace-match "\\1\\2" t))
+       ((search-forward-regexp
+         (rx ;; An unqualified import.
+          (and (group "import" (1+ blank))   ;; Group 1
+               (group (+ (in alnum ?.)) ?.) ;; Group 2
+               (group (+ (in alnum)))       ;; Group 3
+               (group (* blank))))          ;; Group 4
+         eol t)
+        (replace-match "\\1qualified \\2\\3 as \\3\\4" t))))))
+
+(defun pjones:haskell-read-import (&optional module)
+  "Read a Haskell import line from the minibuffer.
+If non-nil, use MODULE as the initial module name."
+  (let ((initial-input (concat "import " module (if module "")))
+        (map (make-sparse-keymap "pjones-import")))
+    (set-keymap-parent map minibuffer-local-map)
+    (define-key map (kbd "C-q") #'pjones:haskell-toggle-qualified)
+    (read-from-minibuffer "Add Import: " initial-input map)))
+
+(defun pjones:haskell-add-import (&optional initial)
+  "Prompt for an import and add it to the imports section.
+When prompting, use INITIAL as the initial module name."
+  (interactive)
+  (save-excursion
+    (goto-char (point-max))
+    (haskell-navigate-imports)
+    (insert (pjones:haskell-read-import initial))
+    (insert "\n")
+    (haskell-sort-imports)))
+
+(defun pjones:haskell-add-import-from-hoogle ()
   "Use hoogle to select an import to add."
   (interactive)
   (let* ((choice (pjones:haskell-search-hoogle "Module Query: "))
-         (import (and choice
-                      (string-match "^\\(\\S-+\\) " (caar choice))
-                      (match-string 1 (caar choice)))))
-    (when import
-      (message "%s" choice)
-      (save-excursion
-        (goto-char (point-max))
-        (haskell-navigate-imports)
-        (insert (read-string
-                 "Import Line: "
-                 (concat
-                  "import " import
-                  " (" (cadr choice) ")")))
-        (insert "\n")
-        (haskell-sort-imports)))))
+         (import (and choice (caar choice))))
+    (cond
+     ((string-match
+       (rx "module"
+           (+ blank)
+           (group (+ (in alnum ?.)))) import)
+      (pjones:haskell-add-import (match-string 1 import)))
+     ((string-match
+       (rx (group (+ (in alnum ?.)))
+           (+ blank)
+           (group (+ (not blank)))) import)
+      (pjones:haskell-add-import
+       (concat (match-string 1 import)
+               " (" (match-string 2 import) ")"))))))
 
 (defun pjones:haskell-mode-hook ()
   "Hook run on new Haskell buffers."
