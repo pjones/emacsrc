@@ -184,6 +184,9 @@ When prompting, use INITIAL as the initial module name."
   (abbrev-mode)
   (highlight-indent-guides-mode)
 
+  ;; Evil doc-lookup (on the "K" key):
+  (set (make-local-variable 'evil-lookup-func) #'pjones:hoogle)
+
   ;; Pretty symbols:
   ;; https://gist.github.com/m-renaud/2c085d453b1263f1a6ed52d0c90688de
   (setq prettify-symbols-alist
