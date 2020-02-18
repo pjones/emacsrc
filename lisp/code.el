@@ -89,22 +89,18 @@ already been cached."
   ;; Completion:
   (make-local-variable 'company-backends)
   (add-to-list 'company-backends '(company-dabbrev-code
-                                   company-gtags
                                    company-etags
                                    company-keywords))
 
   (setq comment-empty-lines t)
   (set (make-local-variable 'comment-auto-fill-only-comments) t)
   (local-set-key (kbd "C-<tab>") 'pjones:comment-bar)
-  (hs-minor-mode)
   (show-paren-mode)
   (whitespace-mode)
   (auto-fill-mode)
   (flyspell-prog-mode)
-  (electric-pair-mode)
   (save-place-mode)
   (display-line-numbers-mode)
-  (setq display-line-numbers 'relative)
   (pjones:add-fixme-lock)
   (add-hook 'before-save-hook 'delete-trailing-whitespace)
   (add-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p))
@@ -112,8 +108,6 @@ already been cached."
 (defun pjones:add-programming-hook (mode-hook)
   "Add the programming hook to the given MODE-HOOK."
   (add-hook mode-hook 'pjones:prog-mode-hook))
-
-(defun pjones:after-save-reload-browser ())
 
 (defun pjones:indium-start-chrome ()
   "Start an Indium session for Chrome."

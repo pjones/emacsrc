@@ -14,8 +14,9 @@
   ;; Other modes:
   (rainbow-mode)
 
-  (setq css-indent-offset 2)
-  (add-hook 'after-save-hook 'pjones:after-save-reload-browser nil t))
+  (setq css-indent-offset 2))
 
 (pjones:add-programming-hook 'css-mode-hook)
 (add-hook 'css-mode-hook 'pjones:css-mode-hook)
+
+;;; css-mode-conf.el ends here
