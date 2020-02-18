@@ -84,13 +84,15 @@
 (evil-define-key 'insert global-map (kbd "C-k") #'kill-line)
 
 ;; Hooks:
-(add-hook 'after-init-hook   #'pjones:evil-set-cursors)
-(add-hook 'evil-mode-hook    #'evil-collection-init)
-(add-hook 'evil-mode-hook    #'evil-commentary-mode)
-(add-hook 'evil-mode-hook    #'evil-owl-mode)
-(add-hook 'evil-mode-hook    #'global-evil-fringe-mark-mode)
-(add-hook 'evil-mode-hook    #'global-evil-matchit-mode)
-(add-hook 'evil-mode-hook    #'global-evil-surround-mode)
-(add-hook 'evil-mode-hook    #'pjones:evil-mode-hook)
+(add-hook 'after-init-hook                #'pjones:evil-set-cursors)
+(add-hook 'after-make-frame-functions     #'pjones:evil-set-cursors)
+(add-hook 'evil-mode-hook                 #'evil-collection-init)
+(add-hook 'evil-mode-hook                 #'evil-commentary-mode)
+(add-hook 'evil-mode-hook                 #'evil-owl-mode)
+(add-hook 'evil-mode-hook                 #'global-evil-fringe-mark-mode)
+(add-hook 'evil-mode-hook                 #'global-evil-matchit-mode)
+(add-hook 'evil-mode-hook                 #'global-evil-surround-mode)
+(add-hook 'evil-mode-hook                 #'pjones:evil-mode-hook)
+(add-hook 'pjones:after-theme-change-hook #'pjones:evil-set-cursors)
 
 ;;; evil-conf.el ends here

@@ -5,7 +5,8 @@
 ;;    Code to activate my preferred themes.
 ;;
 ;;; Code:
-(load-theme 'dracula t)
+(defvar pjones:after-theme-change-hook nil
+  "Hook run after changing themes.")
 
 ;; Stolen from: https://github.com/alezost/emacs-config
 (defun pjones:load-theme (theme)
@@ -15,7 +16,9 @@
                   "Load custom theme: "
                   (mapcar #'symbol-name (custom-available-themes))))))
   (mapc #'disable-theme custom-enabled-themes)
-  (load-theme theme t))
+  (load-theme theme t)
+  (run-hooks 'pjones:after-theme-change-hook))
 
+(pjones:load-theme 'dracula)
 (provide 'themes)
 ;;; themes.el ends here
