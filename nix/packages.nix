@@ -59,7 +59,6 @@ overrides.emacsWithPackages (epkgs: with epkgs; [
   evil-leader                   # let there be <leader>
   evil-magit                    # evil-based key bindings for magit
   evil-matchit                  # Vim matchit ported to Evil
-  evil-nl-break-undo            # Break evil's undo sequence on CR
   evil-org                      # evil keybindings for org-mode
   evil-owl                      # Preview evil registers and marks before using them
   evil-surround                 # emulate surround.vim from Vim

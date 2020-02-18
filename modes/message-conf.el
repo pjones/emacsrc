@@ -63,6 +63,7 @@
 (defun pjones:message-mode-hook ()
   "Configure message mode to my liking."
   ;; Configure completion:
+  (evil-set-initial-state major-mode 'normal)
   (make-local-variable 'company-backends)
   (add-to-list 'company-backends 'company-ispell))
 

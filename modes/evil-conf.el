@@ -3,16 +3,15 @@
 ;;; Commentary:
 ;;
 ;;; Code:
+(require 'doom-modeline-core)
 (require 'evil)
 (require 'evil-matchit)
-(require 'evil-nl-break-undo)
 (require 'evil-owl)
 (require 'evil-surround)
 
 ;; Settings:
 (custom-set-variables
  '(evil-shift-width 2)
- '(evil-default-cursor 'box)
  '(evil-move-beyond-eol t)
  '(evil-want-fine-undo nil)
  '(evil-want-Y-yank-to-eol t)
@@ -22,7 +21,6 @@
  '(evil-search-module 'evil-search)
  '(evil-fringe-mark-show-special t)
  '(evil-fringe-mark-ignore-chars '(?' ?{ ?} ?^ ?.))
-
  '(evil-owl-display-method 'window)
  '(evil-owl-max-string-length 50))
 
@@ -31,62 +29,30 @@
  '(evil-fringe-mark-file-face ((t (:inherit fringe))))
  '(evil-fringe-mark-special-face ((t (:inherit fringe)))))
 
-(defface pjones:cursor-normal-face
-  '((t (:background "DarkGoldenrod2"
-        :inherit 'cursor)))
-  "Normal state cursor"
-  :group 'evil)
-
-(defface pjones:cursor-insert-face
-  '((t (:background "chartreuse3"
-        :inherit 'cursor)))
-  "Insert state cursor"
-  :group 'evil)
-
-(defface pjones:cursor-emacs-face
-  '((t (:background "SkyBlue2"
-        :inherit 'cursor)))
-  "Emacs state cursor"
-  :group 'evil)
-
-(defface pjones:cursor-replace-face
-  '((t (:background "chocolate"
-        :inherit 'cursor)))
-  "Replace state cursor"
-  :group 'evil)
-
-(defface pjones:cursor-visual-face
-  '((t (:background "gray"
-        :inherit 'cursor)))
-  "Visual state cursor"
-  :group 'evil)
-
-(defface pjones:cursor-motion-face
-  '((t (:background "plum3"
-        :inherit 'cursor)))
-  "Motion state cursor"
-  :group 'evil)
-
-(defun pjones:evil-update-cursor ()
-  "Change the cursor to match the evil state."
-  (let* ((cursor
-          (cond
-           ((evil-normal-state-p)  '(box  . pjones:cursor-normal-face))
-           ((evil-insert-state-p)  '(hbar . pjones:cursor-insert-face))
-           ((evil-emacs-state-p)   '(bar  . pjones:cursor-emacs-face))
-           ((evil-replace-state-p) '(box  . pjones:cursor-replace-face))
-           ((evil-visual-state-p)  '(box  . pjones:cursor-visual-face))
-           ((evil-motion-state-p)  '(box  . pjones:cursor-motion-face))
-           (t                      '(box  . error))))
-         (fg (face-attribute (cdr cursor) :foreground))
-         (bg (face-attribute (cdr cursor) :background)))
-    (setq cursor-type (car cursor))
-    (set-face-attribute 'cursor nil :foreground fg :background bg)))
-
 (defun pjones:evil-mode-hook ()
   "Hook fun by `evil-mode'."
+  ;; Use symbols for movement instead of words!
+  (defalias 'forward-evil-word 'forward-evil-symbol)
   ;; Put buffers back into the correct mode after saving them:
   (add-hook 'after-save-hook #'evil-change-to-initial-state))
+
+(defun pjones:evil-set-cursors ()
+  "Settings that need to be applied after init."
+  (let ((normal   (face-attribute 'doom-modeline-evil-normal-state   :foreground nil t))
+        (visual   (face-attribute 'doom-modeline-evil-visual-state   :foreground nil t))
+        (motion   (face-attribute 'doom-modeline-evil-motion-state   :foreground nil t))
+        (operator (face-attribute 'doom-modeline-evil-operator-state :foreground nil t))
+        (replace  (face-attribute 'doom-modeline-evil-replace-state  :foreground nil t))
+        (emacs    (face-attribute 'doom-modeline-evil-emacs-state    :foreground nil t))
+        (insert   (face-attribute 'doom-modeline-evil-insert-state   :foreground nil t)))
+    (setq evil-default-cursor        (list 'box normal)
+          evil-normal-state-cursor   (list 'box normal)
+          evil-visual-state-cursor   (list 'hbar visual)
+          evil-motion-state-cursor   (list 'hbar motion)
+          evil-operator-state-cursor (list 'hbar operator)
+          evil-replace-state-cursor  (list 'box replace)
+          evil-emacs-state-cursor    (list 'bar emacs)
+          evil-insert-state-cursor   (list 'bar insert))))
 
 (evil-define-operator pjones:evil-sort (beg end)
   "Sort text."
@@ -116,15 +82,13 @@
 (evil-define-key 'insert global-map (kbd "C-k") #'kill-line)
 
 ;; Hooks:
-(add-hook 'post-command-hook #'pjones:evil-update-cursor)
-(add-hook 'evil-mode-hook    #'pjones:evil-mode-hook)
+(add-hook 'after-init-hook   #'pjones:evil-set-cursors)
 (add-hook 'evil-mode-hook    #'evil-collection-init)
 (add-hook 'evil-mode-hook    #'evil-commentary-mode)
 (add-hook 'evil-mode-hook    #'evil-owl-mode)
 (add-hook 'evil-mode-hook    #'global-evil-fringe-mark-mode)
 (add-hook 'evil-mode-hook    #'global-evil-matchit-mode)
 (add-hook 'evil-mode-hook    #'global-evil-surround-mode)
-(add-hook 'prog-mode-hook    #'evil-nl-break-undo-mode)
-(add-hook 'text-mode-hook    #'evil-nl-break-undo-mode)
+(add-hook 'evil-mode-hook    #'pjones:evil-mode-hook)
 
 ;;; evil-conf.el ends here
