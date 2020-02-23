@@ -16,6 +16,9 @@ let
   overrides = (pkgs.emacsPackagesFor emacs).overrideScope' (self: super: rec {
     # Newer versions of existing packages:
     passmm = import ./passmm.nix   { inherit super self pkgs melpaBuild; };
+
+    evil-indent-textobject = import ./evil-indent-textobject.nix
+      { inherit super self pkgs melpaBuild; };
   });
 
 in
@@ -56,6 +59,7 @@ overrides.emacsWithPackages (epkgs: with epkgs; [
   evil-collection               # A set of keybindings for Evil mode
   evil-commentary               # Comment stuff out. A port of vim-commentary
   evil-fringe-mark              # Display evil-mode marks in the fringe
+  evil-indent-textobject        # evil textobjects based on indentation
   evil-leader                   # let there be <leader>
   evil-magit                    # evil-based key bindings for magit
   evil-matchit                  # Vim matchit ported to Evil

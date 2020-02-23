@@ -5,6 +5,7 @@
 ;;; Code:
 (require 'doom-modeline-core)
 (require 'evil)
+(require 'evil-indent-textobject)
 (require 'evil-matchit)
 (require 'evil-owl)
 (require 'evil-surround)
