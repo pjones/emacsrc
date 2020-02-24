@@ -98,9 +98,9 @@ The match chosen by the user will be returned."
   (let* ((choice (pjones:haskell-search-hoogle "Query: "))
          (url (and choice (cdar choice))))
     (when url
-      (w3m-browse-url
+      (eww-browse-url
        (if (string-match-p "/$" url) (concat url "index.html") url) t)
-      (pjones:w3m-rename-buffer))))
+      (pjones:eww-rename-buffer))))
 
 (defun pjones:haskell-toggle-qualified nil
   "Toggle the 'qualified' modifier on the current line."
@@ -229,7 +229,11 @@ When prompting, use INITIAL as the initial module name."
   (set (make-local-variable 'company-backends)
        '((dante-company company-capf company-files
           company-dabbrev-code company-gtags company-etags
-          company-keywords company-dabbrev))))
+          company-keywords company-dabbrev)))
+
+  ;; Get tags working correctly:
+  (xref-etags-mode)
+  (setq xref-backend-functions '(etags--xref-backend dante--xref-backend)))
 
 (defun pjones:dante-mode-hook ()
   "Peter's hook for Dante."
