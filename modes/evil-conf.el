@@ -52,8 +52,10 @@ are the arguments to it."
     (apply oldfun args)))
 (advice-add #'evil-ex-start-word-search :around #'pjones:evil-search-word)
 
-(defun pjones:evil-set-cursors ()
-  "Settings that need to be applied after init."
+(defun pjones:evil-set-cursors (&rest _args)
+  "Settings that need to be applied after init.
+Ignores arguments passed from various hooks that this function is
+called from."
   (let ((normal   (face-attribute 'doom-modeline-evil-normal-state   :foreground nil t))
         (visual   (face-attribute 'doom-modeline-evil-visual-state   :foreground nil t))
         (motion   (face-attribute 'doom-modeline-evil-motion-state   :foreground nil t))
