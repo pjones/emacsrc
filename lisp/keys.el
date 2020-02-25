@@ -114,6 +114,7 @@
   "j"     #'erc-track-switch-buffer
   "m"     #'magit-status
   "n"     #'flycheck-next-error
+  "o"     #'delete-blank-lines
   "p f"   #'pjones:projectile-find-file
   "q"     #'kill-this-buffer
   "s"     #'pjones:evil-sort
