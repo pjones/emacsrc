@@ -19,6 +19,10 @@
  '(evil-lookup-func #'dictionary-lookup-definition)
  '(evil-symbol-word-search t)
  '(evil-search-module 'evil-search)
+ '(evil-magic 'very-magic)
+ '(evil-ex-search-vim-style-regexp t)
+ '(evil-ex-search-persistent-highlight nil)
+ '(evil-ex-substitute-case 'smart)
  '(evil-fringe-mark-show-special t)
  '(evil-fringe-mark-ignore-chars '(?' ?{ ?} ?^ ?.))
  '(evil-owl-display-method 'window)
@@ -39,6 +43,15 @@
   ;; Put buffers back into the correct mode after saving them:
   (add-hook 'after-save-hook #'evil-change-to-initial-state))
 
+(defun pjones:evil-search-word (oldfun &rest args)
+  "Work around a bug.
+https://github.com/emacs-evil/evil/issues/347
+OLDFUN is the original `evil-ex-start-word-search' function and ARGS
+are the arguments to it."
+  (let ((evil-ex-search-vim-style-regexp nil))
+    (apply oldfun args)))
+(advice-add #'evil-ex-start-word-search :around #'pjones:evil-search-word)
+
 (defun pjones:evil-set-cursors ()
   "Settings that need to be applied after init."
   (let ((normal   (face-attribute 'doom-modeline-evil-normal-state   :foreground nil t))
@@ -56,6 +69,9 @@
           evil-replace-state-cursor  (list 'box replace)
           evil-emacs-state-cursor    (list 'bar emacs)
           evil-insert-state-cursor   (list 'bar insert))))
+
+;; Remove search highlighting after using C-l:
+(advice-add #'recenter-top-bottom :after '(lambda (&rest _args) (evil-ex-nohighlight)))
 
 (evil-define-operator pjones:evil-sort (beg end)
   "Sort text."
@@ -94,6 +110,7 @@
 (add-hook 'evil-mode-hook                 #'global-evil-matchit-mode)
 (add-hook 'evil-mode-hook                 #'global-evil-surround-mode)
 (add-hook 'evil-mode-hook                 #'pjones:evil-mode-hook)
+(add-hook 'evil-mode-hook                 #'pjones:evil-set-cursors)
 (add-hook 'pjones:after-theme-change-hook #'pjones:evil-set-cursors)
 
 ;;; evil-conf.el ends here
