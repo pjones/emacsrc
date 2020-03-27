@@ -19,6 +19,6 @@
   (load-theme theme t)
   (run-hooks 'pjones:after-theme-change-hook))
 
-(pjones:load-theme 'dracula)
-(provide 'themes)
+(add-hook 'after-init-hook (lambda () (pjones:load-theme 'doom-dracula)))
+
 ;;; themes.el ends here
