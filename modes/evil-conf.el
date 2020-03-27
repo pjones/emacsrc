@@ -85,12 +85,13 @@ called from."
       (error nil))))
 
 ;; Additional key bindings:
-(evil-define-key 'normal global-map "g "  #'just-one-space)
-(evil-define-key 'normal global-map "g'"  #'pjones:switch-to-previous-buffer)
-(evil-define-key 'normal global-map "gs"  #'evil-surround-edit)
-(evil-define-key 'visual global-map "s"   #'evil-surround-region)
-(evil-define-key 'visual global-map "S"   #'evil-Surround-region)
-(evil-define-key 'normal global-map "z'"  #'evil-window-mru)
+(evil-define-key 'normal global-map (kbd "g <return>") #'delete-blank-lines)
+(evil-define-key 'normal global-map "g " #'just-one-space)
+(evil-define-key 'normal global-map "g'" #'pjones:switch-to-previous-buffer)
+(evil-define-key 'normal global-map "gs" #'evil-surround-edit)
+(evil-define-key 'visual global-map "s"  #'evil-surround-region)
+(evil-define-key 'visual global-map "S"  #'evil-Surround-region)
+(evil-define-key 'normal global-map "z'" #'evil-window-mru)
 
 (define-key evil-normal-state-map (kbd "C-SPC") #'evil-scroll-page-down)
 (define-key evil-normal-state-map (kbd "C-DEL") #'evil-scroll-page-up)
