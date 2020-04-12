@@ -7,7 +7,6 @@ let
     withX       = true;
     withGTK2    = false;
     withGTK3    = true;
-    imagemagick = pkgs.imagemagick;
   };
 
   ##############################################################################
@@ -24,12 +23,14 @@ pkgs.stdenv.mkDerivation rec {
 
   phases = [ "installPhase" "fixupPhase" ];
 
-  buildInputs = [ emacsAndPackages
-                  pkgs.gitAndTools.gitFull # Needed to compile magit config
-                  pkgs.imagemagick # For image-mode and eimp-mode
-                ];
+  buildInputs = [
+    emacsAndPackages
+    pkgs.gitAndTools.gitFull # Needed to compile magit config
+    pkgs.imagemagick # For image-mode and eimp-mode
+    pkgs.sqlite # For dash docs.
+  ];
 
-  propagatedUserEnvPkgs = [ emacsAndPackages ];
+  propagatedUserEnvPkgs = buildInputs;
 
   installPhase = ''
     mkdir -p "$out/bin" "$out/emacs.d"
@@ -38,7 +39,7 @@ pkgs.stdenv.mkDerivation rec {
     export emacspath="${emacsAndPackages}/bin"
 
     substituteAll ${src}/dot.emacs.el "$out/dot.emacs.el"
-    cp -r ${src}/lisp ${src}/modes "$out/emacs.d/"
+    cp -r ${src}/lisp ${src}/modes ${src}/snippets "$out/emacs.d/"
     chmod u+w "$out"/emacs.d/*
 
     for f in ${src}/bin/*; do

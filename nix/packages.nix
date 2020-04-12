@@ -29,16 +29,17 @@ overrides.emacsWithPackages (epkgs: with epkgs; [
   adaptive-wrap                 # Smart line-wrapping with wrap-prefix
   async                         # Asynchronous processing in Emacs
   beginend                      # Redefine M-< and M-> for some modes
-  color-theme-sanityinc-tomorrow # A version of Chris Kempson's "tomorrow" themes
   company                       # Modular text completion framework
   company-quickhelp             # Popup documentation for completion candidates
   company-statistics            # Sort candidates using completion history
   counsel                       # Various completion functions using Ivy
+  counsel-dash                  # Browse dash docsets using Ivy
   counsel-world-clock           # Display world clock using Ivy
   csv-mode                      # Major mode for editing comma/char separated values
   cyberpunk-theme               # Cyberpunk Color Theme
   dante                         # Development mode for Haskell
   darkroom                      # Remove visual distractions and focus on writing
+  dash-docs                     # Offline documentation browser using Dash docsets
   deadgrep                      # fast, friendly searching with ripgrep
   default-text-scale            # Easily adjust the font size in all frames
   deft                          # quickly browse, filter, and edit plain text notes
@@ -52,6 +53,7 @@ overrides.emacsWithPackages (epkgs: with epkgs; [
   doom-themes                   # an opinionated pack of modern color-themes
   dracula-theme                 # Dracula Theme
   edit-server                   # server that responds to edit requests from Chrome
+  eglot                         # Client for Language Server Protocol (LSP) servers
   eimp                          # Emacs Image Manipulation Package
   elm-mode                      # Elm mode for emacs
   erc-hl-nicks                  # ERC nick highlighter that ignores uniquifying chars when colorizing
@@ -128,4 +130,5 @@ overrides.emacsWithPackages (epkgs: with epkgs; [
   wgrep                         # Writable grep buffer and apply the changes to files
   which-key                     # Display available keybindings in popup
   yaml-mode                     # Major mode for editing YAML files
+  yasnippet                     # Yet another snippet extension for Emacs
 ])

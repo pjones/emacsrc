@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# Stolen from https://github.com/AndreaCrotti/yasnippet-snippets/blob/master/snippets/haskell-mode/main
+# name: main function
+# key: main
+# expand-env: ((yas-indent-line 'fixed))
+# --
+main :: IO ()
+main = putStrLn "Hello World!"

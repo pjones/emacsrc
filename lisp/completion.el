@@ -4,6 +4,7 @@
 ;;
 ;;; Code:
 (require 'company)
+(require 'yasnippet)
 
 ;; I don't want to type "yes".
 (defalias 'yes-or-no-p 'y-or-n-p)
@@ -18,7 +19,9 @@ current line.  Otherwise run the completion command.  ARG is passed to
   (let ((tab-always-indent t)
         (n (save-excursion (beginning-of-line) (point))))
     (if (or (bolp) (looking-back "\\s-" n)) (indent-for-tab-command arg)
-      (company-complete))))
+      (if (yas-maybe-expand-abbrev-key-filter t)
+          (yas-expand)
+        (company-complete)))))
 
 ;; In buffer completion:
 (require 'company)

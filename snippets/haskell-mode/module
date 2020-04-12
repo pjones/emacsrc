@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: module
+# key: mod
+# --
+module ${1:`(pjones:haskell-generate-module-name)`}
+  (
+  ) where
+$0

@@ -22,18 +22,19 @@
 ;; The reset of the file is only loaded if we're not in --batch mode.
 (unless noninteractive
   ;; Global minor modes:
-  (global-diff-hl-mode)                   ; Show what changes in a buffer
-  (winner-mode)                           ; Track win conifg changes
-  (projectile-mode)                       ; Project tool
-  (global-auto-revert-mode)               ; External changes cause a revert
-  (shackle-mode)                          ; Control pop-up windows.
-  (default-text-scale-mode)               ; Frame text scaling.
-  (ivy-mode)                              ; Minibuffer completion
   (counsel-mode)                          ; More completion via Ivy
-  (which-key-mode)                        ; Remind me what keys do.
-  (minions-mode)                          ; Hide some minor modes.
+  (default-text-scale-mode)               ; Frame text scaling.
   (direnv-mode)                           ; Respect .envrc files.
+  (global-auto-revert-mode)               ; External changes cause a revert
+  (global-diff-hl-mode)                   ; Show what changes in a buffer
   (global-prettify-symbols-mode)          ; Replace buffer symbols.
+  (ivy-mode)                              ; Minibuffer completion
+  (minions-mode)                          ; Hide some minor modes.
+  (projectile-mode)                       ; Project tool
+  (shackle-mode)                          ; Control pop-up windows.
+  (which-key-mode)                        ; Remind me what keys do.
+  (winner-mode)                           ; Track win conifg changes
+  (yas-global-mode)                       ; Snippets.
 
   ;; Other modes that need to be activated:
   (pdf-tools-install)                     ; Internal PDF viewer

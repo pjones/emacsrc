@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# Stolen from https://github.com/AndreaCrotti/yasnippet-snippets/blob/master/snippets/haskell-mode/pragma
+# name: pragma
+# key: prag
+# --
+{-# ${1:PRAGMA} #-}

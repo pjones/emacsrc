@@ -30,16 +30,20 @@
 
 ;; A few extra key bindings:
 (evil-leader/set-key-for-mode 'haskell-mode
-  "DEL e" #'haskell-cabal-visit-file
-  "DEL h" #'pjones:hoogle
-  "DEL I" #'pjones:haskell-add-import
-  "DEL i" #'pjones:haskell-add-import-from-hoogle
-  "DEL j" #'haskell-navigate-imports
-  "DEL q" #'pjones:haskell-toggle-qualified
-  "DEL s" #'pjones:haskell-sort-imports
-  "DEL t" #'dante-type-at
-  "DEL x" #'pjones:hasky-extensions
-  "DEL y" #'dante-info)
+  "DEL e"   #'haskell-cabal-visit-file
+  "DEL h"   #'pjones:hoogle
+  "DEL i i" #'pjones:haskell-add-import
+  "DEL i h" #'pjones:haskell-add-import-from-hoogle
+  "DEL i p" #'pjones:haskell-import-project-file
+  "DEL j e" #'pjones:haskell-navigate-exports
+  "DEL j i" #'haskell-navigate-imports
+  "DEL j b" #'pjones:haskell-navigate-imports-return
+  "DEL q"   #'pjones:haskell-toggle-qualified
+  "DEL s"   #'pjones:haskell-sort-imports
+  "DEL t t" #'dante-type-at
+  "DEL t i" #'dante-info
+  "DEL x"   #'pjones:hasky-extensions
+  "DEL y m" #'pjones:haskell-kill-module-name)
 
 (evil-leader/set-key-for-mode 'haskell-cabal-mode
   "DEL s" #'haskell-cabal-subsection-arrange-lines)
@@ -79,6 +83,14 @@ A version of `hasky-extensions' that doesn't use avy."
          (name (ivy-completing-read "Extension: " exts nil t)))
     (if (member name active) (hasky-extensions-remove name)
       (hasky-extensions-add name))))
+
+(defun pjones:haskell-generate-module-name (&optional file)
+  "Attempt to turn FILE into a module name."
+  (let* ((file-name (or file buffer-file-name))
+         (cabal-dir (file-name-directory (haskell-cabal-find-file)))
+         (name (s-chop-suffix ".hs" (s-chop-prefix cabal-dir file-name))))
+    (s-replace-all '(("/" . "."))
+      (s-chop-prefixes (list "src/" "test/" "app/") name))))
 
 (defun pjones:haskell-search-hoogle (prompt)
   "Use PROMPT to prompt the user and search hoogle.
@@ -142,12 +154,16 @@ If non-nil, use MODULE as the initial module name."
   "Prompt for an import and add it to the imports section.
 When prompting, use INITIAL as the initial module name."
   (interactive)
-  (save-excursion
     (goto-char (point-max))
     (haskell-navigate-imports)
-    (insert (pjones:haskell-read-import initial))
-    (insert "\n")
-    (haskell-sort-imports)))
+    (if initial
+        (progn
+          (insert (concat (pjones:haskell-read-import initial) "\n"))
+          (haskell-sort-imports)
+          (haskell-navigate-imports-return))
+      (open-line 1)
+      (evil-insert-state)
+      (yas-expand-snippet (yas-lookup-snippet "import"))))
 
 (defun pjones:haskell-add-import-from-hoogle ()
   "Use hoogle to select an import to add."
@@ -167,6 +183,44 @@ When prompting, use INITIAL as the initial module name."
       (pjones:haskell-add-import
        (concat (match-string 1 import)
                " (" (match-string 2 import) ")"))))))
+
+(defun pjones:haskell-import-project-file ()
+  "Prompt for a project file, then add an import for it."
+  (interactive)
+  (let* ((project (project-current t))
+         (dirs (project-roots project))
+         (table (project-file-completion-table project dirs))
+         (file (projectile-completing-read "Find file" table)))
+    (pjones:haskell-add-import (pjones:haskell-generate-module-name file))))
+
+(defun pjones:haskell-navigate-exports ()
+  "Jump to the export list."
+  (interactive)
+  (setq haskell-navigate-imports-start-point (point))
+  (goto-char (point-min))
+  (search-forward-regexp "^module ")
+  (search-forward-regexp ") where")
+  (forward-line -1))
+
+(defun pjones:haskell-navigate-imports-return ()
+  "Sort imports then jump back to where we came from."
+  (interactive)
+  (beginning-of-line)
+  (when (looking-at-p "^import ")
+    (pjones:haskell-sort-imports))
+  (haskell-navigate-imports-return))
+
+(defun pjones:haskell-kill-module-name ()
+  "Put the current module name in the kill ring."
+  (interactive)
+  (save-excursion
+    (goto-char (point-min))
+    (search-forward-regexp "^module ")
+    (kill-ring-save
+     (point)
+     (progn
+       (search-forward-regexp (rx (or blank eol)))
+       (point)))))
 
 (defun pjones:haskell-mode-hook ()
   "Hook run on new Haskell buffers."
@@ -227,9 +281,7 @@ When prompting, use INITIAL as the initial module name."
   ;; other backends and thus breaks completion.  So, I overwrite what
   ;; Dante does to fix things.
   (set (make-local-variable 'company-backends)
-       '((dante-company company-capf company-files
-          company-dabbrev-code company-gtags company-etags
-          company-keywords company-dabbrev)))
+       '((dante-company company-etags company-keywords company-files)))
 
   ;; Get tags working correctly:
   (xref-etags-mode)

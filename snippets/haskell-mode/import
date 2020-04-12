@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# Stolen from https://github.com/AndreaCrotti/yasnippet-snippets/blob/master/snippets/haskell-mode/import
+# name: import
+# key: im
+# --
+import${1: qualified} ${2:Module${3: (symbols)}}${4: as ${5:alias}}
