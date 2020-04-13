@@ -104,7 +104,8 @@
 (evil-leader/set-key
   "SPC"   #'pjones:switch-to-previous-buffer
   "<tab>" #'pjones:comment-bar
-  "a"     #'ialign
+  "a"     #'pjones:evil-align
+  "A"     #'ialign
   "b"     #'ivy-switch-buffer
   "c"     #'pjones:projectile-compile-project
   "d"     #'pjones:projectile-dired

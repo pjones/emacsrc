@@ -11,6 +11,7 @@
 (eval-when-compile
   (require 'cl))
 
+(require 'align)
 (require 'dante)
 (require 'direnv)
 (require 'evil-leader)
@@ -50,6 +51,23 @@
 
 (evil-define-key 'normal haskell-cabal-mode-map "gj" #'haskell-cabal-next-section)
 (evil-define-key 'normal haskell-cabal-mode-map "gk" #'haskell-cabal-previous-section)
+
+(add-to-list 'align-rules-list
+  '(haskell-types
+    (regexp . "\\(\\s-+\\)\\(::\\|∷\\)\\s-+")
+    (modes quote (haskell-mode literate-haskell-mode))))
+(add-to-list 'align-rules-list
+  '(haskell-assignment
+    (regexp . "\\(\\s-+\\)=\\s-+")
+    (modes quote (haskell-mode literate-haskell-mode))))
+(add-to-list 'align-rules-list
+  '(haskell-arrows
+    (regexp . "\\(\\s-+\\)\\(->\\|→\\)\\s-+")
+    (modes quote (haskell-mode literate-haskell-mode))))
+(add-to-list 'align-rules-list
+  '(haskell-left-arrows
+    (regexp . "\\(\\s-+\\)\\(<-\\|←\\)\\s-+")
+    (modes quote (haskell-mode literate-haskell-mode))))
 
 ;; This overwrite fixes a bug where imports are not sorted because I
 ;; put a comment line above them.

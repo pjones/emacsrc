@@ -3,6 +3,7 @@
 ;;; Commentary:
 ;;
 ;;; Code:
+(require 'align)
 (require 'doom-modeline-core)
 (require 'evil)
 (require 'evil-indent-textobject)
@@ -82,6 +83,14 @@ called from."
   (save-excursion
     (condition-case nil
         (sort-lines nil beg end)
+      (error nil))))
+
+(evil-define-operator pjones:evil-align (beg end)
+  "Align text using `align-rules-list'."
+  :type line
+  (save-excursion
+    (condition-case nil
+        (align beg end)
       (error nil))))
 
 ;; Additional key bindings:
