@@ -240,6 +240,21 @@ When prompting, use INITIAL as the initial module name."
        (search-forward-regexp (rx (or blank eol)))
        (point)))))
 
+(defun pjones:haskell-copyright-text ()
+  "Extract the default copyright text from the Setup.hs file."
+  (let ((cabal-dir (file-name-directory (haskell-cabal-find-file))))
+    (save-excursion
+      (with-temp-buffer
+        (insert-file-contents (concat cabal-dir "Setup.hs"))
+        (goto-char (point-min))
+        (if (looking-at-p "^{-")
+            (progn
+              (buffer-substring-no-properties
+               (point) (progn
+                         (search-forward-regexp "^-}")
+                         (point))))
+          "-- | Module description.")))))
+
 (defun pjones:haskell-mode-hook ()
   "Hook run on new Haskell buffers."
   ;; Update environment variables (i.e. PATH) first!

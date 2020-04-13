@@ -2,7 +2,11 @@
 # name: module
 # key: mod
 # --
+`(pjones:haskell-copyright-text)`
 module ${1:`(pjones:haskell-generate-module-name)`}
   (
   ) where
+
+--------------------------------------------------------------------------------
+-- Imports:
 $0
