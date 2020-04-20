@@ -70,6 +70,7 @@ overrides.emacsWithPackages (epkgs: with epkgs; [
   evil-surround                 # emulate surround.vim from Vim
   evil-textobj-syntax           # Provides syntax text objects
   flycheck                      # On-the-fly syntax checking
+  flymake-hlint                 # A flymake handler for haskell-mode files using hlint
   flyspell-correct              # Correcting words with flyspell via custom interface
   flyspell-correct-ivy          # Correcting words with flyspell via ivy interface
   forge                         # Access Git forges from Magit

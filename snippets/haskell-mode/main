@@ -4,5 +4,6 @@
 # key: main
 # expand-env: ((yas-indent-line 'fixed))
 # --
+-- | Main.
 main :: IO ()
 main = putStrLn "Hello World!"

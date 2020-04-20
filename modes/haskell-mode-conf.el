@@ -12,10 +12,9 @@
   (require 'cl))
 
 (require 'align)
-(require 'dante)
 (require 'direnv)
+(require 'eglot)
 (require 'evil-leader)
-(require 'flycheck)
 (require 'haskell-mode)
 (require 'hasky-extensions)
 (require 'highlight-indent-guides)
@@ -24,10 +23,11 @@
 
 ;; Settings for haskell-mode and friends:
 (custom-set-variables
-  '(haskell-stylish-on-save nil)
+  '(haskell-stylish-on-save t)
+  '(haskell-mode-stylish-haskell-path "ormolu")
+  '(haskell-mode-stylish-haskell-args nil)
   '(haskell-tags-on-save t)
-  '(haskell-completing-read-function 'ivy-completing-read)
-  '(dante-repl-command-line nil))
+  '(haskell-completing-read-function 'ivy-completing-read))
 
 ;; A few extra key bindings:
 (evil-leader/set-key-for-mode 'haskell-mode
@@ -41,8 +41,7 @@
   "DEL j b" #'pjones:haskell-navigate-imports-return
   "DEL q"   #'pjones:haskell-toggle-qualified
   "DEL s"   #'pjones:haskell-sort-imports
-  "DEL t t" #'dante-type-at
-  "DEL t i" #'dante-info
+  "DEL t"   #'eglot-help-at-point
   "DEL x"   #'pjones:hasky-extensions
   "DEL y m" #'pjones:haskell-kill-module-name)
 
@@ -240,6 +239,23 @@ When prompting, use INITIAL as the initial module name."
        (search-forward-regexp (rx (or blank eol)))
        (point)))))
 
+(defun pjones:haskell-package-version (&optional cabal-file)
+  "Return the version of the package defined in CABAL-FILE."
+  (let ((cabal-file (or cabal-file (haskell-cabal-find-file))))
+    (save-excursion
+      (with-temp-buffer
+        (insert-file-contents cabal-file)
+        (goto-char (point-min))
+
+        (if (search-forward-regexp
+             (rx (and line-start (* blank) "version:" (+ blank)
+                      (group (1+ (or digit ?.)))))
+             nil nil)
+            (buffer-substring-no-properties
+             (match-beginning 1)
+             (match-end 1))
+          "0.1.0.0")))))
+
 (defun pjones:haskell-copyright-text ()
   "Extract the default copyright text from the Setup.hs file."
   (let ((cabal-dir (file-name-directory (haskell-cabal-find-file))))
@@ -247,12 +263,15 @@ When prompting, use INITIAL as the initial module name."
       (with-temp-buffer
         (insert-file-contents (concat cabal-dir "Setup.hs"))
         (goto-char (point-min))
-        (if (looking-at-p "^{-")
+        (if (looking-at-p (rx (and line-start (or "{-|" "-- |"))))
             (progn
               (buffer-substring-no-properties
-               (point) (progn
-                         (search-forward-regexp "^-}")
-                         (point))))
+               (point)
+               (progn
+                 (search-forward-regexp
+                  (rx (and line-start (or "import" "module"))))
+                 (end-of-line 0)
+                 (point))))
           "-- | Module description.")))))
 
 (defun pjones:haskell-mode-hook ()
@@ -262,14 +281,15 @@ When prompting, use INITIAL as the initial module name."
 
   ;; Boot `haskell-mode':
   (haskell-indentation-mode)
-  (dante-mode)
 
   ;; Load helper packages:
   (pjones:prog-mode-hook)
-  (flycheck-mode)
   (subword-mode)
   (abbrev-mode)
   (highlight-indent-guides-mode)
+  (flymake-hlint-load)
+  (xref-etags-mode)
+  (eglot-ensure)
 
   ;; Evil doc-lookup (on the "K" key):
   (set (make-local-variable 'evil-lookup-func) #'pjones:hoogle)
@@ -307,26 +327,13 @@ When prompting, use INITIAL as the initial module name."
                      (Bc . Bl) ?= (Br . Br) ?=))
       ("<>"  .  (?\s (Br . Bl) ?\s
                      (Bl . Bl) ?< (Bc . Br) ?<
-                     (Bc . Bl) ?> (Br . Br) ?>))))
-
-  ;; Configure completion specific to this mode.  I *think* that Dante
-  ;; inserts itself in this list in a way that prevents merging with
-  ;; other backends and thus breaks completion.  So, I overwrite what
-  ;; Dante does to fix things.
-  (set (make-local-variable 'company-backends)
-       '((dante-company company-etags company-keywords company-files)))
-
-  ;; Get tags working correctly:
-  (xref-etags-mode)
-  (setq xref-backend-functions '(etags--xref-backend dante--xref-backend)))
-
-(defun pjones:dante-mode-hook ()
-  "Peter's hook for Dante."
-  (flycheck-add-next-checker 'haskell-dante '(warning . haskell-hlint)))
+                     (Bc . Bl) ?> (Br . Br) ?>)))))
 
 (add-hook 'haskell-mode-hook       #'pjones:haskell-mode-hook)
 (add-hook 'haskell-cabal-mode-hook #'highlight-indent-guides-mode)
 (add-hook 'haskell-cabal-mode-hook #'pjones:prog-mode-hook)
-(add-hook 'dante-mode-hook         #'pjones:dante-mode-hook)
+
+;; Tell eglot how to start ghcide:
+(add-to-list 'eglot-server-programs '(haskell-mode . ("ghcide" "--lsp")))
 
 ;;; haskell-mode-conf.el ends here

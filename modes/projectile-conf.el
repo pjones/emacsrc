@@ -3,8 +3,9 @@
 ;;; Commentary:
 ;;
 ;;; Code:
-(require 'projectile)
 (require 'ivy)
+(require 'project)
+(require 'projectile)
 
 (custom-set-variables
  '(projectile-mode-line nil)
@@ -74,5 +75,17 @@ default directory instead."
    (if (projectile-project-p)
        'projectile-find-file
      'find-file)))
+
+;; Taken from: https://github.com/bbatsov/projectile/issues/1282
+;; project-find-function which uses projectile methods to find
+;; the projectile project associated with a directory.
+;; If projectile not loaded, or directory is not in a project,
+;; hopefully returns nil.
+(defun pjones:projectile-project-find (dir)
+  "Find the project that exists in DIR."
+  (if (fboundp 'projectile-project-root)
+      (let ((root (projectile-project-root dir)))
+        (and root (cons 'transient root)))))
+(add-to-list 'project-find-functions #'pjones:projectile-project-find)
 
 ;;; projectile-conf.el ends here

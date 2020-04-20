@@ -5,6 +5,8 @@
 ;;; Code:
 (eval-when-compile
   (require 'cl)) ; for plusp (need to replace it)
+(require 'flycheck)
+(require 'flymake)
 
 (declare-function pjones:erc-freenode "../modes/erc-conf.el")
 (declare-function pjones:erc-bitlbee "../modes/erc-conf.el")
@@ -199,6 +201,19 @@ Open the URL COUNT matches above point."
     (search-backward-regexp "https?://" nil nil count)
     (browse-url-at-point)))
 
+(defun pjones:fly-next-error ()
+  "Go to the next fly(check|make) error."
+  (interactive)
+  (cond
+   (flycheck-mode
+    (flycheck-next-error))
+   (flymake-mode
+    (flymake-goto-next-error)
+    (let ((err (get-char-property (point) 'flymake-diagnostic)))
+      (when err
+        (display-message-or-buffer
+         (concat (flymake--diag-text err) "\n\n")
+         "*flymake message*" 'not-this-window))))))
 
 ;; Local Variables:
 ;; byte-compile-warnings: (not noruntime)

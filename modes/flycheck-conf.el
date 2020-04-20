@@ -8,8 +8,6 @@
 (custom-set-variables
  '(flycheck-disabled-checkers '(javascript-gjslint))
  '(flycheck-standard-error-navigation nil)
- '(flymake-no-changes-timeout nil)
- '(flymake-start-syntax-check-on-newline nil)
- '(flycheck-check-syntax-automatically '(save mode-enabled)))
+ '(flycheck-global-modes '(not haskell-mode)))
 
 ;;; flycheck-conf.el ends here
