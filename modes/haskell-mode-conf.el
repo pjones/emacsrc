@@ -178,7 +178,6 @@ When prompting, use INITIAL as the initial module name."
           (insert (concat (pjones:haskell-read-import initial) "\n"))
           (haskell-sort-imports)
           (haskell-navigate-imports-return))
-      (open-line 1)
       (evil-insert-state)
       (yas-expand-snippet (yas-lookup-snippet "import"))))
 
@@ -273,6 +272,14 @@ When prompting, use INITIAL as the initial module name."
                  (end-of-line 0)
                  (point))))
           "-- | Module description.")))))
+
+(defun pjones:haskell-unqualified-module (module)
+  "Remove qualified prefix from MODULE."
+  (if module
+      (let* ((parts (s-split (rx ".") module))
+             (name (last parts)))
+        (if name (car name) module))
+    ""))
 
 (defun pjones:haskell-mode-hook ()
   "Hook run on new Haskell buffers."
