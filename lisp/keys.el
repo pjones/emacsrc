@@ -27,7 +27,6 @@
 (global-set-key (kbd "C-r")       #'isearch-backward-regexp)
 (global-set-key (kbd "C-s")       #'isearch-forward-regexp)
 (global-set-key (kbd "C-w")       #'pjones:kill-region-or-backward-kill-word)
-(global-set-key (kbd "C-x 0")     #'pjones:switch-window-then-delete)
 (global-set-key (kbd "C-x C-c")   #'pjones:maybe-save-buffers-kill-terminal)
 (global-set-key (kbd "C-x C-f")   #'counsel-find-file)
 (global-set-key (kbd "C-x M-o")   #'resize-window)
