@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# Stolen from https://github.com/AndreaCrotti/yasnippet-snippets/blob/master/snippets/haskell-mode/data
+# name: data
+# key: da
+# --
+-- | FIXME: Write documentation for $1
+--
+-- @since `(pjones:haskell-package-version)`
+data ${1:Type} = $2

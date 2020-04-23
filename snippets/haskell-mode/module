@@ -7,5 +7,4 @@ module ${1:`(pjones:haskell-generate-module-name)`}
   (
   ) where
 
--- Imports:
 $0

@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# Stolen from https://github.com/AndreaCrotti/yasnippet-snippets/blob/master/snippets/haskell-mode/data
+# name: newtype
+# key: nt
+# expand-env: ((yas-indent-line 'fixed))
+# --
+-- | FIXME: Write documentation for ${1:$(car (s-split " " yas-text))}
+--
+-- @since `(pjones:haskell-package-version)`
+newtype ${1:Type} = $1
+  { ${1:$(concat "un" (car (s-split " " yas-text)))} :: $2 }
