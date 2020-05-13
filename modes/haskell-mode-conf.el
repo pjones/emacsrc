@@ -15,7 +15,9 @@
 (require 'direnv)
 (require 'eglot)
 (require 'evil-leader)
+(require 'haskell-interactive-mode)
 (require 'haskell-mode)
+(require 'haskell-process)
 (require 'hasky-extensions)
 (require 'highlight-indent-guides)
 
@@ -26,6 +28,12 @@
   '(haskell-stylish-on-save t)
   '(haskell-mode-stylish-haskell-path "ormolu")
   '(haskell-mode-stylish-haskell-args nil)
+  '(haskell-process-type 'cabal-repl)
+  '(haskell-ask-also-kill-buffers nil)
+  '(haskell-interactive-popup-errors nil)
+  '(haskell-process-show-debug-tips nil)
+  '(haskell-process-suggest-remove-import-lines t)
+  '(haskell-process-auto-import-loaded-modules t)
   '(haskell-tags-on-save t)
   '(haskell-completing-read-function 'ivy-completing-read))
 
@@ -288,6 +296,7 @@ When prompting, use INITIAL as the initial module name."
 
   ;; Boot `haskell-mode':
   (haskell-indentation-mode)
+  (interactive-haskell-mode)
 
   ;; Load helper packages:
   (pjones:prog-mode-hook)

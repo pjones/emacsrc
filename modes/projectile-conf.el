@@ -21,6 +21,7 @@
 (add-to-list 'projectile-project-root-files "Rakefile")
 (add-to-list 'projectile-project-root-files "package.json")
 (add-to-list 'projectile-project-root-files "cabal.project")
+(add-to-list 'projectile-project-root-files-bottom-up ".envrc")
 
 (projectile-register-project-type
  'edify '("default.nix" "courses" "content")
@@ -28,6 +29,10 @@
 
 (projectile-register-project-type
  'haskell-multi '("default.nix" "cabal.project")
+ :compile "cabal build all && cabal test all")
+
+(projectile-register-project-type
+ 'haskell-nix '("default.nix" "Setup.hs")
  :compile "cabal build all && cabal test all")
 
 ;;; Utility Functions

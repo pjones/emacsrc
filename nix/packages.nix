@@ -1,24 +1,15 @@
-{ pkgs
+{ sources ? import ./sources.nix
+, pkgs ? import sources.nixpkgs { }
 , emacs
-, ...
 }:
 
 let
   ##############################################################################
-  # Access to the MELPA Emacs builder:
-  melpaBuild = import <nixpkgs/pkgs/build-support/emacs/melpa.nix> {
-    inherit (pkgs) lib stdenv texinfo fetchFromGitHub;
-    inherit emacs;
-  };
-
-  ##############################################################################
   # Package overrides:
   overrides = (pkgs.emacsPackagesFor emacs).overrideScope' (self: super: rec {
-    # Newer versions of existing packages:
-    passmm = import ./passmm.nix   { inherit super self pkgs melpaBuild; };
-
-    evil-indent-textobject = import ./evil-indent-textobject.nix
-      { inherit super self pkgs melpaBuild; };
+    passmm = super.passmm.overrideAttrs (_: { src = sources.passmm; });
+    evil-indent-textobject = super.evil-indent-textobject.overrideAttrs
+      (_: { src = sources.evil-indent-textobject; });
   });
 
 in

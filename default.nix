@@ -1,4 +1,6 @@
-{ pkgs ? (import <nixpkgs> {}).pkgs }:
+{ sources ? import ./nix/sources.nix
+, pkgs ? import sources.nixpkgs { }
+}:
 
 let
   ##############################################################################
