@@ -11,14 +11,20 @@ option_fresh=0
 option_emacs_opts=()
 
 ################################################################################
-usage () {
-cat <<EOF
+# See if we can get the name of the server from the current workspace.
+if [ -n "$DISPLAY" ] && type wmctrl &>/dev/null; then
+  option_server_name=$(wmctrl -d | awk '$2 == "*" { print $9 }')
+fi
+
+################################################################################
+usage() {
+  cat <<EOF
 Usage: e [options] [file] -- [emacsclient options]
 
   -c      Open a new frame
   -f      Force a fresh Emacs to be started
   -h      This message
-  -s NAME Connect to server NAME
+  -s NAME Connect to server NAME [$option_server_name]
   -t      Open a new TTY
 EOF
 }
@@ -26,36 +32,42 @@ EOF
 ################################################################################
 while getopts "cfhs:t" o; do
   case "${o}" in
-    c) option_emacs_opts+=("--create-frame" "--no-wait")
-       ;;
+  c)
+    option_emacs_opts+=("--create-frame" "--no-wait")
+    ;;
 
-    f) option_fresh=1
-       ;;
+  f)
+    option_fresh=1
+    ;;
 
-    h) usage
-       exit
-       ;;
+  h)
+    usage
+    exit
+    ;;
 
-    s) option_server_name=$OPTARG
-       ;;
+  s)
+    option_server_name=$OPTARG
+    ;;
 
-    t) option_emacs_opts+=("--tty")
-       ;;
+  t)
+    option_emacs_opts+=("--tty")
+    ;;
 
-    *) exit 1
-       ;;
+  *)
+    exit 1
+    ;;
   esac
 done
 
-shift $((OPTIND-1))
+shift $((OPTIND - 1))
 
 ################################################################################
 if [ "$option_fresh" -eq 1 ]; then
   export EMACSLOADPATH=""
   exec @emacspath@/emacs -q \
-       --eval "(toggle-debug-on-error)" \
-       --load @out@/dot.emacs.el \
-       --eval "(run-hooks 'after-init-hook)" "$@"
+    --eval "(toggle-debug-on-error)" \
+    --load @out@/dot.emacs.el \
+    --eval "(run-hooks 'after-init-hook)" "$@"
 fi
 
 ################################################################################
@@ -65,4 +77,4 @@ fi
 
 ################################################################################
 @emacspath@/emacsclient --server-file="${option_server_path}${option_server_name}" \
-   "${option_emacs_opts[@]}" "$@"
+  "${option_emacs_opts[@]}" "$@"

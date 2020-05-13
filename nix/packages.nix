@@ -4,17 +4,26 @@
 }:
 
 let
-  ##############################################################################
   # Package overrides:
   overrides = (pkgs.emacsPackagesFor emacs).overrideScope' (self: super: rec {
-    passmm = super.passmm.overrideAttrs (_: { src = sources.passmm; });
+    passmm = super.passmm.overrideAttrs
+      (_: { src = sources.passmm; });
+    eglot = super.eglot.overrideAttrs
+      (_: { src = sources.eglot; });
     evil-indent-textobject = super.evil-indent-textobject.overrideAttrs
       (_: { src = sources.evil-indent-textobject; });
+    reformatter = super.reformatter.overrideAttrs
+      (_: { src = sources."reformatter.el"; });
+    treemacs = super.treemacs.overrideAttrs
+      (_: { src = sources.treemacs; });
+    treemacs-evil = super.treemacs-evil.overrideAttrs
+      (_: { src = sources.treemacs; });
+    treemacs-projectile = super.treemacs-projectile.overrideAttrs
+      (_: { src = sources.treemacs; });
   });
 
 in
 
-################################################################################
 # Emacs package list:
 overrides.emacsWithPackages (epkgs: with epkgs; [
   adaptive-wrap                 # Smart line-wrapping with wrap-prefix
@@ -24,13 +33,10 @@ overrides.emacsWithPackages (epkgs: with epkgs; [
   company-quickhelp             # Popup documentation for completion candidates
   company-statistics            # Sort candidates using completion history
   counsel                       # Various completion functions using Ivy
-  counsel-dash                  # Browse dash docsets using Ivy
   counsel-world-clock           # Display world clock using Ivy
   csv-mode                      # Major mode for editing comma/char separated values
   cyberpunk-theme               # Cyberpunk Color Theme
-  dante                         # Development mode for Haskell
   darkroom                      # Remove visual distractions and focus on writing
-  dash-docs                     # Offline documentation browser using Dash docsets
   deadgrep                      # fast, friendly searching with ripgrep
   default-text-scale            # Easily adjust the font size in all frames
   deft                          # quickly browse, filter, and edit plain text notes
@@ -42,7 +48,6 @@ overrides.emacsWithPackages (epkgs: with epkgs; [
   direnv                        # direnv support
   doom-modeline                 # A minimal and modern mode-line
   doom-themes                   # an opinionated pack of modern color-themes
-  dracula-theme                 # Dracula Theme
   edit-server                   # server that responds to edit requests from Chrome
   eglot                         # Client for Language Server Protocol (LSP) servers
   eimp                          # Emacs Image Manipulation Package
@@ -105,13 +110,12 @@ overrides.emacsWithPackages (epkgs: with epkgs; [
   projectile                    # Manage and navigate projects in Emacs easily
   purescript-mode               # A PureScript editing mode
   rainbow-mode                  # Colorize color names in buffers
+  reformatter                   # Define commands which run reformatters on the current Emacs buffer
   resize-window                 # easily resize windows
   ruby-end                      # Automatic insertion of end blocks for Ruby
   scad-mode                     # A major mode for editing OpenSCAD code
   shackle                       # Enforce rules for popups
-  smartrep                      # Support sequential operation which omitted prefix keys
   smex                          # M-x interface with Ido-style fuzzy matching
-  swiper                        # Isearch with an overview. Oh, man!
   switch-window                 # A *visual* way to switch window
   treemacs                      # A tree style file explorer package
   treemacs-evil                 # Evil mode integration for treemacs

@@ -20,14 +20,12 @@
 (require 'haskell-process)
 (require 'hasky-extensions)
 (require 'highlight-indent-guides)
+(require 'reformatter)
 
 (declare-function pjones:prog-mode-hook "../lisp/code.el")
 
 ;; Settings for haskell-mode and friends:
 (custom-set-variables
-  '(haskell-stylish-on-save t)
-  '(haskell-mode-stylish-haskell-path "ormolu")
-  '(haskell-mode-stylish-haskell-args nil)
   '(haskell-process-type 'cabal-repl)
   '(haskell-ask-also-kill-buffers nil)
   '(haskell-interactive-popup-errors nil)
@@ -46,9 +44,9 @@
   "DEL i p" #'pjones:haskell-import-project-file
   "DEL j e" #'pjones:haskell-navigate-exports
   "DEL j i" #'haskell-navigate-imports
-  "DEL j b" #'pjones:haskell-navigate-imports-return
+  "DEL j b" #'haskell-navigate-imports-return
+  "DEL j r" #'haskell-interactive-bring
   "DEL q"   #'pjones:haskell-toggle-qualified
-  "DEL s"   #'pjones:haskell-sort-imports
   "DEL t"   #'eglot-help-at-point
   "DEL x"   #'pjones:hasky-extensions
   "DEL y m" #'pjones:haskell-kill-module-name)
@@ -59,45 +57,8 @@
 (evil-define-key 'normal haskell-cabal-mode-map "gj" #'haskell-cabal-next-section)
 (evil-define-key 'normal haskell-cabal-mode-map "gk" #'haskell-cabal-previous-section)
 
-(add-to-list 'align-rules-list
-  '(haskell-types
-    (regexp . "\\(\\s-+\\)\\(::\\|∷\\)\\s-+")
-    (modes quote (haskell-mode literate-haskell-mode))))
-(add-to-list 'align-rules-list
-  '(haskell-assignment
-    (regexp . "\\(\\s-+\\)=\\s-+")
-    (modes quote (haskell-mode literate-haskell-mode))))
-(add-to-list 'align-rules-list
-  '(haskell-arrows
-    (regexp . "\\(\\s-+\\)\\(->\\|→\\)\\s-+")
-    (modes quote (haskell-mode literate-haskell-mode))))
-(add-to-list 'align-rules-list
-  '(haskell-left-arrows
-    (regexp . "\\(\\s-+\\)\\(<-\\|←\\)\\s-+")
-    (modes quote (haskell-mode literate-haskell-mode))))
-
-;; This overwrite fixes a bug where imports are not sorted because I
-;; put a comment line above them.
-(defun pjones:haskell-sort-imports ()
-  "If point is in a block of import statements then sort them.
-Otherwise go totally crazy."
-  (interactive)
-  (let ((b (save-excursion
-             (move-beginning-of-line nil)
-             (while (looking-at "^import") (forward-line -1))
-             (forward-line 1)
-             (point)))
-        (e (save-excursion
-             (move-beginning-of-line nil)
-             (while (looking-at "^import") (forward-line 1))
-             (forward-line -1)
-             (move-end-of-line nil)
-             (point))))
-    (sort-regexp-fields
-       nil "^import +\\(qualified \\)?\\(.+\\)$" "\\2" b e)))
-
-;; Redefine the existing function:
-(defalias 'haskell-sort-imports #'pjones:haskell-sort-imports)
+(reformatter-define haskell-format
+  :program "ormolu")
 
 (defun pjones:hasky-extensions ()
   "Wrapper around `hasky-extensions'.
@@ -181,11 +142,7 @@ When prompting, use INITIAL as the initial module name."
   (interactive)
     (goto-char (point-max))
     (haskell-navigate-imports)
-    (if initial
-        (progn
-          (insert (concat (pjones:haskell-read-import initial) "\n"))
-          (haskell-sort-imports)
-          (haskell-navigate-imports-return))
+    (if initial (insert (concat (pjones:haskell-read-import initial) "\n"))
       (evil-insert-state)
       (yas-expand-snippet (yas-lookup-snippet "import"))))
 
@@ -225,14 +182,6 @@ When prompting, use INITIAL as the initial module name."
   (search-forward-regexp "^module ")
   (search-forward-regexp ") where")
   (forward-line -1))
-
-(defun pjones:haskell-navigate-imports-return ()
-  "Sort imports then jump back to where we came from."
-  (interactive)
-  (beginning-of-line)
-  (when (looking-at-p "^import ")
-    (pjones:haskell-sort-imports))
-  (haskell-navigate-imports-return))
 
 (defun pjones:haskell-kill-module-name ()
   "Put the current module name in the kill ring."
@@ -297,6 +246,7 @@ When prompting, use INITIAL as the initial module name."
   ;; Boot `haskell-mode':
   (haskell-indentation-mode)
   (interactive-haskell-mode)
+  (haskell-format-on-save-mode)
 
   ;; Load helper packages:
   (pjones:prog-mode-hook)

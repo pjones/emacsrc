@@ -4,14 +4,19 @@
 ;;
 ;;; Code:
 (require 'nix-mode)
+(require 'reformatter)
 
 (custom-set-variables
  '(nix-indent-function #'nix-indent-line))
 
+(reformatter-define nix-format
+  :program "nixfmt")
+
 (defun pjones:nix-mode-hook ()
   "Configure `nix-mode'."
   (make-local-variable 'electric-pair-open-newline-between-pairs)
-  (setq electric-pair-open-newline-between-pairs nil))
+  (setq electric-pair-open-newline-between-pairs nil)
+  (nix-format-on-save-mode))
 
 (add-hook 'nix-mode-hook #'pjones:nix-mode-hook)
 

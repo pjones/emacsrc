@@ -1,4 +1,16 @@
 {
+    "eglot": {
+        "branch": "master",
+        "description": "A client for Language Server Protocol servers",
+        "homepage": null,
+        "owner": "joaotavora",
+        "repo": "eglot",
+        "rev": "da7ff4883d3108468265fdc16a217d8e6aff92f2",
+        "sha256": "0vlffhz73fr6p4jrg6ygf6npn2nzqri4vxksrzhmlbm165aw2y9c",
+        "type": "tarball",
+        "url": "https://github.com/joaotavora/eglot/archive/da7ff4883d3108468265fdc16a217d8e6aff92f2.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
     "evil-indent-textobject": {
         "ref": "patches",
         "repo": "https://code.devalot.com/mirrors/evil-indent-textobject.git",
@@ -34,5 +46,29 @@
         "repo": "https://code.devalot.com/open/passmm.git",
         "rev": "b25a92048c788a8477cc5ffe14c0c4a4df19d79a",
         "type": "git"
+    },
+    "reformatter.el": {
+        "branch": "master",
+        "description": "Define commands which run reformatters on the current Emacs buffer",
+        "homepage": null,
+        "owner": "purcell",
+        "repo": "reformatter.el",
+        "rev": "dc6278a6b1e3565604346ac41a6ffc3cbab04031",
+        "sha256": "147qrqs3ndc4xfbb9wiymjsskccp54qpj8bn3i19n9zwm4kmgdzr",
+        "type": "tarball",
+        "url": "https://github.com/purcell/reformatter.el/archive/dc6278a6b1e3565604346ac41a6ffc3cbab04031.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
+    "treemacs": {
+        "branch": "master",
+        "description": null,
+        "homepage": null,
+        "owner": "Alexander-Miller",
+        "repo": "treemacs",
+        "rev": "1ff0a8f0d3ce771d71c200e39b75d895acf35ec2",
+        "sha256": "0jkrykp1xg5vxipp8w3k42a9qyb1ckpm8211n3y449298zbff4kj",
+        "type": "tarball",
+        "url": "https://github.com/Alexander-Miller/treemacs/archive/1ff0a8f0d3ce771d71c200e39b75d895acf35ec2.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     }
 }

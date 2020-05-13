@@ -86,6 +86,7 @@ in PLIST.  ALIST is passed to display functions."
        "\\*Deletions\\*"
        "\\*Flycheck error"
        "\\*evil-owl\\*"
+       "\\*eglot-help"
        calendar-mode)
       :regexp t
       :size 0.3
@@ -108,9 +109,11 @@ in PLIST.  ALIST is passed to display functions."
       :custom pjones:shackle-split)
 
      ;; Like above, but don't consider the major mode:
-     ((term-mode)
+     ((term-mode
+       haskell-interactive-mode)
       :select t
       :dedicated t
+      :frame t
       :custom pjones:shackle-split)
 
      ;; Windows that should split the current window but *not* get focus:

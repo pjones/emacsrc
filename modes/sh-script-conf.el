@@ -3,7 +3,16 @@
 ;;; Commentary:
 ;;
 ;;; Code:
+(require 'reformatter)
+(require 'sh-script)
+
 (custom-set-variables
  '(sh-basic-offset 2))
+
+(reformatter-define sh-format
+  :program "shfmt"
+  :args '("-i" "2"))
+
+(add-to-list 'sh-mode-hook #'sh-format-on-save-mode)
 
 ;;; sh-script-conf.el ends here

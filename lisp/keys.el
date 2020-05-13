@@ -107,7 +107,7 @@
   "A"     #'ialign
   "b"     #'ivy-switch-buffer
   "c"     #'pjones:projectile-compile-project
-  "d"     #'pjones:projectile-dired
+  "d"     #'treemacs-select-window
   "e"     pjones:e-map
   "f"     #'counsel-find-file
   "g"     #'next-error
