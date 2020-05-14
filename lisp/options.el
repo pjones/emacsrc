@@ -88,7 +88,7 @@
   (set-frame-parameter frame 'name  nil))
 
 (add-to-list 'default-frame-alist '(cursor-type  . hbar))
-(add-to-list 'default-frame-alist '(font . "Fira Code Retina:pixelsize=13"))
+(add-to-list 'default-frame-alist '(font . "Hermit:pixelsize=14:weight=normal"))
 (setq frame-title-format '(:eval (pjones:frame-title-file-name)))
 
 (defun pjones:find-file-hook ()
