@@ -1,10 +1,12 @@
 # -*- mode: snippet -*-
 # name: module
 # key: mod
+# expand-env: ((yas-indent-line 'fixed))
 # --
 `(pjones:haskell-copyright-text)`
 module ${1:`(pjones:haskell-generate-module-name)`}
   (
-  ) where
+  )
+where
 
 $0

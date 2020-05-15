@@ -2,6 +2,7 @@
 # Stolen from https://github.com/AndreaCrotti/yasnippet-snippets/blob/master/snippets/haskell-mode/data
 # name: type
 # key: ty
+# expand-env: ((yas-indent-line 'fixed))
 # --
 -- | FIXME: Write documentation for $1
 --

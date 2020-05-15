@@ -2,5 +2,6 @@
 # Stolen from https://github.com/AndreaCrotti/yasnippet-snippets/blob/master/snippets/haskell-mode/import
 # name: import
 # key: im
+# expand-env: ((yas-indent-line 'fixed))
 # --
 import ${2:Module} (${3:names})

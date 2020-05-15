@@ -2,5 +2,6 @@
 # Stolen from https://github.com/AndreaCrotti/yasnippet-snippets/blob/master/snippets/haskell-mode/import
 # name: import-qualified
 # key: qi
+# expand-env: ((yas-indent-line 'fixed))
 # --
 import qualified ${2:Module} as ${2:$(pjones:haskell-unqualified-module yas-text)}
