@@ -8,7 +8,12 @@ set -e
 option_server_name="server"
 option_server_path="$HOME/.cache/emacs/server/"
 option_fresh=0
+option_wait=0
 option_emacs_opts=()
+
+################################################################################
+# Extra path entries for dependencies (wmctrl, nc, etc)
+export PATH=@path@:$PATH
 
 ################################################################################
 # See if we can get the name of the server from the current workspace.
@@ -26,14 +31,34 @@ Usage: e [options] [file] -- [emacsclient options]
   -h      This message
   -s NAME Connect to server NAME [$option_server_name]
   -t      Open a new TTY
+  -w      Wait for Emacs to finish with the file
 EOF
 }
 
 ################################################################################
-while getopts "cfhs:t" o; do
+# Is the selected Emacs daemon alive?
+alive() {
+  path="${option_server_path}${option_server_name}"
+
+  # Does the server file exist?
+  if [ ! -e "$path" ]; then
+    return 1
+  fi
+
+  # Can we connect to the server?
+  port=$(head -1 "$path" | sed -E 's/^.*:([[:digit:]]+).*/\1/')
+
+  if ! nc -N 127.0.0.1 "$port" </dev/null; then
+    rm -f "$path" # Server is dead, delete the file.
+    return 1
+  fi
+}
+
+################################################################################
+while getopts "cfhs:tw" o; do
   case "${o}" in
   c)
-    option_emacs_opts+=("--create-frame" "--no-wait")
+    option_emacs_opts+=("--create-frame")
     ;;
 
   f)
@@ -53,6 +78,10 @@ while getopts "cfhs:t" o; do
     option_emacs_opts+=("--tty")
     ;;
 
+  w)
+    option_wait=1
+    ;;
+
   *)
     exit 1
     ;;
@@ -64,17 +93,21 @@ shift $((OPTIND - 1))
 ################################################################################
 if [ "$option_fresh" -eq 1 ]; then
   export EMACSLOADPATH=""
-  exec @emacspath@/emacs -q \
+  exec emacs -q \
     --eval "(toggle-debug-on-error)" \
     --load @out@/dot.emacs.el \
     --eval "(run-hooks 'after-init-hook)" "$@"
 fi
 
 ################################################################################
-if [ ! -e "${option_server_path}${option_server_name}" ]; then
-  @emacspath@/emacs --daemon="$option_server_name"
+if ! alive; then
+  emacs --daemon="$option_server_name"
 fi
 
 ################################################################################
-@emacspath@/emacsclient --server-file="${option_server_path}${option_server_name}" \
+if [ "$option_wait" -eq 0 ]; then
+  option_emacs_opts+=("--no-wait")
+fi
+
+emacsclient --server-file="${option_server_path}${option_server_name}" \
   "${option_emacs_opts[@]}" "$@"
