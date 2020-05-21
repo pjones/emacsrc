@@ -1,0 +1,443 @@
+;;; gnus-conf.el -- Configuration for Gnus
+;;
+;;; Commentary:
+;;
+;;; Code:
+(require 'dianyou)
+(require 'evil)
+(require 'gnus)
+(require 'gnus-sum)
+(require 'gnus-win)
+(require 's)
+
+(declare-function pjones:cheat-sheet-buffer "../lisp/functions.el")
+(declare-function pjones:kill-cheat-sheet-buffers "../lisp/functions.el")
+
+(defvar gnus-tmp-group nil
+  "Variable from gnus-group.el.
+Declared here to avoid compiler warnings.")
+
+(defvar gnus-tmp-decoded-group nil
+  "Variable from gnus-group.el.
+Declared here to avoid compiler warnings.")
+
+(custom-set-variables
+ ;; Basic Gnus settings:
+ '(gnus-read-newsrc-file nil)
+ '(gnus-save-newsrc-file nil)
+ '(gnus-activate-level 3)
+ '(gnus-process-mark ?✯)
+ '(gnus-large-newsgroup 800)
+ '(gnus-save-score t)
+ '(gnus-novice-user nil)
+ '(gnus-expert-user t)
+ '(gnus-interactive-exit nil)
+ '(gnus-extract-address-components 'mail-extract-address-components)
+ '(gnus-use-full-window t)
+ '(gnus-always-force-window-configuration t)
+
+ ;; Gnus Agent (gnus-agent.el):
+ '(gnus-agent t)
+ '(gnus-agent-handle-level 2)
+ '(gnus-agent-go-online t)
+
+ ;; Gnus Article (gnus-art.el):
+ '(gnus-article-update-date-headers 60)
+ '(gnus-inhibit-images t)
+ '(gnus-treat-body-boundary 'head)
+ '(gnus-treat-fill-long-lines t)
+ '(gnus-treat-from-gravatar 'head)
+ '(gnus-treat-leading-whitespace t)
+ '(gnus-treat-mail-gravatar 'head)
+ '(gnus-treat-strip-leading-blank-lines  t)
+ '(gnus-treat-strip-multiple-blank-lines t)
+ '(gnus-treat-strip-trailing-blank-lines t)
+ '(gnus-treat-unsplit-urls t)
+ '(gnus-treat-x-pgp-sig 'head)
+ '(gnus-visible-headers
+   '("^From:" "^Subject:" "^To:" "^[BGF]?Cc:" "^Date:" "^X-Mailer:"
+     "^X-URL:" "^Newsgroups:" "^Posted-To:" "^Gnus-Warning:"))
+
+ ;; Gnus Asynchronous (gnus-async.el):
+ '(gnus-asynchronous t)
+
+ ;; Gnus Cloud (use IMAP to save data) (gnus-cloud.el):
+ '(gnus-cloud-interactive t)
+ '(gnus-cloud-method  "nnimap:devalot")
+ '(gnus-cloud-synced-files
+   '((:directory "~/.cache/emacs/gnus" :match ".*.SCORE\\'")
+     (:directory "~/.cache/emacs/gnus/rss" :match "\\.el$")))
+
+ ;; Gnus Group:
+ '(gnus-permanently-visible-groups nil)
+ '(gnus-new-mail-mark ?✉)
+ '(gnus-group-line-format
+   "%B%P%p%m%M %7{%5y%}: %*%uc %-30= (%g)%-60= %5{%S%L%}\n")
+ '(gnus-parameters
+   '(("^nnimap"
+      (agent-predicate . true)
+      (agent-enable-expiration t)
+      (agent-enable-undownloaded-faces t))
+     (":INBOX$"
+      (comment . "Inbox")
+      (gnus-show-threads nil))
+     (":\\(INBOX\\|Archive\\|Sent\\)$"
+      (display . all)
+      (gnus-article-sort-functions '(gnus-article-sort-by-date)))
+     (":mlists$"
+      (comment . "Mailing Lists")
+      (auto-expire . t)
+      (expiry-wait . 14)
+      (display . [unread])
+      (gnus-thread-hide-subtree t))
+     (":subs$"
+      (comment . "Sub Addrs")
+      (display . [unread]))
+     ("^nnrss:"
+      (display . [unread])
+      (gnus-summary-line-format "[%ud] %B%*%s\n"))))
+
+ ;; Gnus Message:
+ '(gnus-gcc-mark-as-read t)
+ '(gnus-message-replysign t)
+ '(gnus-message-replyencrypt t)
+ '(gnus-message-replysignencrypted t)
+ `(gnus-posting-styles
+   '((".*"
+      (name "Peter Jones")
+      (address ,(concat "pjones" "@" "devalot.com"))
+      (signature :file "devalot")
+      (gcc "nnimap+devalot:Sent")
+      (eval (setq smtpmail-smtp-server "mail.pmade.com"
+                  smtpmail-smtp-service 465
+                  smtpmail-stream-type 'ssl)))
+     ("outlook\\.office365\\.com"
+      (address ,(concat "peter.jones" "@" "rfa.sc.gov"))
+      (signature :file "rfa")
+      (gcc "nnimap+rfa:Sent")
+      (eval (setq smtpmail-smtp-server "outlook.office365.com"
+                  smtpmail-smtp-service 587
+                  smtpmail-stream-type 'starttls)))))
+
+ ;; Gnus Summary:
+ '(gnus-preserve-marks nil)
+ '(gnus-unread-mark ?✉)
+ '(gnus-ticked-mark ?⚡)
+ '(gnus-dormant-mark ?☒)
+ '(gnus-del-mark ?✗)
+ '(gnus-read-mark ? )
+ '(gnus-expirable-mark ?⌛)
+ '(gnus-killed-mark ?☠)
+ '(gnus-catchup-mark ? )
+ '(gnus-replied-mark ?↶)
+ '(gnus-forwarded-mark ?→)
+ '(gnus-recent-mark ? )
+ '(gnus-cached-mark ?⚓)
+ '(gnus-unseen-mark ? )
+ '(gnus-ancient-mark ? )
+ '(gnus-canceled-mark ?⊘)
+ '(gnus-summary-stop-at-end-of-message t)
+ '(gnus-summary-make-false-root 'adopt)
+ '(gnus-auto-center-summary nil)
+ '(gnus-sum-thread-tree-indent " ")
+ '(gnus-sum-thread-tree-root "")
+ '(gnus-sum-thread-tree-false-root "")
+ '(gnus-sum-thread-tree-single-indent "")
+ '(gnus-sum-thread-tree-vertical    "│")
+ '(gnus-sum-thread-tree-leaf-with-other "├─► ")
+ '(gnus-sum-thread-tree-single-leaf   "╰─► ")
+ '(gnus-summary-to-prefix "〉 ")
+ '(gnus-summary-line-format
+   "%5{%z %U %R %}%-6=%f%-25= [%ud] %B%*%s\n")
+ '(gnus-summary-highlight
+   '(((eq mark gnus-canceled-mark)
+      . gnus-summary-cancelled)
+     ((or (eq mark gnus-dormant-mark)
+          (eq mark gnus-ticked-mark))
+      . gnus-summary-normal-ticked)
+     ((eq mark gnus-unread-mark)
+      . gnus-summary-normal-unread)
+     (t
+      . gnus-summary-normal-read)))
+
+ ;; Gnus Topic:
+ '(gnus-topic-indent-level 2)
+ '(gnus-topic-display-empty-topics nil)
+
+ '(gnus-nntp-server nil)
+ '(gnus-select-method
+   '(nnrss "rss"))
+ '(gnus-secondary-select-methods
+   '((nnimap "devalot"
+             (nnimap-address "mail.pmade.com")
+             (nnimap-server-port 993)
+             (nnimap-authenticator plain)
+             (nnimap-stream tls))
+     (nnimap "rfa"
+             (nnimap-address "outlook.office365.com")
+             (nnimap-server-port 993)
+             (nnimap-authenticator plain)
+             (nnimap-stream tls))))
+
+ ;; How to "expire" articles:
+ '(nnmail-expiry-target #'pjones:gnus-trash-target)
+
+ ;; Sending mail:
+ '(message-send-mail-function 'smtpmail-send-it)
+ '(smtpmail-queue-dir "~/.cache/smtpmail/queue")
+ '(mml-secure-openpgp-encrypt-to-self t)
+ '(mml-secure-smime-encrypt-to-self t))
+
+;;; Window layout:
+(push (cons 'summary-cheat #'pjones:gnus-summary-cheat) gnus-window-to-buffer)
+
+(gnus-add-configuration
+ '(article
+   (horizontal 1.0
+     (vertical 25
+       (group 0.5)
+       (summary-cheat 1.0))
+     (vertical 1.0
+       (summary 0.16 point)
+       (article 1.0)))))
+
+(gnus-add-configuration
+ '(summary
+   (horizontal 1.0
+     (vertical 25
+       (group 0.5)
+       (summary-cheat 1.0))
+     (vertical 1.0 (summary 1.0 point)))))
+
+;;; Faces:
+(defvar gnus-face-1 font-lock-builtin-face)
+(defvar gnus-face-2 font-lock-constant-face)
+(defvar gnus-face-3 font-lock-function-name-face)
+(defvar gnus-face-4 font-lock-keyword-face)
+(defvar gnus-face-5 font-lock-negation-char-face)
+(defvar gnus-face-6 font-lock-string-face)
+(defvar gnus-face-7 font-lock-type-face)
+(defvar gnus-face-8 font-lock-variable-name-face)
+(defvar gnus-face-9 font-lock-comment-face)
+
+;;; Functions
+(defun pjones:gnus-format-date (header)
+  "Format dates for the Gnus header HEADER."
+  (let* ((base-fmt "%m/%d/%y")
+         (date (cond
+                (header (gnus-date-get-time (mail-header-date header)))
+                (t (current-time))))
+         (since (if date
+                    (time-to-number-of-days (time-since date))
+                  0.0))
+         (fmt (cond
+               ((> since 1.0) (concat base-fmt " %a  "))
+               (t (concat base-fmt " %R")))))
+    (if date (format-time-string fmt date) "")))
+(defalias 'gnus-user-format-function-d #'pjones:gnus-format-date)
+
+(defun pjones:gnus-format-comment (&rest _dummy)
+  "Render a group's comment.
+Why and I doing this?  Well, when Gnus renders the group line in the
+group buffer using the %C specifier it can't find the `comment'
+parameter.  I'm not sure why it's not in the list of parameters
+returned by `gnus-group-get-parameter'.  It does show up in
+`gnus-group-find-parameter` though."
+  (let ((group (or gnus-tmp-group (gnus-group-group-name))))
+    (if group
+        (cond
+         ((s-matches-p "^nnrss:" group)
+          (s-replace-regexp "^nnrss:" "" group))
+         (t
+          (or (gnus-group-find-parameter group 'comment)
+              (and
+               gnus-tmp-decoded-group
+               (gnus-short-group-name gnus-tmp-decoded-group))
+              group)))
+      "Missing comment and group name")))
+(defalias 'gnus-user-format-function-c #'pjones:gnus-format-comment)
+
+(defun pjones:gnus-cloud-encode-data ()
+  "Replace the `gnus-cloud-encode-data' function.
+My version uses asymmetric encryption."
+  (let ((context (epg-make-context 'OpenPGP))
+        cipher)
+    (setf (epg-context-armor context) t)
+    (setf (epg-context-textmode context) t)
+    (let* ((keys (epg-list-keys context epa-file-encrypt-to))
+           (data (epg-encrypt-string
+                 context
+                 (buffer-substring-no-properties
+                  (point-min)
+                  (point-max))
+                 keys)))
+      (delete-region (point-min) (point-max))
+      (insert data))))
+(defalias 'gnus-cloud-encode-data #'pjones:gnus-cloud-encode-data)
+
+(defun pjones:gnus-trash-target (group)
+  "Get the GROUP target for expired messages."
+  (s-replace-regexp ":.*$" ":Trash" group))
+
+(defun pjones:gnus-summary-close-or-quit ()
+  "Close the article buffer, or kill the summary buffer."
+  (interactive)
+  (if (get-buffer-window gnus-article-buffer)
+      (gnus-configure-windows 'summary 'force)
+    (gnus-summary-exit)))
+
+(defun pjones:gnus-summary-show-or-select ()
+  "Show or select the article buffer."
+  (interactive)
+  (if (get-buffer-window gnus-article-buffer)
+      (gnus-summary-select-article-buffer)
+    (gnus-summary-show-article)))
+
+(defmacro pjones:gnus-article-move-to (group)
+  "Move marked/current article to GROUP."
+  `(defun ,(intern (concat "pjones:gnus-article-move-to-" group)) ()
+    ,(concat "Move article(s) to " group)
+    (interactive)
+    ;; gnus-newsgroup-name
+    ;; If group has a : remove the trailing word with
+    (let ((dest
+          (if (s-matches-p ":" gnus-newsgroup-name)
+              (s-replace-regexp
+               ":.*$"
+               (concat ":" ,group)
+               gnus-newsgroup-name t)
+            ,group)))
+      (gnus-summary-move-article nil dest))))
+
+(defmacro pjones:gnus-summary-reverse-sort-by (func)
+  "Generate reverse sorting function from FUNC."
+  `(defun ,(intern (concat "pjones:" (symbol-name func) "-rev")) ()
+     ,(concat
+       "Reverse sort by "
+       (car (last (s-split "-" (symbol-name func)))))
+     (interactive)
+     (let ((current-prefix-arg '(4)))
+       (call-interactively (quote ,func)))))
+
+(defun pjones:gnus-demon-scan-mail ()
+  "Fetch new mail for subscribed groups."
+  (interactive)
+  (save-window-excursion
+    (with-current-buffer gnus-group-buffer
+      (gnus-group-get-new-news gnus-activate-level))))
+
+(defun pjones:gnus-demon-scan-low-volume ()
+  "Fetch articles from all low-volume levels."
+  (save-window-excursion
+    (with-current-buffer gnus-group-buffer
+      (let ((levels
+             (number-sequence
+              (1+ gnus-activate-level)
+              (1- gnus-level-default-unsubscribed))))
+        (dolist (level levels)
+          (gnus-group-get-new-news level t))))))
+
+(defun pjones:gnus-demon-init ()
+  "Prepare the Gnus Demon."
+  ;; Check levels 1-3 groups every 2 minutes.
+  (gnus-demon-add-handler 'pjones:gnus-demon-scan-mail 2 30)
+  ;; Check levels 4-5 groups every 30 minutes.
+  (gnus-demon-add-handler 'pjones:gnus-demon-scan-low-volume 30 30))
+
+(defun pjones:gnus-summary-cheat ()
+  "Create a cheat sheet buffer for the summary buffer."
+  (pjones:cheat-sheet-buffer
+   "*Gnus Summary Cheat*"
+   "# Summary
+
+```
+r:  Reply (wide)
+R:  Reply (author)
+a:  Compose
+m:  Process mark
+d:  Mark read
+u:  Clear mark (unread)
+c:  Catch-up (all)
+o:  Sort
+e:  Edit
+zm: Move commands
+gS: Send commands
+gT: Thread commands
+x:  Limit to unread
+z/: Limit (z/p: pop)
+```
+
+# Article
+
+```
+zt: Toggle headers
+zv: View part
+;:  Attachment commands
+```
+"))
+
+;;; Key bindings:
+;;
+;; These are in hooks because they override bindings set by
+;; evil-collection which gets loaded after this file.
+(defun pjones:gnus-group-mode-map ()
+  "Hook called by `gnus-group-mode-hook'."
+  (evil-define-key 'normal gnus-group-mode-map
+    "a" (lambda () (interactive) (gnus-group-mail 4))
+    "c"  #'gnus-group-catchup-current
+    "l"  #'gnus-group-list-groups
+    "L"  #'gnus-group-list-all-groups
+    "gr" #'pjones:gnus-demon-scan-mail
+    "gR" #'gnus-group-get-new-news-this-group
+    "g/" #'dianyou-group-make-nnir-group))
+(add-hook 'gnus-group-mode-hook #'pjones:gnus-group-mode-map)
+
+;; (add-hook 'gnus-summary-mode-hook (lambda ()
+(defun pjones:gnus-summary-mode-map ()
+  "Hook called by `gnus-summary-mode-hook'."
+  (evil-define-key 'normal gnus-summary-mode-map
+    "q" #'pjones:gnus-summary-close-or-quit
+    "r" #'gnus-article-wide-reply-with-original
+    "R" #'gnus-article-reply-with-original
+    "gx" #'gnus-article-browse-html-article
+    "+" #'gnus-summary-tick-article
+    "-" #'gnus-summary-mark-as-read-forward
+    "oD" (pjones:gnus-summary-reverse-sort-by gnus-summary-sort-by-date)
+    "oA" (pjones:gnus-summary-reverse-sort-by gnus-summary-sort-by-author)
+    "oS" (pjones:gnus-summary-reverse-sort-by gnus-summary-sort-by-subject)
+    "oT" (pjones:gnus-summary-reverse-sort-by gnus-summary-sort-by-recipient)
+    "zm" nil ; Clear previous binding.
+    "zma" (pjones:gnus-article-move-to "Archive")
+    "zmi" (pjones:gnus-article-move-to "INBOX")
+    "zmj" (pjones:gnus-article-move-to "Junk")
+    "zmr" (pjones:gnus-article-move-to "Review")
+    "zmt" (pjones:gnus-article-move-to "Trash")
+    "zmm" #'gnus-summary-move-article
+    (kbd "<tab>") #'gnus-summary-select-article-buffer))
+(add-hook 'gnus-summary-mode-hook #'pjones:gnus-summary-mode-map)
+
+(defun pjones:gnus-article-mode-map ()
+  "Hook called by `gnus-article-mode-hook'."
+  (evil-define-key 'normal gnus-article-mode-map
+    "r" #'gnus-article-wide-reply-with-original
+    "R" #'gnus-article-reply-with-original
+    ";|" #'gnus-mime-pipe-part
+    ";s" #'gnus-mime-save-part
+    ";v" #'gnus-mime-view-part
+    ";e" #'gnus-mime-view-part-externally
+    ";i" #'gnus-mime-inline-part
+    (kbd "<tab>") #'evil-window-delete))
+(add-hook 'gnus-article-mode-hook #'pjones:gnus-article-mode-map)
+
+;;; Hooks:
+(add-hook 'gnus-after-getting-new-news-hook #'gnus-notifications)
+(add-hook 'gnus-group-mode-hook #'gnus-topic-mode)
+(add-hook 'gnus-group-mode-hook #'hl-line-mode)
+(add-hook 'gnus-save-newsrc-hook #'gnus-cloud-upload-all-data)
+(add-hook 'gnus-started-hook #'gnus-cloud-download-all-data)
+(add-hook 'gnus-started-hook #'gnus-delay-initialize)
+(add-hook 'gnus-started-hook #'pjones:gnus-demon-init)
+(add-hook 'gnus-summary-mode-hook #'hl-line-mode)
+(add-hook 'gnus-after-exiting-gnus-hook #'pjones:kill-cheat-sheet-buffers)
+
+;;; gnus-conf.el ends here

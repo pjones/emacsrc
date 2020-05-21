@@ -3,8 +3,12 @@
 ;;; Code:
 (require 'company)
 (require 'evil-leader)
+(require 'google-contacts-message)
 (require 'message)
 (require 'mml)
+
+(custom-set-variables
+ '(message-signature-directory "~/notes/signatures/"))
 
 ;; A few extra key bindings:
 (evil-leader/set-key-for-mode 'mu4e-compose-mode

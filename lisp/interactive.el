@@ -71,8 +71,8 @@ placing it in the kill ring)."
 (defun pjones:start-mail ()
   "Start an instance of mu4e."
   (interactive)
-  (require 'mu4e)
-  (mu4e))
+  (require 'gnus)
+  (gnus))
 
 (defun pjones:start-irc (&optional local-only)
   "Start IRC clients.

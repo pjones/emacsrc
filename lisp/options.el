@@ -6,6 +6,11 @@
 (require 'server)
 (require 'epa)
 (require 'doom-modeline)
+(require 'auth-source-pass)
+(require 'flycheck)
+
+(eval-when-compile
+  (require 'gnus))
 
 ;; Personal information
 (setq user-full-name "Peter Jones"
@@ -13,7 +18,7 @@
 
 ;; Things to turn on for all modes
 (defun pjones:add-basic-mode-hook (mode-hook)
-  "A helper function to add minor modes to another mode's hooks."
+  "A helper function to add minor modes to another mode's MODE-HOOK."
   (add-hook mode-hook 'font-lock-mode)
   (add-hook mode-hook 'auto-fill-mode)
   (add-hook mode-hook 'flyspell-mode)
@@ -50,8 +55,14 @@
 ;; Settings not worth their own file in the modes directory:
 (custom-set-variables
  '(epa-file-encrypt-to "204284CB")    ; Default GPG key to use
+ '(auth-sources '(password-store))    ; Use pass(1) for passwords.
  '(compilation-scroll-output 'first-error)
  `(custom-file ,(concat user-emacs-directory "custom.el"))) ; To keep Emacs happy
+
+;; Settings that must be set before a mode file is loaded:
+(setq
+ gnus-home-directory "~/.cache/emacs"
+ gnus-directory "~/.cache/emacs/gnus")
 
 ;; Settings from simple.el:
 (custom-set-variables
@@ -61,6 +72,7 @@
  '(next-line-add-newlines t))
 
 (defun pjones:frame-title-file-name ()
+  "How to format frame titles."
   (let* ((home (expand-file-name "~"))
          (end (length home))
          (start (and buffer-file-name (substring buffer-file-name 0 end)))

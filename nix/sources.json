@@ -11,6 +11,30 @@
         "url": "https://github.com/joaotavora/eglot/archive/da7ff4883d3108468265fdc16a217d8e6aff92f2.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
+    "evil": {
+        "branch": "master",
+        "description": "The extensible vi layer for Emacs.",
+        "homepage": null,
+        "owner": "emacs-evil",
+        "repo": "evil",
+        "rev": "3f3b2fea87172f155e5f91d75f0fb69d8648acf2",
+        "sha256": "0ihb42v513c9jrh8d0v5a76ykhqi408cdnfpilrwq9499qr22jdg",
+        "type": "tarball",
+        "url": "https://github.com/emacs-evil/evil/archive/3f3b2fea87172f155e5f91d75f0fb69d8648acf2.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
+    "evil-collection": {
+        "branch": "master",
+        "description": "A set of keybindings for evil-mode",
+        "homepage": null,
+        "owner": "emacs-evil",
+        "repo": "evil-collection",
+        "rev": "1237452e13d621e119c2fb2212958f5d2e80925a",
+        "sha256": "07qmhnsxikraiaa4w1wjav5krnrk9kdim4qymwdgzx2d2x8j0na0",
+        "type": "tarball",
+        "url": "https://github.com/emacs-evil/evil-collection/archive/1237452e13d621e119c2fb2212958f5d2e80925a.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
     "evil-indent-textobject": {
         "ref": "patches",
         "repo": "https://code.devalot.com/mirrors/evil-indent-textobject.git",

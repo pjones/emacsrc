@@ -19,6 +19,11 @@
   (load-theme theme t)
   (run-hooks 'pjones:after-theme-change-hook))
 
+;;; Override some annoying faces.
+(custom-set-faces
+ '(flymake-warning ((t (:underline nil))))
+ '(flymake-error ((t (:underline nil)))))
+
 (add-hook 'after-init-hook (lambda () (pjones:load-theme 'doom-dracula)))
 
 ;;; themes.el ends here
