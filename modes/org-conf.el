@@ -9,6 +9,7 @@
 (require 'org-clock)
 (require 'org-clock-csv)
 (require 'org-id)
+(require 's)
 (require 'saveplace)
 (require 'whitespace)
 
@@ -214,11 +215,6 @@
   (evil-define-key 'normal evil-org-mode-map "gk" #'outline-up-heading)
   (evil-define-key 'motion evil-org-mode-map "gk" #'outline-up-heading)
 
-  ;; Makes things prettier:
-  (push '("[ ]" . "☐") prettify-symbols-alist)
-  (push '("[X]" . "☑") prettify-symbols-alist)
-  (push '("[-]" . "❍") prettify-symbols-alist)
-
   ;; Extra Bindings
   (org-defkey org-mode-map "\C-\M-f"   'org-metaright)
   (org-defkey org-mode-map "\C-\M-b"   'org-metaleft)
@@ -409,6 +405,13 @@ PARAMS is a property list of parameters:
           (insert (concat "| " (plist-get row attr))))
         (insert "|\n"))
       (org-table-align)))
+
+(defun pjones:org-trello-activate ()
+  "Maybe activate `org-trello-mode'."
+  (let ((name (buffer-file-name (current-buffer))))
+    (when (and name (s-matches-p "\\.trello\\.org$" name))
+      (org-trello-mode))))
+(add-hook 'org-mode-hook #'pjones:org-trello-activate)
 
 ;; Local Variables:
 ;; byte-compile-warnings: (not noruntime)

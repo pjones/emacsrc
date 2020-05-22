@@ -1,14 +1,50 @@
 {
+    "company-org-roam": {
+        "branch": "v0.1",
+        "description": "Company completion backend for Org-roam",
+        "homepage": null,
+        "owner": "org-roam",
+        "repo": "company-org-roam",
+        "rev": "a4c3f60883de783b190d4eb8bcc85f5912d9393a",
+        "sha256": "087z699i7y0q72s5qc7ks09bzin9cl3gm3aqs4ka99lzg676lrl8",
+        "type": "tarball",
+        "url": "https://github.com/org-roam/company-org-roam/archive/a4c3f60883de783b190d4eb8bcc85f5912d9393a.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
     "eglot": {
         "branch": "master",
         "description": "A client for Language Server Protocol servers",
         "homepage": null,
         "owner": "joaotavora",
         "repo": "eglot",
-        "rev": "da7ff4883d3108468265fdc16a217d8e6aff92f2",
-        "sha256": "0vlffhz73fr6p4jrg6ygf6npn2nzqri4vxksrzhmlbm165aw2y9c",
+        "rev": "1cfcef4108f09a0d6cea84c6fe12fbdea1158f5e",
+        "sha256": "0yhbzxwm0dqs7lc5gr0ls17arc3byqp4z9w0y21yhss0pf72d75l",
         "type": "tarball",
-        "url": "https://github.com/joaotavora/eglot/archive/da7ff4883d3108468265fdc16a217d8e6aff92f2.tar.gz",
+        "url": "https://github.com/joaotavora/eglot/archive/1cfcef4108f09a0d6cea84c6fe12fbdea1158f5e.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
+    "elfeed": {
+        "branch": "3.3.0",
+        "description": "An Emacs web feeds client",
+        "homepage": null,
+        "owner": "skeeto",
+        "repo": "elfeed",
+        "rev": "9b5a0ce648cdaa59f7c96414ee868038e08ea29d",
+        "sha256": "0j8a94val4ml7g1vcjgzk1w89h55sxfdrwnncmz6qbh1y2xsz8c5",
+        "type": "tarball",
+        "url": "https://github.com/skeeto/elfeed/archive/9b5a0ce648cdaa59f7c96414ee868038e08ea29d.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
+    "elfeed-protocol": {
+        "branch": "0.7.6",
+        "description": "Provide extra protocols to make like Fever, NewsBlur, Nextcloud/ownCloud News and Tiny Tiny RSS work with elfeed",
+        "homepage": "",
+        "owner": "fasheng",
+        "repo": "elfeed-protocol",
+        "rev": "fc0beb392386b8ed387e52e7e100354b8549fd7e",
+        "sha256": "1kh524fkhsq3l9w0dv12b8shdyqfvnkhdr19xzfbhzw10hfdl5js",
+        "type": "tarball",
+        "url": "https://github.com/fasheng/elfeed-protocol/archive/fc0beb392386b8ed387e52e7e100354b8549fd7e.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "evil": {
@@ -29,10 +65,10 @@
         "homepage": null,
         "owner": "emacs-evil",
         "repo": "evil-collection",
-        "rev": "1237452e13d621e119c2fb2212958f5d2e80925a",
-        "sha256": "07qmhnsxikraiaa4w1wjav5krnrk9kdim4qymwdgzx2d2x8j0na0",
+        "rev": "4678306a34d10f8e987cf8bf87a15b2eaeda0d34",
+        "sha256": "1lbkzl843qz1jk9wq02qcic21fz8amdb0zcv1ra1alzcwcjpg0mv",
         "type": "tarball",
-        "url": "https://github.com/emacs-evil/evil-collection/archive/1237452e13d621e119c2fb2212958f5d2e80925a.tar.gz",
+        "url": "https://github.com/emacs-evil/evil-collection/archive/4678306a34d10f8e987cf8bf87a15b2eaeda0d34.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "evil-indent-textobject": {
@@ -59,10 +95,34 @@
         "homepage": "https://github.com/NixOS/nixpkgs",
         "owner": "NixOS",
         "repo": "nixpkgs-channels",
-        "rev": "5adf2a6c11646898742b0c08f7e94101620ba707",
-        "sha256": "0wf7pwma2qyfak39b242mcq8z7cdj65sds7hcjxchy0448shapzi",
+        "rev": "48723f48ab92381f0afd50143f38e45cf3080405",
+        "sha256": "0h3b3l867j3ybdgimfn76lw7w6yjhszd5x02pq5827l659ihcf53",
         "type": "tarball",
-        "url": "https://github.com/NixOS/nixpkgs-channels/archive/5adf2a6c11646898742b0c08f7e94101620ba707.tar.gz",
+        "url": "https://github.com/NixOS/nixpkgs-channels/archive/48723f48ab92381f0afd50143f38e45cf3080405.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
+    "org-roam": {
+        "branch": "v1.1.1",
+        "description": "Rudimentary Roam replica with Org-mode",
+        "homepage": "https://org-roam.github.io/org-roam/manual/",
+        "owner": "org-roam",
+        "repo": "org-roam",
+        "rev": "cce2db8b5a2c1f1258bcb35f4a3241067e4f950e",
+        "sha256": "17za99r44x18mr7f9lp3k2mj8r5gsr2niw28jabs2pxl1f0llsql",
+        "type": "tarball",
+        "url": "https://github.com/org-roam/org-roam/archive/cce2db8b5a2c1f1258bcb35f4a3241067e4f950e.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
+    "org-trello": {
+        "branch": "0.8.2",
+        "description": "Org minor mode - 2-way sync org & trello",
+        "homepage": "http://org-trello.github.io/",
+        "owner": "org-trello",
+        "repo": "org-trello",
+        "rev": "4ddc257fe24e97c01e12b247568581ff255f0e8d",
+        "sha256": "18y5zdjc7zh4jlwz6k1nl13i721rknqm0vp4mxfnmq0sc5a0qva0",
+        "type": "tarball",
+        "url": "https://github.com/org-trello/org-trello/archive/4ddc257fe24e97c01e12b247568581ff255f0e8d.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "passmm": {
@@ -89,10 +149,10 @@
         "homepage": null,
         "owner": "Alexander-Miller",
         "repo": "treemacs",
-        "rev": "1ff0a8f0d3ce771d71c200e39b75d895acf35ec2",
-        "sha256": "0jkrykp1xg5vxipp8w3k42a9qyb1ckpm8211n3y449298zbff4kj",
+        "rev": "1935108f683ac446e3d0add9467bc1adc4f744e7",
+        "sha256": "0b8r7wsjm3my1cgwv66lz53i4r6yklfpyhx1xq1cibixwxi1p1ac",
         "type": "tarball",
-        "url": "https://github.com/Alexander-Miller/treemacs/archive/1ff0a8f0d3ce771d71c200e39b75d895acf35ec2.tar.gz",
+        "url": "https://github.com/Alexander-Miller/treemacs/archive/1935108f683ac446e3d0add9467bc1adc4f744e7.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     }
 }

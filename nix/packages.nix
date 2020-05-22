@@ -5,11 +5,14 @@ let
   overrides = (pkgs.emacsPackagesFor emacs).overrideScope' (self: super: rec {
     passmm = super.passmm.overrideAttrs (_: { src = sources.passmm; });
     eglot = super.eglot.overrideAttrs (_: { src = sources.eglot; });
+    elfeed = super.elfeed.overrideAttrs (_: { src = sources.elfeed; });
     evil = super.evil.overrideAttrs (_: { src = sources.evil; });
     evil-collection = super.evil-collection.overrideAttrs
       (_: { src = sources.evil-collection; });
     evil-indent-textobject = super.evil-indent-textobject.overrideAttrs
       (_: { src = sources.evil-indent-textobject; });
+    org-trello =
+      super.org-trello.overrideAttrs (_: { src = sources.org-trello; });
     reformatter =
       super.reformatter.overrideAttrs (_: { src = sources."reformatter.el"; });
     treemacs = super.treemacs.overrideAttrs (_: { src = sources.treemacs; });
@@ -17,11 +20,35 @@ let
       super.treemacs-evil.overrideAttrs (_: { src = sources.treemacs; });
     treemacs-projectile =
       super.treemacs-projectile.overrideAttrs (_: { src = sources.treemacs; });
+
+    # Not yet in nixpkgs:
+    org-roam = super.melpaBuild {
+      pname = "org-roam";
+      version = pkgs.lib.removePrefix "v" sources.org-roam.branch;
+      src = sources.org-roam;
+      recipe = pkgs.writeText "org-roam-recipe" ''
+        (org-roam :fetcher github
+          :repo "org-roam/org-roam")
+      '';
+    };
+    company-org-roam = super.melpaBuild {
+      pname = "company-org-roam";
+      version = pkgs.lib.removePrefix "v" sources.company-org-roam.branch;
+      src = sources.company-org-roam;
+      recipe = pkgs.writeText "company-org-roam-recipe" ''
+        (company-org-roam :fetcher github
+          :repo "org-roam/company-org-roam")
+      '';
+    };
   });
 
   # Emacs package list:
 in overrides.emacsWithPackages (epkgs:
   with epkgs; [
+    org-roam # Roam Research replica with Org-mode
+    company-org-roam # Company backend for Org-roam
+    org-journal # a simple org-mode based journaling mode
+
     adaptive-wrap # Smart line-wrapping with wrap-prefix
     async # Asynchronous processing in Emacs
     beginend # Redefine M-< and M-> for some modes
@@ -48,6 +75,8 @@ in overrides.emacsWithPackages (epkgs:
     edit-server # server that responds to edit requests from Chrome
     eglot # Client for Language Server Protocol (LSP) servers
     eimp # Emacs Image Manipulation Package
+    elfeed # an Emacs Atom/RSS feed reader
+    elfeed-protocol # Provide fever/newsblur/owncloud/ttrss protocols for elfeed
     elm-mode # Elm mode for emacs
     erc-hl-nicks # ERC nick highlighter that ignores uniquifying chars when colorizing
     evil # Extensible Vi layer for Emacs
@@ -98,6 +127,7 @@ in overrides.emacsWithPackages (epkgs:
     org-clock-csv # Export `org-mode' clock entries to CSV format
     org-mru-clock # clock in/out of tasks with completion and persistent history
     org-tree-slide # A presentation tool for org-mode
+    org-trello # Minor mode to synchronize org-mode buffer and trello board
     orgalist # Manage Org-like lists in non-Org buffers
     passmm # A minor mode for pass (Password Store).
     password-store # Password store (pass) support
