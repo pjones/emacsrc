@@ -45,14 +45,11 @@ let
   # Emacs package list:
 in overrides.emacsWithPackages (epkgs:
   with epkgs; [
-    org-roam # Roam Research replica with Org-mode
-    company-org-roam # Company backend for Org-roam
-    org-journal # a simple org-mode based journaling mode
-
     adaptive-wrap # Smart line-wrapping with wrap-prefix
     async # Asynchronous processing in Emacs
     beginend # Redefine M-< and M-> for some modes
     company # Modular text completion framework
+    company-org-roam # Company backend for Org-roam
     company-quickhelp # Popup documentation for completion candidates
     company-statistics # Sort candidates using completion history
     counsel # Various completion functions using Ivy
@@ -125,7 +122,9 @@ in overrides.emacsWithPackages (epkgs:
     org # Outline-based notes management and organizer
     org-bullets # Show bullets in org-mode as UTF-8 characters
     org-clock-csv # Export `org-mode' clock entries to CSV format
+    org-journal # a simple org-mode based journaling mode
     org-mru-clock # clock in/out of tasks with completion and persistent history
+    org-roam # Roam Research replica with Org-mode
     org-tree-slide # A presentation tool for org-mode
     org-trello # Minor mode to synchronize org-mode buffer and trello board
     orgalist # Manage Org-like lists in non-Org buffers
