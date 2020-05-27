@@ -1,0 +1,16 @@
+# -*- mode: snippet -*-
+# name: file
+# key: file
+# expand-env: ((yas-indent-line 'fixed))
+# --
+;;; ${1:`(file-name-base)`.el} -- Settings for \`${2:some-mode}'
+;;
+;;; Commentary:
+;;
+;;; Code:
+(require '$2)
+
+(custom-set-variables
+  '($0))
+
+;;; $1 ends here
