@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=Gnus
+Exec=e -cs mail --eval '(browse-url "%u")'
+Icon=emacs-icon
+Type=Application
+Terminal=false
+MimeType=x-scheme-handler/mailto
