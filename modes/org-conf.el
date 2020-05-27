@@ -1,25 +1,38 @@
 ;;; org-conf.el -- Settings for org-mode.
-;; Silence compiler warnings
-(declare-function whitespace-mode "whitespace")
-(declare-function org-bookmark-jump-unhide "org")
-
-(require 'dbus)
+;;
+;;; Commentary:
+;;
+;;; Code:
+(require 's)
 (require 'org)
 (require 'org-agenda)
-(require 'org-clock)
-(require 'org-clock-csv)
-(require 'org-id)
-(require 's)
-(require 'saveplace)
-(require 'whitespace)
-
-(require 'org-bullets)
-(add-hook 'org-mode-hook #'org-bullets-mode)
+(require 'evil)
+(require 'evil-leader)
+(require 'org-capture)
+(require 'org-roam)
 
 (eval-when-compile
-  ;; Access macros for compiling:
-  (require 'evil-core)
-  (require 'evil-org))
+  (load
+   (concat
+    (file-name-directory
+     (or load-file-name
+         byte-compile-current-file
+         (buffer-file-name)))
+    "../lisp/macros")))
+
+;; Silence compiler warnings
+(declare-function pjones:org-roam-activate "./org-roam-conf.el")
+(declare-function whitespace-mode "whitespace")
+(declare-function org-bookmark-jump-unhide "org")
+(declare-function org-clocking-p "org-clock")
+(declare-function dbus-send-signal "dbus")
+(declare-function org-clock-sum-current-item "org-clock")
+(declare-function org-trello-mode "org-trello")
+(declare-function org-bullets-mode "org-bullets")
+(defvar whitespace-style)
+(defvar org-clock-start-time)
+(defvar dbus-path-emacs)
+(defvar dbus-interface-emacs)
 
 ;; General Org Settings
 (custom-set-variables
@@ -192,54 +205,10 @@
  ;; Plugin Settings:
  '(org-mru-clock-completing-read #'ivy-completing-read))
 
-(evil-leader/set-key-for-mode 'org-mode
-  "DEL d" #'org-time-stamp-inactive
-  "DEL i" #'org-clock-in
-  "DEL o" #'org-clock-out
-  "DEL s" #'org-schedule
-  "DEL t" #'org-todo)
-
-(evil-leader/set-key-for-mode 'org-agenda-mode
-  "w" #'org-save-all-org-buffers
-  "DEL i" #'org-agenda-clock-in
-  "DEL o" #'org-agenda-clock-out
-  "DEL s" #'org-agenda-schedule
-  "DEL t" #'org-agenda-todo)
-
 (defun pjones:org-mode-hook ()
   "Hook to hack `org-mode'."
-  ;; Evil:
-  (require 'evil-org)
-  (evil-org-mode)
-  (evil-org-set-key-theme '(navigation insert textobjects additional calendar))
-  (evil-define-key 'normal evil-org-mode-map "gk" #'outline-up-heading)
-  (evil-define-key 'motion evil-org-mode-map "gk" #'outline-up-heading)
-
-  ;; Extra Bindings
-  (org-defkey org-mode-map "\C-\M-f"   'org-metaright)
-  (org-defkey org-mode-map "\C-\M-b"   'org-metaleft)
-  (org-defkey org-mode-map "\C-\M-S-f" 'org-shiftmetaright)
-  (org-defkey org-mode-map "\C-\M-S-b" 'org-shiftmetaleft)
-  (org-defkey org-mode-map "\C-\M-p"   'org-metaup)
-  (org-defkey org-mode-map "\C-\M-n"   'org-metadown)
-
-  (org-defkey org-mode-map "\C-ce"               'pjones:org-edit-special)
-  (org-defkey org-mode-map "\C-c0"               'pjones:org-hide-all)
-  (org-defkey org-mode-map "\C-c1"               'pjones:org-hide-others)
-  (org-defkey org-mode-map "\C-j"                'pjones:org-list-append)
-  (org-defkey org-mode-map "\C-c\C-j"            'pjones:org-goto)
-  (org-defkey org-mode-map [(meta return)]       'pjones:org-list-append)
-  (org-defkey org-mode-map [(shift meta return)] 'pjones:org-list-append-with-checkbox)
-
   ;; Buffer Settings
   (save-place-mode -1)
-
-  ;; Exporting
-  ;;(setq org-export-html-link-org-files-as-html nil
-  ;;      org-export-with-emphasize nil
-  ;;      org-export-html-style-default ""
-  ;;      org-export-html-style-extra ""
-  ;;      org-export-html-style nil)
 
   ;; Tailor whitespace mode
   (set (make-local-variable 'whitespace-style)
@@ -250,9 +219,7 @@
 
 (defun pjones:org-agenda-mode-hook ()
   "Hook run after a `org-agenda-mode' buffer is created."
-  (hl-line-mode 1)
-  (require 'evil-org-agenda)
-  (evil-org-agenda-set-keys))
+  (hl-line-mode 1))
 
 (add-hook 'org-agenda-mode-hook 'pjones:org-agenda-mode-hook)
 
@@ -270,52 +237,45 @@
   (goto-char (point-min))
   (org-cycle '(4)))
 
-(defun pjones:org-list-append (&optional checkbox)
-  "Append a plain list item to the current heading.  If the
-current heading already has plain list items, a new one will be
-added, otherwise a new plain list will be created.  If checkbox
-is set, add a plain list item with a checkbox."
+(defun pjones:org-smart-insert (respect &optional todo)
+  "Insert a heading or plain list item.
+If RESPECT is non-nil and the current item is a heading, always insert
+after the current subtree content.  If TODO is non-nil, mark it as
+to-do or checkbox."
   (interactive "P")
-  (when (not (org-insert-item (if checkbox 'checkbox)))
-    (org-back-to-heading)
-    (org-show-subtree)
-    (outline-next-heading)
-    (if (eolp) (newline)
-      (newline)
-      (forward-line -1))
-    (org-indent-line)
-    (insert (concat "-" (if checkbox " [ ] " " ")))
-    (save-excursion
-      (org-back-to-heading)
-      (org-cycle-hide-drawers 'subtree))))
+  (let* ((plain (org-at-item-p))
+         (org-insert-heading-respect-content (and respect (not plain))))
+    (if todo
+        (org-insert-todo-heading
+         nil (if plain nil '(4)))
+      (org-meta-return
+       (if plain nil '(4))))
+    (evil-insert-state)))
 
-(defun pjones:org-list-append-with-checkbox ()
-  "Calls `pjones:org-list-append' with checkbox set."
-  (interactive)
-  (pjones:org-list-append t))
+(defun pjones:org-insert-below (&optional todo)
+  "Insert a heading or item below the current one.
+If TODO is non-nil, mark it as to-do or checkbox."
+  (interactive "P")
+  (end-of-line)
+  (pjones:org-smart-insert t todo))
+
+(defun pjones:org-insert-above (&optional todo)
+  "Insert a heading or item above the current one.
+If TODO is non-nil, mark it as to-do or checkbox."
+  (interactive "P")
+  (beginning-of-line)
+  (pjones:org-smart-insert nil todo))
 
 (defun pjones:org-goto (&optional alternative-interface)
-  "My version of `org-goto' that first widens the buffer (if
-narrowed), jumps to the correct heading via `org-goto', then
-narrows it again if necessary."
+  "Call `org-goto' after first widening the buffer.
+Jumps to the correct heading via `org-goto', then narrows the buffer
+again if necessary.  Passes ALTERNATIVE-INTERFACE to `org-goto'."
   (interactive "P")
   (let ((point-size (save-restriction (- (point-max) (point-min))))
         (buff-size  (buffer-size)))
     (widen)
     (org-goto alternative-interface)
     (if (/= buff-size point-size) (org-narrow-to-subtree))))
-
-(defun pjones:org-edit-special (&optional arg)
-  "A wrapper around `org-edit-special' that acts differently from
-within a terminal vs. a graphical client.  I typically do
-presentations from within a terminal and tmux session and in that
-case I don't want org to mess around with the window
-arrangement."
-  (interactive "P")
-  (let ((org-src-window-setup
-         (if (display-graphic-p) 'reorganize-frame
-           'current-window)))
-    (org-edit-special arg)))
 
 (defun pjones:org-clock-update-dbus ()
   "Broadcast a D-Bus signal with the latest `org-clock' data.
@@ -329,6 +289,8 @@ You can monitor this signal via the following command:
 
 Read the code below for the two event names and the signal arguments
 they provide."
+  (require 'dbus)
+  (require 'org-clock)
   (if (org-clocking-p)
       (let ((start-time (floor (float-time org-clock-start-time)))
             (description org-clock-heading))
@@ -339,12 +301,6 @@ they provide."
     (dbus-send-signal
      :session nil dbus-path-emacs
      (concat dbus-interface-emacs ".Org.Clock") "Stopped")))
-
-(let ((hooks '( org-clock-in-hook
-                org-clock-out-hook
-                org-clock-cancel-hook )))
-  (dolist (hook hooks)
-    (add-hook hook #'pjones:org-clock-update-dbus)))
 
 (defun pjones:org-effort-sum (&optional skip-done clock-diff)
   "Recursively sum the Effort property.
@@ -411,7 +367,151 @@ PARAMS is a property list of parameters:
   (let ((name (buffer-file-name (current-buffer))))
     (when (and name (s-matches-p "\\.trello\\.org$" name))
       (org-trello-mode))))
+
+;;; Key Bindings:
+
+  ;; (org-defkey org-mode-map "\C-ce"               'pjones:org-edit-special)
+  ;; (org-defkey org-mode-map "\C-c0"               'pjones:org-hide-all)
+  ;; (org-defkey org-mode-map "\C-c1"               'pjones:org-hide-others)
+  ;; (org-defkey org-mode-map "\C-j"                'pjones:org-list-append)
+  ;; (org-defkey org-mode-map "\C-c\C-j"            'pjones:org-goto)
+  ;; (org-defkey org-mode-map [(meta return)]       'pjones:org-list-append)
+  ;; (org-defkey org-mode-map [(shift meta return)] 'pjones:org-list-append-with-checkbox)
+
+
+;; (evil-leader/set-key-for-mode 'org-mode
+;;   "DEL d" #'org-time-stamp-inactive
+;;   "DEL i" #'org-clock-in
+;;   "DEL o" #'org-clock-out
+;;   "DEL s" #'org-schedule
+;;   "DEL t" #'org-todo)
+;;
+;; (evil-leader/set-key-for-mode 'org-agenda-mode
+;;   "w" #'org-save-all-org-buffers
+;;   "DEL i" #'org-agenda-clock-in
+;;   "DEL o" #'org-agenda-clock-out
+;;   "DEL s" #'org-agenda-schedule
+;;   "DEL t" #'org-agenda-todo)
+
+;; Taken (and modified) from: https://github.com/Somelauw/evil-org-mode
+(evil-define-operator evil-org-> (beg end count)
+  "Demote, indent, move column right."
+  :type line
+  :move-point nil
+  (interactive "<r><vc>")
+  (when (null count) (setq count 1))
+  (cond
+   ;; Work with subtrees and headings
+   ((org-with-limited-levels
+     (or (org-at-heading-p)
+         (save-excursion (goto-char beg) (org-at-heading-p))))
+    (if (> count 0)
+        (org-map-region 'org-do-demote beg end)
+      (org-map-region 'org-do-promote beg end)))
+   (t
+    ;; FIXME: on error, just indent or outdent the current item
+    (condition-case nil
+      (if (> count 0) (org-shiftmetaright)
+        (org-shiftmetaleft))
+      (error
+       (if (> count 0) (org-indent-item)
+         (org-outdent-item))))))
+  (when (evil-visual-state-p)
+    (evil-normal-state)
+    (evil-visual-restore)))
+
+;; Taken from: https://github.com/Somelauw/evil-org-mode
+(evil-define-operator evil-org-< (beg end count)
+  "Promote, dedent, move column left."
+  :type line
+  :move-point nil
+  (interactive "<r><vc>")
+  (evil-org-> beg end (- (or count 1))))
+
+(defun pjones:org-activate ()
+  "Activate/finish something."
+  (interactive)
+  (cond
+   (org-capture-mode
+    (org-capture-finalize))
+   (t
+    (org-ctrl-c-ctrl-c))))
+
+(defun pjones:org-cancel ()
+  "Cancel something."
+  (interactive)
+  (cond
+   (org-capture-mode
+    (org-capture-kill))
+   (t
+    (org-kill-note-or-show-branches))))
+
+(evil-set-initial-state 'org-mode 'normal)
+(evil-set-initial-state 'org-agenda-mode 'normal)
+
+(evil-define-key 'normal org-mode-map
+  ;; Folding:
+  "zo" #'outline-show-children
+  "zO" #'outline-show-branches
+  "zc" #'outline-hide-subtree
+  "zC" #'pjones:org-hide-others
+  "za" #'org-cycle
+  "zr" #'outline-show-all
+  "zm" #'pjones:org-hide-all
+  "zR" #'org-reveal
+
+  ;; Header Manipulation:
+  ">" #'evil-org->
+  "<" #'evil-org-<
+
+  ;; Links:
+  "gx" #'org-open-at-point)
+
+(evil-define-key 'insert org-mode-map
+  "\C-j" #'pjones:org-insert-below
+  "\C-k" #'pjones:org-insert-above)
+
+(evil-define-key 'motion org-mode-map
+  "gj" #'outline-forward-same-level
+  "gk" #'outline-up-heading
+  "gJ" #'org-shiftmetadown
+  "gK" #'org-shiftmetaup)
+
+(evil-leader/set-key-for-mode 'org-mode
+  "m c c" #'pjones:org-activate
+  "m c i" #'org-clock-in
+  "m c o" #'org-clock-out
+  "m k" #'pjones:org-cancel
+  "m d !" #'org-time-stamp-inactive
+  "m d ." #'org-time-stamp
+  "m d d" #'org-deadline
+  "m d s" #'org-schedule
+  "m g g" #'pjones:org-goto
+  "m j" #'pjones:org-insert-below
+  "m k" #'pjones:org-insert-above
+  "m t" #'org-todo
+  "m T" #'org-set-tags-command)
+
+(evil-leader/set-key-for-mode 'org-agenda-mode
+  "f s" #'org-save-all-org-buffers
+  "m c i" #'org-agenda-clock-in
+  "m c o" #'org-agenda-clock-out
+  "m d s" #'org-agenda-schedule
+  "m t" #'org-agenda-todo)
+
+;;; Hooks
+(add-hook 'org-mode-hook #'org-bullets-mode)
+(add-hook 'org-mode-hook #'pjones:org-roam-activate)
 (add-hook 'org-mode-hook #'pjones:org-trello-activate)
+
+(let ((hooks
+       '(org-clock-in-hook
+         org-clock-out-hook
+         org-clock-cancel-hook)))
+  (dolist (hook hooks)
+    (add-hook hook #'pjones:org-clock-update-dbus)))
+
+;;; org-conf.el ends here
 
 ;; Local Variables:
 ;; byte-compile-warnings: (not noruntime)

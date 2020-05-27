@@ -133,20 +133,19 @@ directory.  Optionally renaming FILE to NAME."
 
 ;; A few extra key bindings:
 (evil-leader/set-key-for-mode 'markdown-mode
-  "DEL a" #'pjones:markdown-attach-file
-  "DEL c" #'pjones:markdown-slide-fenced-code-block
-  "DEL i" #'pjones:markdown-slide-fenced-code-insert
-  "DEL l" #'markdown-live-preview-mode
-  "DEL n" #'pjones:markdown-slide-notes
-  "DEL p" #'markdown-preview
-  "DEL r" #'markdown-cleanup-list-numbers)
+  "m h i" #'markdown-insert-header-dwim
+  "m a" #'pjones:markdown-attach-file
+  "m f" #'pjones:markdown-slide-fenced-code-block
+  "m i" #'pjones:markdown-slide-fenced-code-insert
+  "m l" #'pjones:markdown-insert-list-item
+  "m L" #'markdown-live-preview-mode
+  "m n" #'pjones:markdown-slide-notes
+  "m c" #'markdown-preview
+  "m o" #'pjones:markdown-follow-thing-at-point
+  "m r" #'markdown-cleanup-list-numbers)
 
 (defun pjones:markdown-mode-hook ()
   "Set up key bindings and other crap for markdown-mode."
-  (local-set-key (kbd "C-c C-o")    #'pjones:markdown-follow-thing-at-point)
-  (local-set-key (kbd "C-c /")      #'markdown-complete)
-  (local-set-key (kbd "C-<return>") #'markdown-insert-header-dwim)
-  (local-set-key (kbd "M-<return>") #'pjones:markdown-insert-list-item)
   (whitespace-mode)
   (orgalist-mode)
   (orgtbl-mode)

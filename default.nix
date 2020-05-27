@@ -28,6 +28,8 @@ in pkgs.stdenv.mkDerivation rec {
     pkgs.wmctrl # For bin/e
     pkgs.netcat # For bin/e
     pkgs.python3 # For treemacs
+    pkgs.graphviz # For org-roam
+    pkgs.gnuplot # For org-mode
   ];
 
   propagatedUserEnvPkgs = buildInputs;
@@ -43,6 +45,9 @@ in pkgs.stdenv.mkDerivation rec {
       substituteAll ${src}/dot.emacs.el "$out/dot.emacs.el"
       cp -r ${src}/lisp ${src}/modes ${src}/snippets "$out/emacs.d/"
       chmod u+w "$out"/emacs.d/*
+
+      cp -r "${src}/share" "$out/"
+      chmod -R u+r "$out/share"
 
       for f in ${src}/bin/*; do
         substituteAll "$f" "$out/bin/$(basename "$f")"

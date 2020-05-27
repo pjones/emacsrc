@@ -3,13 +3,16 @@
 ;;; Commentary:
 ;;
 ;;; Code:
-(require 'align)
-(require 'doom-modeline-core)
+(eval-when-compile
+  (require 'align)
+  (require 'doom-modeline-core)
+  (require 'evil-indent-textobject)
+  (require 'evil-matchit)
+  (require 'evil-owl)
+  (require 'evil-surround))
+
 (require 'evil)
-(require 'evil-indent-textobject)
-(require 'evil-matchit)
-(require 'evil-owl)
-(require 'evil-surround)
+(require 'evil-leader)
 
 ;; Settings:
 (custom-set-variables
@@ -27,7 +30,7 @@
  '(evil-fringe-mark-show-special t)
  '(evil-fringe-mark-ignore-chars '(?' ?{ ?} ?^ ?.))
  '(evil-owl-display-method 'window)
- '(evil-owl-max-string-length 50))
+ '(evil-owl-max-string-length 60))
 
 ;; Baffles me why I need to do this:
 (customize-set-variable 'evil-want-Y-yank-to-eol t)
@@ -64,14 +67,15 @@ called from."
         (replace  (face-attribute 'doom-modeline-evil-replace-state  :foreground nil t))
         (emacs    (face-attribute 'doom-modeline-evil-emacs-state    :foreground nil t))
         (insert   (face-attribute 'doom-modeline-evil-insert-state   :foreground nil t)))
-    (setq evil-default-cursor        (list 'box normal)
-          evil-normal-state-cursor   (list 'box normal)
-          evil-visual-state-cursor   (list 'hbar visual)
-          evil-motion-state-cursor   (list 'hbar motion)
-          evil-operator-state-cursor (list 'hbar operator)
-          evil-replace-state-cursor  (list 'box replace)
-          evil-emacs-state-cursor    (list 'bar emacs)
-          evil-insert-state-cursor   (list 'bar insert))))
+    (when cursor-type ;; Don't update a disabled cursor.
+      (setq evil-default-cursor        (list 'box normal)
+            evil-normal-state-cursor   (list 'box normal)
+            evil-visual-state-cursor   (list 'hbar visual)
+            evil-motion-state-cursor   (list 'hbar motion)
+            evil-operator-state-cursor (list 'hbar operator)
+            evil-replace-state-cursor  (list 'box replace)
+            evil-emacs-state-cursor    (list 'bar emacs)
+            evil-insert-state-cursor   (list 'bar insert)))))
 
 ;; Remove search highlighting after using C-l:
 (advice-add #'recenter-top-bottom :after '(lambda (&rest _args) (evil-ex-nohighlight)))
@@ -102,20 +106,23 @@ called from."
 (evil-define-key 'visual global-map "S"  #'evil-Surround-region)
 (evil-define-key 'normal global-map "z'" #'evil-window-mru)
 
-(define-key evil-normal-state-map (kbd "C-SPC") #'evil-scroll-page-down)
-(define-key evil-normal-state-map (kbd "C-DEL") #'evil-scroll-page-up)
-(define-key evil-motion-state-map (kbd "C-SPC") #'evil-scroll-page-down)
-(define-key evil-motion-state-map (kbd "C-DEL") #'evil-scroll-page-up)
+;; Swap ' and `
+(dolist (state '(normal visual motion))
+  (evil-define-key state global-map "'" #'evil-goto-mark)
+  (evil-define-key state global-map "`" #'evil-goto-mark-line))
 
 ;; Hybrid evil/Emacs bindings:
 (evil-define-key 'insert global-map (kbd "C-a") #'beginning-of-line)
 (evil-define-key 'insert global-map (kbd "C-e") #'end-of-line)
 (evil-define-key 'insert global-map (kbd "C-k") #'kill-line)
 
+;; Second leader key:
+(dolist (state '(normal visual motion))
+  (evil-define-key state global-map (kbd "DEL") evil-leader--default-map))
+
 ;; Hooks:
 (add-hook 'after-init-hook                #'pjones:evil-set-cursors)
 (add-hook 'after-make-frame-functions     #'pjones:evil-set-cursors)
-(add-hook 'evil-mode-hook                 #'evil-collection-init)
 (add-hook 'evil-mode-hook                 #'evil-commentary-mode)
 (add-hook 'evil-mode-hook                 #'evil-owl-mode)
 (add-hook 'evil-mode-hook                 #'global-evil-fringe-mark-mode)

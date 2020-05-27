@@ -9,7 +9,7 @@
  '(eww-download-directory "~/download"))
 
 (evil-leader/set-key-for-mode 'eww-mode
-  "DEL r" #'pjones:eww-rename-buffer)
+  "m r" #'pjones:eww-rename-buffer)
 
 (defun pjones:eww-rename-buffer ()
   "Rename the current `eww' buffer to include its title."

@@ -1,0 +1,4 @@
+#!/bin/sh
+
+# Divert all connections to my "mail" instance:
+e -cs mail "$@"

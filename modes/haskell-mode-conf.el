@@ -37,22 +37,19 @@
 
 ;; A few extra key bindings:
 (evil-leader/set-key-for-mode 'haskell-mode
-  "DEL e"   #'haskell-cabal-visit-file
-  "DEL h"   #'pjones:hoogle
-  "DEL i i" #'pjones:haskell-add-import
-  "DEL i h" #'pjones:haskell-add-import-from-hoogle
-  "DEL i p" #'pjones:haskell-import-project-file
-  "DEL j e" #'pjones:haskell-navigate-exports
-  "DEL j i" #'haskell-navigate-imports
-  "DEL j b" #'haskell-navigate-imports-return
-  "DEL j r" #'haskell-interactive-bring
-  "DEL q"   #'pjones:haskell-toggle-qualified
-  "DEL t"   #'eglot-help-at-point
-  "DEL x"   #'pjones:hasky-extensions
-  "DEL y m" #'pjones:haskell-kill-module-name)
+  "e t"   #'eglot-help-at-point
+  "j e"   #'pjones:haskell-navigate-exports
+  "j i"   #'haskell-navigate-imports
+  "j j"   #'haskell-navigate-imports-return
+  "j r"   #'haskell-interactive-bring
+  "m e"   #'haskell-cabal-visit-file
+  "m h"   #'pjones:hoogle
+  "m q"   #'pjones:haskell-toggle-qualified
+  "m x"   #'pjones:hasky-extensions
+  "m y m" #'pjones:haskell-kill-module-name)
 
 (evil-leader/set-key-for-mode 'haskell-cabal-mode
-  "DEL s" #'haskell-cabal-subsection-arrange-lines)
+  "m s" #'haskell-cabal-subsection-arrange-lines)
 
 (evil-define-key 'normal haskell-cabal-mode-map "gj" #'haskell-cabal-next-section)
 (evil-define-key 'normal haskell-cabal-mode-map "gk" #'haskell-cabal-previous-section)

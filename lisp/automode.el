@@ -44,6 +44,9 @@
 ;; ZSH
 (add-to-list 'auto-mode-alist '("\\.zsh$" . sh-mode))
 
+;; Images
+(add-to-list 'auto-mode-alist '("\\.svg$" . image-mode))
+
 ;; Files that trigger complication-mode
 (add-to-list 'auto-mode-alist '("errors\\.out$" . compilation-mode))
 

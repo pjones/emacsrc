@@ -4,7 +4,6 @@
 (require 'term)
 (require 'projectile)
 (require 'evil)
-(require 'evil-collection)
 
 ;; Settings for term-mode:
 (custom-set-variables
@@ -75,13 +74,13 @@ Sends the next key COUNT times."
   (add-hook 'evil-insert-state-entry-hook #'pjones:term-char-mode)
   (add-hook 'evil-insert-state-exit-hook  #'pjones:term-line-mode)
 
-  (evil-collection-define-key 'insert 'term-raw-map
+  (evil-define-key 'insert 'term-raw-map
     ;; NOTE: Make C-o work like it should.  I suppose this might break
     ;; some terminal applications but I don't care:
     (kbd "C-o")     #'evil-execute-in-normal-state
     (kbd "C-c C-d") #'pjones:term-insert-directory)
 
-  (evil-collection-define-key 'normal 'term-mode-map
+  (evil-define-key 'normal 'term-mode-map
     (kbd "C-c C-k")  #'evil-insert
     (kbd "<return>") #'evil-insert)
 

@@ -59,18 +59,6 @@
         "url": "https://github.com/emacs-evil/evil/archive/3f3b2fea87172f155e5f91d75f0fb69d8648acf2.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
-    "evil-collection": {
-        "branch": "master",
-        "description": "A set of keybindings for evil-mode",
-        "homepage": null,
-        "owner": "emacs-evil",
-        "repo": "evil-collection",
-        "rev": "4678306a34d10f8e987cf8bf87a15b2eaeda0d34",
-        "sha256": "1lbkzl843qz1jk9wq02qcic21fz8amdb0zcv1ra1alzcwcjpg0mv",
-        "type": "tarball",
-        "url": "https://github.com/emacs-evil/evil-collection/archive/4678306a34d10f8e987cf8bf87a15b2eaeda0d34.tar.gz",
-        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
-    },
     "evil-indent-textobject": {
         "ref": "patches",
         "repo": "https://code.devalot.com/mirrors/evil-indent-textobject.git",

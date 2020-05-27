@@ -4,11 +4,24 @@
 ;;
 ;;; Code:
 ;; Dependencies:
+(require 'adaptive-wrap)
 (require 'erc)
 (require 'erc-track)
-(require 'passmm)
-(require 'adaptive-wrap)
+(require 'evil)
+(require 'evil-leader)
 (require 'notifications)
+(require 'passmm)
+
+(eval-when-compile
+  (load
+   (concat
+    (file-name-directory
+     (or load-file-name
+         byte-compile-current-file
+         (buffer-file-name)))
+    "../lisp/macros")))
+
+(declare-function pjones:urgency-hint "../lisp/functions.el")
 
 (custom-set-variables
  '(erc-nick "pmade")
@@ -128,11 +141,14 @@ if BUFFER is not currently displayed in a window."
              (string-match-p "^#" (erc-default-target)))
     (add-to-list 'erc-track-exclude (erc-default-target))))
 
+
+(pjones:evil-override-mode erc-mode)
+(evil-leader/set-key-for-mode 'erc-mode
+  "m j" #'erc-track-switch-buffer)
+
 (add-hook 'erc-mode-hook #'pjones:erc-mode-hook)
 (add-hook 'erc-track-mode-hook #'pjones:erc-ignore-channel)
 (add-hook 'erc-track-list-changed-hook #'pjones:erc-maybe-set-urgency-hint)
-
-;; Make `erc-track' update when a frame gains focus.
 (add-hook 'focus-in-hook #'erc-modified-channels-update)
 
 ;;; erc-conf.el ends here

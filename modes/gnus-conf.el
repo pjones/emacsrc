@@ -3,12 +3,20 @@
 ;;; Commentary:
 ;;
 ;;; Code:
-(require 'dianyou)
 (require 'evil)
+(require 'evil-leader)
 (require 'gnus)
-(require 'gnus-sum)
-(require 'gnus-win)
 (require 's)
+(require 'dianyou)
+
+(eval-when-compile
+  (load
+   (concat
+    (file-name-directory
+     (or load-file-name
+         byte-compile-current-file
+         (buffer-file-name)))
+    "../lisp/macros")))
 
 (declare-function pjones:cheat-sheet-buffer "../lisp/functions.el")
 (declare-function pjones:kill-cheat-sheet-buffers "../lisp/functions.el")
@@ -188,27 +196,6 @@ Declared here to avoid compiler warnings.")
  '(mml-secure-openpgp-encrypt-to-self t)
  '(mml-secure-smime-encrypt-to-self t))
 
-;;; Window layout:
-(push (cons 'summary-cheat #'pjones:gnus-summary-cheat) gnus-window-to-buffer)
-
-(gnus-add-configuration
- '(article
-   (horizontal 1.0
-     (vertical 25
-       (group 0.5)
-       (summary-cheat 1.0))
-     (vertical 1.0
-       (summary 0.16 point)
-       (article 1.0)))))
-
-(gnus-add-configuration
- '(summary
-   (horizontal 1.0
-     (vertical 25
-       (group 0.5)
-       (summary-cheat 1.0))
-     (vertical 1.0 (summary 1.0 point)))))
-
 ;;; Faces:
 (defvar gnus-face-1 font-lock-builtin-face)
 (defvar gnus-face-2 font-lock-constant-face)
@@ -319,117 +306,62 @@ My version uses asymmetric encryption."
      (let ((current-prefix-arg '(4)))
        (call-interactively (quote ,func)))))
 
-(defun pjones:gnus-demon-scan-mail ()
-  "Fetch new mail for subscribed groups."
-  (interactive)
-  (save-window-excursion
-    (with-current-buffer gnus-group-buffer
-      (gnus-group-get-new-news gnus-activate-level))))
-
-(defun pjones:gnus-demon-scan-low-volume ()
-  "Fetch articles from all low-volume levels."
-  (save-window-excursion
-    (with-current-buffer gnus-group-buffer
-      (let ((levels
-             (number-sequence
-              (1+ gnus-activate-level)
-              (1- gnus-level-default-unsubscribed))))
-        (dolist (level levels)
-          (gnus-group-get-new-news level t))))))
-
 (defun pjones:gnus-demon-init ()
   "Prepare the Gnus Demon."
-  ;; Check levels 1-3 groups every 2 minutes.
-  (gnus-demon-add-handler 'pjones:gnus-demon-scan-mail 2 30)
-  ;; Check levels 4-5 groups every 30 minutes.
-  (gnus-demon-add-handler 'pjones:gnus-demon-scan-low-volume 30 30))
+  (gnus-demon-add-handler 'gnus-demon-scan-mail 2 30))
 
-(defun pjones:gnus-summary-cheat ()
-  "Create a cheat sheet buffer for the summary buffer."
-  (pjones:cheat-sheet-buffer
-   "*Gnus Summary Cheat*"
-   "# Summary
-
-```
-r:  Reply (wide)
-R:  Reply (author)
-a:  Compose
-m:  Process mark
-d:  Mark read
-u:  Clear mark (unread)
-c:  Catch-up (all)
-o:  Sort
-e:  Edit
-zm: Move commands
-gS: Send commands
-gT: Thread commands
-x:  Limit to unread
-z/: Limit (z/p: pop)
-```
-
-# Article
-
-```
-zt: Toggle headers
-zv: View part
-;:  Attachment commands
-```
-"))
+(defun pjones:gnus-summary-header-line ()
+  "Set `header-line-format' for `gnus-summary-mode'."
+  (setq header-line-format
+        '((:propertize
+           gnus-newsgroup-name
+           face gnus-header-content))))
 
 ;;; Key bindings:
-;;
-;; These are in hooks because they override bindings set by
-;; evil-collection which gets loaded after this file.
-(defun pjones:gnus-group-mode-map ()
-  "Hook called by `gnus-group-mode-hook'."
-  (evil-define-key 'normal gnus-group-mode-map
-    "a" (lambda () (interactive) (gnus-group-mail 4))
-    "c"  #'gnus-group-catchup-current
-    "l"  #'gnus-group-list-groups
-    "L"  #'gnus-group-list-all-groups
-    "gr" #'pjones:gnus-demon-scan-mail
-    "gR" #'gnus-group-get-new-news-this-group
-    "g/" #'dianyou-group-make-nnir-group))
-(add-hook 'gnus-group-mode-hook #'pjones:gnus-group-mode-map)
+(pjones:evil-override-mode gnus-group-mode
+  "a" (lambda () (interactive) (gnus-group-mail 4))
+  "c"  #'gnus-group-catchup-current
+  "l"  #'gnus-group-list-groups
+  "L"  #'gnus-group-list-all-groups
+  "gr" #'gnus-gcc-mark-as-read
+  "gR" #'gnus-group-get-new-news-this-group
+  "g/" #'dianyou-group-make-nnir-group)
 
-;; (add-hook 'gnus-summary-mode-hook (lambda ()
-(defun pjones:gnus-summary-mode-map ()
-  "Hook called by `gnus-summary-mode-hook'."
-  (evil-define-key 'normal gnus-summary-mode-map
-    "q" #'pjones:gnus-summary-close-or-quit
-    "r" #'gnus-article-wide-reply-with-original
-    "R" #'gnus-article-reply-with-original
-    "gx" #'gnus-article-browse-html-article
-    "+" #'gnus-summary-tick-article
-    "-" #'gnus-summary-mark-as-read-forward
-    "oD" (pjones:gnus-summary-reverse-sort-by gnus-summary-sort-by-date)
-    "oA" (pjones:gnus-summary-reverse-sort-by gnus-summary-sort-by-author)
-    "oS" (pjones:gnus-summary-reverse-sort-by gnus-summary-sort-by-subject)
-    "oT" (pjones:gnus-summary-reverse-sort-by gnus-summary-sort-by-recipient)
-    "zm" nil ; Clear previous binding.
-    "zma" (pjones:gnus-article-move-to "Archive")
-    "zmi" (pjones:gnus-article-move-to "INBOX")
-    "zmj" (pjones:gnus-article-move-to "Junk")
-    "zmr" (pjones:gnus-article-move-to "Review")
-    "zmt" (pjones:gnus-article-move-to "Trash")
-    "zmm" #'gnus-summary-move-article
-    (kbd "<tab>") #'gnus-summary-select-article-buffer))
-(add-hook 'gnus-summary-mode-hook #'pjones:gnus-summary-mode-map)
+(pjones:evil-override-mode gnus-summary-mode
+  "q" #'pjones:gnus-summary-close-or-quit
+  "r" #'gnus-article-wide-reply-with-original
+  "R" #'gnus-article-reply-with-original
+  "m" #'gnus-summary-mark-as-processable
+  "gx" #'gnus-article-browse-html-article
+  "+" #'gnus-summary-tick-article
+  "-" #'gnus-summary-mark-as-read-forward
+  "oo" #'gnus-summary-sort-by-original
+  "od" #'gnus-summary-sort-by-date
+  "oa" #'gnus-summary-sort-by-author
+  "os" #'gnus-summary-sort-by-subject
+  "ot" #'gnus-summary-sort-by-recipient
+  "oD" (pjones:gnus-summary-reverse-sort-by gnus-summary-sort-by-date)
+  "oA" (pjones:gnus-summary-reverse-sort-by gnus-summary-sort-by-author)
+  "oS" (pjones:gnus-summary-reverse-sort-by gnus-summary-sort-by-subject)
+  "oT" (pjones:gnus-summary-reverse-sort-by gnus-summary-sort-by-recipient)
+  (kbd "<tab>") #'gnus-summary-select-article-buffer)
 
-(defun pjones:gnus-article-mode-map ()
-  "Hook called by `gnus-article-mode-hook'."
-  (evil-define-key 'normal gnus-article-mode-map
-    "r" #'gnus-article-wide-reply-with-original
-    "R" #'gnus-article-reply-with-original
-    ";|" #'gnus-mime-pipe-part
-    ";s" #'gnus-mime-save-part
-    ";v" #'gnus-mime-view-part
-    ";e" #'gnus-mime-view-part-externally
-    ";i" #'gnus-mime-inline-part
-    (kbd "<tab>") #'evil-window-delete))
-(add-hook 'gnus-article-mode-hook #'pjones:gnus-article-mode-map)
+(evil-leader/set-key-for-mode 'gnus-summary-mode
+  "m a" (pjones:gnus-article-move-to "Archive")
+  "m d" (pjones:gnus-article-move-to "Trash")
+  "m i" (pjones:gnus-article-move-to "INBOX")
+  "m j" (pjones:gnus-article-move-to "Junk")
+  "m r" (pjones:gnus-article-move-to "Review")
+  "m t" (pjones:gnus-article-move-to "Trash")
+  "m m" #'gnus-summary-move-article
+  "m /" gnus-summary-limit-map)
+
+(pjones:evil-override-mode gnus-article-mode
+  "r" #'gnus-article-wide-reply-with-original
+  "R" #'gnus-article-reply-with-original)
 
 ;;; Hooks:
+(add-hook 'gnus-after-exiting-gnus-hook #'pjones:kill-cheat-sheet-buffers)
 (add-hook 'gnus-after-getting-new-news-hook #'gnus-notifications)
 (add-hook 'gnus-group-mode-hook #'gnus-topic-mode)
 (add-hook 'gnus-group-mode-hook #'hl-line-mode)
@@ -438,6 +370,6 @@ zv: View part
 (add-hook 'gnus-started-hook #'gnus-delay-initialize)
 (add-hook 'gnus-started-hook #'pjones:gnus-demon-init)
 (add-hook 'gnus-summary-mode-hook #'hl-line-mode)
-(add-hook 'gnus-after-exiting-gnus-hook #'pjones:kill-cheat-sheet-buffers)
+(add-hook 'gnus-summary-mode-hook #'pjones:gnus-summary-header-line)
 
 ;;; gnus-conf.el ends here

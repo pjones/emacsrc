@@ -7,8 +7,6 @@ let
     eglot = super.eglot.overrideAttrs (_: { src = sources.eglot; });
     elfeed = super.elfeed.overrideAttrs (_: { src = sources.elfeed; });
     evil = super.evil.overrideAttrs (_: { src = sources.evil; });
-    evil-collection = super.evil-collection.overrideAttrs
-      (_: { src = sources.evil-collection; });
     evil-indent-textobject = super.evil-indent-textobject.overrideAttrs
       (_: { src = sources.evil-indent-textobject; });
     org-trello =
@@ -47,6 +45,7 @@ in overrides.emacsWithPackages (epkgs:
   with epkgs; [
     adaptive-wrap # Smart line-wrapping with wrap-prefix
     async # Asynchronous processing in Emacs
+    avy # Jump to arbitrary positions in visible text and select text quickly
     beginend # Redefine M-< and M-> for some modes
     company # Modular text completion framework
     company-org-roam # Company backend for Org-roam
@@ -57,7 +56,6 @@ in overrides.emacsWithPackages (epkgs:
     csv-mode # Major mode for editing comma/char separated values
     cyberpunk-theme # Cyberpunk Color Theme
     darkroom # Remove visual distractions and focus on writing
-    deadgrep # fast, friendly searching with ripgrep
     default-text-scale # Easily adjust the font size in all frames
     deft # quickly browse, filter, and edit plain text notes
     dianyou # Search and analyze mails in Gnus
@@ -77,12 +75,10 @@ in overrides.emacsWithPackages (epkgs:
     elm-mode # Elm mode for emacs
     erc-hl-nicks # ERC nick highlighter that ignores uniquifying chars when colorizing
     evil # Extensible Vi layer for Emacs
-    evil-collection # A set of keybindings for Evil mode
     evil-commentary # Comment stuff out. A port of vim-commentary
     evil-fringe-mark # Display evil-mode marks in the fringe
     evil-indent-textobject # evil textobjects based on indentation
     evil-leader # let there be <leader>
-    evil-magit # evil-based key bindings for magit
     evil-matchit # Vim matchit ported to Evil
     evil-org # evil keybindings for org-mode
     evil-owl # Preview evil registers and marks before using them
@@ -140,9 +136,11 @@ in overrides.emacsWithPackages (epkgs:
     rainbow-mode # Colorize color names in buffers
     reformatter # Define commands which run reformatters on the current Emacs buffer
     resize-window # easily resize windows
+    rg # A search tool based on ripgrep
     ruby-end # Automatic insertion of end blocks for Ruby
     scad-mode # A major mode for editing OpenSCAD code
     shackle # Enforce rules for popups
+    smartrep # Support sequential operation which omitted prefix keys
     smex # M-x interface with Ido-style fuzzy matching
     switch-window # A *visual* way to switch window
     treemacs # A tree style file explorer package
@@ -153,6 +151,7 @@ in overrides.emacsWithPackages (epkgs:
     vlf # View Large Files
     wgrep # Writable grep buffer and apply the changes to files
     which-key # Display available keybindings in popup
+    winum # Navigate windows and frames using numbers.
     yaml-mode # Major mode for editing YAML files
     yasnippet # Yet another snippet extension for Emacs
   ])

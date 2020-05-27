@@ -21,31 +21,34 @@
 
 ;; The reset of the file is only loaded if we're not in --batch mode.
 (unless noninteractive
-  ;; Global minor modes:
-  (counsel-mode)                          ; More completion via Ivy
-  (default-text-scale-mode)               ; Frame text scaling.
-  (direnv-mode)                           ; Respect .envrc files.
-  (global-auto-revert-mode)               ; External changes cause a revert
-  (global-diff-hl-mode)                   ; Show what changes in a buffer
-  (global-prettify-symbols-mode)          ; Replace buffer symbols.
-  (ivy-mode)                              ; Minibuffer completion
-  (minions-mode)                          ; Hide some minor modes.
-  (projectile-mode)                       ; Project tool
-  (shackle-mode)                          ; Control pop-up windows.
-  (which-key-mode)                        ; Remind me what keys do.
-  (winner-mode)                           ; Track win conifg changes
-  (yas-global-mode)                       ; Snippets.
+  (defun pjones:boot-global-modes ()
+    "Start or prepare global modes."
+    (counsel-mode)                          ; More completion via Ivy
+    (default-text-scale-mode)               ; Frame text scaling.
+    (direnv-mode)                           ; Respect .envrc files.
+    (global-auto-revert-mode)               ; External changes cause a revert
+    (global-diff-hl-mode)                   ; Show what changes in a buffer
+    (global-prettify-symbols-mode)          ; Replace buffer symbols.
+    (ivy-mode)                              ; Minibuffer completion
+    (minions-mode)                          ; Hide some minor modes.
+    (projectile-mode)                       ; Project tool
+    (shackle-mode)                          ; Control pop-up windows.
+    (which-key-mode)                        ; Remind me what keys do.
+    (winner-mode)                           ; Track win conifg changes
+    (winum-mode)                            ; Number windows
+    (yas-global-mode)                       ; Snippets.
 
-  ;; Other modes that need to be activated:
-  (pdf-tools-install)                     ; Internal PDF viewer
+    ;; Other modes that need to be activated:
+    (pdf-tools-install)                     ; Internal PDF viewer
 
-  ;; Libraries used throughout my Emacs session:
-  (require 'saveplace)                    ; Saves your location in files
-  (require 'dired-x)                      ; Extra features for dired-mode
-  (require 'align)                        ; Align things
-  (require 'vlf-setup)                    ; Deal with large files
+    ;; Libraries used throughout my Emacs session:
+    (require 'saveplace)                    ; Saves your location in files
+    (require 'vlf-setup)                    ; Deal with large files
 
-  (add-hook 'text-mode-hook           #'abbrev-mode)
-  (add-hook 'pjones:after-server-hook #'pjones:maybe-start-edit-server))
+    (add-hook 'text-mode-hook           #'abbrev-mode)
+    (add-hook 'pjones:after-server-hook #'pjones:maybe-start-edit-server))
+
+  ;; Hook in:
+  (add-hook 'after-init-hook #'pjones:boot-global-modes))
 
 ;;; modes.el ends here

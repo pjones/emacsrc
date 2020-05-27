@@ -50,6 +50,13 @@ placing it in the kill ring)."
             (ido-ignored-list nil))
         (switch-to-buffer (car (ido-make-buffer-list nil)))))))
 
+(defun pjones:rename-current-file (newname)
+  "Rename the current file to NEWNAME."
+  (interactive "F")
+  (let ((oldname (buffer-file-name)))
+    (when oldname
+      (dired-rename-file oldname newname nil))))
+
 (defun pjones:open-line-above (stay)
   "Open a line above point and move there if STAY is nil."
   (interactive "P")
@@ -163,6 +170,14 @@ file.  With a prefix argument kill the entire path for the file."
   (let* ((path (buffer-file-name))
          (name (file-name-nondirectory path)))
     (kill-new (if full-path path name))))
+
+(defun pjones:kill-whole-buffer ()
+  "Kill the entire buffer contents."
+  (interactive)
+  (kill-new
+   (buffer-substring-no-properties
+    (point-min)
+    (point-max))))
 
 (defun pjones:agenda ()
   "Start org-agenda with my custom agenda view"
