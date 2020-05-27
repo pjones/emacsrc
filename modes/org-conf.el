@@ -492,6 +492,10 @@ PARAMS is a property list of parameters:
   "m t" #'org-todo
   "m T" #'org-set-tags-command)
 
+(evil-define-key 'normal org-agenda-mode-map
+  "q" #'org-agenda-quit
+  "gr" #'org-agenda-redo-all)
+
 (evil-leader/set-key-for-mode 'org-agenda-mode
   "f s" #'org-save-all-org-buffers
   "m c i" #'org-agenda-clock-in
