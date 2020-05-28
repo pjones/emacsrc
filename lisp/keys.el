@@ -57,6 +57,7 @@
   ":" #'eval-expression
 
   ;; Buffer Commnads:
+  "b a" (pjones:jump-to-buffer "*Org Agenda*" pjones:agenda)
   "b b" #'ivy-switch-buffer
   "b B" #'ibuffer
   "b d" #'kill-this-buffer

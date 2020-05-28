@@ -3,12 +3,14 @@
 ;;; Commentary:
 ;;
 ;;; Code:
-(defmacro pjones:jump-to-buffer (name)
-  "Generate a command to jump to buffer NAME."
+(defmacro pjones:jump-to-buffer (name &optional command)
+  "Generate a command to jump to buffer NAME.
+If buffer NAME doesn't exist, COMMAND can be used to create it."
   `(defun ,(intern (concat "pjones:jump-to-buffer-" name)) ()
     (interactive)
     (let ((buf (get-buffer ,name)))
-      (when buf (switch-to-buffer buf)))))
+      (if buf (switch-to-buffer buf)
+        ,(if command `(,command) 'nil)))))
 
 (defmacro pjones:evil-override-mode (mode &rest bindings)
   "Override standard evil bindings for the given MODE.

@@ -23,16 +23,15 @@
       :unnarrowed t))))
 
 (defun pjones:org-roam-activate ()
-  "Ensure that the `org-roam' display is visible."
+  "Ensure that the `org-roam' is ready and displayed."
   (interactive)
   (when (org-roam--org-roam-file-p)
     (require 'org-roam-protocol)
     (require 'company-org-roam)
+    (org-roam-mode) ; Ensure this is enabled.
     (push 'company-org-roam company-backends)
     (pcase (org-roam-buffer--visibility)
-      ('none
-       (org-roam-mode) ; Ensure this is enabled.
-       (org-roam-buffer--get-create)))))
+      ((or 'exists 'none) (org-roam-buffer--get-create)))))
 
 ;; Patch broken function:
 (defun org-roam-buffer--get-create ()

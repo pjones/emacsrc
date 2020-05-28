@@ -3,13 +3,14 @@
 ;;; Commentary:
 ;;
 ;;; Code:
-(require 's)
-(require 'org)
-(require 'org-agenda)
 (require 'evil)
 (require 'evil-leader)
+(require 'org)
+(require 'org-agenda)
 (require 'org-capture)
+(require 'org-journal)
 (require 'org-roam)
+(require 's)
 
 (eval-when-compile
   (load
@@ -409,7 +410,6 @@ PARAMS is a property list of parameters:
         (org-map-region 'org-do-demote beg end)
       (org-map-region 'org-do-promote beg end)))
    (t
-    ;; FIXME: on error, just indent or outdent the current item
     (condition-case nil
       (if (> count 0) (org-shiftmetaright)
         (org-shiftmetaleft))
@@ -469,7 +469,8 @@ PARAMS is a property list of parameters:
 
 (evil-define-key 'insert org-mode-map
   "\C-j" #'pjones:org-insert-below
-  "\C-k" #'pjones:org-insert-above)
+  "\C-k" #'pjones:org-insert-above
+  "\C-ci" #'org-roam-insert)
 
 (evil-define-key 'motion org-mode-map
   "gj" #'outline-forward-same-level
@@ -498,12 +499,15 @@ PARAMS is a property list of parameters:
 
 (evil-leader/set-key-for-mode 'org-agenda-mode
   "f s" #'org-save-all-org-buffers
+  "j j" #'org-journal-new-entry
+  "j r" #'org-roam-find-file
   "m c i" #'org-agenda-clock-in
   "m c o" #'org-agenda-clock-out
   "m d s" #'org-agenda-schedule
   "m t" #'org-agenda-todo)
 
 ;;; Hooks
+(add-hook 'org-agenda-mode-hook #'pjones:org-roam-activate)
 (add-hook 'org-mode-hook #'org-bullets-mode)
 (add-hook 'org-mode-hook #'pjones:org-roam-activate)
 (add-hook 'org-mode-hook #'pjones:org-trello-activate)
