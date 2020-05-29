@@ -43,9 +43,10 @@
 (defun pjones:evil-mode-hook ()
   "Hook fun by `evil-mode'."
   ;; Use symbols for movement instead of words!
-  (defalias 'forward-evil-word 'forward-evil-symbol)
-  ;; Put buffers back into the correct mode after saving them:
-  (add-hook 'after-save-hook #'evil-change-to-initial-state))
+  (defalias 'pjones:forward-evil-WORD 'forward-evil-WORD)
+  (defalias 'pjones:forward-evil-word 'forward-evil-word)
+  (defalias 'forward-evil-WORD 'forward-evil-word)
+  (defalias 'forward-evil-word 'forward-evil-symbol))
 
 (defun pjones:evil-search-word (oldfun &rest args)
   "Work around a bug.
