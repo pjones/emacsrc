@@ -22,8 +22,9 @@ let
     # Not yet in nixpkgs:
     org-roam = super.melpaBuild {
       pname = "org-roam";
-      version = pkgs.lib.removePrefix "v" sources.org-roam.branch;
+      version = "20200529.0";
       src = sources.org-roam;
+      packageRequires = [ self.emacsql-sqlite3 ];
       recipe = pkgs.writeText "org-roam-recipe" ''
         (org-roam :fetcher github
           :repo "org-roam/org-roam")
@@ -106,6 +107,7 @@ in overrides.emacsWithPackages (epkgs:
     js2-mode # Improved JavaScript editing mode
     json-mode # Major mode for editing JSON files
     kaolin-themes # A set of eye pleasing themes
+    link-hint # Use avy to open, copy, etc. visible links
     magit # A Git porcelain inside Emacs
     magit-annex # Control git-annex from Magit
     markdown-mode # Major mode for Markdown-formatted text

@@ -90,16 +90,10 @@
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "org-roam": {
-        "branch": "v1.1.1",
-        "description": "Rudimentary Roam replica with Org-mode",
-        "homepage": "https://org-roam.github.io/org-roam/manual/",
-        "owner": "org-roam",
-        "repo": "org-roam",
-        "rev": "cce2db8b5a2c1f1258bcb35f4a3241067e4f950e",
-        "sha256": "17za99r44x18mr7f9lp3k2mj8r5gsr2niw28jabs2pxl1f0llsql",
-        "type": "tarball",
-        "url": "https://github.com/org-roam/org-roam/archive/cce2db8b5a2c1f1258bcb35f4a3241067e4f950e.tar.gz",
-        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+        "ref": "pjones/master",
+        "repo": "https://code.devalot.com/mirrors/org-roam.git",
+        "rev": "a8c2fac07af7a09d51fd14ea728097366580f4fa",
+        "type": "git"
     },
     "org-trello": {
         "branch": "0.8.2",

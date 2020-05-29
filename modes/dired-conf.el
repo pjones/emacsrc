@@ -78,7 +78,7 @@
   "gk" #'dired-subtree-up
   "gj" #'dired-subtree-down
   "gq" #'dired-do-query-replace-regexp
-  "gr" #'dired-do-redisplay
+  "gr" #'revert-buffer
   "go" #'noccur-dired
   "yn" #'dired-copy-filename-as-kill
   "yp" '(lambda () (interactive) (dired-copy-filename-as-kill '(nil . nil))))

@@ -13,7 +13,7 @@
  '(which-key-show-remaining-keys t)
  '(which-key-paging-key "<down>")
  '(which-key-popup-type 'side-window)
- '(which-key-side-window-location 'right)
+ '(which-key-side-window-location '(right bottom))
  '(which-key-side-window-max-width 0.5)
  '(which-key-side-window-max-height 0.5)
  '(which-key-show-prefix 'top))

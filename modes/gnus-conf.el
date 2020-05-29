@@ -18,9 +18,6 @@
          (buffer-file-name)))
     "../lisp/macros")))
 
-(declare-function pjones:cheat-sheet-buffer "../lisp/functions.el")
-(declare-function pjones:kill-cheat-sheet-buffers "../lisp/functions.el")
-
 (defvar gnus-tmp-group nil
   "Variable from gnus-group.el.
 Declared here to avoid compiler warnings.")
@@ -319,11 +316,11 @@ My version uses asymmetric encryption."
 
 ;;; Key bindings:
 (pjones:evil-override-mode gnus-group-mode
-  "a" (lambda () (interactive) (gnus-group-mail 4))
+  "a" (lambda () (interactive) (gnus-group-mail '(4)))
   "c"  #'gnus-group-catchup-current
   "l"  #'gnus-group-list-groups
   "L"  #'gnus-group-list-all-groups
-  "gr" #'gnus-gcc-mark-as-read
+  "gr" #'gnus-group-get-new-news
   "gR" #'gnus-group-get-new-news-this-group
   "g/" #'dianyou-group-make-nnir-group)
 
@@ -332,6 +329,7 @@ My version uses asymmetric encryption."
   "r" #'gnus-article-wide-reply-with-original
   "R" #'gnus-article-reply-with-original
   "m" #'gnus-summary-mark-as-processable
+  "gr" #'gnus-summary-rescan-group
   "gx" #'gnus-article-browse-html-article
   "+" #'gnus-summary-tick-article
   "-" #'gnus-summary-mark-as-read-forward
@@ -358,11 +356,10 @@ My version uses asymmetric encryption."
 
 (pjones:evil-override-mode gnus-article-mode
   "r" #'gnus-article-wide-reply-with-original
-  "R" #'gnus-article-reply-with-original)
+  "R" #'gnus-article-reply-with-original
+  "q" #'pjones:gnus-summary-close-or-quit)
 
 ;;; Hooks:
-(add-hook 'gnus-after-exiting-gnus-hook #'pjones:kill-cheat-sheet-buffers)
-(add-hook 'gnus-after-getting-new-news-hook #'gnus-notifications)
 (add-hook 'gnus-group-mode-hook #'gnus-topic-mode)
 (add-hook 'gnus-group-mode-hook #'hl-line-mode)
 (add-hook 'gnus-save-newsrc-hook #'gnus-cloud-upload-all-data)

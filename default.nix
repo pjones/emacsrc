@@ -30,6 +30,7 @@ in pkgs.stdenv.mkDerivation rec {
     pkgs.python3 # For treemacs
     pkgs.graphviz # For org-roam
     pkgs.gnuplot # For org-mode
+    pkgs.sqlite # For org-roam
   ];
 
   propagatedUserEnvPkgs = buildInputs;

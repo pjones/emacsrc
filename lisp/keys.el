@@ -47,6 +47,10 @@
 (require 'evil)
 (require 'evil-leader)
 
+;; Loading `link-hint' will also load my settings and custom functions
+;; for it.
+(autoload 'pjones:link-hint-open-link "link-hint")
+
 ;; Maps that need to be shared:
 (defvar pjones:zoom-map (make-sparse-keymap))
 (defvar pjones:window-map (make-sparse-keymap))
@@ -113,10 +117,11 @@
   "g o i" #'org-mru-clock-in
   "g o j" #'org-journal-new-entry
   "g o l" #'org-store-link
+  "g o L" #'org-id-store-link
   "g o o" #'org-clock-out
   "g o r" #'org-roam-find-file
   "g o R" #'org-roam
-  "g x" #'pjones:search-backwards-browse-url
+  "g x" #'pjones:link-hint-open-link
 
   ;; Help:
   "h" help-map

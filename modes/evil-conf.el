@@ -120,6 +120,11 @@ called from."
 (dolist (state '(normal visual motion))
   (evil-define-key state global-map (kbd "DEL") evil-leader--default-map))
 
+;; Use both leader keys from insert mode:
+(evil-define-key 'insert global-map
+  (kbd "C-SPC") evil-leader--default-map
+  (kbd "C-DEL") evil-leader--default-map)
+
 ;; Hooks:
 (add-hook 'after-init-hook                #'pjones:evil-set-cursors)
 (add-hook 'after-make-frame-functions     #'pjones:evil-set-cursors)

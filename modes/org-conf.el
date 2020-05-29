@@ -487,13 +487,17 @@ PARAMS is a property list of parameters:
   "m d ." #'org-time-stamp
   "m d d" #'org-deadline
   "m d s" #'org-schedule
+  "m S" #'org-deadline
+  "m s" #'org-schedule
   "m g g" #'pjones:org-goto
   "m j" #'pjones:org-insert-below
   "m k" #'pjones:org-insert-above
   "m t" #'org-todo
-  "m T" #'org-set-tags-command)
+  "m T" #'org-set-tags-command
+  "t t" #'org-todo)
 
 (evil-define-key 'normal org-agenda-mode-map
+  (kbd "RET") #'org-agenda-switch-to
   "q" #'org-agenda-quit
   "gr" #'org-agenda-redo-all)
 
@@ -503,7 +507,10 @@ PARAMS is a property list of parameters:
   "j r" #'org-roam-find-file
   "m c i" #'org-agenda-clock-in
   "m c o" #'org-agenda-clock-out
+  "m d d" #'org-agenda-deadline
   "m d s" #'org-agenda-schedule
+  "m s" #'org-agenda-schedule
+  "m S" #'org-agenda-deadline
   "m t" #'org-agenda-todo)
 
 ;;; Hooks
