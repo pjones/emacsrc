@@ -63,7 +63,15 @@
   "gj" #'pdf-view-next-page-command
   "gk" #'pdf-view-previous-page-command
   "gg" #'pdf-view-first-page
-  "G" #'pdf-view-goto-page)
+  "G" #'pdf-view-goto-page
+  "/" #'isearch-forward
+  "?" #'isearch-backward
+  "n" #'isearch-repeat-forward
+  "N" #'isearch-repeat-backward
+  (kbd "<tab>") #'pdf-outline)
+
+(pjones:evil-override-mode pdf-outline-buffer-mode)
+
 
 ;; Extra key bindings:
 (define-key pdf-outline-buffer-mode-map (kbd "RET") #'pjones:pdf-outline-follow-link-and-quit)
