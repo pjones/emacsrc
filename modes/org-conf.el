@@ -8,8 +8,6 @@
 (require 'org)
 (require 'org-agenda)
 (require 'org-capture)
-(require 'org-journal)
-(require 'org-roam)
 (require 's)
 
 (eval-when-compile
@@ -22,7 +20,6 @@
     "../lisp/macros")))
 
 ;; Silence compiler warnings
-(declare-function pjones:org-roam-activate "./org-roam-conf.el")
 (declare-function whitespace-mode "whitespace")
 (declare-function org-bookmark-jump-unhide "org")
 (declare-function org-clocking-p "org-clock")
@@ -469,8 +466,7 @@ PARAMS is a property list of parameters:
 
 (evil-define-key 'insert org-mode-map
   "\C-j" #'pjones:org-insert-below
-  "\C-k" #'pjones:org-insert-above
-  "\C-ci" #'org-roam-insert)
+  "\C-k" #'pjones:org-insert-above)
 
 (evil-define-key 'motion org-mode-map
   "gj" #'outline-forward-same-level
@@ -503,8 +499,6 @@ PARAMS is a property list of parameters:
 
 (evil-leader/set-key-for-mode 'org-agenda-mode
   "f s" #'org-save-all-org-buffers
-  "j j" #'org-journal-new-entry
-  "j r" #'org-roam-find-file
   "m c i" #'org-agenda-clock-in
   "m c o" #'org-agenda-clock-out
   "m d d" #'org-agenda-deadline
@@ -514,9 +508,7 @@ PARAMS is a property list of parameters:
   "m t" #'org-agenda-todo)
 
 ;;; Hooks
-(add-hook 'org-agenda-mode-hook #'pjones:org-roam-activate)
 (add-hook 'org-mode-hook #'org-bullets-mode)
-(add-hook 'org-mode-hook #'pjones:org-roam-activate)
 (add-hook 'org-mode-hook #'pjones:org-trello-activate)
 
 (let ((hooks

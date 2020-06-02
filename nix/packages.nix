@@ -20,23 +20,15 @@ let
       super.treemacs-projectile.overrideAttrs (_: { src = sources.treemacs; });
 
     # Not yet in nixpkgs:
-    org-roam = super.melpaBuild {
-      pname = "org-roam";
-      version = "20200529.0";
-      src = sources.org-roam;
-      packageRequires = [ self.emacsql-sqlite3 ];
-      recipe = pkgs.writeText "org-roam-recipe" ''
-        (org-roam :fetcher github
-          :repo "org-roam/org-roam")
-      '';
-    };
-    company-org-roam = super.melpaBuild {
-      pname = "company-org-roam";
-      version = pkgs.lib.removePrefix "v" sources.company-org-roam.branch;
-      src = sources.company-org-roam;
-      recipe = pkgs.writeText "company-org-roam-recipe" ''
-        (company-org-roam :fetcher github
-          :repo "org-roam/company-org-roam")
+    neuron-mode = super.melpaBuild {
+      pname = "neuron-mode";
+      version = "20200602.0";
+      src = sources.neuron-mode;
+      packageRequires = [ self.f self.counsel self.markdown-mode ];
+      recipe = pkgs.writeText "neuron-mode-recipe" ''
+        (neuron-mode
+          :fetcher github
+          :repo "felko/neuron-mode")
       '';
     };
   });
@@ -49,7 +41,6 @@ in overrides.emacsWithPackages (epkgs:
     avy # Jump to arbitrary positions in visible text and select text quickly
     beginend # Redefine M-< and M-> for some modes
     company # Modular text completion framework
-    company-org-roam # Company backend for Org-roam
     company-quickhelp # Popup documentation for completion candidates
     company-statistics # Sort candidates using completion history
     counsel # Various completion functions using Ivy
@@ -113,6 +104,7 @@ in overrides.emacsWithPackages (epkgs:
     markdown-mode # Major mode for Markdown-formatted text
     minions # A minor-mode menu for the mode line
     monokai-theme # A fruity color theme for Emacs
+    neuron-mode # Major mode for editing zettelkasten notes using neuron
     nix-mode # Major mode for editing .nix files
     no-littering # help keeping ~/.emacs.d clean
     noccur # Run multi-occur on project/dired files
@@ -120,12 +112,11 @@ in overrides.emacsWithPackages (epkgs:
     org # Outline-based notes management and organizer
     org-bullets # Show bullets in org-mode as UTF-8 characters
     org-clock-csv # Export `org-mode' clock entries to CSV format
-    org-journal # a simple org-mode based journaling mode
     org-mru-clock # clock in/out of tasks with completion and persistent history
-    org-roam # Roam Research replica with Org-mode
     org-tree-slide # A presentation tool for org-mode
     org-trello # Minor mode to synchronize org-mode buffer and trello board
     orgalist # Manage Org-like lists in non-Org buffers
+    origami # Flexible text folding
     passmm # A minor mode for pass (Password Store).
     password-store # Password store (pass) support
     pdf-tools # Support library for PDF documents

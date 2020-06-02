@@ -7,8 +7,6 @@
 (require 'darkroom)
 (require 'evil-leader)
 (require 'markdown-mode)
-(require 'org)
-(require 'orgalist)
 (require 'visual-fill)
 (require 'whitespace)
 
@@ -17,6 +15,7 @@
 
 ;; Basic settings.
 (custom-set-variables
+ '(markdown-header-scaling nil) ; See lisp/themes.el
  '(markdown-reference-location 'end)
  '(markdown-command "pandoc -f markdown -t html"))
 
@@ -100,6 +99,7 @@ increase the indentation by one level."
 (defun pjones:markdown-follow-thing-at-point (arg)
   "Call (and pass ARG) to `markdown-follow-thing-at-point'."
   (interactive "P")
+  (require 'org)
   (cl-letf (((symbol-function 'find-file)
              (lambda (name) (org-open-file name))))
     (markdown-follow-thing-at-point arg)))
@@ -147,8 +147,6 @@ directory.  Optionally renaming FILE to NAME."
 (defun pjones:markdown-mode-hook ()
   "Set up key bindings and other crap for markdown-mode."
   (whitespace-mode)
-  (orgalist-mode)
-  (orgtbl-mode)
   (pjones:add-fixme-lock)
 
   ;; Completion configuration:

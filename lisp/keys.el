@@ -8,22 +8,6 @@
 (require 'smartrep)
 
 (eval-when-compile
-  (require 'ivy)
-  (require 'counsel)
-  (require 'treemacs)
-  (require 'dired)
-  (require 'dired-aux)
-  (require 'magit)
-  (require 'winum)
-  (require 'switch-window)
-  (require 'passmm)
-  (require 'org)
-  (require 'org-mru-clock)
-  (require 'winner)
-  (require 'which-key)
-  (require 'org-journal)
-  (require 'org-roam)
-
   (load
    (concat
     (file-name-directory
@@ -50,6 +34,13 @@
 ;; Loading `link-hint' will also load my settings and custom functions
 ;; for it.
 (autoload 'pjones:link-hint-open-link "link-hint")
+
+;; Autoloads for neuron-mode:
+(dolist (f '(neuron-new-zettel
+             neuron-select-zettelkasten
+             neuron-open-zettel
+             neuron-open-index))
+  (autoload f "neuron-mode"))
 
 ;; Maps that need to be shared:
 (defvar pjones:zoom-map (make-sparse-keymap))
@@ -115,12 +106,9 @@
   "g o a" #'pjones:agenda
   "g o c" #'org-capture
   "g o i" #'org-mru-clock-in
-  "g o j" #'org-journal-new-entry
   "g o l" #'org-store-link
   "g o L" #'org-id-store-link
   "g o o" #'org-clock-out
-  "g o r" #'org-roam-find-file
-  "g o R" #'org-roam
   "g x" #'pjones:link-hint-open-link
 
   ;; Help:
@@ -183,7 +171,13 @@
   "x s" #'pjones:evil-sort
 
   ;; Zoom Commands: (others: zw zf)
-  "z" pjones:zoom-map)
+  "z" pjones:zoom-map
+
+  ;; Zettelkasten:
+  "zz" #'neuron-new-zettel
+  "zs" #'neuron-select-zettelkasten
+  "zo" #'neuron-open-zettel
+  "zO" #'neuron-open-index)
 
 ;; Window Resizing:
 (smartrep-define-key pjones:window-map "r"
