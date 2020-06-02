@@ -11,6 +11,7 @@ let
       (_: { src = sources.evil-indent-textobject; });
     org-trello =
       super.org-trello.overrideAttrs (_: { src = sources.org-trello; });
+    origami = super.origami.overrideAttrs (_: { src = sources."origami.el"; });
     reformatter =
       super.reformatter.overrideAttrs (_: { src = sources."reformatter.el"; });
     treemacs = super.treemacs.overrideAttrs (_: { src = sources.treemacs; });

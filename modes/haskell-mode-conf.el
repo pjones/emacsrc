@@ -249,10 +249,9 @@ When prompting, use INITIAL as the initial module name."
   (pjones:prog-mode-hook)
   (subword-mode)
   (abbrev-mode)
-  (highlight-indent-guides-mode)
-  (flymake-hlint-load)
   (xref-etags-mode)
   (eglot-ensure)
+  (flymake-hlint-load)
 
   ;; Evil doc-lookup (on the "K" key):
   (set (make-local-variable 'evil-lookup-func) #'pjones:hoogle)

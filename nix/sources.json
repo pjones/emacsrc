@@ -119,6 +119,18 @@
         "url": "https://github.com/org-trello/org-trello/archive/4ddc257fe24e97c01e12b247568581ff255f0e8d.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
+    "origami.el": {
+        "branch": "master",
+        "description": "A folding minor mode for Emacs",
+        "homepage": null,
+        "owner": "gregsexton",
+        "repo": "origami.el",
+        "rev": "e558710a975e8511b9386edc81cd6bdd0a5bda74",
+        "sha256": "0ycjbsn03cjzx6adabcvi1j7f92yhx3xjzj3xc68m1hw9r2f2gzf",
+        "type": "tarball",
+        "url": "https://github.com/gregsexton/origami.el/archive/e558710a975e8511b9386edc81cd6bdd0a5bda74.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
     "passmm": {
         "ref": "master",
         "repo": "https://code.devalot.com/open/passmm.git",
