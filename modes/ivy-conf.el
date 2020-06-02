@@ -46,10 +46,8 @@
 
 (defun pjones:ivy-ignore-buffers (buffer)
   "Ignore BUFFER if it meets certain criteria."
-  (let* ((buf  (get-buffer buffer))
-         (vars (buffer-local-variables buf)))
-    (or (get-buffer-window buf t)
-        (eq 'fundamental-mode (alist-get 'major-mode vars)))))
+  (let* ((buf  (get-buffer buffer)))
+    (get-buffer-window buf t)))
 
 (add-to-list 'ivy-ignore-buffers #'pjones:ivy-ignore-buffers)
 
