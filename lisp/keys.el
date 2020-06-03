@@ -37,6 +37,7 @@
 
 ;; Autoloads for neuron-mode:
 (dolist (f '(neuron-new-zettel
+             neuron-open-daily-notes
              neuron-select-zettelkasten
              neuron-open-zettel
              neuron-open-index))
@@ -174,6 +175,7 @@
   "z" pjones:zoom-map
 
   ;; Zettelkasten:
+  "zd" #'neuron-open-daily-notes
   "zz" #'neuron-new-zettel
   "zs" #'neuron-select-zettelkasten
   "zo" #'neuron-open-zettel

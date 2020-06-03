@@ -10,6 +10,7 @@
 ;; (require 'neuron-mode)
 
 (custom-set-variables
+ '(neuron-daily-note-title-format "%B %d, %Y")
  `(neuron-default-zettelkasten-directory
    ,(expand-file-name "~/notes/zettelkasten")))
 
@@ -31,7 +32,7 @@
   "m o" #'neuron-open-current-zettel
   "m q" #'neuron-query-tags
   "m s" #'neuron-insert-static-link
-  "m t" #'neuron-insert-tag
+  "m t" #'neuron-add-tag
   "m w" #'neuron-rib-watch)
 
 ;;; neuron-mode-conf.el ends here
