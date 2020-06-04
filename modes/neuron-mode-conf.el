@@ -5,9 +5,7 @@
 ;;; Code:
 (require 'evil)
 (require 'evil-leader)
-
-;; WTF: Error: Wrong type argument: listp, class
-;; (require 'neuron-mode)
+(require 'neuron-mode)
 
 (custom-set-variables
  '(neuron-daily-note-title-format "%B %d, %Y")
@@ -33,6 +31,7 @@
   "m q" #'neuron-query-tags
   "m s" #'neuron-insert-static-link
   "m t" #'neuron-add-tag
-  "m w" #'neuron-rib-watch)
+  "m w" #'neuron-rib-watch
+  "m W" #'neuron-rib-serve)
 
 ;;; neuron-mode-conf.el ends here

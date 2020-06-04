@@ -177,9 +177,8 @@
   ;; Zettelkasten:
   "zd" #'neuron-open-daily-notes
   "zz" #'neuron-new-zettel
-  "zs" #'neuron-select-zettelkasten
-  "zo" #'neuron-open-zettel
-  "zO" #'neuron-open-index)
+  "ze" #'neuron-edit-zettel
+  "zs" #'neuron-select-zettelkasten)
 
 ;; Window Resizing:
 (smartrep-define-key pjones:window-map "r"
