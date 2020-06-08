@@ -57,6 +57,9 @@
 (reformatter-define haskell-format
   :program "ormolu")
 
+(reformatter-define cabal-format
+  :program "cabal-fmt")
+
 (defun pjones:hasky-extensions ()
   "Wrapper around `hasky-extensions'.
 A version of `hasky-extensions' that doesn't use avy."
@@ -292,8 +295,8 @@ When prompting, use INITIAL as the initial module name."
                      (Bc . Bl) ?> (Br . Br) ?>)))))
 
 (add-hook 'haskell-mode-hook       #'pjones:haskell-mode-hook)
-(add-hook 'haskell-cabal-mode-hook #'highlight-indent-guides-mode)
 (add-hook 'haskell-cabal-mode-hook #'pjones:prog-mode-hook)
+(add-hook 'haskell-cabal-mode-hook #'cabal-format-on-save-mode)
 
 ;; Tell eglot how to start ghcide:
 (add-to-list 'eglot-server-programs '(haskell-mode . ("ghcide" "--lsp")))
