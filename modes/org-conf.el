@@ -475,21 +475,19 @@ PARAMS is a property list of parameters:
   "gK" #'org-shiftmetaup)
 
 (evil-leader/set-key-for-mode 'org-mode
-  "m c c" #'pjones:org-activate
-  "m c i" #'org-clock-in
-  "m c o" #'org-clock-out
-  "m k" #'pjones:org-cancel
+  "m K" #'pjones:org-cancel
+  "m S" #'org-deadline
+  "m T" #'org-set-tags-command
+  "m c" #'pjones:org-activate
   "m d !" #'org-time-stamp-inactive
   "m d ." #'org-time-stamp
-  "m d d" #'org-deadline
-  "m d s" #'org-schedule
-  "m S" #'org-deadline
-  "m s" #'org-schedule
   "m g g" #'pjones:org-goto
+  "m i" #'org-clock-in
   "m j" #'pjones:org-insert-below
   "m k" #'pjones:org-insert-above
+  "m o" #'org-clock-out
+  "m s" #'org-schedule
   "m t" #'org-todo
-  "m T" #'org-set-tags-command
   "t t" #'org-todo)
 
 (evil-define-key 'normal org-agenda-mode-map
@@ -499,12 +497,10 @@ PARAMS is a property list of parameters:
 
 (evil-leader/set-key-for-mode 'org-agenda-mode
   "f s" #'org-save-all-org-buffers
-  "m c i" #'org-agenda-clock-in
-  "m c o" #'org-agenda-clock-out
-  "m d d" #'org-agenda-deadline
-  "m d s" #'org-agenda-schedule
-  "m s" #'org-agenda-schedule
   "m S" #'org-agenda-deadline
+  "m i" #'org-agenda-clock-in
+  "m o" #'org-agenda-clock-out
+  "m s" #'org-agenda-schedule
   "m t" #'org-agenda-todo)
 
 ;;; Hooks

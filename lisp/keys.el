@@ -77,16 +77,18 @@
   "e r" #'eval-region
 
   ;; File Commands:
-  "f b" #'counsel-bookmark
-  "f f" #'counsel-find-file
+  "f B" #'counsel-bookmark
   "f F" #'find-dired
-  "f d" #'dired-jump
-  "f g" #'rg-project
   "f G" #'rg
-  "f o" #'occur
   "f R" #'pjones:rename-current-file
-  "f s" #'save-buffer
   "f S" #'evil-write-all
+  "f b" #'magit-blame
+  "f d" #'dired-jump
+  "f f" #'counsel-find-file
+  "f g" #'rg-project
+  "f l" #'magit-log-buffer-file
+  "f o" #'occur
+  "f s" #'save-buffer
   "f t" #'treemacs-select-window
   "f w" #'write-file
   "f y" #'pjones:kill-file-name
@@ -101,9 +103,7 @@
   "g e" #'next-error
   "g f" #'pjones:fly-next-error
   "g i" #'counsel-imenu
-  "g m b" #'magit-blame
-  "g m f" #'magit-log-buffer-file
-  "g m m" #'magit-status
+  "g m" #'magit-status
   "g o a" #'pjones:agenda
   "g o c" #'org-capture
   "g o i" #'org-mru-clock-in
@@ -192,6 +192,8 @@
   '(("=" . text-scale-increase)
     ("+" . text-scale-increase)
     ("-" . text-scale-decrease)
+    ("j" . text-scale-increase)
+    ("k" . text-scale-decrease)
     ("0" . text-scale-set)))
 
 ;; Zooming frames:
@@ -199,8 +201,9 @@
   '(("=" . default-text-scale-increase)
     ("+" . default-text-scale-increase)
     ("-" . default-text-scale-decrease)
+    ("j" . default-text-scale-increase)
+    ("k" . default-text-scale-decrease)
     ("0" . default-text-scale-reset)))
-
 
 ;; Overriding default key bindings
 (global-set-key (kbd "C-w")       #'pjones:kill-region-or-backward-kill-word)

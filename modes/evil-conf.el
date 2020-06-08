@@ -121,21 +121,26 @@ called from."
 (dolist (state '(normal visual motion))
   (evil-define-key state global-map (kbd "DEL") evil-leader--default-map))
 
-;; Use both leader keys from insert mode:
-(evil-define-key 'insert global-map
-  (kbd "C-SPC") evil-leader--default-map
-  (kbd "C-DEL") evil-leader--default-map)
+(defun pjones:evil-leader-in-all-states ()
+  "Use both leader keys from insert mode."
+  ;; Force a local mode keymap.
+  (evil-leader/set-key-for-mode major-mode nil nil)
+  (let* ((mode-map (cdr (assoc major-mode evil-leader--mode-maps)))
+         (map (or mode-map evil-leader--default-map)))
+    (define-key evil-insert-state-local-map (kbd "C-SPC") map)
+    (define-key evil-insert-state-local-map (kbd "C-DEL") map)))
 
 ;; Hooks:
-(add-hook 'after-init-hook                #'pjones:evil-set-cursors)
-(add-hook 'after-make-frame-functions     #'pjones:evil-set-cursors)
-(add-hook 'evil-mode-hook                 #'evil-commentary-mode)
-(add-hook 'evil-mode-hook                 #'evil-owl-mode)
-(add-hook 'evil-mode-hook                 #'global-evil-fringe-mark-mode)
-(add-hook 'evil-mode-hook                 #'global-evil-matchit-mode)
-(add-hook 'evil-mode-hook                 #'global-evil-surround-mode)
-(add-hook 'evil-mode-hook                 #'pjones:evil-mode-hook)
-(add-hook 'evil-mode-hook                 #'pjones:evil-set-cursors)
+(add-hook 'after-init-hook #'pjones:evil-set-cursors)
+(add-hook 'after-make-frame-functions #'pjones:evil-set-cursors)
+(add-hook 'evil-leader-mode-hook #'pjones:evil-leader-in-all-states)
+(add-hook 'evil-mode-hook #'evil-commentary-mode)
+(add-hook 'evil-mode-hook #'evil-owl-mode)
+(add-hook 'evil-mode-hook #'global-evil-fringe-mark-mode)
+(add-hook 'evil-mode-hook #'global-evil-matchit-mode)
+(add-hook 'evil-mode-hook #'global-evil-surround-mode)
+(add-hook 'evil-mode-hook #'pjones:evil-mode-hook)
+(add-hook 'evil-mode-hook #'pjones:evil-set-cursors)
 (add-hook 'pjones:after-theme-change-hook #'pjones:evil-set-cursors)
 
 ;;; evil-conf.el ends here

@@ -5,6 +5,7 @@
 ;;; Code:
 (require 'company)
 (require 'darkroom)
+(require 'evil)
 (require 'evil-leader)
 (require 'markdown-mode)
 (require 'visual-fill)
@@ -12,65 +13,19 @@
 
 (declare-function pjones:open-line-above "../lisp/interactive.el")
 (declare-function pjones:add-fixme-lock "../lisp/code.el")
+(autoload 'org-open-file "org")
 
 ;; Basic settings.
 (custom-set-variables
  '(markdown-header-scaling nil) ; See lisp/themes.el
  '(markdown-reference-location 'end)
- '(markdown-command "pandoc -f markdown -t html"))
+ '(markdown-asymmetric-header t)
+ '(markdown-hide-urls t)
+ '(markdown-command "pandoc --standalone -f markdown -t html"))
 
 (defvar pjones:markdown-attachments-directory
   "attachments"
   "Name of the directory used to hold git-annex files.")
-
-(defvar pjones:markdown-langs
-  '("ruby" "javascript" "html" "css" "haskell" "shell" "python")
-  "List of pandoc languages I use.")
-
-(define-skeleton pjones:markdown-slide-notes
-  "Add a div section for slide notes." nil
-  "<div class=\"notes\">"
-  ?\n ?\n _
-  ?\n ?\n "</div>")
-
-(defun pjones:markdown-collect-token-names (file)
-  "Return a list of Edify token names found in FILE."
-  (let ((tokens nil))
-    (with-temp-buffer
-      (insert-file-contents file)
-      (goto-char (point-min))
-      (while (search-forward-regexp "<<: \\(.+\\)" nil t 1)
-        (setq tokens (append tokens (list (match-string 1)))))
-      tokens)))
-
-(defun pjones:markdown-slide-fenced-code-block (&optional with-insert with-token)
-  "Insert a markdown fenced code block.
-
-If WITH-INSERT is non-nil, prompt for a file path to insert.  If
-WITH-TOKEN is non-nil, prompt for a token name."
-  (interactive "P")
-  (let* ((indent (- (point) (save-excursion (forward-line 0) (point))))
-         (prefix (make-string indent ? ))
-         (lang (ido-completing-read "Lang: " pjones:markdown-langs))
-         (file (when with-insert
-                 (file-relative-name
-                  (read-file-name "Insert File Path: " nil nil t))))
-         (tokens (if (and with-insert with-token) (pjones:markdown-collect-token-names file)))
-         (token (if (and with-token tokens) (ido-completing-read "Token: " tokens))))
-    (insert (concat "~~~ {." lang
-                    (if with-insert (concat " insert=\"" file "\""))
-                    (if (and with-token token) (concat " token=\"" token "\""))
-                    "}\n" (unless with-insert (concat prefix "\n")) prefix "~~~\n"))
-    (forward-line -2)
-    (end-of-line)
-    t))
-(put 'pjones:markdown-slide-fenced-code-block 'no-self-insert t)
-
-(defun pjones:markdown-slide-fenced-code-insert nil
-  "Wrapper around `pjones:markdown-slide-fenced-code-block'."
-  (interactive)
-  (pjones:markdown-slide-fenced-code-block t t))
-(put 'pjones:markdown-slide-fenced-code-insert 'no-self-insert t)
 
 (defun pjones:markdown-insert-list-item (&optional arg)
   "Insert a new list item.
@@ -84,8 +39,19 @@ decrease the indentation by one level.
 With two \\[universal-argument] prefixes (i.e., when ARG is (16)),
 increase the indentation by one level."
   (interactive "p")
-  (markdown-insert-list-item arg)
+  (markdown-insert-list-item (or arg 0))
   (pjones:open-line-above t))
+
+(defun pjones:markdown-insert-heading-or-item (reverse)
+  "Insert a heading or item based on the current context.
+If REVERSE is non-nil, do the opposite of what the context says."
+  (interactive "P")
+  (if (or (markdown-on-heading-p) reverse)
+      (progn
+        (newline)
+        (markdown-insert-header-dwim))
+    (pjones:markdown-insert-list-item))
+  (evil-insert-state))
 
 (defun pjones:markdown-visual-line ()
   "Don't wrap lines.  Needed for most web forms."
@@ -131,18 +97,62 @@ directory.  Optionally renaming FILE to NAME."
      (file-name-nondirectory name)
      (file-relative-name dest))))
 
-;; A few extra key bindings:
-(evil-leader/set-key-for-mode 'markdown-mode
-  "m h i" #'markdown-insert-header-dwim
-  "m a" #'pjones:markdown-attach-file
-  "m f" #'pjones:markdown-slide-fenced-code-block
-  "m i" #'pjones:markdown-slide-fenced-code-insert
-  "m l" #'pjones:markdown-insert-list-item
-  "m L" #'markdown-live-preview-mode
-  "m n" #'pjones:markdown-slide-notes
-  "m c" #'markdown-preview
-  "m o" #'pjones:markdown-follow-thing-at-point
-  "m r" #'markdown-cleanup-list-numbers)
+(evil-define-operator pjones:markdown-promote (beg end count)
+  "Promote, indent, move column left."
+  :type line
+  :move-point nil
+  (interactive "<r><vc>")
+  (when (null count) (setq count 1))
+  (dotimes (_ count)
+    (condition-case nil
+        (markdown-promote)
+      (user-error
+       (evil-shift-left beg end 1)))))
+
+(evil-define-operator pjones:markdown-demote (beg end count)
+  "Demote, indent, move column right."
+  :type line
+  :move-point nil
+  (interactive "<r><vc>")
+  (when (null count) (setq count 1))
+  (dotimes (_ count)
+    (condition-case nil
+        (markdown-demote)
+      (user-error
+       (evil-shift-right beg end 1)))))
+
+(defun pjones:markdown-bind-keys ()
+  "Bind keys in modes derived from `markdown-mode'."
+  (let* ((mode major-mode)
+         (map (symbol-value (intern (concat (symbol-name mode) "-map")))))
+    (evil-define-key 'insert map
+      (kbd "C-j") #'pjones:markdown-insert-heading-or-item
+      (kbd "TAB") #'pjones:indent-or-complete)
+    (evil-define-key 'motion map
+      "gj" #'outline-forward-same-level
+      "gk" #'outline-up-heading
+      "gJ" #'outline-move-subtree-down
+      "gK" #'outline-move-subtree-up)
+    (evil-define-key 'normal map
+      ;; Folding:
+      "zo" #'outline-show-entry
+      "zO" #'outline-show-subtree
+      "zc" #'outline-hide-subtree
+      "zr" #'outline-show-all
+      "zm" #'outline-hide-sublevels
+      ;; Promoting, demoting:
+      ">" #'pjones:markdown-demote
+      "<" #'pjones:markdown-promote)
+    (evil-leader/set-key-for-mode mode
+      "g x" #'pjones:markdown-follow-thing-at-point
+      "m a" #'pjones:markdown-attach-file
+      "m c" #'markdown-preview
+      "m f" #'markdown-insert-footnote
+      "m j" #'pjones:markdown-insert-heading-or-item
+      "m l" #'markdown-insert-link
+      "m n" #'markdown-cleanup-list-numbers
+      "m p" #'markdown-live-preview-mode
+      "m t" #'markdown-insert-table)))
 
 (defun pjones:markdown-mode-hook ()
   "Set up key bindings and other crap for markdown-mode."
@@ -160,6 +170,7 @@ directory.  Optionally renaming FILE to NAME."
     (pjones:markdown-visual-line)))
 
 (add-hook 'markdown-mode-hook 'pjones:markdown-mode-hook)
+(add-hook 'markdown-mode-hook 'pjones:markdown-bind-keys)
 
 ;; Local Variables:
 ;; byte-compile-warnings: (not noruntime)
