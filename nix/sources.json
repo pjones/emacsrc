@@ -68,7 +68,7 @@
     "neuron-mode": {
         "ref": "pjones/master",
         "repo": "https://github.com/pjones/neuron-mode.git",
-        "rev": "5ed47fcc78f01273a4094488ad3f8cf0efc6c74b",
+        "rev": "242b444821f89e402c397328e381667474c0022c",
         "type": "git"
     },
     "niv": {

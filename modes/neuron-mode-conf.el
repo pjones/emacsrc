@@ -39,11 +39,8 @@
     "gx" #'neuron-follow-thing-at-point
     "gr" #'neuron-refresh-buffer)
   (evil-leader/set-key-for-mode 'neuron-mode
-    "m I" #'neuron-insert-zettel-link
     "m e" #'neuron-edit-zettel
-    "m g g" #'pjones:rg-zettel-dir
-    "m g t" #'pjones:zettel-need-to-do
-    "m i" #'neuron-insert-new-zettel
+    "m i" #'neuron-create-and-insert-zettel-link
     "m o" #'neuron-open-current-zettel
     "m q" #'neuron-query-tags
     "m r" #'neuron-rib-generate
