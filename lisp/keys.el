@@ -36,6 +36,8 @@
 (autoload 'pjones:link-hint-open-link "link-hint")
 
 ;; Autoloads for neuron-mode:
+(autoload 'pjones:rg-zettel-dir "neuron-mode")
+(autoload 'pjones:zettel-need-to-do "neuron-mode")
 (dolist (f '(neuron-new-zettel
              neuron-open-daily-notes
              neuron-select-zettelkasten
@@ -79,13 +81,16 @@
   ;; File Commands:
   "f B" #'counsel-bookmark
   "f F" #'find-dired
-  "f G" #'rg
   "f R" #'pjones:rename-current-file
   "f S" #'evil-write-all
   "f b" #'magit-blame
   "f d" #'dired-jump
   "f f" #'counsel-find-file
-  "f g" #'rg-project
+  "f g g" #'rg-project
+  "f g c" #'rg
+  "f g p" #'counsel-rg
+  "f g t" #'pjones:zettel-need-to-do
+  "f g z" #'pjones:rg-zettel-dir
   "f l" #'magit-log-buffer-file
   "f o" #'occur
   "f s" #'save-buffer
