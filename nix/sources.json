@@ -61,13 +61,13 @@
     },
     "evil-indent-textobject": {
         "ref": "patches",
-        "repo": "https://code.devalot.com/mirrors/evil-indent-textobject.git",
+        "repo": "https://github.com/pjones/evil-indent-textobject.git",
         "rev": "350246086fd1aad574c67b1df341bf2e9168c5ed",
         "type": "git"
     },
     "neuron-mode": {
         "ref": "pjones/master",
-        "repo": "https://code.devalot.com/mirrors/neuron-mode.git",
+        "repo": "https://github.com/pjones/neuron-mode.git",
         "rev": "5ed47fcc78f01273a4094488ad3f8cf0efc6c74b",
         "type": "git"
     },
@@ -95,12 +95,6 @@
         "url": "https://github.com/NixOS/nixpkgs-channels/archive/48723f48ab92381f0afd50143f38e45cf3080405.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
-    "org-roam": {
-        "ref": "pjones/master",
-        "repo": "https://code.devalot.com/mirrors/org-roam.git",
-        "rev": "a8c2fac07af7a09d51fd14ea728097366580f4fa",
-        "type": "git"
-    },
     "org-trello": {
         "branch": "0.8.2",
         "description": "Org minor mode - 2-way sync org & trello",
@@ -127,7 +121,7 @@
     },
     "passmm": {
         "ref": "master",
-        "repo": "https://code.devalot.com/open/passmm.git",
+        "repo": "https://github.com/pjones/passmm.git",
         "rev": "b25a92048c788a8477cc5ffe14c0c4a4df19d79a",
         "type": "git"
     },
