@@ -14,11 +14,6 @@
       (eval-after-load (intern (replace-match "" t t basename))
         `(load ,file)))))
 
-(defun pjones:maybe-start-edit-server ()
-  "Start `edit-server' if this is the main Emacs instance."
-  (if (string= "server" server-name)
-      (edit-server-start))) ; Half-baked browser extension.
-
 ;; The reset of the file is only loaded if we're not in --batch mode.
 (unless noninteractive
   (defun pjones:boot-global-modes ()
@@ -45,8 +40,7 @@
     (require 'saveplace)                    ; Saves your location in files
     (require 'vlf-setup)                    ; Deal with large files
 
-    (add-hook 'text-mode-hook           #'abbrev-mode)
-    (add-hook 'pjones:after-server-hook #'pjones:maybe-start-edit-server))
+    (add-hook 'text-mode-hook           #'abbrev-mode))
 
   ;; Hook in:
   (add-hook 'after-init-hook #'pjones:boot-global-modes))

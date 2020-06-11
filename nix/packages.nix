@@ -60,7 +60,6 @@ in overrides.emacsWithPackages (epkgs:
     direnv # direnv support
     doom-modeline # A minimal and modern mode-line
     doom-themes # an opinionated pack of modern color-themes
-    edit-server # server that responds to edit requests from Chrome
     eglot # Client for Language Server Protocol (LSP) servers
     eimp # Emacs Image Manipulation Package
     elfeed # an Emacs Atom/RSS feed reader

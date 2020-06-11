@@ -58,25 +58,13 @@ in PLIST.  ALIST is passed to display functions."
       (set-window-dedicated-p window (plist-get plist :dedicated))
       (select-window (if (plist-get plist :select) window current)))))
 
-(defun pjones:shackle-match-edit-server (buffer)
-  "Return non-nil when BUFFER is for `edit-server'."
-  (and (fboundp 'edit-server-edit-mode)
-       (buffer-local-value 'edit-server-url buffer)))
-
 ;; Settings:
 (custom-set-variables
  '(shackle-inhibit-window-quit-on-same-windows t)
  '(shackle-default-rule (quote (:same t)))
 
  '(shackle-rules
-   '(
-     ;; Edit server buffers:
-     ((:custom pjones:shackle-match-edit-server)
-      :select t
-      :same-mode t
-      :custom pjones:shackle-split)
-
-     ;; Modes that should get their own windows, but remain inactive:
+   '(;; Modes that should get their own windows, but remain inactive:
      ((magit-diff-mode)
       :select nil
       :same nil)
