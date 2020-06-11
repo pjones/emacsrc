@@ -4,4 +4,4 @@
 # key: qi
 # expand-env: ((yas-indent-line 'fixed))
 # --
-import qualified ${2:Module} as ${2:$(pjones:haskell-unqualified-module yas-text)}
+import qualified ${1:Module} as ${1:$(pjones:haskell-unqualified-module yas-text)}$0

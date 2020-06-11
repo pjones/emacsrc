@@ -7,5 +7,5 @@
 -- | FIXME: Write description for $1
 --
 -- @since `(pjones:haskell-package-version)`
-${1:function-name} :: ${2:Type}
-$1 $0 = undefined
+${1:function-name} :: $0
+$1 = undefined
