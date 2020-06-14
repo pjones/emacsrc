@@ -37,16 +37,16 @@
 
 ;; A few extra key bindings:
 (evil-leader/set-key-for-mode 'haskell-mode
-  "e t"   #'eglot-help-at-point
-  "j e"   #'pjones:haskell-navigate-exports
-  "j i"   #'haskell-navigate-imports
-  "j j"   #'haskell-navigate-imports-return
-  "j r"   #'haskell-interactive-bring
-  "m e"   #'haskell-cabal-visit-file
-  "m h"   #'pjones:hoogle
-  "m q"   #'pjones:haskell-toggle-qualified
-  "m x"   #'pjones:hasky-extensions
-  "m y m" #'pjones:haskell-kill-module-name)
+  "e t" #'eglot-help-at-point
+  "j e" #'pjones:haskell-navigate-exports
+  "j i" #'haskell-navigate-imports
+  "j j" #'haskell-navigate-imports-return
+  "j r" #'haskell-interactive-bring
+  "m e" #'haskell-cabal-visit-file
+  "m h" #'pjones:hoogle
+  "m q" #'pjones:haskell-toggle-qualified
+  "m x" #'pjones:hasky-extensions
+  "y m" #'pjones:haskell-kill-module-name)
 
 (evil-leader/set-key-for-mode 'haskell-cabal-mode
   "m s" #'haskell-cabal-subsection-arrange-lines)

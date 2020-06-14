@@ -38,7 +38,8 @@
 (evil-leader/set-key-for-mode 'magit-status-mode-map
   "m L" #'magit-log-refresh
   "m :" #'magit-git-command
-  "m SPC" #'magit-diff-show-or-scroll-up)
+  "m SPC" #'magit-diff-show-or-scroll-up
+  "y m" #'magit-copy-buffer-revision)
 
 (pjones:evil-override-mode magit-log-mode
   "H" #'magit-dispatch ; "h"

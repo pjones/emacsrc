@@ -176,6 +176,10 @@
   "x c" #'pjones:comment-bar
   "x s" #'pjones:evil-sort
 
+  ;; Yanking Commands:
+  "y f" #'pjones:kill-file-name
+  "y x" #'link-hint-copy-link
+
   ;; Zoom Commands: (others: zw zf)
   "z" pjones:zoom-map
 

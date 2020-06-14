@@ -69,7 +69,9 @@
   "m m u" #'dired-unmark-all-marks
   "m m a" #'pjones:dired-mark-all-files
   "m o"   #'noccur-dired
-  "m q"   #'dired-do-query-replace-regexp)
+  "m q"   #'dired-do-query-replace-regexp
+  "y n"   #'dired-copy-filename-as-kill
+  "y p"    '(lambda () (interactive) (dired-copy-filename-as-kill '(nil . nil))))
 
 (pjones:evil-override-mode dired-mode
   "!" (pjones:dired-cwd-do #'dired-do-shell-command)
@@ -79,9 +81,7 @@
   "gj" #'dired-subtree-down
   "gq" #'dired-do-query-replace-regexp
   "gr" #'revert-buffer
-  "go" #'noccur-dired
-  "yn" #'dired-copy-filename-as-kill
-  "yp" '(lambda () (interactive) (dired-copy-filename-as-kill '(nil . nil))))
+  "go" #'noccur-dired)
 
 (defun pjones:dired-insert-or-visit ()
   "Visit the file at point.
