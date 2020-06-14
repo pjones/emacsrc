@@ -47,6 +47,18 @@
         "url": "https://github.com/fasheng/elfeed-protocol/archive/fc0beb392386b8ed387e52e7e100354b8549fd7e.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
+    "emacs-libvterm": {
+        "branch": "master",
+        "description": "Emacs libvterm integration",
+        "homepage": "",
+        "owner": "akermu",
+        "repo": "emacs-libvterm",
+        "rev": "fbd0f097198ee110a895dcff30c0d1be39e8284e",
+        "sha256": "180dj9hjngd9by00gvibws6i7wxmr3la684wv07mpq4f1pxdfqix",
+        "type": "tarball",
+        "url": "https://github.com/akermu/emacs-libvterm/archive/fbd0f097198ee110a895dcff30c0d1be39e8284e.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
     "evil": {
         "branch": "master",
         "description": "The extensible vi layer for Emacs.",

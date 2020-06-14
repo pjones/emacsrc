@@ -102,7 +102,7 @@
   "g a h" #'pjones:start-http
   "g a i" #'pjones:start-irc
   "g a m" #'pjones:start-mail
-  "g a t" #'pjones:start-term
+  "g a t" #'vterm
   "g c" #'quick-calc
   "g C" #'full-calc
   "g e" #'next-error

@@ -4,6 +4,7 @@
 (require 'term)
 (require 'projectile)
 (require 'evil)
+(require 'evil-leader)
 
 ;; Settings for term-mode:
 (custom-set-variables
@@ -71,34 +72,32 @@ Sends the next key COUNT times."
   (toggle-truncate-lines -1)
 
   ;; But use Evil too:
+  (make-local-variable 'evil-insert-state-entry-hook)
+  (make-local-variable 'evil-insert-state-exit-hook)
   (add-hook 'evil-insert-state-entry-hook #'pjones:term-char-mode)
-  (add-hook 'evil-insert-state-exit-hook  #'pjones:term-line-mode)
+  (add-hook 'evil-insert-state-exit-hook  #'pjones:term-line-mode))
 
-  (evil-define-key 'insert 'term-raw-map
-    ;; NOTE: Make C-o work like it should.  I suppose this might break
-    ;; some terminal applications but I don't care:
-    (kbd "C-o")     #'evil-execute-in-normal-state
-    (kbd "C-c C-d") #'pjones:term-insert-directory)
+(evil-define-key 'insert term-raw-map
+  (kbd "C-a") (pjones:term-send-char [?\C-a])
+  (kbd "C-e") (pjones:term-send-char [?\C-e])
+  (kbd "C-w") (pjones:term-send-char [?\C-w])
+  (kbd "C-k") (pjones:term-send-char [?\C-p])
+  (kbd "C-j") (pjones:term-send-char [?\C-n])
+  (kbd "C-c C-c") (pjones:term-send-char [?\C-c])
+  (kbd "C-c C-d") #'pjones:term-insert-directory
+  (kbd "C-c C-d") (pjones:term-send-char [?\C-d])
+  (kbd "C-c C-e") (pjones:term-send-char [?\C-x ?\C-e])
+  (kbd "C-c C-o") (pjones:term-send-char [?\C-o])
+  (kbd "C-c C-q") #'pjones:term-quoted-insert
+  (kbd "C-c C-r") (pjones:term-send-char [?\C-r])
+  (kbd "C-c C-x") (pjones:term-send-char [?\C-x])
+  (kbd "C-c C-z") (pjones:term-send-char [?\C-z])
+  (kbd "C-d") (pjones:term-send-char [?\C-d])
+  (kbd "C-h") help-map
+  (kbd "C-o") #'evil-execute-in-normal-state)
 
-  (evil-define-key 'normal 'term-mode-map
-    (kbd "C-c C-k")  #'evil-insert
-    (kbd "<return>") #'evil-insert)
-
-  (let ((map term-raw-map))
-    ;; Sending special keys to the terminal:
-    (define-key map (kbd "C-c")     nil)
-    (define-key map (kbd "C-c C-c") (pjones:term-send-char [?\C-c]))
-    (define-key map (kbd "C-c C-d") #'pjones:term-insert-directory)
-    (define-key map (kbd "C-c C-e") (pjones:term-send-char [?\C-x ?\C-e]))
-    (define-key map (kbd "C-c C-o") (pjones:term-send-char [?\C-o]))
-    (define-key map (kbd "C-c C-x") (pjones:term-send-char [?\C-x]))
-    (define-key map (kbd "C-c C-z") (pjones:term-send-char [?\C-z]))
-    (define-key map (kbd "C-c M-x") (pjones:term-send-char [escape ?x]))
-    (define-key map (kbd "C-c C-q") #'pjones:term-quoted-insert)
-
-    ;; Other functions:
-    (define-key map (kbd "C-c C-k") #'evil-normal-state)
-    (define-key map (kbd "M-x")     nil)))
+(evil-define-key 'normal term-mode-map
+  (kbd "<return>") #'evil-insert)
 
 (advice-add 'term-handle-exit :after 'pjones:remove-dead-term)
 (add-hook 'term-mode-hook 'pjones:term-mode-hook)

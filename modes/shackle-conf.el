@@ -96,7 +96,7 @@ in PLIST.  ALIST is passed to display functions."
       :same-mode t
       :custom pjones:shackle-split)
 
-     ;; Like above, but don't consider the major mode:
+     ;; Modes that force a new frame:
      ((term-mode
        haskell-interactive-mode)
       :select t

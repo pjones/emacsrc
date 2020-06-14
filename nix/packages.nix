@@ -19,6 +19,7 @@ let
       super.treemacs-evil.overrideAttrs (_: { src = sources.treemacs; });
     treemacs-projectile =
       super.treemacs-projectile.overrideAttrs (_: { src = sources.treemacs; });
+    vterm = super.vterm.overrideAttrs (_: { src = sources.emacs-libvterm; });
 
     # Not yet in nixpkgs:
     neuron-mode = super.melpaBuild {
@@ -142,6 +143,7 @@ in overrides.emacsWithPackages (epkgs:
     typescript-mode # Major mode for editing typescript
     visual-fill # Auto-refill paragraphs without modifying the buffer
     vlf # View Large Files
+    vterm # This package implements a terminal via libvterm
     wgrep # Writable grep buffer and apply the changes to files
     which-key # Display available keybindings in popup
     winum # Navigate windows and frames using numbers.
