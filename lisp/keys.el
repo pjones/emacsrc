@@ -68,8 +68,7 @@
   "b s" (pjones:jump-to-buffer "*scratch*")
   "b t" #'treemacs-select-window
   "b v" #'find-alternate-file
-  "b y" #'pjones:kill-file-name
-  "b Y" #'pjones:kill-whole-buffer
+  "b y" #'pjones:kill-whole-buffer
   "b w" #'read-only-mode
 
   ;; Evaluation Keys:
@@ -95,26 +94,25 @@
   "f o" #'occur
   "f s" #'save-buffer
   "f t" #'treemacs-select-window
+  "f v" #'find-alternate-file
   "f w" #'write-file
-  "f y" #'pjones:kill-file-name
 
   ;; Go Commands:
-  "g a h" #'pjones:start-http
-  "g a i" #'pjones:start-irc
-  "g a m" #'pjones:start-mail
-  "g a t" #'vterm
-  "g c" #'quick-calc
   "g C" #'full-calc
+  "g I" #'pjones:start-irc
+  "g c" #'quick-calc
   "g e" #'next-error
   "g f" #'pjones:fly-next-error
+  "g h" #'pjones:start-http
   "g i" #'counsel-imenu
   "g m" #'magit-status
+  "g o L" #'org-id-store-link
   "g o a" #'pjones:agenda
   "g o c" #'org-capture
   "g o i" #'org-mru-clock-in
   "g o l" #'org-store-link
-  "g o L" #'org-id-store-link
   "g o o" #'org-clock-out
+  "g t" #'vterm
   "g x" #'pjones:link-hint-open-link
 
   ;; Help:

@@ -475,12 +475,13 @@ PARAMS is a property list of parameters:
   "gK" #'org-shiftmetaup)
 
 (evil-leader/set-key-for-mode 'org-mode
+  "m !" #'org-time-stamp-inactive
+  "m ." #'org-time-stamp
   "m K" #'pjones:org-cancel
   "m S" #'org-deadline
   "m T" #'org-set-tags-command
   "m c" #'pjones:org-activate
-  "m d !" #'org-time-stamp-inactive
-  "m d ." #'org-time-stamp
+  "m d" (lambda () (interactive) (org-todo 'done))
   "m g g" #'pjones:org-goto
   "m i" #'org-clock-in
   "m j" #'pjones:org-insert-below
@@ -498,6 +499,7 @@ PARAMS is a property list of parameters:
 (evil-leader/set-key-for-mode 'org-agenda-mode
   "f s" #'org-save-all-org-buffers
   "m S" #'org-agenda-deadline
+  "m d" (lambda () (interactive) (org-agenda-todo 'done))
   "m i" #'org-agenda-clock-in
   "m o" #'org-agenda-clock-out
   "m s" #'org-agenda-schedule
