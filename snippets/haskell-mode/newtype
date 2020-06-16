@@ -7,5 +7,5 @@
 -- | FIXME: Write documentation for ${1:$(car (s-split " " yas-text))}
 --
 -- @since `(pjones:haskell-package-version)`
-newtype ${1:Type} = $1
+newtype ${1:Type} = ${1:$(car (s-split " " yas-text))}
   { ${1:$(concat "un" (car (s-split " " yas-text)))} :: $2 }
