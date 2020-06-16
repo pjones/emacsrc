@@ -179,6 +179,12 @@ file.  With a prefix argument kill the entire path for the file."
     (point-min)
     (point-max))))
 
+(defun pjones:kill-directory-name ()
+  "Put the current directory name into the kill ring."
+  (interactive)
+  (kill-new
+   (concat "~/" (file-relative-name default-directory "~"))))
+
 (defun pjones:agenda ()
   "Start org-agenda with my custom agenda view"
   (interactive)

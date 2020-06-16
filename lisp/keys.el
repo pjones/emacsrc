@@ -176,7 +176,8 @@
   "x c" #'pjones:comment-bar
   "x s" #'pjones:evil-sort
 
-  ;; Yanking Commands:
+  ;; Yanking (copy) Commands:
+  "y d" #'pjones:kill-directory-name
   "y f" #'pjones:kill-file-name
   "y x" #'link-hint-copy-link
 
