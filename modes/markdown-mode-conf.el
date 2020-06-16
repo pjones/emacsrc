@@ -166,7 +166,7 @@ directory.  Optionally renaming FILE to NAME."
 
   ;; Files in /tmp that are *.txt are from my browser and most
   ;; websites don't like it when text you submit has newlines.
-  (when (and buffer-file-name (string-match "^/tmp/.*\\.txt$" buffer-file-name))
+  (when (and buffer-file-name (string-match "^/tmp/vimb-.*$" buffer-file-name))
     (pjones:markdown-visual-line)))
 
 (add-hook 'markdown-mode-hook 'pjones:markdown-mode-hook)

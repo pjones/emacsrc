@@ -112,7 +112,7 @@
   "g o i" #'org-mru-clock-in
   "g o l" #'org-store-link
   "g o o" #'org-clock-out
-  "g t" #'vterm
+  "g t" #'pjones:open-temp-buffer
   "g x" #'pjones:link-hint-open-link
 
   ;; Help:

@@ -214,6 +214,15 @@ current buffer after point."
   (let ((switch-window-threshold 1))
     (switch-window-then-delete)))
 
+(defun pjones:open-temp-buffer ()
+  "Open/create a temporary buffer for writing."
+  (interactive)
+  (let ((buf (get-buffer-create "*write*")))
+    (with-current-buffer buf
+      (markdown-mode)
+      (pjones:markdown-visual-line))
+    (pop-to-buffer buf)))
+
 (defun pjones:search-backwards-browse-url (&optional count)
   "Search backwards for a URL and open it.
 Open the URL COUNT matches above point."
