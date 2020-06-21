@@ -23,6 +23,7 @@
 (require 'reformatter)
 
 (declare-function pjones:prog-mode-hook "../lisp/code.el")
+(defvar pm/polymode)
 
 ;; Settings for haskell-mode and friends:
 (custom-set-variables
@@ -249,12 +250,13 @@ When prompting, use INITIAL as the initial module name."
   (haskell-format-on-save-mode)
 
   ;; Load helper packages:
-  (pjones:prog-mode-hook)
-  (subword-mode)
-  (abbrev-mode)
-  (xref-etags-mode)
-  (eglot-ensure)
-  (flymake-hlint-load)
+  (unless pm/polymode
+    (pjones:prog-mode-hook)
+    (subword-mode)
+    (abbrev-mode)
+    (xref-etags-mode)
+    (eglot-ensure)
+    (flymake-hlint-load))
 
   ;; Evil doc-lookup (on the "K" key):
   (set (make-local-variable 'evil-lookup-func) #'pjones:hoogle)
