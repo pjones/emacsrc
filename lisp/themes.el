@@ -28,6 +28,7 @@
  '(markdown-header-face-5 ((t (:inherit org-level-5))))
  '(markdown-header-face-6 ((t (:inherit org-level-6))))
  '(markdown-header-delimiter-face ((t (:inherit org-done))))
+ '(markdown-code-face ((t (:background nil))))
  '(flymake-warning ((t (:underline nil))))
  '(flymake-error ((t (:underline nil)))))
 
