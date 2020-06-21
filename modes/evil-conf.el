@@ -16,6 +16,7 @@
 
 ;; Settings:
 (custom-set-variables
+ '(evil-want-abbrev-expand-on-insert-exit nil)
  '(evil-shift-width 2)
  '(evil-move-beyond-eol t)
  '(evil-want-fine-undo nil)
@@ -30,9 +31,18 @@
  '(evil-fringe-mark-show-special t)
  '(evil-fringe-mark-ignore-chars '(?' ?{ ?} ?^ ?.))
  '(evil-owl-display-method 'window)
- '(evil-owl-max-string-length 60))
+ '(evil-owl-max-string-length 60)
+ '(evil-default-cursor #'pjones:evil-set-cursor)
+ '(evil-normal-state-cursor 'box)
+ '(evil-visual-state-cursor 'hbar)
+ '(evil-motion-state-cursor 'hbar)
+ '(evil-operator-state-cursor 'hbar)
+ '(evil-replace-state-cursor 'box)
+ '(evil-emacs-state-cursor 'bar)
+ '(evil-insert-state-cursor 'bar))
 
-;; Baffles me why I need to do this:
+;; Baffles me why I need to do this here, instead of in
+;; `custom-set-variables':
 (customize-set-variable 'evil-want-Y-yank-to-eol t)
 
 (custom-set-faces
@@ -57,26 +67,12 @@ are the arguments to it."
     (apply oldfun args)))
 (advice-add #'evil-ex-start-word-search :around #'pjones:evil-search-word)
 
-(defun pjones:evil-set-cursors (&rest _args)
-  "Settings that need to be applied after init.
-Ignores arguments passed from various hooks that this function is
-called from."
-  (let ((normal   (face-attribute 'doom-modeline-evil-normal-state   :foreground nil t))
-        (visual   (face-attribute 'doom-modeline-evil-visual-state   :foreground nil t))
-        (motion   (face-attribute 'doom-modeline-evil-motion-state   :foreground nil t))
-        (operator (face-attribute 'doom-modeline-evil-operator-state :foreground nil t))
-        (replace  (face-attribute 'doom-modeline-evil-replace-state  :foreground nil t))
-        (emacs    (face-attribute 'doom-modeline-evil-emacs-state    :foreground nil t))
-        (insert   (face-attribute 'doom-modeline-evil-insert-state   :foreground nil t)))
-    (when cursor-type ;; Don't update a disabled cursor.
-      (setq evil-default-cursor        (list 'box normal)
-            evil-normal-state-cursor   (list 'box normal)
-            evil-visual-state-cursor   (list 'hbar visual)
-            evil-motion-state-cursor   (list 'hbar motion)
-            evil-operator-state-cursor (list 'hbar operator)
-            evil-replace-state-cursor  (list 'box replace)
-            evil-emacs-state-cursor    (list 'bar emacs)
-            evil-insert-state-cursor   (list 'bar insert)))))
+(defun pjones:evil-set-cursor ()
+  "Called from `evil-mode' to set the cursor."
+  (let ((face (intern (format "doom-modeline-evil-%s-state" evil-state))))
+    (when (facep face)
+      (evil-set-cursor-color
+      (face-attribute face :foreground nil t)))))
 
 ;; Remove search highlighting after using C-l:
 (advice-add #'recenter-top-bottom :after '(lambda (&rest _args) (evil-ex-nohighlight)))
@@ -131,8 +127,6 @@ called from."
     (define-key evil-insert-state-local-map (kbd "C-DEL") map)))
 
 ;; Hooks:
-(add-hook 'after-init-hook #'pjones:evil-set-cursors)
-(add-hook 'after-make-frame-functions #'pjones:evil-set-cursors)
 (add-hook 'evil-leader-mode-hook #'pjones:evil-leader-in-all-states)
 (add-hook 'evil-mode-hook #'evil-commentary-mode)
 (add-hook 'evil-mode-hook #'evil-owl-mode)
@@ -140,7 +134,6 @@ called from."
 (add-hook 'evil-mode-hook #'global-evil-matchit-mode)
 (add-hook 'evil-mode-hook #'global-evil-surround-mode)
 (add-hook 'evil-mode-hook #'pjones:evil-mode-hook)
-(add-hook 'evil-mode-hook #'pjones:evil-set-cursors)
-(add-hook 'pjones:after-theme-change-hook #'pjones:evil-set-cursors)
+(add-hook 'pjones:after-theme-change-hook #'pjones:evil-set-cursor)
 
 ;;; evil-conf.el ends here
