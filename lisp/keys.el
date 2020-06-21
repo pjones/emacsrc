@@ -26,6 +26,11 @@
 ;; Evil and evil-leader:
 ;; These need to be set before loading Evil.
 (custom-set-variables
+ '(evil-want-C-i-jump t)
+ '(evil-want-C-u-delete t)
+ '(evil-want-C-u-scroll t)
+ '(evil-want-C-w-delete t)
+ '(evil-respect-visual-line-mode t)
  '(evil-leader/leader "SPC"))
 
 (require 'evil)
