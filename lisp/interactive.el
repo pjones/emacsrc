@@ -19,24 +19,6 @@ don't want to."
   (if (yes-or-no-p "Really close this terminal? ")
       (save-buffers-kill-terminal arg)))
 
-(defun pjones:kill-region-or-backward-kill-word (arg)
-  "Replacement for `kill-region'.  If there is a region with
-`transient-mark-mode' active, it will be removed and placed in
-the kill ring in a similar manner to `kill-region'.  If there
-isn't a region, the word before point will be deleted (without
-placing it in the kill ring)."
-  (interactive "p")
-  (require 'subword)
-  (let ((forward
-    (if (and (boundp 'subword-mode)
-             (or subword-mode global-subword-mode))
-        'subword-forward
-      'forward-word)))
-    (if (or (not transient-mark-mode) (and transient-mark-mode mark-active))
-        (kill-region (region-beginning) (region-end))
-      (delete-region (point) (progn (funcall forward (- arg))
-                                    (point))))))
-
 (defun pjones:switch-to-previous-buffer ()
   "Switch back to the last buffer shown in this window."
   (interactive)
@@ -120,49 +102,6 @@ If DONT-ASK is non-nil, don't prompt for a project."
               (shell-command-to-string (concat "pwgen " opts)))))
     (insert pw)))
 
-(defvar pjones:last-dictionary nil
-  "The last non-English dictionary used by `pjones:toggle-dictionary'.")
-
-(defun pjones:toggle-dictionary (&optional reset)
-  "Switch between English and another language easily.  Switches
-the current input method and dictionary.  With a prefix argument
-prompts for the foreign language to use."
-  (interactive "P")
-  (require 'ispell)
-  (let* ((en "english")
-         ;;         Human        Dict       Input Method
-         (langs '(("Italian" . ("italian"  "italian-postfix"))
-                  ("French"  . ("francais" "french-postfix"))))
-         (names (mapcar 'car langs))
-         (last (if (or reset (not pjones:last-dictionary))
-                   (ido-completing-read "Lang: " names) pjones:last-dictionary))
-         (cur-dict (or (and reset en) ispell-current-dictionary en))
-         (new-dict (if (string= cur-dict en) last en)))
-    (setq pjones:last-dictionary last)
-    (ispell-change-dictionary (cadr (assoc new-dict langs)))
-    (activate-input-method (car (cddr (assoc new-dict langs))))))
-
-(defun pjones:insert-italian-name ()
-  "Helper function for when I'm writing Italian dialog."
-  (interactive)
-  (let* ((names '("Alessandra" "Piera" "Carlotta" "Stefano"
-                  "Valentina" "Paolo"))
-         (pick (ido-completing-read "Name: " names)))
-    (insert (concat "*" pick ":* "))))
-
-(defun pjones:journal ()
-  "Open an entry in the journal for today."
-  (interactive)
-  (let* ((base (expand-file-name "~/documents/journal/"))
-         (path (downcase (format-time-string "%Y/%m/%d-%A.md")))
-         (full (concat base path))
-         (dir (file-name-directory full)))
-    (unless (file-directory-p dir) (make-directory dir t))
-    (find-file full)
-    (when (= (buffer-size) 0)
-      (insert (format-time-string "%% %A, %B %d, %Y\n\n"))
-      (insert-file-contents (concat base "template.md")))))
-
 (defun pjones:kill-file-name (&optional full-path)
   "Create a new kill containing the base name of the buffer's
 file.  With a prefix argument kill the entire path for the file."
@@ -200,14 +139,6 @@ current buffer after point."
     (kill-new uuid)
     (insert uuid)))
 
-(defun pjones:lock-screen ()
-  "Lock the screen."
-  (interactive)
-  (start-process "lock-screen" nil
-                 "qdbus" "org.freedesktop.ScreenSaver"
-                 "/ScreenSaver"
-                 "Lock"))
-
 (defun pjones:switch-window-then-delete ()
   "Interactively delete a window."
   (interactive)
@@ -223,14 +154,6 @@ current buffer after point."
       (pjones:markdown-visual-line))
     (pop-to-buffer buf)))
 
-(defun pjones:search-backwards-browse-url (&optional count)
-  "Search backwards for a URL and open it.
-Open the URL COUNT matches above point."
-  (interactive "P")
-  (save-excursion
-    (search-backward-regexp "https?://" nil nil count)
-    (browse-url-at-point)))
-
 (defun pjones:fly-next-error ()
   "Go to the next fly(check|make) error."
   (interactive)
@@ -244,6 +167,36 @@ Open the URL COUNT matches above point."
         (display-message-or-buffer
          (concat (flymake--diag-text err) "\n\n")
          "*flymake message*" 'not-this-window))))))
+
+;; Adapted from: https://github.com/hlissner/doom-emacs/
+(defun pjones:next-file (n)
+  "Return the name of the Nth next file."
+  (unless buffer-file-name
+    (user-error "Must be called from a file-visiting buffer"))
+  (let* ((directory (file-name-directory buffer-file-name))
+         (filename (file-name-nondirectory buffer-file-name))
+         (files (directory-files
+                 (file-name-directory buffer-file-name) nil
+                 (rx bol (not (in ?.)))))
+         (index (cl-position filename files :test #'file-equal-p)))
+    (when (null index)
+      (user-error "Couldn't find this file in current directory"))
+    (let ((index (+ index n)))
+      (cond ((>= index (length files))
+             (user-error "No files after this one"))
+            ((< index 0)
+             (user-error "No files before this one"))
+            ((expand-file-name (nth index files) directory))))))
+
+(defun pjones:find-file-next (count)
+  "Call `find-file' with COUNT next file."
+  (interactive "p")
+  (find-file (pjones:next-file count)))
+
+(defun pjones:find-file-prev (count)
+  "Call `find-file' with COUNT previous file."
+  (interactive "p")
+  (find-file (pjones:next-file (- count))))
 
 ;; Local Variables:
 ;; byte-compile-warnings: (not noruntime)

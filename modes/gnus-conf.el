@@ -66,13 +66,6 @@ Declared here to avoid compiler warnings.")
  ;; Gnus Asynchronous (gnus-async.el):
  '(gnus-asynchronous t)
 
- ;; Gnus Cloud (use IMAP to save data) (gnus-cloud.el):
- '(gnus-cloud-interactive t)
- '(gnus-cloud-method  "nnimap:devalot")
- '(gnus-cloud-synced-files
-   '((:directory "~/.cache/emacs/gnus" :match ".*.SCORE\\'")
-     (:directory "~/.cache/emacs/gnus/rss" :match "\\.el$")))
-
  ;; Gnus Group:
  '(gnus-permanently-visible-groups nil)
  '(gnus-new-mail-mark ?✉)
@@ -241,24 +234,6 @@ returned by `gnus-group-get-parameter'.  It does show up in
       "Missing comment and group name")))
 (defalias 'gnus-user-format-function-c #'pjones:gnus-format-comment)
 
-(defun pjones:gnus-cloud-encode-data ()
-  "Replace the `gnus-cloud-encode-data' function.
-My version uses asymmetric encryption."
-  (let ((context (epg-make-context 'OpenPGP))
-        cipher)
-    (setf (epg-context-armor context) t)
-    (setf (epg-context-textmode context) t)
-    (let* ((keys (epg-list-keys context epa-file-encrypt-to))
-           (data (epg-encrypt-string
-                 context
-                 (buffer-substring-no-properties
-                  (point-min)
-                  (point-max))
-                 keys)))
-      (delete-region (point-min) (point-max))
-      (insert data))))
-(defalias 'gnus-cloud-encode-data #'pjones:gnus-cloud-encode-data)
-
 (defun pjones:gnus-trash-target (group)
   "Get the GROUP target for expired messages."
   (s-replace-regexp ":.*$" ":Trash" group))
@@ -362,8 +337,6 @@ My version uses asymmetric encryption."
 ;;; Hooks:
 (add-hook 'gnus-group-mode-hook #'gnus-topic-mode)
 (add-hook 'gnus-group-mode-hook #'hl-line-mode)
-(add-hook 'gnus-save-newsrc-hook #'gnus-cloud-upload-all-data)
-(add-hook 'gnus-started-hook #'gnus-cloud-download-all-data)
 (add-hook 'gnus-started-hook #'gnus-delay-initialize)
 (add-hook 'gnus-started-hook #'pjones:gnus-demon-init)
 (add-hook 'gnus-summary-mode-hook #'hl-line-mode)

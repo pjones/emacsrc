@@ -1,16 +1,4 @@
 {
-    "company-org-roam": {
-        "branch": "v0.1",
-        "description": "Company completion backend for Org-roam",
-        "homepage": null,
-        "owner": "org-roam",
-        "repo": "company-org-roam",
-        "rev": "a4c3f60883de783b190d4eb8bcc85f5912d9393a",
-        "sha256": "087z699i7y0q72s5qc7ks09bzin9cl3gm3aqs4ka99lzg676lrl8",
-        "type": "tarball",
-        "url": "https://github.com/org-roam/company-org-roam/archive/a4c3f60883de783b190d4eb8bcc85f5912d9393a.tar.gz",
-        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
-    },
     "eglot": {
         "branch": "master",
         "description": "A client for Language Server Protocol servers",
@@ -47,6 +35,18 @@
         "url": "https://github.com/fasheng/elfeed-protocol/archive/fc0beb392386b8ed387e52e7e100354b8549fd7e.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
+    "emacs-doom-themes": {
+        "branch": "master",
+        "description": "An opinionated pack of modern color-themes",
+        "homepage": "",
+        "owner": "hlissner",
+        "repo": "emacs-doom-themes",
+        "rev": "7307dc6ca2faf408aade90281179678a78193eec",
+        "sha256": "17k60fnm3wqdw0v7rgj3pj0a2h1mmq0fmv174l3bb8hrc2lacg5y",
+        "type": "tarball",
+        "url": "https://github.com/hlissner/emacs-doom-themes/archive/7307dc6ca2faf408aade90281179678a78193eec.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
     "emacs-libvterm": {
         "branch": "master",
         "description": "Emacs libvterm integration",
@@ -65,10 +65,10 @@
         "homepage": null,
         "owner": "emacs-evil",
         "repo": "evil",
-        "rev": "3f3b2fea87172f155e5f91d75f0fb69d8648acf2",
-        "sha256": "0ihb42v513c9jrh8d0v5a76ykhqi408cdnfpilrwq9499qr22jdg",
+        "rev": "25fc5c6647979357cf3e39f0667a9b7ae5266af9",
+        "sha256": "0yh9b0753pcvp7gazrqlb6k3lmz6bwl189f4adcjg0kz763y657s",
         "type": "tarball",
-        "url": "https://github.com/emacs-evil/evil/archive/3f3b2fea87172f155e5f91d75f0fb69d8648acf2.tar.gz",
+        "url": "https://github.com/emacs-evil/evil/archive/25fc5c6647979357cf3e39f0667a9b7ae5266af9.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "evil-indent-textobject": {
@@ -105,6 +105,18 @@
         "sha256": "0h3b3l867j3ybdgimfn76lw7w6yjhszd5x02pq5827l659ihcf53",
         "type": "tarball",
         "url": "https://github.com/NixOS/nixpkgs-channels/archive/48723f48ab92381f0afd50143f38e45cf3080405.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
+    "nixpkgs-fmt": {
+        "branch": "master",
+        "description": "Nix code formatter for nixpkgs [maintainer=@zimbatm]",
+        "homepage": "https://nix-community.github.io/nixpkgs-fmt/",
+        "owner": "nix-community",
+        "repo": "nixpkgs-fmt",
+        "rev": "c3d92bd62faa667f0de02f2afbc16e8e7b3640b9",
+        "sha256": "11963m3pb580p4xk5q2zyjxzrr5xjw5ir8gdryz4mlky7nhih8k4",
+        "type": "tarball",
+        "url": "https://github.com/nix-community/nixpkgs-fmt/archive/c3d92bd62faa667f0de02f2afbc16e8e7b3640b9.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "org-trello": {

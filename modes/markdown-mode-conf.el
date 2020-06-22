@@ -23,6 +23,16 @@
  '(markdown-hide-urls t)
  '(markdown-command "pandoc --standalone -f markdown -t html"))
 
+(custom-set-faces
+ '(markdown-code-face ((t (:background nil))))
+ '(markdown-header-delimiter-face ((t (:inherit org-done))))
+ '(markdown-header-face-1 ((t (:inherit org-level-1 :height 2.0))))
+ '(markdown-header-face-2 ((t (:inherit org-level-2 :height 1.7))))
+ '(markdown-header-face-3 ((t (:inherit org-level-3 :height 1.4))))
+ '(markdown-header-face-4 ((t (:inherit org-level-4 :height 1.1))))
+ '(markdown-header-face-5 ((t (:inherit org-level-5))))
+ '(markdown-header-face-6 ((t (:inherit org-level-6)))))
+
 (defvar pjones:markdown-attachments-directory
   "attachments"
   "Name of the directory used to hold git-annex files.")
@@ -129,7 +139,8 @@ directory.  Optionally renaming FILE to NAME."
       (kbd "C-j") #'pjones:markdown-insert-heading-or-item
       (kbd "TAB") #'pjones:indent-or-complete)
     (evil-define-key 'motion map
-      "gj" #'outline-forward-same-level
+      "[[" #'outline-backward-same-level
+      "]]" #'outline-forward-same-level
       "gk" #'outline-up-heading
       "gJ" #'outline-move-subtree-down
       "gK" #'outline-move-subtree-up)

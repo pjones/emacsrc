@@ -1,6 +1,6 @@
 # -*- mode: snippet -*-
-# name: file
-# key: file
+# name: conf
+# key: conf
 # expand-env: ((yas-indent-line 'fixed))
 # --
 ;;; ${1:`(file-name-base)`.el} -- Settings for \`${2:some-mode}'

@@ -30,18 +30,24 @@
 
 ;; Variables defined in Emacs' C source
 (custom-set-variables
- '(max-lisp-eval-depth 1200)           ; My theme is too deep
- '(inhibit-startup-message t)          ; I've seen it already
- '(initial-scratch-message nil)        ; Ditto
- '(make-backup-files nil)              ; Don't make backup files
- '(mouse-yank-at-point t)              ; Don't move point when mouse pasting
- '(visible-bell nil)                   ; No visual bell
- '(enable-recursive-minibuffers t)     ; Allow multiple mini buffers
- '(echo-keystrokes 0.1)                ; Show unfinished keystrokes after a pause
- '(disabled-command-function nil)      ; Disable novice user protection
- '(truncate-partial-width-windows nil) ; When windows don't fill the frame
- '(mark-even-if-inactive t)            ; Use the mark without a region
- '(inhibit-eol-conversion t))          ; Force manual line conversions.
+ '(inhibit-startup-message t)
+ '(initial-scratch-message nil)
+ '(make-backup-files nil)
+ '(mouse-yank-at-point t)
+ '(visible-bell nil)
+ '(enable-recursive-minibuffers t)
+ '(echo-keystrokes 0.1)
+ '(disabled-command-function nil)
+ '(truncate-partial-width-windows nil)
+ '(mark-even-if-inactive t)
+ '(inhibit-eol-conversion t)
+ '(hscroll-margin 2)
+ '(hscroll-step 1)
+ '(scroll-conservatively 101)
+ '(scroll-margin 0)
+ '(scroll-preserve-screen-position nil)
+ '(auto-window-vscroll nil)
+ '(x-underline-at-descent-line t))
 
 ;; Default variables that become buffer/frame local.
 (setq-default
@@ -50,14 +56,15 @@
  indicate-empty-lines t                 ; Ditto
  require-final-newline t                ; Always end files with \n
  indent-tabs-mode nil                   ; Don't use tabs
- truncate-lines t)                      ; Don't wrap lines
+ truncate-lines t                       ; Don't wrap lines
+ display-line-numbers-width 3)          ; Faster default.
 
 ;; Settings not worth their own file in the modes directory:
 (custom-set-variables
  '(epa-file-encrypt-to "204284CB")    ; Default GPG key to use
  '(auth-sources '(password-store))    ; Use pass(1) for passwords.
  '(compilation-scroll-output 'first-error)
- `(custom-file ,(concat user-emacs-directory "custom.el"))) ; To keep Emacs happy
+ `(custom-file "/dev/null")) ; Don't load transient config!
 
 ;; Settings that must be set before a mode file is loaded:
 (setq
@@ -69,7 +76,7 @@
  '(async-shell-command-buffer 'new-buffer)
  '(kill-do-not-save-duplicates t)
  '(set-mark-command-repeat-pop t)
- '(next-line-add-newlines t))
+ '(next-line-add-newlines nil))
 
 (defun pjones:frame-title-file-name ()
   "How to format frame titles."

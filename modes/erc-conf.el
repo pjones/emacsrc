@@ -141,10 +141,9 @@ if BUFFER is not currently displayed in a window."
              (string-match-p "^#" (erc-default-target)))
     (add-to-list 'erc-track-exclude (erc-default-target))))
 
-
 (pjones:evil-override-mode erc-mode)
 (evil-leader/set-key-for-mode 'erc-mode
-  "m j" #'erc-track-switch-buffer)
+  "j j" #'erc-track-switch-buffer)
 
 (add-hook 'erc-mode-hook #'pjones:erc-mode-hook)
 (add-hook 'erc-track-mode-hook #'pjones:erc-ignore-channel)

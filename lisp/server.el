@@ -16,4 +16,20 @@
 
 (advice-add #'server-start :after #'pjones:after-server-start)
 
+;; Each server should get its own treemacs config:
+(defvar treemacs-persist-file)
+(defvar treemacs-last-error-persist-file)
+(defun pjones:set-treemacs-persist-file ()
+  "Set `treemacs-persist-file' so servers don't clobber it."
+  (setq treemacs-persist-file
+        (concat
+         user-emacs-directory
+         "treemacs/"
+         server-name)
+        treemacs-last-error-persist-file
+        (concat treemacs-persist-file ".error")))
+(add-hook
+ 'pjones:after-server-hook
+ #'pjones:set-treemacs-persist-file)
+
 ;;; server.el ends here

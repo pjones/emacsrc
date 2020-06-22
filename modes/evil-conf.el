@@ -46,8 +46,8 @@
 (customize-set-variable 'evil-want-Y-yank-to-eol t)
 
 (custom-set-faces
- '(evil-fringe-mark-local-face ((t (:inherit fringe))))
  '(evil-fringe-mark-file-face ((t (:inherit fringe))))
+ '(evil-fringe-mark-local-face ((t (:inherit fringe))))
  '(evil-fringe-mark-special-face ((t (:inherit fringe)))))
 
 (defun pjones:evil-mode-hook ()
@@ -75,47 +75,8 @@ are the arguments to it."
       (face-attribute face :foreground nil t)))))
 
 ;; Remove search highlighting after using C-l:
-(advice-add #'recenter-top-bottom :after '(lambda (&rest _args) (evil-ex-nohighlight)))
-
-(evil-define-operator pjones:evil-sort (beg end)
-  "Sort text."
-  :move-point nil
-  :type line
-  (save-excursion
-    (condition-case nil
-        (sort-lines nil beg end)
-      (error nil))))
-
-(evil-define-operator pjones:evil-align (beg end)
-  "Align text using `align-rules-list'."
-  :type line
-  (save-excursion
-    (condition-case nil
-        (align beg end)
-      (error nil))))
-
-;; Additional key bindings:
-(evil-define-key 'normal global-map (kbd "g <return>") #'delete-blank-lines)
-(evil-define-key 'normal global-map "g " #'just-one-space)
-(evil-define-key 'normal global-map "g'" #'pjones:switch-to-previous-buffer)
-(evil-define-key 'normal global-map "gs" #'evil-surround-edit)
-(evil-define-key 'visual global-map "s"  #'evil-surround-region)
-(evil-define-key 'visual global-map "S"  #'evil-Surround-region)
-(evil-define-key 'normal global-map "z'" #'evil-window-mru)
-
-;; Swap ' and `
-(dolist (state '(normal visual motion))
-  (evil-define-key state global-map "'" #'evil-goto-mark)
-  (evil-define-key state global-map "`" #'evil-goto-mark-line))
-
-;; Hybrid evil/Emacs bindings:
-(evil-define-key 'insert global-map (kbd "C-a") #'beginning-of-line)
-(evil-define-key 'insert global-map (kbd "C-e") #'end-of-line)
-(evil-define-key 'insert global-map (kbd "C-k") #'kill-line)
-
-;; Second leader key:
-(dolist (state '(normal visual motion))
-  (evil-define-key state global-map (kbd "DEL") evil-leader--default-map))
+(advice-add #'recenter-top-bottom :after
+            '(lambda (&rest _args) (evil-ex-nohighlight)))
 
 (defun pjones:evil-leader-in-all-states ()
   "Use both leader keys from insert mode."

@@ -1,8 +1,12 @@
-{ sources ? import ./sources.nix, pkgs ? import sources.nixpkgs { }, emacs }:
-
+{ sources ? import ./sources.nix
+, pkgs ? import sources.nixpkgs { }
+, emacs
+}:
 let
   # Package overrides:
   overrides = (pkgs.emacsPackagesFor emacs).overrideScope' (self: super: rec {
+    doom-themes =
+      super.doom-themes.overrideAttrs (_: { src = sources.emacs-doom-themes; });
     passmm = super.passmm.overrideAttrs (_: { src = sources.passmm; });
     eglot = super.eglot.overrideAttrs (_: { src = sources.eglot; });
     elfeed = super.elfeed.overrideAttrs (_: { src = sources.elfeed; });
@@ -36,7 +40,8 @@ let
   });
 
   # Emacs package list:
-in overrides.emacsWithPackages (epkgs:
+in
+overrides.emacsWithPackages (epkgs:
   with epkgs; [
     adaptive-wrap # Smart line-wrapping with wrap-prefix
     async # Asynchronous processing in Emacs
@@ -48,7 +53,6 @@ in overrides.emacsWithPackages (epkgs:
     counsel # Various completion functions using Ivy
     counsel-world-clock # Display world clock using Ivy
     csv-mode # Major mode for editing comma/char separated values
-    cyberpunk-theme # Cyberpunk Color Theme
     darkroom # Remove visual distractions and focus on writing
     default-text-scale # Easily adjust the font size in all frames
     deft # quickly browse, filter, and edit plain text notes
@@ -98,13 +102,11 @@ in overrides.emacsWithPackages (epkgs:
     ivy-rich # More friendly display transformer for ivy
     js2-mode # Improved JavaScript editing mode
     json-mode # Major mode for editing JSON files
-    kaolin-themes # A set of eye pleasing themes
     link-hint # Use avy to open, copy, etc. visible links
     magit # A Git porcelain inside Emacs
     magit-annex # Control git-annex from Magit
     markdown-mode # Major mode for Markdown-formatted text
     minions # A minor-mode menu for the mode line
-    monokai-theme # A fruity color theme for Emacs
     neuron-mode # Major mode for editing zettelkasten notes using neuron
     nix-mode # Major mode for editing .nix files
     no-littering # help keeping ~/.emacs.d clean

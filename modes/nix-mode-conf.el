@@ -10,12 +10,11 @@
  '(nix-indent-function #'nix-indent-line))
 
 (reformatter-define nix-format
-  :program "nixfmt")
+  :program "nixpkgs-fmt")
 
 (defun pjones:nix-mode-hook ()
   "Configure `nix-mode'."
-  (make-local-variable 'electric-pair-open-newline-between-pairs)
-  (setq electric-pair-open-newline-between-pairs nil)
+  (setq-local electric-pair-open-newline-between-pairs nil)
   (nix-format-on-save-mode))
 
 (add-hook 'nix-mode-hook #'pjones:nix-mode-hook)

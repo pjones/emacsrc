@@ -11,7 +11,7 @@
 (eval-when-compile
   (require 'cl))
 
-(require 'align)
+(require 'company)
 (require 'direnv)
 (require 'eglot)
 (require 'evil-leader)
@@ -37,8 +37,13 @@
   '(haskell-completing-read-function 'ivy-completing-read))
 
 ;; A few extra key bindings:
+(evil-set-initial-state 'haskell-interactive-mode 'insert)
+
+(evil-define-key 'insert haskell-interactive-mode-map
+  (kbd "C-j") #'haskell-interactive-mode-history-next
+  (kbd "C-k") #'haskell-interactive-mode-history-previous)
+
 (evil-leader/set-key-for-mode 'haskell-mode
-  "e t" #'eglot-help-at-point
   "j e" #'pjones:haskell-navigate-exports
   "j i" #'haskell-navigate-imports
   "j j" #'haskell-navigate-imports-return
@@ -46,20 +51,12 @@
   "m e" #'haskell-cabal-visit-file
   "m h" #'pjones:hoogle
   "m q" #'pjones:haskell-toggle-qualified
+  "m t" #'eglot-help-at-point
   "m x" #'pjones:hasky-extensions
   "y m" #'pjones:haskell-kill-module-name)
 
-(evil-leader/set-key-for-mode 'haskell-cabal-mode
-  "m s" #'haskell-cabal-subsection-arrange-lines)
-
-(evil-define-key 'normal haskell-cabal-mode-map "gj" #'haskell-cabal-next-section)
-(evil-define-key 'normal haskell-cabal-mode-map "gk" #'haskell-cabal-previous-section)
-
 (reformatter-define haskell-format
   :program "ormolu")
-
-(reformatter-define cabal-format
-  :program "cabal-fmt")
 
 (defun pjones:hasky-extensions ()
   "Wrapper around `hasky-extensions'.
@@ -251,15 +248,20 @@ When prompting, use INITIAL as the initial module name."
 
   ;; Load helper packages:
   (unless pm/polymode
+    (make-local-variable 'company-backends)
+    (push 'company-capf company-backends)
+    (push 'eglot-flymake-backend flymake-diagnostic-functions)
+    (setq-local
+     eglot-stay-out-of
+     '(company xref-prompt-for-identifier
+       flymake-diagnostic-functions company-backends))
     (pjones:prog-mode-hook)
-    (subword-mode)
-    (abbrev-mode)
     (xref-etags-mode)
     (eglot-ensure)
     (flymake-hlint-load))
 
   ;; Evil doc-lookup (on the "K" key):
-  (set (make-local-variable 'evil-lookup-func) #'pjones:hoogle)
+  (setq-local evil-lookup-func #'pjones:hoogle)
 
   ;; Pretty symbols:
   ;; https://gist.github.com/m-renaud/2c085d453b1263f1a6ed52d0c90688de
@@ -296,9 +298,20 @@ When prompting, use INITIAL as the initial module name."
                      (Bl . Bl) ?< (Bc . Br) ?<
                      (Bc . Bl) ?> (Br . Br) ?>)))))
 
-(add-hook 'haskell-mode-hook       #'pjones:haskell-mode-hook)
-(add-hook 'haskell-cabal-mode-hook #'pjones:prog-mode-hook)
-(add-hook 'haskell-cabal-mode-hook #'cabal-format-on-save-mode)
+(defun pjones:haskell-interactive-mode-hook ()
+  "Hook for `haskell-interactive-mode'."
+  (make-local-variable 'evil-insert-state-entry-hook)
+  (add-hook 'evil-insert-state-entry-hook
+    (defun pjones:haskell-interactive-insert-enter ()
+      (setq buffer-read-only nil)
+      (goto-char haskell-interactive-mode-prompt-start)))
+  (make-local-variable 'evil-insert-state-exit-hook)
+  (add-hook 'evil-insert-state-exit-hook
+    (defun pjones:pjones:haskell-interactive-insert-exit ()
+      (setq buffer-read-only t))))
+
+(add-hook 'haskell-interactive-mode-hook #'pjones:haskell-interactive-mode-hook)
+(add-hook 'haskell-mode-hook #'pjones:haskell-mode-hook)
 
 ;; Tell eglot how to start ghcide:
 (add-to-list 'eglot-server-programs '(haskell-mode . ("ghcide" "--lsp")))

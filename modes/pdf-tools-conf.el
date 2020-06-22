@@ -45,7 +45,9 @@
   (setq-local evil-operator-state-cursor nil)
   (setq-local evil-replace-state-cursor nil)
   (setq-local evil-emacs-state-cursor nil)
-  (setq-local evil-insert-state-cursor nil))
+  (setq-local evil-insert-state-cursor nil)
+  (evil-set-cursor-color
+   (face-attribute 'default :background nil t)))
 
 ;; Settings:
 (custom-set-variables
@@ -58,10 +60,12 @@
   (pjones:pdf-view-after-change-page-hook))
 
 (pjones:evil-override-mode pdf-view-mode
+  "[[" #'pdf-view-previous-page-command
+  "]]" #'pdf-view-next-page-command
   "j" #'pdf-view-scroll-up-or-next-page
   "k" #'pdf-view-scroll-down-or-previous-page
-  "gj" #'pdf-view-next-page-command
-  "gk" #'pdf-view-previous-page-command
+  "gk" #'pdf-view-previous-line-or-previous-page
+  "gj" #'pdf-view-next-line-or-next-page
   "gg" #'pdf-view-first-page
   "G" #'pdf-view-goto-page
   "/" #'isearch-forward
@@ -71,7 +75,6 @@
   (kbd "<tab>") #'pdf-outline)
 
 (pjones:evil-override-mode pdf-outline-buffer-mode)
-
 
 ;; Extra key bindings:
 (define-key pdf-outline-buffer-mode-map (kbd "RET") #'pjones:pdf-outline-follow-link-and-quit)

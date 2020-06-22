@@ -8,6 +8,13 @@
 (defvar pjones:after-theme-change-hook nil
   "Hook run after changing themes.")
 
+(defvar pjones:current-theme nil
+  "The currently active theme.")
+
+(custom-set-variables
+ '(doom-themes-treemacs-theme "doom-colors")
+ '(doom-themes-treemacs-enable-variable-pitch nil))
+
 ;; Stolen from: https://github.com/alezost/emacs-config
 (defun pjones:load-theme (theme)
   "Load THEME after unloading all other themes first."
@@ -16,22 +23,41 @@
                   "Load custom theme: "
                   (mapcar #'symbol-name (custom-available-themes))))))
   (mapc #'disable-theme custom-enabled-themes)
-  (load-theme theme t)
+  (condition-case nil
+      (load-theme theme t)
+    (error nil))
+  (setq pjones:current-theme theme)
   (run-hooks 'pjones:after-theme-change-hook))
 
-;;; Override some annoying faces.
-(custom-set-faces
- '(markdown-header-face-1 ((t (:inherit org-level-1 :height 2.0))))
- '(markdown-header-face-2 ((t (:inherit org-level-2 :height 1.7))))
- '(markdown-header-face-3 ((t (:inherit org-level-3 :height 1.4))))
- '(markdown-header-face-4 ((t (:inherit org-level-4 :height 1.1))))
- '(markdown-header-face-5 ((t (:inherit org-level-5))))
- '(markdown-header-face-6 ((t (:inherit org-level-6))))
- '(markdown-header-delimiter-face ((t (:inherit org-done))))
- '(markdown-code-face ((t (:background nil))))
- '(flymake-warning ((t (:underline nil))))
- '(flymake-error ((t (:underline nil)))))
+(defun pjones:theme-next (&optional prev)
+  "Switch to the next theme.
+If PREV is non-nil go to the previous theme."
+  (interactive "P")
+  (let* ((themes (custom-available-themes))
+         (last (1- (length themes)))
+         (n (or (seq-position themes pjones:current-theme) last))
+         (m (if prev (1- n) (1+ n))))
+    (cond
+     ((> m last) (pjones:load-theme (car themes)))
+     ((< m 0) (pjones:load-theme (nth last themes)))
+     (t (pjones:load-theme (nth m themes))))
+    (message "Theme %s" pjones:current-theme)))
 
-(add-hook 'after-init-hook (lambda () (pjones:load-theme 'doom-dracula)))
+(defun pjones:theme-prev ()
+  "Switch to the previous theme."
+  (interactive)
+  (pjones:theme-next t))
+
+;;; Override some annoying faces.
+(add-hook 'after-init-hook
+  (defun pjones:set-initial-theme ()
+    (pjones:load-theme 'doom-dracula)))
+
+(add-hook 'pjones:after-theme-change-hook
+  (defun pjones:set-up-doom ()
+    (when (s-prefix-p "doom-" (symbol-name pjones:current-theme))
+      (doom-themes-visual-bell-config)
+      (doom-themes-treemacs-config)
+      (doom-themes-org-config))))
 
 ;;; themes.el ends here

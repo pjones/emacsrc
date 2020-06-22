@@ -77,8 +77,8 @@
   "!" (pjones:dired-cwd-do #'dired-do-shell-command)
   "&" (pjones:dired-cwd-do #'dired-do-async-shell-command)
   (kbd "<return>") #'pjones:dired-insert-or-visit
-  "gk" #'dired-subtree-up
-  "gj" #'dired-subtree-down
+  "[[" #'dired-subtree-up
+  "]]" #'dired-subtree-down
   "gq" #'dired-do-query-replace-regexp
   "gr" #'revert-buffer
   "go" #'noccur-dired)

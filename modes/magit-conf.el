@@ -3,9 +3,11 @@
 ;;; Commentary:
 ;;
 ;;; Code:
-(require 'magit)
 (require 'evil)
 (require 'evil-leader)
+(require 'git-rebase)
+(require 'magit)
+(require 'with-editor)
 
 (eval-when-compile
   (load
@@ -26,8 +28,8 @@
 (pjones:evil-override-mode magit-mode)
 
 (pjones:evil-override-mode magit-status-mode
-  "j" #'magit-section-forward
-  "k" #'magit-section-backward
+  "]]" #'magit-section-forward
+  "[[" #'magit-section-backward
   "J" #'magit-status-jump ; "j"
   "K" #'magit-discard ; "k"
   "H" #'magit-dispatch ; "h"
@@ -36,8 +38,10 @@
   "gR" #'magit-refresh-all)
 
 (evil-leader/set-key-for-mode 'magit-status-mode-map
-  "m L" #'magit-log-refresh
   "m :" #'magit-git-command
+  "m L" #'magit-log-refresh
+  "m r" #'magit-reverse
+  "m R" #'magit-show-refs
   "m SPC" #'magit-diff-show-or-scroll-up
   "y m" #'magit-copy-buffer-revision)
 
@@ -50,10 +54,26 @@
   "H" #'magit-dispatch ; "h"
   "gr" #'magit-refresh
   "gR" #'magit-refresh-all
-  "v" (lookup-key evil-motion-state-local-map "v")
-  "V" (lookup-key evil-motion-state-local-map "V")
-  "\C-v" (lookup-key evil-motion-state-local-map "\C-v")
   "r" #'magit-reverse
   "R" #'magit-revert)
+
+(pjones:evil-override-mode magit-diff-mode
+  "[[" #'magit-section-backward
+  "]]" #'magit-section-forward
+  "H" #'magit-dispatch ; "h"
+  "K" #'magit-discard) ; "k"
+
+(pjones:evil-override-mode magit-log-select-mode
+  (kbd "RET") #'magit-log-select-pick
+  [escape] #'magit-log-select-quit)
+
+(pjones:evil-override-mode git-rebase-mode
+  "L" #'git-rebase-label
+  "gk" #'git-rebase-move-line-up
+  "gj" #'git-rebase-move-line-down)
+
+(evil-leader/set-key-for-mode 'git-rebase-mode-map
+  "m c" #'with-editor-finish
+  "m k" #'with-editor-cancel)
 
 ;;; magit-conf.el ends here

@@ -2,6 +2,8 @@
 ;;
 ;;; Commentary:
 ;;
+;; More settings in ../lisp/server.el
+;;
 ;;; Code:
 (require 'treemacs)
 (require 'treemacs-evil)
@@ -10,7 +12,8 @@
 (custom-set-variables
  '(treemacs-project-follow-cleanup t)
  '(treemacs-is-never-other-window t)
- '(treemacs-follow-after-init t))
+ '(treemacs-follow-after-init t)
+ '(treemacs-sorting 'alphabetic-case-insensitive-asc))
 
 (defun pjones:treemacs-mode-hook ()
   "Hook for `treemacs-mode'."

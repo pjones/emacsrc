@@ -7,8 +7,6 @@
 (require 'company-quickhelp)
 (require 'company-statistics)
 
-(declare-function pjones:kill-region-or-backward-kill-word "../lisp/interactive.el")
-
 ;; Settings for company-mode:
 (custom-set-variables
   '(company-idle-delay nil)
@@ -16,7 +14,8 @@
   '(company-selection-wrap-around t)
   '(company-dabbrev-ignore-case nil)
   '(company-dabbrev-downcase nil)
-  '(company-dabbrev-code-other-buffers t)
+  '(company-require-match 'never)
+  '(company-dabbrev-code-other-buffers nil)
   '(company-tooltip-align-annotations t)
   '(company-quickhelp-use-propertized-text t)
   '(company-transformers '(company-sort-by-occurrence))
@@ -28,20 +27,20 @@
   "Peter's mode hook for company-mode."
   (let ((map company-active-map))
     (define-key map (kbd "<escape>") #'company-abort)
-    (define-key map (kbd "C-f")      #'company-abort)
-    (define-key map (kbd "C-w")      #'pjones:kill-region-or-backward-kill-word)
-    (define-key map (kbd "C-s")      #'company-filter-candidates)
-    (define-key map (kbd "/")        #'company-filter-candidates)
-    (define-key map (kbd "M-j")      #'company-select-next)
-    (define-key map (kbd "M-k")      #'company-select-previous)
-    (define-key map (kbd "M-h")      #'company-quickhelp-manual-begin)
-    (define-key map (kbd "<tab>")    #'company-complete-common-or-cycle))
+    (define-key map (kbd "C-f") #'company-abort)
+    (define-key map (kbd "C-s") #'company-filter-candidates)
+    (define-key map (kbd "/") #'company-filter-candidates)
+    (define-key map (kbd "C-j") #'company-select-next)
+    (define-key map (kbd "C-k") #'company-select-previous)
+    (define-key map (kbd "C-h") #'company-quickhelp-manual-begin)
+    (define-key map (kbd "<tab>") #'company-complete-common-or-cycle))
 
   (let ((map company-search-map))
     (define-key map (kbd "<escape>") #'company-abort)
-    (define-key map (kbd "C-f")      #'company-abort)
-    (define-key map (kbd "M-j")      #'company-select-next)
-    (define-key map (kbd "M-k")      #'company-select-previous))
+    (define-key map (kbd "C-f") #'company-abort)
+    (define-key map (kbd "C-j") #'company-select-next)
+    (define-key map (kbd "C-k") #'company-select-previous)
+    (define-key map (kbd "n") #'company-search-repeat-forward))
 
   (company-quickhelp-mode)
   (company-statistics-mode))

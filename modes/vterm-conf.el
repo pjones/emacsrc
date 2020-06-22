@@ -77,6 +77,7 @@
   (kbd "C-r") #'vterm--self-insert
   (kbd "C-s") #'vterm--self-insert
   (kbd "C-t") #'vterm--self-insert
+  (kbd "C-u") #'vterm--self-insert
   (kbd "C-v") #'vterm--self-insert
   (kbd "C-w") #'vterm--self-insert
   (kbd "C-y") #'vterm--self-insert
@@ -88,7 +89,7 @@
   (kbd "C-c k") (pjones:vterm-send-key "C-k")
   (kbd "C-c u") (pjones:vterm-send-key "C-u")
   (kbd "C-c /") (pjones:vterm-send-key "C-/")
-  (kbd "C-c <escape>") (pjones:vterm-send-key "<escape>"))
+  (kbd "C-c <escape>") (pjones:vterm-send-key "ESC"))
 
 (evil-define-key 'normal vterm-copy-mode-map
   "gt" #'pjones:vterm-switch-buffer
@@ -96,8 +97,8 @@
   "u" #'vterm-undo)
 
 (evil-define-key 'motion vterm-copy-mode-map
-  "gk" #'vterm-previous-prompt
-  "gj" #'vterm-next-prompt)
+  "[[" #'vterm-previous-prompt
+  "]]" #'vterm-next-prompt)
 
 (dolist (mode '(vterm-mode vterm-copy-mode))
   (evil-leader/set-key-for-mode mode
