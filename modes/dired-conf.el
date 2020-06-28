@@ -70,8 +70,8 @@
   "m m a" #'pjones:dired-mark-all-files
   "m o"   #'noccur-dired
   "m q"   #'dired-do-query-replace-regexp
-  "y n"   #'dired-copy-filename-as-kill
-  "y p"    '(lambda () (interactive) (dired-copy-filename-as-kill '(nil . nil))))
+  "y d"   (pjones:dired-cwd-do 'pjones:kill-directory-name)
+  "y f"   #'pjones:dired-copy-filename-as-kill)
 
 (pjones:evil-override-mode dired-mode
   "!" (pjones:dired-cwd-do #'dired-do-shell-command)
@@ -82,6 +82,13 @@
   "gq" #'dired-do-query-replace-regexp
   "gr" #'revert-buffer
   "go" #'noccur-dired)
+
+(defun pjones:dired-copy-filename-as-kill (&optional path)
+  "Copy file name or entire PATH."
+  (interactive "P")
+  (if path
+      (dired-copy-filename-as-kill '(nil . nil))
+    (dired-copy-filename-as-kill)))
 
 (defun pjones:dired-insert-or-visit ()
   "Visit the file at point.

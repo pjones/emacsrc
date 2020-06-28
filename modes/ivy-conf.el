@@ -27,13 +27,11 @@
  '(counsel-find-file-ignore-regexp "\\(?:\\`\\|[/\\]\\)\\(?:[#.]\\)"))
 
 ;; Custom key bindings:
+(define-key ivy-minibuffer-map (kbd "TAB") 'ivy-next-line)
 (define-key ivy-minibuffer-map (kbd "C-j") 'ivy-next-line)
 (define-key ivy-minibuffer-map (kbd "C-k") 'ivy-previous-line)
 (define-key ivy-minibuffer-map [escape] 'minibuffer-keyboard-quit)
-
-;; Improve some faces too:
-;; (custom-set-faces
-;;  '(ivy-current-match ((t (:inherit 'isearch)))))
+(define-key ivy-switch-buffer-map (kbd "C-k") 'ivy-previous-line)
 
 ;; Enable complementary modes:
 (require 'ivy-rich)

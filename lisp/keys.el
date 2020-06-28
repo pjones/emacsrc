@@ -44,7 +44,9 @@
 ;; Autoloads for neuron-mode:
 (autoload 'pjones:rg-zettel-dir "neuron-mode")
 (autoload 'pjones:zettel-need-to-do "neuron-mode")
+(autoload 'pjones:zettel-open-inbox "neuron-mode")
 (dolist (f '(neuron-new-zettel
+             neuron-edit-zettel
              neuron-open-daily-notes
              neuron-select-zettelkasten
              neuron-open-zettel
@@ -52,7 +54,6 @@
   (autoload f "neuron-mode"))
 
 ;; Maps that need to be shared:
-(defvar pjones:zoom-map (make-sparse-keymap))
 (defvar pjones:window-map (make-sparse-keymap))
 
 ;; Key bindings that fall under the leader (space) key:
@@ -69,14 +70,10 @@
   "b f" #'counsel-find-file
   "b l" #'pjones:switch-to-previous-buffer
   "b m" (pjones:jump-to-buffer "*Messages*")
-  "b n" #'next-buffer
-  "b p" #'previous-buffer
   "b r" #'revert-buffer
   "b s" (pjones:jump-to-buffer "*scratch*")
   "b t" #'pjones:open-temp-buffer
-  "b v" #'find-alternate-file
   "b w" #'read-only-mode
-  "b y" #'pjones:kill-whole-buffer
 
   ;; Evaluation Keys:
   "e b" #'eval-buffer
@@ -85,32 +82,29 @@
   "e r" #'eval-region
 
   ;; File Commands:
-  "f B" #'counsel-bookmark
-  "f F" #'find-dired
-  "f R" #'pjones:rename-current-file
-  "f S" #'evil-write-all
+  "f b" #'counsel-bookmark
   "f d" #'dired-jump
   "f f" #'counsel-find-file
+  "f F" #'find-dired
   "f m b" #'magit-blame
   "f m d" #'magit-diff-buffer-file
   "f m l" #'magit-log-buffer-file
   "f o" #'occur
+  "f R" #'pjones:rename-current-file
+  "f S" #'evil-write-all
   "f s" #'save-buffer
-  "f t" #'treemacs-select-window
   "f v" #'find-alternate-file
   "f w" #'write-file
 
   ;; Go/Grep Commands:
   "g C" #'full-calc
   "g c" #'quick-calc
-  "g e" #'next-error
   "g f" #'rg
   "g g" #'rg-project
   "g h" #'pjones:start-http
   "g i" #'counsel-imenu
   "g I" #'pjones:start-irc
   "g m" #'magit-status
-  "g n" #'pjones:fly-next-error
   "g o a" #'pjones:agenda
   "g o c" #'org-capture
   "g o i" #'org-mru-clock-in
@@ -176,26 +170,28 @@
   "wD" #'pjones:switch-window-then-delete
   "wn" #'winum-select-window-by-number
   "wo" #'switch-window
+  "ws" #'window-toggle-side-windows
+  "wt" #'treemacs-select-window
   "wu" #'winner-undo
-  ;; Resizing commands below:
+  ;; "wz" Zoom window
+  ;; "wZ" Zoom all windows
 
   ;; Text Commands:
   "x c" #'pjones:comment-bar
   "x s" #'pjones:evil-sort
 
   ;; Yanking (copy) Commands:
+  "y b" #'pjones:kill-whole-buffer
   "y d" #'pjones:kill-directory-name
   "y f" #'pjones:kill-file-name
   "y x" #'link-hint-copy-link
 
-  ;; Zoom Commands: (others: zw zf)
-  "z" pjones:zoom-map
-
   ;; Zettelkasten:
-  "zd" #'neuron-open-daily-notes
-  "zz" #'neuron-new-zettel
-  "ze" #'neuron-edit-zettel
-  "zs" #'neuron-select-zettelkasten)
+  "z d" #'neuron-open-daily-notes
+  "z f" #'neuron-edit-zettel
+  "z i" #'pjones:zettel-open-inbox
+  "z s" #'neuron-select-zettelkasten)
+  "z z" #'neuron-new-zettel
 
 ;; Window Resizing:
 (smartrep-define-key pjones:window-map "r"
@@ -205,7 +201,7 @@
     ("l" . shrink-window-horizontally)))
 
 ;; Zooming windows:
-(smartrep-define-key pjones:zoom-map "w"
+(smartrep-define-key pjones:window-map "z"
   '(("=" . text-scale-increase)
     ("+" . text-scale-increase)
     ("-" . text-scale-decrease)
@@ -214,7 +210,7 @@
     ("0" . text-scale-set)))
 
 ;; Zooming frames:
-(smartrep-define-key pjones:zoom-map "f"
+(smartrep-define-key pjones:window-map "Z"
   '(("=" . default-text-scale-increase)
     ("+" . default-text-scale-increase)
     ("-" . default-text-scale-decrease)
@@ -226,6 +222,10 @@
 (global-set-key (kbd "C-x C-c") #'pjones:maybe-save-buffers-kill-terminal)
 (global-set-key (kbd "TAB") #'pjones:indent-or-complete)
 (define-key minibuffer-local-map [escape] #'minibuffer-keyboard-quit)
+(define-key minibuffer-local-map (kbd "C-k") #'previous-history-element)
+(define-key minibuffer-local-map (kbd "C-j") #'next-history-element)
+(define-key evil-ex-completion-map (kbd "C-k") #'previous-complete-history-element)
+(define-key evil-ex-completion-map (kbd "C-j") #'next-complete-history-element)
 
 (evil-define-operator pjones:evil-sort (beg end)
   "Sort text."
@@ -245,9 +245,10 @@
 ;; Additional key bindings:
 (evil-define-key 'normal global-map
   "[b" #'previous-buffer
-  "]b" #'next-buffer
   "[f" #'pjones:find-file-prev
   "[t" #'pjones:theme-prev
+  "]b" #'next-buffer
+  "]c" #'pjones:fly-next-error
   "]f" #'pjones:find-file-next
   "]t" #'pjones:theme-next
   (kbd "g <return>") #'delete-blank-lines

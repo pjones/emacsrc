@@ -37,7 +37,11 @@
   "gr" #'magit-refresh
   "gR" #'magit-refresh-all)
 
-(evil-leader/set-key-for-mode 'magit-status-mode-map
+(evil-define-key 'visual magit-status-mode-map
+  "K" #'magit-discard ; "k"
+  "r" #'magit-reverse)
+
+(evil-leader/set-key-for-mode 'magit-status-mode
   "m :" #'magit-git-command
   "m L" #'magit-log-refresh
   "m r" #'magit-reverse
@@ -72,7 +76,7 @@
   "gk" #'git-rebase-move-line-up
   "gj" #'git-rebase-move-line-down)
 
-(evil-leader/set-key-for-mode 'git-rebase-mode-map
+(evil-leader/set-key-for-mode 'git-rebase-mode
   "m c" #'with-editor-finish
   "m k" #'with-editor-cancel)
 

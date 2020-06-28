@@ -10,13 +10,14 @@
 (require 'neuron-mode)
 
 (custom-set-variables
- '(neuron-daily-note-title-format "%B %d, %Y")
+ '(neuron-daily-note-title-format "%A, %B %d, %Y")
  `(neuron-default-zettelkasten-directory
-   ,(expand-file-name "~/notes/zettelkasten")))
+   ,(expand-file-name "~/notes/zettelkasten/")))
 
-(defvar neuron-zettelkasten)
-(defvar neuron-default-zettelkasten-directory)
-(setq neuron-zettelkasten neuron-default-zettelkasten-directory)
+(defun pjones:zettel-open-inbox ()
+  "Open the inbox.md zettel."
+  (interactive)
+  (find-file (concat neuron-default-zettelkasten-directory "inbox.md")))
 
 (rg-define-search pjones:zettel-need-to-do
   "Search for zettels that have open check boxes."
