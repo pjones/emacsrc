@@ -255,9 +255,10 @@ When prompting, use INITIAL as the initial module name."
      eglot-stay-out-of
      '(company xref-prompt-for-identifier
        flymake-diagnostic-functions company-backends))
+    ;; Start eglot first, so we can override it next.
+    (eglot-ensure)
     (pjones:prog-mode-hook)
     (xref-etags-mode)
-    (eglot-ensure)
     (flymake-hlint-load))
 
   ;; Evil doc-lookup (on the "K" key):
