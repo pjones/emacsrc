@@ -60,6 +60,7 @@
 (evil-leader/set-key
   ;; Menus:
   "SPC" #'counsel-M-x
+  "DEL" #'ivy-switch-buffer
   ":" #'eval-expression
 
   ;; Buffer Commnads:
