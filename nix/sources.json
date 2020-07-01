@@ -78,10 +78,16 @@
         "type": "git"
     },
     "neuron-mode": {
-        "ref": "pjones/master",
-        "repo": "https://github.com/pjones/neuron-mode.git",
-        "rev": "41a36c3c37e2fda91b47eb605055e6fcc97bc2b0",
-        "type": "git"
+        "branch": "master",
+        "description": "An emacs mode for editing Zettelkasten notes with neuron",
+        "homepage": "",
+        "owner": "felko",
+        "repo": "neuron-mode",
+        "rev": "2c00b5e27fef19664fab7c61a2a2d350e8848b43",
+        "sha256": "07cl60037rd32ndx0dn2di26rcb5zcr19wp7pwsr0725w1m5wdrf",
+        "type": "tarball",
+        "url": "https://github.com/felko/neuron-mode/archive/2c00b5e27fef19664fab7c61a2a2d350e8848b43.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "niv": {
         "branch": "master",
