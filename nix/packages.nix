@@ -37,6 +37,21 @@ let
           :repo "felko/neuron-mode")
       '';
     };
+
+    project = super.elpaBuild rec {
+      pname = "project";
+      ename = "project";
+      version = "0.4.0";
+      src = pkgs.fetchurl {
+        url = "https://elpa.gnu.org/packages/project-${version}.el";
+        sha256 = "010g7s6gp3gg771r2s0pw0009gsnsan99rws1vm2kcxgkhj4x4i5";
+      };
+      packageRequires = [ ];
+      meta = {
+        homepage = "https://elpa.gnu.org/packages/project.html";
+        license = pkgs.lib.licenses.free;
+      };
+    };
   });
 
   # Emacs package list:
@@ -127,6 +142,7 @@ overrides.emacsWithPackages (epkgs:
     poly-erb # Polymode for erb
     poly-markdown # Polymode for markdown-mode
     polymode # Extensible framework for multiple major modes
+    project # Operations on the current project
     projectile # Manage and navigate projects in Emacs easily
     purescript-mode # A PureScript editing mode
     rainbow-mode # Colorize color names in buffers

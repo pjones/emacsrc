@@ -1,14 +1,14 @@
 {
     "eglot": {
-        "branch": "1.6",
+        "branch": "master",
         "description": "A client for Language Server Protocol servers",
         "homepage": null,
         "owner": "joaotavora",
         "repo": "eglot",
-        "rev": "e02479a8c20cd79c3dfeb553deaaecd7d6e97e51",
-        "sha256": "13r1ysdhnxkc025wypwi6w507v18hm5qf0x29qrycql46f8klrjb",
+        "rev": "ac9239bed5e3bfbf057382d1a75cdfa23f2caddd",
+        "sha256": "1zmx77wvjs9cxsk91sgb5ichl9grs01s2pc65wl51rvpy275vpri",
         "type": "tarball",
-        "url": "https://github.com/joaotavora/eglot/archive/e02479a8c20cd79c3dfeb553deaaecd7d6e97e51.tar.gz",
+        "url": "https://github.com/joaotavora/eglot/archive/ac9239bed5e3bfbf057382d1a75cdfa23f2caddd.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "elfeed": {
