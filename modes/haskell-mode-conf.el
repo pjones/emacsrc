@@ -248,14 +248,21 @@ When prompting, use INITIAL as the initial module name."
 
   ;; Load helper packages:
   (unless pm/polymode
-    (make-local-variable 'company-backends)
-    (push 'company-capf company-backends)
-    (push 'eglot-flymake-backend flymake-diagnostic-functions)
     (setq-local
      eglot-stay-out-of
-     '(company xref-prompt-for-identifier
-       flymake-diagnostic-functions company-backends))
-    ;; Start eglot first, so we can override it next.
+     '(company
+       xref-prompt-for-identifier
+       flymake-diagnostic-functions
+       company-backends))
+    (setq-local
+     company-backends
+     '((company-capf
+        company-etags
+        company-dabbrev-code
+        company-keywords)))
+    (setq-local
+     flymake-diagnostic-functions
+     '(eglot-flymake-backend))
     (eglot-ensure)
     (pjones:prog-mode-hook)
     (xref-etags-mode)

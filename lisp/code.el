@@ -86,14 +86,8 @@ already been cached."
                                  1 'pjones:fixme-face t))))
 (defun pjones:prog-mode-hook ()
   "Settings and bindings for programming modes."
-  ;; Completion:
-  (make-local-variable 'company-backends)
-  (add-to-list 'company-backends '(company-dabbrev-code
-                                   company-etags
-                                   company-keywords))
-
   (setq comment-empty-lines t)
-  (set (make-local-variable 'comment-auto-fill-only-comments) t)
+  (setq-local comment-auto-fill-only-comments t)
   (local-set-key (kbd "C-<tab>") 'pjones:comment-bar)
   (origami-mode)
   (show-paren-mode)
