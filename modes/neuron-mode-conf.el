@@ -24,13 +24,13 @@
   :format regexp
   :query "\\[ \\]"
   :files "*.md"
-  :dir (eval neuron-zettelkasten))
+  :dir (eval (neuron-zettelkasten)))
 
 (rg-define-search pjones:rg-zettel-dir
   "Search through my zettel collection."
   :format regexp
   :files current
-  :dir (eval neuron-zettelkasten))
+  :dir (eval (neuron-zettelkasten)))
 
 (defun pjones:neuron-bind-keys ()
   "Bind keys in modes derived from `markdown-mode'."
