@@ -52,4 +52,9 @@
 
 (add-hook 'neuron-mode-hook 'pjones:neuron-bind-keys)
 
+;; Prevent neuron-mode from messing with my writing buffers.
+(remove-hook
+ 'markdown-mode-hook
+ #'neuron--auto-enable-when-in-zettelkasten)
+
 ;;; neuron-mode-conf.el ends here
