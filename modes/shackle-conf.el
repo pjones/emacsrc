@@ -73,6 +73,7 @@ in PLIST.  ALIST is passed to display functions."
      (("\\*Completions\\*"
        "\\*Deletions\\*"
        "\\*Flycheck error"
+       "\\*flymake "
        "\\*evil-owl\\*"
        "\\*eglot-help"
        calendar-mode)
