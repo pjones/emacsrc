@@ -85,7 +85,7 @@ are the arguments to it."
   (let* ((mode-map (cdr (assoc major-mode evil-leader--mode-maps)))
          (map (or mode-map evil-leader--default-map)))
     (define-key evil-insert-state-local-map (kbd "C-SPC") map)
-    (define-key evil-insert-state-local-map (kbd "C-DEL") map)))
+    (define-key evil-insert-state-local-map (kbd "C-<backspace>") map)))
 
 ;; Hooks:
 (add-hook 'evil-leader-mode-hook #'pjones:evil-leader-in-all-states)
