@@ -5,4 +5,10 @@
 set -e
 
 ################################################################################
-e -c -- --eval '(vterm)' -F '((name . "eterm"))' >/dev/null 2>&1
+lisp='(vterm)'
+
+if [ $# -ne 0 ]; then
+  lisp="(let ((vterm-shell \"$*\") (vterm-kill-buffer-on-exit nil)) (vterm))"
+fi
+
+e -c -- --eval "$lisp" -F '((name . "eterm"))' >/dev/null 2>&1
