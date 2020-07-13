@@ -245,6 +245,8 @@ When prompting, use INITIAL as the initial module name."
   (haskell-indentation-mode)
   (interactive-haskell-mode)
   (haskell-format-on-save-mode)
+  ;; Override the indentation function.
+  (setq-local indent-line-function #'indent-relative)
 
   ;; Load helper packages:
   (unless pm/polymode
