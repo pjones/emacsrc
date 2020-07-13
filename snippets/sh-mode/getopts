@@ -4,8 +4,8 @@
 # expand-env: ((yas-indent-line 'fixed))
 # --
 # Option arguments are in $OPTARG
-while getopts "h" o; do
-  case "${o}" in
+while getopts "$0h" o; do
+  case "\${o}" in
   h)
     usage
     exit

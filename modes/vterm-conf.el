@@ -10,8 +10,12 @@
 
 (custom-set-variables
  '(vterm-max-scrollback 10000)
- '(vterm-kill-buffer-on-exit t)
+ '(vterm-kill-buffer-on-exit nil)
  '(vterm-buffer-name-string "vterm %s"))
+
+(defvar-local pjones:vterm-kill-buffer-on-exit t
+  "Smarter version of `vterm-kill-buffer-on-exit'.")
+(put 'pjones:vterm-kill-buffer-on-exit 'permanent-local t)
 
 (defun pjones:vterm-insert-mode ()
   "Put `vterm' back into insert mode."
@@ -48,6 +52,29 @@
   `(lambda ()
      (interactive)
      (vterm-send ,key)))
+
+(defun pjones:vterm (cmd &optional keep)
+  "Open a terminal running CMD.
+If KEEP is non-nil then don't close the buffer when the command
+completes."
+  (interactive)
+  (let ((buffer (generate-new-buffer "vterm")))
+    (with-current-buffer buffer
+      (setq pjones:vterm-kill-buffer-on-exit (not keep))
+      (let ((vterm-shell cmd)) (vterm-mode)))
+    (pop-to-buffer-same-window buffer)))
+
+(defun pjones:vterm-exit-functions (buffer &rest _args)
+  "Maybe kill the recently closed vterm BUFFER."
+  (when (and (buffer-live-p buffer)
+             (buffer-local-value 'pjones:vterm-kill-buffer-on-exit buffer))
+    (let ((win (get-buffer-window buffer)))
+      (if (and win (= 1 (length (window-list (window-frame win) nil))))
+          (progn
+            (delete-frame (window-frame win))
+            (kill-buffer buffer))
+        (with-current-buffer buffer
+          (kill-buffer-and-window))))))
 
 (defun pjones:vterm-mode-hook ()
   "Configure a new `vterm' buffer."
@@ -106,5 +133,6 @@
     "f f" #'find-file-other-frame))
 
 (add-hook 'vterm-mode-hook #'pjones:vterm-mode-hook)
+(add-hook 'vterm-exit-functions #'pjones:vterm-exit-functions)
 
 ;;; vterm-conf.el ends here

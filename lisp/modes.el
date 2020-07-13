@@ -14,6 +14,9 @@
       (eval-after-load (intern (replace-match "" t t basename))
         `(load ,file)))))
 
+;; Other functions that need to be autoloaded into the server:
+(autoload 'pjones:vterm "vterm")
+
 ;; The reset of the file is only loaded if we're not in --batch mode.
 (unless noninteractive
   (defun pjones:boot-global-modes ()
