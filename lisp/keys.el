@@ -167,8 +167,7 @@
   "w1" #'delete-other-windows
   "w=" #'balance-windows
   "w'" #'evil-window-mru
-  "wd" #'delete-window
-  "wD" #'pjones:switch-window-then-delete
+  "wd" #'pjones:switch-window-then-delete
   "wn" #'winum-select-window-by-number
   "wo" #'switch-window
   "ws" #'window-toggle-side-windows
@@ -191,8 +190,8 @@
   "z d" #'neuron-open-daily-notes
   "z f" #'neuron-edit-zettel
   "z i" #'pjones:zettel-open-inbox
-  "z s" #'neuron-select-zettelkasten)
-  "z z" #'neuron-new-zettel
+  "z s" #'neuron-select-zettelkasten
+  "z z" #'neuron-new-zettel)
 
 ;; Window Resizing:
 (smartrep-define-key pjones:window-map "r"
@@ -206,8 +205,8 @@
   '(("=" . text-scale-increase)
     ("+" . text-scale-increase)
     ("-" . text-scale-decrease)
-    ("j" . text-scale-increase)
-    ("k" . text-scale-decrease)
+    ("k" . text-scale-increase)
+    ("j" . text-scale-decrease)
     ("0" . text-scale-set)))
 
 ;; Zooming frames:
@@ -215,8 +214,8 @@
   '(("=" . default-text-scale-increase)
     ("+" . default-text-scale-increase)
     ("-" . default-text-scale-decrease)
-    ("j" . default-text-scale-increase)
-    ("k" . default-text-scale-decrease)
+    ("k" . default-text-scale-increase)
+    ("j" . default-text-scale-decrease)
     ("0" . default-text-scale-reset)))
 
 ;; Overriding default key bindings
@@ -248,15 +247,18 @@
   "[b" #'previous-buffer
   "[f" #'pjones:find-file-prev
   "[t" #'pjones:theme-prev
+  "[z" #'text-scale-decrease
   "]b" #'next-buffer
   "]c" #'pjones:fly-next-error
   "]f" #'pjones:find-file-next
   "]t" #'pjones:theme-next
+  "]z" #'text-scale-increase
   (kbd "g <return>") #'delete-blank-lines
   "g " #'just-one-space
   "g'" #'pjones:switch-to-previous-buffer
   "gl" #'evil-avy-goto-line
   "gs" #'evil-surround-edit
+  "z'" #'evil-window-mru
   "zn" #'widen)
 
 (evil-define-key 'visual global-map
