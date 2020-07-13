@@ -53,10 +53,10 @@
         "homepage": "",
         "owner": "akermu",
         "repo": "emacs-libvterm",
-        "rev": "fbd0f097198ee110a895dcff30c0d1be39e8284e",
-        "sha256": "180dj9hjngd9by00gvibws6i7wxmr3la684wv07mpq4f1pxdfqix",
+        "rev": "f41849c2c9c1899f22d1c3d4f871ec47c82627ce",
+        "sha256": "1b5s1101n7a2lnpkbadm1h4k6z295fpijx0rdpmd05dkhyarax6n",
         "type": "tarball",
-        "url": "https://github.com/akermu/emacs-libvterm/archive/fbd0f097198ee110a895dcff30c0d1be39e8284e.tar.gz",
+        "url": "https://github.com/akermu/emacs-libvterm/archive/f41849c2c9c1899f22d1c3d4f871ec47c82627ce.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "evil": {
