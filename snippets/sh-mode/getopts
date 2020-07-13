@@ -1,0 +1,20 @@
+# -*- mode: snippet -*-
+# name: getopts
+# key: getopts
+# expand-env: ((yas-indent-line 'fixed))
+# --
+# Option arguments are in $OPTARG
+while getopts "h" o; do
+  case "${o}" in
+  h)
+    usage
+    exit
+    ;;
+
+  *)
+    exit 1
+    ;;
+  esac
+done
+
+shift $((OPTIND - 1))
