@@ -268,6 +268,7 @@
 
 ;; Hybrid evil/Emacs bindings:
 (evil-define-key 'insert global-map
+  (kbd "<backspace>") #'pjones:backward-delete-char
   (kbd "C-a") #'pjones:move-beginning-of-line
   (kbd "C-e") #'end-of-line
   (kbd "C-k") #'kill-line)

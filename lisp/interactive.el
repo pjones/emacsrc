@@ -57,6 +57,16 @@ don't want to."
     (back-to-indentation)
     (when (= start (point)) (move-beginning-of-line 1))))
 
+(defun pjones:backward-delete-char (&optional count)
+  "Delete a character backwards.
+If the all of the characters before point are space characters then
+delete COUNT levels of indentation."
+  (interactive "p")
+  (let ((sofar (save-excursion (beginning-of-line) (point))))
+    (if (or (bolp) (looking-back "\\s-" sofar))
+        (evil-shift-left-line count)
+      (evil-delete-backward-char-and-join count))))
+
 (defun pjones:start-mail ()
   "Start an instance of mu4e."
   (interactive)
