@@ -14,10 +14,12 @@
 
 (defun pjones:nix-mode-hook ()
   "Configure `nix-mode'."
-  (setq-local electric-pair-open-newline-between-pairs nil)
   (setq-local indent-line-function #'indent-relative)
+  (electric-indent-mode -1)
+  (pjones:prog-mode-hook)
   (nix-format-on-save-mode))
 
+(define-key nix-mode-map (kbd "<return>") #'newline-and-indent)
 (add-hook 'nix-mode-hook #'pjones:nix-mode-hook)
 
 ;;; nix-mode-conf.el ends here
