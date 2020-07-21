@@ -84,13 +84,12 @@
          (end (length home))
          (start (and buffer-file-name (substring buffer-file-name 0 end)))
          (under-home (and start (string= home start)))
-         (server (and server-name (concat " [" server-name "]")))
          (file (cond (under-home
                       (concat "~/" (file-relative-name buffer-file-name "~")))
                      (buffer-file-name buffer-file-name)
                      (dired-directory
                       (if (listp dired-directory) (car dired-directory) dired-directory)))))
-    (concat "Emacs: " (buffer-name) " " file server)))
+    (concat "Emacs: " (buffer-name))))
 
 (defun pjones:configure-new-frame (&optional frame)
   "Hook to configure new frame FRAME."
