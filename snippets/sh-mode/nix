@@ -1,0 +1,18 @@
+# -*- mode: snippet -*-
+# name: nix
+# key: nix
+# expand-env: ((yas-indent-line 'fixed))
+# --
+#! /usr/bin/env nix-shell
+#! nix-shell -i bash
+# shellcheck shell=bash
+
+set -eu
+set -o pipefail
+
+$0
+
+# Local Variables:
+#   mode: sh
+#   sh-shell: bash
+# End:
