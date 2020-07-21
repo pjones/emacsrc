@@ -110,6 +110,7 @@ completes."
   (kbd "C-y") #'vterm--self-insert
   (kbd "C-z") #'vterm--self-insert
   (kbd "C-/") #'pjones:vterm-insert-directory
+  (kbd "<backspace>") #'vterm-send-backspace
   (kbd "<delete>") 'vterm-send-delete
   ;; Keys I've stolen, let them shine through after C-c:
   (kbd "C-c j") (pjones:vterm-send-key "C-j")
