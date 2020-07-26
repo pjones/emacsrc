@@ -20,6 +20,7 @@
 (require 'haskell-process)
 (require 'hasky-extensions)
 (require 'highlight-indent-guides)
+(require 'lsp-mode)
 (require 'reformatter)
 
 (declare-function pjones:prog-mode-hook "../lisp/code.el")
@@ -34,7 +35,8 @@
   '(haskell-process-suggest-remove-import-lines t)
   '(haskell-process-auto-import-loaded-modules t)
   '(haskell-tags-on-save t)
-  '(haskell-completing-read-function 'ivy-completing-read))
+  '(haskell-completing-read-function 'ivy-completing-read)
+  '(flycheck-hlint-args '("--no-exit-code")))
 
 ;; A few extra key bindings:
 (evil-set-initial-state 'haskell-interactive-mode 'insert)
@@ -265,7 +267,12 @@ When prompting, use INITIAL as the initial module name."
     (setq-local
      flymake-diagnostic-functions
      '(eglot-flymake-backend))
-    (eglot-ensure)
+    ;;(eglot-ensure)
+    (setq-local
+     flycheck-disabled-checkers
+     '(haskell-stack-ghc haskell-ghc))
+    (lsp)
+    (flycheck-add-next-checker 'lsp '(warning . haskell-hlint))
     (pjones:prog-mode-hook)
     (xref-etags-mode)
     (flymake-hlint-load))
@@ -325,5 +332,12 @@ When prompting, use INITIAL as the initial module name."
 
 ;; Tell eglot how to start ghcide:
 (add-to-list 'eglot-server-programs '(haskell-mode . ("ghcide" "--lsp")))
+
+;; Tell lsp-mode how to start ghcide:
+(lsp-register-client
+ (make-lsp-client
+  :new-connection (lsp-stdio-connection '("ghcide" "--lsp"))
+  :major-modes '(haskell-mode)
+  :server-id 'ghcide))
 
 ;;; haskell-mode-conf.el ends here

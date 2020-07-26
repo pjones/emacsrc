@@ -3,30 +3,39 @@
 , emacs
 }:
 let
-  # Package overrides:
-  overrides = (pkgs.emacsPackagesFor emacs).overrideScope' (self: super: rec {
-    doom-themes =
-      super.doom-themes.overrideAttrs (_: { src = sources.emacs-doom-themes; });
-    passmm = super.passmm.overrideAttrs (_: { src = sources.passmm; });
-    eglot = super.eglot.overrideAttrs (_: { src = sources.eglot; });
-    elfeed = super.elfeed.overrideAttrs (_: { src = sources.elfeed; });
-    evil = super.evil.overrideAttrs (_: { src = sources.evil; });
-    evil-indent-textobject = super.evil-indent-textobject.overrideAttrs
-      (_: { src = sources.evil-indent-textobject; });
-    org-trello =
-      super.org-trello.overrideAttrs (_: { src = sources.org-trello; });
-    origami = super.origami.overrideAttrs (_: { src = sources."origami.el"; });
-    reformatter =
-      super.reformatter.overrideAttrs (_: { src = sources."reformatter.el"; });
-    treemacs = super.treemacs.overrideAttrs (_: { src = sources.treemacs; });
-    treemacs-evil =
-      super.treemacs-evil.overrideAttrs (_: { src = sources.treemacs; });
-    treemacs-projectile =
-      super.treemacs-projectile.overrideAttrs (_: { src = sources.treemacs; });
-    vterm = super.vterm.overrideAttrs (_: { src = sources.emacs-libvterm; });
+  # Latest versions of existing packages (or packages not in nixpkgs):
+  latest = {
+    doom-themes = sources.emacs-doom-themes;
+    eglot = sources.eglot;
+    elfeed = sources.elfeed;
+    evil = sources.evil;
+    evil-indent-textobject = sources.evil-indent-textobject;
+    lsp-mode = sources.lsp-mode;
+    lsp-ui = sources.lsp-ui;
+    org-trello = sources.org-trello;
+    origami = sources."origami.el";
+    passmm = sources.passmm;
+    posframe = sources.posframe;
+    reformatter = sources."reformatter.el";
+    treemacs = sources.treemacs;
+    treemacs-evil = sources.treemacs;
+    treemacs-projectile = sources.treemacs;
+    vterm = sources.emacs-libvterm;
 
-    # Not yet in nixpkgs:
-    neuron-mode = super.melpaBuild {
+    flycheck = self: super: {
+      src = sources.flycheck;
+
+      # Patch for hlint 3 support:
+      # https://github.com/flycheck/flycheck/pull/1804
+      patches = [
+        (pkgs.fetchurl {
+          url = "https://github.com/flycheck/flycheck/commit/5ddcd0fe76fb7753c694e542082ae884e7f1227a.diff";
+          sha256 = "0bbhm263m0hbgiwn6b7ns92qjabf3sak11q3hj4lznqdzjfkfd8m";
+        })
+      ];
+    };
+
+    neuron-mode = self: super: super.melpaBuild {
       pname = "neuron-mode";
       version = "20200602.0";
       src = sources.neuron-mode;
@@ -38,7 +47,7 @@ let
       '';
     };
 
-    project = super.elpaBuild rec {
+    project = self: super: super.elpaBuild rec {
       pname = "project";
       ename = "project";
       version = "0.4.0";
@@ -52,7 +61,25 @@ let
         license = pkgs.lib.licenses.free;
       };
     };
-  });
+  };
+
+  # A function that can override packages using the `latest' attrset.
+  overrideFromLatest = self: super: with pkgs.lib;
+    let
+      drv = value:
+        if isFunction value
+        then value self super
+        else { src = value; };
+    in
+    mapAttrs
+      (name: value:
+        if super ? ${name}
+        then super.${name}.overrideAttrs (_: drv value)
+        else drv value)
+      latest;
+
+  # Package overrides:
+  overrides = (pkgs.emacsPackagesFor emacs).overrideScope' overrideFromLatest;
 
   # Emacs package list:
 in
@@ -97,6 +124,7 @@ overrides.emacsWithPackages (epkgs:
     evil-surround # emulate surround.vim from Vim
     evil-textobj-syntax # Provides syntax text objects
     flycheck # On-the-fly syntax checking
+    flycheck-posframe # Show flycheck error messages using posframe.el
     flymake-hlint # A flymake handler for haskell-mode files using hlint
     flyspell-correct # Correcting words with flyspell via custom interface
     flyspell-correct-ivy # Correcting words with flyspell via ivy interface
@@ -118,6 +146,8 @@ overrides.emacsWithPackages (epkgs:
     js2-mode # Improved JavaScript editing mode
     json-mode # Major mode for editing JSON files
     link-hint # Use avy to open, copy, etc. visible links
+    lsp-mode # LSP mode
+    lsp-ui # UI modules for lsp-mode
     magit # A Git porcelain inside Emacs
     magit-annex # Control git-annex from Magit
     markdown-mode # Major mode for Markdown-formatted text
@@ -142,6 +172,7 @@ overrides.emacsWithPackages (epkgs:
     poly-erb # Polymode for erb
     poly-markdown # Polymode for markdown-mode
     polymode # Extensible framework for multiple major modes
+    posframe # Pop a posframe (just a frame) at point
     project # Operations on the current project
     projectile # Manage and navigate projects in Emacs easily
     purescript-mode # A PureScript editing mode

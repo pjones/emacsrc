@@ -77,6 +77,42 @@
         "rev": "350246086fd1aad574c67b1df341bf2e9168c5ed",
         "type": "git"
     },
+    "flycheck": {
+        "branch": "master",
+        "description": "On the fly syntax checking for GNU Emacs",
+        "homepage": "https://www.flycheck.org",
+        "owner": "flycheck",
+        "repo": "flycheck",
+        "rev": "c02cd773dded0215f9417ec04dfe8dabda63ef43",
+        "sha256": "15w2b98zylppbfvy653i3a5jrxqvbrz8lqs4pzb39w2mbf8nxibx",
+        "type": "tarball",
+        "url": "https://github.com/flycheck/flycheck/archive/c02cd773dded0215f9417ec04dfe8dabda63ef43.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
+    "lsp-mode": {
+        "branch": "7.0",
+        "description": "Emacs client/library for the Language Server Protocol",
+        "homepage": "https://emacs-lsp.github.io/lsp-mode",
+        "owner": "emacs-lsp",
+        "repo": "lsp-mode",
+        "rev": "728134a2320c06d128bc5e379ee436a322086d13",
+        "sha256": "1kw32dcm73i0kg1fncp6vwgar3dwva7dh3gkg5cr45gavn6rq34i",
+        "type": "tarball",
+        "url": "https://github.com/emacs-lsp/lsp-mode/archive/728134a2320c06d128bc5e379ee436a322086d13.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
+    "lsp-ui": {
+        "branch": "7.0",
+        "description": "UI integrations for lsp-mode",
+        "homepage": "https://emacs-lsp.github.io/lsp-ui",
+        "owner": "emacs-lsp",
+        "repo": "lsp-ui",
+        "rev": "840620f8f5a86440c1ce29e66910dcbcdcd7d815",
+        "sha256": "1v5xl2sfnpzrfi22bcb7zp25pv8s5kxgiqamxlbkd72pwch0skma",
+        "type": "tarball",
+        "url": "https://github.com/emacs-lsp/lsp-ui/archive/840620f8f5a86440c1ce29e66910dcbcdcd7d815.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
     "neuron-mode": {
         "branch": "master",
         "description": "An emacs mode for editing Zettelkasten notes with neuron",
@@ -154,6 +190,18 @@
         "repo": "https://github.com/pjones/passmm.git",
         "rev": "b25a92048c788a8477cc5ffe14c0c4a4df19d79a",
         "type": "git"
+    },
+    "posframe": {
+        "branch": "v0.7.0",
+        "description": "Pop a posframe (just a child-frame) at point",
+        "homepage": "",
+        "owner": "tumashu",
+        "repo": "posframe",
+        "rev": "83b4d39fdda34355c01aecc22677f7376ae0f013",
+        "sha256": "0cjrl4xgs70hbw1a1mqkdmpcmrxaakw8csrz365c31vj14nii0ax",
+        "type": "tarball",
+        "url": "https://github.com/tumashu/posframe/archive/83b4d39fdda34355c01aecc22677f7376ae0f013.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "reformatter.el": {
         "branch": "master",
