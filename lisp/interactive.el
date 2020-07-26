@@ -63,7 +63,7 @@ If the all of the characters before point are space characters then
 delete COUNT levels of indentation."
   (interactive "p")
   (let ((sofar (save-excursion (beginning-of-line) (point))))
-    (if (or (bolp) (looking-back "^\\s-$" sofar))
+    (if (looking-back "^\\s-+$" sofar)
         (evil-shift-left-line count)
       (evil-delete-backward-char-and-join count))))
 
