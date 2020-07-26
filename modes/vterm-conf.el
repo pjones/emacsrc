@@ -84,7 +84,10 @@ completes."
   (make-local-variable 'evil-insert-state-entry-hook)
   (make-local-variable 'evil-insert-state-exit-hook)
   (add-hook 'evil-insert-state-entry-hook #'pjones:vterm-insert-mode)
-  (add-hook 'evil-insert-state-exit-hook  #'pjones:vterm-normal-mode))
+  (add-hook 'evil-insert-state-exit-hook  #'pjones:vterm-normal-mode)
+
+  ;; Use a smaller font in terminals by default:
+  (text-scale-decrease 1))
 
 (evil-set-initial-state 'vterm-mode 'insert)
 (evil-set-initial-state 'vterm-copy-mode 'normal)
