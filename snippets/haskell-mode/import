@@ -4,4 +4,4 @@
 # key: im
 # expand-env: ((yas-indent-line 'fixed))
 # --
-import ${1:Module} ($0)
+import ${1:Module} $0

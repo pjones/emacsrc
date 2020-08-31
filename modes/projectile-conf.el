@@ -13,7 +13,6 @@
  '(projectile-completion-system 'ivy))
 
 ;; Modes to ignore:
-(add-to-list 'projectile-globally-ignored-modes "mu4e-.*-mode")
 (add-to-list 'projectile-globally-ignored-modes "org-agenda-mode")
 
 ;; Files to consider as root project files:

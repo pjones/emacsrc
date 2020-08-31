@@ -7,20 +7,14 @@ let
   latest = {
     doom-themes = sources.emacs-doom-themes;
     eglot = sources.eglot;
-    elfeed = sources.elfeed;
     evil = sources.evil;
     evil-indent-textobject = sources.evil-indent-textobject;
-    lsp-mode = sources.lsp-mode;
-    lsp-ui = sources.lsp-ui;
-    org-trello = sources.org-trello;
     origami = sources."origami.el";
     passmm = sources.passmm;
-    posframe = sources.posframe;
     reformatter = sources."reformatter.el";
     treemacs = sources.treemacs;
     treemacs-evil = sources.treemacs;
     treemacs-projectile = sources.treemacs;
-    vterm = sources.emacs-libvterm;
 
     flycheck = self: super: {
       src = sources.flycheck;
@@ -47,9 +41,22 @@ let
       '';
     };
 
+    eldoc = self: super: super.elpaBuild rec {
+      pname = "eldoc";
+      version = "1.9.0";
+      src = pkgs.fetchurl {
+        url = "http://elpa.gnu.org/packages/eldoc-${version}.el";
+        sha256 = "0y6xrf1m4949d9k5mbqhb1w6zga5k71zazvbay6af70gz8k447cg";
+      };
+      packageRequires = [ ];
+      meta = {
+        homepage = "http://elpa.gnu.org/packages/eldoc.html";
+        license = pkgs.lib.licenses.gpl3;
+      };
+    };
+
     project = self: super: super.elpaBuild rec {
       pname = "project";
-      ename = "project";
       version = "0.4.0";
       src = pkgs.fetchurl {
         url = "https://elpa.gnu.org/packages/project-${version}.el";
@@ -109,8 +116,7 @@ overrides.emacsWithPackages (epkgs:
     doom-themes # an opinionated pack of modern color-themes
     eglot # Client for Language Server Protocol (LSP) servers
     eimp # Emacs Image Manipulation Package
-    elfeed # an Emacs Atom/RSS feed reader
-    elfeed-protocol # Provide fever/newsblur/owncloud/ttrss protocols for elfeed
+    eldoc # Show function arglist or variable docstring in echo area
     elm-mode # Elm mode for emacs
     erc-hl-nicks # ERC nick highlighter that ignores uniquifying chars when colorizing
     evil # Extensible Vi layer for Emacs
@@ -124,7 +130,6 @@ overrides.emacsWithPackages (epkgs:
     evil-surround # emulate surround.vim from Vim
     evil-textobj-syntax # Provides syntax text objects
     flycheck # On-the-fly syntax checking
-    flycheck-posframe # Show flycheck error messages using posframe.el
     flymake-hlint # A flymake handler for haskell-mode files using hlint
     flyspell-correct # Correcting words with flyspell via custom interface
     flyspell-correct-ivy # Correcting words with flyspell via ivy interface
@@ -145,9 +150,8 @@ overrides.emacsWithPackages (epkgs:
     ivy-rich # More friendly display transformer for ivy
     js2-mode # Improved JavaScript editing mode
     json-mode # Major mode for editing JSON files
+    jsonrpc # JSON-RPC library
     link-hint # Use avy to open, copy, etc. visible links
-    lsp-mode # LSP mode
-    lsp-ui # UI modules for lsp-mode
     magit # A Git porcelain inside Emacs
     magit-annex # Control git-annex from Magit
     markdown-mode # Major mode for Markdown-formatted text
@@ -162,17 +166,14 @@ overrides.emacsWithPackages (epkgs:
     org-clock-csv # Export `org-mode' clock entries to CSV format
     org-mru-clock # clock in/out of tasks with completion and persistent history
     org-tree-slide # A presentation tool for org-mode
-    org-trello # Minor mode to synchronize org-mode buffer and trello board
     orgalist # Manage Org-like lists in non-Org buffers
     origami # Flexible text folding
     passmm # A minor mode for pass (Password Store).
     password-store # Password store (pass) support
     pdf-tools # Support library for PDF documents
-    pkgs.mu # maildir indexer/searcher + emacs mail client
     poly-erb # Polymode for erb
     poly-markdown # Polymode for markdown-mode
     polymode # Extensible framework for multiple major modes
-    posframe # Pop a posframe (just a frame) at point
     project # Operations on the current project
     projectile # Manage and navigate projects in Emacs easily
     purescript-mode # A PureScript editing mode
@@ -192,7 +193,6 @@ overrides.emacsWithPackages (epkgs:
     typescript-mode # Major mode for editing typescript
     visual-fill # Auto-refill paragraphs without modifying the buffer
     vlf # View Large Files
-    vterm # This package implements a terminal via libvterm
     wgrep # Writable grep buffer and apply the changes to files
     which-key # Display available keybindings in popup
     winum # Navigate windows and frames using numbers.

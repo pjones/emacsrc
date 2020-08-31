@@ -51,7 +51,7 @@ If PREV is non-nil go to the previous theme."
 ;;; Override some annoying faces.
 (add-hook 'after-init-hook
   (defun pjones:set-initial-theme ()
-    (pjones:load-theme 'doom-dark+)))
+    (pjones:load-theme 'doom-challenger-deep)))
 
 (add-hook 'pjones:after-theme-change-hook
   (defun pjones:set-up-doom ()

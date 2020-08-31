@@ -68,7 +68,7 @@ delete COUNT levels of indentation."
       (evil-delete-backward-char-and-join count))))
 
 (defun pjones:start-mail ()
-  "Start an instance of mu4e."
+  "Start an instance of my mail client."
   (interactive)
   (require 'gnus)
   (gnus))

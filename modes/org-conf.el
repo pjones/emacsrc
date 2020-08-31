@@ -25,7 +25,6 @@
 (declare-function org-clocking-p "org-clock")
 (declare-function dbus-send-signal "dbus")
 (declare-function org-clock-sum-current-item "org-clock")
-(declare-function org-trello-mode "org-trello")
 (declare-function org-bullets-mode "org-bullets")
 (defvar whitespace-style)
 (defvar org-clock-start-time)
@@ -381,12 +380,6 @@ PARAMS is a property list of parameters:
         (insert "|\n"))
       (org-table-align)))
 
-(defun pjones:org-trello-activate ()
-  "Maybe activate `org-trello-mode'."
-  (let ((name (buffer-file-name (current-buffer))))
-    (when (and name (s-matches-p "\\.trello\\.org$" name))
-      (org-trello-mode))))
-
 ;;; Key Bindings:
 
   ;; (org-defkey org-mode-map "\C-ce"               'pjones:org-edit-special)
@@ -528,7 +521,6 @@ PARAMS is a property list of parameters:
 
 ;;; Hooks
 (add-hook 'org-mode-hook #'org-bullets-mode)
-(add-hook 'org-mode-hook #'pjones:org-trello-activate)
 
 (let ((hooks
        '(org-clock-in-hook

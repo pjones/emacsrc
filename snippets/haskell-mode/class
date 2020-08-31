@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: class
+# key: class
+# expand-env: ((yas-indent-line 'fixed))
+# --
+-- | FIXME: Write documentation for $1
+--
+-- @since `(pjones:haskell-package-version)`
+class ${1:Name} a where
+  $0 ::

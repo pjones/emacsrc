@@ -76,6 +76,7 @@ in PLIST.  ALIST is passed to display functions."
        "\\*flymake "
        "\\*evil-owl\\*"
        "\\*eglot-help"
+       "\\*eldoc\\*"
        calendar-mode)
       :regexp t
       :size 0.3

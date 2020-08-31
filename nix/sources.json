@@ -5,34 +5,10 @@
         "homepage": null,
         "owner": "joaotavora",
         "repo": "eglot",
-        "rev": "ac9239bed5e3bfbf057382d1a75cdfa23f2caddd",
-        "sha256": "1zmx77wvjs9cxsk91sgb5ichl9grs01s2pc65wl51rvpy275vpri",
+        "rev": "61b71ea769fa14887465517f70832861f7052816",
+        "sha256": "07d86f55j9mxh6p2ba62yg4dnajp75lamm4z6qdaigl9a1zq77pn",
         "type": "tarball",
-        "url": "https://github.com/joaotavora/eglot/archive/ac9239bed5e3bfbf057382d1a75cdfa23f2caddd.tar.gz",
-        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
-    },
-    "elfeed": {
-        "branch": "3.3.0",
-        "description": "An Emacs web feeds client",
-        "homepage": null,
-        "owner": "skeeto",
-        "repo": "elfeed",
-        "rev": "9b5a0ce648cdaa59f7c96414ee868038e08ea29d",
-        "sha256": "0j8a94val4ml7g1vcjgzk1w89h55sxfdrwnncmz6qbh1y2xsz8c5",
-        "type": "tarball",
-        "url": "https://github.com/skeeto/elfeed/archive/9b5a0ce648cdaa59f7c96414ee868038e08ea29d.tar.gz",
-        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
-    },
-    "elfeed-protocol": {
-        "branch": "0.7.6",
-        "description": "Provide extra protocols to make like Fever, NewsBlur, Nextcloud/ownCloud News and Tiny Tiny RSS work with elfeed",
-        "homepage": "",
-        "owner": "fasheng",
-        "repo": "elfeed-protocol",
-        "rev": "fc0beb392386b8ed387e52e7e100354b8549fd7e",
-        "sha256": "1kh524fkhsq3l9w0dv12b8shdyqfvnkhdr19xzfbhzw10hfdl5js",
-        "type": "tarball",
-        "url": "https://github.com/fasheng/elfeed-protocol/archive/fc0beb392386b8ed387e52e7e100354b8549fd7e.tar.gz",
+        "url": "https://github.com/joaotavora/eglot/archive/61b71ea769fa14887465517f70832861f7052816.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "emacs-doom-themes": {
@@ -41,22 +17,10 @@
         "homepage": "",
         "owner": "hlissner",
         "repo": "emacs-doom-themes",
-        "rev": "7307dc6ca2faf408aade90281179678a78193eec",
-        "sha256": "17k60fnm3wqdw0v7rgj3pj0a2h1mmq0fmv174l3bb8hrc2lacg5y",
+        "rev": "462784e39fa38f4f8eb730ad739dc5cc0a3f50bf",
+        "sha256": "06yrmd2130dfymzl87dhqgvzpfbdp9pmiznphycpn0w00hyv8cdf",
         "type": "tarball",
-        "url": "https://github.com/hlissner/emacs-doom-themes/archive/7307dc6ca2faf408aade90281179678a78193eec.tar.gz",
-        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
-    },
-    "emacs-libvterm": {
-        "branch": "master",
-        "description": "Emacs libvterm integration",
-        "homepage": "",
-        "owner": "akermu",
-        "repo": "emacs-libvterm",
-        "rev": "f41849c2c9c1899f22d1c3d4f871ec47c82627ce",
-        "sha256": "1b5s1101n7a2lnpkbadm1h4k6z295fpijx0rdpmd05dkhyarax6n",
-        "type": "tarball",
-        "url": "https://github.com/akermu/emacs-libvterm/archive/f41849c2c9c1899f22d1c3d4f871ec47c82627ce.tar.gz",
+        "url": "https://github.com/hlissner/emacs-doom-themes/archive/462784e39fa38f4f8eb730ad739dc5cc0a3f50bf.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "evil": {
@@ -65,10 +29,10 @@
         "homepage": null,
         "owner": "emacs-evil",
         "repo": "evil",
-        "rev": "25fc5c6647979357cf3e39f0667a9b7ae5266af9",
-        "sha256": "0yh9b0753pcvp7gazrqlb6k3lmz6bwl189f4adcjg0kz763y657s",
+        "rev": "1e7aa5bfbd86feff0ed5982e487070352d326b90",
+        "sha256": "1vb7np6yzv8iqblxg0yi1ac080k2bn7n8wz6wj8vkm080zmfwfb0",
         "type": "tarball",
-        "url": "https://github.com/emacs-evil/evil/archive/25fc5c6647979357cf3e39f0667a9b7ae5266af9.tar.gz",
+        "url": "https://github.com/emacs-evil/evil/archive/1e7aa5bfbd86feff0ed5982e487070352d326b90.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "evil-indent-textobject": {
@@ -83,34 +47,10 @@
         "homepage": "https://www.flycheck.org",
         "owner": "flycheck",
         "repo": "flycheck",
-        "rev": "c02cd773dded0215f9417ec04dfe8dabda63ef43",
-        "sha256": "15w2b98zylppbfvy653i3a5jrxqvbrz8lqs4pzb39w2mbf8nxibx",
+        "rev": "806f2a8c21231a0dddd0a48d27fa4021729ee365",
+        "sha256": "1n4m8qnvvxqqbp9k7zx5m4vhnjy9kxdnv1a5ll3hvsh5imc3g1dx",
         "type": "tarball",
-        "url": "https://github.com/flycheck/flycheck/archive/c02cd773dded0215f9417ec04dfe8dabda63ef43.tar.gz",
-        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
-    },
-    "lsp-mode": {
-        "branch": "7.0",
-        "description": "Emacs client/library for the Language Server Protocol",
-        "homepage": "https://emacs-lsp.github.io/lsp-mode",
-        "owner": "emacs-lsp",
-        "repo": "lsp-mode",
-        "rev": "728134a2320c06d128bc5e379ee436a322086d13",
-        "sha256": "1kw32dcm73i0kg1fncp6vwgar3dwva7dh3gkg5cr45gavn6rq34i",
-        "type": "tarball",
-        "url": "https://github.com/emacs-lsp/lsp-mode/archive/728134a2320c06d128bc5e379ee436a322086d13.tar.gz",
-        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
-    },
-    "lsp-ui": {
-        "branch": "7.0",
-        "description": "UI integrations for lsp-mode",
-        "homepage": "https://emacs-lsp.github.io/lsp-ui",
-        "owner": "emacs-lsp",
-        "repo": "lsp-ui",
-        "rev": "840620f8f5a86440c1ce29e66910dcbcdcd7d815",
-        "sha256": "1v5xl2sfnpzrfi22bcb7zp25pv8s5kxgiqamxlbkd72pwch0skma",
-        "type": "tarball",
-        "url": "https://github.com/emacs-lsp/lsp-ui/archive/840620f8f5a86440c1ce29e66910dcbcdcd7d815.tar.gz",
+        "url": "https://github.com/flycheck/flycheck/archive/806f2a8c21231a0dddd0a48d27fa4021729ee365.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "neuron-mode": {
@@ -150,27 +90,15 @@
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "nixpkgs-fmt": {
-        "branch": "master",
+        "branch": "v1.0.0",
         "description": "Nix code formatter for nixpkgs [maintainer=@zimbatm]",
         "homepage": "https://nix-community.github.io/nixpkgs-fmt/",
         "owner": "nix-community",
         "repo": "nixpkgs-fmt",
-        "rev": "c3d92bd62faa667f0de02f2afbc16e8e7b3640b9",
-        "sha256": "11963m3pb580p4xk5q2zyjxzrr5xjw5ir8gdryz4mlky7nhih8k4",
+        "rev": "025292e583d585c2951040ff4c4717885fab9c91",
+        "sha256": "0w1himwix7iv40rixj9afknwmqg2qmkif23z217gc7x63zyg9vdc",
         "type": "tarball",
-        "url": "https://github.com/nix-community/nixpkgs-fmt/archive/c3d92bd62faa667f0de02f2afbc16e8e7b3640b9.tar.gz",
-        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
-    },
-    "org-trello": {
-        "branch": "0.8.2",
-        "description": "Org minor mode - 2-way sync org & trello",
-        "homepage": "http://org-trello.github.io/",
-        "owner": "org-trello",
-        "repo": "org-trello",
-        "rev": "4ddc257fe24e97c01e12b247568581ff255f0e8d",
-        "sha256": "18y5zdjc7zh4jlwz6k1nl13i721rknqm0vp4mxfnmq0sc5a0qva0",
-        "type": "tarball",
-        "url": "https://github.com/org-trello/org-trello/archive/4ddc257fe24e97c01e12b247568581ff255f0e8d.tar.gz",
+        "url": "https://github.com/nix-community/nixpkgs-fmt/archive/025292e583d585c2951040ff4c4717885fab9c91.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "origami.el": {
@@ -191,28 +119,16 @@
         "rev": "b25a92048c788a8477cc5ffe14c0c4a4df19d79a",
         "type": "git"
     },
-    "posframe": {
-        "branch": "v0.7.0",
-        "description": "Pop a posframe (just a child-frame) at point",
-        "homepage": "",
-        "owner": "tumashu",
-        "repo": "posframe",
-        "rev": "83b4d39fdda34355c01aecc22677f7376ae0f013",
-        "sha256": "0cjrl4xgs70hbw1a1mqkdmpcmrxaakw8csrz365c31vj14nii0ax",
-        "type": "tarball",
-        "url": "https://github.com/tumashu/posframe/archive/83b4d39fdda34355c01aecc22677f7376ae0f013.tar.gz",
-        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
-    },
     "reformatter.el": {
         "branch": "master",
         "description": "Define commands which run reformatters on the current Emacs buffer",
         "homepage": null,
         "owner": "purcell",
         "repo": "reformatter.el",
-        "rev": "dc6278a6b1e3565604346ac41a6ffc3cbab04031",
-        "sha256": "147qrqs3ndc4xfbb9wiymjsskccp54qpj8bn3i19n9zwm4kmgdzr",
+        "rev": "45c0add95025f53ca644a6c8b9afa05b2da3c474",
+        "sha256": "1dfn7c3gpavpiwd73v2pasd8wd8b62dczhg9iv1cgh8vaqlsf92x",
         "type": "tarball",
-        "url": "https://github.com/purcell/reformatter.el/archive/dc6278a6b1e3565604346ac41a6ffc3cbab04031.tar.gz",
+        "url": "https://github.com/purcell/reformatter.el/archive/45c0add95025f53ca644a6c8b9afa05b2da3c474.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "treemacs": {
@@ -221,10 +137,10 @@
         "homepage": null,
         "owner": "Alexander-Miller",
         "repo": "treemacs",
-        "rev": "1ce0bd487f0b9178744e19bbc48b6692c55c590c",
-        "sha256": "1yck0jf2dl8vjq19flrczfhixm44acsx1visq6q2wa15p1s4cdn4",
+        "rev": "a3562d8e63105a7b33fdac54c276f29b62c8f528",
+        "sha256": "1sz3257mgzcyh7wawx3dhn8q78hqdxbl265skpv439imy5l6rwf5",
         "type": "tarball",
-        "url": "https://github.com/Alexander-Miller/treemacs/archive/1ce0bd487f0b9178744e19bbc48b6692c55c590c.tar.gz",
+        "url": "https://github.com/Alexander-Miller/treemacs/archive/a3562d8e63105a7b33fdac54c276f29b62c8f528.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     }
 }

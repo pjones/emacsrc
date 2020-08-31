@@ -3,14 +3,6 @@
 }:
 let
   ##############################################################################
-  # Custom build of Emacs with the settings I like:
-  emacs = pkgs.emacs.override {
-    withX = true;
-    withGTK2 = false;
-    withGTK3 = true;
-  };
-
-  ##############################################################################
   # Emacs + all of the packages I need:
   emacsAndPackages = pkgs.callPackage ./nix/packages.nix { };
 
