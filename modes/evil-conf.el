@@ -39,7 +39,9 @@
  '(evil-operator-state-cursor 'hbar)
  '(evil-replace-state-cursor 'box)
  '(evil-emacs-state-cursor 'bar)
- '(evil-insert-state-cursor 'bar))
+ '(evil-insert-state-cursor 'bar)
+ '(evil-emacs-state-modes nil)
+ '(evil-motion-state-modes nil))
 
 ;; Baffles me why I need to do this here, instead of in
 ;; `custom-set-variables':
