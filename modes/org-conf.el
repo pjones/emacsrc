@@ -142,6 +142,7 @@
  '(org-agenda-span 'day)
  '(org-agenda-start-on-weekday nil)
  '(org-agenda-start-day nil)
+ '(org-agenda-block-separator ?─)
 
  '(org-stuck-projects
    (quote ("+project+LEVEL=3-notes-TODO=\"DONE\""
@@ -149,19 +150,39 @@
 
  '(org-agenda-custom-commands
    (quote (("c" "Current Status"
-            ((agenda)
+            ((agenda ""
+              ((org-agenda-overriding-header "⚡ Agenda:")
+               (org-agenda-remove-tags t)
+               (org-agenda-current-time-string "⮜┈┈┈┈┈┈┈ now")
+               (org-agenda-prefix-format "  %-12s %-12t %-8c ")
+               (org-agenda-todo-keyword-format "")))
              (todo "WAITING"
-                   ((org-agenda-todo-ignore-deadlines (quote future))
-                    (org-agenda-todo-ignore-scheduled (quote future))))
+               ((org-agenda-overriding-header "⚡ Waiting for Someone Else:")
+                (org-agenda-todo-ignore-deadlines (quote future))
+                (org-agenda-todo-ignore-scheduled (quote future))
+                (org-agenda-remove-tags t)
+                (org-agenda-prefix-format "  %-8c ")
+                (org-agenda-todo-keyword-format "")))
              (tags-todo "@phone|@email"
-                   ((org-agenda-todo-ignore-deadlines (quote all))
-                    (org-agenda-todo-ignore-scheduled (quote all))))
-             (stuck)
-             (tags "+TODO=\"BLOCKED\"")
-             (tags "+inbox+LEVEL=2|+orgzly+LEVEL=1")
+               ((org-agenda-overriding-header "⚡ Phone Calls to Make, Emails to Send:")
+                (org-agenda-prefix-format "  %-8c ")
+                (org-agenda-remove-tags t)
+                (org-agenda-todo-keyword-format "")
+                (org-agenda-todo-ignore-deadlines (quote all))
+                (org-agenda-todo-ignore-scheduled (quote all))))
+             (stuck ""
+               ((org-agenda-overriding-header "⚡ Stuck Projects:")))
+             (tags "+inbox+LEVEL=2|+orgzly+LEVEL=1"
+               ((org-agenda-overriding-header "⚡ Inbox Tasks to Process:")
+                (org-agenda-prefix-format "  %-8c ")
+                (org-agenda-todo-keyword-format "")))
              (todo "NEXT"
-                   ((org-agenda-todo-ignore-deadlines (quote all))
-                    (org-agenda-todo-ignore-scheduled (quote all))))))
+               ((org-agenda-overriding-header "⚡ Next Actions:")
+                (org-agenda-prefix-format "  %-8c ")
+                (org-agenda-remove-tags t)
+                (org-agenda-todo-keyword-format "")
+                (org-agenda-todo-ignore-deadlines (quote all))
+                (org-agenda-todo-ignore-scheduled (quote all))))))
            ("p" "Project List"
             ((tags "+project+LEVEL=3")))
            ("e" "Tasks by Energy Level"
