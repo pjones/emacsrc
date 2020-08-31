@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: error
+# key: error
+# expand-env: ((yas-indent-line 'fixed))
+# --
+echo >&2 "ERROR: $0"
