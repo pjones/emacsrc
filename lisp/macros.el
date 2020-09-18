@@ -19,7 +19,7 @@ evil bindings.  Use BINDINGS to move those keys to alternatives."
   (declare (indent defun))
   (let ((keymap (intern (concat (symbol-name mode) "-map"))))
     `(progn
-       (evil-make-overriding-map ,keymap 'normal)
+       (evil-make-overriding-map ,keymap 'normal t)
        (evil-set-initial-state (quote ,mode) 'normal)
        (evil-define-key 'normal ,keymap
          "\C-v" (lookup-key evil-motion-state-map "\C-v")
