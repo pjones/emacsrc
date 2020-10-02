@@ -1,14 +1,24 @@
-{ sources ? import ./sources.nix
-, pkgs ? import sources.nixpkgs { }
+{ lib
+, fetchurl
+, writeText
 , emacs
+, emacsPackagesFor
 }:
 let
+  # Package sources:
+  sources = import ./sources.nix;
+
   # Latest versions of existing packages (or packages not in nixpkgs):
   latest = {
+    connection = sources.dictionary-el;
+    dictionary = sources.dictionary-el;
+    link = sources.dictionary-el;
+
     doom-themes = sources.emacs-doom-themes;
     eglot = sources.eglot;
     evil = sources.evil;
     evil-indent-textobject = sources.evil-indent-textobject;
+    neuron-mode = sources.neuron-mode;
     origami = sources."origami.el";
     passmm = sources.passmm;
     reformatter = sources."reformatter.el";
@@ -22,74 +32,47 @@ let
       # Patch for hlint 3 support:
       # https://github.com/flycheck/flycheck/pull/1804
       patches = [
-        (pkgs.fetchurl {
+        (fetchurl {
           url = "https://github.com/flycheck/flycheck/commit/5ddcd0fe76fb7753c694e542082ae884e7f1227a.diff";
           sha256 = "0bbhm263m0hbgiwn6b7ns92qjabf3sak11q3hj4lznqdzjfkfd8m";
         })
       ];
     };
 
-    neuron-mode = self: super: super.melpaBuild {
-      pname = "neuron-mode";
-      version = "20200602.0";
-      src = sources.neuron-mode;
-      packageRequires = [ self.f self.counsel self.markdown-mode ];
-      recipe = pkgs.writeText "neuron-mode-recipe" ''
-        (neuron-mode
-          :fetcher github
-          :repo "felko/neuron-mode")
-      '';
-    };
-
-    eldoc = self: super: super.elpaBuild rec {
-      pname = "eldoc";
+    eldoc = self: super: rec {
       version = "1.9.0";
-      src = pkgs.fetchurl {
+      src = fetchurl {
         url = "http://elpa.gnu.org/packages/eldoc-${version}.el";
         sha256 = "0y6xrf1m4949d9k5mbqhb1w6zga5k71zazvbay6af70gz8k447cg";
-      };
-      packageRequires = [ ];
-      meta = {
-        homepage = "http://elpa.gnu.org/packages/eldoc.html";
-        license = pkgs.lib.licenses.gpl3;
-      };
-    };
-
-    project = self: super: super.elpaBuild rec {
-      pname = "project";
-      version = "0.4.0";
-      src = pkgs.fetchurl {
-        url = "https://elpa.gnu.org/packages/project-${version}.el";
-        sha256 = "010g7s6gp3gg771r2s0pw0009gsnsan99rws1vm2kcxgkhj4x4i5";
-      };
-      packageRequires = [ ];
-      meta = {
-        homepage = "https://elpa.gnu.org/packages/project.html";
-        license = pkgs.lib.licenses.free;
       };
     };
   };
 
   # A function that can override packages using the `latest' attrset.
-  overrideFromLatest = self: super: with pkgs.lib;
+  overrideFromLatest = self: super:
     let
-      drv = value:
-        if isFunction value
+      drv = orig: value:
+        if builtins.isFunction value
         then value self super
-        else { src = value; };
+        else {
+          src = value;
+
+          # When updating a package, automatically remove the broken flag:
+          meta = (orig.meta or { }) // { broken = false; };
+        };
     in
-    mapAttrs
+    lib.mapAttrs
       (name: value:
         if super ? ${name}
-        then super.${name}.overrideAttrs (_: drv value)
-        else drv value)
+        then super.${name}.overrideAttrs (orig: drv orig value)
+        else drv null value)
       latest;
 
   # Package overrides:
-  overrides = (pkgs.emacsPackagesFor emacs).overrideScope' overrideFromLatest;
+  overrides = (emacsPackagesFor emacs).overrideScope' overrideFromLatest;
 
-  # Emacs package list:
 in
+# Emacs package list:
 overrides.emacsWithPackages (epkgs:
   with epkgs; [
     adaptive-wrap # Smart line-wrapping with wrap-prefix
@@ -172,7 +155,6 @@ overrides.emacsWithPackages (epkgs:
     passmm # A minor mode for pass (Password Store).
     password-store # Password store (pass) support
     pdf-tools # Support library for PDF documents
-    pkgs.notmuch # run notmuch within emacs
     poly-erb # Polymode for erb
     poly-markdown # Polymode for markdown-mode
     polymode # Extensible framework for multiple major modes

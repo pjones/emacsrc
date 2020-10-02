@@ -1,4 +1,16 @@
 {
+    "dictionary-el": {
+        "branch": "master",
+        "description": null,
+        "homepage": "http://www.myrkr.in-berlin.de/dictionary/index.html",
+        "owner": "myrkr",
+        "repo": "dictionary-el",
+        "rev": "46ee5d9ba15cac7282ed73c8b4c272a969c6159e",
+        "sha256": "06mqf19k96mgpa7iv3li2qmfra6qgh4g0s43ark24bk63hdxqvyc",
+        "type": "tarball",
+        "url": "https://github.com/myrkr/dictionary-el/archive/46ee5d9ba15cac7282ed73c8b4c272a969c6159e.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
     "eglot": {
         "branch": "master",
         "description": "A client for Language Server Protocol servers",
