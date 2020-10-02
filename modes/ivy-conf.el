@@ -3,8 +3,9 @@
 ;;; Commentary:
 
 ;;; Code:
-(require 'ivy)
 (require 'counsel)
+(require 'evil)
+(require 'ivy)
 
 (custom-set-variables
  ;; Ivy:
@@ -28,10 +29,9 @@
 
 ;; Custom key bindings:
 (define-key ivy-minibuffer-map (kbd "TAB") 'ivy-next-line)
-(define-key ivy-minibuffer-map (kbd "C-j") 'ivy-next-line)
-(define-key ivy-minibuffer-map (kbd "C-k") 'ivy-previous-line)
-(define-key ivy-minibuffer-map [escape] 'minibuffer-keyboard-quit)
-(define-key ivy-switch-buffer-map (kbd "C-k") 'ivy-previous-line)
+
+(evil-define-key 'normal ivy-minibuffer-map
+  (kbd "<escape>") #'minibuffer-keyboard-quit)
 
 ;; Enable complementary modes:
 (require 'ivy-rich)

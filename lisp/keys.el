@@ -210,11 +210,6 @@
 ;; Overriding default key bindings
 (global-set-key (kbd "C-x C-c") #'pjones:maybe-save-buffers-kill-terminal)
 (global-set-key (kbd "TAB") #'pjones:indent-or-complete)
-(define-key minibuffer-local-map [escape] #'minibuffer-keyboard-quit)
-(define-key minibuffer-local-map (kbd "C-k") #'previous-history-element)
-(define-key minibuffer-local-map (kbd "C-j") #'next-history-element)
-(define-key evil-ex-completion-map (kbd "C-k") #'previous-complete-history-element)
-(define-key evil-ex-completion-map (kbd "C-j") #'next-complete-history-element)
 
 (evil-define-operator pjones:evil-sort (beg end)
   "Sort text."
@@ -232,6 +227,9 @@
   (evil-narrow-to-line (pjones:move-beginning-of-line)))
 
 ;; Additional key bindings:
+(evil-define-key 'normal minibuffer-local-map
+  (kbd "<escape>") #'minibuffer-keyboard-quit)
+
 (evil-define-key 'normal global-map
   "[b" #'previous-buffer
   "[f" #'pjones:find-file-prev
