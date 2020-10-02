@@ -507,6 +507,7 @@ PARAMS is a property list of parameters:
 
 (evil-define-key 'normal org-agenda-mode-map
   (kbd "RET") #'org-agenda-switch-to
+  (kbd "<backspace>") evil-leader--default-map
   "q" #'org-agenda-quit
   "gr" #'org-agenda-redo-all)
 
