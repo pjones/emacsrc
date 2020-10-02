@@ -59,10 +59,10 @@
         "homepage": "",
         "owner": "felko",
         "repo": "neuron-mode",
-        "rev": "2c00b5e27fef19664fab7c61a2a2d350e8848b43",
-        "sha256": "07cl60037rd32ndx0dn2di26rcb5zcr19wp7pwsr0725w1m5wdrf",
+        "rev": "6042cb8960f0018d19db7be84e76622bdfaed5ec",
+        "sha256": "1wvi1apnsxmlc93lnhgkrvxcb9b3d13sr722lzwjr0sv1vjp8gnq",
         "type": "tarball",
-        "url": "https://github.com/felko/neuron-mode/archive/2c00b5e27fef19664fab7c61a2a2d350e8848b43.tar.gz",
+        "url": "https://github.com/felko/neuron-mode/archive/6042cb8960f0018d19db7be84e76622bdfaed5ec.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "niv": {
