@@ -244,7 +244,8 @@
   "g " #'just-one-space
   "g'" #'pjones:switch-to-previous-buffer
   "gl" #'evil-avy-goto-line
-  "gs" #'evil-surround-edit
+  "gs" #'pjones:evil-sort
+  "gS" #'evil-surround-edit
   "z'" #'evil-window-mru
   "zn" #'widen)
 
