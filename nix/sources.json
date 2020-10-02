@@ -17,10 +17,10 @@
         "homepage": "",
         "owner": "hlissner",
         "repo": "emacs-doom-themes",
-        "rev": "462784e39fa38f4f8eb730ad739dc5cc0a3f50bf",
-        "sha256": "06yrmd2130dfymzl87dhqgvzpfbdp9pmiznphycpn0w00hyv8cdf",
+        "rev": "d6ee47dc8ed2cf9e585f62243214af03ba5b1687",
+        "sha256": "074i7zwpi8ah72aa7j0f8bzaphmb8sh0pm9kvna9ip7ir2bgix5f",
         "type": "tarball",
-        "url": "https://github.com/hlissner/emacs-doom-themes/archive/462784e39fa38f4f8eb730ad739dc5cc0a3f50bf.tar.gz",
+        "url": "https://github.com/hlissner/emacs-doom-themes/archive/d6ee47dc8ed2cf9e585f62243214af03ba5b1687.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "evil": {
@@ -29,10 +29,10 @@
         "homepage": null,
         "owner": "emacs-evil",
         "repo": "evil",
-        "rev": "1e7aa5bfbd86feff0ed5982e487070352d326b90",
-        "sha256": "1vb7np6yzv8iqblxg0yi1ac080k2bn7n8wz6wj8vkm080zmfwfb0",
+        "rev": "60ec41f73fb5a4c21bebf29eab1f6ef1bf1bbda9",
+        "sha256": "0nnrpqxdwhv9pkxrbf850dsq5nhxqs0p33z0vnx4m4fgyk2dgnxn",
         "type": "tarball",
-        "url": "https://github.com/emacs-evil/evil/archive/1e7aa5bfbd86feff0ed5982e487070352d326b90.tar.gz",
+        "url": "https://github.com/emacs-evil/evil/archive/60ec41f73fb5a4c21bebf29eab1f6ef1bf1bbda9.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "evil-indent-textobject": {
@@ -137,10 +137,10 @@
         "homepage": null,
         "owner": "Alexander-Miller",
         "repo": "treemacs",
-        "rev": "a3562d8e63105a7b33fdac54c276f29b62c8f528",
-        "sha256": "1sz3257mgzcyh7wawx3dhn8q78hqdxbl265skpv439imy5l6rwf5",
+        "rev": "6a4de5085fbe1d02ad3593bb152ad5646eebfa55",
+        "sha256": "1xxzxxyhy62xp212p9f2ng0421yg7sahcmjig937hm1qn52193zw",
         "type": "tarball",
-        "url": "https://github.com/Alexander-Miller/treemacs/archive/a3562d8e63105a7b33fdac54c276f29b62c8f528.tar.gz",
+        "url": "https://github.com/Alexander-Miller/treemacs/archive/6a4de5085fbe1d02ad3593bb152ad5646eebfa55.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     }
 }
