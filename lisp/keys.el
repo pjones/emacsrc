@@ -48,8 +48,8 @@
 ;; Key bindings that fall under the leader (space) key:
 (evil-leader/set-key
   ;; Menus:
-  "SPC" #'counsel-M-x
-  "DEL" #'ivy-switch-buffer
+  "DEL" #'counsel-M-x
+  "SPC" #'ivy-switch-buffer
   ":" #'eval-expression
 
   ;; Buffer Commnads:
