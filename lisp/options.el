@@ -42,11 +42,11 @@
  '(mark-even-if-inactive t)
  '(inhibit-eol-conversion t)
  '(hscroll-margin 2)
- '(hscroll-step 0.5)
- '(scroll-conservatively 5)
- '(scroll-margin 1)
- '(scroll-preserve-screen-position t)
- '(auto-window-vscroll t)
+ '(hscroll-step 1)
+ '(scroll-conservatively 101)
+ '(scroll-margin 0)
+ '(scroll-preserve-screen-position nil)
+ '(auto-window-vscroll nil)
  '(x-underline-at-descent-line t))
 
 ;; Default variables that become buffer/frame local.
