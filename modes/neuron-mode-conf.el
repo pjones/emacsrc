@@ -9,6 +9,8 @@
 (require 'markdown-mode)
 (require 'neuron-mode)
 
+(declare-function pjones:markdown-bind-keys "./make-mode-conf")
+
 (custom-set-variables
  '(neuron-daily-note-title-format "%A, %B %d, %Y")
  `(neuron-default-zettelkasten-directory
@@ -50,7 +52,34 @@
     "m w" #'neuron-rib-watch
     "m W" #'neuron-rib-serve))
 
+(defun pjones:neuron-rename-buffer ()
+  "Rename neuron buffer to include the title."
+  (save-match-data
+    (let ((base-name (buffer-name))
+          (title (save-excursion
+                   (goto-char (point-min))
+                   (when (search-forward-regexp "^# ")
+                     (buffer-substring-no-properties
+                      (point)
+                      (progn
+                        (end-of-line)
+                        (point)))))))
+
+      (and (string-match " (title: .+)\\'" base-name)
+           (not (and buffer-file-name
+                     (string= base-name
+                              (file-name-nondirectory buffer-file-name))))
+           ;; If the existing buffer name has a (title: xxxx),
+           ;; which isn't part of the file name (if any),
+           ;; then get rid of that.
+           (setq base-name (substring base-name 0 (match-beginning 0))))
+      (rename-buffer
+       (generate-new-buffer-name
+        (concat base-name (if title (concat " (title: " title ")")))))
+      (force-mode-line-update))))
+
 (add-hook 'neuron-mode-hook 'pjones:neuron-bind-keys)
+(add-hook 'neuron-mode-hook 'pjones:neuron-rename-buffer)
 
 ;; Prevent neuron-mode from messing with my writing buffers.
 (remove-hook
