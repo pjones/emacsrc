@@ -52,14 +52,6 @@
  '(evil-fringe-mark-local-face ((t (:inherit fringe))))
  '(evil-fringe-mark-special-face ((t (:inherit fringe)))))
 
-(defun pjones:evil-mode-hook ()
-  "Hook fun by `evil-mode'."
-  ;; Use symbols for movement instead of words!
-  (defalias 'pjones:forward-evil-WORD 'forward-evil-WORD)
-  (defalias 'pjones:forward-evil-word 'forward-evil-word)
-  (defalias 'forward-evil-WORD 'forward-evil-word)
-  (defalias 'forward-evil-word 'forward-evil-symbol))
-
 (defun pjones:evil-search-word (oldfun &rest args)
   "Work around a bug.
 https://github.com/emacs-evil/evil/issues/347
@@ -96,7 +88,6 @@ are the arguments to it."
 (add-hook 'evil-mode-hook #'global-evil-fringe-mark-mode)
 (add-hook 'evil-mode-hook #'global-evil-matchit-mode)
 (add-hook 'evil-mode-hook #'global-evil-surround-mode)
-(add-hook 'evil-mode-hook #'pjones:evil-mode-hook)
 (add-hook 'pjones:after-theme-change-hook #'pjones:evil-set-cursor)
 
 ;;; evil-conf.el ends here
