@@ -100,6 +100,7 @@ overrides.emacsWithPackages (epkgs:
     company-quickhelp # Popup documentation for completion candidates
     company-statistics # Sort candidates using completion history
     counsel # Various completion functions using Ivy
+    counsel-notmuch # Search emails in Notmuch asynchronously with Ivy
     counsel-world-clock # Display world clock using Ivy
     csv-mode # Major mode for editing comma/char separated values
     darkroom # Remove visual distractions and focus on writing
@@ -171,6 +172,7 @@ overrides.emacsWithPackages (epkgs:
     passmm # A minor mode for pass (Password Store).
     password-store # Password store (pass) support
     pdf-tools # Support library for PDF documents
+    pkgs.notmuch # run notmuch within emacs
     poly-erb # Polymode for erb
     poly-markdown # Polymode for markdown-mode
     polymode # Extensible framework for multiple major modes

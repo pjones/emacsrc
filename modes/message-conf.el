@@ -2,15 +2,57 @@
 ;;; Commentary:
 ;;; Code:
 (require 'message)
+(require 'smtpmail)
 
 (eval-when-compile
   (require 'company)
   (require 'evil-leader)
-  (require 'google-contacts-message)
   (require 'mml))
 
 (custom-set-variables
+ '(message-confirm-send t)
+ '(message-directory "~/mail")
+ '(message-from-style 'angles)
+ '(message-citation-line-function #'message-insert-formatted-citation-line)
+ '(message-citation-line-format "On %a, %b %d %Y, %N wrote:")
+ '(message-cite-reply-position 'above)
+ '(message-auto-save-directory nil)
+ '(message-dont-reply-to-names '("pjones@pmade.com" "pmadeinc@gmail.com"))
+ '(message-send-mail-function #'pjones:smtpmail-send-it)
+ '(message-kill-buffer-on-exit t)
+ '(message-signature #'pjones:message-signature)
  '(message-signature-directory "~/notes/signatures/"))
+
+;; FIXME: Use message-send-hook to convert body to HTML
+
+(defun pjones:smtpmail-send-it ()
+  "Send mail after changing some variables."
+  (let ((from (save-restriction
+                (message-narrow-to-headers)
+                (message-fetch-field "From"))))
+    (cond
+     ((string-match-p "rfa\\.sc\\.gov" from)
+      (setq smtpmail-smtp-server "outlook.office365.com"
+            smtpmail-smtp-service 587
+            smtpmail-stream-type 'starttls))
+     (t
+      (setq smtpmail-smtp-server "mail.pmade.com"
+            smtpmail-smtp-service 465
+            smtpmail-stream-type 'ssl))))
+  (smtpmail-send-it))
+
+(defun pjones:message-signature ()
+  "Return the signature text to use."
+  (let* ((from (save-restriction
+                 (message-narrow-to-headers)
+                 (message-fetch-field "From")))
+         (file
+          (cond
+           ((string-match-p "rfa\\.sc\\.gov" from) "rfa")
+           (t "devalot"))))
+    (with-temp-buffer
+      (insert-file-contents (concat message-signature-directory file))
+      (buffer-string))))
 
 ;; A few extra key bindings:
 (evil-leader/set-key-for-mode 'message-mode
@@ -18,13 +60,13 @@
   "m k" #'message-kill-buffer
   "m d" #'message-kill-to-signature
   "m e" #'mml-secure-message-sign-encrypt
-  "m g b" #'message-goto-body
-  "m g c" #'message-goto-cc
-  "m g f" #'message-goto-from
-  "m g i" #'message-goto-signature
-  "m g l" #'message-goto-bcc
-  "m g s" #'message-goto-subject
-  "m g t" #'message-goto-to
+  "j b" #'message-goto-body
+  "j C" #'message-goto-cc
+  "j f" #'message-goto-from
+  "j i" #'message-goto-signature
+  "j B" #'message-goto-bcc
+  "j s" #'message-goto-subject
+  "j t" #'message-goto-to
   "m h" #'pjones:message-convert-to-html)
 
 (defun pjones:message-convert-to-html ()
