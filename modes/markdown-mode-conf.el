@@ -21,7 +21,7 @@
  '(markdown-reference-location 'end)
  '(markdown-asymmetric-header t)
  '(markdown-hide-urls t)
- '(markdown-command "pandoc --standalone -M title=Preview -f markdown -t html"))
+ '(markdown-command "pandoc --standalone -T Preview -f markdown -t html 2> /dev/null"))
 
 (custom-set-faces
  '(markdown-code-face ((t (:background nil))))
