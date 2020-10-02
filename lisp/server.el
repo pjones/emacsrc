@@ -7,6 +7,8 @@
 (require 'server)
 (require 'cl-lib)
 
+(declare-function pjones:load-theme "./theme")
+
 (defvar pjones:after-server-hook nil
   "Hook run after Emacs server starts.")
 
@@ -42,5 +44,19 @@ ARGS are passed on to `server-execute'."
 (add-hook
  'pjones:after-server-hook
  #'pjones:set-treemacs-persist-file)
+
+(defun pjones:notes-server-hook ()
+  "Set up the notes server."
+  (when (string= server-name "notes")
+    (auto-save-visited-mode 1)
+    (pjones:load-theme 'doom-snazzy)))
+
+(defun pjones:mail-server-hook ()
+  "Set up the mail server."
+  (when (string= server-name "mail")
+    (pjones:load-theme 'doom-molokai)))
+
+(add-hook 'pjones:after-server-hook #'pjones:mail-server-hook)
+(add-hook 'pjones:after-server-hook #'pjones:notes-server-hook)
 
 ;;; server.el ends here
