@@ -89,6 +89,7 @@ already been cached."
   (setq comment-empty-lines t)
   (setq-local comment-auto-fill-only-comments t)
   (local-set-key (kbd "C-<tab>") 'pjones:comment-bar)
+  (local-set-key (kbd "RET") 'newline-and-indent)
   (origami-mode)
   (show-paren-mode)
   (whitespace-mode)
