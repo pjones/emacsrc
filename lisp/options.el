@@ -64,6 +64,7 @@
  '(epa-file-encrypt-to "204284CB")    ; Default GPG key to use
  '(auth-sources '(password-store))    ; Use pass(1) for passwords.
  '(compilation-scroll-output 'first-error)
+ '(vc-follow-symlinks t) ; Don't warn prompt me about symlinks!
  `(custom-file "/dev/null")) ; Don't load transient config!
 
 ;; Settings that must be set before a mode file is loaded:
