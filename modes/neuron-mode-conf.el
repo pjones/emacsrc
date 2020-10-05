@@ -31,7 +31,7 @@
 (rg-define-search pjones:rg-zettel-dir
   "Search through my zettel collection."
   :format regexp
-  :files current
+  :files "*.md"
   :dir (eval (neuron-zettelkasten)))
 
 (defun pjones:neuron-bind-keys ()
