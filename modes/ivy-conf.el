@@ -31,10 +31,11 @@
 (define-key ivy-minibuffer-map (kbd "TAB") 'ivy-next-line)
 
 (evil-define-key 'normal ivy-minibuffer-map
+  (kbd "<backspace>") #'ivy-backward-delete-char
   (kbd "<escape>") #'minibuffer-keyboard-quit)
 
 (evil-define-key 'insert counsel-find-file-map
-  (kbd "<backspace>") 'counsel-up-directory)
+  (kbd "C-<backspace>") #'counsel-up-directory)
 
 ;; Enable complementary modes:
 (require 'ivy-rich)
