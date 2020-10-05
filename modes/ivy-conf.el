@@ -33,6 +33,9 @@
 (evil-define-key 'normal ivy-minibuffer-map
   (kbd "<escape>") #'minibuffer-keyboard-quit)
 
+(evil-define-key 'insert counsel-find-file-map
+  (kbd "<backspace>") 'counsel-up-directory)
+
 ;; Enable complementary modes:
 (require 'ivy-rich)
 (ivy-rich-mode 1)
