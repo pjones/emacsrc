@@ -6,7 +6,6 @@
 (require 'dash)
 (require 'evil)
 (require 'evil-leader)
-(require 'message)
 (require 'notmuch)
 (require 's)
 
@@ -108,7 +107,7 @@
   "y T" #'notmuch-show-stash-tags
   "y t" #'notmuch-show-stash-to)
 
-(pjones:evil-override-notmuch notmuch-message-mode)
+(pjones:evil-override-mode notmuch-message-mode)
 
 (evil-leader/set-key-for-mode 'notmuch-message-mode
   "f s" #'notmuch-draft-save

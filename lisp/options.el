@@ -61,7 +61,7 @@
 
 ;; Settings not worth their own file in the modes directory:
 (custom-set-variables
- '(epa-file-encrypt-to "204284CB")    ; Default GPG key to use
+ '(epa-file-encrypt-to "B3CDF5E4B27790430DACE07F526722D1204284CB")
  '(auth-sources '(password-store))    ; Use pass(1) for passwords.
  '(compilation-scroll-output 'first-error)
  '(vc-follow-symlinks t) ; Don't warn prompt me about symlinks!

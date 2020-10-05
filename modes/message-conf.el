@@ -1,13 +1,11 @@
 ;;; message-conf.el --- composing mail and news messages
 ;;; Commentary:
 ;;; Code:
+(require 'company)
+(require 'evil-leader)
 (require 'message)
+(require 'mml)
 (require 'smtpmail)
-
-(eval-when-compile
-  (require 'company)
-  (require 'evil-leader)
-  (require 'mml))
 
 (custom-set-variables
  '(message-confirm-send t)
@@ -18,10 +16,13 @@
  '(message-cite-reply-position 'above)
  '(message-auto-save-directory nil)
  '(message-dont-reply-to-names '("pjones@pmade.com" "pmadeinc@gmail.com"))
- '(message-send-mail-function #'pjones:smtpmail-send-it)
  '(message-kill-buffer-on-exit t)
  '(message-signature #'pjones:message-signature)
- '(message-signature-directory "~/notes/signatures/"))
+ '(message-signature-directory "~/notes/signatures/")
+ `(mml-secure-key-preferences
+   '((OpenPGP
+      (sign ("pjones@devalot.com" ,epa-file-encrypt-to))
+      (encrypt ("pjones@devalot.com" ,epa-file-encrypt-to))))))
 
 ;; FIXME: Use message-send-hook to convert body to HTML
 
@@ -111,10 +112,8 @@
       (insert "<#/multipart>\n"))))
 
 (defun pjones:message-mode-hook ()
-  "Configure message mode to my liking.")
-  ;; Configure completion:
-  ;; (make-local-variable 'company-backends)
-  ;; (add-to-list 'company-backends 'company-ispell))
+  "Configure message mode to my liking."
+  (setq message-send-mail-function #'pjones:smtpmail-send-it))
 
 (add-hook 'message-mode-hook #'pjones:message-mode-hook)
 
