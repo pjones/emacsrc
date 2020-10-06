@@ -47,10 +47,10 @@
       :query "tag:draft"
       :key "d")
      (:name "Haskell Cafe"
-      :query "tag:haskell-cafe"
+      :query "tag:haskell-cafe and tag:unread"
       :key "h")
      (:name "Notmuch List"
-      :query "tag:notmuch"
+      :query "tag:notmuch and tag:unread"
       :key "n")))
  '(notmuch-tagging-keys
   '(("a" notmuch-archive-tags "Archive")
