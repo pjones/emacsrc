@@ -38,22 +38,28 @@
       :count-query "folder:\"\" and tag:unread"
       :key "i")
      (:name "Unread"
-      :query "tag:unread"
+      :query "tag:unread and not tag:mailing-list"
       :key "u")
      (:name "Flagged"
       :query "tag:flagged"
       :key "f")
      (:name "Drafts"
       :query "tag:draft"
-      :key "d")))
+      :key "d")
+     (:name "Haskell Cafe"
+      :query "tag:haskell-cafe"
+      :key "h")
+     (:name "Notmuch List"
+      :query "tag:notmuch"
+      :key "n")))
  '(notmuch-tagging-keys
   '(("a" notmuch-archive-tags "Archive")
     ("b" ("+blacklisted" "+spam") "Blacklisted")
     ("d" ("+deleted" "+move") "Delete")
     ("f" ("+flagged") "Flag")
-    ("r" notmuch-show-mark-read-tags "Mark read")
-    ("s" ("+spam" "+move") "Mark as spam")
-    ("u" ("+unread") "Mark unread"))))
+    ("r" notmuch-show-mark-read-tags "Mark Read")
+    ("s" ("+spam" "+move") "Mark as Spam")
+    ("u" ("+unread") "Mark Unread"))))
 
 (defmacro pjones:evil-override-notmuch (mode &rest bindings)
   "Override MODE bindings in evil-normal mode with BINDINGS."
@@ -65,6 +71,7 @@
      "gR" #'notmuch-poll-and-refresh-this-buffer
      "gr" #'notmuch-refresh-this-buffer
      "H" #'notmuch-help
+     "J" #'pjones:notmuch-mark-read
      "M" #'pjones:notmuch-move-message
      "q" #'notmuch-bury-or-kill-this-buffer
      "s" #'notmuch-search
@@ -144,13 +151,15 @@
   "y T" #'notmuch-show-stash-tags
   "y t" #'notmuch-show-stash-to)
 
-(defun pjones:notmuch-delete-thread (&optional undelete beg end)
-  "Delete messages between BEG and END.
-
-If UNDELETE is non-nil then reverse the delete operation."
-  (interactive (cons current-prefix-arg (notmuch-interactive-region)))
-  (let* ((tags '("+deleted" "-unread" "+move"))
-         (query (notmuch-tag-change-list tags undelete)))
+(defun pjones:notmuch-tag-thread (&optional tags reverse beg end)
+  "Tag selected messages (between BEG and END) with TAGS.
+If REVERSE is non-nil then reverse the tagging operation."
+  (interactive
+   (list
+    (notmuch-search-interactive-tag-changes)
+    current-prefix-arg
+    (notmuch-interactive-region)))
+  (let ((query (notmuch-tag-change-list tags reverse)))
     (pcase major-mode
       ('notmuch-search-mode
        (notmuch-search-tag query)
@@ -161,6 +170,19 @@ If UNDELETE is non-nil then reverse the delete operation."
       ('notmuch-show-mode
        (apply #'notmuch-show-tag-message query)
        (unless (notmuch-show-next-open-message) (notmuch-show-next-thread t))))))
+
+(defun pjones:notmuch-delete-thread (&optional undelete beg end)
+  "Delete messages between BEG and END.
+If UNDELETE is non-nil then reverse the delete operation."
+  (interactive (cons current-prefix-arg (notmuch-interactive-region)))
+  (let ((tags '("+deleted" "-unread" "+move")))
+    (pjones:notmuch-tag-thread tags undelete beg end)))
+
+(defun pjones:notmuch-mark-read (&optional unread beg end)
+  "Tag messages between BEG and END as read.
+If UNREAD is non-nil, tag them as unread instead."
+  (interactive (cons current-prefix-arg (notmuch-interactive-region)))
+  (pjones:notmuch-tag-thread '("-unread") unread beg end))
 
 (defun pjones:notmuch-mail-folders (&optional keep)
   "Return a list of valid folder names.
