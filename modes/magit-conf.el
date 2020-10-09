@@ -19,6 +19,7 @@
     "../lisp/macros")))
 
 (custom-set-variables
+ '(magit-completing-read-function #'ivy-completing-read)
  '(magit-popup-use-prefix-argument 'default)
  '(magit-status-margin '(t age magit-log-margin-width nil 18))
  '(magit-status-show-hashes-in-headers t)

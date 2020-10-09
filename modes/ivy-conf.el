@@ -28,14 +28,17 @@
  '(counsel-find-file-ignore-regexp "\\(?:\\`\\|[/\\]\\)\\(?:[#.]\\)"))
 
 ;; Custom key bindings:
-(define-key ivy-minibuffer-map (kbd "TAB") 'ivy-next-line)
+(evil-define-key 'insert ivy-mode-map
+  (kbd "TAB") #'ivy-next-line
+  (kbd "<backspace>") #'ivy-backward-delete-char)
 
-(evil-define-key 'normal ivy-minibuffer-map
+(evil-define-key 'insert ivy-minibuffer-map
+  (kbd "TAB") #'ivy-next-line
   (kbd "<backspace>") #'ivy-backward-delete-char
   (kbd "<escape>") #'minibuffer-keyboard-quit)
 
 (evil-define-key 'insert counsel-find-file-map
-  (kbd "C-<backspace>") #'counsel-up-directory)
+  (kbd "C-w") #'counsel-up-directory)
 
 ;; Enable complementary modes:
 (require 'ivy-rich)
