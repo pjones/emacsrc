@@ -1,15 +1,15 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 ################################################################################
 # A very simple wrapper around emacsclient.
-set -e
+set -eu
+set -o pipefail
 
 ################################################################################
 option_server_name="server"
 option_server_path="$HOME/.cache/emacs/server/"
 option_fresh=0
 option_wait=0
-option_frame=0
 option_emacs_opts=()
 
 ################################################################################
@@ -59,7 +59,6 @@ alive() {
 while getopts "cfhs:tw" o; do
   case "${o}" in
   c)
-    option_frame=1
     option_emacs_opts+=("--create-frame")
     ;;
 
@@ -107,7 +106,7 @@ if ! alive; then
 fi
 
 ################################################################################
-if [ "$option_frame" -eq 1 ] && [ "$option_wait" -eq 0 ]; then
+if [ "$option_wait" -eq 0 ]; then
   option_emacs_opts+=("--no-wait")
 fi
 

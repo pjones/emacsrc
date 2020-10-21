@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+################################################################################
+# A script to use as your EDITOR.
+set -eu
+set -o pipefail
+e -w "$@"
