@@ -19,7 +19,6 @@
  '(evil-want-abbrev-expand-on-insert-exit nil)
  '(evil-shift-width 2)
  '(evil-move-beyond-eol t)
- '(evil-want-fine-undo nil)
  '(evil-cross-lines t)
  '(evil-lookup-func #'dictionary-lookup-definition)
  '(evil-symbol-word-search t)

@@ -27,14 +27,11 @@
  '(counsel-find-file-at-point nil) ; Use M-n instead
  '(counsel-find-file-ignore-regexp "\\(?:\\`\\|[/\\]\\)\\(?:[#.]\\)"))
 
-;; Custom key bindings:
-(evil-define-key 'insert ivy-mode-map
+(evil-define-key 'insert ivy-minibuffer-map
   (kbd "TAB") #'ivy-next-line
   (kbd "<backspace>") #'ivy-backward-delete-char)
 
-(evil-define-key 'insert ivy-minibuffer-map
-  (kbd "TAB") #'ivy-next-line
-  (kbd "<backspace>") #'ivy-backward-delete-char
+(evil-define-key 'normal ivy-minibuffer-map
   (kbd "<escape>") #'minibuffer-keyboard-quit)
 
 (evil-define-key 'insert counsel-find-file-map

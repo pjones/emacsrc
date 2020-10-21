@@ -5,6 +5,7 @@
 ;; These need to be set before loading Evil.
 (custom-set-variables
  '(evil-want-minibuffer t)
+ '(evil-want-fine-undo t)
  '(evil-want-C-i-jump t)
  '(evil-want-C-u-delete t)
  '(evil-want-C-u-scroll t)
