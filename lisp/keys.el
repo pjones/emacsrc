@@ -227,7 +227,7 @@
   (evil-narrow-to-line (pjones:move-beginning-of-line)))
 
 ;; Additional key bindings:
-(evil-define-key 'normal minibuffer-local-map
+(evil-define-key 'insert minibuffer-local-map
   (kbd "<escape>") #'minibuffer-keyboard-quit)
 
 (evil-define-key 'normal global-map

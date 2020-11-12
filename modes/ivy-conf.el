@@ -29,9 +29,7 @@
 
 (evil-define-key 'insert ivy-minibuffer-map
   (kbd "TAB") #'ivy-next-line
-  (kbd "<backspace>") #'ivy-backward-delete-char)
-
-(evil-define-key 'normal ivy-minibuffer-map
+  (kbd "<backspace>") #'ivy-backward-delete-char
   (kbd "<escape>") #'minibuffer-keyboard-quit)
 
 (evil-define-key 'insert counsel-find-file-map
