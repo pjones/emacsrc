@@ -4,7 +4,15 @@
 let
   ##############################################################################
   # Emacs + all of the packages I need:
-  emacsAndPackages = pkgs.callPackage ./nix/packages.nix { };
+  emacsAndPackages = pkgs.callPackage ./nix/packages.nix {
+    emacs = pkgs.emacs.override {
+      # GTK3 no longer allows setting a WM_CLASS:
+      # https://debbugs.gnu.org/cgi/bugreport.cgi?bug=41719
+      withGTK2 = false;
+      withGTK3 = false;
+      toolkit = "lucid";
+    };
+  };
 
   ##############################################################################
   # Use the latest version:
