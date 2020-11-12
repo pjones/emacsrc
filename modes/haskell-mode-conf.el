@@ -33,7 +33,7 @@
   '(haskell-process-show-debug-tips nil)
   '(haskell-process-suggest-remove-import-lines t)
   '(haskell-process-auto-import-loaded-modules t)
-  '(haskell-tags-on-save t)
+  '(haskell-tags-on-save nil)
   '(haskell-completing-read-function 'ivy-completing-read))
 
 ;; A few extra key bindings:
@@ -50,6 +50,7 @@
   "j r" #'haskell-interactive-bring
   "m e" #'haskell-cabal-visit-file
   "m h" #'pjones:hoogle
+  "m i" #'pjones:haskell-add-import
   "m q" #'pjones:haskell-toggle-qualified
   "m t" #'eglot-help-at-point
   "m x" #'pjones:hasky-extensions
