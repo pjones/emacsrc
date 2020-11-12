@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: trap
+# key: trap
+# expand-env: ((yas-indent-line 'fixed))
+# --
+${1:cleanup}() {
+  $0
+}
+trap $1 ${2:EXIT}
