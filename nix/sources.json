@@ -29,10 +29,10 @@
         "homepage": "",
         "owner": "hlissner",
         "repo": "emacs-doom-themes",
-        "rev": "d6ee47dc8ed2cf9e585f62243214af03ba5b1687",
-        "sha256": "074i7zwpi8ah72aa7j0f8bzaphmb8sh0pm9kvna9ip7ir2bgix5f",
+        "rev": "e55d9a2ead88cf7039afdf944ba8e4be3165395a",
+        "sha256": "0pmgaxahk6j78w5wy72r2mxw7nmx1x1c8zsary1gll2jmmqaifym",
         "type": "tarball",
-        "url": "https://github.com/hlissner/emacs-doom-themes/archive/d6ee47dc8ed2cf9e585f62243214af03ba5b1687.tar.gz",
+        "url": "https://github.com/hlissner/emacs-doom-themes/archive/e55d9a2ead88cf7039afdf944ba8e4be3165395a.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "evil": {
@@ -41,10 +41,10 @@
         "homepage": null,
         "owner": "emacs-evil",
         "repo": "evil",
-        "rev": "60ec41f73fb5a4c21bebf29eab1f6ef1bf1bbda9",
-        "sha256": "0nnrpqxdwhv9pkxrbf850dsq5nhxqs0p33z0vnx4m4fgyk2dgnxn",
+        "rev": "d6cf6680ec52733ea78dc530ed75fadc5171c758",
+        "sha256": "14rl6jx7cj336raxbksh3r2cplyifz8dghdhqvf7h1ng10sd9j6b",
         "type": "tarball",
-        "url": "https://github.com/emacs-evil/evil/archive/60ec41f73fb5a4c21bebf29eab1f6ef1bf1bbda9.tar.gz",
+        "url": "https://github.com/emacs-evil/evil/archive/d6cf6680ec52733ea78dc530ed75fadc5171c758.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "evil-indent-textobject": {
@@ -71,10 +71,10 @@
         "homepage": "",
         "owner": "felko",
         "repo": "neuron-mode",
-        "rev": "6042cb8960f0018d19db7be84e76622bdfaed5ec",
-        "sha256": "1wvi1apnsxmlc93lnhgkrvxcb9b3d13sr722lzwjr0sv1vjp8gnq",
+        "rev": "d769042ca0b715c8da7947421302b52222598e95",
+        "sha256": "0804ixy7q9jnw6nw8g71dx4isndca1jkwpkjb8k71ckwvvz63i17",
         "type": "tarball",
-        "url": "https://github.com/felko/neuron-mode/archive/6042cb8960f0018d19db7be84e76622bdfaed5ec.tar.gz",
+        "url": "https://github.com/felko/neuron-mode/archive/d769042ca0b715c8da7947421302b52222598e95.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "niv": {
@@ -149,10 +149,10 @@
         "homepage": null,
         "owner": "Alexander-Miller",
         "repo": "treemacs",
-        "rev": "6a4de5085fbe1d02ad3593bb152ad5646eebfa55",
-        "sha256": "1xxzxxyhy62xp212p9f2ng0421yg7sahcmjig937hm1qn52193zw",
+        "rev": "c8f70f119f0deb1100b0d91a0e3c488ffd9cd63b",
+        "sha256": "1c760llribvqnq0lx4sq5d4yldrvf719lpld12syb26jrazcppxn",
         "type": "tarball",
-        "url": "https://github.com/Alexander-Miller/treemacs/archive/6a4de5085fbe1d02ad3593bb152ad5646eebfa55.tar.gz",
+        "url": "https://github.com/Alexander-Miller/treemacs/archive/c8f70f119f0deb1100b0d91a0e3c488ffd9cd63b.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     }
 }
