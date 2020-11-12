@@ -173,12 +173,7 @@ directory.  Optionally renaming FILE to NAME."
   ;; Completion configuration:
   (make-local-variable 'company-backends)
   (add-to-list 'company-backends '(company-ispell
-                                   company-dabbrev))
-
-  ;; Files in /tmp that are *.txt are from my browser and most
-  ;; websites don't like it when text you submit has newlines.
-  (when (and buffer-file-name (string-match "^/tmp/vimb-.*$" buffer-file-name))
-    (pjones:markdown-visual-line)))
+                                   company-dabbrev)))
 
 (add-hook 'markdown-mode-hook 'pjones:markdown-mode-hook)
 (add-hook 'markdown-mode-hook 'pjones:markdown-bind-keys)
