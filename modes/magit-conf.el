@@ -35,6 +35,7 @@
   "K" #'magit-discard ; "k"
   "H" #'magit-dispatch ; "h"
   "L" #'magit-log ; "l"
+  "R" #'magit-show-refs ; "y"
   "gr" #'magit-refresh
   "gR" #'magit-refresh-all)
 
@@ -61,6 +62,12 @@
   "gR" #'magit-refresh-all
   "r" #'magit-reverse
   "R" #'magit-revert)
+
+(pjones:evil-override-mode magit-refs-mode
+  "H" #'magit-dispatch ; "h"
+  "K" #'magit-delete-thing
+  "d" #'magit-delete-thing
+  "gr" #'magit-refresh)
 
 (pjones:evil-override-mode magit-diff-mode
   "[[" #'magit-section-backward
