@@ -17,10 +17,10 @@
         "homepage": null,
         "owner": "joaotavora",
         "repo": "eglot",
-        "rev": "61b71ea769fa14887465517f70832861f7052816",
-        "sha256": "07d86f55j9mxh6p2ba62yg4dnajp75lamm4z6qdaigl9a1zq77pn",
+        "rev": "21726416e6e580b20dfa90833c6dab2a8a15ea48",
+        "sha256": "1al1a7np6127xw4ksqcwpm20v635pb83vfx8mr06wyzdbgls0plb",
         "type": "tarball",
-        "url": "https://github.com/joaotavora/eglot/archive/61b71ea769fa14887465517f70832861f7052816.tar.gz",
+        "url": "https://github.com/joaotavora/eglot/archive/21726416e6e580b20dfa90833c6dab2a8a15ea48.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "emacs-doom-themes": {
