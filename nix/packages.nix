@@ -172,6 +172,7 @@ overrides.emacsWithPackages (epkgs:
     shackle # Enforce rules for popups
     smartrep # Support sequential operation which omitted prefix keys
     smex # M-x interface with Ido-style fuzzy matching
+    sweet-theme # Sweet-looking theme
     switch-window # A *visual* way to switch window
     treemacs # A tree style file explorer package
     treemacs-evil # Evil mode integration for treemacs
