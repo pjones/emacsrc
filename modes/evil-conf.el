@@ -22,6 +22,7 @@
  '(evil-cross-lines t)
  '(evil-lookup-func #'dictionary-lookup-definition)
  '(evil-symbol-word-search t)
+ '(evil-search-wrap nil)
  '(evil-search-module 'evil-search)
  '(evil-magic 'very-magic)
  '(evil-ex-search-vim-style-regexp t)
