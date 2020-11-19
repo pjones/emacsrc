@@ -180,6 +180,7 @@ overrides.emacsWithPackages (epkgs:
     typescript-mode # Major mode for editing typescript
     visual-fill # Auto-refill paragraphs without modifying the buffer
     vlf # View Large Files
+    weyland-yutani-theme # Emacs theme based off Alien movie franchise
     wgrep # Writable grep buffer and apply the changes to files
     which-key # Display available keybindings in popup
     winum # Navigate windows and frames using numbers.
