@@ -260,7 +260,6 @@ When prompting, use INITIAL as the initial module name."
     (setq-local
      company-backends
      '((company-capf
-        company-etags
         company-dabbrev-code
         company-keywords)))
     (setq-local
@@ -270,7 +269,6 @@ When prompting, use INITIAL as the initial module name."
     (eglot-ensure)
     (pjones:prog-mode-hook)
     (flycheck-mode -1)
-    (xref-etags-mode)
     (flymake-hlint-load))
 
   ;; Evil doc-lookup (on the "K" key):

@@ -99,6 +99,7 @@ overrides.emacsWithPackages (epkgs:
     direnv # direnv support
     doom-modeline # A minimal and modern mode-line
     doom-themes # an opinionated pack of modern color-themes
+    dumb-jump # Jump to definition for 40+ languages without configuration
     eglot # Client for Language Server Protocol (LSP) servers
     eimp # Emacs Image Manipulation Package
     eldoc # Show function arglist or variable docstring in echo area
