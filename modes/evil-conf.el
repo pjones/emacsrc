@@ -13,6 +13,7 @@
 
 (require 'evil)
 (require 'evil-leader)
+(require 'evil-textobj-syntax)
 
 ;; Settings:
 (custom-set-variables
