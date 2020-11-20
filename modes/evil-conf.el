@@ -82,6 +82,74 @@ are the arguments to it."
     (define-key evil-insert-state-local-map (kbd "C-SPC") map)
     (define-key evil-insert-state-local-map (kbd "C-<backspace>") map)))
 
+(defun pjones:evil-range-for-comment-paragraph (&optional inclusive)
+  "Create a range that includes the currently commented paragraph.
+If INCLUSIVE is non-nil, also include leading and trailing white space."
+  (let* ((commented-blank-line-p
+          (lambda (n)
+            (save-excursion
+              (forward-line n)
+              (back-to-indentation)
+              (or
+               ;; Line starts with a comment character.
+               (looking-at-p
+                (rx (and
+                     (regexp comment-start-skip)
+                     (* (char blank))
+                     line-end)))
+               ;; Multi-line comment.
+               (and
+                (nth 4 (syntax-ppss))
+                (looking-at-p
+                 (rx (and
+                      (* (char blank))
+                      line-end))))))))
+         (commented-line-p
+          (lambda (n)
+            "Return non-nil if the current line is a non-blank comment."
+            (save-excursion
+              (forward-line n)
+              (back-to-indentation)
+              (and
+               (not (funcall commented-blank-line-p 0))
+               (or
+                (looking-at-p (rx (regexp comment-start-skip)))
+                (nth 4 (syntax-ppss)))))))
+         (comment-boundry
+          (lambda (fun n)
+            (save-excursion
+              (while (funcall fun n)
+                (forward-line n))
+              (if (> n 0)
+                  (end-of-line)
+                (back-to-indentation))
+              (point))))
+         (beg (funcall comment-boundry commented-line-p -1))
+         (end (funcall comment-boundry commented-line-p 1)))
+    (if inclusive
+        (save-excursion
+          (evil-range
+           (progn
+             (goto-char beg)
+             (funcall comment-boundry commented-blank-line-p -1))
+           (progn
+             (goto-char end)
+             (+ 1 (funcall comment-boundry commented-blank-line-p 1)))))
+      (evil-range beg end))))
+
+(evil-define-text-object pjones:evil-i-comment-para
+  (_count &optional _beg _end _type)
+  "Select inner comment paragraph."
+  (pjones:evil-range-for-comment-paragraph))
+
+(evil-define-text-object pjones:evil-a-comment-para
+  (_count &optional _beg _end _type)
+  "Select outer comment paragraph."
+  (pjones:evil-range-for-comment-paragraph t))
+
+(define-key evil-inner-text-objects-map "c" #'pjones:evil-i-comment-para)
+(define-key evil-outer-text-objects-map "c" #'pjones:evil-a-comment-para)
+
 ;; Hooks:
 (add-hook 'evil-leader-mode-hook #'pjones:evil-leader-in-all-states)
 (add-hook 'evil-mode-hook #'evil-commentary-mode)
