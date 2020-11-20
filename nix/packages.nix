@@ -79,7 +79,6 @@ overrides.emacsWithPackages (epkgs:
     adaptive-wrap # Smart line-wrapping with wrap-prefix
     async # Asynchronous processing in Emacs
     avy # Jump to arbitrary positions in visible text and select text quickly
-    beginend # Redefine M-< and M-> for some modes
     company # Modular text completion framework
     company-quickhelp # Popup documentation for completion candidates
     company-statistics # Sort candidates using completion history
@@ -89,8 +88,6 @@ overrides.emacsWithPackages (epkgs:
     csv-mode # Major mode for editing comma/char separated values
     darkroom # Remove visual distractions and focus on writing
     default-text-scale # Easily adjust the font size in all frames
-    deft # quickly browse, filter, and edit plain text notes
-    dianyou # Search and analyze mails in Gnus
     dictionary # Client for rfc2229 dictionary servers
     diff-hl # Highlight uncommitted changes using VC
     dired-filter # Ibuffer-like filtering for dired
@@ -111,7 +108,6 @@ overrides.emacsWithPackages (epkgs:
     evil-indent-textobject # evil textobjects based on indentation
     evil-leader # let there be <leader>
     evil-matchit # Vim matchit ported to Evil
-    evil-org # evil keybindings for org-mode
     evil-owl # Preview evil registers and marks before using them
     evil-surround # emulate surround.vim from Vim
     evil-textobj-syntax # Provides syntax text objects
@@ -122,7 +118,6 @@ overrides.emacsWithPackages (epkgs:
     forge # Access Git forges from Magit
     git-annex # Mode for easy editing of git-annex'd files
     go-mode # Major mode for the Go programming language
-    google-contacts # Support for Google Contacts in Emacs
     graphviz-dot-mode # Mode for the dot-language used by graphviz
     haskell-mode # A Haskell editing mode
     hasky-extensions # Toggle Haskell language extensions
