@@ -1,5 +1,5 @@
 [Desktop Entry]
-Name=Gnus
+Name=Notmuch Mail
 Exec=e -cs mail --eval '(browse-url "%u")'
 Icon=emacs-icon
 Type=Application
