@@ -53,18 +53,6 @@
         "rev": "350246086fd1aad574c67b1df341bf2e9168c5ed",
         "type": "git"
     },
-    "flycheck": {
-        "branch": "master",
-        "description": "On the fly syntax checking for GNU Emacs",
-        "homepage": "https://www.flycheck.org",
-        "owner": "flycheck",
-        "repo": "flycheck",
-        "rev": "806f2a8c21231a0dddd0a48d27fa4021729ee365",
-        "sha256": "1n4m8qnvvxqqbp9k7zx5m4vhnjy9kxdnv1a5ll3hvsh5imc3g1dx",
-        "type": "tarball",
-        "url": "https://github.com/flycheck/flycheck/archive/806f2a8c21231a0dddd0a48d27fa4021729ee365.tar.gz",
-        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
-    },
     "neuron-mode": {
         "branch": "master",
         "description": "An emacs mode for editing Zettelkasten notes with neuron",

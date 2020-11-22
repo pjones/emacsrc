@@ -268,8 +268,7 @@ When prompting, use INITIAL as the initial module name."
     (setq-local eldoc-echo-area-use-multiline-p 2)
     (eglot-ensure)
     (pjones:prog-mode-hook)
-    (flycheck-mode -1)
-    (flymake-hlint-load))
+    (flycheck-mode -1))
 
   ;; Evil doc-lookup (on the "K" key):
   (setq-local evil-lookup-func #'pjones:hoogle)
@@ -325,6 +324,8 @@ When prompting, use INITIAL as the initial module name."
 (add-hook 'haskell-mode-hook #'pjones:haskell-mode-hook)
 
 ;; Tell eglot how to start ghcide:
-(add-to-list 'eglot-server-programs '(haskell-mode . ("ghcide" "--lsp")))
+(add-to-list
+ 'eglot-server-programs
+ '(haskell-mode . ("haskell-language-server" "--lsp")))
 
 ;;; haskell-mode-conf.el ends here

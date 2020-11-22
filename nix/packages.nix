@@ -27,19 +27,6 @@ let
     treemacs-evil = sources.treemacs;
     treemacs-projectile = sources.treemacs;
 
-    flycheck = self: super: {
-      src = sources.flycheck;
-
-      # Patch for hlint 3 support:
-      # https://github.com/flycheck/flycheck/pull/1804
-      patches = [
-        (fetchurl {
-          url = "https://github.com/flycheck/flycheck/commit/5ddcd0fe76fb7753c694e542082ae884e7f1227a.diff";
-          sha256 = "0bbhm263m0hbgiwn6b7ns92qjabf3sak11q3hj4lznqdzjfkfd8m";
-        })
-      ];
-    };
-
     eldoc = self: super: rec {
       version = "1.9.0";
       src = fetchurl {
@@ -112,7 +99,6 @@ overrides.emacsWithPackages (epkgs:
     evil-surround # emulate surround.vim from Vim
     evil-textobj-syntax # Provides syntax text objects
     flycheck # On-the-fly syntax checking
-    flymake-hlint # A flymake handler for haskell-mode files using hlint
     flyspell-correct # Correcting words with flyspell via custom interface
     flyspell-correct-ivy # Correcting words with flyspell via ivy interface
     forge # Access Git forges from Magit
