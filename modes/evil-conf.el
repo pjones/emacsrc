@@ -3,16 +3,15 @@
 ;;; Commentary:
 ;;
 ;;; Code:
-(eval-when-compile
-  (require 'align)
-  (require 'doom-modeline-core)
-  (require 'evil-indent-textobject)
-  (require 'evil-matchit)
-  (require 'evil-owl)
-  (require 'evil-surround))
-
+(require 'doom-modeline-core)
 (require 'evil)
+(require 'evil-commentary)
+(require 'evil-fringe-mark)
+(require 'evil-indent-textobject)
 (require 'evil-leader)
+(require 'evil-matchit)
+(require 'evil-owl)
+(require 'evil-surround)
 (require 'evil-textobj-syntax)
 
 ;; Settings:

@@ -18,14 +18,18 @@ let
   # Use the latest version:
   nixpkgs-fmt = import sources.nixpkgs-fmt { };
 
-  ################################################################################
-  # The actual Nix package definition:
 in
 pkgs.stdenv.mkDerivation rec {
   name = "emacsrc";
-  src = ./.;
+  phases = [ "unpackPhase" "installPhase" "fixupPhase" ];
 
-  phases = [ "installPhase" "fixupPhase" ];
+  src = with pkgs.lib;
+    cleanSourceWith {
+      src = ./.;
+      filter = name: _type:
+        let baseName = baseNameOf (toString name);
+        in !(baseName == "nix" || baseName == "test");
+    };
 
   buildInputs = [
     emacsAndPackages # Emacs!
@@ -45,7 +49,7 @@ pkgs.stdenv.mkDerivation rec {
   propagatedUserEnvPkgs = buildInputs;
 
   installPhase = with pkgs.lib;
-    let path = concatMapStringsSep ":" (p: "${p}/bin") buildInputs;
+    let path = makeBinPath buildInputs;
     in
     ''
       mkdir -p "$out/bin" "$out/emacs.d"
@@ -53,21 +57,21 @@ pkgs.stdenv.mkDerivation rec {
       export path="${path}"
       export loadpathel="$out/emacs.d/lisp/loadpath.el"
 
-      substituteAll ${src}/dot.emacs.el "$out/dot.emacs.el"
-      cp -r ${src}/lisp ${src}/modes ${src}/snippets "$out/emacs.d/"
+      substituteAll dot.emacs.el "$out/dot.emacs.el"
+      cp -r lisp modes snippets "$out/emacs.d/"
       chmod u+w "$out"/emacs.d/*
 
-      cp -r "${src}/share" "$out/"
+      cp -r share "$out/"
       chmod -R u+r "$out/share"
 
-      for f in ${src}/bin/*; do
+      for f in bin/*; do
         substituteAll "$f" "$out/bin/$(basename "$f")"
         chmod 0555 "$out/bin/$(basename "$f")"
       done
 
       for f in $(find "$out/emacs.d" -type f -name "*.el"); do
-        emacs -Q --quick --batch -f package-initialize \
-          --load "$loadpathel" -f batch-byte-compile "$f"
+        echo "==> Compile" "$(sed -E 's|/nix/store/[^/]+/||' <<<"$f")"
+        emacs --quick --batch --load "$loadpathel" -f batch-byte-compile "$f"
       done
     '';
 }

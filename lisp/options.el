@@ -65,12 +65,7 @@
  '(auth-sources '(password-store))    ; Use pass(1) for passwords.
  '(compilation-scroll-output 'first-error)
  '(vc-follow-symlinks t) ; Don't warn prompt me about symlinks!
- `(custom-file "/dev/null")) ; Don't load transient config!
-
-;; Settings that must be set before a mode file is loaded:
-(setq
- gnus-home-directory "~/.cache/emacs"
- gnus-directory "~/.cache/emacs/gnus")
+ '(custom-file (concat user-emacs-directory "custom-init.el")))
 
 ;; Settings from simple.el:
 (custom-set-variables

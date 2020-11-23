@@ -21,6 +21,7 @@ don't want to."
 
 (defun pjones:switch-to-previous-buffer ()
   "Switch back to the last buffer shown in this window."
+  ;; NOTE: Should I use `switch-to-prev-buffer-skip'?
   (interactive)
   (require 'ido)
   (let ((previous-place (evil-alternate-buffer)))

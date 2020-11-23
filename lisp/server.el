@@ -45,6 +45,16 @@ ARGS are passed on to `server-execute'."
  'pjones:after-server-hook
  #'pjones:set-treemacs-persist-file)
 
+(defvar desktop-base-file-name)
+(defvar desktop-base-lock-name)
+(defun pjones:desktop-server-vars ()
+  "Set per-server variables for `desktop-mode'."
+  (setq desktop-base-file-name (concat server-name ".desktop")
+        desktop-base-lock-name (concat server-name ".desktop.lock")))
+(add-hook
+ 'pjones:after-server-hook
+ #'pjones:desktop-server-vars)
+
 (defun pjones:notes-server-hook ()
   "Set up the notes server."
   (when (string= server-name "notes")

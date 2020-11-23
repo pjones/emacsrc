@@ -3,6 +3,8 @@
 ;;; Commentary:
 ;;
 ;; Settings for `desktop-save-mode'.
+;;
+;; Also see lisp/server.el
 
 ;;; Code:
 (require 'desktop)

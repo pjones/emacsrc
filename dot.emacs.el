@@ -14,9 +14,6 @@
  '(evil-respect-visual-line-mode t)
  '(evil-leader/leader "SPC"))
 
-;; Prepare package management
-(package-initialize)
-
 ;; Load other configuration files
 (load "@loadpathel@")
 (pjones:load-configuration-files)

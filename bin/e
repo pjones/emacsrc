@@ -6,8 +6,11 @@ set -eu
 set -o pipefail
 
 ################################################################################
-option_server_name="server"
-option_server_path="$HOME/.cache/emacs/server/"
+export EMACS_SOCKET_NAME=server
+
+################################################################################
+option_server_path="${XDG_RUNTIME_DIR:-$HOME/.cache}/emacs"
+option_start_daemon=1
 option_fresh=0
 option_wait=0
 option_emacs_opts=()
@@ -18,8 +21,13 @@ export PATH=@path@:$PATH
 
 ################################################################################
 # See if we can get the name of the server from the current workspace.
-if [ -n "$DISPLAY" ] && type wmctrl &>/dev/null && wmctrl -d &>/dev/null; then
-  option_server_name=$(wmctrl -d | awk '$2 == "*" { print $9 }')
+if test -n "${DISPLAY:-}" &&
+  type wmctrl &>/dev/null &&
+  wmctrl -d &>/dev/null; then
+  EMACS_SOCKET_NAME=$(
+    wmctrl -d |
+      awk '$2 == "*" { print $9 }'
+  )
 fi
 
 ################################################################################
@@ -28,9 +36,10 @@ usage() {
 Usage: e [options] [file] -- [emacsclient options]
 
   -c      Open a new frame
+  -d      Don't start a new daemon
   -f      Force a fresh Emacs to be started
   -h      This message
-  -s NAME Connect to server NAME [$option_server_name]
+  -s NAME Connect to server NAME [$EMACS_SOCKET_NAME]
   -t      Open a new TTY
   -w      Wait for Emacs to finish with the file
 EOF
@@ -39,7 +48,7 @@ EOF
 ################################################################################
 # Is the selected Emacs daemon alive?
 alive() {
-  path="${option_server_path}${option_server_name}"
+  path="${option_server_path}/${EMACS_SOCKET_NAME}"
 
   # Does the server file exist?
   if [ ! -e "$path" ]; then
@@ -47,19 +56,22 @@ alive() {
   fi
 
   # Can we connect to the server?
-  port=$(head -1 "$path" | sed -E 's/^.*:([[:digit:]]+).*/\1/')
 
-  if ! nc -N 127.0.0.1 "$port" </dev/null; then
+  if ! nc -UN "$path" </dev/null; then
     rm -f "$path" # Server is dead, delete the file.
     return 1
   fi
 }
 
 ################################################################################
-while getopts "cfhs:tw" o; do
+while getopts "cdfhs:tw" o; do
   case "${o}" in
   c)
     option_emacs_opts+=("--create-frame")
+    ;;
+
+  d)
+    option_start_daemon=0
     ;;
 
   f)
@@ -72,7 +84,7 @@ while getopts "cfhs:tw" o; do
     ;;
 
   s)
-    option_server_name=$OPTARG
+    EMACS_SOCKET_NAME=$OPTARG
     ;;
 
   t)
@@ -95,20 +107,23 @@ shift $((OPTIND - 1))
 if [ "$option_fresh" -eq 1 ]; then
   export EMACSLOADPATH=""
   exec emacs -q \
-    --eval "(toggle-debug-on-error)" \
+    --funcall package-initialize \
     --load @out@/dot.emacs.el \
     --eval "(run-hooks 'after-init-hook)" "$@"
 fi
 
 ################################################################################
 if ! alive; then
-  emacs --daemon="$option_server_name"
+  if [ "$option_start_daemon" -eq 1 ]; then
+    emacs --daemon="$EMACS_SOCKET_NAME"
+  else
+    echo >&2 "ERROR: no $EMACS_SOCKET_NAME daemon is running"
+    exit 1
+  fi
 fi
 
-################################################################################
 if [ "$option_wait" -eq 0 ]; then
   option_emacs_opts+=("--no-wait")
 fi
 
-emacsclient --server-file="${option_server_path}${option_server_name}" \
-  "${option_emacs_opts[@]}" "$@"
+emacsclient "${option_emacs_opts[@]}" "$@"
