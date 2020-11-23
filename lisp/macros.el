@@ -35,6 +35,7 @@ evil bindings.  Use BINDINGS to move those keys to alternatives."
          "v" (lookup-key evil-motion-state-map "v")
          "Y" (lookup-key evil-normal-state-map "Y")
          "y" (lookup-key evil-normal-state-map "y")
+         "z" (lookup-key evil-motion-state-map "z")
          ":" (lookup-key evil-motion-state-map ":")
          "/" (lookup-key evil-motion-state-map "/")
          "?" (lookup-key evil-motion-state-map "?")
