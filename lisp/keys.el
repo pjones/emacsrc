@@ -92,8 +92,7 @@
   "g f" #'rg
   "g g" #'rg-project
   "g h" #'pjones:start-http
-  "g i" #'counsel-imenu
-  "g I" #'pjones:start-irc
+  "g i" #'pjones:start-irc
   "g m" #'magit-status
   "g o a" #'pjones:agenda
   "g o c" #'org-capture
@@ -243,7 +242,7 @@
   (kbd "g <return>") #'delete-blank-lines
   "g " #'just-one-space
   "g'" #'pjones:switch-to-previous-buffer
-  "gl" #'evil-avy-goto-line
+  "gm" #'counsel-imenu
   "gs" #'pjones:evil-sort
   "gS" #'evil-surround-edit
   "z'" #'evil-window-mru
@@ -264,7 +263,9 @@
 (evil-define-key 'motion global-map
   "^" #'pjones:evil-first-non-blank
   "[e" #'previous-error
-  "]e" #'next-error)
+  "]e" #'next-error
+  "gl" #'evil-avy-goto-line
+  "gM" #'evil-middle-of-visual-line)
 
 (dolist (state '(normal visual motion))
   (evil-define-key state global-map
