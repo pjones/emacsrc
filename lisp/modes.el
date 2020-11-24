@@ -28,7 +28,6 @@
       (eval-after-load (intern (replace-match "" t t basename))
         `(load ,file)))))
 
-;; The reset of the file is only loaded if we're not in --batch mode.
 (defun pjones:boot-global-modes ()
   "Start or prepare global modes."
   (counsel-mode)                          ; More completion via Ivy
@@ -55,12 +54,19 @@
 
   (add-hook 'text-mode-hook #'abbrev-mode))
 
-;; Hook in:
-(cond
- ((daemonp) (add-hook 'server-after-make-frame-hook #'pjones:boot-global-modes))
- ((not noninteractive) (add-hook 'after-init-hook #'pjones:boot-global-modes)))
+(defvar pjones:first-server-frame-initialized nil
+  "Non-nil when the first frame has been configured.")
 
-(add-hook 'server-after-make-frame-hook #'desktop-read)
-(add-hook 'server-after-make-frame-hook #'desktop-save-mode)
+(defun pjones:initialize-server-frame ()
+  "Configure a new server frame."
+  (unless pjones:first-server-frame-initialized
+    (setq pjones:first-server-frame-initialized t)
+    (desktop-read)
+    (desktop-save-mode)))
+
+;; Hook in:
+(unless noninteractive
+  (add-hook 'emacs-startup-hook #'pjones:boot-global-modes)
+  (add-hook 'server-after-make-frame-hook #'pjones:initialize-server-frame))
 
 ;;; modes.el ends here
