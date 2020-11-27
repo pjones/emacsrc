@@ -67,13 +67,6 @@
  '(vc-follow-symlinks t) ; Don't warn prompt me about symlinks!
  '(custom-file (concat user-emacs-directory "custom-init.el")))
 
-;; Settings from simple.el:
-(custom-set-variables
- '(async-shell-command-buffer 'new-buffer)
- '(kill-do-not-save-duplicates t)
- '(set-mark-command-repeat-pop t)
- '(next-line-add-newlines nil))
-
 (defun pjones:frame-title-file-name ()
   "How to format frame titles."
   (let* ((home (expand-file-name "~"))

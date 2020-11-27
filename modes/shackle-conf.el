@@ -1,49 +1,39 @@
-;;; shackle-conf.el -- Settings for shackle.
+;;; shackle-conf.el -- Settings for shackle. -*- lexical-binding: t -*-
 ;;
 ;;; Commentary:
 ;;
 ;;; Code:
 ;;
-;; https://github.com/wasamasa/shackle
+;; https://depp.brause.cc/shackle/
 (require 'shackle)
-
-(defun pjones:shackle-upper-right (buffer alist plist)
-  "Split the right-most window and put BUFFER there.
-ALIST is passed to display functions.  PLIST is ignored."
-  (let ((current (window-at (frame-width) 0)))
-    (when current
-      (let ((new (split-window current nil 'above)))
-        (when new
-          ;; This makes it so quitting the buffer closes the window:
-          (window--display-buffer buffer new 'window alist nil)
-          new)))))
 
 (defun pjones:shackle-make-window (buffer alist plist)
   "Make a window for BUFFER.
+
 If the :same-mode key in PLIST is non-nil, try to reuse a window that is
-already showing a buffer with the same mode as BUFFER.  If the
-:upper-right key is set, place buffer in the upper-right corner.
+already showing a buffer with the same mode as BUFFER.
+
 Otherwise split the current window.  ALIST is passed to display
 functions."
   (or (and (plist-get plist :same-mode)
            (display-buffer-reuse-mode-window buffer alist))
-      (and (plist-get plist :upper-right)
-           (pjones:shackle-upper-right buffer alist plist))
       (display-buffer-below-selected buffer alist)))
 
 (defun pjones:shackle-make-frame (buffer alist plist)
   "Make a frame for BUFFER.
 Follow the rules in `pjones:shackle-make-window' for PLIST and ALIST."
-  (add-to-list 'alist (cons 'reusable-frames 'visible))
-  (add-to-list 'alist (cons 'pop-up-frame-parameters
-                            (list (cons 'name "popup"))))
-  (unless (plist-get plist :select)
-    (add-to-list 'alist (cons 'inhibit-switch-frame t)))
-  (or (and (plist-get plist :same-mode)
-           (display-buffer-reuse-mode-window buffer alist))
-      (display-buffer-reuse-window buffer alist)
-      (display-buffer-pop-up-frame buffer alist)
-      (pjones:shackle-make-window buffer alist plist)))
+  (let ((params (list
+                 (cons 'name "popup")
+                 (cons 'unsplittable (plist-get plist :dedicated)))))
+    (push (cons 'reusable-frames 'visible) alist)
+    (push (cons 'pop-up-frame-parameters params) alist)
+    (unless (plist-get plist :select)
+      (push (cons 'inhibit-switch-frame t) alist))
+    (or (and (plist-get plist :same-mode)
+             (display-buffer-reuse-mode-window buffer alist))
+        (display-buffer-reuse-window buffer alist)
+        (display-buffer-pop-up-frame buffer alist)
+        (pjones:shackle-make-window buffer alist plist))))
 
 (defun pjones:shackle-split (buffer alist plist)
   "Split the current window to display BUFFER.
@@ -98,14 +88,6 @@ in PLIST.  ALIST is passed to display functions."
       :same-mode t
       :custom pjones:shackle-split)
 
-     ;; Modes that force a new frame:
-     ((term-mode
-       haskell-interactive-mode)
-      :select t
-      :dedicated t
-      :frame t
-      :custom pjones:shackle-split)
-
      ;; Windows that should split the current window but *not* get focus:
      (("magit-diff: "
        "\\*HTTP Response.*")
@@ -114,12 +96,21 @@ in PLIST.  ALIST is passed to display functions."
       :same-mode t
       :custom pjones:shackle-split)
 
-     ;; A very special rule, windows that should be placed in the upper
-     ;; right-hand corner of the frame but not take the focus:
+     ;; Modes that force a new (raised and focused) frame:
+     ((term-mode
+       haskell-interactive-mode)
+      :select t
+      :dedicated t
+      :frame t
+      :custom pjones:shackle-split)
+
+     ;; Modes that share a frame that is never raised.
      ((compilation-mode
-       grep-mode)
+       grep-mode
+       rg-mode)
       :select nil
       :same-mode t
+      :dedicated t
       :frame t
       :custom pjones:shackle-split))))
 
