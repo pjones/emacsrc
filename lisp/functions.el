@@ -4,7 +4,8 @@
 ;;
 ;;; Code:
 
-(require 'subr-x)
+(eval-when-compile
+  (require 'subr-x))
 
 (defun pjones:urgency-hint (frame status)
   "Set the urgency hint on FRAME with STATUS."
