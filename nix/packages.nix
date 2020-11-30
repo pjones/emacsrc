@@ -28,10 +28,10 @@ let
     treemacs-projectile = sources.treemacs;
 
     eldoc = self: super: rec {
-      version = "1.9.0";
+      version = "1.11.0";
       src = fetchurl {
         url = "http://elpa.gnu.org/packages/eldoc-${version}.el";
-        sha256 = "0y6xrf1m4949d9k5mbqhb1w6zga5k71zazvbay6af70gz8k447cg";
+        sha256 = "1py9l1vl7s90y5kfpglhy11jswam2gcrqap09h6wb5ldnyb8cgq2";
       };
     };
   };

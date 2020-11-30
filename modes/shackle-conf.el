@@ -66,7 +66,6 @@ in PLIST.  ALIST is passed to display functions."
        "\\*flymake "
        "\\*evil-owl\\*"
        "\\*eglot-help"
-       "\\*eldoc\\*"
        calendar-mode)
       :regexp t
       :size 0.3
@@ -107,7 +106,9 @@ in PLIST.  ALIST is passed to display functions."
      ;; Modes that share a frame that is never raised.
      ((compilation-mode
        grep-mode
-       rg-mode)
+       rg-mode
+       "\\*eldoc\\*")
+      :regexp t
       :select nil
       :same-mode t
       :dedicated t
