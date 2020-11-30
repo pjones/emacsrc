@@ -12,6 +12,7 @@
 (custom-set-variables
  '(desktop-save t)
  '(desktop-load-locked-desktop t)
+ '(desktop-restore-frames nil)
  `(desktop-dirname ,user-emacs-directory))
 
 ;;; desktop-conf.el ends here
