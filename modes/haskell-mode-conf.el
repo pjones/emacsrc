@@ -9,21 +9,29 @@
 ;;
 ;;; Code:
 (eval-when-compile
-  (require 'cl))
+  (require 'cl-lib))
 
 (require 'company)
+(require 'dash)
 (require 'direnv)
 (require 'eglot)
 (require 'evil-leader)
+(require 'haskell)
 (require 'haskell-interactive-mode)
 (require 'haskell-mode)
+(require 'haskell-navigate-imports)
 (require 'haskell-process)
 (require 'hasky-extensions)
 (require 'highlight-indent-guides)
+(require 'ivy)
+(require 'projectile)
 (require 'reformatter)
+(require 's)
+(require 'yasnippet)
 
 (declare-function pjones:prog-mode-hook "../lisp/code.el")
 (defvar pm/polymode)
+(defvar haskell-navigate-imports-start-point)
 
 ;; Settings for haskell-mode and friends:
 (custom-set-variables
@@ -48,16 +56,18 @@
   "j i" #'haskell-navigate-imports
   "j j" #'haskell-navigate-imports-return
   "j r" #'haskell-interactive-bring
+  "m a" #'eglot-code-actions
   "m e" #'haskell-cabal-visit-file
   "m h" #'pjones:hoogle
   "m i" #'pjones:haskell-add-import
+  "m I" #'pjones:haskell-import-project-file
   "m q" #'pjones:haskell-toggle-qualified
-  "m t" #'eglot-help-at-point
   "m x" #'pjones:hasky-extensions
   "y m" #'pjones:haskell-kill-module-name)
 
 (reformatter-define haskell-format
-  :program "ormolu")
+  :program "ormolu"
+  :group 'haskell)
 
 (defun pjones:hasky-extensions ()
   "Wrapper around `hasky-extensions'.
@@ -95,9 +105,8 @@ The match chosen by the user will be returned."
   (let* ((choice (pjones:haskell-search-hoogle "Query: "))
          (url (and choice (cdar choice))))
     (when url
-      (eww-browse-url
-       (if (string-match-p "/$" url) (concat url "index.html") url) t)
-      (pjones:eww-rename-buffer))))
+      (browse-url
+       (if (string-match-p "/$" url) (concat url "index.html") url) t))))
 
 (defun pjones:haskell-toggle-qualified nil
   "Toggle the 'qualified' modifier on the current line."
@@ -168,10 +177,13 @@ When prompting, use INITIAL as the initial module name."
   "Prompt for a project file, then add an import for it."
   (interactive)
   (let* ((project (project-current t))
-         (dirs (project-roots project))
-         (table (project-file-completion-table project dirs))
-         (file (projectile-completing-read "Find file" table)))
-    (pjones:haskell-add-import (pjones:haskell-generate-module-name file))))
+         (files
+          (-filter
+           (lambda (name) (s-suffix-p ".hs" name))
+           (project-files project)))
+         (file (projectile-completing-read "Find file: " files)))
+    (pjones:haskell-add-import
+     (pjones:haskell-generate-module-name file))))
 
 (defun pjones:haskell-navigate-exports ()
   "Jump to the export list."
@@ -179,7 +191,7 @@ When prompting, use INITIAL as the initial module name."
   (setq haskell-navigate-imports-start-point (point))
   (goto-char (point-min))
   (search-forward-regexp "^module ")
-  (search-forward-regexp ") where")
+  (search-forward-regexp "^where")
   (forward-line -1))
 
 (defun pjones:haskell-kill-module-name ()
@@ -253,22 +265,16 @@ When prompting, use INITIAL as the initial module name."
   (unless pm/polymode
     (setq-local
      eglot-stay-out-of
-     '(company
-       xref-prompt-for-identifier
-       flymake-diagnostic-functions
-       company-backends))
+     '(company company-backends))
     (setq-local
      company-backends
      '((company-capf
         company-dabbrev-code
         company-keywords)))
-    (setq-local
-     flymake-diagnostic-functions
-     '(eglot-flymake-backend))
-    (setq-local eldoc-echo-area-use-multiline-p 2)
     (eglot-ensure)
     (pjones:prog-mode-hook)
-    (flycheck-mode -1))
+    (if (fboundp 'flycheck-mode)
+        (flycheck-mode -1)))
 
   ;; Evil doc-lookup (on the "K" key):
   (setq-local evil-lookup-func #'pjones:hoogle)

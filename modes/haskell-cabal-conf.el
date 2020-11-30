@@ -3,13 +3,17 @@
 ;;; Commentary:
 ;;
 ;;; Code:
+
 (require 'haskell-mode)
 (require 'haskell-cabal)
 (require 'reformatter)
 (require 'evil)
 
+(declare-function pjones:prog-mode-hook "../lisp/code.el")
+
 (reformatter-define cabal-format
-  :program "cabal-fmt")
+  :program "cabal-fmt"
+  :group 'haskell)
 
 (evil-define-key 'normal haskell-cabal-mode-map
   "]]" #'haskell-cabal-next-section

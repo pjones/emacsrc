@@ -57,6 +57,7 @@
   "b B" #'ibuffer
   "b b" #'ivy-switch-buffer
   "b d" #'kill-this-buffer
+  "b e" #'eldoc-doc-buffer
   "b f" #'counsel-find-file
   "b l" #'pjones:switch-to-previous-buffer
   "b m" (pjones:jump-to-buffer "*Messages*")

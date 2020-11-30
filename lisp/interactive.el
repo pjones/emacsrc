@@ -3,8 +3,7 @@
 ;;; Commentary:
 ;;
 ;;; Code:
-(eval-when-compile
-  (require 'cl)) ; for plusp (need to replace it)
+
 (require 'flycheck)
 (require 'flymake)
 
@@ -13,8 +12,9 @@
 (declare-function pjones:projectile-project-root "../modes/projectile-conf.el")
 
 (defun pjones:maybe-save-buffers-kill-terminal (&optional arg)
-  "Save me from myself.  I somehow keep hitting C-x C-c when I
-don't want to."
+  "A function to save me from myself.
+I somehow keep hitting C-x C-c when I don't want to.
+ARG is passed to `save-buffers-kill-terminal'"
   (interactive)
   (if (yes-or-no-p "Really close this terminal? ")
       (save-buffers-kill-terminal arg)))
@@ -106,7 +106,8 @@ If DONT-ASK is non-nil, don't prompt for a project."
     (switch-to-buffer buf)))
 
 (defun pjones:pwgen (&optional word)
-  "Generate and insert a password."
+  "Generate and insert a password.
+If WORD is non-nil then generate a simple password."
   (interactive "P")
   (let* ((opts (if word "20 1" "-cnsyB 15 1"))
          (pw (replace-regexp-in-string "\n" ""
@@ -212,3 +213,5 @@ current buffer after point."
 ;; Local Variables:
 ;; byte-compile-warnings: (not noruntime)
 ;; End:
+
+;;; interactive.el ends here
