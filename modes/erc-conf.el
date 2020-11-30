@@ -4,6 +4,7 @@
 ;;
 ;;; Code:
 ;; Dependencies:
+
 (require 'adaptive-wrap)
 (require 'erc)
 (require 'erc-track)
@@ -142,12 +143,13 @@ if BUFFER is not currently displayed in a window."
     (add-to-list 'erc-track-exclude (erc-default-target))))
 
 (pjones:evil-override-mode erc-mode)
-(evil-leader/set-key-for-mode 'erc-mode
-  "j j" #'erc-track-switch-buffer)
+
+(evil-define-key 'normal erc-mode-map
+  "]b" #'erc-track-switch-buffer)
 
 (add-hook 'erc-mode-hook #'pjones:erc-mode-hook)
 (add-hook 'erc-track-mode-hook #'pjones:erc-ignore-channel)
 (add-hook 'erc-track-list-changed-hook #'pjones:erc-maybe-set-urgency-hint)
-(add-hook 'focus-in-hook #'erc-modified-channels-update)
+(add-hook 'after-focus-change-function #'erc-modified-channels-update)
 
 ;;; erc-conf.el ends here
