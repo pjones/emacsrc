@@ -147,9 +147,13 @@ if BUFFER is not currently displayed in a window."
 (evil-define-key 'normal erc-mode-map
   "]b" #'erc-track-switch-buffer)
 
+(add-function
+ :after after-focus-change-function
+ (lambda (&rest args) (erc-modified-channels-update)))
+
 (add-hook 'erc-mode-hook #'pjones:erc-mode-hook)
 (add-hook 'erc-track-mode-hook #'pjones:erc-ignore-channel)
 (add-hook 'erc-track-list-changed-hook #'pjones:erc-maybe-set-urgency-hint)
-(add-hook 'after-focus-change-function #'erc-modified-channels-update)
+
 
 ;;; erc-conf.el ends here
