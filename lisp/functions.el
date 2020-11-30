@@ -18,12 +18,15 @@
      '(1 "_NET_WM_STATE_DEMANDS_ATTENTION" 0))
   frame)
 
+(defun pjones:frame-popup-p (&optional frame)
+  "Return non-nil if FRAME is a popup frame."
+  (let ((params (frame-parameters (or frame (selected-frame)))))
+    ;; See shackle-conf.el for info about `x-name'.
+    (string= "popup" (cdr (assq 'x-name params)))))
+
 (defun pjones:display-buffer-in-non-popup-frame (buffer)
   "Display and select BUFFER for a server client."
-  (let* ((not-popup-p
-          (lambda (frame)
-            (not
-             (string= "popup" (cdr (assq 'name (frame-parameters frame)))))))
+  (let* ((not-popup-p (lambda (frame) (not (pjones:frame-popup-p frame))))
          (actions (list :frame-predicate not-popup-p)))
     (if-let ((window (display-buffer-use-some-frame buffer actions)))
         (progn
