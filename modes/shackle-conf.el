@@ -27,7 +27,7 @@ Follow the rules in `pjones:shackle-make-window' for PLIST and ALIST."
           (cons 'name "popup") ; For the window manager.
           (cons 'x-name "popup") ; Because `name' is replaced with `title'.
           (cons 'unsplittable (plist-get plist :dedicated)))))
-    (push (cons 'reusable-frames 'visible) alist)
+    (push (cons 'reusable-frames t) alist)
     (push (cons 'pop-up-frame-parameters params) alist)
     (unless (plist-get plist :select)
       (push (cons 'inhibit-switch-frame t) alist))
