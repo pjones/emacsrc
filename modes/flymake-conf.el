@@ -5,8 +5,8 @@
 ;;; Code:
 (require 'flymake)
 
-;; (custom-set-faces
-;;  '(flymake-error ((t (:underline nil))))
-;;  '(flymake-warning ((t (:underline nil)))))
+(custom-set-faces
+ '(flymake-error ((t (:underline nil))))
+ '(flymake-warning ((t (:underline nil)))))
 
 ;;; flymake-conf.el ends here

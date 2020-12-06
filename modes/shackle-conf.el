@@ -65,7 +65,6 @@ in PLIST.  ALIST is passed to display functions."
      (("\\*Completions\\*"
        "\\*Deletions\\*"
        "\\*Flycheck error"
-       "\\*flymake "
        "\\*evil-owl\\*"
        "\\*eglot-help"
        calendar-mode)
@@ -109,6 +108,7 @@ in PLIST.  ALIST is passed to display functions."
      ((compilation-mode
        grep-mode
        rg-mode
+       "\\*flymake "
        "\\*eldoc\\*")
       :regexp t
       :select nil
