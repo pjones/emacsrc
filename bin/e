@@ -13,6 +13,7 @@ option_server_path="${XDG_RUNTIME_DIR:-$HOME/.cache}/emacs"
 option_start_daemon=1
 option_fresh=0
 option_wait=0
+option_set_frame_name=0
 option_emacs_opts=()
 
 ################################################################################
@@ -39,6 +40,7 @@ Usage: e [options] [file] -- [emacsclient options]
   -d      Don't start a new daemon
   -f      Force a fresh Emacs to be started
   -h      This message
+  -n      Set the frame's name to the server name
   -s NAME Connect to server NAME [$EMACS_SOCKET_NAME]
   -t      Open a new TTY
   -w      Wait for Emacs to finish with the file
@@ -64,7 +66,7 @@ alive() {
 }
 
 ################################################################################
-while getopts "cdfhs:tw" o; do
+while getopts "cdfhns:tw" o; do
   case "${o}" in
   c)
     option_emacs_opts+=("--create-frame")
@@ -81,6 +83,10 @@ while getopts "cdfhs:tw" o; do
   h)
     usage
     exit
+    ;;
+
+  n)
+    option_set_frame_name=1
     ;;
 
   s)
@@ -110,6 +116,13 @@ if [ "$option_fresh" -eq 1 ]; then
     --funcall package-initialize \
     --load @out@/dot.emacs.el \
     --eval "(run-hooks 'after-init-hook)" "$@"
+fi
+
+################################################################################
+if [ "$option_set_frame_name" -eq 1 ]; then
+  option_emacs_opts+=(
+    "--frame-parameters=((name . \"$EMACS_SOCKET_NAME\"))"
+  )
 fi
 
 ################################################################################
