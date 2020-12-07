@@ -160,6 +160,7 @@ overrides.emacsWithPackages (epkgs:
     treemacs-evil # Evil mode integration for treemacs
     treemacs-projectile # Projectile integration for treemacs
     typescript-mode # Major mode for editing typescript
+    undo-fu # Undo helper with redo
     visual-fill # Auto-refill paragraphs without modifying the buffer
     vlf # View Large Files
     weyland-yutani-theme # Emacs theme based off Alien movie franchise

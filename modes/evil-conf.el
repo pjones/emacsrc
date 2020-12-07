@@ -16,13 +16,14 @@
 
 ;; Settings:
 (custom-set-variables
+ '(evil-undo-system 'undo-fu)
  '(evil-want-abbrev-expand-on-insert-exit nil)
  '(evil-shift-width 2)
  '(evil-move-beyond-eol t)
  '(evil-cross-lines t)
  '(evil-lookup-func #'dictionary-lookup-definition)
  '(evil-symbol-word-search t)
- '(evil-search-wrap nil)
+ '(evil-search-wrap t) ; I wish there was an 'ask option.
  '(evil-search-module 'evil-search)
  '(evil-magic 'very-magic)
  '(evil-ex-search-vim-style-regexp t)
