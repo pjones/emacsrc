@@ -10,7 +10,7 @@
 (declare-function pjones:frame-popup-p "../lisp/functions")
 
 (custom-set-variables
-  '(compilation-auto-jump-to-first-error t)
+  '(compilation-auto-jump-to-first-error nil)
   '(compilation-always-kill t))
 
 (defun pjones:compile-goto-error (orig &rest args)
