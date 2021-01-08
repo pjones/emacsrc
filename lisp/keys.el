@@ -77,9 +77,7 @@
   "f d" #'dired-jump
   "f f" #'counsel-find-file
   "f F" #'find-dired
-  "f m b" #'magit-blame
-  "f m d" #'magit-diff-buffer-file
-  "f m l" #'magit-log-buffer-file
+  "f m" #'magit-file-dispatch
   "f o" #'occur
   "f R" #'pjones:rename-current-file
   "f S" #'evil-write-all
