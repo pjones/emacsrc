@@ -6,7 +6,8 @@
   "The directory where I store my general Emacs configuration files.")
 
 (defvar pjones:lisp-files
-  '( "modes"
+  '( "buffers"
+     "modes"
      "server"
      "themes"
      "code"

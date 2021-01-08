@@ -11,7 +11,6 @@
 (declare-function ivy-mode "ivy")
 (declare-function minions-mode "minions")
 (declare-function projectile-mode "projectile")
-(declare-function shackle-mode "shackle")
 (declare-function which-key-mode "which-key")
 (declare-function winum-mode "winum")
 (declare-function yas-global-mode "yasnippet")
@@ -39,7 +38,6 @@
   (ivy-mode)                              ; Minibuffer completion
   (minions-mode)                          ; Hide some minor modes.
   (projectile-mode)                       ; Project tool
-  (shackle-mode)                          ; Control pop-up windows.
   (which-key-mode)                        ; Remind me what keys do.
   (winner-mode)                           ; Track win conifg changes
   (winum-mode)                            ; Number windows

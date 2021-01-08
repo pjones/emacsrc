@@ -21,7 +21,7 @@
 (defun pjones:frame-popup-p (&optional frame)
   "Return non-nil if FRAME is a popup frame."
   (let ((params (frame-parameters (or frame (selected-frame)))))
-    ;; See shackle-conf.el for info about `x-name'.
+    ;; See buffers.el for info about `x-name'.
     (string= "popup" (cdr (assq 'x-name params)))))
 
 (defun pjones:display-buffer-in-non-popup-frame (buffer)

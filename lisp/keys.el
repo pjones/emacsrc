@@ -127,6 +127,7 @@
   "p g" #'pjones:pwgen
   "p l" #'passmm-list-passwords
   "p p" #'passmm-completing-read
+  "p t" #'projectile-test-project
 
   ;; Toggles:
   "t /" #'evil-ex-nohighlight
