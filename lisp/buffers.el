@@ -19,16 +19,17 @@
 NAMES-OR-MODES should be a list of regular expressions that match a
 buffer name, or symbols that match a major mode."
   `(lambda (buffer-or-name _action)
-     (let* ((buffer (get-buffer buffer-or-name))
-            (name (buffer-name buffer))
-            (mode (buffer-local-value 'major-mode buffer)))
-       (-any
-        (lambda (condition)
-          (or (and (symbolp condition)
-                   (eq condition mode))
-              (and (stringp condition)
-                   (string-match condition name)))
-          ) ,names-or-modes))))
+     (when buffer-or-name
+       (let* ((buffer (get-buffer buffer-or-name))
+              (name (buffer-name buffer))
+              (mode (buffer-local-value 'major-mode buffer)))
+         (-any
+          (lambda (condition)
+            (or (and (symbolp condition)
+                     (eq condition mode))
+                (and (stringp condition)
+                     (string-match condition name)))
+            ) ,names-or-modes)))))
 
 (setq display-buffer-alist
       `(;; Windows that should split the entire frame:
@@ -49,6 +50,15 @@ buffer name, or symbols that match a major mode."
           display-buffer-at-bottom)
          (reusable-framaes .)
          (window-height . 0.3))
+
+        ;; Like above, but with a smaller size:
+        (,(pjones:buffer-conditions
+           '("Embark Collect \\(Live\\|Completions\\)"))
+         (display-buffer-reuse-window
+          display-buffer-reuse-mode-window
+          display-buffer-at-bottom)
+         (reusable-framaes .)
+         (window-height . 0.1))
 
         ;; Windows that should split the current window but *not* get
         ;; focus:

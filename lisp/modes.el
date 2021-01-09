@@ -4,11 +4,9 @@
 ;;
 ;;; Code:
 
-(declare-function counsel-mode "counsel")
 (declare-function default-text-scale-mode "default-text-scale")
 (declare-function direnv-mode "direnv")
 (declare-function global-diff-hl-mode "diff-hl")
-(declare-function ivy-mode "ivy")
 (declare-function minions-mode "minions")
 (declare-function projectile-mode "projectile")
 (declare-function which-key-mode "which-key")
@@ -29,19 +27,18 @@
 
 (defun pjones:boot-global-modes ()
   "Start or prepare global modes."
-  (counsel-mode)                          ; More completion via Ivy
-  (default-text-scale-mode)               ; Frame text scaling.
-  (direnv-mode)                           ; Respect .envrc files.
-  (global-auto-revert-mode)               ; External changes cause a revert
-  (global-diff-hl-mode)                   ; Show what changes in a buffer
-  (global-prettify-symbols-mode)          ; Replace buffer symbols.
-  (ivy-mode)                              ; Minibuffer completion
-  (minions-mode)                          ; Hide some minor modes.
-  (projectile-mode)                       ; Project tool
-  (which-key-mode)                        ; Remind me what keys do.
-  (winner-mode)                           ; Track win conifg changes
-  (winum-mode)                            ; Number windows
-  (yas-global-mode)                       ; Snippets.
+  (icomplete-mode)                   ; minibuffer completions.
+  (default-text-scale-mode)          ; Frame text scaling.
+  (direnv-mode)                      ; Respect .envrc files.
+  (global-auto-revert-mode)          ; External changes cause a revert
+  (global-diff-hl-mode)              ; Show what changes in a buffer
+  (global-prettify-symbols-mode)     ; Replace buffer symbols.
+  (minions-mode)                     ; Hide some minor modes.
+  (projectile-mode)                  ; Project tool
+  (which-key-mode)                   ; Remind me what keys do.
+  (winner-mode)                      ; Track win conifg changes
+  (winum-mode)                       ; Number windows
+  (yas-global-mode)                  ; Snippets.
 
   ;; Other modes that need to be activated:
   (pdf-tools-install)                     ; Internal PDF viewer

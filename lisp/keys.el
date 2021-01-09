@@ -48,17 +48,17 @@
 ;; Key bindings that fall under the leader (space) key:
 (evil-leader/set-key
   ;; Menus:
-  "DEL" #'counsel-M-x
-  "SPC" #'ivy-switch-buffer
+  "DEL" #'execute-extended-command
+  "SPC" #'consult-buffer
   ":" #'eval-expression
 
   ;; Buffer Commnads:
   "b a" (pjones:jump-to-buffer "*Org Agenda*" pjones:agenda)
   "b B" #'ibuffer
-  "b b" #'ivy-switch-buffer
+  "b b" #'consult-buffer
   "b d" #'kill-this-buffer
   "b e" #'eldoc-doc-buffer
-  "b f" #'counsel-find-file
+  "b f" #'find-file
   "b l" #'pjones:switch-to-previous-buffer
   "b m" (pjones:jump-to-buffer "*Messages*")
   "b r" #'revert-buffer
@@ -73,9 +73,8 @@
   "e r" #'eval-region
 
   ;; File Commands:
-  "f b" #'counsel-bookmark
   "f d" #'dired-jump
-  "f f" #'counsel-find-file
+  "f f" #'find-file
   "f F" #'find-dired
   "f m" #'magit-file-dispatch
   "f o" #'occur
@@ -86,12 +85,13 @@
   "f w" #'write-file
 
   ;; Go/Grep Commands:
+  "g a h" #'pjones:start-http
+  "g a i" #'pjones:start-irc
   "g C" #'full-calc
   "g c" #'quick-calc
+  "g e" #'embark-act
   "g f" #'rg
   "g g" #'rg-project
-  "g h" #'pjones:start-http
-  "g i" #'pjones:start-irc
   "g m" #'magit-status
   "g o a" #'pjones:agenda
   "g o c" #'org-capture
@@ -99,7 +99,7 @@
   "g o L" #'org-id-store-link
   "g o l" #'org-store-link
   "g o o" #'org-clock-out
-  "g r" #'counsel-rg
+  "g r" #'consult-ripgrep
   "g t" #'pjones:zettel-need-to-do
   "g x" #'pjones:link-hint-open-link
   "g z" #'pjones:rg-zettel-dir
@@ -227,7 +227,7 @@
 
 ;; Additional key bindings:
 (evil-define-key 'insert minibuffer-local-map
-  (kbd "<escape>") #'minibuffer-keyboard-quit)
+  (kbd "<escape>") #'abort-recursive-edit)
 
 (evil-define-key 'normal global-map
   "[b" #'previous-buffer
@@ -242,7 +242,8 @@
   (kbd "g <return>") #'delete-blank-lines
   "g " #'just-one-space
   "g'" #'pjones:switch-to-previous-buffer
-  "gm" #'counsel-imenu
+  "gG" #'consult-goto-line
+  "gm" #'consult-imenu
   "gs" #'pjones:evil-sort
   "gS" #'evil-surround-edit
   "z'" #'evil-window-mru

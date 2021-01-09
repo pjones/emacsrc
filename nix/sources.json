@@ -1,4 +1,16 @@
 {
+    "consult": {
+        "branch": "main",
+        "description": "consult.el - Consulting completing-read",
+        "homepage": "",
+        "owner": "minad",
+        "repo": "consult",
+        "rev": "1ca1ca683fe40b233272ac23f46193d968e03b28",
+        "sha256": "0zir3fyx6kdv4mh91qjnwh3myf6iv94yjwqn1zs8szr3fqsvj580",
+        "type": "tarball",
+        "url": "https://github.com/minad/consult/archive/1ca1ca683fe40b233272ac23f46193d968e03b28.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
     "dictionary-el": {
         "branch": "master",
         "description": null,
@@ -35,6 +47,18 @@
         "url": "https://github.com/hlissner/emacs-doom-themes/archive/e55d9a2ead88cf7039afdf944ba8e4be3165395a.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
+    "embark": {
+        "branch": "master",
+        "description": "Emacs Mini-Buffer Actions Rooted in Keymaps",
+        "homepage": null,
+        "owner": "oantolin",
+        "repo": "embark",
+        "rev": "567addfcdb744bb3e2f7dcea052568f9641d9737",
+        "sha256": "0983kryh7zz9znp09pxgxx0xi4lxk2raqya6rwlwy7r3b9j3kqr2",
+        "type": "tarball",
+        "url": "https://github.com/oantolin/embark/archive/567addfcdb744bb3e2f7dcea052568f9641d9737.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
     "evil": {
         "branch": "master",
         "description": "The extensible vi layer for Emacs.",
@@ -63,6 +87,18 @@
         "sha256": "0iksjch94wfvyq0cgwv5wq52j0dc9cavm68wka3pahhdvjlxd3js",
         "type": "tarball",
         "url": "https://github.com/nix-community/home-manager/archive/63f299b3347aea183fc5088e4d6c4a193b334a41.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
+    "melpa": {
+        "branch": "master",
+        "description": "Recipes and build machinery for the biggest Emacs package repo",
+        "homepage": "https://melpa.org",
+        "owner": "melpa",
+        "repo": "melpa",
+        "rev": "2e7aee5074faedef4f2b989ffe05995b2f73bfbb",
+        "sha256": "1i5zc2l26cxs5vh2n08i3cbc6mrglqlpfy3wnzkj4scpalq1srj7",
+        "type": "tarball",
+        "url": "https://github.com/melpa/melpa/archive/2e7aee5074faedef4f2b989ffe05995b2f73bfbb.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "neuron-mode": {
@@ -113,6 +149,18 @@
         "url": "https://github.com/nix-community/nixpkgs-fmt/archive/025292e583d585c2951040ff4c4717885fab9c91.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
+    "orderless": {
+        "branch": "master",
+        "description": "Emacs completion style that matches multiple regexps in any order",
+        "homepage": "",
+        "owner": "oantolin",
+        "repo": "orderless",
+        "rev": "fc420e3d072a50e4c57d743627f09b7a66c066ba",
+        "sha256": "11b6kszv8wrfglxk1p2lzdar7b19gjf3wcchycjm2zycr82wrwk8",
+        "type": "tarball",
+        "url": "https://github.com/oantolin/orderless/archive/fc420e3d072a50e4c57d743627f09b7a66c066ba.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
     "origami.el": {
         "branch": "master",
         "description": "A folding minor mode for Emacs",
@@ -128,7 +176,7 @@
     "passmm": {
         "ref": "master",
         "repo": "https://github.com/pjones/passmm.git",
-        "rev": "b25a92048c788a8477cc5ffe14c0c4a4df19d79a",
+        "rev": "d78d1bf4f397180d2256248df589f33aafb4c8b4",
         "type": "git"
     },
     "reformatter.el": {

@@ -3,14 +3,12 @@
 ;;; Commentary:
 ;;
 ;;; Code:
-(require 'ivy)
 (require 'project)
 (require 'projectile)
 
 (custom-set-variables
  '(projectile-mode-line nil)
- '(projectile-switch-project-action 'projectile-dired)
- '(projectile-completion-system 'ivy))
+ '(projectile-switch-project-action 'projectile-dired))
 
 ;; Modes to ignore:
 (add-to-list 'projectile-globally-ignored-modes "org-agenda-mode")

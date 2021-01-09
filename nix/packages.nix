@@ -9,17 +9,31 @@ let
   # Package sources:
   sources = import ./sources.nix;
 
+  # Build a MELPA package that isn't in nixpkgs:
+  melpa = name: src: args: super:
+    super.melpaBuild
+      {
+        inherit src;
+        pname = name;
+        version = "20210108.1"; # Dummy version number.
+        recipe = "${sources.melpa}/recipes/${name}";
+      } // args;
+
+
   # Latest versions of existing packages (or packages not in nixpkgs):
   latest = {
     connection = sources.dictionary-el;
     dictionary = sources.dictionary-el;
     link = sources.dictionary-el;
 
+    consult = self: melpa "consult" sources.consult { };
     doom-themes = sources.emacs-doom-themes;
     eglot = sources.eglot;
+    embark = self: melpa "embark" sources.embark { };
     evil = sources.evil;
     evil-indent-textobject = sources.evil-indent-textobject;
     neuron-mode = sources.neuron-mode;
+    orderless = sources.orderless;
     origami = sources."origami.el";
     passmm = sources.passmm;
     reformatter = sources."reformatter.el";
@@ -69,9 +83,7 @@ overrides.emacsWithPackages (epkgs:
     company # Modular text completion framework
     company-quickhelp # Popup documentation for completion candidates
     company-statistics # Sort candidates using completion history
-    counsel # Various completion functions using Ivy
-    counsel-notmuch # Search emails in Notmuch asynchronously with Ivy
-    counsel-world-clock # Display world clock using Ivy
+    consult # Consulting completing-read
     csv-mode # Major mode for editing comma/char separated values
     darkroom # Remove visual distractions and focus on writing
     default-text-scale # Easily adjust the font size in all frames
@@ -88,6 +100,7 @@ overrides.emacsWithPackages (epkgs:
     eimp # Emacs Image Manipulation Package
     eldoc # Show function arglist or variable docstring in echo area
     elm-mode # Elm mode for emacs
+    embark # Conveniently act on minibuffer completions
     erc-hl-nicks # ERC nick highlighter that ignores uniquifying chars when colorizing
     evil # Extensible Vi layer for Emacs
     evil-commentary # Comment stuff out. A port of vim-commentary
@@ -100,7 +113,6 @@ overrides.emacsWithPackages (epkgs:
     evil-textobj-syntax # Provides syntax text objects
     flycheck # On-the-fly syntax checking
     flyspell-correct # Correcting words with flyspell via custom interface
-    flyspell-correct-ivy # Correcting words with flyspell via ivy interface
     forge # Access Git forges from Magit
     git-annex # Mode for easy editing of git-annex'd files
     go-mode # Major mode for the Go programming language
@@ -113,8 +125,6 @@ overrides.emacsWithPackages (epkgs:
     ialign # visual align-regexp
     indium # JavaScript Awesome Development Environment
     inf-ruby # Run a Ruby process in a buffer
-    ivy # Incremental Vertical completion
-    ivy-rich # More friendly display transformer for ivy
     js2-mode # Improved JavaScript editing mode
     json-mode # Major mode for editing JSON files
     jsonrpc # JSON-RPC library
@@ -129,6 +139,7 @@ overrides.emacsWithPackages (epkgs:
     noccur # Run multi-occur on project/dired files
     notmuch.emacs # Notmunch emacs library.
     nov # Featureful EPUB reader mode
+    orderless # Completion style for matching regexps in any order
     org # Outline-based notes management and organizer
     org-bullets # Show bullets in org-mode as UTF-8 characters
     org-clock-csv # Export `org-mode' clock entries to CSV format

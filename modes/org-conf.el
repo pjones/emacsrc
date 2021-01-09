@@ -218,10 +218,7 @@
            ("r" "Respond to Email" entry (id "3ef415be-890a-407b-8a3e-21814810790e")
             (file "~/notes/etc/templates/orgmode/mail.org"))
            ("c" "New Training Class" entry (id "09727f4a-aa01-4429-8408-d40511c19657")
-            (file "~/notes/etc/templates/orgmode/training.org")))))
-
- ;; Plugin Settings:
- '(org-mru-clock-completing-read #'ivy-completing-read))
+            (file "~/notes/etc/templates/orgmode/training.org"))))))
 
 (defun pjones:org-mode-hook ()
   "Hook to hack `org-mode'."

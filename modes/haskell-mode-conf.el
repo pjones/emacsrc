@@ -23,7 +23,6 @@
 (require 'haskell-process)
 (require 'hasky-extensions)
 (require 'highlight-indent-guides)
-(require 'ivy)
 (require 'projectile)
 (require 'reformatter)
 (require 's)
@@ -41,8 +40,7 @@
   '(haskell-process-show-debug-tips nil)
   '(haskell-process-suggest-remove-import-lines t)
   '(haskell-process-auto-import-loaded-modules t)
-  '(haskell-tags-on-save nil)
-  '(haskell-completing-read-function 'ivy-completing-read))
+  '(haskell-tags-on-save nil))
 
 ;; A few extra key bindings:
 (evil-set-initial-state 'haskell-interactive-mode 'insert)
@@ -75,7 +73,7 @@ A version of `hasky-extensions' that doesn't use avy."
   (interactive)
   (let* ((exts hasky-extensions)
          (active (hasky-extensions-list))
-         (name (ivy-completing-read "Extension: " exts nil t)))
+         (name (completing-read "Extension: " exts nil t)))
     (if (member name active) (hasky-extensions-remove name)
       (hasky-extensions-add name))))
 
@@ -96,11 +94,11 @@ The match chosen by the user will be returned."
       (goto-char (point-min))
       (while (search-forward-regexp "^\\(.*\\) -- \\(.*\\)$" nil t)
         (setq result (cons `(,(match-string 1) . ,(match-string 2)) result))))
-    (cons (assoc (ivy-completing-read "Matches: " result nil t) result)
+    (cons (assoc (completing-read "Matches: " result nil t) result)
           (list query))))
 
 (defun pjones:hoogle ()
-  "Run hoogle and display results in ivy."
+  "Run hoogle and display results."
   (interactive)
   (let* ((choice (pjones:haskell-search-hoogle "Query: "))
          (url (and choice (cdar choice))))
