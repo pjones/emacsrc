@@ -54,9 +54,7 @@ buffer name, or symbols that match a major mode."
         ;; Like above, but with a smaller size:
         (,(pjones:buffer-conditions
            '("Embark Collect \\(Live\\|Completions\\)"))
-         (display-buffer-reuse-window
-          display-buffer-reuse-mode-window
-          display-buffer-at-bottom)
+         (display-buffer-at-bottom)
          (reusable-framaes .)
          (window-height . 0.1))
 
