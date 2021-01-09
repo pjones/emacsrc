@@ -11,6 +11,9 @@
 ;;
 ;;; Code:
 
+(eval-when-compile
+  (require 'subr-x))
+
 (require 'dash)
 
 (defmacro pjones:buffer-conditions (names-or-modes)
@@ -19,17 +22,16 @@
 NAMES-OR-MODES should be a list of regular expressions that match a
 buffer name, or symbols that match a major mode."
   `(lambda (buffer-or-name _action)
-     (when buffer-or-name
-       (let* ((buffer (get-buffer buffer-or-name))
-              (name (buffer-name buffer))
-              (mode (buffer-local-value 'major-mode buffer)))
-         (-any
-          (lambda (condition)
-            (or (and (symbolp condition)
-                     (eq condition mode))
-                (and (stringp condition)
-                     (string-match condition name)))
-            ) ,names-or-modes)))))
+     (when-let* ((buffer (and buffer-or-name (get-buffer buffer-or-name)))
+                 (name (buffer-name buffer))
+                 (mode (buffer-local-value 'major-mode buffer)))
+       (-any
+        (lambda (condition)
+          (or (and (symbolp condition)
+                   (eq condition mode))
+              (and (stringp condition)
+                   (string-match condition name))))
+        ,names-or-modes))))
 
 (setq display-buffer-alist
       `(;; Windows that should split the entire frame:
