@@ -46,8 +46,8 @@
 (evil-set-initial-state 'haskell-interactive-mode 'insert)
 
 (evil-define-key 'insert haskell-interactive-mode-map
-  (kbd "C-j") #'haskell-interactive-mode-history-next
-  (kbd "C-k") #'haskell-interactive-mode-history-previous)
+  (kbd "<down>") #'haskell-interactive-mode-history-next
+  (kbd "<up>") #'haskell-interactive-mode-history-previous)
 
 (evil-leader/set-key-for-mode 'haskell-mode
   "j e" #'pjones:haskell-navigate-exports
@@ -57,7 +57,7 @@
   "m a" #'eglot-code-actions
   "m e" #'haskell-cabal-visit-file
   "m h" #'pjones:hoogle
-  "m i" #'pjones:haskell-add-import
+  "m i" #'pjones:haskell-import-package-module
   "m I" #'pjones:haskell-import-project-file
   "m q" #'pjones:haskell-toggle-qualified
   "m x" #'pjones:hasky-extensions
@@ -146,11 +146,15 @@ If non-nil, use MODULE as the initial module name."
   "Prompt for an import and add it to the imports section.
 When prompting, use INITIAL as the initial module name."
   (interactive)
+  (if initial
+      (save-excursion
+        (goto-char (point-max))
+        (haskell-navigate-imports)
+        (insert (concat (pjones:haskell-read-import initial) "\n")))
     (goto-char (point-max))
     (haskell-navigate-imports)
-    (if initial (insert (concat (pjones:haskell-read-import initial) "\n"))
-      (evil-insert-state)
-      (yas-expand-snippet (yas-lookup-snippet "import"))))
+    (evil-insert-state)
+    (yas-expand-snippet (yas-lookup-snippet "import"))))
 
 (defun pjones:haskell-add-import-from-hoogle ()
   "Use hoogle to select an import to add."
@@ -174,14 +178,41 @@ When prompting, use INITIAL as the initial module name."
 (defun pjones:haskell-import-project-file ()
   "Prompt for a project file, then add an import for it."
   (interactive)
-  (let* ((project (project-current t))
+  (let* ((project (project-current t)) (root (project-root project))
          (files
-          (-filter
-           (lambda (name) (s-suffix-p ".hs" name))
-           (project-files project)))
-         (file (projectile-completing-read "Find file: " files)))
+          (-map
+           (lambda (name) (s-chop-prefix root name))
+           (-filter
+            (lambda (name)
+              (and (s-suffix-p ".hs" name)
+                   (not (string-match-p "/dist\\(-newstyle\\)?/" name))))
+            (project-files project))))
+         (file (completing-read "Import project file: " files)))
     (pjones:haskell-add-import
      (pjones:haskell-generate-module-name file))))
+
+(defun pjones:haskell-import-package-module ()
+  "Prompt for a module from a build-dependes package and import it."
+  (interactive)
+  (let* ((on-space (rx (one-or-more space)))
+         (packages
+          (s-split
+           on-space
+           (s-trim
+            (shell-command-to-string "ghc-pkg --simple-output list"))
+           t))
+         (package
+          (completing-read "Import from package: " packages))
+         (modules
+          (s-split
+           on-space
+           (s-trim
+            (shell-command-to-string
+             (concat "ghc-pkg --simple-output field "
+                     package " exposed-modules")))
+           t)))
+    (pjones:haskell-add-import
+     (completing-read "Import package module: " modules))))
 
 (defun pjones:haskell-navigate-exports ()
   "Jump to the export list."
@@ -261,14 +292,7 @@ When prompting, use INITIAL as the initial module name."
 
   ;; Load helper packages:
   (unless pm/polymode
-    (setq-local
-     eglot-stay-out-of
-     '(company company-backends))
-    (setq-local
-     company-backends
-     '((company-capf
-        company-dabbrev-code
-        company-keywords)))
+    (setq-local eglot-stay-out-of '(company company-backends))
     (eglot-ensure)
     (pjones:prog-mode-hook)
     (if (fboundp 'flycheck-mode)

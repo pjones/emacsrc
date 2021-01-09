@@ -29,10 +29,10 @@
         "homepage": null,
         "owner": "joaotavora",
         "repo": "eglot",
-        "rev": "21726416e6e580b20dfa90833c6dab2a8a15ea48",
-        "sha256": "1al1a7np6127xw4ksqcwpm20v635pb83vfx8mr06wyzdbgls0plb",
+        "rev": "16bbf8564f52312f81bef56f57d46cb08d6df291",
+        "sha256": "17h1ngci4swsa73fvm45sf9mycsgzwdfim6ji3il5bg7qrrzivc5",
         "type": "tarball",
-        "url": "https://github.com/joaotavora/eglot/archive/21726416e6e580b20dfa90833c6dab2a8a15ea48.tar.gz",
+        "url": "https://github.com/joaotavora/eglot/archive/16bbf8564f52312f81bef56f57d46cb08d6df291.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "emacs-doom-themes": {
@@ -131,10 +131,10 @@
         "homepage": "",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "05334ad78526ead39af85f846515606d9f052a11",
-        "sha256": "1jrn6prplav0knaj859qqwg0l6mcyiv5yjd567hpgm4bi9hy1nxg",
+        "rev": "0cfd08f4881bbfdaa57e68835b923d4290588d98",
+        "sha256": "1srd9p37jmrsxgvrxvlibmscphz5p42244285yc5piacvrz1rdcc",
         "type": "tarball",
-        "url": "https://github.com/NixOS/nixpkgs/archive/05334ad78526ead39af85f846515606d9f052a11.tar.gz",
+        "url": "https://github.com/NixOS/nixpkgs/archive/0cfd08f4881bbfdaa57e68835b923d4290588d98.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "nixpkgs-fmt": {
