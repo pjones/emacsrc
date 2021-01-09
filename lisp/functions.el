@@ -22,7 +22,8 @@
   "Return non-nil if FRAME is a popup frame."
   (let ((params (frame-parameters (or frame (selected-frame)))))
     ;; See buffers.el for info about `x-name'.
-    (string= "popup" (cdr (assq 'x-name params)))))
+    (or (string= "popup" (cdr (assq 'x-name params)))
+        (string= "popup" (cdr (assq 'name params))))))
 
 (defun pjones:display-buffer-in-non-popup-frame (buffer)
   "Display and select BUFFER for a server client."
