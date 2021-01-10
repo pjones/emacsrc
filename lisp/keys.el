@@ -125,6 +125,7 @@
   "p g" #'pjones:pwgen
   "p l" #'passmm-list-passwords
   "p p" #'passmm-completing-read
+  "p s" #'projectile-switch-project
   "p t" #'projectile-test-project
 
   ;; Toggles:

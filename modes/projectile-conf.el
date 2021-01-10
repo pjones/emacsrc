@@ -8,7 +8,8 @@
 
 (custom-set-variables
  '(projectile-mode-line nil)
- '(projectile-switch-project-action 'projectile-dired))
+ '(projectile-switch-project-action 'projectile-dired)
+ '(projectile-completion-system 'default))
 
 ;; Modes to ignore:
 (add-to-list 'projectile-globally-ignored-modes "org-agenda-mode")
