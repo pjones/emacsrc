@@ -52,16 +52,8 @@
 (defvar pjones:first-server-frame-initialized nil
   "Non-nil when the first frame has been configured.")
 
-(defun pjones:initialize-server-frame ()
-  "Configure a new server frame."
-  (unless pjones:first-server-frame-initialized
-    (setq pjones:first-server-frame-initialized t)
-    (desktop-read)
-    (desktop-save-mode)))
-
 ;; Hook in:
 (unless noninteractive
-  (add-hook 'emacs-startup-hook #'pjones:boot-global-modes)
-  (add-hook 'server-after-make-frame-hook #'pjones:initialize-server-frame))
+  (add-hook 'emacs-startup-hook #'pjones:boot-global-modes))
 
 ;;; modes.el ends here
