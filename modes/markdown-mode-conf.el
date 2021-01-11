@@ -70,7 +70,7 @@ If REVERSE is non-nil, do the opposite of what the context says."
   (whitespace-mode -1)
   (visual-line-mode)
   (visual-fill-mode)
-  (darkroom-tentative-mode))
+  (darkroom-mode))
 
 (defun pjones:markdown-follow-thing-at-point (arg)
   "Call (and pass ARG) to `markdown-follow-thing-at-point'."
