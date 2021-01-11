@@ -26,7 +26,6 @@ let
     dictionary = sources.dictionary-el;
     link = sources.dictionary-el;
 
-    consult = self: melpa "consult" sources.consult { };
     doom-themes = sources.emacs-doom-themes;
     eglot = sources.eglot;
     embark = self: melpa "embark" sources.embark { };
@@ -83,7 +82,6 @@ overrides.emacsWithPackages (epkgs:
     company # Modular text completion framework
     company-quickhelp # Popup documentation for completion candidates
     company-statistics # Sort candidates using completion history
-    consult # Consulting completing-read
     csv-mode # Major mode for editing comma/char separated values
     darkroom # Remove visual distractions and focus on writing
     default-text-scale # Easily adjust the font size in all frames
@@ -108,11 +106,13 @@ overrides.emacsWithPackages (epkgs:
     evil-indent-textobject # evil textobjects based on indentation
     evil-leader # let there be <leader>
     evil-matchit # Vim matchit ported to Evil
+    evil-numbers # increment/decrement numbers like in vim
     evil-owl # Preview evil registers and marks before using them
     evil-surround # emulate surround.vim from Vim
     evil-textobj-syntax # Provides syntax text objects
     flycheck # On-the-fly syntax checking
     flyspell-correct # Correcting words with flyspell via custom interface
+    flyspell-correct-avy-menu # Correcting words with flyspell via avy-menu interface
     forge # Access Git forges from Magit
     git-annex # Mode for easy editing of git-annex'd files
     go-mode # Major mode for the Go programming language
@@ -123,6 +123,7 @@ overrides.emacsWithPackages (epkgs:
     htmlize # Convert buffer text and decorations to HTML
     http # Yet another HTTP client
     ialign # visual align-regexp
+    imenus # Imenu for multiple buffers and without subgroups
     indium # JavaScript Awesome Development Environment
     inf-ruby # Run a Ruby process in a buffer
     js2-mode # Improved JavaScript editing mode
@@ -162,9 +163,7 @@ overrides.emacsWithPackages (epkgs:
     rg # A search tool based on ripgrep
     ruby-end # Automatic insertion of end blocks for Ruby
     scad-mode # A major mode for editing OpenSCAD code
-    shackle # Enforce rules for popups
     smartrep # Support sequential operation which omitted prefix keys
-    smex # M-x interface with Ido-style fuzzy matching
     sweet-theme # Sweet-looking theme
     switch-window # A *visual* way to switch window
     treemacs # A tree style file explorer package

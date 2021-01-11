@@ -3,9 +3,15 @@
 ;;; Commentary:
 ;;
 ;;; Code:
-(require 'flyspell)
-(require 'flyspell-correct)
 
-(define-key flyspell-mode-map (kbd "C-;") #'flyspell-correct-wrapper)
+(require 'flyspell)
+(require 'flyspell-correct-avy-menu)
+
+(defun pjones:flyspell-correct ()
+  "Correct work without moving point."
+  (interactive)
+  (save-excursion (flyspell-correct-wrapper)))
+
+(define-key flyspell-mode-map (kbd "C-;") #'pjones:flyspell-correct)
 
 ;;; flyspell-conf.el ends here

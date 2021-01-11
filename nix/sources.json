@@ -1,16 +1,4 @@
 {
-    "consult": {
-        "branch": "main",
-        "description": "consult.el - Consulting completing-read",
-        "homepage": "",
-        "owner": "minad",
-        "repo": "consult",
-        "rev": "1ca1ca683fe40b233272ac23f46193d968e03b28",
-        "sha256": "0zir3fyx6kdv4mh91qjnwh3myf6iv94yjwqn1zs8szr3fqsvj580",
-        "type": "tarball",
-        "url": "https://github.com/minad/consult/archive/1ca1ca683fe40b233272ac23f46193d968e03b28.tar.gz",
-        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
-    },
     "dictionary-el": {
         "branch": "master",
         "description": null,

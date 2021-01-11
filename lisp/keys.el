@@ -49,13 +49,17 @@
 (evil-leader/set-key
   ;; Menus:
   "DEL" #'execute-extended-command
-  "SPC" #'consult-buffer
+  "SPC" #'switch-to-buffer
   ":" #'eval-expression
+
+  ;; Top-level (simple) commands:
+  "+" #'evil-numbers/inc-at-pt
+  "-" #'evil-numbers/dec-at-pt
 
   ;; Buffer Commnads:
   "b a" (pjones:jump-to-buffer "*Org Agenda*" pjones:agenda)
   "b B" #'ibuffer
-  "b b" #'consult-buffer
+  "b b" #'switch-to-buffer
   "b d" #'kill-this-buffer
   "b e" #'eldoc-doc-buffer
   "b f" #'find-file
@@ -73,6 +77,7 @@
   "e r" #'eval-region
 
   ;; File Commands:
+  "f b" #'bookmark-jump
   "f d" #'dired-jump
   "f f" #'find-file
   "f F" #'find-dired
@@ -99,7 +104,6 @@
   "g o L" #'org-id-store-link
   "g o l" #'org-store-link
   "g o o" #'org-clock-out
-  "g r" #'consult-ripgrep
   "g t" #'pjones:zettel-need-to-do
   "g x" #'pjones:link-hint-open-link
   "g z" #'pjones:rg-zettel-dir
@@ -162,6 +166,7 @@
   "ws" #'window-toggle-side-windows
   "wt" #'treemacs-select-window
   "wu" #'winner-undo
+  "ww" #'delete-other-windows
   ;; "wz" Zoom window
   ;; "wZ" Zoom all windows
 
@@ -243,8 +248,7 @@
   (kbd "g <return>") #'delete-blank-lines
   "g " #'just-one-space
   "g'" #'pjones:switch-to-previous-buffer
-  "gG" #'consult-goto-line
-  "gm" #'consult-imenu
+  "gm" #'imenus
   "gs" #'pjones:evil-sort
   "gS" #'evil-surround-edit
   "z'" #'evil-window-mru
