@@ -60,25 +60,25 @@
   (pjones:pdf-view-after-change-page-hook))
 
 (pjones:evil-override-mode pdf-view-mode
-  "[[" #'pdf-view-previous-page-command
-  "]]" #'pdf-view-next-page-command
-  "j" #'pdf-view-scroll-up-or-next-page
-  "k" #'pdf-view-scroll-down-or-previous-page
-  "gk" #'pdf-view-previous-line-or-previous-page
-  "gj" #'pdf-view-next-line-or-next-page
-  "gg" #'pdf-view-first-page
-  "G" #'pdf-view-goto-page
   "/" #'isearch-forward
   "?" #'isearch-backward
-  "n" #'isearch-repeat-forward
+  "[[" #'pdf-view-previous-page-command
+  "]]" #'pdf-view-next-page-command
+  "G" #'pdf-view-goto-page
+  "gg" #'pdf-view-first-page
+  "gj" #'pdf-view-next-line-or-next-page
+  "gk" #'pdf-view-previous-line-or-previous-page
+  "h" #'evil-scroll-left
+  "j" #'pdf-view-scroll-up-or-next-page
+  "k" #'pdf-view-scroll-down-or-previous-page
+  "l" #'evil-scroll-right
   "N" #'isearch-repeat-backward
+  "n" #'isearch-repeat-forward
   (kbd "<tab>") #'pdf-outline)
 
-(pjones:evil-override-mode pdf-outline-buffer-mode)
-
-;; Extra key bindings:
-(define-key pdf-outline-buffer-mode-map (kbd "RET") #'pjones:pdf-outline-follow-link-and-quit)
-(define-key pdf-outline-buffer-mode-map (kbd "q")   #'pjones:pdf-outline-quit)
+(pjones:evil-override-mode pdf-outline-buffer-mode
+  (kbd "RET") #'pjones:pdf-outline-follow-link-and-quit
+  "q" #'pjones:pdf-outline-quit)
 
 ;; Hooks:
 (add-hook 'pdf-view-after-change-page-hook #'pjones:pdf-view-after-change-page-hook)
