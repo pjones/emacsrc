@@ -238,11 +238,13 @@
 (evil-define-key 'normal global-map
   "[b" #'previous-buffer
   "[f" #'pjones:find-file-prev
+  "[h" #'diff-hl-previous-hunk
   "[t" #'pjones:theme-prev
   "[z" #'text-scale-decrease
   "]b" #'next-buffer
   "]c" #'pjones:fly-next-error
   "]f" #'pjones:find-file-next
+  "]h" #'diff-hl-next-hunk
   "]t" #'pjones:theme-next
   "]z" #'text-scale-increase
   (kbd "g <return>") #'delete-blank-lines
