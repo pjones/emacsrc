@@ -137,6 +137,29 @@ If INCLUSIVE is non-nil, also include leading and trailing white space."
              (+ 1 (funcall comment-boundry commented-blank-line-p 1)))))
       (evil-range beg end))))
 
+(evil-define-operator pjones:evil-shell-command
+  (beg end type command &optional previous)
+  "Execute a shell command asynchronously.
+
+Wraps the default `evil-shell-command' operator to enforce an
+asynchronous command execution when not capturing standard output.  In
+other words, this operator adds the terminating ampersand for you so
+shell commands don't lock up Emacs.
+
+If BEG, END and TYPE is specified, COMMAND is executed on the region,
+which is replaced with the command's output. Otherwise, the
+output is displayed in its own buffer. If PREVIOUS is non-nil,
+the previous shell command is executed instead."
+  (interactive "<R><sh><!>")
+  (if evil-ex-range
+      (evil-shell-command beg end type command previous)
+    (let ((with-amp
+           (if (s-suffix-p "&" command) command
+             (concat command " &"))))
+      (evil-shell-command beg end type with-amp previous))))
+
+(evil-ex-define-cmd "!" #'pjones:evil-shell-command)
+
 (evil-define-text-object pjones:evil-i-comment-para
   (_count &optional _beg _end _type)
   "Select inner comment paragraph."
