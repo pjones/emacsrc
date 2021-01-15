@@ -163,6 +163,8 @@
   "wd" #'pjones:switch-window-then-delete
   "wn" #'winum-select-window-by-number
   "wo" #'switch-window
+  ;; "wr" Window resizing
+  "wR" #'rotate-layout
   "ws" #'window-toggle-side-windows
   "wt" #'treemacs-select-window
   "wu" #'winner-undo

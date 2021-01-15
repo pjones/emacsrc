@@ -161,6 +161,7 @@ overrides.emacsWithPackages (epkgs:
     reformatter # Define commands which run reformatters on the current Emacs buffer
     resize-window # easily resize windows
     rg # A search tool based on ripgrep
+    rotate # Rotate the layout of emacs
     ruby-end # Automatic insertion of end blocks for Ruby
     scad-mode # A major mode for editing OpenSCAD code
     smartrep # Support sequential operation which omitted prefix keys
