@@ -5,7 +5,6 @@
 ;;; Code:
 
 (require 'server)
-(require 'cl-lib)
 
 (declare-function pjones:load-theme "./theme")
 
@@ -17,17 +16,6 @@
   "Called after `server-start'."
   (run-hooks 'pjones:after-server-hook))
 (advice-add #'server-start :after #'pjones:after-server-start)
-
-;; Make server.el STFU.
-(defun pjones:server-execute-stfu (orig &rest args)
-  "Prevent `server-execute' (ORIG) from using the `message' command.
-ARGS are passed on to `server-execute'."
-  (cl-letf (((symbol-function 'message) (lambda (&rest _) nil)))
-    (apply orig args))
-  ;; And then clear the echo area so modes like vterm don't start out
-  ;; with a smaller than expected buffer height:
-  (message "%s" ""))
-(advice-add #'server-execute :around #'pjones:server-execute-stfu)
 
 ;; Each server should get its own treemacs config:
 (defvar treemacs-persist-file)
