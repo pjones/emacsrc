@@ -82,6 +82,7 @@ overrides.emacsWithPackages (epkgs:
     company # Modular text completion framework
     company-quickhelp # Popup documentation for completion candidates
     company-statistics # Sort candidates using completion history
+    company-try-hard # get all completions from company backends
     csv-mode # Major mode for editing comma/char separated values
     darkroom # Remove visual distractions and focus on writing
     default-text-scale # Easily adjust the font size in all frames

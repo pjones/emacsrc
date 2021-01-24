@@ -3,9 +3,11 @@
 ;;; Commentary:
 ;;
 ;;; Code:
+
 (require 'company)
 (require 'company-quickhelp)
 (require 'company-statistics)
+(require 'company-try-hard)
 
 ;; Settings for company-mode:
 (custom-set-variables
@@ -25,16 +27,17 @@
       company-preview-frontend
       company-echo-metadata-frontend))
   '(company-backends
-     '((company-capf
-        company-dabbrev-code
+     '(company-capf
+       (company-dabbrev
         company-keywords
-        company-files))))
+        company-files
+        company-ispell))))
 
 (let ((map company-active-map))
   (define-key map (kbd "<escape>") #'company-abort)
-  (define-key map (kbd "C-f") #'company-abort)
-  (define-key map (kbd "C-/") #'company-filter-candidates)
+  (define-key map (kbd "C-s") #'company-filter-candidates)
   (define-key map (kbd "C-h") #'company-quickhelp-manual-begin)
+  (define-key map (kbd "C-n") #'company-try-hard)
   (define-key map (kbd "<tab>") #'company-complete-common-or-cycle)
   (dotimes (i 10)
     (define-key
@@ -44,8 +47,7 @@
 
 (let ((map company-search-map))
   (define-key map (kbd "<escape>") #'company-abort)
-  (define-key map (kbd "C-f") #'company-abort)
-  (define-key map (kbd "n") #'company-search-repeat-forward))
+  (define-key map (kbd "C-n") #'company-try-hard))
 
 (add-hook 'company-mode-hook #'company-quickhelp-mode)
 (add-hook 'company-mode-hook #'company-statistics-mode)

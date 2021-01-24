@@ -3,7 +3,9 @@
 ;;; Commentary:
 ;;
 ;;; Code:
+
 (require 'company)
+(require 'company-try-hard)
 (require 'yasnippet)
 
 ;; I don't want to type "yes".
@@ -21,12 +23,10 @@ current line.  Otherwise run the completion command.  ARG is passed to
     (if (or (bolp) (looking-back "\\s-" n)) (indent-for-tab-command arg)
       (if (yas-maybe-expand-abbrev-key-filter t)
           (yas-expand)
-        (company-complete)))))
+        (company-try-hard)))))
 
 ;; In buffer completion:
-(require 'company)
 (add-hook 'after-init-hook 'global-company-mode)
-(add-to-list 'company-backends 'company-capf)
 
 ;; Settings for older code still using hippie expand:
 (setq hippie-expand-try-functions-list
