@@ -5,18 +5,18 @@
 ;; Settings for `dired-mode'.
 
 ;;; Code:
+
 (require 'dired)
+(require 'dired-filter)
+(require 'dired-narrow)
+(require 'dired-subtree)
 (require 'dired-x)
 (require 'evil)
 (require 'evil-leader)
+(require 'noccur)
+(require 'wdired)
 
 (eval-when-compile
-  (require 'dired-filter)
-  (require 'dired-narrow)
-  (require 'dired-subtree)
-  (require 'dired-x)
-  (require 'noccur)
-
   (load
    (concat
     (file-name-directory
@@ -50,6 +50,7 @@
 
 ;; A few extra key bindings:
 (evil-leader/set-key-for-mode 'dired-mode
+  "b w"   #'pjones:dired-toggle-wdired
   "f f"   (pjones:dired-cwd-do 'find-file)
   "m G"   #'dired-do-chgrp
   "m / n" #'dired-filter-by-name
@@ -83,7 +84,10 @@
   "]]" #'dired-subtree-down
   "gq" #'dired-do-query-replace-regexp
   "gr" #'revert-buffer
-  "go" #'noccur-dired)
+  "go" #'noccur-dired
+  "o"  #'dired-sort-toggle-or-edit)
+
+(evil-set-initial-state 'wdired-mode 'normal)
 
 (defun pjones:dired-copy-filename-as-kill (&optional path)
   "Copy file name or entire PATH."
@@ -115,6 +119,13 @@ dired buffer.  Otherwise visit the file under point."
   (interactive)
   (dired-unmark-all-marks)
   (dired-toggle-marks))
+
+(defun pjones:dired-toggle-wdired ()
+  "Toggle `wdired-mode'."
+  (interactive)
+  (if (eq major-mode 'wdired-mode)
+      (wdired-finish-edit)
+    (wdired-change-to-wdired-mode)))
 
 (add-hook 'dired-mode-hook #'dired-hide-details-mode)
 (add-hook 'dired-mode-hook #'turn-on-gnus-dired-mode)
