@@ -76,6 +76,7 @@ in
 # Emacs package list:
 overrides.emacsWithPackages (epkgs:
   with epkgs; [
+    ace-window # Quickly switch windows
     adaptive-wrap # Smart line-wrapping with wrap-prefix
     async # Asynchronous processing in Emacs
     avy # Jump to arbitrary positions in visible text and select text quickly

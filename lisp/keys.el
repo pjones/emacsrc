@@ -165,6 +165,7 @@
   "wo" #'switch-window
   ;; "wr" Window resizing
   "wR" #'rotate-layout
+  "wS" #'ace-swap-window
   "ws" #'window-toggle-side-windows
   "wt" #'treemacs-select-window
   "wu" #'winner-undo
