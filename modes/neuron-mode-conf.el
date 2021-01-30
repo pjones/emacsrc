@@ -9,10 +9,11 @@
 (require 'markdown-mode)
 (require 'neuron-mode)
 
-(declare-function pjones:markdown-bind-keys "./make-mode-conf")
+(declare-function pjones:markdown-bind-keys "./markdown-conf")
 
 (custom-set-variables
  '(neuron-daily-note-title-format "%A, %B %d, %Y")
+ '(neuron-use-short-links nil)
  `(neuron-default-zettelkasten-directory
    ,(expand-file-name "~/notes/zettelkasten/")))
 
@@ -36,50 +37,26 @@
 
 (defun pjones:neuron-bind-keys ()
   "Bind keys in modes derived from `markdown-mode'."
-  (evil-set-initial-state 'neuron-mode 'normal)
-  (pjones:markdown-bind-keys)
-  (evil-define-key 'normal neuron-mode-map
-    "gx" #'neuron-follow-thing-at-point
-    "gr" #'neuron-refresh-buffer)
-  (evil-leader/set-key-for-mode 'neuron-mode
-    "m e" #'neuron-edit-zettel
-    "m i" #'neuron-create-and-insert-zettel-link
-    "m o" #'neuron-open-current-zettel
-    "m q" #'neuron-query-tags
-    "m r" #'neuron-rib-generate
-    "m s" #'neuron-insert-static-link
-    "m t" #'neuron-add-tag
-    "m w" #'neuron-rib-watch
-    "m W" #'neuron-rib-serve))
+  (pjones:markdown-bind-keys))
 
-(defun pjones:neuron-rename-buffer ()
-  "Rename neuron buffer to include the title."
-  (save-match-data
-    (let ((base-name (buffer-name))
-          (title (save-excursion
-                   (goto-char (point-min))
-                   (when (search-forward-regexp "^# ")
-                     (buffer-substring-no-properties
-                      (point)
-                      (progn
-                        (end-of-line)
-                        (point)))))))
+(evil-set-initial-state 'neuron-mode 'normal)
 
-      (and (string-match " (title: .+)\\'" base-name)
-           (not (and buffer-file-name
-                     (string= base-name
-                              (file-name-nondirectory buffer-file-name))))
-           ;; If the existing buffer name has a (title: xxxx),
-           ;; which isn't part of the file name (if any),
-           ;; then get rid of that.
-           (setq base-name (substring base-name 0 (match-beginning 0))))
-      (rename-buffer
-       (generate-new-buffer-name
-        (concat base-name (if title (concat " (title: " title ")")))))
-      (force-mode-line-update))))
+(evil-define-key 'normal neuron-mode-map
+  "gx" #'neuron-follow-thing-at-point
+  "gr" #'neuron-refresh-buffer)
+
+(evil-leader/set-key-for-mode 'neuron-mode
+  "m e" #'neuron-edit-zettel
+  "m i" #'neuron-create-and-insert-zettel-link
+  "m o" #'neuron-open-current-zettel
+  "m q" #'neuron-query-tags
+  "m r" #'neuron-rib-generate
+  "m s" #'neuron-insert-static-link
+  "m t" #'neuron-add-tag
+  "m w" #'neuron-rib-watch
+  "m W" #'neuron-rib-serve)
 
 (add-hook 'neuron-mode-hook 'pjones:neuron-bind-keys)
-(add-hook 'neuron-mode-hook 'pjones:neuron-rename-buffer)
 
 ;; Prevent neuron-mode from messing with my writing buffers.
 (remove-hook
