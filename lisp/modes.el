@@ -27,7 +27,7 @@
 
 (defun pjones:boot-global-modes ()
   "Start or prepare global modes."
-  (icomplete-mode)                   ; minibuffer completions.
+  (selectrum-mode)                   ; minibuffer completions.
   (default-text-scale-mode)          ; Frame text scaling.
   (direnv-mode)                      ; Respect .envrc files.
   (global-auto-revert-mode)          ; External changes cause a revert

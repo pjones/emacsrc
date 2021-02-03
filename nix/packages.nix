@@ -26,16 +26,21 @@ let
     dictionary = sources.dictionary-el;
     link = sources.dictionary-el;
 
+    prescient = sources."prescient.el";
+    selectrum-prescient = sources."prescient.el";
+    company-prescient = sources."prescient.el";
+
     doom-themes = sources.emacs-doom-themes;
     eglot = sources.eglot;
     embark = self: melpa "embark" sources.embark { };
-    evil = sources.evil;
+    evil = sources.evil-fork;
     evil-indent-textobject = sources.evil-indent-textobject;
+    marginalia = self: melpa "marginalia" sources.marginalia { };
     neuron-mode = sources.neuron-mode;
-    orderless = sources.orderless;
     origami = sources."origami.el";
     passmm = sources.passmm;
     reformatter = sources."reformatter.el";
+    selectrum = sources.selectrum;
     treemacs = sources.treemacs;
     treemacs-evil = sources.treemacs;
     treemacs-projectile = sources.treemacs;
@@ -81,8 +86,8 @@ overrides.emacsWithPackages (epkgs:
     async # Asynchronous processing in Emacs
     avy # Jump to arbitrary positions in visible text and select text quickly
     company # Modular text completion framework
+    company-prescient # prescient.el + Company
     company-quickhelp # Popup documentation for completion candidates
-    company-statistics # Sort candidates using completion history
     company-try-hard # get all completions from company backends
     csv-mode # Major mode for editing comma/char separated values
     darkroom # Remove visual distractions and focus on writing
@@ -134,6 +139,7 @@ overrides.emacsWithPackages (epkgs:
     link-hint # Use avy to open, copy, etc. visible links
     magit # A Git porcelain inside Emacs
     magit-annex # Control git-annex from Magit
+    marginalia # Enrich existing commands with completion annotations
     markdown-mode # Major mode for Markdown-formatted text
     minions # A minor-mode menu for the mode line
     neuron-mode # Major mode for editing zettelkasten notes using neuron
@@ -142,7 +148,6 @@ overrides.emacsWithPackages (epkgs:
     noccur # Run multi-occur on project/dired files
     notmuch.emacs # Notmunch emacs library.
     nov # Featureful EPUB reader mode
-    orderless # Completion style for matching regexps in any order
     org # Outline-based notes management and organizer
     org-bullets # Show bullets in org-mode as UTF-8 characters
     org-clock-csv # Export `org-mode' clock entries to CSV format
@@ -156,6 +161,7 @@ overrides.emacsWithPackages (epkgs:
     poly-erb # Polymode for erb
     poly-markdown # Polymode for markdown-mode
     polymode # Extensible framework for multiple major modes
+    prescient # Better sorting and filtering
     project # Operations on the current project
     projectile # Manage and navigate projects in Emacs easily
     purescript-mode # A PureScript editing mode
@@ -166,6 +172,8 @@ overrides.emacsWithPackages (epkgs:
     rotate # Rotate the layout of emacs
     ruby-end # Automatic insertion of end blocks for Ruby
     scad-mode # A major mode for editing OpenSCAD code
+    selectrum # Easily select item from list
+    selectrum-prescient # Selectrum integration
     smartrep # Support sequential operation which omitted prefix keys
     sweet-theme # Sweet-looking theme
     switch-window # A *visual* way to switch window

@@ -41,22 +41,22 @@
         "homepage": null,
         "owner": "oantolin",
         "repo": "embark",
-        "rev": "567addfcdb744bb3e2f7dcea052568f9641d9737",
-        "sha256": "0983kryh7zz9znp09pxgxx0xi4lxk2raqya6rwlwy7r3b9j3kqr2",
+        "rev": "c8f164b1a48bbcb6884dedd0a6de1d2a7ede0e3e",
+        "sha256": "0gzanhz9lsg74fk1nklr7irwz14wkgn7hfmllv8151pabbwplxp8",
         "type": "tarball",
-        "url": "https://github.com/oantolin/embark/archive/567addfcdb744bb3e2f7dcea052568f9641d9737.tar.gz",
+        "url": "https://github.com/oantolin/embark/archive/c8f164b1a48bbcb6884dedd0a6de1d2a7ede0e3e.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
-    "evil": {
-        "branch": "master",
-        "description": "The extensible vi layer for Emacs.",
-        "homepage": null,
-        "owner": "emacs-evil",
-        "repo": "evil",
-        "rev": "d6cf6680ec52733ea78dc530ed75fadc5171c758",
-        "sha256": "14rl6jx7cj336raxbksh3r2cplyifz8dghdhqvf7h1ng10sd9j6b",
+    "evil-fork": {
+        "branch": "trunk",
+        "description": "My personal fork of evil",
+        "homepage": "",
+        "owner": "pjones",
+        "repo": "evil-fork",
+        "rev": "cc9d6886b418389752a0591b9fcb270e83234cf9",
+        "sha256": "14nin675kb2q7fchawj5f2r7bdga9cxp7jbhmaa8vac03zs6xb4x",
         "type": "tarball",
-        "url": "https://github.com/emacs-evil/evil/archive/d6cf6680ec52733ea78dc530ed75fadc5171c758.tar.gz",
+        "url": "https://github.com/pjones/evil-fork/archive/cc9d6886b418389752a0591b9fcb270e83234cf9.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "evil-indent-textobject": {
@@ -75,6 +75,18 @@
         "sha256": "0iksjch94wfvyq0cgwv5wq52j0dc9cavm68wka3pahhdvjlxd3js",
         "type": "tarball",
         "url": "https://github.com/nix-community/home-manager/archive/63f299b3347aea183fc5088e4d6c4a193b334a41.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
+    "marginalia": {
+        "branch": "main",
+        "description": "marginalia.el - Marginalia in the minibuffer",
+        "homepage": "",
+        "owner": "minad",
+        "repo": "marginalia",
+        "rev": "7df0e53ab99e22c631cd860aea38b5e96b065914",
+        "sha256": "0kxiqhqp1fl37gsm0z5f46ymr814g80d8yrhc438mdnv5m422cg9",
+        "type": "tarball",
+        "url": "https://github.com/minad/marginalia/archive/7df0e53ab99e22c631cd860aea38b5e96b065914.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "melpa": {
@@ -137,18 +149,6 @@
         "url": "https://github.com/nix-community/nixpkgs-fmt/archive/025292e583d585c2951040ff4c4717885fab9c91.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
-    "orderless": {
-        "branch": "master",
-        "description": "Emacs completion style that matches multiple regexps in any order",
-        "homepage": "",
-        "owner": "oantolin",
-        "repo": "orderless",
-        "rev": "fc420e3d072a50e4c57d743627f09b7a66c066ba",
-        "sha256": "11b6kszv8wrfglxk1p2lzdar7b19gjf3wcchycjm2zycr82wrwk8",
-        "type": "tarball",
-        "url": "https://github.com/oantolin/orderless/archive/fc420e3d072a50e4c57d743627f09b7a66c066ba.tar.gz",
-        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
-    },
     "origami.el": {
         "branch": "master",
         "description": "A folding minor mode for Emacs",
@@ -167,6 +167,18 @@
         "rev": "d78d1bf4f397180d2256248df589f33aafb4c8b4",
         "type": "git"
     },
+    "prescient.el": {
+        "branch": "master",
+        "description": "☄️ Simple but effective sorting and filtering for Emacs.",
+        "homepage": "",
+        "owner": "raxod502",
+        "repo": "prescient.el",
+        "rev": "42adc802d3ba6c747bed7ea1f6e3ffbbdfc7192d",
+        "sha256": "0v12707jwd2ynk8gp3shgarl6yp3ynal7d4jzds6l2lknr6wi50w",
+        "type": "tarball",
+        "url": "https://github.com/raxod502/prescient.el/archive/42adc802d3ba6c747bed7ea1f6e3ffbbdfc7192d.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
     "reformatter.el": {
         "branch": "master",
         "description": "Define commands which run reformatters on the current Emacs buffer",
@@ -177,6 +189,18 @@
         "sha256": "1dfn7c3gpavpiwd73v2pasd8wd8b62dczhg9iv1cgh8vaqlsf92x",
         "type": "tarball",
         "url": "https://github.com/purcell/reformatter.el/archive/45c0add95025f53ca644a6c8b9afa05b2da3c474.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
+    "selectrum": {
+        "branch": "master",
+        "description": "🔔 Better solution for incremental narrowing in Emacs.",
+        "homepage": "",
+        "owner": "raxod502",
+        "repo": "selectrum",
+        "rev": "503c8b1d5f1a9d39d16539e6996b26a63465fbc4",
+        "sha256": "0s16k7d8d0j4qjqq3b8vzr7d8xphwwnnb411jl0m103cshbqw9cw",
+        "type": "tarball",
+        "url": "https://github.com/raxod502/selectrum/archive/503c8b1d5f1a9d39d16539e6996b26a63465fbc4.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "treemacs": {
