@@ -31,11 +31,15 @@ Used for cleaning up LSP server docs.")
 Call ORIG after modifying MARKUP"
   (let ((clean (pjones:eglot-apply-doc-cleanup (plist-get markup :value))))
     (apply orig (list (plist-put markup :value clean)))))
-
-;; Before converting markdown documentation from the LSP server, clean
-;; it up a bit.
 (advice-add
  'eglot--format-markup
  :around #'pjones:eglot--format-markup-advice)
+
+(defun pjones:eglot--snippet-expansion-fn ()
+  "Keep eglot from using yasnippet."
+  nil)
+(advice-add
+ 'eglot--snippet-expansion-fn
+ :override #'pjones:eglot--snippet-expansion-fn)
 
 ;;; eglot-conf.el ends here
