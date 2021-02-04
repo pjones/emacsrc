@@ -20,14 +20,25 @@
      nil)))
 
 (defun pjones:selectrum-slash ()
-  "Interpret the slash character."
+  "Interpret the slash character.
+
+If it looks like the user wants to complete the current candidate then
+entering a slash will have the same affect as pressing the tab key.
+
+But, in situations where a literal slash is needed, insert one instead.
+
+A literal slash can always be added by using \\[quoted-insert]."
   (interactive)
   (if minibuffer-completing-file-name
-      (if (or (eq (char-before) ?~)
-              (eq (char-before) ?:)
-              (looking-back "[[:alnum:]]+:/" 3))
-          (insert "/")
+      (cond
+       ((or (eq (char-before) ? ) ; At prompt start?
+            (eq (char-before) ?~) ; Restart at $HOME
+            (eq (char-before) ?:) ; Looks like URL
+            (looking-back "[[:alnum:]]+:/" 3)) ; URL
+        (insert "/"))
+       ((> selectrum--actual-num-candidates-displayed 0)
         (selectrum-insert-current-candidate))
+       (t (insert "/")))
     (insert "/")))
 
 (defun pjones:selectrum-delete ()
