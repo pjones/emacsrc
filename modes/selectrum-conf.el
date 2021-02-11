@@ -64,8 +64,8 @@ A literal slash can always be added by using \\[quoted-insert]."
 (evil-define-key 'insert selectrum-minibuffer-map
   (kbd "/") #'pjones:selectrum-slash
   (kbd "<backspace>") #'pjones:selectrum-delete
-  (kbd "<right>") #'selectrum-previous-candidate
-  (kbd "<left>") #'selectrum-next-candidate
+  (kbd "<right>") #'selectrum-next-candidate
+  (kbd "<left>") #'selectrum-previous-candidate
   (kbd "<tab>") #'selectrum-next-candidate
   (kbd "C-<tab>") #'embark-collect-completions
   (kbd "C-<escape>") #'embark-become
