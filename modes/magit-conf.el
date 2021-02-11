@@ -28,6 +28,7 @@
            (-flatten (-map ls (funcall ls base)))))))
 
 (custom-set-variables
+ '(magit-display-buffer-function 'magit-display-buffer-fullcolumn-most-v1)
  '(magit-popup-use-prefix-argument 'default)
  '(magit-status-margin '(t age magit-log-margin-width nil 18))
  '(magit-status-show-hashes-in-headers t)
