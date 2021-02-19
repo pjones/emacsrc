@@ -48,8 +48,9 @@
  '(scroll-preserve-screen-position nil)
  '(auto-window-vscroll nil)
  '(x-underline-at-descent-line t)
- '(focus-follows-mouse t)
- '(mouse-autoselect-window t))
+ '(focus-follows-mouse nil)
+ '(mouse-autoselect-window nil)
+ '(x-mouse-click-focus-ignore-position t))
 
 ;; Default variables that become buffer/frame local.
 (setq-default
