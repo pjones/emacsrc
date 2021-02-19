@@ -67,6 +67,7 @@
  '(auth-sources '(password-store))    ; Use pass(1) for passwords.
  '(compilation-scroll-output 'first-error)
  '(vc-follow-symlinks t) ; Don't warn prompt me about symlinks!
+ '(prettify-symbols-unprettify-at-point 'right-edge)
  '(custom-file (concat user-emacs-directory "custom-init.el")))
 
 (defun pjones:frame-title-file-name ()

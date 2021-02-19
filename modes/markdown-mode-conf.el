@@ -173,7 +173,11 @@ directory.  Optionally renaming FILE to NAME."
   ;; Completion configuration:
   (make-local-variable 'company-backends)
   (add-to-list 'company-backends '(company-ispell
-                                   company-dabbrev)))
+                                   company-dabbrev))
+
+  ;; Translate some strings into pretty symbols:
+  (setq prettify-symbols-alist
+        '(("[x]" . (?\] (Bl . Br) ?✓ (Bl . Br) ?\[)))))
 
 (add-hook 'markdown-mode-hook 'pjones:markdown-mode-hook)
 (add-hook 'markdown-mode-hook 'pjones:markdown-bind-keys)
