@@ -62,7 +62,7 @@
   "b b" #'switch-to-buffer
   "b d" #'kill-this-buffer
   "b e" #'eldoc-doc-buffer
-  "b f" #'find-file
+  "b f" (pjones:jump-to-buffer "*flymake message*")
   "b l" #'pjones:switch-to-previous-buffer
   "b m" (pjones:jump-to-buffer "*Messages*")
   "b r" #'revert-buffer

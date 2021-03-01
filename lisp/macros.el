@@ -9,7 +9,7 @@ If buffer NAME doesn't exist, COMMAND can be used to create it."
   `(defun ,(intern (concat "pjones:jump-to-buffer-" name)) ()
     (interactive)
     (let ((buf (get-buffer ,name)))
-      (if buf (switch-to-buffer buf)
+      (if buf (display-buffer buf)
         ,(if command `(,command) 'nil)))))
 
 (defmacro pjones:evil-override-mode (mode &rest bindings)

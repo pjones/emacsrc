@@ -71,6 +71,18 @@ buffer name, or symbols that match a major mode."
          (reusable-framaes .)
          (window-height . 0.4))
 
+        ;; Buffers that should take over the current window:
+        (,(pjones:buffer-conditions
+           '("\\*Org Agenda\\*"))
+         (display-buffer-same-window))
+
+        ;; Modes to show in the right side-window:
+        (,(pjones:buffer-conditions
+           '("\\*eldoc\\*"
+             "\\*flymake message\\*"))
+         (display-buffer-in-side-window)
+         (side . bottom))
+
         ;; Modes that force a new (raised and focused) frame:
         (,(pjones:buffer-conditions
            '(term-mode
@@ -85,11 +97,9 @@ buffer name, or symbols that match a major mode."
              (x-name . "popup" ) ; Because `name' is replaced with `title'.
              (unsplittable . t))))
 
-        ;; Modes that share a frame that is never raised.
+        ;; Modes that share a frame that is never raised:
         (,(pjones:buffer-conditions
-           '("\\*eldoc\\*"
-             "\\*flymake "
-             compilation-mode
+           '(compilation-mode
              grep-mode
              rg-mode))
          (display-buffer-reuse-window
