@@ -43,7 +43,7 @@
  '(inhibit-eol-conversion t)
  '(hscroll-margin 2)
  '(hscroll-step 1)
- '(scroll-conservatively 101)
+ '(scroll-conservatively 0)
  '(scroll-margin 0)
  '(scroll-preserve-screen-position nil)
  '(auto-window-vscroll nil)
