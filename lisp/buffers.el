@@ -82,7 +82,8 @@ BUFFER and ALIST are passed on to display functions."
 
         ;; Buffers that should take over the current window:
         (,(pjones:buffer-conditions
-           '("\\*Org Agenda\\*"))
+           '("\\*Org Agenda\\*"
+             Man-mode))
          (display-buffer-same-window))
 
         ;; Modes to show in the right side-window:
