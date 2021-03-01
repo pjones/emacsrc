@@ -121,7 +121,7 @@ fi
 ################################################################################
 if [ "$option_set_frame_name" -eq 1 ]; then
   option_emacs_opts+=(
-    "--frame-parameters=((name . \"$EMACS_SOCKET_NAME\"))"
+    "--frame-parameters=((name . \"$EMACS_SOCKET_NAME\") (role . \"$EMACS_SOCKET_NAME\"))"
   )
 fi
 

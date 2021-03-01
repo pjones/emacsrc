@@ -33,6 +33,15 @@ buffer name, or symbols that match a major mode."
                    (string-match condition name))))
         ,names-or-modes))))
 
+(defun pjones:display-buffer-maybe-pop-up-frame (buffer alist)
+  "Pop up a frame, unless we're in a special frame already.
+BUFFER and ALIST are passed on to display functions."
+  (let* ((frame (selected-frame))
+         (name (frame-parameter frame 'role)))
+    (if (string= name "notes")
+        (display-buffer-in-direction buffer alist)
+      (display-buffer-pop-up-frame buffer alist))))
+
 (setq display-buffer-alist
       `(;; Windows that should split the entire frame:
         (,(pjones:buffer-conditions
@@ -104,7 +113,8 @@ buffer name, or symbols that match a major mode."
              rg-mode))
          (display-buffer-reuse-window
           display-buffer-reuse-mode-window
-          display-buffer-pop-up-frame)
+          pjones:display-buffer-maybe-pop-up-frame)
+         (direction . right)
          (reusable-frames . t)
          (dedicated . t)
          (inhibit-switch-frame . t)
