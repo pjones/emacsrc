@@ -1,10 +1,12 @@
 # -*- mode: snippet -*-
 # name: class
 # key: class
+# condition: (pjones:yas-bolp)
 # expand-env: ((yas-indent-line 'fixed))
 # --
 -- | FIXME: Write documentation for $1
 --
 -- @since `(pjones:haskell-package-version)`
 class ${1:Name} a where
-  $0 ::
+  -- | FIXME: Write documentation for $2
+  ${2:method} :: $0

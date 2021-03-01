@@ -2,6 +2,7 @@
 # Stolen from https://github.com/AndreaCrotti/yasnippet-snippets/blob/master/snippets/haskell-mode/main
 # name: main function
 # key: main
+# condition: (pjones:yas-bolp)
 # expand-env: ((yas-indent-line 'fixed))
 # --
 -- | Main.

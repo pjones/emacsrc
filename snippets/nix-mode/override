@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: override
+# key: override
+# expand-env: ((yas-indent-line 'fixed))
+# --
+${1:package} =
+  let src = fetchTarball {
+    url = "https://hackage.haskell.org/package/$1-${2:version}/$1-$2.tar.gz";
+    sha256 = lib.fakeSha256; $0
+  };
+  in super.callCabal2nix "$1" src { };

@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: deriving-instance
+# key: di
+# condition: (pjones:yas-bolp)
+# expand-env: ((yas-indent-line 'fixed))
+# --
+deriving instance ${1:class} ${2:type}

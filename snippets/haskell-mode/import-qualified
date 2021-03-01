@@ -2,6 +2,7 @@
 # Stolen from https://github.com/AndreaCrotti/yasnippet-snippets/blob/master/snippets/haskell-mode/import
 # name: import-qualified
 # key: qi
+# condition: (pjones:yas-bolp)
 # expand-env: ((yas-indent-line 'fixed))
 # --
 import qualified ${1:Module} as ${1:$(pjones:haskell-unqualified-module yas-text)}$0

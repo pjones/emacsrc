@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: deriving-via
+# key: dv
+# condition: (pjones:yas-bolp)
+# expand-env: ((yas-indent-line 'fixed))
+# --
+deriving via (${1:wrapper} ${2:type}) instance ${3:class} $2 $0
