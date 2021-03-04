@@ -6,7 +6,7 @@
 (require 'whitespace)
 
 (custom-set-variables
- '(whitespace-style '(face tabs newline lines-tail))
+ '(whitespace-style '(face tabs newline lines-tail trailing))
  '(whitespace-action '(auto-cleanup)))
 
 ;;; whitespace-conf.el ends here

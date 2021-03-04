@@ -84,6 +84,7 @@ already been cached."
   "Add todo markers as keywords."
   (font-lock-add-keywords nil '(("\\<\\(FIXME:\\|TODO:\\|NOTE:\\)"
                                  1 'pjones:fixme-face t))))
+
 (defun pjones:prog-mode-hook ()
   "Settings and bindings for programming modes."
   (setq comment-empty-lines t)
@@ -98,7 +99,6 @@ already been cached."
   (save-place-mode)
   (pjones:add-fixme-lock)
   (add-hook 'xref-backend-functions #'dumb-jump-xref-activate)
-  (add-hook 'before-save-hook 'delete-trailing-whitespace)
   (add-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p))
 
 (defun pjones:add-programming-hook (mode-hook)
