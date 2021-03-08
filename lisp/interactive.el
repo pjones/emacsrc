@@ -173,12 +173,7 @@ current buffer after point."
    (flycheck-mode
     (flycheck-next-error))
    (flymake-mode
-    (flymake-goto-next-error)
-    (let ((err (get-char-property (point) 'flymake-diagnostic)))
-      (when err
-        (display-message-or-buffer
-         (concat (flymake--diag-text err) "\n\n")
-         "*flymake message*" 'not-this-window))))))
+    (pjones:flymake-goto-next-error))))
 
 ;; Adapted from: https://github.com/hlissner/doom-emacs/
 (defun pjones:next-file (n)
