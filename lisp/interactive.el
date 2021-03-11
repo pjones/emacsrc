@@ -175,6 +175,12 @@ current buffer after point."
    (flymake-mode
     (pjones:flymake-goto-next-error))))
 
+(defun pjones:rectangle-number-lines ()
+  "Call `rectangle-number-lines' with prefix argument set."
+  (interactive)
+  (let ((current-prefix-arg '(4)))
+    (call-interactively #'rectangle-number-lines)))
+
 ;; Adapted from: https://github.com/hlissner/doom-emacs/
 (defun pjones:next-file (n)
   "Return the name of the Nth next file."

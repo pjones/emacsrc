@@ -260,6 +260,7 @@
   "zn" #'widen)
 
 (evil-define-key 'visual global-map
+  "N" #'pjones:rectangle-number-lines
   "s" #'evil-surround-region
   "S" #'evil-Surround-region
   "zn" #'narrow-to-region)
