@@ -51,7 +51,13 @@
       :key "h")
      (:name "Notmuch List"
       :query "tag:notmuch and tag:unread"
-      :key "n")))
+      :key "n")
+     (:name "Recently Received"
+      :query "date:3d..now and (not tag:mailing-list) and (not tag:spam)"
+      :key "r")
+     (:name "Recently Sent"
+      :query "date:3d..now and tag:from-me"
+      :key "s")))
  '(notmuch-tagging-keys
   '(("a" notmuch-archive-tags "Archive")
     ("b" ("+blacklisted" "+spam") "Blacklisted")
