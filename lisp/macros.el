@@ -12,6 +12,15 @@ If buffer NAME doesn't exist, COMMAND can be used to create it."
       (if buf (display-buffer buf)
         ,(if command `(,command) 'nil)))))
 
+(defmacro pjones:call-with-prefix-arg (func)
+  "Generate a command to call FUNC with `C-u'."
+  (let* ((funs (symbol-name (function func)))
+         (name (intern (concat "pjones:" funs "-with-arg"))))
+    `(defun ,name ()
+       (interactive)
+       (let ((current-prefix-arg '(4)))
+         (call-interactively ,func)))))
+
 (defmacro pjones:evil-override-mode (mode &rest bindings)
   "Override standard evil bindings for the given MODE.
 MODE-map should be a mode's keymap that would normally conflict with

@@ -98,6 +98,7 @@
   "g f" #'rg
   "g g" #'rg-project
   "g m" #'magit-status
+  "g M" (pjones:call-with-prefix-arg #'magit-status)
   "g o a" #'pjones:agenda
   "g o c" #'org-capture
   "g o i" #'org-mru-clock-in
