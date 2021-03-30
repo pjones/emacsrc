@@ -3,6 +3,8 @@
 ;;; Commentary:
 ;;
 ;;; Code:
+
+(require 'dash)
 (require 'evil)
 (require 'evil-leader)
 (require 'org)
@@ -31,6 +33,32 @@
 (defvar dbus-path-emacs)
 (defvar dbus-interface-emacs)
 
+(defun pjones:org-parse-effort-tag (tag)
+  "Convert an effort TAG to a number of seconds."
+  (if (string-match "^\\([0-9]+\\)\\([mh]\\)$" tag)
+      (let ((num (string-to-number (match-string 1 tag)))
+            (mod (match-string 2 tag)))
+        (cond
+         ((string= mod "m") (* num 60))
+         ((string= mod "h") (* num 3600))
+         (t num)))
+    0))
+
+(defun pjones:org-get-effort-tag-as-seconds (heading)
+  "Return effort tags for HEADING converted to seconds."
+  (-sum
+   (-map #'pjones:org-parse-effort-tag
+         (-filter
+          (apply-partially #'string-match-p "^[0-9]")
+          (get-text-property 1 'tags heading)))))
+
+(defun pjones:org-sort-next-actions (a b)
+  "Return sort order for to-do items A and B."
+  (let ((ta (pjones:org-get-effort-tag-as-seconds a))
+        (tb (pjones:org-get-effort-tag-as-seconds b)))
+    (cond ((< ta tb) -1)
+          ((< tb ta) +1))))
+
 ;; General Org Settings
 (custom-set-variables
  ;; Visual Settings:
@@ -55,7 +83,6 @@
  '(org-clock-into-drawer t)
  '(org-log-into-drawer t)
  '(org-tags-exclude-from-inheritance nil)
- '(org-completion-use-ido t)
  '(org-goto-interface 'outline-path-completion)
  '(org-outline-path-complete-in-steps t)
  '(org-id-link-to-org-use-id t)
@@ -67,7 +94,7 @@
  '(org-attach-annex-auto-get nil)
  '(org-attach-method 'ln)
  '(org-attach-store-link-p t)
- '(org-attach-archive-delete t)
+ '(org-attach-archive-delete nil)
 
  ;; Showing context
  '(org-show-hierarchy-above t)
@@ -92,7 +119,7 @@
            ("@email"     . ?e)
            ("@errand"    . ?E)
            ("@home"      . ?h)
-           ("@kindle"    . ?k)
+           ("@reading"   . ?r)
            ("@phone"     . ?p)
            (:endgroup    . nil)
            (:startgroup  . nil)
@@ -109,7 +136,6 @@
  ;; TODO keywords and faces:
  '(org-todo-keywords
    (quote ((sequence "TODO(t)" "|" "DONE(d)")
-           (sequence "|" "NOTES")
            (sequence "NEXT(n)" "WAITING(w)" "BLOCKED(b)" "|" "DONE(d)" "CANCELLED(c)"))))
 
  '(org-todo-keyword-faces
@@ -120,11 +146,9 @@
 
  ;; Stuff for org-agenda.
  '(org-agenda-files
-   (quote ("~/notes/agenda/projects.org"
-           "~/notes/agenda/tasks.org"
-           "~/notes/agenda/review.org"
-           "~/notes/agenda/calendar.org"
-           "~/notes/agenda/inbox.org")))
+   (quote ("~/notes/gtd/routines.org"
+           "~/notes/gtd/projects.org"
+           "~/notes/gtd/inbox.org")))
 
  '(org-agenda-window-setup (quote current-window))
  '(org-agenda-todo-ignore-with-date nil)
@@ -144,7 +168,7 @@
  '(org-agenda-block-separator ?─)
 
  '(org-stuck-projects
-   (quote ("+project+LEVEL=3-notes-TODO=\"DONE\""
+   (quote ("+project+LEVEL=3"
            ("NEXT" "WAITING" "BLOCKED") nil "")))
 
  '(org-agenda-custom-commands
@@ -157,8 +181,6 @@
                (org-agenda-todo-keyword-format "")))
              (todo "WAITING"
                ((org-agenda-overriding-header "⚡ Waiting for Someone Else:")
-                (org-agenda-todo-ignore-deadlines (quote future))
-                (org-agenda-todo-ignore-scheduled (quote future))
                 (org-agenda-remove-tags t)
                 (org-agenda-prefix-format "  %-8c ")
                 (org-agenda-todo-keyword-format "")))
@@ -166,59 +188,37 @@
                ((org-agenda-overriding-header "⚡ Phone Calls to Make, Emails to Send:")
                 (org-agenda-prefix-format "  %-8c ")
                 (org-agenda-remove-tags t)
-                (org-agenda-todo-keyword-format "")
-                (org-agenda-todo-ignore-deadlines (quote all))
-                (org-agenda-todo-ignore-scheduled (quote all))))
+                (org-agenda-todo-keyword-format "")))
              (stuck ""
                ((org-agenda-overriding-header "⚡ Stuck Projects:")))
-             (tags "+inbox+LEVEL=2|+orgzly+LEVEL=1"
+             (tags "+inbox+LEVEL=1"
                ((org-agenda-overriding-header "⚡ Inbox Tasks to Process:")
                 (org-agenda-prefix-format "  %-8c ")
                 (org-agenda-todo-keyword-format "")))
              (todo "NEXT"
                ((org-agenda-overriding-header "⚡ Next Actions:")
                 (org-agenda-prefix-format "  %-8c ")
-                (org-agenda-remove-tags t)
+                (org-agenda-remove-tags nil)
                 (org-agenda-todo-keyword-format "")
-                (org-agenda-todo-ignore-deadlines (quote all))
-                (org-agenda-todo-ignore-scheduled (quote all))))))
+                (org-agenda-cmp-user-defined #'pjones:org-sort-next-actions)
+                (org-agenda-sorting-strategy '(user-defined-up))))))
            ("p" "Project List"
             ((tags "+project+LEVEL=3")))
-           ("e" "Tasks by Energy Level"
-            ((tags-todo "5m")
-             (tags-todo "30m")
-             (tags-todo "1h"))
-            ((org-agenda-todo-ignore-deadlines nil)))
-           ("o" "Offline Tasks"
-            ((tags-todo "+@offline")))
            ("T" "Travel Schedule"
             ((tags "+travel+TIMESTAMP>=\"<now>\""))
             ((org-agenda-view-columns-initially t))))))
 
  ;; Stuff for org-capture and org-refile:
- '(org-default-notes-file "~/notes/agenda/tasks.org")
+ '(org-default-notes-file "~/notes/gtd/inbox.org")
  '(org-refile-use-outline-path t)
  '(org-refile-allow-creating-parent-nodes t)
  '(org-log-refile (quote time))
- '(org-archive-location "~/notes/agenda/archive/%s::")
+ '(org-archive-location "::* Archived")
 
  '(org-refile-targets
-   (quote (("~/notes/agenda/projects.org" :level . 3)
-           ("~/notes/agenda/tasks.org" :level . 1)
-           ("~/notes/agenda/review.org" :level . 2)
-           ("~/notes/agenda/calendar.org" :level . 1))))
-
- '(org-capture-templates
-   (quote (("i" "Inbox" entry (id "9a053ee1-ade2-43af-af63-ea3e28fcc639")
-            (file "~/notes/etc/templates/orgmode/inbox.org"))
-           ("t" "Standalone Task" entry (id "f058299a-ab32-4374-9d38-2ef744c3f306")
-            (file "~/notes/etc/templates/orgmode/task.org"))
-           ("o" "Prep for Upcoming Offline" entry (id "6224680c-d1c7-4e3a-825e-affa4a065345")
-            (file "~/notes/etc/templates/orgmode/task.org"))
-           ("r" "Respond to Email" entry (id "3ef415be-890a-407b-8a3e-21814810790e")
-            (file "~/notes/etc/templates/orgmode/mail.org"))
-           ("c" "New Training Class" entry (id "09727f4a-aa01-4429-8408-d40511c19657")
-            (file "~/notes/etc/templates/orgmode/training.org"))))))
+   (quote (("~/notes/gtd/projects.org" :level . 3)
+           ("~/notes/gtd/routines.org" :level . 2)
+           ("~/notes/gtd/someday.org" :level . 3)))))
 
 (defun pjones:org-mode-hook ()
   "Hook to hack `org-mode'."
@@ -226,17 +226,16 @@
   (save-place-mode -1)
 
   ;; Tailor whitespace mode
-  (set (make-local-variable 'whitespace-style)
-       '(trailing tabs empty))
+  (setq-local whitespace-style '(trailing tabs empty))
   (whitespace-mode))
 
-(add-hook 'org-mode-hook 'pjones:org-mode-hook)
+(add-hook 'org-mode-hook #'pjones:org-mode-hook)
 
 (defun pjones:org-agenda-mode-hook ()
   "Hook run after a `org-agenda-mode' buffer is created."
   (hl-line-mode 1))
 
-(add-hook 'org-agenda-mode-hook 'pjones:org-agenda-mode-hook)
+(add-hook 'org-agenda-mode-hook #'pjones:org-agenda-mode-hook)
 
 (defun pjones:org-hide-others ()
   "Close all headings except the heading at point."
@@ -471,6 +470,8 @@ PARAMS is a property list of parameters:
   ;; Header Manipulation:
   ">" #'evil-org->
   "<" #'evil-org-<
+  "\C-j" #'pjones:org-insert-below
+  "\C-k" #'pjones:org-insert-above
 
   ;; Links:
   "gx" #'org-open-at-point)
@@ -480,10 +481,10 @@ PARAMS is a property list of parameters:
   "\C-k" #'pjones:org-insert-above)
 
 (evil-define-key 'motion org-mode-map
-  "gj" #'outline-forward-same-level
-  "gk" #'outline-up-heading
-  "gJ" #'org-shiftmetadown
-  "gK" #'org-shiftmetaup)
+  "[[" #'outline-up-heading
+  "]]" #'outline-forward-same-level
+  "gj" #'org-shiftmetadown
+  "gk" #'org-shiftmetaup)
 
 (evil-leader/set-key-for-mode 'org-mode
   "m !" #'org-time-stamp-inactive
