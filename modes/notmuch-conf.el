@@ -3,10 +3,12 @@
 ;;; Commentary:
 ;;
 ;;; Code:
+
 (require 'dash)
 (require 'evil)
 (require 'evil-leader)
 (require 'notmuch)
+(require 'org)
 (require 's)
 
 (eval-when-compile

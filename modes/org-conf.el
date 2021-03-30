@@ -13,6 +13,7 @@
 (require 's)
 
 (eval-when-compile
+  (require 'subr-x)
   (load
    (concat
     (file-name-directory
@@ -22,12 +23,12 @@
     "../lisp/macros")))
 
 ;; Silence compiler warnings
-(declare-function whitespace-mode "whitespace")
-(declare-function org-bookmark-jump-unhide "org")
-(declare-function org-clocking-p "org-clock")
 (declare-function dbus-send-signal "dbus")
-(declare-function org-clock-sum-current-item "org-clock")
+(declare-function org-bookmark-jump-unhide "org")
 (declare-function org-bullets-mode "org-bullets")
+(declare-function org-clock-sum-current-item "org-clock")
+(declare-function org-clocking-p "org-clock")
+(declare-function whitespace-mode "whitespace")
 (defvar whitespace-style)
 (defvar org-clock-start-time)
 (defvar dbus-path-emacs)
@@ -108,6 +109,7 @@
                          ("\\.x?html?\\'" . default)
                          ("\\.mp4\\'"     . "vlc %s"))))
 
+ '(org-link-file-path-type 'relative)
  '(org-link-frame-setup
    (quote ((file . find-file))))
 
@@ -218,7 +220,11 @@
  '(org-refile-targets
    (quote (("~/notes/gtd/projects.org" :level . 3)
            ("~/notes/gtd/routines.org" :level . 2)
-           ("~/notes/gtd/someday.org" :level . 3)))))
+           ("~/notes/gtd/someday.org" :level . 3))))
+
+ ;; Stuff for exporting:
+ '(org-icalendar-combined-agenda-file "~/notes/gtd/calendar.ics")
+ '(org-icalendar-include-todo t))
 
 (defun pjones:org-mode-hook ()
   "Hook to hack `org-mode'."
@@ -375,6 +381,49 @@ PARAMS is a property list of parameters:
           (insert (concat "| " (plist-get row attr))))
         (insert "|\n"))
       (org-table-align)))
+
+;;; notmuch integration:
+(defvar notmuch-show-thread-id)
+(declare-function notmuch-search "notmuch")
+(declare-function notmuch-search-find-thread-id "notmuch")
+(declare-function notmuch-show-get-message-id "notmuch")
+
+(defun pjones:org-notmuch-follow (id)
+  "Go to mail message ID in `notmuch'."
+  (require 'notmuch)
+  (notmuch-search (concat "id:" id)))
+
+(defun pjones:org-notmuch-export (link description format)
+  "Export a notmuch link.
+See `org-link-parameters' for details about LINK, DESCRIPTION and
+FORMAT."
+  ;; FIXME: For now, don't export anything.
+  ;; Maybe get the subject of the email and export that?
+  nil)
+
+(defun pjones:org-notmuch-store ()
+  "Store the current notmuch message as a link."
+  (require 'notmuch)
+  (when-let* ((query
+               (cond
+                ((eq major-mode 'notmuch-search-mode)
+                 (notmuch-search-find-thread-id))
+                ((eq major-mode 'notmuch-show-mode)
+                 (notmuch-show-get-message-id))
+                ((eq major-mode 'notmuch-tree-mode)
+                 notmuch-show-thread-id)))
+              (link (s-replace-regexp "^id:" "notmuch:" query)))
+    (org-link-store-props
+     :type "notmuch"
+     :link link
+     :description (concat "notmuch message ID `" link "'"))
+    (kill-new link)))
+
+(org-link-set-parameters
+ "notmuch"
+ :follow #'pjones:org-notmuch-follow
+ :export #'pjones:org-notmuch-export
+ :store #'pjones:org-notmuch-store)
 
 ;;; Key Bindings:
 
