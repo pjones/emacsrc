@@ -1,17 +1,19 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 ################################################################################
 # A script to run Emacs in batch mode, preserving my configuration.
-set -e
+set -eu
+set -o pipefail
 
 ################################################################################
 export PATH=@path@:$PATH
 lispdir=$(dirname "@loadpathel@")
 
 ################################################################################
+_emacs() {
+  emacs --batch --load "$lispdir/modes.el" "$@"
+}
+
+################################################################################
 # The redirection madness is to remove "Loading" messages from stderr.
-{ emacs \
-  --batch \
-  --funcall package-initialize \
-  --load "$lispdir/modes.el" \
-  "$@" 2>&1 1>&3 | grep -v '^Loading ' 1>&2; } 3>&1
+_emacs "$@" 2> >(grep -v "^Loading " >&2 || :)

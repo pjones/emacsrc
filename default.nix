@@ -69,7 +69,10 @@ pkgs.stdenv.mkDerivation rec {
 
       for f in $(find "$out/emacs.d" -type f -name "*.el"); do
         echo "==> Compile" "$(sed -E 's|/nix/store/[^/]+/||' <<<"$f")"
-        emacs --quick --batch --load "$loadpathel" -f batch-byte-compile "$f"
+        emacs --quick --batch \
+          --load "$loadpathel" \
+          --funcall batch-byte-compile \
+          "$f" 2> >(grep -Ev "^(Loading |\[Treemacs)" >&2 || :)
       done
     '';
 }
