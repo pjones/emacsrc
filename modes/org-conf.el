@@ -9,6 +9,7 @@
 (require 'evil-leader)
 (require 'org)
 (require 'org-agenda)
+(require 'org-bullets)
 (require 'org-capture)
 (require 's)
 
@@ -25,7 +26,6 @@
 ;; Silence compiler warnings
 (declare-function dbus-send-signal "dbus")
 (declare-function org-bookmark-jump-unhide "org")
-(declare-function org-bullets-mode "org-bullets")
 (declare-function org-clock-sum-current-item "org-clock")
 (declare-function org-clocking-p "org-clock")
 (declare-function whitespace-mode "whitespace")
