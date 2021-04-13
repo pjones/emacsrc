@@ -13,25 +13,29 @@
 
 (defun pjones:maybe-save-buffers-kill-terminal (&optional arg)
   "A function to save me from myself.
-I somehow keep hitting C-x C-c when I don't want to.
+I somehow keep hitting \\[kill-emacs] when I don't want to.
 ARG is passed to `save-buffers-kill-terminal'"
   (interactive)
   (if (yes-or-no-p "Really close this terminal? ")
       (save-buffers-kill-terminal arg)))
 
-(defun pjones:switch-to-previous-buffer ()
-  "Switch back to the last buffer shown in this window."
-  ;; NOTE: Should I use `switch-to-prev-buffer-skip'?
-  (interactive)
-  (require 'ido)
-  (let ((previous-place (evil-alternate-buffer)))
-    (if previous-place
-        (progn
-          (switch-to-buffer (car previous-place))
-          (goto-char (car (last previous-place))))
-      (let ((ido-process-ignore-lists t)
-            (ido-ignored-list nil))
-        (switch-to-buffer (car (ido-make-buffer-list nil)))))))
+(defun pjones:kill-region-or-backward-kill-word (arg)
+  "Replacement for `kill-region' to kill ARG preceding words.
+If there is a region with \\[transient-mark-mode] active, it will
+be removed and placed in the kill ring in a similar manner to
+`kill-region'.  If there isn't a region, the word before point
+will be deleted (without placing it in the kill ring)."
+  (interactive "p")
+  (require 'subword)
+  (let ((forward
+         (if (and (boundp 'subword-mode)
+                  (or subword-mode global-subword-mode))
+             'subword-forward
+           'forward-word)))
+    (if (or (not transient-mark-mode) (and transient-mark-mode mark-active))
+        (kill-region (region-beginning) (region-end))
+      (delete-region (point) (progn (funcall forward (- arg))
+                                    (point))))))
 
 (defun pjones:rename-current-file (newname)
   "Rename the current file to NEWNAME."
@@ -58,21 +62,11 @@ ARG is passed to `save-buffers-kill-terminal'"
     (back-to-indentation)
     (when (= start (point)) (move-beginning-of-line 1))))
 
-(defun pjones:backward-delete-char (&optional count)
-  "Delete a character backwards.
-If the all of the characters before point are space characters then
-delete COUNT levels of indentation."
-  (interactive "p")
-  (let ((sofar (save-excursion (beginning-of-line) (point))))
-    (if (looking-back "^\\s-+$" sofar)
-        (evil-shift-left-line count)
-      (evil-delete-backward-char-and-join count))))
-
 (defun pjones:start-mail ()
   "Start an instance of my mail client."
   (interactive)
-  (require 'gnus)
-  (gnus))
+  (require 'notmuch)
+  (notmuch))
 
 (defun pjones:start-irc (&optional local-only)
   "Start IRC clients.
@@ -115,8 +109,8 @@ If WORD is non-nil then generate a simple password."
     (insert pw)))
 
 (defun pjones:kill-file-name (&optional full-path)
-  "Create a new kill containing the base name of the buffer's
-file.  With a prefix argument kill the entire path for the file."
+  "Kill the base name of the buffer's file.
+When FULL-PATH is non-nil kill the entire path for the file."
   (interactive "P")
   (let* ((path (buffer-file-name))
          (name (file-name-nondirectory path)))
@@ -137,17 +131,17 @@ file.  With a prefix argument kill the entire path for the file."
    (concat "~/" (file-relative-name default-directory "~"))))
 
 (defun pjones:agenda ()
-  "Start org-agenda with my custom agenda view"
+  "Start `org-agenda' with my custom agenda view."
   (interactive)
   (require 'org)
   (let ((default-directory "~/notes/"))
     (org-agenda nil "c")))
 
 (defun pjones:uuid ()
-  "Create a UUID, add it to the kill ring, and insert it into the
-current buffer after point."
+  "Create a UUID, add it to the kill ring, and insert it after point."
   (interactive)
-  (let ((uuid (replace-regexp-in-string "[\n-]" "" (shell-command-to-string "uuid"))))
+  (let* ((raw (shell-command-to-string "uuid"))
+         (uuid (replace-regexp-in-string "[\n-]" "" raw)))
     (kill-new uuid)
     (insert uuid)))
 
@@ -210,6 +204,24 @@ current buffer after point."
   "Call `find-file' with COUNT previous file."
   (interactive "p")
   (find-file (pjones:next-file (- count))))
+
+(defun pjones:sort-lines (beg end)
+  "Sort the region from BEG to END."
+  (interactive "r")
+  (let ((sort-fold-case t))
+    (save-excursion
+      (sort-lines nil beg end))))
+
+(defun pjones:exchange-point-and-mark (&optional arg)
+  "Exchange point and mark without alerting region state.
+If the region is active, keep it active.  If the region is
+inactive, keep it inactive.  When ARG is non-nil, negate this
+behavior."
+  (interactive "P")
+  (exchange-point-and-mark
+   (if (region-active-p) arg
+     (not arg))))
+
 
 ;; Local Variables:
 ;; byte-compile-warnings: (not noruntime)

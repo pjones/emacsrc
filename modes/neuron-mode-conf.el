@@ -4,8 +4,6 @@
 ;;
 ;;; Code:
 (require 'rg)
-(require 'evil)
-(require 'evil-leader)
 (require 'markdown-mode)
 (require 'neuron-mode)
 
@@ -16,11 +14,6 @@
  '(neuron-use-short-links nil)
  `(neuron-default-zettelkasten-directory
    ,(expand-file-name "~/notes/zettelkasten/")))
-
-(defun pjones:zettel-open-inbox ()
-  "Open the inbox.md zettel."
-  (interactive)
-  (find-file (concat neuron-default-zettelkasten-directory "inbox.md")))
 
 (rg-define-search pjones:zettel-need-to-do
   "Search for zettels that have open check boxes."
@@ -39,22 +32,9 @@
   "Bind keys in modes derived from `markdown-mode'."
   (pjones:markdown-bind-keys))
 
-(evil-set-initial-state 'neuron-mode 'normal)
-
-(evil-define-key 'normal neuron-mode-map
-  "gx" #'neuron-follow-thing-at-point
-  "gr" #'neuron-refresh-buffer)
-
-(evil-leader/set-key-for-mode 'neuron-mode
-  "m e" #'neuron-edit-zettel
-  "m i" #'neuron-create-and-insert-zettel-link
-  "m o" #'neuron-open-current-zettel
-  "m q" #'neuron-query-tags
-  "m r" #'neuron-rib-generate
-  "m s" #'neuron-insert-static-link
-  "m t" #'neuron-add-tag
-  "m w" #'neuron-rib-watch
-  "m W" #'neuron-rib-serve)
+(let ((map neuron-mode-map))
+  (define-key map (kbd "C-c C-o") #'neuron-follow-thing-at-point)
+  (define-key map (kbd "C-c C-i") #'neuron-create-and-insert-zettel-link))
 
 (add-hook 'neuron-mode-hook 'pjones:neuron-bind-keys)
 

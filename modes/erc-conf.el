@@ -8,8 +8,6 @@
 (require 'adaptive-wrap)
 (require 'erc)
 (require 'erc-track)
-(require 'evil)
-(require 'evil-leader)
 (require 'notifications)
 (require 'passmm)
 
@@ -142,11 +140,6 @@ if BUFFER is not currently displayed in a window."
              (string-match-p "^#" (erc-default-target)))
     (add-to-list 'erc-track-exclude (erc-default-target))))
 
-(pjones:evil-override-mode erc-mode)
-
-(evil-define-key 'normal erc-mode-map
-  "]b" #'erc-track-switch-buffer)
-
 (add-function
  :after after-focus-change-function
  (lambda (&rest args) (erc-modified-channels-update)))
@@ -154,6 +147,5 @@ if BUFFER is not currently displayed in a window."
 (add-hook 'erc-mode-hook #'pjones:erc-mode-hook)
 (add-hook 'erc-track-mode-hook #'pjones:erc-ignore-channel)
 (add-hook 'erc-track-list-changed-hook #'pjones:erc-maybe-set-urgency-hint)
-
 
 ;;; erc-conf.el ends here

@@ -5,23 +5,11 @@
 ;;; Code:
 
 (require 'dash)
-(require 'evil)
-(require 'evil-leader)
 (require 'org)
 (require 'org-agenda)
 (require 'org-bullets)
 (require 'org-capture)
 (require 's)
-
-(eval-when-compile
-  (require 'subr-x)
-  (load
-   (concat
-    (file-name-directory
-     (or load-file-name
-         byte-compile-current-file
-         (buffer-file-name)))
-    "../lisp/macros")))
 
 ;; Silence compiler warnings
 (declare-function dbus-send-signal "dbus")
@@ -257,35 +245,6 @@
   (goto-char (point-min))
   (org-cycle '(4)))
 
-(defun pjones:org-smart-insert (respect &optional todo)
-  "Insert a heading or plain list item.
-If RESPECT is non-nil and the current item is a heading, always insert
-after the current subtree content.  If TODO is non-nil, mark it as
-to-do or checkbox."
-  (interactive "P")
-  (let* ((plain (org-at-item-p))
-         (org-insert-heading-respect-content (and respect (not plain))))
-    (if todo
-        (org-insert-todo-heading
-         nil (if plain nil '(4)))
-      (org-meta-return
-       (if plain nil '(4))))
-    (evil-insert-state)))
-
-(defun pjones:org-insert-below (&optional todo)
-  "Insert a heading or item below the current one.
-If TODO is non-nil, mark it as to-do or checkbox."
-  (interactive "P")
-  (end-of-line)
-  (pjones:org-smart-insert t todo))
-
-(defun pjones:org-insert-above (&optional todo)
-  "Insert a heading or item above the current one.
-If TODO is non-nil, mark it as to-do or checkbox."
-  (interactive "P")
-  (beginning-of-line)
-  (pjones:org-smart-insert nil todo))
-
 (defun pjones:org-goto (&optional alternative-interface)
   "Call `org-goto' after first widening the buffer.
 Jumps to the correct heading via `org-goto', then narrows the buffer
@@ -426,146 +385,9 @@ FORMAT."
  :store #'pjones:org-notmuch-store)
 
 ;;; Key Bindings:
-
-  ;; (org-defkey org-mode-map "\C-ce"               'pjones:org-edit-special)
-  ;; (org-defkey org-mode-map "\C-c0"               'pjones:org-hide-all)
-  ;; (org-defkey org-mode-map "\C-c1"               'pjones:org-hide-others)
-  ;; (org-defkey org-mode-map "\C-j"                'pjones:org-list-append)
-  ;; (org-defkey org-mode-map "\C-c\C-j"            'pjones:org-goto)
-  ;; (org-defkey org-mode-map [(meta return)]       'pjones:org-list-append)
-  ;; (org-defkey org-mode-map [(shift meta return)] 'pjones:org-list-append-with-checkbox)
-
-
-;; (evil-leader/set-key-for-mode 'org-mode
-;;   "DEL d" #'org-time-stamp-inactive
-;;   "DEL i" #'org-clock-in
-;;   "DEL o" #'org-clock-out
-;;   "DEL s" #'org-schedule
-;;   "DEL t" #'org-todo)
-;;
-;; (evil-leader/set-key-for-mode 'org-agenda-mode
-;;   "w" #'org-save-all-org-buffers
-;;   "DEL i" #'org-agenda-clock-in
-;;   "DEL o" #'org-agenda-clock-out
-;;   "DEL s" #'org-agenda-schedule
-;;   "DEL t" #'org-agenda-todo)
-
-;; Taken (and modified) from: https://github.com/Somelauw/evil-org-mode
-(evil-define-operator evil-org-> (beg end count)
-  "Demote, indent, move column right."
-  :type line
-  :move-point nil
-  (interactive "<r><vc>")
-  (when (null count) (setq count 1))
-  (cond
-   ;; Work with subtrees and headings
-   ((org-with-limited-levels
-     (or (org-at-heading-p)
-         (save-excursion (goto-char beg) (org-at-heading-p))))
-    (if (> count 0)
-        (org-map-region 'org-do-demote beg end)
-      (org-map-region 'org-do-promote beg end)))
-   (t
-    (condition-case nil
-      (if (> count 0) (org-shiftmetaright)
-        (org-shiftmetaleft))
-      (error
-       (if (> count 0) (org-indent-item)
-         (org-outdent-item))))))
-  (when (evil-visual-state-p)
-    (evil-normal-state)
-    (evil-visual-restore)))
-
-;; Taken from: https://github.com/Somelauw/evil-org-mode
-(evil-define-operator evil-org-< (beg end count)
-  "Promote, dedent, move column left."
-  :type line
-  :move-point nil
-  (interactive "<r><vc>")
-  (evil-org-> beg end (- (or count 1))))
-
-(defun pjones:org-activate ()
-  "Activate/finish something."
-  (interactive)
-  (cond
-   (org-capture-mode
-    (org-capture-finalize))
-   (t
-    (org-ctrl-c-ctrl-c))))
-
-(defun pjones:org-cancel ()
-  "Cancel something."
-  (interactive)
-  (cond
-   (org-capture-mode
-    (org-capture-kill))
-   (t
-    (org-kill-note-or-show-branches))))
-
-(evil-set-initial-state 'org-mode 'normal)
-(evil-set-initial-state 'org-agenda-mode 'normal)
-
-(evil-define-key 'normal org-mode-map
-  ;; Folding:
-  "zo" #'outline-show-children
-  "zO" #'outline-show-branches
-  "zc" #'outline-hide-subtree
-  "zC" #'pjones:org-hide-others
-  "za" #'org-cycle
-  "zr" #'outline-show-all
-  "zm" #'pjones:org-hide-all
-  "zR" #'org-reveal
-
-  ;; Header Manipulation:
-  ">" #'evil-org->
-  "<" #'evil-org-<
-  "\C-j" #'pjones:org-insert-below
-  "\C-k" #'pjones:org-insert-above
-
-  ;; Links:
-  "gx" #'org-open-at-point)
-
-(evil-define-key 'insert org-mode-map
-  "\C-j" #'pjones:org-insert-below
-  "\C-k" #'pjones:org-insert-above)
-
-(evil-define-key 'motion org-mode-map
-  "[[" #'outline-up-heading
-  "]]" #'outline-forward-same-level
-  "gj" #'org-shiftmetadown
-  "gk" #'org-shiftmetaup)
-
-(evil-leader/set-key-for-mode 'org-mode
-  "m !" #'org-time-stamp-inactive
-  "m ." #'org-time-stamp
-  "m K" #'pjones:org-cancel
-  "m S" #'org-deadline
-  "m T" #'org-set-tags-command
-  "m c" #'pjones:org-activate
-  "m d" (lambda () (interactive) (org-todo 'done))
-  "m g g" #'pjones:org-goto
-  "m i" #'org-clock-in
-  "m j" #'pjones:org-insert-below
-  "m k" #'pjones:org-insert-above
-  "m o" #'org-clock-out
-  "m s" #'org-schedule
-  "m t" #'org-todo
-  "t t" #'org-todo)
-
-(evil-define-key 'normal org-agenda-mode-map
-  (kbd "RET") #'org-agenda-switch-to
-  (kbd "<backspace>") evil-leader--default-map
-  "q" #'org-agenda-quit
-  "gr" #'org-agenda-redo-all)
-
-(evil-leader/set-key-for-mode 'org-agenda-mode
-  "f s" #'org-save-all-org-buffers
-  "m S" #'org-agenda-deadline
-  "m d" (lambda () (interactive) (org-agenda-todo 'done))
-  "m i" #'org-agenda-clock-in
-  "m o" #'org-agenda-clock-out
-  "m s" #'org-agenda-schedule
-  "m t" #'org-agenda-todo)
+(let ((map org-mode-map))
+  (define-key map (kbd "C-c C-0") #'pjones:org-hide-all)
+  (define-key map (kbd "C-c C-1") #'pjones:org-hide-others))
 
 ;;; Hooks
 (add-hook 'org-mode-hook #'org-bullets-mode)

@@ -30,20 +30,14 @@ let
     selectrum-prescient = sources."prescient.el";
     company-prescient = sources."prescient.el";
 
-    doom-themes = sources.emacs-doom-themes;
     eglot = sources.eglot;
     embark = self: melpa "embark" sources.embark { };
-    evil = sources.evil-fork;
-    evil-indent-textobject = sources.evil-indent-textobject;
     marginalia = self: melpa "marginalia" sources.marginalia { };
     neuron-mode = sources.neuron-mode;
     origami = sources."origami.el";
     passmm = sources.passmm;
     reformatter = sources."reformatter.el";
     selectrum = sources.selectrum;
-    treemacs = sources.treemacs;
-    treemacs-evil = sources.treemacs;
-    treemacs-projectile = sources.treemacs;
 
     eldoc = self: super: rec {
       version = "1.11.0";
@@ -85,6 +79,7 @@ overrides.emacsWithPackages (epkgs:
     adaptive-wrap # Smart line-wrapping with wrap-prefix
     async # Asynchronous processing in Emacs
     avy # Jump to arbitrary positions in visible text and select text quickly
+    color-theme-sanityinc-tomorrow # A version of Chris Kempson's "tomorrow" themes
     company # Modular text completion framework
     company-prescient # prescient.el + Company
     company-quickhelp # Popup documentation for completion candidates
@@ -99,7 +94,6 @@ overrides.emacsWithPackages (epkgs:
     dired-subtree # Insert subdirectories in a tree-like fashion
     direnv # direnv support
     doom-modeline # A minimal and modern mode-line
-    doom-themes # an opinionated pack of modern color-themes
     dumb-jump # Jump to definition for 40+ languages without configuration
     eglot # Client for Language Server Protocol (LSP) servers
     eimp # Emacs Image Manipulation Package
@@ -107,16 +101,6 @@ overrides.emacsWithPackages (epkgs:
     elm-mode # Elm mode for emacs
     embark # Conveniently act on minibuffer completions
     erc-hl-nicks # ERC nick highlighter that ignores uniquifying chars when colorizing
-    evil # Extensible Vi layer for Emacs
-    evil-commentary # Comment stuff out. A port of vim-commentary
-    evil-fringe-mark # Display evil-mode marks in the fringe
-    evil-indent-textobject # evil textobjects based on indentation
-    evil-leader # let there be <leader>
-    evil-matchit # Vim matchit ported to Evil
-    evil-numbers # increment/decrement numbers like in vim
-    evil-owl # Preview evil registers and marks before using them
-    evil-surround # emulate surround.vim from Vim
-    evil-textobj-syntax # Provides syntax text objects
     flycheck # On-the-fly syntax checking
     flyspell-correct # Correcting words with flyspell via custom interface
     flyspell-correct-avy-menu # Correcting words with flyspell via avy-menu interface
@@ -127,9 +111,7 @@ overrides.emacsWithPackages (epkgs:
     haskell-mode # A Haskell editing mode
     hasky-extensions # Toggle Haskell language extensions
     highlight-indent-guides # Minor mode to highlight indentation
-    htmlize # Convert buffer text and decorations to HTML
     http # Yet another HTTP client
-    ialign # visual align-regexp
     imenus # Imenu for multiple buffers and without subgroups
     indium # JavaScript Awesome Development Environment
     inf-ruby # Run a Ruby process in a buffer
@@ -151,7 +133,6 @@ overrides.emacsWithPackages (epkgs:
     org # Outline-based notes management and organizer
     org-bullets # Show bullets in org-mode as UTF-8 characters
     org-clock-csv # Export `org-mode' clock entries to CSV format
-    org-mru-clock # clock in/out of tasks with completion and persistent history
     org-tree-slide # A presentation tool for org-mode
     orgalist # Manage Org-like lists in non-Org buffers
     origami # Flexible text folding
@@ -174,14 +155,9 @@ overrides.emacsWithPackages (epkgs:
     scad-mode # A major mode for editing OpenSCAD code
     selectrum # Easily select item from list
     selectrum-prescient # Selectrum integration
-    smartrep # Support sequential operation which omitted prefix keys
     sweet-theme # Sweet-looking theme
     switch-window # A *visual* way to switch window
-    treemacs # A tree style file explorer package
-    treemacs-evil # Evil mode integration for treemacs
-    treemacs-projectile # Projectile integration for treemacs
     typescript-mode # Major mode for editing typescript
-    undo-fu # Undo helper with redo
     visual-fill # Auto-refill paragraphs without modifying the buffer
     vlf # View Large Files
     weyland-yutani-theme # Emacs theme based off Alien movie franchise
@@ -190,4 +166,5 @@ overrides.emacsWithPackages (epkgs:
     winum # Navigate windows and frames using numbers.
     yaml-mode # Major mode for editing YAML files
     yasnippet # Yet another snippet extension for Emacs
+    expand-region # Increase selected region by semantic units.
   ])

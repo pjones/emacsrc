@@ -36,15 +36,8 @@
 (defun pjones:notes-server-hook ()
   "Set up the notes server."
   (when (string= server-name "notes")
-    (auto-save-visited-mode 1)
-    (pjones:load-theme 'doom-snazzy)))
+    (auto-save-visited-mode 1)))
 
-(defun pjones:mail-server-hook ()
-  "Set up the mail server."
-  (when (string= server-name "mail")
-    (pjones:load-theme 'doom-molokai)))
-
-(add-hook 'pjones:after-server-hook #'pjones:mail-server-hook)
 (add-hook 'pjones:after-server-hook #'pjones:notes-server-hook)
 
 ;;; server.el ends here

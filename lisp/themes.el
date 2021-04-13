@@ -11,10 +11,6 @@
 (defvar pjones:current-theme nil
   "The currently active theme.")
 
-(custom-set-variables
- '(doom-themes-treemacs-theme "doom-colors")
- '(doom-themes-treemacs-enable-variable-pitch nil))
-
 ;; Stolen from: https://github.com/alezost/emacs-config
 (defun pjones:load-theme (theme)
   "Load THEME after unloading all other themes first."
@@ -51,13 +47,6 @@ If PREV is non-nil go to the previous theme."
 ;;; Override some annoying faces.
 (add-hook 'after-init-hook
   (defun pjones:set-initial-theme ()
-    (pjones:load-theme 'doom-challenger-deep)))
-
-(add-hook 'pjones:after-theme-change-hook
-  (defun pjones:set-up-doom ()
-    (when (s-prefix-p "doom-" (symbol-name pjones:current-theme))
-      (doom-themes-visual-bell-config)
-      (doom-themes-treemacs-config)
-      (doom-themes-org-config))))
+    (pjones:load-theme 'sanityinc-tomorrow-night)))
 
 ;;; themes.el ends here

@@ -23,18 +23,6 @@
         "url": "https://github.com/joaotavora/eglot/archive/92b0c5d385cc6f3593f60c2f93917fd8b2d44207.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
-    "emacs-doom-themes": {
-        "branch": "master",
-        "description": "An opinionated pack of modern color-themes",
-        "homepage": "",
-        "owner": "hlissner",
-        "repo": "emacs-doom-themes",
-        "rev": "e55d9a2ead88cf7039afdf944ba8e4be3165395a",
-        "sha256": "0pmgaxahk6j78w5wy72r2mxw7nmx1x1c8zsary1gll2jmmqaifym",
-        "type": "tarball",
-        "url": "https://github.com/hlissner/emacs-doom-themes/archive/e55d9a2ead88cf7039afdf944ba8e4be3165395a.tar.gz",
-        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
-    },
     "embark": {
         "branch": "master",
         "description": "Emacs Mini-Buffer Actions Rooted in Keymaps",
@@ -46,24 +34,6 @@
         "type": "tarball",
         "url": "https://github.com/oantolin/embark/archive/c8f164b1a48bbcb6884dedd0a6de1d2a7ede0e3e.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
-    },
-    "evil-fork": {
-        "branch": "trunk",
-        "description": "My personal fork of evil",
-        "homepage": "",
-        "owner": "pjones",
-        "repo": "evil-fork",
-        "rev": "cc9d6886b418389752a0591b9fcb270e83234cf9",
-        "sha256": "14nin675kb2q7fchawj5f2r7bdga9cxp7jbhmaa8vac03zs6xb4x",
-        "type": "tarball",
-        "url": "https://github.com/pjones/evil-fork/archive/cc9d6886b418389752a0591b9fcb270e83234cf9.tar.gz",
-        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
-    },
-    "evil-indent-textobject": {
-        "ref": "patches",
-        "repo": "https://github.com/pjones/evil-indent-textobject.git",
-        "rev": "350246086fd1aad574c67b1df341bf2e9168c5ed",
-        "type": "git"
     },
     "home-manager": {
         "branch": "release-20.09",
@@ -201,18 +171,6 @@
         "sha256": "0s16k7d8d0j4qjqq3b8vzr7d8xphwwnnb411jl0m103cshbqw9cw",
         "type": "tarball",
         "url": "https://github.com/raxod502/selectrum/archive/503c8b1d5f1a9d39d16539e6996b26a63465fbc4.tar.gz",
-        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
-    },
-    "treemacs": {
-        "branch": "master",
-        "description": null,
-        "homepage": null,
-        "owner": "Alexander-Miller",
-        "repo": "treemacs",
-        "rev": "c8f70f119f0deb1100b0d91a0e3c488ffd9cd63b",
-        "sha256": "1c760llribvqnq0lx4sq5d4yldrvf719lpld12syb26jrazcppxn",
-        "type": "tarball",
-        "url": "https://github.com/Alexander-Miller/treemacs/archive/c8f70f119f0deb1100b0d91a0e3c488ffd9cd63b.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     }
 }

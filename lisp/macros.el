@@ -21,33 +21,4 @@ If buffer NAME doesn't exist, COMMAND can be used to create it."
        (let ((current-prefix-arg '(4)))
          (call-interactively ,func)))))
 
-(defmacro pjones:evil-override-mode (mode &rest bindings)
-  "Override standard evil bindings for the given MODE.
-MODE-map should be a mode's keymap that would normally conflict with
-evil bindings.  Use BINDINGS to move those keys to alternatives."
-  (declare (indent defun))
-  (let ((keymap (intern (concat (symbol-name mode) "-map"))))
-    `(progn
-       (evil-make-overriding-map ,keymap 'normal t)
-       (evil-set-initial-state (quote ,mode) 'normal)
-       (evil-define-key 'normal ,keymap
-         "\C-v" (lookup-key evil-motion-state-map "\C-v")
-         "G" (lookup-key evil-motion-state-map "G")
-         "gg" (lookup-key evil-motion-state-map "gg")
-         "h" (lookup-key evil-motion-state-map "h")
-         "j" (lookup-key evil-motion-state-map "j")
-         "k" (lookup-key evil-motion-state-map "k")
-         "l" (lookup-key evil-motion-state-map "l")
-         "N" (lookup-key evil-motion-state-map "N")
-         "n" (lookup-key evil-motion-state-map "n")
-         "V" (lookup-key evil-motion-state-map "V")
-         "v" (lookup-key evil-motion-state-map "v")
-         "Y" (lookup-key evil-normal-state-map "Y")
-         "y" (lookup-key evil-normal-state-map "y")
-         "z" (lookup-key evil-motion-state-map "z")
-         ":" (lookup-key evil-motion-state-map ":")
-         "/" (lookup-key evil-motion-state-map "/")
-         "?" (lookup-key evil-motion-state-map "?")
-         ,@bindings))))
-
 ;;; macros.el ends here

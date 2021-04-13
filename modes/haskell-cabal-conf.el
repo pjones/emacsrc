@@ -7,17 +7,12 @@
 (require 'haskell-mode)
 (require 'haskell-cabal)
 (require 'reformatter)
-(require 'evil)
 
 (declare-function pjones:prog-mode-hook "../lisp/code.el")
 
 (reformatter-define cabal-format
   :program "cabal-fmt"
   :group 'haskell)
-
-(evil-define-key 'normal haskell-cabal-mode-map
-  "]]" #'haskell-cabal-next-section
-  "[[" #'haskell-cabal-previous-section)
 
 (add-hook 'haskell-cabal-mode-hook #'cabal-format-on-save-mode)
 (add-hook 'haskell-cabal-mode-hook #'pjones:prog-mode-hook)

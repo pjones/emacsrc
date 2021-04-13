@@ -15,7 +15,6 @@
 (require 'dash)
 (require 'direnv)
 (require 'eglot)
-(require 'evil-leader)
 (require 'haskell)
 (require 'haskell-interactive-mode)
 (require 'haskell-mode)
@@ -42,26 +41,18 @@
   '(haskell-process-auto-import-loaded-modules t)
   '(haskell-tags-on-save nil))
 
-;; A few extra key bindings:
-(evil-set-initial-state 'haskell-interactive-mode 'insert)
-
-(evil-define-key 'insert haskell-interactive-mode-map
-  (kbd "<down>") #'haskell-interactive-mode-history-next
-  (kbd "<up>") #'haskell-interactive-mode-history-previous)
-
-(evil-leader/set-key-for-mode 'haskell-mode
-  "j e" #'pjones:haskell-navigate-exports
-  "j i" #'haskell-navigate-imports
-  "j j" #'haskell-navigate-imports-return
-  "j r" #'haskell-interactive-bring
-  "m a" #'eglot-code-actions
-  "m e" #'haskell-cabal-visit-file
-  "m h" #'pjones:hoogle
-  "m i" #'pjones:haskell-import-package-module
-  "m I" #'pjones:haskell-import-project-file
-  "m q" #'pjones:haskell-toggle-qualified
-  "m x" #'pjones:hasky-extensions
-  "y m" #'pjones:haskell-kill-module-name)
+(let ((map haskell-mode-map))
+  (define-key map (kbd "C-c C-a") #'eglot-code-actions)
+  (define-key map (kbd "C-c C-e") #'pjones:haskell-navigate-exports)
+  (define-key map (kbd "C-c C-f") #'pjones:haskell-import-project-file)
+  (define-key map (kbd "C-c C-h") #'pjones:hoogle)
+  (define-key map (kbd "C-c C-m") #'haskell-navigate-imports)
+  (define-key map (kbd "C-c C-p") #'pjones:haskell-import-package-module)
+  (define-key map (kbd "C-c C-q") #'pjones:haskell-toggle-qualified)
+  (define-key map (kbd "C-c C-r") #'haskell-interactive-bring)
+  (define-key map (kbd "C-c M-e") #'pjones:hasky-extensions)
+  (define-key map (kbd "C-c M-f") #'haskell-cabal-visit-file)
+  (define-key map (kbd "C-c M-w") #'pjones:haskell-kill-module-name))
 
 (reformatter-define haskell-format
   :program "ormolu"
@@ -153,7 +144,6 @@ When prompting, use INITIAL as the initial module name."
         (insert (concat (pjones:haskell-read-import initial) "\n")))
     (goto-char (point-max))
     (haskell-navigate-imports)
-    (evil-insert-state)
     (yas-expand-snippet (yas-lookup-snippet "import"))))
 
 (defun pjones:haskell-add-import-from-hoogle ()
@@ -298,9 +288,6 @@ When prompting, use INITIAL as the initial module name."
     (if (fboundp 'flycheck-mode)
         (flycheck-mode -1)))
 
-  ;; Evil doc-lookup (on the "K" key):
-  (setq-local evil-lookup-func #'pjones:hoogle)
-
   ;; Pretty symbols:
   ;; https://gist.github.com/m-renaud/2c085d453b1263f1a6ed52d0c90688de
   (setq prettify-symbols-alist
@@ -336,19 +323,6 @@ When prompting, use INITIAL as the initial module name."
                      (Bl . Bl) ?< (Bc . Br) ?<
                      (Bc . Bl) ?> (Br . Br) ?>)))))
 
-(defun pjones:haskell-interactive-mode-hook ()
-  "Hook for `haskell-interactive-mode'."
-  (make-local-variable 'evil-insert-state-entry-hook)
-  (add-hook 'evil-insert-state-entry-hook
-    (defun pjones:haskell-interactive-insert-enter ()
-      (setq buffer-read-only nil)
-      (goto-char haskell-interactive-mode-prompt-start)))
-  (make-local-variable 'evil-insert-state-exit-hook)
-  (add-hook 'evil-insert-state-exit-hook
-    (defun pjones:pjones:haskell-interactive-insert-exit ()
-      (setq buffer-read-only t))))
-
-(add-hook 'haskell-interactive-mode-hook #'pjones:haskell-interactive-mode-hook)
 (add-hook 'haskell-mode-hook #'pjones:haskell-mode-hook)
 
 ;; Tell eglot how to start ghcide:

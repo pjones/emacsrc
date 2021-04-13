@@ -2,7 +2,6 @@
 ;;; Commentary:
 ;;; Code:
 (require 'company)
-(require 'evil-leader)
 (require 'message)
 (require 'mml)
 (require 'smtpmail)
@@ -56,19 +55,19 @@
       (buffer-string))))
 
 ;; A few extra key bindings:
-(evil-leader/set-key-for-mode 'message-mode
-  "m c" #'message-send-and-exit
-  "m k" #'message-kill-buffer
-  "m d" #'message-kill-to-signature
-  "m e" #'mml-secure-message-sign-encrypt
-  "j b" #'message-goto-body
-  "j C" #'message-goto-cc
-  "j f" #'message-goto-from
-  "j i" #'message-goto-signature
-  "j B" #'message-goto-bcc
-  "j s" #'message-goto-subject
-  "j t" #'message-goto-to
-  "m h" #'pjones:message-convert-to-html)
+(let ((map message-mode-map))
+  (define-key map (kbd "C-c C-b") #'message-goto-body)
+  (define-key map (kbd "C-c C-c") #'message-send-and-exit)
+  (define-key map (kbd "C-c C-e") #'mml-secure-message-sign-encrypt)
+  (define-key map (kbd "C-c C-f") #'message-goto-from)
+  (define-key map (kbd "C-c C-h") #'pjones:message-convert-to-html)
+  (define-key map (kbd "C-c C-k") #'message-kill-buffer)
+  (define-key map (kbd "C-c C-s") #'message-kill-to-signature)
+  (define-key map (kbd "C-c C-S-b") #'message-goto-bcc)
+  (define-key map (kbd "C-c C-S-c") #'message-goto-cc)
+  (define-key map (kbd "C-c C-S-s") #'message-goto-signature)
+  (define-key map (kbd "C-c C-s") #'message-goto-subject)
+  (define-key map (kbd "C-c C-t") #'message-goto-to))
 
 (defun pjones:message-convert-to-html ()
   "Turn the current email into HTML using Markdown."

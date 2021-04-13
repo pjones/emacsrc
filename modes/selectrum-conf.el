@@ -4,8 +4,9 @@
 ;;
 ;;; Code:
 
-(require 'evil)
 (require 'selectrum)
+(require 'embark)
+(require 'marginalia)
 
 (require 'selectrum-prescient)
 (selectrum-prescient-mode)
@@ -41,17 +42,6 @@ A literal slash can always be added by using \\[quoted-insert]."
        (t (insert "/")))
     (insert "/")))
 
-(defun pjones:selectrum-delete ()
-  "Move upward in the file hierarchy."
-  (interactive)
-  (if (and minibuffer-completing-file-name
-           (eq (char-before) ?/))
-      (save-excursion
-        (goto-char (1- (point)))
-        (when (search-backward "/" (point-min) t)
-          (delete-region (1+ (point)) (point-max))))
-    (call-interactively #'backward-delete-char)))
-
 (defun pjones:selectrum-toggle-marginalia ()
   "Toggle `marginalia-mode' based on `selectrum-display-style'."
   (if (eq selectrum-display-style 'horizontal)
@@ -61,15 +51,15 @@ A literal slash can always be added by using \\[quoted-insert]."
  'selectrum-cycle-display-style
  :after #'pjones:selectrum-toggle-marginalia)
 
-(evil-define-key 'insert selectrum-minibuffer-map
-  (kbd "/") #'pjones:selectrum-slash
-  (kbd "<backspace>") #'pjones:selectrum-delete
-  (kbd "<right>") #'selectrum-next-candidate
-  (kbd "<left>") #'selectrum-previous-candidate
-  (kbd "<tab>") #'selectrum-next-candidate
-  (kbd "C-<tab>") #'embark-collect-completions
-  (kbd "C-<escape>") #'embark-become
-  (kbd "C-<return>") #'embark-act
-  (kbd "M-a") #'marginalia-cycle)
+(let ((map selectrum-minibuffer-map))
+  (define-key map (kbd "/") #'pjones:selectrum-slash)
+  (define-key map (kbd "<right>") #'selectrum-next-candidate)
+  (define-key map (kbd "<left>") #'selectrum-previous-candidate)
+  (define-key map (kbd "<tab>") #'selectrum-next-candidate)
+  (define-key map (kbd "<backtab>") #'selectrum-previous-candidate)
+  (define-key map (kbd "C-<tab>") #'embark-collect-completions)
+  (define-key map (kbd "C-`") #'embark-become)
+  (define-key map (kbd "C-<return>") #'embark-act)
+  (define-key map (kbd "M-a") #'marginalia-cycle))
 
 ;;; selectrum-conf.el ends here

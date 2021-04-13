@@ -41,12 +41,6 @@
  '(truncate-partial-width-windows nil)
  '(mark-even-if-inactive t)
  '(inhibit-eol-conversion t)
- '(hscroll-margin 2)
- '(hscroll-step 1)
- '(scroll-conservatively 0)
- '(scroll-margin 0)
- '(scroll-preserve-screen-position nil)
- '(auto-window-vscroll nil)
  '(x-underline-at-descent-line t)
  '(focus-follows-mouse nil)
  '(mouse-autoselect-window nil)
@@ -98,7 +92,7 @@
   (set-frame-parameter frame 'title nil)
   (set-frame-parameter frame 'name  nil))
 
-(add-to-list 'default-frame-alist '(cursor-type  . hbar))
+(add-to-list 'default-frame-alist '(cursor-type  . bar))
 (add-to-list 'default-frame-alist '(font . "Hermit:pixelsize=14:weight=normal"))
 (setq frame-title-format '(:eval (pjones:frame-title-file-name)))
 

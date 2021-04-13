@@ -11,19 +11,8 @@
 (require 'dired-narrow)
 (require 'dired-subtree)
 (require 'dired-x)
-(require 'evil)
-(require 'evil-leader)
 (require 'noccur)
 (require 'wdired)
-
-(eval-when-compile
-  (load
-   (concat
-    (file-name-directory
-     (or load-file-name
-         byte-compile-current-file
-         (buffer-file-name)))
-    "../lisp/macros")))
 
 (declare-function org-open-file "org")
 
@@ -48,46 +37,19 @@
   '(dired-subtree-line-prefix-face 'subtree)
   '(dired-subtree-use-backgrounds nil))
 
-;; A few extra key bindings:
-(evil-leader/set-key-for-mode 'dired-mode
-  "b w"   #'pjones:dired-toggle-wdired
-  "f f"   (pjones:dired-cwd-do 'find-file)
-  "m G"   #'dired-do-chgrp
-  "m / n" #'dired-filter-by-name
-  "m / r" #'dired-filter-by-regexp
-  "m / ." #'dired-filter-by-extension
-  "m / f" #'dired-filter-by-file
-  "m / d" #'dired-filter-by-directory
-  "m / s" #'dired-filter-by-symlink
-  "m / m" #'dired-filter-by-mode
-  "m / p" #'dired-filter-pop
-  "m / /" #'dired-filter-pop-all
-  "m m n" #'dired-filter-mark-by-name
-  "m m r" #'dired-filter-mark-by-regexp
-  "m m ." #'dired-filter-mark-by-extension
-  "m m f" #'dired-filter-mark-by-file
-  "m m d" #'dired-filter-mark-by-directory
-  "m m s" #'dired-filter-mark-by-symlink
-  "m m m" #'dired-filter-mark-by-mode
-  "m m u" #'dired-unmark-all-marks
-  "m m a" #'pjones:dired-mark-all-files
-  "m o"   #'noccur-dired
-  "m q"   #'dired-do-query-replace-regexp
-  "y d"   (pjones:dired-cwd-do 'pjones:kill-directory-name)
-  "y f"   #'pjones:dired-copy-filename-as-kill)
-
-(pjones:evil-override-mode dired-mode
-  "!" (pjones:dired-cwd-do #'dired-do-shell-command)
-  "&" (pjones:dired-cwd-do #'dired-do-async-shell-command)
-  (kbd "<return>") #'pjones:dired-insert-or-visit
-  "[[" #'dired-subtree-up
-  "]]" #'dired-subtree-down
-  "gq" #'dired-do-query-replace-regexp
-  "gr" #'revert-buffer
-  "go" #'noccur-dired
-  "o"  #'dired-sort-toggle-or-edit)
-
-(evil-set-initial-state 'wdired-mode 'normal)
+(let ((map dired-mode-map))
+  (define-key map (kbd "&") (pjones:dired-cwd-do 'dired-do-async-shell-command))
+  (define-key map (kbd "!") (pjones:dired-cwd-do 'dired-do-shell-command))
+  (define-key map (kbd "<return>") #'pjones:dired-insert-or-visit)
+  (define-key map (kbd "* a") #'pjones:dired-mark-all-files)
+  (define-key map (kbd "C-c C-c") #'pjones:dired-toggle-wdired)
+  (define-key map (kbd "C-c f w") #'pjones:dired-copy-filename-as-kill)
+  (define-key map (kbd "C-c f W") (pjones:dired-cwd-do 'pjones:kill-directory-name))
+  (define-key map (kbd "C-x C-f") (pjones:dired-cwd-do 'find-file))
+  (define-key map (kbd "M-%") #'dired-do-query-replace-regexp)
+  (define-key map (kbd "M-n") #'dired-subtree-down)
+  (define-key map (kbd "M-p") #'dired-subtree-up)
+  (define-key map (kbd "M-s o") #'noccur-dired))
 
 (defun pjones:dired-copy-filename-as-kill (&optional path)
   "Copy file name or entire PATH."

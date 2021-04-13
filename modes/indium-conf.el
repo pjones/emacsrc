@@ -1,9 +1,13 @@
-;;; indium-conf.el --- Configuration for indium.el
+;;; indium-conf.el -- Settings for `indium' -*- lexical-binding: t -*-
+;;
+;;; Commentary:
+;;
+;;; Code:
 
 ;; FIXME:
 ;; Loading this file leads to something trying to touch $HOME which
 ;; fails during a nix-build.
-;;(require 'indium)
+;; (require 'indium)
 
 (defun pjones:indium-eval-buffer ()
   "Eval the entire buffer."
@@ -20,17 +24,17 @@
   "Configure indium-repl-mode."
   (let ((map indium-repl-mode-map))
     (define-key map (kbd "C-c C-l") 'indium-repl-clear-output)
-    (define-key map (kbd "C-c C-p") 'indium-repl-inspect)
-    (define-key map (kbd "C-c C-c") 'indium-scratch)))
+    (define-key map (kbd "C-c C-i") 'indium-repl-inspect)
+    (define-key map (kbd "C-c C-s") 'indium-scratch)))
 
 (defun pjones:indium-interaction-mode-hook ()
   "Configure indium-interaction-mode."
   (let ((map indium-interaction-mode-map))
-    (define-key map (kbd "C-M-x")   'indium-eval-last-node)
-    (define-key map (kbd "C-x C-s") 'pjones:indium-eval-buffer)
     (define-key map (kbd "C-c C-c") 'pjones:indium-eval-buffer-and-close)
-    (define-key map (kbd "C-c C-b") 'pjones:indium-eval-buffer)
-    (define-key map (kbd "C-c C-p") 'indium-inspect-last-node)))
+    (define-key map (kbd "C-c e b") 'pjones:indium-eval-buffer)
+    (define-key map (kbd "C-c e l") 'indium-eval-last-node)
+    (define-key map (kbd "C-c e n") 'indium-inspect-last-node)
+    (define-key map (kbd "C-x C-s") 'pjones:indium-eval-buffer)))
 
 ;; Install Hooks:
 (add-hook 'indium-repl-mode-hook 'pjones:indium-repl-mode-hook)
@@ -39,3 +43,5 @@
 ;; Local Variables:
 ;; byte-compile-warnings: (not noruntime)
 ;; End:
+
+;;; indium-conf.el ends here

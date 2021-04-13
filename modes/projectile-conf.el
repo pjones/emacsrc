@@ -37,7 +37,7 @@
 
 (defun pjones:projectile-project-root (&optional dont-ask)
   "Return the root directory of the current project.
-When a project is not active and DO NT-ASK is nil, prompt the user
+When a project is not active and DONT-ASK is nil, prompt the user
 to select a project.  If DONT-ASK is non-nil then simply return
 the default directory."
   (cond

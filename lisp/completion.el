@@ -18,12 +18,14 @@ If the character before point is a space character then indent the
 current line.  Otherwise run the completion command.  ARG is passed to
 `indent-for-tab-command'."
   (interactive "P")
-  (let ((tab-always-indent t)
-        (n (save-excursion (beginning-of-line) (point))))
-    (if (or (bolp) (looking-back "\\s-" n)) (indent-for-tab-command arg)
-      (if (yas-maybe-expand-abbrev-key-filter t)
-          (yas-expand)
-        (company-try-hard)))))
+  (if (and transient-mark-mode mark-active)
+      (indent-region (region-beginning) (region-end))
+    (let ((tab-always-indent t)
+          (n (save-excursion (beginning-of-line) (point))))
+      (if (or (bolp) (looking-back "\\s-" n)) (indent-for-tab-command arg)
+        (if (yas-maybe-expand-abbrev-key-filter t)
+            (yas-expand)
+          (company-try-hard))))))
 
 ;; In buffer completion:
 (add-hook 'after-init-hook 'global-company-mode)

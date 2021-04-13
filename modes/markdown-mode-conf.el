@@ -5,14 +5,14 @@
 ;;; Code:
 (require 'company)
 (require 'darkroom)
-(require 'evil)
-(require 'evil-leader)
 (require 'markdown-mode)
 (require 'visual-fill)
 (require 'whitespace)
 
 (declare-function pjones:open-line-above "../lisp/interactive.el")
 (declare-function pjones:add-fixme-lock "../lisp/code.el")
+(declare-function pjones:indent-or-complete "../lisp/completion.el")
+
 (autoload 'org-open-file "org")
 
 ;; Basic settings.
@@ -60,8 +60,7 @@ If REVERSE is non-nil, do the opposite of what the context says."
       (progn
         (newline)
         (markdown-insert-header-dwim))
-    (pjones:markdown-insert-list-item))
-  (evil-insert-state))
+    (pjones:markdown-insert-list-item)))
 
 (defun pjones:markdown-visual-line ()
   "Don't wrap lines.  Needed for most web forms."
@@ -107,63 +106,13 @@ directory.  Optionally renaming FILE to NAME."
      (file-name-nondirectory name)
      (file-relative-name dest))))
 
-(evil-define-operator pjones:markdown-promote (beg end count)
-  "Promote, indent, move column left."
-  :type line
-  :move-point nil
-  (interactive "<r><vc>")
-  (when (null count) (setq count 1))
-  (dotimes (_ count)
-    (condition-case nil
-        (markdown-promote)
-      (user-error
-       (evil-shift-left beg end 1)))))
-
-(evil-define-operator pjones:markdown-demote (beg end count)
-  "Demote, indent, move column right."
-  :type line
-  :move-point nil
-  (interactive "<r><vc>")
-  (when (null count) (setq count 1))
-  (dotimes (_ count)
-    (condition-case nil
-        (markdown-demote)
-      (user-error
-       (evil-shift-right beg end 1)))))
-
 (defun pjones:markdown-bind-keys ()
   "Bind keys in modes derived from `markdown-mode'."
   (let* ((mode major-mode)
          (map (symbol-value (intern (concat (symbol-name mode) "-map")))))
-    (evil-define-key 'insert map
-      (kbd "C-j") #'pjones:markdown-insert-heading-or-item
-      (kbd "TAB") #'pjones:indent-or-complete)
-    (evil-define-key 'motion map
-      "[[" #'outline-backward-same-level
-      "]]" #'outline-forward-same-level
-      "gk" #'outline-up-heading
-      "gJ" #'outline-move-subtree-down
-      "gK" #'outline-move-subtree-up)
-    (evil-define-key 'normal map
-      ;; Folding:
-      "zo" #'outline-show-entry
-      "zO" #'outline-show-subtree
-      "zc" #'outline-hide-subtree
-      "zr" #'outline-show-all
-      "zm" #'outline-hide-sublevels
-      ;; Promoting, demoting:
-      ">" #'pjones:markdown-demote
-      "<" #'pjones:markdown-promote)
-    (evil-leader/set-key-for-mode mode
-      "g x" #'pjones:markdown-follow-thing-at-point
-      "m a" #'pjones:markdown-attach-file
-      "m c" #'markdown-preview
-      "m f" #'markdown-insert-footnote
-      "m j" #'pjones:markdown-insert-heading-or-item
-      "m l" #'markdown-insert-link
-      "m n" #'markdown-cleanup-list-numbers
-      "m p" #'markdown-live-preview-mode
-      "m t" #'markdown-insert-table)))
+    (define-key map (kbd "C-<return>") #'pjones:markdown-insert-heading-or-item)
+    (define-key map (kbd "TAB") #'pjones:indent-or-complete)
+    (define-key map (kbd "C-c C-c") #'markdown-preview)))
 
 (defun pjones:markdown-mode-hook ()
   "Set up key bindings and other crap for markdown-mode."
