@@ -11,7 +11,24 @@
 (require 'project)
 
 (custom-set-variables
-  '(consult-project-root-function #'pjones:consult-project-root-function))
+ '(consult-project-root-function #'pjones:consult-project-root-function))
+
+(defvar pjones:consult-orig-buffer-items
+  (plist-get consult--source-buffer :items)
+  "Original function for fetching buffer names.")
+
+(defun pjones:consult-source-buffer-items ()
+  "Replacement function for `consult--source-buffer' :items.
+
+This version of the :items function discards buffers that are
+already being shown in a window on the current frame."
+  (seq-remove
+   (lambda (name) (get-buffer-window name))
+   (funcall pjones:consult-orig-buffer-items)))
+
+;; Update consult--source-buffer with our custom :items function:
+(plist-put consult--source-buffer :items
+           #'pjones:consult-source-buffer-items)
 
 (defun pjones:consult-project-root-function ()
   "Return the current project's root directory."
