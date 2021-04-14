@@ -101,6 +101,7 @@ overrides.emacsWithPackages (epkgs:
     elm-mode # Elm mode for emacs
     embark # Conveniently act on minibuffer completions
     erc-hl-nicks # ERC nick highlighter that ignores uniquifying chars when colorizing
+    expand-region # Increase selected region by semantic units.
     flycheck # On-the-fly syntax checking
     flyspell-correct # Correcting words with flyspell via custom interface
     flyspell-correct-avy-menu # Correcting words with flyspell via avy-menu interface
@@ -166,5 +167,5 @@ overrides.emacsWithPackages (epkgs:
     winum # Navigate windows and frames using numbers.
     yaml-mode # Major mode for editing YAML files
     yasnippet # Yet another snippet extension for Emacs
-    expand-region # Increase selected region by semantic units.
+    monokai-theme # A fruity color theme for Emacs.
   ])
