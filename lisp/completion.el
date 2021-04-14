@@ -18,7 +18,7 @@ If the character before point is a space character then indent the
 current line.  Otherwise run the completion command.  ARG is passed to
 `indent-for-tab-command'."
   (interactive "P")
-  (if (and transient-mark-mode mark-active)
+  (if (region-active-p)
       (indent-region (region-beginning) (region-end))
     (let ((tab-always-indent t)
           (n (save-excursion (beginning-of-line) (point))))

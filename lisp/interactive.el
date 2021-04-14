@@ -32,7 +32,7 @@ will be deleted (without placing it in the kill ring)."
                   (or subword-mode global-subword-mode))
              'subword-forward
            'forward-word)))
-    (if (or (not transient-mark-mode) (and transient-mark-mode mark-active))
+    (if (region-active-p)
         (kill-region (region-beginning) (region-end))
       (delete-region (point) (progn (funcall forward (- arg))
                                     (point))))))
@@ -212,6 +212,30 @@ When FULL-PATH is non-nil kill the entire path for the file."
     (save-excursion
       (sort-lines nil beg end))))
 
+(defun pjones:set-mark-command (arg)
+  "Set the mark where point is, or jump to the mark.
+
+With no prefix argument, set mark to where point is.  If the mark
+is already set to point's location then activate the region.
+
+With a prefix argument (ARG is non-nil), jump to mark."
+  (interactive "P")
+  (cond
+   (arg
+    (setq this-command 'pop-to-mark-command)
+    (pop-to-mark-command))
+   ((eq last-command 'pop-to-mark-command)
+    (setq this-command 'pop-to-mark-command)
+    (pop-to-mark-command))
+   ((eq last-command 'pop-global-mark)
+    (setq this-command 'pop-global-mark)
+    (pop-global-mark))
+   (t
+    (let ((mark (mark t)))
+      (if (or (null mark) (/= mark (point)))
+          (push-mark)
+        (activate-mark 'no-tmm))))))
+
 (defun pjones:exchange-point-and-mark (&optional arg)
   "Exchange point and mark without alerting region state.
 If the region is active, keep it active.  If the region is
@@ -221,7 +245,6 @@ behavior."
   (exchange-point-and-mark
    (if (region-active-p) arg
      (not arg))))
-
 
 ;; Local Variables:
 ;; byte-compile-warnings: (not noruntime)
