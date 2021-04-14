@@ -70,8 +70,9 @@ buffer name, or symbols that match a major mode."
          (display-buffer-reuse-window
           display-buffer-reuse-mode-window
           display-buffer-pop-up-window
-          display-buffer-at-bottom)
+          display-buffer-in-direction)
          (reusable-framaes .)
+         (direction . below)
          (window-height . 0.4))
 
         ;; Buffers that should take over the current window:

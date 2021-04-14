@@ -26,6 +26,6 @@
   (define-key map (kbd "!") #'pjones:project-shell-command)
   (define-key map (kbd "&") #'pjones:project-async-shell-command)
   (define-key map (kbd "c") #'pjones:projectile-compile-project)
-  (define-key map (kbd "t") #'projectile-test-command))
+  (define-key map (kbd "t") #'projectile-test-project))
 
 ;;; project-conf.el ends here
