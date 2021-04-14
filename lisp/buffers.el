@@ -33,15 +33,6 @@ buffer name, or symbols that match a major mode."
                    (string-match condition name))))
         ,names-or-modes))))
 
-(defun pjones:display-buffer-maybe-pop-up-frame (buffer alist)
-  "Pop up a frame, unless we're in a special frame already.
-BUFFER and ALIST are passed on to display functions."
-  (let* ((frame (selected-frame))
-         (name (frame-parameter frame 'role)))
-    (if (string= name "notes")
-        (display-buffer-in-direction buffer alist)
-      (display-buffer-pop-up-frame buffer alist))))
-
 (setq display-buffer-alist
       `(;; Windows that should split the entire frame:
         (,(pjones:buffer-conditions
@@ -71,10 +62,14 @@ BUFFER and ALIST are passed on to display functions."
         ;; Windows that should split the current window but *not* get
         ;; focus:
         (,(pjones:buffer-conditions
-           '("magit-diff: "
+           '(compilation-mode
+             grep-mode
+             rg-mode
+             "magit-diff: "
              "\\*HTTP Response.*"))
          (display-buffer-reuse-window
           display-buffer-reuse-mode-window
+          display-buffer-pop-up-window
           display-buffer-at-bottom)
          (reusable-framaes .)
          (window-height . 0.4))
@@ -90,37 +85,6 @@ BUFFER and ALIST are passed on to display functions."
            '("\\*eldoc\\*"
              "\\*flymake message\\*"))
          (display-buffer-in-side-window)
-         (side . bottom))
-
-        ;; Modes that force a new (raised and focused) frame:
-        (,(pjones:buffer-conditions
-           '(term-mode
-             haskell-interactive-mode))
-         (display-buffer-reuse-window
-          display-buffer-reuse-mode-window
-          display-buffer-pop-up-frame)
-         (reusable-framaes .)
-         (dedicated . t)
-         (pop-up-frame-parameters
-          . ((name . "popup") ; For the window manager.
-             (x-name . "popup" ) ; Because `name' is replaced with `title'.
-             (unsplittable . t))))
-
-        ;; Modes that share a frame that is never raised:
-        (,(pjones:buffer-conditions
-           '(compilation-mode
-             grep-mode
-             rg-mode))
-         (display-buffer-reuse-window
-          display-buffer-reuse-mode-window
-          pjones:display-buffer-maybe-pop-up-frame)
-         (direction . right)
-         (reusable-frames . t)
-         (dedicated . t)
-         (inhibit-switch-frame . t)
-         (pop-up-frame-parameters
-          . ((name . "popup") ; For the window manager.
-             (x-name . "popup" ) ; Because `name' is replaced with `title'.
-             (unsplittable . t))))))
+         (side . bottom))))
 
 ;;; buffers.el ends here
