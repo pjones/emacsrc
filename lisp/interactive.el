@@ -145,12 +145,6 @@ When FULL-PATH is non-nil kill the entire path for the file."
     (kill-new uuid)
     (insert uuid)))
 
-(defun pjones:switch-window-then-delete ()
-  "Interactively delete a window."
-  (interactive)
-  (let ((switch-window-threshold 1))
-    (switch-window-then-delete)))
-
 (defun pjones:open-temp-buffer ()
   "Open/create a temporary buffer for writing."
   (interactive)

@@ -167,7 +167,6 @@ overrides.emacsWithPackages (epkgs:
     selectrum # Easily select item from list
     selectrum-prescient # Selectrum integration
     sweet-theme # Sweet-looking theme
-    switch-window # A *visual* way to switch window
     typescript-mode # Major mode for editing typescript
     visual-fill # Auto-refill paragraphs without modifying the buffer
     vlf # View Large Files

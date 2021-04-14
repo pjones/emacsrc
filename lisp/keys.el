@@ -111,12 +111,8 @@
  (kbd "C-c 8") #'winum-select-window-8
  (kbd "C-c 9") #'winum-select-window-9
  (kbd "C-c w /") #'winner-undo
- (kbd "C-c w 0") #'delete-window
- (kbd "C-c w 1") #'delete-other-windows
  (kbd "C-c w =") #'balance-windows
- (kbd "C-c w k") #'pjones:switch-window-then-delete
  (kbd "C-c w n") #'winum-select-window-by-number
- (kbd "C-c w o") #'switch-window
  (kbd "C-c w r") #'rotate-layout
  (kbd "C-c w s") #'ace-swap-window
  (kbd "C-c w S") #'window-toggle-side-windows
@@ -160,6 +156,8 @@
  (kbd "M-RET") #'delete-blank-lines
 
  ;; Overriding default key bindings
+ [remap other-window] #'ace-select-window
+ [remap delete-window] #'ace-delete-window
  [remap bookmark-jump] #'consult-bookmark
  [remap yank-pop] #'consult-yank-pop
  [remap apropos-command] #'consult-apropos
