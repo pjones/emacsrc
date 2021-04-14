@@ -5,6 +5,7 @@
 ;;; Code:
 
 (require 'project)
+(require 'projectile)
 
 ;; Port this function to project.el:
 (declare-function pjones:projectile-compile-project "./projectile-conf")
@@ -24,6 +25,7 @@
 (let ((map project-prefix-map))
   (define-key map (kbd "!") #'pjones:project-shell-command)
   (define-key map (kbd "&") #'pjones:project-async-shell-command)
-  (define-key map (kbd "c") #'pjones:projectile-compile-project))
+  (define-key map (kbd "c") #'pjones:projectile-compile-project)
+  (define-key map (kbd "t") #'projectile-test-command))
 
 ;;; project-conf.el ends here

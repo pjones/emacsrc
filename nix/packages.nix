@@ -30,6 +30,7 @@ let
     selectrum-prescient = sources."prescient.el";
     company-prescient = sources."prescient.el";
 
+    consult = self: melpa "consult" sources.consult { };
     eglot = sources.eglot;
     embark = self: melpa "embark" sources.embark { };
     marginalia = self: melpa "marginalia" sources.marginalia { };
@@ -84,6 +85,7 @@ overrides.emacsWithPackages (epkgs:
     company-prescient # prescient.el + Company
     company-quickhelp # Popup documentation for completion candidates
     company-try-hard # get all completions from company backends
+    consult # Consulting completing-read
     csv-mode # Major mode for editing comma/char separated values
     darkroom # Remove visual distractions and focus on writing
     default-text-scale # Easily adjust the font size in all frames
@@ -113,7 +115,6 @@ overrides.emacsWithPackages (epkgs:
     hasky-extensions # Toggle Haskell language extensions
     highlight-indent-guides # Minor mode to highlight indentation
     http # Yet another HTTP client
-    imenus # Imenu for multiple buffers and without subgroups
     indium # JavaScript Awesome Development Environment
     inf-ruby # Run a Ruby process in a buffer
     js2-mode # Improved JavaScript editing mode
@@ -125,6 +126,7 @@ overrides.emacsWithPackages (epkgs:
     marginalia # Enrich existing commands with completion annotations
     markdown-mode # Major mode for Markdown-formatted text
     minions # A minor-mode menu for the mode line
+    monokai-theme # A fruity color theme for Emacs.
     neuron-mode # Major mode for editing zettelkasten notes using neuron
     nix-mode # Major mode for editing .nix files
     no-littering # help keeping ~/.emacs.d clean
@@ -167,5 +169,4 @@ overrides.emacsWithPackages (epkgs:
     winum # Navigate windows and frames using numbers.
     yaml-mode # Major mode for editing YAML files
     yasnippet # Yet another snippet extension for Emacs
-    monokai-theme # A fruity color theme for Emacs.
   ])

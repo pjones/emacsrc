@@ -1,4 +1,16 @@
 {
+    "consult": {
+        "branch": "0.6",
+        "description": "consult.el - Consulting completing-read",
+        "homepage": "",
+        "owner": "minad",
+        "repo": "consult",
+        "rev": "3184edd6ccf9cfb300511feb297b9012ce902bbe",
+        "sha256": "09n3q3dyi83s4fk4z7csnjicbxd69ws4zp4371c1lbxcvvq2fdnd",
+        "type": "tarball",
+        "url": "https://github.com/minad/consult/archive/3184edd6ccf9cfb300511feb297b9012ce902bbe.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
     "dictionary-el": {
         "branch": "master",
         "description": null,
@@ -24,15 +36,15 @@
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "embark": {
-        "branch": "master",
+        "branch": "0.10",
         "description": "Emacs Mini-Buffer Actions Rooted in Keymaps",
         "homepage": null,
         "owner": "oantolin",
         "repo": "embark",
-        "rev": "c8f164b1a48bbcb6884dedd0a6de1d2a7ede0e3e",
-        "sha256": "0gzanhz9lsg74fk1nklr7irwz14wkgn7hfmllv8151pabbwplxp8",
+        "rev": "47daded610b245caf01a97d74c940aff91fe14e2",
+        "sha256": "063hc0hganws11vjdk3ic0mxm9i0vpw6s7hzbgxvja0gjkdxjldz",
         "type": "tarball",
-        "url": "https://github.com/oantolin/embark/archive/c8f164b1a48bbcb6884dedd0a6de1d2a7ede0e3e.tar.gz",
+        "url": "https://github.com/oantolin/embark/archive/47daded610b245caf01a97d74c940aff91fe14e2.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "home-manager": {
@@ -48,15 +60,15 @@
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "marginalia": {
-        "branch": "main",
+        "branch": "0.4",
         "description": "marginalia.el - Marginalia in the minibuffer",
         "homepage": "",
         "owner": "minad",
         "repo": "marginalia",
-        "rev": "7df0e53ab99e22c631cd860aea38b5e96b065914",
-        "sha256": "0kxiqhqp1fl37gsm0z5f46ymr814g80d8yrhc438mdnv5m422cg9",
+        "rev": "e741b243b30f6cfe85e568cc551acff9a1e5e74f",
+        "sha256": "0piwzxp1zmwp876kyca0xcgyxgn8bn4wh5fnn88dkvdzi8mcgmkh",
         "type": "tarball",
-        "url": "https://github.com/minad/marginalia/archive/7df0e53ab99e22c631cd860aea38b5e96b065914.tar.gz",
+        "url": "https://github.com/minad/marginalia/archive/e741b243b30f6cfe85e568cc551acff9a1e5e74f.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "melpa": {
@@ -65,10 +77,10 @@
         "homepage": "https://melpa.org",
         "owner": "melpa",
         "repo": "melpa",
-        "rev": "2e7aee5074faedef4f2b989ffe05995b2f73bfbb",
-        "sha256": "1i5zc2l26cxs5vh2n08i3cbc6mrglqlpfy3wnzkj4scpalq1srj7",
+        "rev": "2fad55061bdabfcd0b756fa2c9f6532265be08ce",
+        "sha256": "0asp8rqwljnjrm2683xpygg6lii4jmxs2h4a0101b94zpy77p3yf",
         "type": "tarball",
-        "url": "https://github.com/melpa/melpa/archive/2e7aee5074faedef4f2b989ffe05995b2f73bfbb.tar.gz",
+        "url": "https://github.com/melpa/melpa/archive/2fad55061bdabfcd0b756fa2c9f6532265be08ce.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "neuron-mode": {
@@ -162,15 +174,15 @@
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "selectrum": {
-        "branch": "master",
+        "branch": "v3.1",
         "description": "🔔 Better solution for incremental narrowing in Emacs.",
         "homepage": "",
         "owner": "raxod502",
         "repo": "selectrum",
-        "rev": "503c8b1d5f1a9d39d16539e6996b26a63465fbc4",
-        "sha256": "0s16k7d8d0j4qjqq3b8vzr7d8xphwwnnb411jl0m103cshbqw9cw",
+        "rev": "a9ecaa018f249c15fae8e1af5d4df337e846e92f",
+        "sha256": "02jrki6vzyfyi1bbslki5pk2348flh9dz18jkc4y7p60bvbr52cb",
         "type": "tarball",
-        "url": "https://github.com/raxod502/selectrum/archive/503c8b1d5f1a9d39d16539e6996b26a63465fbc4.tar.gz",
+        "url": "https://github.com/raxod502/selectrum/archive/a9ecaa018f249c15fae8e1af5d4df337e846e92f.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     }
 }

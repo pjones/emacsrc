@@ -4,9 +4,11 @@
 ;;
 ;;; Code:
 
-(require 'selectrum)
+(require 'consult)
+(require 'consult-selectrum)
 (require 'embark)
 (require 'marginalia)
+(require 'selectrum)
 
 (require 'selectrum-prescient)
 (selectrum-prescient-mode)
