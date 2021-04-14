@@ -57,6 +57,9 @@
     ("s" ("+spam" "+move") "Mark as Spam")
     ("u" ("+unread") "Mark Unread"))))
 
+(let ((map notmuch-search-mode-map))
+  (define-key map (kbd "d") #'pjones:notmuch-delete-thread))
+
 (defun pjones:notmuch-tag-thread (&optional tags reverse beg end)
   "Tag selected messages (between BEG and END) with TAGS.
 If REVERSE is non-nil then reverse the tagging operation."
