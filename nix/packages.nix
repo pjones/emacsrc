@@ -10,7 +10,7 @@ let
   sources = import ./sources.nix;
 
   # Build a MELPA package that isn't in nixpkgs:
-  melpa = name: src: args: super:
+  melpa = name: src: args: super: _orig:
     super.melpaBuild
       {
         inherit src;
@@ -40,12 +40,20 @@ let
     reformatter = sources."reformatter.el";
     selectrum = sources.selectrum;
 
-    eldoc = self: super: rec {
+    eldoc = self: super: orig: rec {
       version = "1.11.0";
       src = fetchurl {
         url = "http://elpa.gnu.org/packages/eldoc-${version}.el";
         sha256 = "1py9l1vl7s90y5kfpglhy11jswam2gcrqap09h6wb5ldnyb8cgq2";
       };
+    };
+
+    vterm = _self: _super: orig: {
+      src = sources.emacs-libvterm;
+      postInstall = ''
+        ln -s emacs-libvterm-src source
+        ${orig.postInstall}
+      '';
     };
   };
 
@@ -54,7 +62,7 @@ let
     let
       drv = orig: value:
         if builtins.isFunction value
-        then value self super
+        then value self super orig
         else {
           src = value;
 
@@ -163,6 +171,7 @@ overrides.emacsWithPackages (epkgs:
     typescript-mode # Major mode for editing typescript
     visual-fill # Auto-refill paragraphs without modifying the buffer
     vlf # View Large Files
+    vterm # Fully-featured terminal emulator
     weyland-yutani-theme # Emacs theme based off Alien movie franchise
     wgrep # Writable grep buffer and apply the changes to files
     which-key # Display available keybindings in popup

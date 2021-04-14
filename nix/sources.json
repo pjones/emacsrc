@@ -35,6 +35,18 @@
         "url": "https://github.com/joaotavora/eglot/archive/92b0c5d385cc6f3593f60c2f93917fd8b2d44207.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
+    "emacs-libvterm": {
+        "branch": "master",
+        "description": "Emacs libvterm integration",
+        "homepage": "",
+        "owner": "akermu",
+        "repo": "emacs-libvterm",
+        "rev": "2b1392cb2b14ec5bd0b7355197d5f353aa5d3983",
+        "sha256": "0cz0zfq5lannqq2ivmp6zv9r3fybkykx2vl4vn614rij23lylbwc",
+        "type": "tarball",
+        "url": "https://github.com/akermu/emacs-libvterm/archive/2b1392cb2b14ec5bd0b7355197d5f353aa5d3983.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
     "embark": {
         "branch": "0.10",
         "description": "Emacs Mini-Buffer Actions Rooted in Keymaps",
