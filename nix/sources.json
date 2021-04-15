@@ -35,6 +35,18 @@
         "url": "https://github.com/joaotavora/eglot/archive/92b0c5d385cc6f3593f60c2f93917fd8b2d44207.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
+    "emacs-doom-themes": {
+        "branch": "master",
+        "description": "An opinionated pack of modern color-themes",
+        "homepage": "",
+        "owner": "hlissner",
+        "repo": "emacs-doom-themes",
+        "rev": "4199e74db170200995ee8dfbb55ffae004d6e219",
+        "sha256": "0vfhnywww560rf0b7h2gc9w4x4738xwq12c8qi9y267110zg62mz",
+        "type": "tarball",
+        "url": "https://github.com/hlissner/emacs-doom-themes/archive/4199e74db170200995ee8dfbb55ffae004d6e219.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
     "emacs-libvterm": {
         "branch": "master",
         "description": "Emacs libvterm integration",

@@ -30,6 +30,7 @@ let
     selectrum-prescient = sources."prescient.el";
     company-prescient = sources."prescient.el";
 
+    doom-themes = sources.emacs-doom-themes;
     consult = self: melpa "consult" sources.consult { };
     eglot = sources.eglot;
     embark = self: melpa "embark" sources.embark { };
@@ -88,7 +89,6 @@ overrides.emacsWithPackages (epkgs:
     adaptive-wrap # Smart line-wrapping with wrap-prefix
     async # Asynchronous processing in Emacs
     avy # Jump to arbitrary positions in visible text and select text quickly
-    color-theme-sanityinc-tomorrow # A version of Chris Kempson's "tomorrow" themes
     company # Modular text completion framework
     company-prescient # prescient.el + Company
     company-quickhelp # Popup documentation for completion candidates
@@ -104,6 +104,7 @@ overrides.emacsWithPackages (epkgs:
     dired-subtree # Insert subdirectories in a tree-like fashion
     direnv # direnv support
     doom-modeline # A minimal and modern mode-line
+    doom-themes # an opinionated pack of modern color-themes
     dumb-jump # Jump to definition for 40+ languages without configuration
     eglot # Client for Language Server Protocol (LSP) servers
     eimp # Emacs Image Manipulation Package
@@ -134,7 +135,6 @@ overrides.emacsWithPackages (epkgs:
     marginalia # Enrich existing commands with completion annotations
     markdown-mode # Major mode for Markdown-formatted text
     minions # A minor-mode menu for the mode line
-    monokai-theme # A fruity color theme for Emacs.
     neuron-mode # Major mode for editing zettelkasten notes using neuron
     nix-mode # Major mode for editing .nix files
     no-littering # help keeping ~/.emacs.d clean
@@ -166,7 +166,6 @@ overrides.emacsWithPackages (epkgs:
     scad-mode # A major mode for editing OpenSCAD code
     selectrum # Easily select item from list
     selectrum-prescient # Selectrum integration
-    sweet-theme # Sweet-looking theme
     typescript-mode # Major mode for editing typescript
     visual-fill # Auto-refill paragraphs without modifying the buffer
     vlf # View Large Files
