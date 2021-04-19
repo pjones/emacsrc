@@ -39,12 +39,6 @@ buffer name, or symbols that match a major mode."
            '("\\*Backtrace\\*"
              "\\*Completions\\*"
              "\\*Deletions\\*"
-             "\\*eww buffers\\*"
-             "\\*JS scratch\\*"
-             "\\*magit-.*popup"
-             "\\*transient"
-             help-mode
-             pdf-outline-buffer-mode
              calendar-mode))
          (display-buffer-reuse-window
           display-buffer-reuse-mode-window
@@ -59,14 +53,34 @@ buffer name, or symbols that match a major mode."
          (reusable-framaes .)
          (window-height . 0.1))
 
-        ;; Windows that should split the current window but *not* get
-        ;; focus:
+        ;; Buffers that are related to the current window and should
+        ;; split it, opening a new window below the current window:
+        (,(pjones:buffer-conditions
+           '(help-mode
+             pdf-outline-buffer-mode
+             "\\*magit-.*popup"
+             "\\*transient"))
+         (display-buffer-reuse-window
+          display-buffer-reuse-mode-window
+          display-buffer-in-direction)
+         (reusable-framaes .)
+         (direction . below)
+         (window-height . 0.4))
+
+        ;; Windows that should split the current window (either to the
+        ;; right or below depending on available space):
         (,(pjones:buffer-conditions
            '(compilation-mode
              grep-mode
+             help-mode
+             pdf-outline-buffer-mode
              rg-mode
-             "magit-diff: "
-             "\\*HTTP Response.*"))
+             "\\*eww buffers\\*"
+             "\\*HTTP Response.*"
+             "\\*JS scratch\\*"
+             "\\*magit-.*popup"
+             "\\*transient"
+             "magit-diff: "))
          (display-buffer-reuse-window
           display-buffer-reuse-mode-window
           display-buffer-pop-up-window
