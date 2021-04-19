@@ -25,7 +25,6 @@
 
 (defun pjones:pdf-view-after-change-page-hook ()
   "Respond to a page change in PDF documents."
-  (blink-cursor-mode -1)
   (setq-local cursor-type nil))
 
 ;; Settings:
