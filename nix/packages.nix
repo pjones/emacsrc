@@ -89,6 +89,7 @@ overrides.emacsWithPackages (epkgs:
     adaptive-wrap # Smart line-wrapping with wrap-prefix
     async # Asynchronous processing in Emacs
     avy # Jump to arbitrary positions in visible text and select text quickly
+    clojure-mode # Major mode for Clojure code
     company # Modular text completion framework
     company-prescient # prescient.el + Company
     company-quickhelp # Popup documentation for completion candidates
