@@ -113,10 +113,11 @@
  (kbd "C-c w /") #'winner-undo
  (kbd "C-c w =") #'balance-windows
  (kbd "C-c w n") #'winum-select-window-by-number
+ (kbd "C-c w R") #'resize-window
  (kbd "C-c w r") #'rotate-layout
  (kbd "C-c w s") #'ace-swap-window
  (kbd "C-c w S") #'window-toggle-side-windows
- (kbd "C-c w R") #'resize-window
+ (kbd "C-c w u") #'winner-undo
 
  ;; Zettelkasten:
  (kbd "C-c z d") #'neuron-open-daily-notes
@@ -125,18 +126,19 @@
  (kbd "C-c z z") #'neuron-new-zettel
 
  ;; Additional searching/grepping bindings:
- (kbd "M-s z") #'pjones:rg-zettel-dir
+ (kbd "M-s d") #'rg
  (kbd "M-s f") #'consult-find
  (kbd "M-s G") #'consult-git-grep
  (kbd "M-s g") #'consult-grep
  (kbd "M-s k") #'consult-keep-lines
- (kbd "M-s l") #'consult-line
- (kbd "M-s L") #'consult-locate
+ (kbd "M-s l") #'consult-locate
  (kbd "M-s m") #'consult-multi-occur
- (kbd "M-s r") #'consult-ripgrep
- (kbd "M-s u") #'consult-focus-lines
+ (kbd "M-s M-s") #'consult-line
  (kbd "M-s p") #'rg-project
- (kbd "M-s d") #'rg
+ (kbd "M-s r") #'consult-ripgrep
+ (kbd "M-s s") #'consult-line
+ (kbd "M-s u") #'consult-focus-lines
+ (kbd "M-s z") #'pjones:rg-zettel-dir
 
  ;; Additional go-to bindings:
  (kbd "M-g @") #'consult-global-mark
@@ -156,24 +158,25 @@
  (kbd "M-RET") #'delete-blank-lines
 
  ;; Overriding default key bindings
- [remap other-window] #'ace-select-window
- [remap delete-window] #'ace-delete-window
- [remap bookmark-jump] #'consult-bookmark
- [remap yank-pop] #'consult-yank-pop
  [remap apropos-command] #'consult-apropos
- [remap switch-to-buffer] #'consult-buffer
- [remap switch-to-buffer-other-window] #'consult-buffer-other-window
- [remap switch-to-buffer-other-frame] #'consult-buffer-other-frame
- [remap goto-line] #'consult-goto-line
+ [remap bookmark-jump] #'consult-bookmark
+ [remap delete-window] #'ace-delete-window
  [remap exchange-point-and-mark] #'pjones:exchange-point-and-mark
+ [remap goto-line] #'consult-goto-line
  [remap indent-for-tab-command] #'pjones:indent-or-complete
  [remap isearch-backward] #'isearch-backward-regexp
  [remap isearch-forward] #'isearch-forward-regexp
  [remap kill-region] #'pjones:kill-region-or-backward-kill-word
+ [remap list-buffers] #'ibuffer
  [remap move-beginning-of-line] #'pjones:move-beginning-of-line
  [remap open-line] #'pjones:open-line-above
+ [remap other-window] #'ace-select-window
  [remap rectangle-number-lines] #'pjones:rectangle-number-lines
  [remap save-buffers-kill-emacs] #'pjones:maybe-save-buffers-kill-terminal
+ [remap switch-to-buffer-other-frame] #'consult-buffer-other-frame
+ [remap switch-to-buffer-other-window] #'consult-buffer-other-window
+ [remap switch-to-buffer] #'consult-buffer
+ [remap yank-pop] #'consult-yank-pop
  [remap zap-to-char] #'zap-up-to-char)
 
 ;;; keys.el ends here
