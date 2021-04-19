@@ -203,7 +203,7 @@
  '(org-refile-use-outline-path t)
  '(org-refile-allow-creating-parent-nodes t)
  '(org-log-refile (quote time))
- '(org-archive-location "::* Archived")
+ '(org-archive-location "~/notes/gtd/archive.org::datetree/* Archived From %s")
 
  '(org-refile-targets
    (quote (("~/notes/gtd/projects.org" :level . 3)
