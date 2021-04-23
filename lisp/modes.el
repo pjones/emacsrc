@@ -33,6 +33,7 @@
   (global-auto-revert-mode)          ; External changes cause a revert
   (global-diff-hl-mode)              ; Show what changes in a buffer
   (global-prettify-symbols-mode)     ; Replace buffer symbols.
+  (mini-frame-mode)                  ; minibuffer in its own frame!
   (minions-mode)                     ; Hide some minor modes.
   (projectile-mode)                  ; Project tool
   (which-key-mode)                   ; Remind me what keys do.

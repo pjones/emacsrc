@@ -30,6 +30,7 @@ let
     selectrum-prescient = sources."prescient.el";
     company-prescient = sources."prescient.el";
 
+    mini-frame = sources.emacs-mini-frame;
     doom-themes = sources.emacs-doom-themes;
     consult = self: melpa "consult" sources.consult { };
     eglot = sources.eglot;
@@ -135,6 +136,7 @@ overrides.emacsWithPackages (epkgs:
     magit-annex # Control git-annex from Magit
     marginalia # Enrich existing commands with completion annotations
     markdown-mode # Major mode for Markdown-formatted text
+    mini-frame # Show minibuffer in child frame on read-from-minibuffer
     minions # A minor-mode menu for the mode line
     neuron-mode # Major mode for editing zettelkasten notes using neuron
     nix-mode # Major mode for editing .nix files
