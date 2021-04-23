@@ -20,13 +20,11 @@ interesting things:
     needed.  See `lisp/modes.el` for more information.  This makes a
     big difference for Emacs start-up time.
 
-  * `themes`: Custom color themes.
-
   * The `dot.emacs.el` file bootstraps all of this.
 
 ## Installation
 
-What to try this configuration out without having to change your
+Want to try this configuration out without having to change your
 existing configuartion in any way?
 
   1. Install the [Nix Package Manager](https://nixos.org/nix/)
