@@ -45,81 +45,33 @@
           def (pop bindings))))
 
 (pjones:global-set-keys
- ;; Miscellaneous Commands:
- (kbd "C-c s") #'pjones:sort-lines
-
- ;; Buffer Commands:
- (kbd "C-c b a") (pjones:jump-to-buffer "*Org Agenda*" pjones:agenda)
- (kbd "C-c b e") #'eldoc-doc-buffer
- (kbd "C-c b f") (pjones:jump-to-buffer "*flymake message*")
- (kbd "C-c b m") (pjones:jump-to-buffer "*Messages*")
- (kbd "C-c b r") #'revert-buffer
- (kbd "C-c b s") (pjones:jump-to-buffer "*scratch*")
- (kbd "C-c b t") #'pjones:open-temp-buffer
- (kbd "C-c b w") #'read-only-mode
-
- ;; Evaluation Keys:
- (kbd "C-c e b") #'eval-buffer
- (kbd "C-c e f") #'eval-defun
- (kbd "C-c e l") #'eval-last-sexp
- (kbd "C-c e r") #'eval-region
-
- ;; File Commands:
- (kbd "C-c f f") #'find-dired
- (kbd "C-c f m") #'magit-file-dispatch
- (kbd "C-c f n") #'pjones:find-file-next
- (kbd "C-c f p") #'pjones:find-file-prev
- (kbd "C-c f R") #'pjones:rename-current-file
- (kbd "C-c f s") #'save-buffer
- (kbd "C-c f w") #'pjones:kill-file-name
- (kbd "C-c f W") #'pjones:kill-directory-name
-
- ;; Application Launcher and Link Following:
- (kbd "C-c a C") #'full-calc
- (kbd "C-c a c") #'quick-calc
- (kbd "C-c a e") #'embark-act
- (kbd "C-c a h") #'pjones:start-http
- (kbd "C-c a m") #'pjones:start-mail
+ (kbd "C-c a") (pjones:jump-to-buffer "*Org Agenda*" pjones:agenda)
+ (kbd "C-c C") #'full-calc
+ (kbd "C-c c") #'quick-calc
+ (kbd "C-c d") #'eldoc-doc-buffer
+ (kbd "C-c E") #'embark-act
+ (kbd "C-c f") (pjones:jump-to-buffer "*flymake message*")
+ (kbd "C-c h") #'pjones:start-http
  (kbd "C-c l o") #'link-hint-open-link
  (kbd "C-c l w") #'link-hint-copy-link
+ (kbd "C-c M") #'magit-file-dispatch
  (kbd "C-c m") #'magit-status
-
- ;; Passwords:
+ (kbd "C-c M-W") #'pjones:kill-directory-name
+ (kbd "C-c M-w") #'pjones:kill-file-name
+ (kbd "C-c n") #'pjones:start-mail
  (kbd "C-c p g") #'pjones:pwgen
  (kbd "C-c p l") #'passmm-list-passwords
  (kbd "C-c p p") #'passmm-completing-read
-
- ;; Toggles:
- (kbd "C-c t H") #'highlight-regexp
- (kbd "C-c t h") #'hl-line-mode
- (kbd "C-c t i") #'highlight-indent-guides-mode
- (kbd "C-c t l") #'toggle-truncate-lines
- (kbd "C-c t n") #'display-line-numbers-mode
-
- ;; Window Commands:
- (kbd "C-+") #'text-scale-adjust
- (kbd "C--") #'text-scale-adjust
- (kbd "C-_") (lambda () (interactive) (text-scale-set 0))
- (kbd "C-c 0") #'winum-select-window-0-or-10
- (kbd "C-c 1") #'winum-select-window-1
- (kbd "C-c 2") #'winum-select-window-2
- (kbd "C-c 3") #'winum-select-window-3
- (kbd "C-c 4") #'winum-select-window-4
- (kbd "C-c 5") #'winum-select-window-5
- (kbd "C-c 6") #'winum-select-window-6
- (kbd "C-c 7") #'winum-select-window-7
- (kbd "C-c 8") #'winum-select-window-8
- (kbd "C-c 9") #'winum-select-window-9
+ (kbd "C-c R") #'pjones:rename-current-file
+ (kbd "C-c r") #'revert-buffer
+ (kbd "C-c s") #'pjones:sort-lines
+ (kbd "C-c t") #'pjones:open-temp-buffer
  (kbd "C-c w /") #'winner-undo
- (kbd "C-c w =") #'balance-windows
- (kbd "C-c w n") #'winum-select-window-by-number
  (kbd "C-c w R") #'resize-window
  (kbd "C-c w r") #'rotate-layout
  (kbd "C-c w s") #'ace-swap-window
  (kbd "C-c w S") #'window-toggle-side-windows
  (kbd "C-c w u") #'winner-undo
-
- ;; Zettelkasten:
  (kbd "C-c z d") #'neuron-open-daily-notes
  (kbd "C-c z f") #'neuron-edit-zettel
  (kbd "C-c z s") #'neuron-select-zettelkasten
@@ -130,6 +82,8 @@
  (kbd "M-s f") #'consult-find
  (kbd "M-s G") #'consult-git-grep
  (kbd "M-s g") #'consult-grep
+ (kbd "M-s h g") #'highlight-indent-guides-mode
+ (kbd "M-s h L") #'hl-line-mode
  (kbd "M-s k") #'consult-keep-lines
  (kbd "M-s l") #'consult-locate
  (kbd "M-s m") #'consult-multi-occur
@@ -147,6 +101,9 @@
  (kbd "M-g N") #'pjones:fly-next-error
 
  ;; Bindings that are not under C-c:
+ (kbd "C-+") #'text-scale-adjust
+ (kbd "C--") #'text-scale-adjust
+ (kbd "C-_") (lambda () (interactive) (text-scale-set 0))
  (kbd "C-`") #'consult-register-load
  (kbd "C-M-`") #'consult-register
  (kbd "C-M-SPC") #'er/expand-region
