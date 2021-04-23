@@ -46,6 +46,11 @@
  '(mouse-autoselect-window nil)
  '(x-mouse-click-focus-ignore-position t))
 
+(custom-set-faces
+ '(default ((t (:font "Hermit:pixelsize=14:weight=normal"))))
+ '(fixed-pitch ((t (:font "Hermit:pixelsize=14:weight=normal"))))
+ '(variable-pitch ((t (:font "Noto Serif:pixelsize=14:weight=normal"))))) ;
+
 ;; Default variables that become buffer/frame local.
 (setq-default
  cursor-in-non-selected-windows 'hollow ; Self-explanatory
@@ -93,7 +98,6 @@
   (set-frame-parameter frame 'name  nil))
 
 (add-to-list 'default-frame-alist '(cursor-type  . bar))
-(add-to-list 'default-frame-alist '(font . "Hermit:pixelsize=14:weight=normal"))
 (setq frame-title-format '(:eval (pjones:frame-title-file-name)))
 
 (defun pjones:find-file-hook ()
