@@ -52,14 +52,14 @@ BUFFER and ALIST are passed on to display functions."
          (display-buffer-reuse-window
           display-buffer-reuse-mode-window
           display-buffer-at-bottom)
-         (reusable-frames . visible)
+         (reusable-frames . t)
          (window-height . 0.3))
 
         ;; Like above, but with a smaller size:
         (,(pjones:buffer-conditions
            '("Embark Collect \\(Live\\|Completions\\)"))
          (display-buffer-at-bottom)
-         (reusable-frames . visible)
+         (reusable-frames . t)
          (window-height . 0.1))
 
         ;; Buffers that are related to the current window and should
@@ -70,7 +70,7 @@ BUFFER and ALIST are passed on to display functions."
          (display-buffer-reuse-window
           display-buffer-reuse-mode-window
           display-buffer-in-direction)
-         (reusable-frames . visible)
+         (reusable-frames . t)
          (direction . below)
          (window-height . 0.4))
 
@@ -92,7 +92,7 @@ BUFFER and ALIST are passed on to display functions."
           display-buffer-reuse-mode-window
           pjones:display-buffer-maybe-pop-up-frame)
          (inhibit-switch-frame . t)
-         (reusable-frames . visible)
+         (reusable-frames . t)
          (pop-up-frame-parameters
           . ((name . "popup") ; For the window manager.
              (x-name . "popup" ) ; Because `name' is replaced with `title'.
