@@ -113,6 +113,7 @@ overrides.emacsWithPackages (epkgs:
     forge # Access Git forges from Magit
     git-annex # Mode for easy editing of git-annex'd files
     go-mode # Major mode for the Go programming language
+    goto-last-point # Record and jump to the last point in the buffer.
     graphviz-dot-mode # Mode for the dot-language used by graphviz
     haskell-mode # A Haskell editing mode
     hasky-extensions # Toggle Haskell language extensions

@@ -13,6 +13,7 @@
 (declare-function winum-mode "winum")
 (declare-function yas-global-mode "yasnippet")
 (declare-function pdf-tools-install "pdf-tools")
+(autoload 'goto-last-point-mode "goto-last-point")
 
 (defvar pjones:modes-dir
   (concat (file-name-directory (directory-file-name (file-name-directory load-file-name))) "modes/")
@@ -27,15 +28,16 @@
 
 (defun pjones:boot-global-modes ()
   "Start or prepare global modes."
-  (selectrum-mode)                   ; minibuffer completions.
   (default-text-scale-mode)          ; Frame text scaling.
   (direnv-mode)                      ; Respect .envrc files.
   (global-auto-revert-mode)          ; External changes cause a revert
   (global-diff-hl-mode)              ; Show what changes in a buffer
   (global-prettify-symbols-mode)     ; Replace buffer symbols.
+  (goto-last-point-mode)             ; Move point back somewhere.
   (mini-frame-mode)                  ; minibuffer in its own frame!
   (minions-mode)                     ; Hide some minor modes.
   (projectile-mode)                  ; Project tool
+  (selectrum-mode)                   ; minibuffer completions.
   (which-key-mode)                   ; Remind me what keys do.
   (winner-mode)                      ; Track win conifg changes
   (winum-mode)                       ; Number windows

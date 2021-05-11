@@ -13,5 +13,6 @@
   (save-excursion (flyspell-correct-wrapper)))
 
 (define-key flyspell-mode-map (kbd "C-;") #'pjones:flyspell-correct)
+(define-key flyspell-mode-map (kbd "C-.") nil)
 
 ;;; flyspell-conf.el ends here

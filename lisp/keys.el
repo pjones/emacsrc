@@ -103,6 +103,7 @@
  ;; Bindings that are not under C-c:
  (kbd "C-+") #'text-scale-adjust
  (kbd "C--") #'text-scale-adjust
+ (kbd "C-.") #'goto-last-point
  (kbd "C-_") (lambda () (interactive) (text-scale-set 0))
  (kbd "C-`") #'consult-register-load
  (kbd "C-M-`") #'consult-register
