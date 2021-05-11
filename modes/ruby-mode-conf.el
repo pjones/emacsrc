@@ -1,31 +1,23 @@
-;;; ruby-conf.el -- Settings for ruby-mode.
-(eval-when-compile
-  (require 'align)
-  (require 'ruby-mode))
+;;; ruby-mode-conf.el -- Settings for `ruby-mode' -*- lexical-binding: t -*-
+;;
+;;; Commentary:
+;;
+;;; Code:
+
+(require 'ruby-mode)
+(require 'ruby-end)
+
+(custom-set-variables
+ '(ruby-deep-arglist 'space)
+ '(ruby-deep-indent-paren 'space))
 
 (defun pjones:ruby-mode-hook ()
-  (if (fboundp 'ruby-indent-line)
-      (setq indent-line-function 'ruby-indent-line))
-  (setq ruby-deep-arglist 'space
-        ruby-deep-indent-paren 'space
-        align-mode-rules-list
-        '((ruby-comma
-           (regexp . ",\\(\\s-*\\)")
-           (group  . 1)
-           (repeat . t))
-          (ruby-hash
-           (regexp . "\\(\\s-*\\)=>")
-           (group  . 1)
-           (repeat . t))
-          (ruby-eq
-           (regexp . "\\(\\s-*\\)=")
-           (group  . 1)
-           (repeat . nil)))))
+  "Hook for `ruby-mode'."
+  (when (fboundp 'ruby-indent-line)
+    (setq indent-line-function 'ruby-indent-line)))
 
-(add-hook 'ruby-mode-hook 'ruby-end-mode)
-(add-hook 'ruby-mode-hook 'pjones:ruby-mode-hook)
+(add-hook 'ruby-mode-hook #'ruby-end-mode)
+(add-hook 'ruby-mode-hook #'superword-mode)
+(add-hook 'ruby-mode-hook #'pjones:ruby-mode-hook)
 
-;; Getting Ruby Documentation via RI
-;; (setq ri-ruby-script
-;;       (concat user-emacs-directory "/share/emacs/site-lisp/ri-emacs.rb"))
-;; (autoload 'ri "ri-ruby" nil t)
+;;; ruby-mode-conf.el ends here
