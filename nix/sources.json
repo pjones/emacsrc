@@ -59,6 +59,18 @@
         "url": "https://github.com/akermu/emacs-libvterm/archive/2b1392cb2b14ec5bd0b7355197d5f353aa5d3983.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
+    "emacs-mini-frame": {
+        "branch": "master",
+        "description": "Show minibuffer in child frame on read-from-minibuffer",
+        "homepage": null,
+        "owner": "muffinmad",
+        "repo": "emacs-mini-frame",
+        "rev": "41afb3d79cd269726e955ef0896dc077562de0f5",
+        "sha256": "0yghz9pdjsm9v6lbjckm6c5h9ak7iylx8sqgyjwl6nihkpvv4jyp",
+        "type": "tarball",
+        "url": "https://github.com/muffinmad/emacs-mini-frame/archive/41afb3d79cd269726e955ef0896dc077562de0f5.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
     "embark": {
         "branch": "0.10",
         "description": "Emacs Mini-Buffer Actions Rooted in Keymaps",
