@@ -33,15 +33,6 @@ buffer name, or symbols that match a major mode."
                    (string-match condition name))))
         ,names-or-modes))))
 
-(defun pjones:display-buffer-maybe-pop-up-frame (buffer alist)
-  "Pop up a frame, unless we're in a special frame already.
-BUFFER and ALIST are passed on to display functions."
-  (let* ((frame (selected-frame))
-         (name (frame-parameter frame 'role)))
-    (if (string= name "notes")
-        (display-buffer-in-direction buffer alist)
-      (display-buffer-pop-up-frame buffer alist))))
-
 (setq display-buffer-alist
       `(;; Windows that should split the entire frame:
         (,(pjones:buffer-conditions
@@ -78,25 +69,17 @@ BUFFER and ALIST are passed on to display functions."
         (,(pjones:buffer-conditions
            '(compilation-mode
              grep-mode
-             help-mode
-             pdf-outline-buffer-mode
              rg-mode
              shell-mode
-             vterm-mode
              "\\*eldoc\\*"
              "\\*flymake message\\*"
-             "\\*HTTP Response.*"
-             "\\*Warnings\\*"
-             "\\*JS scratch\\*"))
+             "\\*HTTP Response.*"))
          (display-buffer-reuse-window
           display-buffer-reuse-mode-window
-          pjones:display-buffer-maybe-pop-up-frame)
+          display-buffer-pop-up-frame)
          (inhibit-switch-frame . t)
          (reusable-frames . t)
-         (pop-up-frame-parameters
-          . ((name . "popup") ; For the window manager.
-             (x-name . "popup" ) ; Because `name' is replaced with `title'.
-             (unsplittable . t))))
+         (pop-up-frame-parameters . ((unsplittable . t))))
 
         ;; Buffers that should take over the current window:
         (,(pjones:buffer-conditions
