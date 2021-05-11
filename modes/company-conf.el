@@ -5,7 +5,6 @@
 ;;; Code:
 
 (require 'company)
-(require 'company-prescient)
 (require 'company-quickhelp)
 (require 'company-try-hard)
 
@@ -52,6 +51,5 @@
   (define-key map (kbd "C-p") #'company-select-previous))
 
 (add-hook 'company-mode-hook #'company-quickhelp-mode)
-(add-hook 'company-mode-hook #'company-prescient-mode)
 
 ;;; company-conf.el ends here

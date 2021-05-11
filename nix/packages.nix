@@ -28,7 +28,6 @@ let
 
     prescient = sources."prescient.el";
     selectrum-prescient = sources."prescient.el";
-    company-prescient = sources."prescient.el";
 
     consult = self: melpa "consult" sources.consult { };
     doom-themes = sources.emacs-doom-themes;
@@ -84,7 +83,6 @@ overrides.emacsWithPackages (epkgs:
     avy # Jump to arbitrary positions in visible text and select text quickly
     clojure-mode # Major mode for Clojure code
     company # Modular text completion framework
-    company-prescient # prescient.el + Company
     company-quickhelp # Popup documentation for completion candidates
     company-try-hard # get all completions from company backends
     consult # Consulting completing-read
