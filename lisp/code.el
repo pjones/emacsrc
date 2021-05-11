@@ -95,6 +95,7 @@ already been cached."
   (show-paren-mode)
   (whitespace-mode)
   (auto-fill-mode)
+  (electric-pair-mode)
   (flyspell-prog-mode)
   (save-place-mode)
   (pjones:add-fixme-lock)
