@@ -47,18 +47,6 @@
         "url": "https://github.com/hlissner/emacs-doom-themes/archive/4199e74db170200995ee8dfbb55ffae004d6e219.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
-    "emacs-libvterm": {
-        "branch": "master",
-        "description": "Emacs libvterm integration",
-        "homepage": "",
-        "owner": "akermu",
-        "repo": "emacs-libvterm",
-        "rev": "2b1392cb2b14ec5bd0b7355197d5f353aa5d3983",
-        "sha256": "0cz0zfq5lannqq2ivmp6zv9r3fybkykx2vl4vn614rij23lylbwc",
-        "type": "tarball",
-        "url": "https://github.com/akermu/emacs-libvterm/archive/2b1392cb2b14ec5bd0b7355197d5f353aa5d3983.tar.gz",
-        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
-    },
     "emacs-mini-frame": {
         "branch": "master",
         "description": "Show minibuffer in child frame on read-from-minibuffer",

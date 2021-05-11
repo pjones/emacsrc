@@ -30,12 +30,12 @@ let
     selectrum-prescient = sources."prescient.el";
     company-prescient = sources."prescient.el";
 
-    mini-frame = sources.emacs-mini-frame;
-    doom-themes = sources.emacs-doom-themes;
     consult = self: melpa "consult" sources.consult { };
+    doom-themes = sources.emacs-doom-themes;
     eglot = sources.eglot;
     embark = self: melpa "embark" sources.embark { };
     marginalia = self: melpa "marginalia" sources.marginalia { };
+    mini-frame = sources.emacs-mini-frame;
     neuron-mode = sources.neuron-mode;
     origami = sources."origami.el";
     passmm = sources.passmm;
@@ -48,14 +48,6 @@ let
         url = "http://elpa.gnu.org/packages/eldoc-${version}.el";
         sha256 = "1py9l1vl7s90y5kfpglhy11jswam2gcrqap09h6wb5ldnyb8cgq2";
       };
-    };
-
-    vterm = _self: _super: orig: {
-      src = sources.emacs-libvterm;
-      postInstall = ''
-        ln -s emacs-libvterm-src source
-        ${orig.postInstall}
-      '';
     };
   };
 
@@ -173,7 +165,6 @@ overrides.emacsWithPackages (epkgs:
     typescript-mode # Major mode for editing typescript
     visual-fill # Auto-refill paragraphs without modifying the buffer
     vlf # View Large Files
-    vterm # Fully-featured terminal emulator
     weyland-yutani-theme # Emacs theme based off Alien movie franchise
     wgrep # Writable grep buffer and apply the changes to files
     which-key # Display available keybindings in popup
