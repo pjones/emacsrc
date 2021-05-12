@@ -34,7 +34,6 @@
   (global-diff-hl-mode)              ; Show what changes in a buffer
   (global-prettify-symbols-mode)     ; Replace buffer symbols.
   (goto-last-point-mode)             ; Move point back somewhere.
-  (mini-frame-mode)                  ; minibuffer in its own frame!
   (minions-mode)                     ; Hide some minor modes.
   (projectile-mode)                  ; Project tool
   (selectrum-mode)                   ; minibuffer completions.
@@ -45,6 +44,10 @@
 
   ;; Other modes that need to be activated:
   (pdf-tools-install)                     ; Internal PDF viewer
+
+  ;; Load mini-frame so settings are applied before activation;
+  (require 'mini-frame)
+  (mini-frame-mode)
 
   ;; Libraries used throughout my Emacs session:
   (require 'saveplace)                    ; Saves your location in files

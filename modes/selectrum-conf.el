@@ -16,7 +16,7 @@
 (declare-function marginalia-mode "marginalia")
 
 (custom-set-variables
- '(selectrum-display-style '(horizontal))
+ '(selectrum-display-style '(vertical horizontal))
  '(marginalia-annotators
    '(marginalia-annotators-heavy
      marginalia-annotators-light
