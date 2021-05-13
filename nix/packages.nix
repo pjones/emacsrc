@@ -34,7 +34,6 @@ let
     eglot = sources.eglot;
     embark = self: melpa "embark" sources.embark { };
     marginalia = self: melpa "marginalia" sources.marginalia { };
-    mini-frame = sources.emacs-mini-frame;
     neuron-mode = sources.neuron-mode;
     origami = sources."origami.el";
     passmm = sources.passmm;
@@ -127,7 +126,6 @@ overrides.emacsWithPackages (epkgs:
     magit-annex # Control git-annex from Magit
     marginalia # Enrich existing commands with completion annotations
     markdown-mode # Major mode for Markdown-formatted text
-    mini-frame # Show minibuffer in child frame on read-from-minibuffer
     minions # A minor-mode menu for the mode line
     neuron-mode # Major mode for editing zettelkasten notes using neuron
     nix-mode # Major mode for editing .nix files
