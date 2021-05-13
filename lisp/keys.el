@@ -122,8 +122,6 @@
  [remap exchange-point-and-mark] #'pjones:exchange-point-and-mark
  [remap goto-line] #'consult-goto-line
  [remap indent-for-tab-command] #'pjones:indent-or-complete
- [remap isearch-backward] #'isearch-backward-regexp
- [remap isearch-forward] #'isearch-forward-regexp
  [remap kill-region] #'pjones:kill-region-or-backward-kill-word
  [remap list-buffers] #'ibuffer
  [remap move-beginning-of-line] #'pjones:move-beginning-of-line
