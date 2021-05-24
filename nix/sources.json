@@ -1,16 +1,4 @@
 {
-    "consult": {
-        "branch": "0.6",
-        "description": "consult.el - Consulting completing-read",
-        "homepage": "",
-        "owner": "minad",
-        "repo": "consult",
-        "rev": "3184edd6ccf9cfb300511feb297b9012ce902bbe",
-        "sha256": "09n3q3dyi83s4fk4z7csnjicbxd69ws4zp4371c1lbxcvvq2fdnd",
-        "type": "tarball",
-        "url": "https://github.com/minad/consult/archive/3184edd6ccf9cfb300511feb297b9012ce902bbe.tar.gz",
-        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
-    },
     "dictionary-el": {
         "branch": "master",
         "description": null,
@@ -23,76 +11,16 @@
         "url": "https://github.com/myrkr/dictionary-el/archive/46ee5d9ba15cac7282ed73c8b4c272a969c6159e.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
-    "eglot": {
-        "branch": "master",
-        "description": "A client for Language Server Protocol servers",
-        "homepage": null,
-        "owner": "joaotavora",
-        "repo": "eglot",
-        "rev": "92b0c5d385cc6f3593f60c2f93917fd8b2d44207",
-        "sha256": "1rlgindfq43622gj8jsdkx3b590lhkr2zn18djyfd7g29j26b4wm",
-        "type": "tarball",
-        "url": "https://github.com/joaotavora/eglot/archive/92b0c5d385cc6f3593f60c2f93917fd8b2d44207.tar.gz",
-        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
-    },
-    "emacs-doom-themes": {
-        "branch": "master",
-        "description": "An opinionated pack of modern color-themes",
-        "homepage": "",
-        "owner": "hlissner",
-        "repo": "emacs-doom-themes",
-        "rev": "4199e74db170200995ee8dfbb55ffae004d6e219",
-        "sha256": "0vfhnywww560rf0b7h2gc9w4x4738xwq12c8qi9y267110zg62mz",
-        "type": "tarball",
-        "url": "https://github.com/hlissner/emacs-doom-themes/archive/4199e74db170200995ee8dfbb55ffae004d6e219.tar.gz",
-        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
-    },
-    "embark": {
-        "branch": "0.10",
-        "description": "Emacs Mini-Buffer Actions Rooted in Keymaps",
-        "homepage": null,
-        "owner": "oantolin",
-        "repo": "embark",
-        "rev": "47daded610b245caf01a97d74c940aff91fe14e2",
-        "sha256": "063hc0hganws11vjdk3ic0mxm9i0vpw6s7hzbgxvja0gjkdxjldz",
-        "type": "tarball",
-        "url": "https://github.com/oantolin/embark/archive/47daded610b245caf01a97d74c940aff91fe14e2.tar.gz",
-        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
-    },
     "home-manager": {
-        "branch": "release-20.09",
+        "branch": "release-21.05",
         "description": "Manage a user environment using Nix  [maintainer=@rycee] ",
         "homepage": "https://nix-community.github.io/home-manager/",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "63f299b3347aea183fc5088e4d6c4a193b334a41",
-        "sha256": "0iksjch94wfvyq0cgwv5wq52j0dc9cavm68wka3pahhdvjlxd3js",
+        "rev": "90493027e33ba9eb3f50dc1da365d0e4ca31bf14",
+        "sha256": "0jnxpc1ywnccri1d3m7hqrmxzifi65dk1zyh9xdlbx1fjm4x6xr5",
         "type": "tarball",
-        "url": "https://github.com/nix-community/home-manager/archive/63f299b3347aea183fc5088e4d6c4a193b334a41.tar.gz",
-        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
-    },
-    "marginalia": {
-        "branch": "0.4",
-        "description": "marginalia.el - Marginalia in the minibuffer",
-        "homepage": "",
-        "owner": "minad",
-        "repo": "marginalia",
-        "rev": "e741b243b30f6cfe85e568cc551acff9a1e5e74f",
-        "sha256": "0piwzxp1zmwp876kyca0xcgyxgn8bn4wh5fnn88dkvdzi8mcgmkh",
-        "type": "tarball",
-        "url": "https://github.com/minad/marginalia/archive/e741b243b30f6cfe85e568cc551acff9a1e5e74f.tar.gz",
-        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
-    },
-    "melpa": {
-        "branch": "master",
-        "description": "Recipes and build machinery for the biggest Emacs package repo",
-        "homepage": "https://melpa.org",
-        "owner": "melpa",
-        "repo": "melpa",
-        "rev": "2fad55061bdabfcd0b756fa2c9f6532265be08ce",
-        "sha256": "0asp8rqwljnjrm2683xpygg6lii4jmxs2h4a0101b94zpy77p3yf",
-        "type": "tarball",
-        "url": "https://github.com/melpa/melpa/archive/2fad55061bdabfcd0b756fa2c9f6532265be08ce.tar.gz",
+        "url": "https://github.com/nix-community/home-manager/archive/90493027e33ba9eb3f50dc1da365d0e4ca31bf14.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "neuron-mode": {
@@ -120,39 +48,15 @@
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "nixpkgs": {
-        "branch": "nixos-20.09",
+        "branch": "release-21.05",
         "description": "Nix Packages collection",
         "homepage": "",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "0cfd08f4881bbfdaa57e68835b923d4290588d98",
-        "sha256": "1srd9p37jmrsxgvrxvlibmscphz5p42244285yc5piacvrz1rdcc",
+        "rev": "b7f77e07b21e03be88838d9069e8f9cc0f66d7be",
+        "sha256": "1szgy9qz3y99rgaxnqkm82gqs1ilv3kcnpwrnr6119i1dy6mmyis",
         "type": "tarball",
-        "url": "https://github.com/NixOS/nixpkgs/archive/0cfd08f4881bbfdaa57e68835b923d4290588d98.tar.gz",
-        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
-    },
-    "nixpkgs-fmt": {
-        "branch": "v1.0.0",
-        "description": "Nix code formatter for nixpkgs [maintainer=@zimbatm]",
-        "homepage": "https://nix-community.github.io/nixpkgs-fmt/",
-        "owner": "nix-community",
-        "repo": "nixpkgs-fmt",
-        "rev": "025292e583d585c2951040ff4c4717885fab9c91",
-        "sha256": "0w1himwix7iv40rixj9afknwmqg2qmkif23z217gc7x63zyg9vdc",
-        "type": "tarball",
-        "url": "https://github.com/nix-community/nixpkgs-fmt/archive/025292e583d585c2951040ff4c4717885fab9c91.tar.gz",
-        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
-    },
-    "origami.el": {
-        "branch": "master",
-        "description": "A folding minor mode for Emacs",
-        "homepage": null,
-        "owner": "gregsexton",
-        "repo": "origami.el",
-        "rev": "e558710a975e8511b9386edc81cd6bdd0a5bda74",
-        "sha256": "0ycjbsn03cjzx6adabcvi1j7f92yhx3xjzj3xc68m1hw9r2f2gzf",
-        "type": "tarball",
-        "url": "https://github.com/gregsexton/origami.el/archive/e558710a975e8511b9386edc81cd6bdd0a5bda74.tar.gz",
+        "url": "https://github.com/NixOS/nixpkgs/archive/b7f77e07b21e03be88838d9069e8f9cc0f66d7be.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "passmm": {
@@ -160,41 +64,5 @@
         "repo": "https://github.com/pjones/passmm.git",
         "rev": "d78d1bf4f397180d2256248df589f33aafb4c8b4",
         "type": "git"
-    },
-    "prescient.el": {
-        "branch": "master",
-        "description": "☄️ Simple but effective sorting and filtering for Emacs.",
-        "homepage": "",
-        "owner": "raxod502",
-        "repo": "prescient.el",
-        "rev": "42adc802d3ba6c747bed7ea1f6e3ffbbdfc7192d",
-        "sha256": "0v12707jwd2ynk8gp3shgarl6yp3ynal7d4jzds6l2lknr6wi50w",
-        "type": "tarball",
-        "url": "https://github.com/raxod502/prescient.el/archive/42adc802d3ba6c747bed7ea1f6e3ffbbdfc7192d.tar.gz",
-        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
-    },
-    "reformatter.el": {
-        "branch": "master",
-        "description": "Define commands which run reformatters on the current Emacs buffer",
-        "homepage": null,
-        "owner": "purcell",
-        "repo": "reformatter.el",
-        "rev": "45c0add95025f53ca644a6c8b9afa05b2da3c474",
-        "sha256": "1dfn7c3gpavpiwd73v2pasd8wd8b62dczhg9iv1cgh8vaqlsf92x",
-        "type": "tarball",
-        "url": "https://github.com/purcell/reformatter.el/archive/45c0add95025f53ca644a6c8b9afa05b2da3c474.tar.gz",
-        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
-    },
-    "selectrum": {
-        "branch": "v3.1",
-        "description": "🔔 Better solution for incremental narrowing in Emacs.",
-        "homepage": "",
-        "owner": "raxod502",
-        "repo": "selectrum",
-        "rev": "a9ecaa018f249c15fae8e1af5d4df337e846e92f",
-        "sha256": "02jrki6vzyfyi1bbslki5pk2348flh9dz18jkc4y7p60bvbr52cb",
-        "type": "tarball",
-        "url": "https://github.com/raxod502/selectrum/archive/a9ecaa018f249c15fae8e1af5d4df337e846e92f.tar.gz",
-        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     }
 }

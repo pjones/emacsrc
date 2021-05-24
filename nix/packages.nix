@@ -1,6 +1,4 @@
 { lib
-, fetchurl
-, writeText
 , emacs
 , emacsPackagesFor
 , notmuch
@@ -9,44 +7,16 @@ let
   # Package sources:
   sources = import ./sources.nix;
 
-  # Build a MELPA package that isn't in nixpkgs:
-  melpa = name: src: args: super: _orig:
-    super.melpaBuild
-      {
-        inherit src;
-        pname = name;
-        version = "20210108.1"; # Dummy version number.
-        recipe = "${sources.melpa}/recipes/${name}";
-      } // args;
-
-
   # Latest versions of existing packages (or packages not in nixpkgs):
   latest = {
     connection = sources.dictionary-el;
     dictionary = sources.dictionary-el;
     link = sources.dictionary-el;
 
-    prescient = sources."prescient.el";
-    selectrum-prescient = sources."prescient.el";
-
-    consult = self: melpa "consult" sources.consult { };
-    doom-themes = sources.emacs-doom-themes;
-    eglot = sources.eglot;
-    embark = self: melpa "embark" sources.embark { };
-    marginalia = self: melpa "marginalia" sources.marginalia { };
+    # https://github.com/felko/neuron-mode/issues/76
     neuron-mode = sources.neuron-mode;
-    origami = sources."origami.el";
-    passmm = sources.passmm;
-    reformatter = sources."reformatter.el";
-    selectrum = sources.selectrum;
 
-    eldoc = self: super: orig: rec {
-      version = "1.11.0";
-      src = fetchurl {
-        url = "http://elpa.gnu.org/packages/eldoc-${version}.el";
-        sha256 = "1py9l1vl7s90y5kfpglhy11jswam2gcrqap09h6wb5ldnyb8cgq2";
-      };
-    };
+    passmm = sources.passmm;
   };
 
   # A function that can override packages using the `latest' attrset.

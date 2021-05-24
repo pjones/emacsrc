@@ -4,17 +4,7 @@
 let
   ##############################################################################
   # Emacs + all of the packages I need:
-  emacsAndPackages = pkgs.callPackage ./nix/packages.nix {
-    emacs = pkgs.emacs.overrideAttrs (orig: {
-      patches = (orig.patches or [ ]) ++ [
-        ./patches/gtk_window_set_role.patch
-      ];
-    });
-  };
-
-  ##############################################################################
-  # Use the latest version:
-  nixpkgs-fmt = import sources.nixpkgs-fmt { };
+  emacsAndPackages = pkgs.callPackage ./nix/packages.nix { };
 
 in
 pkgs.stdenv.mkDerivation rec {
@@ -31,16 +21,14 @@ pkgs.stdenv.mkDerivation rec {
 
   buildInputs = [
     emacsAndPackages # Emacs!
-    nixpkgs-fmt # Formatting nix files
     pkgs.gitAndTools.gitFull # Needed to compile magit config
     pkgs.gnuplot # For org-mode
-    pkgs.graphviz # For org-roam
     pkgs.imagemagick # For image-mode and eimp-mode
     pkgs.netcat # For bin/e
-    pkgs.python3 # For treemacs
+    pkgs.neuron-notes # For neuron-mode
+    pkgs.nixpkgs-fmt # Formatting nix files
     pkgs.shellcheck # Lint shell scripts
     pkgs.shfmt # Format shell scripts
-    pkgs.sqlite # For org-roam
     pkgs.wmctrl # For bin/e
   ];
 

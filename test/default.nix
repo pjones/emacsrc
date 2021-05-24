@@ -29,9 +29,14 @@ pkgs.nixosTest {
       group = "users";
     };
 
-    home-manager.users.pjones = { ... }: {
-      imports = [ ../nix/home.nix ];
-      home.packages = [ tests ];
+    home-manager = {
+      # Don't load nixpkgs from the environment:
+      useGlobalPkgs = true;
+
+      users.pjones = { ... }: {
+        imports = [ ../nix/home.nix ];
+        home.packages = [ tests ];
+      };
     };
   };
 
