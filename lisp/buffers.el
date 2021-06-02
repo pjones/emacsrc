@@ -73,7 +73,8 @@ buffer name, or symbols that match a major mode."
              shell-mode
              "\\*eldoc\\*"
              "\\*flymake message\\*"
-             "\\*HTTP Response.*"))
+             "\\*HTTP Response.*"
+             "\\*Occur\\*"))
          (display-buffer-reuse-window
           display-buffer-reuse-mode-window
           display-buffer-pop-up-frame)
