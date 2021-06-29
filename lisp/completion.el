@@ -17,14 +17,30 @@ If the character before point is a space character then indent the
 current line.  Otherwise run the completion command.  ARG is passed to
 `indent-for-tab-command'."
   (interactive "P")
-  (if (region-active-p)
-      (indent-region (region-beginning) (region-end))
+  (if (region-active-p) (indent-region (region-beginning) (region-end))
     (let ((tab-always-indent t)
-          (n (save-excursion (beginning-of-line) (point))))
-      (if (or (bolp) (looking-back "\\s-" n)) (indent-for-tab-command arg)
-        (if (yas-maybe-expand-abbrev-key-filter t)
-            (yas-expand)
-          (company-complete))))))
+          (max-backtrack (save-excursion (beginning-of-line) (point))))
+      (cond
+       ;; Force indenting the entire expression:
+       (arg
+        (indent-for-tab-command arg))
+       ;; Maybe indent the line or match indentation:
+       ((or (bolp) (looking-back "\\s-" max-backtrack))
+          (if (looking-at-p "\\s-*$")
+              ;; Blank line, copy indentation from above:
+              (indent-to
+               (save-excursion
+                 (forward-line -1)
+                 (back-to-indentation)
+                 (current-indentation)))
+            ;; Indent the current line:
+            (indent-for-tab-command arg)))
+       ;; Try snippet completion:
+       ((yas-maybe-expand-abbrev-key-filter t)
+        (yas-expand))
+       ;; Fallback to completion:
+       (t
+        (company-complete))))))
 
 ;; In buffer completion:
 (add-hook 'after-init-hook 'global-company-mode)
