@@ -3,20 +3,21 @@
 ;;; Commentary:
 ;;
 ;;; Code:
+
 (require 'nix-mode)
 (require 'reformatter)
 
 (custom-set-variables
- '(nix-indent-function #'nix-indent-line))
+ '(nix-indent-function #'smie-indent-line))
 
 (reformatter-define nix-format
-  :program "nixpkgs-fmt")
+  :program "nixpkgs-fmt"
+  :group 'nix-mode)
 
 (defun pjones:nix-mode-hook ()
   "Configure `nix-mode'."
-  (setq-local indent-line-function #'indent-relative)
-  (electric-indent-mode -1)
   (pjones:prog-mode-hook)
+  (electric-indent-local-mode)
   (nix-format-on-save-mode))
 
 (define-key nix-mode-map (kbd "<return>") #'newline-and-indent)

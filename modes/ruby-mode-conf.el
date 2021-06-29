@@ -14,7 +14,8 @@
 (defun pjones:ruby-mode-hook ()
   "Hook for `ruby-mode'."
   (when (fboundp 'ruby-indent-line)
-    (setq indent-line-function 'ruby-indent-line)))
+    (setq indent-line-function 'ruby-indent-line))
+  (electric-indent-local-mode))
 
 (add-hook 'ruby-mode-hook #'ruby-end-mode)
 (add-hook 'ruby-mode-hook #'superword-mode)
