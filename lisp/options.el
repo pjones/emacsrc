@@ -33,6 +33,7 @@
  '(inhibit-startup-message t)
  '(initial-scratch-message nil)
  '(make-backup-files nil)
+ '(next-line-add-newlines t)
  '(mouse-yank-at-point t)
  '(visible-bell nil)
  '(enable-recursive-minibuffers t)
