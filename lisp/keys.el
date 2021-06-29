@@ -120,7 +120,6 @@
  [remap bookmark-jump] #'consult-bookmark
  [remap delete-window] #'ace-delete-window
  [remap exchange-point-and-mark] #'pjones:exchange-point-and-mark
- [remap goto-line] #'consult-goto-line
  [remap indent-for-tab-command] #'pjones:indent-or-complete
  [remap kill-region] #'pjones:kill-region-or-backward-kill-word
  [remap list-buffers] #'ibuffer
