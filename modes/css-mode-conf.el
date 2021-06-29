@@ -16,7 +16,7 @@
 (defun pjones:css-mode-hook ()
   "Settings and overrides for `css-mode'."
   (make-local-variable 'company-backends)
-  (add-to-list 'company-backends 'company-css))
+  (push 'company-css (car company-backends)))
 
 (pjones:add-programming-hook 'css-mode-hook)
 (add-hook 'css-mode-hook #'pjones:css-mode-hook)

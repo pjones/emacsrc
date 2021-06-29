@@ -25,11 +25,10 @@
       company-preview-frontend
       company-echo-metadata-frontend))
   '(company-backends
-     '(company-capf
-       (company-dabbrev
-        company-keywords
-        company-files
-        company-ispell))))
+    '((company-capf
+       company-keywords
+       company-files
+       company-dabbrev))))
 
 (let ((map company-active-map))
   (define-key map (kbd "C-s") #'company-filter-candidates)

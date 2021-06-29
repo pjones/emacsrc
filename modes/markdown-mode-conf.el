@@ -119,11 +119,6 @@ directory.  Optionally renaming FILE to NAME."
   (whitespace-mode)
   (pjones:add-fixme-lock)
 
-  ;; Completion configuration:
-  (make-local-variable 'company-backends)
-  (add-to-list 'company-backends '(company-ispell
-                                   company-dabbrev))
-
   ;; Translate some strings into pretty symbols:
   (setq prettify-symbols-alist
         '(("[x]" . (?\] (Bl . Br) ?✓ (Bl . Br) ?\[)))))
