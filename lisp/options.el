@@ -45,7 +45,7 @@
  '(x-underline-at-descent-line t)
  '(focus-follows-mouse nil)
  '(mouse-autoselect-window nil)
- '(x-mouse-click-focus-ignore-position t))
+ '(x-mouse-click-focus-ignore-position nil))
 
 (custom-set-faces
  '(default ((t (:font "Hermit:pixelsize=14:weight=normal"))))
