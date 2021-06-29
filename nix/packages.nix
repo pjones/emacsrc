@@ -7,44 +7,32 @@ let
   # Package sources:
   sources = import ./sources.nix;
 
-  # Latest versions of existing packages (or packages not in nixpkgs):
-  latest = {
-    connection = sources.dictionary-el;
-    dictionary = sources.dictionary-el;
-    link = sources.dictionary-el;
+  # Function to update several attributes in an Emacs package:
+  update = pkg: src: pkg.overrideAttrs (orig: rec {
+    inherit src;
 
-    # https://github.com/felko/neuron-mode/issues/76
-    neuron-mode = sources.neuron-mode;
+    name = "emacs-${orig.ename or orig.pname}-${version}";
+    version = "99999999.0000";
 
-    passmm = sources.passmm;
-  };
-
-  # A function that can override packages using the `latest' attrset.
-  overrideFromLatest = self: super:
-    let
-      drv = orig: value:
-        if builtins.isFunction value
-        then value self super orig
-        else {
-          src = value;
-
-          # When updating a package, automatically remove the broken flag:
-          meta = (orig.meta or { }) // { broken = false; };
-        };
-    in
-    lib.mapAttrs
-      (name: value:
-        if super ? ${name}
-        then super.${name}.overrideAttrs (orig: drv orig value)
-        else drv null value)
-      latest;
+    # When updating a package, automatically remove the broken flag:
+    meta = (orig.meta or { }) // { broken = false; };
+  });
 
   # Package overrides:
-  overrides = (emacsPackagesFor emacs).overrideScope' overrideFromLatest;
+  emacsWithOverrides = (emacsPackagesFor emacs).overrideScope' (self: super: {
+    connection = update super.connection sources.dictionary-el;
+    dictionary = update super.dictionary sources.dictionary-el;
+    link = update super.link sources.dictionary-el;
+
+    # https://github.com/felko/neuron-mode/issues/76
+    neuron-mode = update super.neuron-mode sources.neuron-mode;
+
+    passmm = update super.passmm sources.passmm;
+  });
 
 in
 # Emacs package list:
-overrides.emacsWithPackages (epkgs:
+emacsWithOverrides.emacsWithPackages (epkgs:
   with epkgs; [
     ace-window # Quickly switch windows
     adaptive-wrap # Smart line-wrapping with wrap-prefix
