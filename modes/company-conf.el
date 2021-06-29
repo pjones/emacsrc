@@ -6,7 +6,6 @@
 
 (require 'company)
 (require 'company-quickhelp)
-(require 'company-try-hard)
 
 ;; Settings for company-mode:
 (custom-set-variables
@@ -35,7 +34,6 @@
 (let ((map company-active-map))
   (define-key map (kbd "C-s") #'company-filter-candidates)
   (define-key map (kbd "C-h") #'company-quickhelp-manual-begin)
-  (define-key map (kbd "M-q") #'company-try-hard)
   (define-key map (kbd "<tab>") #'company-complete-common-or-cycle)
   (define-key map (kbd "C-n") #'company-select-next)
   (define-key map (kbd "C-p") #'company-select-previous)
@@ -46,7 +44,6 @@
       'company-complete-number)))
 
 (let ((map company-search-map))
-  (define-key map (kbd "M-q") #'company-try-hard)
   (define-key map (kbd "C-n") #'company-select-next)
   (define-key map (kbd "C-p") #'company-select-previous))
 

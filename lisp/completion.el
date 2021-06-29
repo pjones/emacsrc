@@ -5,7 +5,6 @@
 ;;; Code:
 
 (require 'company)
-(require 'company-try-hard)
 (require 'yasnippet)
 
 ;; I don't want to type "yes".
@@ -25,7 +24,7 @@ current line.  Otherwise run the completion command.  ARG is passed to
       (if (or (bolp) (looking-back "\\s-" n)) (indent-for-tab-command arg)
         (if (yas-maybe-expand-abbrev-key-filter t)
             (yas-expand)
-          (company-try-hard))))))
+          (company-complete))))))
 
 ;; In buffer completion:
 (add-hook 'after-init-hook 'global-company-mode)

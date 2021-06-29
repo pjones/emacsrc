@@ -41,7 +41,6 @@ emacsWithOverrides.emacsWithPackages (epkgs:
     clojure-mode # Major mode for Clojure code
     company # Modular text completion framework
     company-quickhelp # Popup documentation for completion candidates
-    company-try-hard # get all completions from company backends
     consult # Consulting completing-read
     csv-mode # Major mode for editing comma/char separated values
     darkroom # Remove visual distractions and focus on writing
