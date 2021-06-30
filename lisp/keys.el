@@ -112,6 +112,7 @@
  (kbd "C-x C-k @") #'consult-kmacro
  (kbd "C-z") #'repeat
  (kbd "M-'") #'mode-line-other-buffer
+ (kbd "M-<backspace>") (lambda () (interactive) (kill-buffer))
  (kbd "M-`") #'consult-register-store
  (kbd "M-RET") #'delete-blank-lines
 
