@@ -96,9 +96,10 @@
 
  ;; Additional go-to bindings:
  (kbd "M-g @") #'consult-global-mark
+ (kbd "M-g f") #'pjones:fly-next-error
+ (kbd "M-g h") #'consult-outline
  (kbd "M-g i") #'consult-imenu
  (kbd "M-g m") #'consult-mark
- (kbd "M-g N") #'pjones:fly-next-error
 
  ;; Bindings that are not under C-c:
  (kbd "C-+") #'text-scale-adjust
