@@ -98,6 +98,7 @@ already been cached."
   (electric-pair-mode)
   (flyspell-prog-mode)
   (save-place-mode)
+  (display-line-numbers-mode)
   (pjones:add-fixme-lock)
   (add-hook 'xref-backend-functions #'dumb-jump-xref-activate)
   (add-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p))

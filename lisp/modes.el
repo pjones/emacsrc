@@ -32,7 +32,6 @@
   (direnv-mode)                      ; Respect .envrc files.
   (global-auto-revert-mode)          ; External changes cause a revert
   (global-diff-hl-mode)              ; Show what changes in a buffer
-  (global-display-line-numbers-mode) ; Line numbers everywhere.
   (global-prettify-symbols-mode)     ; Replace buffer symbols.
   (goto-last-point-mode)             ; Move point back somewhere.
   (minions-mode)                     ; Hide some minor modes.
