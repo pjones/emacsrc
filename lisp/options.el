@@ -43,8 +43,8 @@
  '(mark-even-if-inactive t)
  '(inhibit-eol-conversion t)
  '(x-underline-at-descent-line t)
- '(focus-follows-mouse nil)
- '(mouse-autoselect-window nil)
+ '(focus-follows-mouse t)
+ '(mouse-autoselect-window t)
  '(x-mouse-click-focus-ignore-position nil))
 
 (custom-set-faces
