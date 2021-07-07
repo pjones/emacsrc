@@ -243,22 +243,28 @@ When prompting, use INITIAL as the initial module name."
           "0.1.0.0")))))
 
 (defun pjones:haskell-copyright-text ()
-  "Extract the default copyright text from the Setup.hs file."
-  (let ((cabal-dir (file-name-directory (haskell-cabal-find-file))))
-    (save-excursion
-      (with-temp-buffer
-        (insert-file-contents (concat cabal-dir "Setup.hs"))
-        (goto-char (point-min))
-        (if (looking-at-p (rx (and line-start (or "{-|" "-- |"))))
-            (progn
-              (buffer-substring-no-properties
-               (point)
-               (progn
-                 (search-forward-regexp
-                  (rx (and line-start (or "import" "module"))))
-                 (end-of-line 0)
-                 (point))))
-          "-- | Module description.")))))
+  "Extract the default copyright text from an existing file."
+  (let* ((cabal-dir (file-name-directory (haskell-cabal-find-file)))
+         (default-text "-- | Module description.")
+         (from-file (-find (lambda (file) (file-exists-p file))
+                           (-map (apply-partially 'concat cabal-dir)
+                                 '("Setup.hs" "app/Main.hs" "test/Main.hs")))))
+    (if from-file
+        (save-excursion
+          (with-temp-buffer
+            (insert-file-contents from-file)
+            (goto-char (point-min))
+            (if (looking-at-p (rx (and line-start (or "{-|" "-- |"))))
+                (progn
+                  (buffer-substring-no-properties
+                   (point)
+                   (progn
+                     (search-forward-regexp
+                      (rx (and line-start (or "import" "module"))))
+                     (end-of-line 0)
+                     (point))))
+              default-text)))
+      default-text)))
 
 (defun pjones:haskell-unqualified-module (module)
   "Remove qualified prefix from MODULE."
