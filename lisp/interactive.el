@@ -37,6 +37,15 @@ will be deleted (without placing it in the kill ring)."
       (delete-region (point) (progn (funcall forward (- arg))
                                     (point))))))
 
+(defun pjones:kill-line (arg)
+  "Kill from point to the end of the line.
+If point is at the end of a line, kill the entire line.  ARG is
+passed on to `kill-line'."
+  (interactive "P")
+  (if (or arg (not (looking-at-p "\\s-*$")))
+      (kill-line arg)
+    (kill-whole-line)))
+
 (defun pjones:rename-current-file (newname)
   "Rename the current file to NEWNAME."
   (interactive "F")

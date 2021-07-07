@@ -107,6 +107,7 @@
  (kbd "C-.") #'goto-last-point
  (kbd "C-_") (lambda () (interactive) (text-scale-set 0))
  (kbd "C-`") #'consult-register-load
+ (kbd "C-k") #'pjones:kill-line
  (kbd "C-M-`") #'consult-register
  (kbd "C-M-SPC") #'er/expand-region
  (kbd "C-M-z") #'zap-to-char
