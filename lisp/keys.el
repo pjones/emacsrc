@@ -121,7 +121,6 @@
  ;; Overriding default key bindings
  [remap apropos-command] #'consult-apropos
  [remap bookmark-jump] #'consult-bookmark
- [remap delete-window] #'ace-delete-window
  [remap exchange-point-and-mark] #'pjones:exchange-point-and-mark
  [remap indent-for-tab-command] #'pjones:indent-or-complete
  [remap kill-region] #'pjones:kill-region-or-backward-kill-word
