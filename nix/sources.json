@@ -11,6 +11,18 @@
         "url": "https://github.com/myrkr/dictionary-el/archive/46ee5d9ba15cac7282ed73c8b4c272a969c6159e.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
+    "goto-chg": {
+        "branch": "master",
+        "description": null,
+        "homepage": null,
+        "owner": "emacs-evil",
+        "repo": "goto-chg",
+        "rev": "3ce1389fea12edde4e343bc7d54c8da97a1a6136",
+        "sha256": "13v9d97ypkfa3g0x64psk29hpicl4djk35iwxhvw080bagrn5gls",
+        "type": "tarball",
+        "url": "https://github.com/emacs-evil/goto-chg/archive/3ce1389fea12edde4e343bc7d54c8da97a1a6136.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
     "home-manager": {
         "branch": "release-21.05",
         "description": "Manage a user environment using Nix  [maintainer=@rycee] ",

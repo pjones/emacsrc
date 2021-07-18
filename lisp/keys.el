@@ -102,9 +102,9 @@
  (kbd "M-g m") #'consult-mark
 
  ;; Bindings that are not under C-c:
+ (kbd "C-'") #'goto-last-change
  (kbd "C-+") #'text-scale-adjust
  (kbd "C--") #'text-scale-adjust
- (kbd "C-.") #'goto-last-point
  (kbd "C-_") (lambda () (interactive) (text-scale-set 0))
  (kbd "C-`") #'consult-register-load
  (kbd "C-k") #'pjones:kill-line

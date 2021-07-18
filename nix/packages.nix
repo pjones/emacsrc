@@ -27,6 +27,7 @@ let
     # https://github.com/felko/neuron-mode/issues/76
     neuron-mode = update super.neuron-mode sources.neuron-mode;
 
+    goto-chg = update super.goto-chg sources.goto-chg;
     passmm = update super.passmm sources.passmm;
   });
 
@@ -67,7 +68,7 @@ emacsWithOverrides.emacsWithPackages (epkgs:
     forge # Access Git forges from Magit
     git-annex # Mode for easy editing of git-annex'd files
     go-mode # Major mode for the Go programming language
-    goto-last-point # Record and jump to the last point in the buffer.
+    goto-chg # Go to last change
     graphviz-dot-mode # Mode for the dot-language used by graphviz
     haskell-mode # A Haskell editing mode
     hasky-extensions # Toggle Haskell language extensions
