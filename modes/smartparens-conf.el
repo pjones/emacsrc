@@ -15,6 +15,7 @@
   (define-key mode (kbd "C-M-5") #'sp-forward-barf-sexp)
   (define-key mode (kbd "C-M-6") #'sp-forward-slurp-sexp)
   (define-key mode (kbd "C-M-9") #'sp-rewrap-sexp)
-  (define-key mode (kbd "C-M-SPC") nil))
+  (define-key mode (kbd "C-M-SPC") nil)
+  (define-key mode (kbd "M-<backspace>") nil))
 
 ;;; smartparens-conf.el ends here
