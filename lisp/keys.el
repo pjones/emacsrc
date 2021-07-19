@@ -77,6 +77,13 @@
  (kbd "C-c z s") #'neuron-select-zettelkasten
  (kbd "C-c z z") #'neuron-new-zettel
 
+ ;; Remove the need for shifting some characters:
+ (kbd "M-1") #'shell-command
+ (kbd "M-2") #'mark-word
+ (kbd "M-5") #'query-replace
+ (kbd "M-6") #'delete-indentation
+ (kbd "M-7") #'async-shell-command
+
  ;; Additional searching/grepping bindings:
  (kbd "M-s d") #'rg
  (kbd "M-s f") #'consult-find
