@@ -44,6 +44,15 @@
     (setq key (pop bindings)
           def (pop bindings))))
 
+(defvar pjones:zettle-map
+  (let ((map (make-sparse-keymap)))
+    (define-key map (kbd "d") #'neuron-open-daily-notes)
+    (define-key map (kbd "f") #'neuron-edit-zettel)
+    (define-key map (kbd "s") #'neuron-select-zettelkasten)
+    (define-key map (kbd "z") #'neuron-new-zettel)
+    map)
+  "Key bindings for neuron-mode.")
+
 (pjones:global-set-keys
  (kbd "C-c a") (pjones:jump-to-buffer "*Org Agenda*" pjones:agenda)
  (kbd "C-c C") #'full-calc
@@ -72,10 +81,6 @@
  (kbd "C-c w s") #'ace-swap-window
  (kbd "C-c w S") #'window-toggle-side-windows
  (kbd "C-c w u") #'winner-undo
- (kbd "C-c z d") #'neuron-open-daily-notes
- (kbd "C-c z f") #'neuron-edit-zettel
- (kbd "C-c z s") #'neuron-select-zettelkasten
- (kbd "C-c z z") #'neuron-new-zettel
 
  ;; Remove the need for shifting some characters:
  (kbd "M-1") #'shell-command
@@ -119,7 +124,7 @@
  (kbd "C-M-SPC") #'er/expand-region
  (kbd "C-M-z") #'zap-to-char
  (kbd "C-x C-k @") #'consult-kmacro
- (kbd "C-z") #'repeat
+ (kbd "C-z") pjones:zettle-map
  (kbd "M-'") #'mode-line-other-buffer
  (kbd "M-<backspace>") (lambda () (interactive) (kill-buffer))
  (kbd "M-`") #'consult-register-store
