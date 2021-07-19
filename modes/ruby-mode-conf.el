@@ -5,7 +5,6 @@
 ;;; Code:
 
 (require 'ruby-mode)
-(require 'ruby-end)
 
 (custom-set-variables
  '(ruby-deep-arglist 'space)
@@ -17,7 +16,6 @@
     (setq indent-line-function 'ruby-indent-line))
   (electric-indent-local-mode))
 
-(add-hook 'ruby-mode-hook #'ruby-end-mode)
 (add-hook 'ruby-mode-hook #'superword-mode)
 (add-hook 'ruby-mode-hook #'pjones:ruby-mode-hook)
 

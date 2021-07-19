@@ -35,6 +35,8 @@
   (minions-mode)                     ; Hide some minor modes.
   (projectile-mode)                  ; Project tool
   (selectrum-mode)                   ; minibuffer completions.
+  (show-smartparens-global-mode)     ; Display delimiters.
+  (smartparens-global-mode)          ; Working with delimiters.
   (which-key-mode)                   ; Remind me what keys do.
   (winner-mode)                      ; Track win conifg changes
   (winum-mode)                       ; Number windows

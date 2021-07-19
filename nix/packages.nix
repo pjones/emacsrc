@@ -112,11 +112,11 @@ emacsWithOverrides.emacsWithPackages (epkgs:
     resize-window # easily resize windows
     rg # A search tool based on ripgrep
     rotate # Rotate the layout of emacs
-    ruby-end # Automatic insertion of end blocks for Ruby
     rust-mode # A major-mode for editing Rust source code
     scad-mode # A major mode for editing OpenSCAD code
     selectrum # Easily select item from list
     selectrum-prescient # Selectrum integration
+    smartparens # Automatic insertion, wrapping and paredit-like navigation with user defined pairs.
     typescript-mode # Major mode for editing typescript
     visual-fill # Auto-refill paragraphs without modifying the buffer
     vlf # View Large Files
