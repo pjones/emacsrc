@@ -36,4 +36,15 @@
       ;; Fallback.
       (pop-to-buffer buffer))))
 
+(defun pjones:script (name)
+  "Generate an absolute path to the script NAME."
+  (concat
+   (file-name-directory
+    (directory-file-name
+     (file-name-directory
+      (or load-file-name
+          byte-compile-current-file
+          (buffer-file-name)))))
+   "scripts/" name))
+
 ;;; functions.el ends here

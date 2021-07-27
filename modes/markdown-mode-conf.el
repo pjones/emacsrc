@@ -3,7 +3,6 @@
 ;;; Commentary:
 ;;
 ;;; Code:
-(require 'company)
 (require 'darkroom)
 (require 'markdown-mode)
 (require 'visual-fill)
@@ -21,7 +20,9 @@
  '(markdown-reference-location 'end)
  '(markdown-asymmetric-header t)
  '(markdown-hide-urls t)
- '(markdown-command "pandoc"))
+ '(markdown-command
+   (concat "pandoc -s --mathjax --filter "
+           (pjones:script "pandoc-filter-title.sh"))))
 
 (custom-set-faces
  '(markdown-code-face ((t (:background nil))))

@@ -44,7 +44,7 @@ pkgs.stdenv.mkDerivation rec {
       export loadpathel="$out/emacs.d/lisp/loadpath.el"
 
       substituteAll dot.emacs.el "$out/dot.emacs.el"
-      cp -r lisp modes snippets "$out/emacs.d/"
+      cp -r lisp modes scripts snippets "$out/emacs.d/"
       chmod u+w "$out"/emacs.d/*
 
       cp -r share "$out/"
