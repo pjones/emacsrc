@@ -113,6 +113,7 @@ emacsWithOverrides.emacsWithPackages (epkgs:
     rg # A search tool based on ripgrep
     rotate # Rotate the layout of emacs
     rust-mode # A major-mode for editing Rust source code
+    sage-shell-mode # A front-end for Sage Math
     scad-mode # A major mode for editing OpenSCAD code
     selectrum # Easily select item from list
     selectrum-prescient # Selectrum integration

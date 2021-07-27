@@ -27,6 +27,7 @@ pkgs.stdenv.mkDerivation rec {
     pkgs.netcat # For bin/e
     pkgs.neuron-notes # For neuron-mode
     pkgs.nixpkgs-fmt # Formatting nix files
+    pkgs.sage # for sage-shell-mode
     pkgs.shellcheck # Lint shell scripts
     pkgs.shfmt # Format shell scripts
     pkgs.wmctrl # For bin/e
