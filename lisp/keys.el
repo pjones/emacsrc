@@ -54,6 +54,10 @@
   "Key bindings for neuron-mode.")
 
 (pjones:global-set-keys
+ (kbd "C-c 1") #'shell-command
+ (kbd "C-c 5") #'query-replace
+ (kbd "C-c 6") #'delete-indentation
+ (kbd "C-c 7") #'async-shell-command
  (kbd "C-c a") (pjones:jump-to-buffer "*Org Agenda*" pjones:agenda)
  (kbd "C-c b") #'eldoc-doc-buffer
  (kbd "C-c C") #'full-calc
@@ -82,13 +86,6 @@
  (kbd "C-c w s") #'ace-swap-window
  (kbd "C-c w S") #'window-toggle-side-windows
  (kbd "C-c w u") #'winner-undo
-
- ;; Remove the need for shifting some characters:
- (kbd "M-1") #'shell-command
- (kbd "M-2") #'mark-word
- (kbd "M-5") #'query-replace
- (kbd "M-6") #'delete-indentation
- (kbd "M-7") #'async-shell-command
 
  ;; Additional searching/grepping bindings:
  (kbd "M-s d") #'rg
