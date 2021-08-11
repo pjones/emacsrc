@@ -85,10 +85,20 @@ already been cached."
   (font-lock-add-keywords nil '(("\\<\\(FIXME:\\|TODO:\\|NOTE:\\)"
                                  1 'pjones:fixme-face t))))
 
+(defun pjones:comment-line-break-function (&rest args)
+  "Work around a bug in Emacs.
+Calls `comment-indent-new-line' with ARGS."
+  (let ((comment-auto-fill-only-comments nil))
+    (apply #'comment-indent-new-line args)
+    (let ((max-backtrack (save-excursion (beginning-of-line) (point))))
+      (unless (looking-back "\\s-" max-backtrack)
+        (insert " ")))))
+
 (defun pjones:prog-mode-hook ()
   "Settings and bindings for programming modes."
   (setq comment-empty-lines t)
-  (setq-local comment-auto-fill-only-comments t)
+  (setq-local ocomment-auto-fill-only-comments t)
+  (setq-local comment-line-break-function #'pjones:comment-line-break-function)
   (local-set-key (kbd "C-<tab>") 'pjones:comment-bar)
   (local-set-key (kbd "RET") 'newline-and-indent)
   (auto-fill-mode)
