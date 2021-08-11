@@ -55,10 +55,11 @@
 
 (pjones:global-set-keys
  (kbd "C-c a") (pjones:jump-to-buffer "*Org Agenda*" pjones:agenda)
+ (kbd "C-c b") #'eldoc-doc-buffer
  (kbd "C-c C") #'full-calc
  (kbd "C-c c") #'quick-calc
- (kbd "C-c d") #'eldoc-doc-buffer
  (kbd "C-c E") #'embark-act
+ (kbd "C-c d") #'pjones:duplicate-region-or-line
  (kbd "C-c f") (pjones:jump-to-buffer "*flymake message*")
  (kbd "C-c h") #'pjones:start-http
  (kbd "C-c l o") #'link-hint-open-link

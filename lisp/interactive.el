@@ -225,6 +225,38 @@ behavior."
    (if (region-active-p) arg
      (not arg))))
 
+(defun pjones:duplicate-region-or-line (&optional count)
+  "Duplicate the previous line, or region if active.
+The line/region will be duplicated COUNT times."
+  (interactive "p")
+  (let ((col
+         (if (region-active-p)
+             (save-excursion
+               (goto-char (region-beginning))
+               (back-to-indentation)
+               (current-column))
+           (current-column)))
+        (text
+         (if (region-active-p)
+             (buffer-substring-no-properties
+              (region-beginning)
+              (region-end))
+           (save-excursion
+             (forward-line -1)
+             (back-to-indentation)
+             (buffer-substring-no-properties
+              (point)
+              (progn (end-of-line) (point)))))))
+    (when (region-active-p)
+      (goto-char (region-end))
+      (deactivate-mark)
+      (newline)
+      (indent-to col))
+    (dotimes (n count)
+      (insert text)
+      (newline)
+      (indent-to col))))
+
 ;; Local Variables:
 ;; byte-compile-warnings: (not noruntime)
 ;; End:
