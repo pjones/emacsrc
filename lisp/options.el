@@ -5,7 +5,6 @@
 ;;; Code:
 (require 'server)
 (require 'epa)
-(require 'doom-modeline)
 (require 'auth-source-pass)
 (require 'flycheck)
 
@@ -92,7 +91,7 @@
   (blink-cursor-mode)
   (require 'fringe)
   (fringe-mode 10)
-  (if (fboundp 'doom-modeline-mode) (doom-modeline-mode))
+  (if (fboundp 'mood-line-mode) (mood-line-mode))
   ;; Reset the `title' frame parameter as it may have been set on the
   ;; command line when the frame name was set.
   (set-frame-parameter frame 'title nil)

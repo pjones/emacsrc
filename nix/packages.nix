@@ -52,7 +52,6 @@ emacsWithOverrides.emacsWithPackages (epkgs:
     dired-narrow # Live-narrowing of search results for dired
     dired-subtree # Insert subdirectories in a tree-like fashion
     direnv # direnv support
-    doom-modeline # A minimal and modern mode-line
     doom-themes # an opinionated pack of modern color-themes
     dumb-jump # Jump to definition for 40+ languages without configuration
     eglot # Client for Language Server Protocol (LSP) servers
@@ -84,7 +83,7 @@ emacsWithOverrides.emacsWithPackages (epkgs:
     magit-annex # Control git-annex from Magit
     marginalia # Enrich existing commands with completion annotations
     markdown-mode # Major mode for Markdown-formatted text
-    minions # A minor-mode menu for the mode line
+    mood-line # A minimal mode-line inspired by doom-modeline
     neuron-mode # Major mode for editing zettelkasten notes using neuron
     nix-mode # Major mode for editing .nix files
     no-littering # help keeping ~/.emacs.d clean

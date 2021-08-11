@@ -32,7 +32,6 @@
   (global-auto-revert-mode)          ; External changes cause a revert
   (global-diff-hl-mode)              ; Show what changes in a buffer
   (global-prettify-symbols-mode)     ; Replace buffer symbols.
-  (minions-mode)                     ; Hide some minor modes.
   (projectile-mode)                  ; Project tool
   (selectrum-mode)                   ; minibuffer completions.
   (show-smartparens-global-mode)     ; Display delimiters.
