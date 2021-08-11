@@ -104,7 +104,6 @@ Calls `comment-indent-new-line' with ARGS."
   (auto-fill-mode)
   (display-line-numbers-mode)
   (flyspell-prog-mode)
-  (origami-mode)
   (save-place-mode)
   (whitespace-mode)
   (pjones:add-fixme-lock)

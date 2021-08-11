@@ -95,7 +95,6 @@ emacsWithOverrides.emacsWithPackages (epkgs:
     org-clock-csv # Export `org-mode' clock entries to CSV format
     org-tree-slide # A presentation tool for org-mode
     orgalist # Manage Org-like lists in non-Org buffers
-    origami # Flexible text folding
     passmm # A minor mode for pass (Password Store).
     password-store # Password store (pass) support
     pdf-tools # Support library for PDF documents
