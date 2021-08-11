@@ -6,7 +6,5 @@
 # expand-env: ((yas-indent-line 'fixed))
 # --
 -- | FIXME: Write description for $1
---
--- @since `(pjones:haskell-package-version)`
 ${1:function-name} :: $0
 $1 = undefined

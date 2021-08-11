@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: since
+# key: @s
+# expand-env: ((yas-indent-line 'fixed))
+# --
+@since `(pjones:haskell-package-version)`

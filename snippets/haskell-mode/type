@@ -6,6 +6,4 @@
 # expand-env: ((yas-indent-line 'fixed))
 # --
 -- | FIXME: Write documentation for $1
---
--- @since `(pjones:haskell-package-version)`
 type ${1:Type} = $0

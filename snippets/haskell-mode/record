@@ -6,8 +6,6 @@
 # expand-env: ((yas-indent-line 'fixed))
 # --
 -- | FIXME: Write documentation for $1
---
--- @since `(pjones:haskell-package-version)`
 data ${1:Type} = ${1:$(car (s-split " " yas-text))}
   { -- | FIXME: Write documentation for $2
     ${2:field} :: $0
