@@ -54,6 +54,11 @@
   (define-key map (kbd "C-c M-f") #'haskell-cabal-visit-file)
   (define-key map (kbd "C-c M-w") #'pjones:haskell-kill-module-name))
 
+(let ((map interactive-haskell-mode-map))
+  ; Use bindings from parent map:
+  (define-key map (kbd "M-.") nil)
+  (define-key map (kbd "C-c C-r") nil))
+
 (reformatter-define haskell-format
   :program "ormolu"
   :group 'haskell)
@@ -283,6 +288,7 @@ When prompting, use INITIAL as the initial module name."
   (haskell-indentation-mode)
   (interactive-haskell-mode)
   (haskell-format-on-save-mode)
+
   ;; Override the indentation function.
   (setq-local indent-line-function #'indent-relative)
 
@@ -291,6 +297,7 @@ When prompting, use INITIAL as the initial module name."
     (setq-local eglot-stay-out-of '(company company-backends))
     (eglot-ensure)
     (pjones:prog-mode-hook)
+    (subword-mode)
     (if (fboundp 'flycheck-mode)
         (flycheck-mode -1)))
 
