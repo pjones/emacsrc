@@ -71,8 +71,6 @@ buffer name, or symbols that match a major mode."
              grep-mode
              rg-mode
              shell-mode
-             "\\*eldoc\\*"
-             "\\*flymake message\\*"
              "\\*HTTP Response.*"
              "\\*Occur\\*"))
          (display-buffer-reuse-window
