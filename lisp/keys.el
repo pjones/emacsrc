@@ -62,8 +62,8 @@
  (kbd "C-c b") #'eldoc-doc-buffer
  (kbd "C-c C") #'full-calc
  (kbd "C-c c") #'quick-calc
- (kbd "C-c E") #'embark-act
  (kbd "C-c d") #'pjones:duplicate-region-or-line
+ (kbd "C-c e") #'embark-act
  (kbd "C-c f") (pjones:jump-to-buffer "*flymake message*")
  (kbd "C-c h") #'pjones:start-http
  (kbd "C-c l o") #'link-hint-open-link
