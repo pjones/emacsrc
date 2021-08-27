@@ -43,7 +43,7 @@
  '(inhibit-eol-conversion t)
  '(x-underline-at-descent-line t)
  '(focus-follows-mouse t)
- '(mouse-autoselect-window t)
+ '(mouse-autoselect-window nil)
  '(x-mouse-click-focus-ignore-position nil))
 
 (custom-set-faces
