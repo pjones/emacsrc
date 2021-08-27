@@ -26,5 +26,20 @@
  '(magit-repository-directories
    (pjones:magit-repository-directories)))
 
+(defun pjones:git-branch-prefix ()
+  "Attempt to extract the current branch prefix."
+  (pcase major-mode
+    ('text-mode
+     (save-excursion
+       (goto-char (point-min))
+       (when (search-forward-regexp "On branch \\([^-]+\\)")
+         (match-string-no-properties 1))))))
+
+(defun pjones:git-insert-branch-prefix ()
+  "Insert the current branch prefix."
+  (interactive)
+  (insert (concat (pjones:git-branch-prefix) " | ")))
+
+(define-key git-commit-mode-map (kbd "C-c C-b") #'pjones:git-insert-branch-prefix)
 
 ;;; magit-conf.el ends here
