@@ -384,10 +384,20 @@ FORMAT."
  :export #'pjones:org-notmuch-export
  :store #'pjones:org-notmuch-store)
 
+(defun pjones:org-up-or-prev (&optional arg)
+  "Move to the parent, or previous sibling.
+ARG is the number of headings to move."
+  (interactive "p")
+  (if (= 1 (org-outline-level))
+      (org-backward-heading-same-level arg)
+    (outline-up-heading arg)))
+
 ;;; Key Bindings:
 (let ((map org-mode-map))
   (define-key map (kbd "C-c C-0") #'pjones:org-hide-all)
-  (define-key map (kbd "C-c C-1") #'pjones:org-hide-others))
+  (define-key map (kbd "C-c C-1") #'pjones:org-hide-others)
+  (define-key map (kbd "M-n") #'org-forward-heading-same-level)
+  (define-key map (kbd "M-p") #'pjones:org-up-or-prev))
 
 ;;; Hooks
 (add-hook 'org-mode-hook #'org-bullets-mode)

@@ -45,10 +45,21 @@
   (define-key map (kbd "C-c C-c") #'pjones:dired-toggle-wdired)
   (define-key map (kbd "C-c M-w") #'pjones:dired-copy-filename-as-kill)
   (define-key map (kbd "C-c M-W") (pjones:dired-cwd-do 'pjones:kill-directory-name))
+  (define-key map (kbd "C-i") #'pjones:dired-insert-or-visit)
   (define-key map (kbd "C-x C-f") (pjones:dired-cwd-do 'find-file))
-  (define-key map (kbd "M-n") #'dired-subtree-down)
-  (define-key map (kbd "M-p") #'dired-subtree-up)
+  (define-key map (kbd "M-n") #'dired-subtree-next-sibling)
+  (define-key map (kbd "M-p") #'pjones:dired-subtree-up-or-prev)
   (define-key map (kbd "M-s o") #'noccur-dired))
+
+(defun pjones:dired-subtree-up-or-prev (&optional arg)
+  "Move point up a directory, or to the previous sibling.
+When in a nested directory, move up to the parent.  If at the top of
+the hierarchy then move to the previous line.
+ARG is the number of lines to jump."
+  (interactive "p")
+  (if-let (ov (dired-subtree--get-ov))
+      (dired-subtree-up arg)
+    (dired-subtree-previous-sibling arg)))
 
 (defun pjones:dired-copy-filename-as-kill (&optional path)
   "Copy file name or entire PATH."
