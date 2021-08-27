@@ -54,10 +54,6 @@
   "Key bindings for neuron-mode.")
 
 (pjones:global-set-keys
- (kbd "C-c 1") #'shell-command
- (kbd "C-c 5") #'query-replace
- (kbd "C-c 6") #'delete-indentation
- (kbd "C-c 7") #'async-shell-command
  (kbd "C-c a") (pjones:jump-to-buffer "*Org Agenda*" pjones:agenda)
  (kbd "C-c b") #'eldoc-doc-buffer
  (kbd "C-c C") #'full-calc
