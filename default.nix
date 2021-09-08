@@ -21,6 +21,7 @@ pkgs.stdenv.mkDerivation rec {
 
   buildInputs = [
     emacsAndPackages # Emacs!
+    pkgs.black # For formatting Python code
     pkgs.gitAndTools.gitFull # Needed to compile magit config
     pkgs.gnuplot # For org-mode
     pkgs.imagemagick # For image-mode and eimp-mode

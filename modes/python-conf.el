@@ -7,8 +7,8 @@
 (require 'python)
 (require 'reformatter)
 
-;; (custom-set-variables
-;;   '())
+(custom-set-variables
+ '(python-indent-offset 4))
 
 (reformatter-define python-format
   :program "black"
