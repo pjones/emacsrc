@@ -20,7 +20,6 @@
 (defun pjones:notes-server-hook ()
   "Set up the notes server."
   (when (string= server-name "notes")
-    (auto-save-visited-mode 1)
     (pjones:load-theme 'doom-snazzy)))
 
 (defun pjones:mail-server-hook ()
