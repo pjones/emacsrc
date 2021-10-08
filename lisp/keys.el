@@ -131,7 +131,6 @@
  [remap indent-for-tab-command] #'pjones:indent-or-complete
  [remap kill-region] #'pjones:kill-region-or-backward-kill-word
  [remap list-buffers] #'ibuffer
- [remap move-beginning-of-line] #'pjones:move-beginning-of-line
  [remap open-line] #'pjones:open-line-above
  [remap other-window] #'ace-select-window
  [remap rectangle-number-lines] #'pjones:rectangle-number-lines
