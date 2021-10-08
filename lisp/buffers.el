@@ -67,8 +67,11 @@ buffer name, or symbols that match a major mode."
 
         ;; Buffers that should create a new frame:
         (,(pjones:buffer-conditions
-           '(compilation-mode
+           '(comint-mode
+             compilation-mode
              grep-mode
+             haskell-interactive-mode
+             inferior-python-mode
              rg-mode
              shell-mode
              "\\*HTTP Response.*"

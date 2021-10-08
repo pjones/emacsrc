@@ -1,4 +1,12 @@
 ;;; loadpath.el -- Correctly set my load-path variable.
+;;
+;;; Commentary:
+;;
+;;; Code:
+
+;; Shouldn't be needed in recent versions of Emacs, but without this
+;; line some packages from Nix don't get put into `load-path'.
+(package-initialize)
 
 ;; Some basic variables used by my other configuration files.
 (defvar pjones:lisp-dir
