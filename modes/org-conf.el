@@ -392,12 +392,30 @@ ARG is the number of headings to move."
       (org-backward-heading-same-level arg)
     (outline-up-heading arg)))
 
+(defun pjones:org-insert-item (checkbox)
+  "Insert a new item.
+If CHECKBOX is non-nil, add a checkbox too.
+This replaces `org-insert-item' which doesn't work unless there's an
+existing item.  This version works on headings too."
+  (interactive "P")
+  (unless (org-insert-item checkbox)
+    (org-back-to-heading)
+    (let ((indent (1+ (org-outline-level))))
+      (end-of-line)
+      (newline)
+      (insert (concat (make-string indent ? ) "- "))
+      (when checkbox (insert "[ ] ")))))
+
 ;;; Key Bindings:
 (let ((map org-mode-map))
   (define-key map (kbd "C-c C-0") #'pjones:org-hide-all)
   (define-key map (kbd "C-c C-1") #'pjones:org-hide-others)
+  (define-key map (kbd "C-c C-x a") #'org-archive-subtree-default)
+  (define-key map (kbd "M-<return>") #'pjones:org-insert-item)
   (define-key map (kbd "M-n") #'org-forward-heading-same-level)
-  (define-key map (kbd "M-p") #'pjones:org-up-or-prev))
+  (define-key map (kbd "M-p") #'pjones:org-up-or-prev)
+  (define-key map (kbd "M-P") #'org-move-subtree-up)
+  (define-key map (kbd "M-N") #'org-move-subtree-down))
 
 ;;; Hooks
 (add-hook 'org-mode-hook #'org-bullets-mode)
