@@ -12,7 +12,7 @@ let
     inherit src;
 
     name = "emacs-${orig.ename or orig.pname}-${version}";
-    version = "99999999.0000";
+    version = "99999999.0";
 
     # When updating a package, automatically remove the broken flag:
     meta = (orig.meta or { }) // { broken = false; };
@@ -29,6 +29,16 @@ let
 
     goto-chg = update super.goto-chg sources.goto-chg;
     passmm = update super.passmm sources.passmm;
+
+    vterm =
+      (update
+        super.vterm
+        sources.emacs-libvterm).overrideAttrs (orig: {
+        postInstall = ''
+          ln -s emacs-libvterm-src source
+          ${orig.postInstall or ""}
+        '';
+      });
   });
 
 in
@@ -119,6 +129,7 @@ emacsWithOverrides.emacsWithPackages (epkgs:
     typescript-mode # Major mode for editing typescript
     visual-fill # Auto-refill paragraphs without modifying the buffer
     vlf # View Large Files
+    vterm # Fully-featured terminal emulator
     weyland-yutani-theme # Emacs theme based off Alien movie franchise
     wgrep # Writable grep buffer and apply the changes to files
     which-key # Display available keybindings in popup

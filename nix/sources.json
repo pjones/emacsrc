@@ -11,6 +11,18 @@
         "url": "https://github.com/myrkr/dictionary-el/archive/46ee5d9ba15cac7282ed73c8b4c272a969c6159e.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
+    "emacs-libvterm": {
+        "branch": "master",
+        "description": "Emacs libvterm integration",
+        "homepage": "",
+        "owner": "akermu",
+        "repo": "emacs-libvterm",
+        "rev": "2681120b770573044832ba8c22ccbac192e1a294",
+        "sha256": "173qhfj5h4xd8rrf4avzknp24hzl0nlxs783pr7900d980cpbygr",
+        "type": "tarball",
+        "url": "https://github.com/akermu/emacs-libvterm/archive/2681120b770573044832ba8c22ccbac192e1a294.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
     "goto-chg": {
         "branch": "master",
         "description": null,
