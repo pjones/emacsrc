@@ -1,13 +1,19 @@
 { pkgs
 , lib
+, config
 , ...
 }:
 let
   emacsrc = import ../. { inherit pkgs; };
+  cfg = config.programs.pjones.emacsrc;
 
 in
 {
-  config = {
+  options.programs.pjones.emacsrc = {
+    enable = lib.mkEnableOption "Peter's Emacs Configuration";
+  };
+
+  config = lib.mkIf cfg.enable {
     home.packages = [
       emacsrc
       pkgs.dict

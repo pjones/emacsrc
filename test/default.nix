@@ -35,6 +35,7 @@ pkgs.nixosTest {
 
       users.pjones = { ... }: {
         imports = [ ../nix/home.nix ];
+        programs.pjones.emacsrc.enable = true;
         home.packages = [ tests ];
       };
     };
