@@ -56,7 +56,10 @@ buffer name, or symbols that match a major mode."
         ;; Buffers that are related to the current window and should
         ;; split it, opening a new window below the current window:
         (,(pjones:buffer-conditions
-           '("\\*magit-.*popup"
+           '(grep-mode
+             rg-mode
+             "\\*magit-.*popup"
+             "\\*Occur\\*"
              "\\*transient"))
          (display-buffer-reuse-window
           display-buffer-reuse-mode-window
@@ -69,13 +72,10 @@ buffer name, or symbols that match a major mode."
         (,(pjones:buffer-conditions
            '(comint-mode
              compilation-mode
-             grep-mode
              haskell-interactive-mode
              inferior-python-mode
-             rg-mode
              shell-mode
-             "\\*HTTP Response.*"
-             "\\*Occur\\*"))
+             "\\*HTTP Response.*"))
          (display-buffer-reuse-window
           display-buffer-reuse-mode-window
           display-buffer-pop-up-frame)
