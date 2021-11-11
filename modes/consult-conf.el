@@ -21,9 +21,9 @@
   "Replacement function for `consult--source-buffer' :items.
 
 This version of the :items function discards buffers that are
-already being shown in a window on the current frame."
+already being shown in a window."
   (seq-remove
-   (lambda (name) (get-buffer-window name))
+   (lambda (name) (get-buffer-window name 'visible))
    (funcall pjones:consult-orig-buffer-items)))
 
 ;; Update consult--source-buffer with our custom :items function:
