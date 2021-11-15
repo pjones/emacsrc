@@ -61,7 +61,6 @@ emacsWithOverrides.emacsWithPackages (epkgs:
     dired-filter # Ibuffer-like filtering for dired
     dired-narrow # Live-narrowing of search results for dired
     dired-subtree # Insert subdirectories in a tree-like fashion
-    direnv # direnv support
     doom-themes # an opinionated pack of modern color-themes
     dumb-jump # Jump to definition for 40+ languages without configuration
     eglot # Client for Language Server Protocol (LSP) servers
@@ -69,6 +68,7 @@ emacsWithOverrides.emacsWithPackages (epkgs:
     eldoc # Show function arglist or variable docstring in echo area
     elm-mode # Elm mode for emacs
     embark # Conveniently act on minibuffer completions
+    envrc # Support for `direnv' that operates buffer-locally
     erc-hl-nicks # ERC nick highlighter that ignores uniquifying chars when colorizing
     expand-region # Increase selected region by semantic units.
     flycheck # On-the-fly syntax checking

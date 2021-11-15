@@ -13,7 +13,6 @@
 
 (require 'company)
 (require 'dash)
-(require 'direnv)
 (require 'eglot)
 (require 'haskell)
 (require 'haskell-interactive-mode)
@@ -281,9 +280,6 @@ When prompting, use INITIAL as the initial module name."
 
 (defun pjones:haskell-mode-hook ()
   "Hook run on new Haskell buffers."
-  ;; Update environment variables (i.e. PATH) first!
-  (direnv-update-environment)
-
   ;; Boot `haskell-mode':
   (haskell-indentation-mode)
   (interactive-haskell-mode)
