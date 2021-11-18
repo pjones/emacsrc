@@ -47,9 +47,9 @@
  '(x-mouse-click-focus-ignore-position nil))
 
 (custom-set-faces
- '(default ((t (:font "Hermit:pixelsize=14:weight=normal"))))
- '(fixed-pitch ((t (:font "Hermit:pixelsize=14:weight=normal"))))
- '(variable-pitch ((t (:font "Noto Serif:pixelsize=14:weight=normal"))))) ;
+ '(default ((t (:font "Hermit-10"))))
+ '(fixed-pitch ((t (:font "Hermit-10"))))
+ '(variable-pitch ((t (:font "Noto Serif-10")))))
 
 ;; Default variables that become buffer/frame local.
 (setq-default
