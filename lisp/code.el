@@ -97,7 +97,7 @@ Calls `comment-indent-new-line' with ARGS."
 (defun pjones:prog-mode-hook ()
   "Settings and bindings for programming modes."
   (setq comment-empty-lines t)
-  (setq-local ocomment-auto-fill-only-comments t)
+  (setq-local comment-auto-fill-only-comments t)
   (setq-local comment-line-break-function #'pjones:comment-line-break-function)
   (local-set-key (kbd "C-<tab>") 'pjones:comment-bar)
   (local-set-key (kbd "RET") 'newline-and-indent)
