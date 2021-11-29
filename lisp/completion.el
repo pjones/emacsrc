@@ -24,17 +24,9 @@ current line.  Otherwise run the completion command.  ARG is passed to
        ;; Force indenting the entire expression:
        (arg
         (indent-for-tab-command arg))
-       ;; Maybe indent the line or match indentation:
+       ;; Maybe indent the line:
        ((or (bolp) (looking-back "\\s-" max-backtrack))
-          (if (looking-at-p "\\s-*$")
-              ;; Blank line, copy indentation from above:
-              (indent-to
-               (save-excursion
-                 (forward-line -1)
-                 (back-to-indentation)
-                 (current-indentation)))
-            ;; Indent the current line:
-            (indent-for-tab-command arg)))
+        (indent-for-tab-command arg))
        ;; Try snippet completion:
        ((yas-maybe-expand-abbrev-key-filter t)
         (yas-expand))
