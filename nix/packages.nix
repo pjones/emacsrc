@@ -72,6 +72,7 @@ emacsWithOverrides.emacsWithPackages (epkgs:
     erc-hl-nicks # ERC nick highlighter that ignores uniquifying chars when colorizing
     expand-region # Increase selected region by semantic units.
     flycheck # On-the-fly syntax checking
+    flycheck-rust # Rust additions and Cargo support
     flyspell-correct # Correcting words with flyspell via custom interface
     flyspell-correct-avy-menu # Correcting words with flyspell via avy-menu interface
     forge # Access Git forges from Magit
