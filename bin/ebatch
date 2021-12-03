@@ -11,7 +11,10 @@ lispdir=$(dirname "@loadpathel@")
 
 ################################################################################
 _emacs() {
-  emacs --batch --load "$lispdir/modes.el" "$@"
+  emacs --batch \
+    --load "$lispdir/modes.el" \
+    --load "$lispdir/code.el" \
+    "$@"
 }
 
 ################################################################################
