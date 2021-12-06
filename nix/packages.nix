@@ -81,7 +81,6 @@ emacsWithOverrides.emacsWithPackages (epkgs:
     goto-chg # Go to last change
     graphviz-dot-mode # Mode for the dot-language used by graphviz
     haskell-mode # A Haskell editing mode
-    hasky-extensions # Toggle Haskell language extensions
     highlight-indent-guides # Minor mode to highlight indentation
     http # Yet another HTTP client
     indium # JavaScript Awesome Development Environment

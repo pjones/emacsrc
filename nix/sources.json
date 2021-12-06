@@ -36,15 +36,15 @@
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "home-manager": {
-        "branch": "release-21.05",
+        "branch": "release-21.11",
         "description": "Manage a user environment using Nix  [maintainer=@rycee] ",
         "homepage": "https://nix-community.github.io/home-manager/",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "ab64dc32493996c24607eab2cae6663466ddfb8a",
-        "sha256": "1w7qxjibrjlqi7l293pnxxww1wxsq46wf3xbcpibys6g165s05f4",
+        "rev": "6ce1d64073f48b9bc9425218803b1b607454c1e7",
+        "sha256": "00wq584g2gs62rjxax3qi5q9ns1044j4bprbxjvxq3rdhf6i7qcm",
         "type": "tarball",
-        "url": "https://github.com/nix-community/home-manager/archive/ab64dc32493996c24607eab2cae6663466ddfb8a.tar.gz",
+        "url": "https://github.com/nix-community/home-manager/archive/6ce1d64073f48b9bc9425218803b1b607454c1e7.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "neuron-mode": {
@@ -72,15 +72,15 @@
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "nixpkgs": {
-        "branch": "nixos-21.05",
+        "branch": "nixos-21.11",
         "description": "Nix Packages collection",
         "homepage": "",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "a284564b7f75ac4db73607db02076e8da9d42c9d",
-        "sha256": "108869dfr9ac0fff2yf7iqh8pcz6wpvbjnqjl4mc4g72ykn3g41s",
+        "rev": "e34c5379866833f41e2a36f309912fa675d687c7",
+        "sha256": "15shzr1wmc5770kblvlfwq5dsdlmvkpc3rhkn40nyi00fidqq96v",
         "type": "tarball",
-        "url": "https://github.com/NixOS/nixpkgs/archive/a284564b7f75ac4db73607db02076e8da9d42c9d.tar.gz",
+        "url": "https://github.com/NixOS/nixpkgs/archive/e34c5379866833f41e2a36f309912fa675d687c7.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "passmm": {

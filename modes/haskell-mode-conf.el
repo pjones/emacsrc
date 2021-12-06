@@ -19,7 +19,6 @@
 (require 'haskell-mode)
 (require 'haskell-navigate-imports)
 (require 'haskell-process)
-(require 'hasky-extensions)
 (require 'highlight-indent-guides)
 (require 'projectile)
 (require 'reformatter)
@@ -49,7 +48,6 @@
   (define-key map (kbd "C-c C-p") #'pjones:haskell-import-package-module)
   (define-key map (kbd "C-c C-q") #'pjones:haskell-toggle-qualified)
   (define-key map (kbd "C-c C-r") #'haskell-interactive-bring)
-  (define-key map (kbd "C-c M-e") #'pjones:hasky-extensions)
   (define-key map (kbd "C-c M-f") #'haskell-cabal-visit-file)
   (define-key map (kbd "C-c M-w") #'pjones:haskell-kill-module-name))
 
@@ -61,16 +59,6 @@
 (reformatter-define haskell-format
   :program "ormolu"
   :group 'haskell)
-
-(defun pjones:hasky-extensions ()
-  "Wrapper around `hasky-extensions'.
-A version of `hasky-extensions' that doesn't use avy."
-  (interactive)
-  (let* ((exts hasky-extensions)
-         (active (hasky-extensions-list))
-         (name (completing-read "Extension: " exts nil t)))
-    (if (member name active) (hasky-extensions-remove name)
-      (hasky-extensions-add name))))
 
 (defun pjones:haskell-generate-module-name (&optional file)
   "Attempt to turn FILE into a module name."
