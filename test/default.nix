@@ -1,5 +1,6 @@
-{ sources ? import ../nix/sources.nix
-, pkgs ? import sources.nixpkgs { }
+{ pkgs
+, home-manager
+, module
 }:
 let
   tests = pkgs.stdenvNoCC.mkDerivation {
@@ -18,9 +19,7 @@ pkgs.nixosTest {
   name = "test-emacsrc";
 
   nodes.emacsrc = { ... }: {
-    imports = [
-      "${sources.home-manager}/nixos"
-    ];
+    imports = [ home-manager.nixosModules.home-manager ];
 
     users.users.pjones = {
       createHome = true;
@@ -34,7 +33,7 @@ pkgs.nixosTest {
       useGlobalPkgs = true;
 
       users.pjones = { ... }: {
-        imports = [ ../nix/home.nix ];
+        imports = [ module ];
         programs.pjones.emacsrc.enable = true;
         home.packages = [ tests ];
       };

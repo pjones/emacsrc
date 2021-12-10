@@ -11,15 +11,6 @@
 (require 'notifications)
 (require 'passmm)
 
-(eval-when-compile
-  (load
-   (concat
-    (file-name-directory
-     (or load-file-name
-         byte-compile-current-file
-         (buffer-file-name)))
-    "../lisp/macros")))
-
 (declare-function pjones:urgency-hint "../lisp/functions.el")
 
 (custom-set-variables

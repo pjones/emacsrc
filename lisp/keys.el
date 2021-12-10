@@ -5,21 +5,14 @@
 ;; Key bindings follow the style used in Spacemacs.
 ;;
 ;;; Code:
-(eval-when-compile
-  (load
-   (concat
-    (file-name-directory
-     (or load-file-name
-         byte-compile-current-file
-         (buffer-file-name)))
-    "macros"))
-  (load
-   (concat
-    (file-name-directory
-     (or load-file-name
-         byte-compile-current-file
-         (buffer-file-name)))
-    "interactive")))
+(defmacro pjones:jump-to-buffer (name &optional command)
+  "Generate a command to jump to buffer NAME.
+If buffer NAME doesn't exist, COMMAND can be used to create it."
+  `(defun ,(intern (concat "pjones:jump-to-buffer-" name)) ()
+    (interactive)
+    (let ((buf (get-buffer ,name)))
+      (if buf (display-buffer buf)
+        ,(if command `(,command) 'nil)))))
 
 ;; Loading `link-hint' will also load my settings and custom functions
 ;; for it.

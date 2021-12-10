@@ -1,10 +1,11 @@
+{ emacsrc
+}:
 { pkgs
 , lib
 , config
 , ...
 }:
 let
-  emacsrc = import ../. { inherit pkgs; };
   cfg = config.programs.pjones.emacsrc;
 
 in
@@ -38,7 +39,7 @@ in
       enable = true;
 
       configFile = {
-        "emacs/init.el".source = "${emacsrc}/dot.emacs.el";
+        "emacs/init.el".source = "${emacsrc}/emacs.d/dot.emacs.el";
       };
     };
 

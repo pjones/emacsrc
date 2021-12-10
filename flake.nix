@@ -1,0 +1,52 @@
+{
+  inputs = {
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-21.11";
+
+    home-manager.url = "github:nix-community/home-manager/release-21.11";
+    home-manager.inputs.nixpkgs.follows = "nixpkgs";
+  };
+
+  outputs = { self, nixpkgs, home-manager }:
+    let
+      # List of supported systems:
+      supportedSystems = [
+        "x86_64-linux"
+        "aarch64-linux"
+        "x86_64-darwin"
+        "aarch64-darwin"
+        "armv7l-linux"
+        "i686-linux"
+      ];
+
+      # Function to generate a set based on supported systems:
+      forAllSystems = f:
+        nixpkgs.lib.genAttrs supportedSystems (system: f system);
+
+      # Attribute set of nixpkgs for each system:
+      nixpkgsFor = forAllSystems (system: import nixpkgs { inherit system; });
+    in
+    {
+      packages = forAllSystems (system:
+        let pkgs = nixpkgsFor.${system}; in
+        {
+          emacsrc = import ./. { inherit pkgs; };
+        });
+
+      defaultPackage =
+        forAllSystems (system: self.packages.${system}.emacsrc);
+
+      checks.x86_64-linux.emacsrc = import ./test {
+        inherit home-manager;
+        pkgs = nixpkgsFor.x86_64-linux;
+        module = self.homeManagerModule;
+      };
+
+      homeManagerModule = { pkgs, ... }: {
+        imports = [
+          (import ./nix/home.nix {
+            emacsrc = self.packages.${pkgs.system}.emacsrc;
+          })
+        ];
+      };
+    };
+}
