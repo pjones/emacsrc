@@ -32,8 +32,22 @@
           emacsrc = import ./. { inherit pkgs; };
         });
 
-      defaultPackage =
-        forAllSystems (system: self.packages.${system}.emacsrc);
+      defaultPackage = forAllSystems (system:
+        self.packages.${system}.emacsrc);
+
+      apps = forAllSystems (system:
+        let pkgs = nixpkgsFor.${system}; in
+        {
+          emacsrc = {
+            type = "app";
+            program = toString (pkgs.writeShellScript "emacsrc" ''
+              ${self.packages.${system}.emacsrc}/bin/e -f
+            '');
+          };
+        });
+
+      defaultApp = forAllSystems (system:
+        self.apps.${system}.emacsrc);
 
       checks.x86_64-linux.emacsrc = import ./test {
         inherit home-manager;

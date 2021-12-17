@@ -114,7 +114,7 @@ if [ "$option_fresh" -eq 1 ]; then
   export EMACSLOADPATH=""
   exec emacs -q \
     --funcall package-initialize \
-    --load @out@/dot.emacs.el \
+    --load @out@/emacs.d/dot.emacs.el \
     --eval "(run-hooks 'after-init-hook)" "$@"
 fi
 
