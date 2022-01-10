@@ -26,12 +26,10 @@
  :compile "nix-shell --run 'eval \"$buildPhase\"'")
 
 (projectile-register-project-type
- 'haskell-multi '("default.nix" "cabal.project")
- :compile "cabal build all && cabal test all")
-
-(projectile-register-project-type
- 'haskell-nix '("default.nix" "Setup.hs")
- :compile "cabal build all && cabal test all")
+ 'haskell-cabal #'projectile-cabal-project-p
+ :compile "cabal -j build all"
+ :test "cabal test all"
+ :run "cabal run")
 
 ;;; Utility Functions
 
