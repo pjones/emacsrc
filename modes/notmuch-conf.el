@@ -143,8 +143,11 @@ If ONLY-MATCHED is non-nil only move matched messages."
   "Process mail messages after they have been tagged."
   (when (member "+move" tag-changes)
     (message "Refiling tagged messages...")
-    (let ((script (concat (notmuch-database-path) "/.notmuch/hooks/x-post-tag")))
-      (start-process "notmuch-x-post-tag" nil script))))
+    (make-process
+     :name "x-post-tag"
+     :command (list (concat (notmuch-config-get "database.hook_dir") "/x-post-tag"))
+     :buffer nil
+     :stderr "*x-post-tag*")))
 
 (add-hook 'notmuch-after-tag-hook #'pjones:notmuch-after-tag-hook)
 (add-hook 'notmuch-mua-send-hook #'notmuch-mua-attachment-check)
