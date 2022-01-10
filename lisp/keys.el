@@ -55,6 +55,7 @@ If buffer NAME doesn't exist, COMMAND can be used to create it."
  (kbd "C-c e") #'embark-act
  (kbd "C-c f") (pjones:jump-to-buffer "*flymake message*")
  (kbd "C-c h") #'pjones:start-http
+ (kbd "C-c k")  #'sp-kill-hybrid-sexp
  (kbd "C-c l o") #'link-hint-open-link
  (kbd "C-c l w") #'link-hint-copy-link
  (kbd "C-c M") #'magit-file-dispatch
