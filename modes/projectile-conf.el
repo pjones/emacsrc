@@ -28,7 +28,7 @@
 (projectile-register-project-type
  'haskell-cabal #'projectile-cabal-project-p
  :compile "cabal -j build all"
- :test "cabal test all"
+ :test "cabal test all --test-show-details=direct"
  :run "cabal run")
 
 ;;; Utility Functions
