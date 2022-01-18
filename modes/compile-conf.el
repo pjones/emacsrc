@@ -4,6 +4,7 @@
 ;;
 ;;; Code:
 
+(require 'ansi-color)
 (require 'compile)
 
 (declare-function pjones:display-buffer-in-non-popup-frame "../lisp/functions")
@@ -27,5 +28,13 @@
       ret)))
 
 (advice-add 'compile-goto-error :around #'pjones:compile-goto-error)
+
+;; https://gist.github.com/wngreene/87d8b4715212e44a42aa79668af090ee
+(defun pjones:compile-apply-ansi-color nil
+  "Add support for ANSI color escapes to `compilation-mode'."
+  (let ((buffer-read-only nil))
+    (ansi-color-apply-on-region (point-min) (point-max))))
+
+(add-hook 'compilation-filter-hook #'pjones:compile-apply-ansi-color)
 
 ;;; compile-conf.el ends here
