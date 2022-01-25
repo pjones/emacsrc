@@ -29,21 +29,22 @@
 
 ;; Variables defined in Emacs' C source
 (custom-set-variables
+ '(disabled-command-function nil)
+ '(echo-keystrokes 0.1)
+ '(enable-recursive-minibuffers t)
+ '(focus-follows-mouse t)
+ '(inhibit-eol-conversion t)
  '(inhibit-startup-message t)
  '(initial-scratch-message nil)
  '(make-backup-files nil)
- '(next-line-add-newlines t)
- '(mouse-yank-at-point t)
- '(visible-bell nil)
- '(enable-recursive-minibuffers t)
- '(echo-keystrokes 0.1)
- '(disabled-command-function nil)
- '(truncate-partial-width-windows nil)
  '(mark-even-if-inactive t)
- '(inhibit-eol-conversion t)
- '(x-underline-at-descent-line t)
- '(focus-follows-mouse t)
  '(mouse-autoselect-window nil)
+ '(mouse-yank-at-point t)
+ '(next-line-add-newlines t)
+ '(show-paren-when-point-inside-paren t)
+ '(truncate-partial-width-windows nil)
+ '(visible-bell nil)
+ '(x-underline-at-descent-line t)
  '(x-mouse-click-focus-ignore-position nil))
 
 (custom-set-faces

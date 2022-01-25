@@ -70,7 +70,6 @@ emacsWithOverrides.emacsWithPackages (epkgs:
     embark # Conveniently act on minibuffer completions
     envrc # Support for `direnv' that operates buffer-locally
     erc-hl-nicks # ERC nick highlighter that ignores uniquifying chars when colorizing
-    expand-region # Increase selected region by semantic units.
     flycheck # On-the-fly syntax checking
     flycheck-rust # Rust additions and Cargo support
     flyspell-correct # Correcting words with flyspell via custom interface
@@ -114,6 +113,7 @@ emacsWithOverrides.emacsWithPackages (epkgs:
     prescient # Better sorting and filtering
     project # Operations on the current project
     projectile # Manage and navigate projects in Emacs easily
+    puni # Parentheses Universalistic
     purescript-mode # A PureScript editing mode
     rainbow-mode # Colorize color names in buffers
     reformatter # Define commands which run reformatters on the current Emacs buffer
@@ -125,7 +125,6 @@ emacsWithOverrides.emacsWithPackages (epkgs:
     scad-mode # A major mode for editing OpenSCAD code
     selectrum # Easily select item from list
     selectrum-prescient # Selectrum integration
-    smartparens # Automatic insertion, wrapping and paredit-like navigation with user defined pairs.
     typescript-mode # Major mode for editing typescript
     visual-fill # Auto-refill paragraphs without modifying the buffer
     vlf # View Large Files

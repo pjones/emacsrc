@@ -32,10 +32,12 @@ will be deleted (without placing it in the kill ring)."
                   (or subword-mode global-subword-mode))
              'subword-forward
            'forward-word)))
-    (if (region-active-p)
-        (kill-region (region-beginning) (region-end))
-      (delete-region (point) (progn (funcall forward (- arg))
-                                    (point))))))
+    (if (use-region-p)
+        (if (= 0 arg) (puni-kill-active-region)
+          (kill-region (region-beginning) (region-end)))
+      (delete-region (point) (progn
+                               (funcall forward (- arg))
+                               (point))))))
 
 (defun pjones:kill-line (arg)
   "Kill from point to the end of the line.

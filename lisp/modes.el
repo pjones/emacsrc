@@ -8,11 +8,13 @@
 (declare-function envrc-global-mode "envrc")
 (declare-function global-diff-hl-mode "diff-hl")
 (declare-function minions-mode "minions")
+(declare-function pdf-tools-install "pdf-tools")
 (declare-function projectile-mode "projectile")
+(declare-function puni-global-mode "puni")
+(declare-function selectrum-mode "selectrum")
 (declare-function which-key-mode "which-key")
 (declare-function winum-mode "winum")
 (declare-function yas-global-mode "yasnippet")
-(declare-function pdf-tools-install "pdf-tools")
 
 (defvar pjones:modes-dir
   (concat (file-name-directory (directory-file-name (file-name-directory load-file-name))) "modes/")
@@ -28,14 +30,15 @@
 (defun pjones:boot-global-modes ()
   "Start or prepare global modes."
   (default-text-scale-mode)          ; Frame text scaling.
+  (electric-pair-mode)               ; Insert matching brackets.
   (envrc-global-mode)                ; Respect .envrc files.
   (global-auto-revert-mode)          ; External changes cause a revert
   (global-diff-hl-mode)              ; Show what changes in a buffer
   (global-prettify-symbols-mode)     ; Replace buffer symbols.
   (projectile-mode)                  ; Project tool
+  (puni-global-mode)                 ; Working with delimiters.
   (selectrum-mode)                   ; minibuffer completions.
-  (show-smartparens-global-mode)     ; Display delimiters.
-  (smartparens-global-mode)          ; Working with delimiters.
+  (show-paren-mode)                  ; Highlight matching brackets.
   (which-key-mode)                   ; Remind me what keys do.
   (winner-mode)                      ; Track win conifg changes
   (winum-mode)                       ; Number windows

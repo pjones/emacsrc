@@ -55,7 +55,7 @@ If buffer NAME doesn't exist, COMMAND can be used to create it."
  (kbd "C-c e") #'embark-act
  (kbd "C-c f") (pjones:jump-to-buffer "*flymake message*")
  (kbd "C-c h") #'pjones:start-http
- (kbd "C-c k")  #'sp-kill-hybrid-sexp
+ (kbd "C-c k") #'pjones:kill-line
  (kbd "C-c l o") #'link-hint-open-link
  (kbd "C-c l w") #'link-hint-copy-link
  (kbd "C-c M") #'magit-file-dispatch
@@ -107,9 +107,8 @@ If buffer NAME doesn't exist, COMMAND can be used to create it."
  (kbd "C--") #'text-scale-adjust
  (kbd "C-_") (lambda () (interactive) (text-scale-set 0))
  (kbd "C-`") #'consult-register-load
- (kbd "C-k") #'pjones:kill-line
  (kbd "C-M-`") #'consult-register
- (kbd "C-M-SPC") #'er/expand-region
+ (kbd "C-M-SPC") #'puni-expand-region
  (kbd "C-M-z") #'zap-to-char
  (kbd "C-x C-k @") #'consult-kmacro
  (kbd "C-z") pjones:zettle-map
