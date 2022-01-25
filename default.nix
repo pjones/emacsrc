@@ -1,9 +1,10 @@
 { pkgs ? import <nixpkgs> { }
+, inputs ? { }
 }:
 let
   ##############################################################################
   # Emacs + all of the packages I need:
-  emacsAndPackages = pkgs.callPackage ./nix/packages.nix { };
+  emacsAndPackages = pkgs.callPackage ./nix/packages.nix { inherit inputs; };
 
   ##############################################################################
   inherit (pkgs) lib;
@@ -17,7 +18,7 @@ pkgs.stdenv.mkDerivation rec {
       src = ./.;
       filter = name: _type:
         let baseName = baseNameOf (toString name);
-        in !(baseName == "nix" || baseName == "test" || baseName == "out");
+        in !(baseName == "test" || baseName == "out");
     };
 
   enableParallelBuilding = true;

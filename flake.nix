@@ -4,9 +4,24 @@
 
     home-manager.url = "github:nix-community/home-manager/release-21.11";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
+
+    corfu = {
+      url = "github:minad/corfu/0.17";
+      flake = false;
+    };
+
+    cape = {
+      url = "github:minad/cape/0.5";
+      flake = false;
+    };
+
+    corfu-doc = {
+      url = "github:galeo/corfu-doc";
+      flake = false;
+    };
   };
 
-  outputs = { self, nixpkgs, home-manager }:
+  outputs = inputs@{ self, nixpkgs, home-manager, ... }:
     let
       # List of supported systems:
       supportedSystems = [
@@ -29,7 +44,7 @@
       packages = forAllSystems (system:
         let pkgs = nixpkgsFor.${system}; in
         {
-          emacsrc = import ./. { inherit pkgs; };
+          emacsrc = import ./. { inherit pkgs inputs; };
         });
 
       defaultPackage = forAllSystems (system:

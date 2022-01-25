@@ -4,8 +4,7 @@
 ;;
 ;;; Code:
 (eval-when-compile
-  (require 'saveplace)
-  (require 'company))
+  (require 'saveplace))
 
 ;;; Dependencies:
 (require 'projectile)

@@ -5,10 +5,14 @@
 ;;; Code:
 
 (require 'ruby-mode)
+(require 'ruby-end)
 
 (custom-set-variables
  '(ruby-deep-arglist 'space)
  '(ruby-deep-indent-paren 'space))
+
+;; Help electric-pair-mode use block arguments:
+(modify-syntax-entry ?| "\"" ruby-mode-syntax-table)
 
 (defun pjones:ruby-mode-hook ()
   "Hook for `ruby-mode'."

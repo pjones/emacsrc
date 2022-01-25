@@ -113,6 +113,7 @@ If buffer NAME doesn't exist, COMMAND can be used to create it."
  (kbd "C-x C-k @") #'consult-kmacro
  (kbd "C-z") pjones:zettle-map
  (kbd "M-'") #'mode-line-other-buffer
+ (kbd "M-/") #'dabbrev-completion
  (kbd "M-<backspace>") (lambda () (interactive) (kill-buffer))
  (kbd "M-`") #'consult-register-store
  (kbd "M-RET") #'delete-blank-lines

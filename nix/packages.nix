@@ -2,6 +2,7 @@
 , emacs
 , emacsPackagesFor
 , notmuch
+, inputs
 }:
 let
   # Package sources:
@@ -23,6 +24,20 @@ let
     connection = update super.connection sources.dictionary-el;
     dictionary = update super.dictionary sources.dictionary-el;
     link = update super.link sources.dictionary-el;
+
+    corfu = update super.corfu "${inputs.corfu}/corfu.el";
+
+    corfu-doc = super.elpaBuild {
+      pname = "corfu-doc";
+      version = "0.4";
+      src = "${inputs.corfu-doc}/corfu-doc.el";
+    };
+
+    cape = super.elpaBuild {
+      pname = "cape";
+      version = "0.5";
+      src = "${inputs.cape}/cape.el";
+    };
 
     # https://github.com/felko/neuron-mode/issues/76
     neuron-mode = update super.neuron-mode sources.neuron-mode;
@@ -49,10 +64,11 @@ emacsWithOverrides.emacsWithPackages (epkgs:
     adaptive-wrap # Smart line-wrapping with wrap-prefix
     async # Asynchronous processing in Emacs
     avy # Jump to arbitrary positions in visible text and select text quickly
+    cape # Let your completions fly!
     clojure-mode # Major mode for Clojure code
-    company # Modular text completion framework
-    company-quickhelp # Popup documentation for completion candidates
     consult # Consulting completing-read
+    corfu # Completion Overlay Region FUnction
+    corfu-doc # Documentation popup for Corfu
     csv-mode # Major mode for editing comma/char separated values
     darkroom # Remove visual distractions and focus on writing
     default-text-scale # Easily adjust the font size in all frames
@@ -99,6 +115,7 @@ emacsWithOverrides.emacsWithPackages (epkgs:
     noccur # Run multi-occur on project/dired files
     notmuch.emacs # Notmunch emacs library.
     nov # Featureful EPUB reader mode
+    orderless # Completion style for matching regexps in any order
     org # Outline-based notes management and organizer
     org-bullets # Show bullets in org-mode as UTF-8 characters
     org-clock-csv # Export `org-mode' clock entries to CSV format
@@ -120,6 +137,7 @@ emacsWithOverrides.emacsWithPackages (epkgs:
     resize-window # easily resize windows
     rg # A search tool based on ripgrep
     rotate # Rotate the layout of emacs
+    ruby-end # Automatic insertion of end blocks for Ruby
     rust-mode # A major-mode for editing Rust source code
     sage-shell-mode # A front-end for Sage Math
     scad-mode # A major mode for editing OpenSCAD code

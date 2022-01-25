@@ -43,14 +43,12 @@ buffer name, or symbols that match a major mode."
          (display-buffer-reuse-window
           display-buffer-reuse-mode-window
           display-buffer-at-bottom)
-         (reusable-frames . t)
          (window-height . 0.3))
 
         ;; Like above, but with a smaller size:
         (,(pjones:buffer-conditions
            '("Embark Collect \\(Live\\|Completions\\)"))
          (display-buffer-at-bottom)
-         (reusable-frames . t)
          (window-height . 0.1))
 
         ;; Buffers that are related to the current window and should
@@ -64,7 +62,6 @@ buffer name, or symbols that match a major mode."
          (display-buffer-reuse-window
           display-buffer-reuse-mode-window
           display-buffer-in-direction)
-         (reusable-frames . t)
          (direction . below)
          (window-height . 0.4))
 
@@ -80,7 +77,7 @@ buffer name, or symbols that match a major mode."
           display-buffer-reuse-mode-window
           display-buffer-pop-up-frame)
          (inhibit-switch-frame . t)
-         (reusable-frames . t)
+         (reusable-frames . visible)
          (pop-up-frame-parameters . ((unsplittable . t))))
 
         ;; Buffers that should take over the current window:

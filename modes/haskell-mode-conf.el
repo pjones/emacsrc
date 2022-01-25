@@ -11,7 +11,6 @@
 (eval-when-compile
   (require 'cl-lib))
 
-(require 'company)
 (require 'dash)
 (require 'eglot)
 (require 'haskell)
@@ -278,7 +277,6 @@ When prompting, use INITIAL as the initial module name."
 
   ;; Load helper packages:
   (unless pm/polymode
-    (setq-local eglot-stay-out-of '(company company-backends))
     (eglot-ensure)
     (pjones:prog-mode-hook)
     (subword-mode)

@@ -1,7 +1,6 @@
 ;;; message-conf.el --- composing mail and news messages
 ;;; Commentary:
 ;;; Code:
-(require 'company)
 (require 'message)
 (require 'mml)
 (require 'smtpmail)
