@@ -21,10 +21,6 @@ let
 
   # Package overrides:
   emacsWithOverrides = (emacsPackagesFor emacs).overrideScope' (self: super: {
-    connection = update super.connection sources.dictionary-el;
-    dictionary = update super.dictionary sources.dictionary-el;
-    link = update super.link sources.dictionary-el;
-
     corfu = update super.corfu "${inputs.corfu}/corfu.el";
 
     corfu-doc = super.elpaBuild {
@@ -39,16 +35,13 @@ let
       src = "${inputs.cape}/cape.el";
     };
 
-    # https://github.com/felko/neuron-mode/issues/76
-    neuron-mode = update super.neuron-mode sources.neuron-mode;
-
-    goto-chg = update super.goto-chg sources.goto-chg;
-    passmm = update super.passmm sources.passmm;
+    neuron-mode = update super.neuron-mode inputs.neuron-mode;
+    passmm = update super.passmm inputs.passmm;
 
     vterm =
       (update
         super.vterm
-        sources.emacs-libvterm).overrideAttrs (orig: {
+        inputs.vterm).overrideAttrs (orig: {
         postInstall = ''
           ln -s emacs-libvterm-src source
           ${orig.postInstall or ""}

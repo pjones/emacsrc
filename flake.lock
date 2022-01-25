@@ -71,6 +71,23 @@
         "type": "github"
       }
     },
+    "neuron-mode": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1611962192,
+        "narHash": "sha256-hQ7owkbfucrkpZy3NaIVQN9LjoBI0t8pczyenaOXVHc=",
+        "owner": "felko",
+        "repo": "neuron-mode",
+        "rev": "3f86d26fb2006e82c673a5bf122594820a4842d8",
+        "type": "github"
+      },
+      "original": {
+        "owner": "felko",
+        "ref": "v1.0",
+        "repo": "neuron-mode",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1642961095,
@@ -87,13 +104,48 @@
         "type": "github"
       }
     },
+    "passmm": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1610150904,
+        "narHash": "sha256-ZgkuSlQqrpBvJCyLESWmaRVJvdfdgK0rpID0aa6QVmQ=",
+        "owner": "pjones",
+        "repo": "passmm",
+        "rev": "d78d1bf4f397180d2256248df589f33aafb4c8b4",
+        "type": "github"
+      },
+      "original": {
+        "owner": "pjones",
+        "repo": "passmm",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "cape": "cape",
         "corfu": "corfu",
         "corfu-doc": "corfu-doc",
         "home-manager": "home-manager",
-        "nixpkgs": "nixpkgs"
+        "neuron-mode": "neuron-mode",
+        "nixpkgs": "nixpkgs",
+        "passmm": "passmm",
+        "vterm": "vterm"
+      }
+    },
+    "vterm": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1640506671,
+        "narHash": "sha256-uSzIDmRNk7u5VtCXYu+JVN7Gzkc65axCiK0Jq0X6MWQ=",
+        "owner": "akermu",
+        "repo": "emacs-libvterm",
+        "rev": "a940dd2ee8a82684860e320c0f6d5e15d31d916f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "akermu",
+        "repo": "emacs-libvterm",
+        "type": "github"
       }
     }
   },
