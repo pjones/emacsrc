@@ -1,0 +1,30 @@
+#! /usr/bin/env nix-shell
+#! nix-shell -i bash -p pandoc
+# shellcheck shell=bash
+
+################################################################################
+set -eu
+set -o pipefail
+
+################################################################################
+bin=$(realpath "$(dirname "$0")")
+
+################################################################################
+input_file=$1
+output_file=$(basename "$input_file" .org).pdf
+
+(
+  cd "$(dirname "$input_file")"
+
+  pandoc -f org -t markdown -s <"$(basename "$input_file")" |
+    "$bin/markdown-to-pdf" - \
+      --toc \
+      --standalone \
+      --number-sections \
+      --output="$output_file"
+)
+
+# Local Variables:
+#   mode: sh
+#   sh-shell: bash
+# End:

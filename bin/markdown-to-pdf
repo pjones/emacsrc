@@ -1,0 +1,38 @@
+#! /usr/bin/env nix-shell
+#! nix-shell -i bash -p pandoc texlive.combined.scheme-full gnome3.librsvg
+# shellcheck shell=bash
+
+function to_pdf() {
+  local path=$1
+  shift
+
+  local dir
+  local file
+  local pandoc_opts=()
+
+  if [ "$path" != "-" ]; then
+    dir=$(dirname "$path")
+    file=$(basename "$path")
+    pandoc_opts+=("--output=$file.pdf")
+  else
+    file=$path
+  fi
+
+  (
+    if [ -n "$dir" ]; then
+      cd "$dir" || exit
+    fi
+
+    pandoc \
+      -t latex \
+      "${pandoc_opts[@]}" \
+      "$@" "$file"
+  )
+}
+
+to_pdf "$@"
+
+# Local Variables:
+#   mode: sh
+#   sh-shell: bash
+# End:
