@@ -16,6 +16,7 @@
 (declare-function org-bookmark-jump-unhide "org")
 (declare-function org-clock-sum-current-item "org-clock")
 (declare-function org-clocking-p "org-clock")
+(declare-function org-tree-slide-mode "org-tree-slide")
 (declare-function whitespace-mode "whitespace")
 (defvar whitespace-style)
 (defvar org-clock-start-time)
@@ -408,6 +409,7 @@ existing item.  This version works on headings too."
 
 ;;; Key Bindings:
 (let ((map org-mode-map))
+  (define-key map (kbd "<f12>") #'org-tree-slide-mode)
   (define-key map (kbd "C-c C-0") #'pjones:org-hide-all)
   (define-key map (kbd "C-c C-1") #'pjones:org-hide-others)
   (define-key map (kbd "C-c C-x a") #'org-archive-subtree-default)
