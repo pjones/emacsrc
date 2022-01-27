@@ -54,7 +54,8 @@ With two \\[universal-argument] prefixes (i.e., when ARG is (16)),
 increase the indentation by one level."
   (interactive "p")
   (markdown-insert-list-item (or arg 0))
-  (pjones:open-line-above t))
+  (save-excursion
+    (pjones:open-line-above nil)))
 
 (defun pjones:markdown-insert-heading-or-item (reverse)
   "Insert a heading or item based on the current context.

@@ -17,6 +17,7 @@
 (declare-function org-clock-sum-current-item "org-clock")
 (declare-function org-clocking-p "org-clock")
 (declare-function org-tree-slide-mode "org-tree-slide")
+(declare-function pjones:open-line-above "../list/interactive")
 (declare-function whitespace-mode "whitespace")
 (defvar whitespace-style)
 (defvar org-clock-start-time)
@@ -414,9 +415,18 @@ existing item.  This version works on headings too."
       (insert (concat (make-string indent ? ) "- "))
       (when checkbox (insert "[ ] ")))))
 
+(defun pjones:org-open-line (arg)
+  "Open a line, the correct way.
+If ARG is non-nil then open below instead of above.  Like the original
+version, properly handles tables."
+  (interactive "P")
+  (if (org-at-table-p) (org-table-insert-row arg)
+    (pjones:open-line-above arg)))
+
 ;;; Key Bindings:
 (let ((map org-mode-map))
   (define-key map (kbd "<f12>") #'org-tree-slide-mode)
+  (define-key map (kbd "C-o") #'pjones:org-open-line)
   (define-key map (kbd "C-c C-0") #'pjones:org-hide-all)
   (define-key map (kbd "C-c C-1") #'pjones:org-hide-others)
   (define-key map (kbd "C-c C-x a") #'org-archive-subtree-default)

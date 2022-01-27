@@ -55,16 +55,18 @@ passed on to `kill-line'."
     (when oldname
       (dired-rename-file oldname newname nil))))
 
-(defun pjones:open-line-above (stay)
-  "Open a line above point and move there if STAY is nil."
+(defun pjones:open-line-above (below)
+  "Open a line above point and move there.
+If BELOW is non-nil, open a line below point instead."
   (interactive "P")
-  (let ((already-bol (bolp))
-        (loc (set-marker (make-marker) (point))))
-    (move-beginning-of-line nil)
-    (open-line 1)
-    (if stay (goto-char (marker-position loc))
-      (when (not already-bol)
-        (indent-according-to-mode)))))
+  (let ((already-bol (bolp)))
+    (if below (progn
+                (move-end-of-line nil)
+                (newline))
+      (move-beginning-of-line nil)
+      (open-line 1))
+    (when (not already-bol)
+      (indent-according-to-mode))))
 
 (defun pjones:start-mail ()
   "Start an instance of my mail client."
