@@ -57,12 +57,13 @@
  '(org-clock-mode-line-total 'current)
  '(org-show-context-detail (quote ((default . tree))))
  '(org-duration-format (quote h:mm))
+ '(org-hide-emphasis-markers t)
 
  ;; Behavior Settings:
  '(org-log-done 'time)
  '(org-reverse-note-order nil)
  '(org-list-empty-line-terminates-plain-lists nil)
- '(org-blank-before-new-entry (quote ((heading . nil) (plain-list-item . nil))))
+ '(org-blank-before-new-entry (quote ((heading . t) (plain-list-item . t))))
  '(org-tags-column 0)
  '(org-use-fast-todo-selection t)
  '(org-use-fast-tag-selection (quote auto))
@@ -393,6 +394,12 @@ ARG is the number of headings to move."
       (org-backward-heading-same-level arg)
     (outline-up-heading arg)))
 
+(defun pjones:org-insert-heading ()
+  "Insert a heading sanely."
+  (interactive)
+  (if (bolp) (org-insert-heading)
+    (org-insert-heading-after-current)))
+
 (defun pjones:org-insert-item (checkbox)
   "Insert a new item.
 If CHECKBOX is non-nil, add a checkbox too.
@@ -413,6 +420,7 @@ existing item.  This version works on headings too."
   (define-key map (kbd "C-c C-0") #'pjones:org-hide-all)
   (define-key map (kbd "C-c C-1") #'pjones:org-hide-others)
   (define-key map (kbd "C-c C-x a") #'org-archive-subtree-default)
+  (define-key map (kbd "C-<return>") #'pjones:org-insert-heading)
   (define-key map (kbd "M-<return>") #'pjones:org-insert-item)
   (define-key map (kbd "M-n") #'org-forward-heading-same-level)
   (define-key map (kbd "M-p") #'pjones:org-up-or-prev)
