@@ -64,6 +64,7 @@ current line.  Otherwise run the completion command.  ARG is passed to
 
 (custom-set-variables
  '(corfu-scroll-margin 5)
+ '(corfu-quit-no-match t)
  '(completion-styles '(orderless partial-completion))
  '(orderless-component-separator #'orderless-escapable-split-on-space)
  '(completion-category-defaults nil)
