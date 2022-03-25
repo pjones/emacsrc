@@ -18,6 +18,7 @@ If ARG is non-nil then perform a splice."
   ;; delimiters:
   (define-key map (kbd "DEL") nil)
   (define-key map (kbd "C-d") nil)
+  (define-key map (kbd "C-k") nil)
   (define-key map (kbd "C-w") nil)
   (define-key map (kbd "C-M-/") #'puni-split)
   (define-key map (kbd "C-M-k") #'pjones:puni-squeeze-splice)

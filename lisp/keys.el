@@ -123,6 +123,7 @@ If buffer NAME doesn't exist, COMMAND can be used to create it."
  [remap bookmark-jump] #'consult-bookmark
  [remap exchange-point-and-mark] #'pjones:exchange-point-and-mark
  [remap indent-for-tab-command] #'pjones:indent-or-complete
+ [remap kill-line] #'pjones:kill-line
  [remap kill-region] #'pjones:kill-region-or-backward-kill-word
  [remap list-buffers] #'ibuffer
  [remap open-line] #'pjones:open-line-above

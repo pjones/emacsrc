@@ -11,6 +11,11 @@
 (declare-function pjones:erc-bitlbee "../modes/erc-conf.el")
 (declare-function pjones:projectile-project-root "../modes/projectile-conf.el")
 
+(declare-function puni-kill-line "puni")
+(declare-function puni-kill-active-region "puni")
+
+(defvar puni-mode)
+
 (defun pjones:maybe-save-buffers-kill-terminal (&optional arg)
   "A function to save me from myself.
 I somehow keep hitting \\[kill-emacs] when I don't want to.
@@ -45,7 +50,11 @@ If point is at the end of a line, kill the entire line.  ARG is
 passed on to `kill-line'."
   (interactive "P")
   (if (or arg (not (looking-at-p "\\s-*$")))
-      (kill-line arg)
+      (if puni-mode
+          (progn
+            (puni-kill-line arg)
+            (indent-according-to-mode))
+        (kill-line arg))
     (kill-whole-line)))
 
 (defun pjones:rename-current-file (newname)
