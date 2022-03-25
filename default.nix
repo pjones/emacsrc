@@ -26,6 +26,7 @@ pkgs.stdenv.mkDerivation rec {
 
   buildInputs = [
     emacsAndPackages # Emacs!
+    pkgs.git # For Magit
     pkgs.imagemagick # For image-mode
   ] ++ lib.optionals pkgs.stdenv.isLinux [
     pkgs.netcat # For bin/e
