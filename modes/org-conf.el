@@ -59,6 +59,7 @@
  '(org-show-context-detail (quote ((default . tree))))
  '(org-duration-format (quote h:mm))
  '(org-hide-emphasis-markers t)
+ '(org-adapt-indentation t)
 
  ;; Behavior Settings:
  '(org-log-done 'time)
