@@ -64,7 +64,6 @@
  '(org-log-done 'time)
  '(org-reverse-note-order nil)
  '(org-list-empty-line-terminates-plain-lists nil)
- '(org-blank-before-new-entry (quote ((heading . t) (plain-list-item . t))))
  '(org-tags-column 0)
  '(org-use-fast-todo-selection t)
  '(org-use-fast-tag-selection (quote auto))
