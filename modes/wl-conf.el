@@ -285,7 +285,8 @@ Notably, ensures that `wl-draft-parent-folder' is set."
                                      (and ?\[
                                           (one-or-more digit)
                                           (one-or-more blank)))))
-          (kill-whole-line)))
+          (beginning-of-line)
+          (delete-region (point) (progn (forward-visible-line 1) (point)))))
       ;; Kill signatures that appear in the citation:
       (when (search-forward-regexp (rx line-start ?>
                                        (zero-or-more (or blank ?>))
@@ -307,7 +308,9 @@ Notably, ensures that `wl-draft-parent-folder' is set."
         (end (save-excursion
                (pjones:wl-draft-goto-signature)
                (point))))
-    (kill-region beg end)
+    (if (called-interactively-p 'interactive)
+        (kill-region beg end)
+      (delete-region beg end))
     (newline)))
 
 ;; FIXME: It looks like this gets called over and over as long as
