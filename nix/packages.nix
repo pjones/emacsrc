@@ -76,6 +76,7 @@ emacsWithOverrides.emacsWithPackages (epkgs:
     eldoc # Show function arglist or variable docstring in echo area
     elm-mode # Elm mode for emacs
     embark # Conveniently act on minibuffer completions
+    embark-consult # Consult integration for Embark
     envrc # Support for `direnv' that operates buffer-locally
     erc-hl-nicks # ERC nick highlighter that ignores uniquifying chars when colorizing
     flycheck # On-the-fly syntax checking
