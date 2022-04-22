@@ -95,7 +95,7 @@
 
  '(wl-biff-check-interval 120)
  '(wl-biff-notify-hook nil)
- '(wl-biff-new-mail-hook (list #'pjones:wl-biff-notify))
+ '(wl-biff-new-mail-hook nil)
 
  '(elmo-message-fetch-confirm nil)
  '(wl-summary-width nil)
@@ -310,6 +310,8 @@ Notably, ensures that `wl-draft-parent-folder' is set."
     (kill-region beg end)
     (newline)))
 
+;; FIXME: It looks like this gets called over and over as long as
+;; there is a new message, not just when a new message arrives.
 (defun pjones:wl-biff-notify (new-mails)
   "Sent new mail notification.
 NEW-MAILS is the number of new mail messages."
