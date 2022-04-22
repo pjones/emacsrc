@@ -18,6 +18,7 @@
 ;;; Code:
 
 (require 'auth-source)
+(require 'dash)
 (require 'notifications)
 (require 'org) ; For faces.
 (require 'signature)
@@ -86,6 +87,7 @@
 
  '(wl-draft-config-alist
    '(((string-match "pmade\\.com" wl-draft-parent-folder)
+      ("From" . (pjones:wl-generate-from-addr))
       (wl-smtp-posting-server . "mail.pmade.com")
       (wl-smtp-posting-user . (pjones:wl-get-user wl-smtp-posting-server))
       (wl-smtp-posting-port . 465)
@@ -312,6 +314,15 @@ Notably, ensures that `wl-draft-parent-folder' is set."
         (kill-region beg end)
       (delete-region beg end))
     (newline)))
+
+(defun pjones:wl-generate-from-addr ()
+  "Return a valid From address for the current mail buffer."
+  (let ((addrs (if wl-draft-reply-buffer
+                   (with-current-buffer wl-draft-reply-buffer
+                     (elmo-multiple-fields-body-list '("To" "Cc")))
+                 (list wl-from))))
+    (or (car (-filter #'wl-address-user-mail-address-p addrs))
+        wl-from)))
 
 ;; FIXME: It looks like this gets called over and over as long as
 ;; there is a new message, not just when a new message arrives.
