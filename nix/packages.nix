@@ -1,7 +1,6 @@
 { lib
 , emacs
 , emacsPackagesFor
-, notmuch
 , inputs
 }:
 let
@@ -106,7 +105,6 @@ emacsWithOverrides.emacsWithPackages (epkgs:
     nix-mode # Major mode for editing .nix files
     no-littering # help keeping ~/.emacs.d clean
     noccur # Run multi-occur on project/dired files
-    notmuch.emacs # Notmunch emacs library.
     nov # Featureful EPUB reader mode
     orderless # Completion style for matching regexps in any order
     org # Outline-based notes management and organizer

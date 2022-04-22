@@ -77,12 +77,6 @@ If BELOW is non-nil, open a line below point instead."
     (when (not already-bol)
       (indent-according-to-mode))))
 
-(defun pjones:start-mail ()
-  "Start an instance of my mail client."
-  (interactive)
-  (require 'notmuch)
-  (notmuch))
-
 (defun pjones:start-irc (&optional local-only)
   "Start IRC clients.
 

@@ -344,49 +344,6 @@ PARAMS is a property list of parameters:
         (insert "|\n"))
       (org-table-align)))
 
-;;; notmuch integration:
-(defvar notmuch-show-thread-id)
-(declare-function notmuch-search "notmuch")
-(declare-function notmuch-search-find-thread-id "notmuch")
-(declare-function notmuch-show-get-message-id "notmuch")
-
-(defun pjones:org-notmuch-follow (id)
-  "Go to mail message ID in `notmuch'."
-  (require 'notmuch)
-  (notmuch-search (concat "id:" id)))
-
-(defun pjones:org-notmuch-export (link description format)
-  "Export a notmuch link.
-See `org-link-parameters' for details about LINK, DESCRIPTION and
-FORMAT."
-  ;; FIXME: For now, don't export anything.
-  ;; Maybe get the subject of the email and export that?
-  nil)
-
-(defun pjones:org-notmuch-store ()
-  "Store the current notmuch message as a link."
-  (require 'notmuch)
-  (when-let* ((query
-               (cond
-                ((eq major-mode 'notmuch-search-mode)
-                 (notmuch-search-find-thread-id))
-                ((eq major-mode 'notmuch-show-mode)
-                 (notmuch-show-get-message-id))
-                ((eq major-mode 'notmuch-tree-mode)
-                 notmuch-show-thread-id)))
-              (link (s-replace-regexp "^id:" "notmuch:" query)))
-    (org-link-store-props
-     :type "notmuch"
-     :link link
-     :description (concat "notmuch message ID `" link "'"))
-    (kill-new link)))
-
-(org-link-set-parameters
- "notmuch"
- :follow #'pjones:org-notmuch-follow
- :export #'pjones:org-notmuch-export
- :store #'pjones:org-notmuch-store)
-
 (defun pjones:org-up-or-prev (&optional arg)
   "Move to the parent, or previous sibling.
 ARG is the number of headings to move."

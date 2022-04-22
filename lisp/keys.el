@@ -62,7 +62,6 @@ If buffer NAME doesn't exist, COMMAND can be used to create it."
  (kbd "C-c m") #'magit-status
  (kbd "C-c M-W") #'pjones:kill-directory-name
  (kbd "C-c M-w") #'pjones:kill-file-name
- (kbd "C-c n") #'pjones:start-mail
  (kbd "C-c p g") #'pjones:pwgen
  (kbd "C-c p l") #'passmm-list-passwords
  (kbd "C-c p p") #'passmm-completing-read
