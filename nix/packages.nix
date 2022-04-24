@@ -64,7 +64,6 @@ emacsWithOverrides.emacsWithPackages (epkgs:
     csv-mode # Major mode for editing comma/char separated values
     darkroom # Remove visual distractions and focus on writing
     default-text-scale # Easily adjust the font size in all frames
-    dictionary # Client for rfc2229 dictionary servers
     diff-hl # Highlight uncommitted changes using VC
     dired-filter # Ibuffer-like filtering for dired
     dired-narrow # Live-narrowing of search results for dired
