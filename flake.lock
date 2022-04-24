@@ -37,11 +37,11 @@
     "corfu-doc": {
       "flake": false,
       "locked": {
-        "lastModified": 1642262445,
-        "narHash": "sha256-pp4Gq1vmAMLc88AaltAxjmrNTXYW6nFVA8mnOw0kJEQ=",
+        "lastModified": 1650325664,
+        "narHash": "sha256-PRly3n1K/titw//3OwdNiLfG1hkVPvrdFcJLMEbtbDE=",
         "owner": "galeo",
         "repo": "corfu-doc",
-        "rev": "f030d5817606602cdfdacb669c6d73f92f7b9b04",
+        "rev": "c14d42e5e2107c1d3f51e88c7d42d0bd3b247b39",
         "type": "github"
       },
       "original": {
@@ -57,16 +57,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1642653493,
-        "narHash": "sha256-22mGPjiHUo2Jmze4IjXCJLjeK2mbvvCztHmUyUMr4yw=",
+        "lastModified": 1650784624,
+        "narHash": "sha256-RTYGFBlxEmhhLLH9UfObyz2d4alhCSf6NQpyID7Mqvg=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "28b9ae40c45c5e7711c353fee1b7af734e293979",
+        "rev": "65a32578d9b1394bea5c6336721ec392aadc89fb",
         "type": "github"
       },
       "original": {
         "owner": "nix-community",
-        "ref": "release-21.11",
+        "ref": "master",
         "repo": "home-manager",
         "type": "github"
       }
@@ -90,16 +90,16 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1647992509,
-        "narHash": "sha256-AG40Nt5OWz0LBs5p457emOuwLKOvTtcv/2fUdnEN3Ws=",
+        "lastModified": 1650701402,
+        "narHash": "sha256-XKfstdtqDg+O+gNBx1yGVKWIhLgfEDg/e2lvJSsp9vU=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "d2caa9377539e3b5ff1272ac3aa2d15f3081069f",
+        "rev": "bc41b01dd7a9fdffd32d9b03806798797532a5fe",
         "type": "github"
       },
       "original": {
         "owner": "NixOS",
-        "ref": "nixos-21.11",
+        "ref": "nixos-unstable",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -135,11 +135,11 @@
     "vterm": {
       "flake": false,
       "locked": {
-        "lastModified": 1640506671,
-        "narHash": "sha256-uSzIDmRNk7u5VtCXYu+JVN7Gzkc65axCiK0Jq0X6MWQ=",
+        "lastModified": 1650555337,
+        "narHash": "sha256-sl9cFSpAZ5d8MFaR5XTzLl4k++YIK6r7iU+sB6OMMsg=",
         "owner": "akermu",
         "repo": "emacs-libvterm",
-        "rev": "a940dd2ee8a82684860e320c0f6d5e15d31d916f",
+        "rev": "8d7c8c593f528646bd3304e64f4ec47d52c40aec",
         "type": "github"
       },
       "original": {
