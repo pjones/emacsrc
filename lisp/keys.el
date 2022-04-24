@@ -47,6 +47,7 @@ If buffer NAME doesn't exist, COMMAND can be used to create it."
   "Key bindings for neuron-mode.")
 
 (pjones:global-set-keys
+ (kbd "C-c ?") #'which-key-show-top-level
  (kbd "C-c a") (pjones:jump-to-buffer "*Org Agenda*" pjones:agenda)
  (kbd "C-c b") #'eldoc-doc-buffer
  (kbd "C-c C") #'full-calc
