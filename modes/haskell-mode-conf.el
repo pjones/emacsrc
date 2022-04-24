@@ -25,7 +25,6 @@
 (require 'yasnippet)
 
 (declare-function pjones:prog-mode-hook "../lisp/code.el")
-(defvar pm/polymode)
 (defvar haskell-navigate-imports-start-point)
 
 ;; Settings for haskell-mode and friends:
@@ -276,12 +275,11 @@ When prompting, use INITIAL as the initial module name."
   (setq-local indent-line-function #'indent-relative)
 
   ;; Load helper packages:
-  (unless pm/polymode
-    (eglot-ensure)
-    (pjones:prog-mode-hook)
-    (subword-mode)
-    (if (fboundp 'flycheck-mode)
-        (flycheck-mode -1)))
+  (eglot-ensure)
+  (pjones:prog-mode-hook)
+  (subword-mode)
+  (if (fboundp 'flycheck-mode)
+      (flycheck-mode -1))
 
   ;; Pretty symbols:
   ;; https://gist.github.com/m-renaud/2c085d453b1263f1a6ed52d0c90688de

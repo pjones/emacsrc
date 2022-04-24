@@ -118,9 +118,6 @@ emacsWithOverrides.emacsWithPackages (epkgs:
     passmm # A minor mode for pass (Password Store).
     password-store # Password store (pass) support
     pdf-tools # Support library for PDF documents
-    poly-erb # Polymode for erb
-    poly-markdown # Polymode for markdown-mode
-    polymode # Extensible framework for multiple major modes
     prescient # Better sorting and filtering
     project # Operations on the current project
     projectile # Manage and navigate projects in Emacs easily
