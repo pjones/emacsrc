@@ -109,6 +109,7 @@ emacsWithOverrides.emacsWithPackages (epkgs:
     nov # Featureful EPUB reader mode
     orderless # Completion style for matching regexps in any order
     org # Outline-based notes management and organizer
+    org-appear # Make invisible parts of Org elements appear visible.
     org-bullets # Show bullets in org-mode as UTF-8 characters
     org-clock-csv # Export `org-mode' clock entries to CSV format
     org-tree-slide # A presentation tool for org-mode

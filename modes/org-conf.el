@@ -7,6 +7,7 @@
 (require 'dash)
 (require 'org)
 (require 'org-agenda)
+(require 'org-appear)
 (require 'org-bullets)
 (require 'org-capture)
 (require 's)
@@ -60,6 +61,10 @@
  '(org-duration-format (quote h:mm))
  '(org-hide-emphasis-markers t)
  '(org-adapt-indentation t)
+ '(org-appear-autolinks t)
+ '(org-appear-autosubmarkers t)
+ '(org-appear-autoentities t)
+ '(org-appear-autokeywords t)
 
  ;; Behavior Settings:
  '(org-log-done 'time)
@@ -395,6 +400,7 @@ version, properly handles tables."
   (define-key map (kbd "M-N") #'org-move-subtree-down))
 
 ;;; Hooks
+(add-hook 'org-mode-hook #'org-appear-mode)
 (add-hook 'org-mode-hook #'org-bullets-mode)
 
 (let ((hooks
