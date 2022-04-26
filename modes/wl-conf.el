@@ -336,8 +336,23 @@ NEW-MAILS is the number of new mail messages."
    :app-name "Wanderlust"
    :app-icon "internet-mail"))
 
+(defvar pjones:wl-folder-window-configuration nil
+  "Window configuration of the folder buffer.")
+
+(defun pjones:wl-folder-save-window-configuration nil
+  "Save the current window configuration."
+  (setq pjones:wl-folder-window-configuration
+        (current-window-configuration))
+  (delete-other-windows))
+
+(defun pjones:wl-folder-restore-window-configuration nil
+  "Restore the folder buffer window configuration."
+  (if pjones:wl-folder-window-configuration
+      (set-window-configuration pjones:wl-folder-window-configuration)))
+
 (defun pjones:wl-folder-hook ()
   "Customize the Wanderlust folder mode."
+  (hl-line-mode)
   (local-set-key (kbd "g") #'wl-folder-check-current-entity)
   (local-set-key (kbd "j") #'wl-folder-goto-folder)
   (local-set-key (kbd "w") #'pjones:wl-draft))
@@ -370,7 +385,9 @@ NEW-MAILS is the number of new mail messages."
 (add-hook 'wl-mail-setup-hook #'pjones:wl-draft-prepare-reply)
 (add-hook 'wl-mail-setup-hook #'wl-draft-config-exec)
 (add-hook 'wl-message-buffer-created-hook #'pjones:wl-message-hook)
+(add-hook 'wl-summary-exit-hook #'pjones:wl-folder-restore-window-configuration)
 (add-hook 'wl-summary-prepared-hook #'pjones:wl-summary-hook)
+(add-hook 'wl-summary-prepared-pre-hook #'pjones:wl-folder-save-window-configuration)
 (remove-hook 'wl-draft-send-hook #'wl-draft-config-exec)
 
 ;;; wl-conf.el ends here
