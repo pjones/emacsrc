@@ -3,6 +3,7 @@
 ;;; Commentary:
 ;;
 ;;; Code:
+(require 'forge)
 (require 'git-rebase)
 (require 'magit)
 (require 'with-editor)
@@ -25,6 +26,13 @@
    '(([unpushed status] . show)))
  '(magit-repository-directories
    (pjones:magit-repository-directories)))
+
+;; Custom forges (GitLab, Enterprise GitHub, etc.):
+(add-to-list 'forge-alist
+             '("code.rfa.sc.gov"
+               "code.rfa.sc.gov/api/v4"
+               "code.rfa.sc.gov"
+               forge-gitlab-repository))
 
 (defun pjones:git-branch-prefix ()
   "Attempt to extract the current branch prefix."
