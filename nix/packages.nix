@@ -101,7 +101,7 @@ emacsWithOverrides.emacsWithPackages (epkgs:
     magit-annex # Control git-annex from Magit
     marginalia # Enrich existing commands with completion annotations
     markdown-mode # Major mode for Markdown-formatted text
-    mood-line # A minimal mode-line inspired by doom-modeline
+    minions # A minor-mode menu for the mode line
     neuron-mode # Major mode for editing zettelkasten notes using neuron
     nix-mode # Major mode for editing .nix files
     no-littering # help keeping ~/.emacs.d clean

@@ -139,7 +139,7 @@
  '(wl-highlight-message-important-header-contents ((t (:inherit org-todo))))
  '(wl-highlight-message-important-header-contents2 ((t (:inherit org-headline-todo))))
  '(wl-highlight-message-signature ((t (:inherit org-cite))))
- '(wl-highlight-message-unimportant-header-contents ((t (:inherit mood-line-unimportant))))
+ '(wl-highlight-message-unimportant-header-contents ((t (:inherit shadow))))
  '(wl-highlight-summary-answered-face ((t (:inherit org-headline-done))))
  '(wl-highlight-summary-copied-face ((t (:inherit default))))
  '(wl-highlight-summary-deleted-face ((t (:inherit mode-line-inactive :strike-through t))))

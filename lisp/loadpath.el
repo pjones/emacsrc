@@ -14,22 +14,30 @@
   "The directory where I store my general Emacs configuration files.")
 
 (defvar pjones:lisp-files
-  '( "buffers"
+  '("options"
      "modes"
      "server"
-     "themes"
      "code"
-     "options"
      "automode"
      "functions"
-     "interactive"
-     "completion"
-     "keys"
-     "suspend"
-    )
+     "suspend")
   "A list of my config files to load in the correct order.")
 
-(defun pjones:load-configuration-files ()
-  "Load all of my lisp configuration files."
-  (dolist (file pjones:lisp-files)
-    (load (concat pjones:lisp-dir file))))
+(defvar pjones:interactive-lisp-files
+  '("buffers"
+    "ui"
+    "interactive"
+    "completion"
+    "keys")
+  "Lisp files that should be loaded in non-batch Emacs.")
+
+(defun pjones:load-configuration-files (&optional files)
+  "Load all of my Lisp configuration files.
+If FILES is non-nil, load files from that list instead."
+  (dolist (file (or files pjones:lisp-files))
+    (load (concat pjones:lisp-dir file)))
+  ;; Load "interactive" files too:
+  (when (and (null files) (not noninteractive))
+    (pjones:load-configuration-files pjones:interactive-lisp-files)))
+
+;;; loadpath.el ends here
