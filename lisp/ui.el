@@ -157,8 +157,8 @@ The mode construct list is then returned."
 
 (defun pjones:mode-line-buffer ()
   "Return a `mode-line-format' component for the buffer name."
-  `(:propertize mode-line-buffer-identification 'face
-              ,(if (or (derived-mode-p 'comint-mode)
+  (propertize "%b" 'face
+              (if (or (derived-mode-p 'comint-mode)
                       (memq major-mode '(vterm-mode
                                          lisp-interaction-mode
                                          org-agenda-mode))
@@ -168,10 +168,12 @@ The mode construct list is then returned."
 
 ;; Mode line format:
 (setq-default
+ mode-line-buffer-identification nil
+
  mode-line-format
  '(" "
    ;; Buffer name, colored when modified:
-   (:eval (pjones:mode-line-buffer)) " "
+   (:eval (or mode-line-buffer-identification (pjones:mode-line-buffer))) " "
    ;; Buffer position and size:
    mode-line-position
    (:eval (pjones:mode-line-align-right
