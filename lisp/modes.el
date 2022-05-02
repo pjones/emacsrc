@@ -27,6 +27,15 @@
       (eval-after-load (intern (replace-match "" t t basename))
         `(load ,file)))))
 
+(defun pjones:basic-mode-hook ()
+  "Minor modes to enable for most major modes."
+  (font-lock-mode)
+  (auto-fill-mode)
+  (flyspell-mode)
+  (line-number-mode)
+  (column-number-mode)
+  (size-indication-mode))
+
 (defun pjones:boot-global-modes ()
   "Start or prepare global modes."
   (default-text-scale-mode)          ; Frame text scaling.
@@ -54,11 +63,10 @@
 
   (add-hook 'text-mode-hook #'abbrev-mode))
 
-(defvar pjones:first-server-frame-initialized nil
-  "Non-nil when the first frame has been configured.")
-
 ;; Hook in:
 (unless noninteractive
-  (add-hook 'emacs-startup-hook #'pjones:boot-global-modes))
+  (add-hook 'prog-mode-hook #'pjones:basic-mode-hook)
+  (add-hook 'text-mode-hook #'pjones:basic-mode-hook)
+  (add-hook 'after-init-hook #'pjones:boot-global-modes))
 
 ;;; modes.el ends here
