@@ -16,7 +16,7 @@
 
 ;; Basic settings.
 (custom-set-variables
- '(markdown-header-scaling nil) ; See lisp/themes.el
+ '(markdown-header-scaling nil)
  '(markdown-reference-location 'end)
  '(markdown-asymmetric-header t)
  '(markdown-hide-urls t)
