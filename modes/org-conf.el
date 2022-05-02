@@ -388,6 +388,7 @@ version, properly handles tables."
 ;;; Key Bindings:
 (let ((map org-mode-map))
   (define-key map (kbd "<f12>") #'org-tree-slide-mode)
+  (define-key map (kbd "C-'") nil)
   (define-key map (kbd "C-o") #'pjones:org-open-line)
   (define-key map (kbd "C-c C-0") #'pjones:org-hide-all)
   (define-key map (kbd "C-c C-1") #'pjones:org-hide-others)
