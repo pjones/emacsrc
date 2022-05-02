@@ -80,6 +80,7 @@ emacsWithOverrides.emacsWithPackages (epkgs:
     envrc # Support for `direnv' that operates buffer-locally
     erc-hl-nicks # ERC nick highlighter that ignores uniquifying chars when colorizing
     flycheck # On-the-fly syntax checking
+    flycheck-indicator # A fancy mode line indicator for `flycheck-mode'
     flycheck-rust # Rust additions and Cargo support
     flyspell-correct # Correcting words with flyspell via custom interface
     flyspell-correct-avy-menu # Correcting words with flyspell via avy-menu interface
