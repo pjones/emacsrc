@@ -70,12 +70,15 @@ If buffer NAME doesn't exist, COMMAND can be used to create it."
  (kbd "C-c r") #'revert-buffer
  (kbd "C-c s") #'pjones:sort-lines
  (kbd "C-c t") #'pjones:open-temp-buffer
- (kbd "C-c w /") #'winner-undo
- (kbd "C-c w R") #'resize-window
- (kbd "C-c w r") #'rotate-layout
- (kbd "C-c w s") #'ace-swap-window
- (kbd "C-c w S") #'window-toggle-side-windows
- (kbd "C-c w u") #'winner-undo
+
+ ;; Additional window commands:
+ (kbd "C-x w /") #'winner-undo
+ (kbd "C-x w d") #'ace-delete-window
+ (kbd "C-x w R") #'resize-window
+ (kbd "C-x w r") #'rotate-layout
+ (kbd "C-x w s") #'ace-swap-window
+ (kbd "C-x w S") #'window-toggle-side-windows
+ (kbd "C-x w u") #'winner-undo
 
  ;; Additional searching/grepping bindings:
  (kbd "M-s d") #'rg
