@@ -54,31 +54,22 @@ buffer name, or symbols that match a major mode."
         ;; Buffers that are related to the current window and should
         ;; split it, opening a new window below the current window:
         (,(pjones:buffer-conditions
-           '(grep-mode
-             rg-mode
+           '("\\*HTTP Response.*"
              "\\*magit-.*popup"
              "\\*Occur\\*"
-             "\\*transient"))
+             "\\*transient"
+             comint-mode
+             compilation-mode
+             grep-mode
+             haskell-interactive-mode
+             inferior-python-mode
+             rg-mode
+             shell-mode))
          (display-buffer-reuse-window
           display-buffer-reuse-mode-window
           display-buffer-in-direction)
          (direction . below)
          (window-height . 0.4))
-
-        ;; Buffers that should create a new frame:
-        (,(pjones:buffer-conditions
-           '(comint-mode
-             compilation-mode
-             haskell-interactive-mode
-             inferior-python-mode
-             shell-mode
-             "\\*HTTP Response.*"))
-         (display-buffer-reuse-window
-          display-buffer-reuse-mode-window
-          display-buffer-pop-up-frame)
-         (inhibit-switch-frame . t)
-         (reusable-frames . visible)
-         (pop-up-frame-parameters . ((unsplittable . t))))
 
         ;; Buffers that should take over the current window:
         (,(pjones:buffer-conditions

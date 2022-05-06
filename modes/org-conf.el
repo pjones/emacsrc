@@ -56,6 +56,8 @@
  ;; Visual Settings:
  '(org-hide-leading-stars t)
  '(org-clock-clocked-in-display (quote both))
+ '(org-clock-clocked-in-display 'frame-title)
+ '(org-clock-frame-title-format (list '(t org-mode-line-string) " " frame-title-format))
  '(org-clock-mode-line-total 'current)
  '(org-show-context-detail (quote ((default . tree))))
  '(org-duration-format (quote h:mm))
@@ -71,7 +73,7 @@
  '(org-reverse-note-order nil)
  '(org-list-empty-line-terminates-plain-lists nil)
  '(org-tags-column 0)
- '(org-use-fast-todo-selection t)
+ '(org-use-fast-todo-selection 'expert)
  '(org-use-fast-tag-selection (quote auto))
  '(org-fast-tag-selection-single-key nil)
  '(org-special-ctrl-a/e t)

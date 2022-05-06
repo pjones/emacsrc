@@ -342,8 +342,7 @@ NEW-MAILS is the number of new mail messages."
 (defun pjones:wl-folder-save-window-configuration nil
   "Save the current window configuration."
   (setq pjones:wl-folder-window-configuration
-        (current-window-configuration))
-  (delete-other-windows))
+        (current-window-configuration)))
 
 (defun pjones:wl-folder-restore-window-configuration nil
   "Restore the folder buffer window configuration."
