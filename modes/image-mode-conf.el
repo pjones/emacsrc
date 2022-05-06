@@ -5,7 +5,6 @@
 ;;; Code:
 (require 'image-mode)
 (require 'cl-macs)
-(require 'eimp)
 
 (defvar-local image-dimensions-minor-mode-dimensions nil
   "Buffer-local image dimensions for `image-dimensions-minor-mode'")
@@ -24,3 +23,5 @@
 
 (add-hook 'image-mode-hook 'image-dimensions-minor-mode)
 (add-hook 'image-mode-hook 'eimp-mode)
+
+;;; image-mode-conf.el ends here

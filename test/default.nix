@@ -1,3 +1,7 @@
+# nix flake check --print-build-logs
+#
+# nix build .\#checks.x86_64-linux.emacsrc.driverInteractive
+# ./result/bin/nixos-test-driver
 { pkgs
 , home-manager
 , module
@@ -58,9 +62,9 @@ pkgs.nixosTest {
       emacsrc.wait_until_tty_matches(1, "pjones@emacsrc:")
 
       # Run the tests:
-      emacsrc.send_chars("clear && emacsrc-test-runner.sh\n")
+      emacsrc.send_chars("emacsrc-test-runner.sh\n")
       emacsrc.succeed("sleep 1")  # Wait for script to start.
-      emacsrc.wait_until_tty_matches(1, "pjones@emacsrc:")
+      emacsrc.wait_until_fails("pgrep --uid pjones -f emacsrc-test-runner")
       print(emacsrc.succeed("cat ${home}/log"))
       emacsrc.succeed("test -e ${home}/PASSED")
     '';

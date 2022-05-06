@@ -4,7 +4,7 @@ set -eu
 set -o pipefail
 
 # Send all output to a file:
-exec >"$HOME/log" 2>&1
+exec &> >(tee -a "$HOME/log") 2>&1
 set -x
 
 # Initial assertions:
@@ -12,7 +12,7 @@ test -e ~/.config/emacs/init.el
 test -n "${XDG_RUNTIME_DIR}"
 
 # Start an Emacs daemon so we can connect to it:
-emacs --daemon=test
+emacs --bg-daemon=test </dev/null
 test -S "$XDG_RUNTIME_DIR/emacs/test"
 
 # Verify that the `e' script can connect to the daemon:
@@ -26,6 +26,9 @@ cat <<EOF >"$custom_file"
 (custom-set-variables
  '(sh-basic-offset 100))
 EOF
+
+# Kill the daemon process:
+e -ds test -- --eval '(kill-emacs)'
 
 # Run the tests:
 tests=$(realpath "$(dirname "$0")/../share/assertions.el")
