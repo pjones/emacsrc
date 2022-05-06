@@ -34,9 +34,6 @@
  '(markdown-header-face-5 ((t (:inherit org-level-5))))
  '(markdown-header-face-6 ((t (:inherit org-level-6)))))
 
-;; Help electric-pair-mode use back quotes:
-(modify-syntax-entry ?` "\"" markdown-mode-syntax-table)
-
 (defvar pjones:markdown-attachments-directory
   "attachments"
   "Name of the directory used to hold git-annex files.")
