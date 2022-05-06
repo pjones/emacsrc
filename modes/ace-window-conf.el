@@ -8,7 +8,6 @@
 
 (custom-set-variables
  '(aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l))
- '(aw-scope 'frame)
- '(aw-ignore-current t))
+ '(aw-scope 'frame))
 
 ;;; ace-window-conf.el ends here
