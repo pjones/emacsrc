@@ -172,6 +172,10 @@ The mode construct list is then returned."
 
  mode-line-format
  '(" "
+   ;; Show window numbers if there are enough windows:
+   (:eval (if (and (fboundp 'winum--get-window-vector)
+                             (> (length (winum--get-window-vector)) 2))
+                        (format winum-format (winum-get-number-string))))
    ;; Buffer name, colored when modified:
    (:eval (or mode-line-buffer-identification (pjones:mode-line-buffer))) " "
    ;; Buffer position and size:
@@ -181,12 +185,7 @@ The mode construct list is then returned."
              ;; Misc (and global) mode info:
              mode-line-misc-info
              ;; Major and minor modes:
-             mode-line-modes
-             ;; Show window numbers if there are enough windows:
-             (:eval (if (and (fboundp 'winum--get-window-vector)
-                             (> (length (winum--get-window-vector)) 2))
-                        (format winum-format (winum-get-number-string))))
-             " ")))))
+             mode-line-modes " ")))))
 
 ;; Hooks:
 (add-hook 'after-init-hook
