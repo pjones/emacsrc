@@ -33,48 +33,58 @@ buffer name, or symbols that match a major mode."
                    (string-match condition name))))
         ,names-or-modes))))
 
-(setq display-buffer-alist
-      `(;; Windows that should split the entire frame:
-        (,(pjones:buffer-conditions
-           '("\\*Backtrace\\*"
-             "\\*Completions\\*"
-             "\\*Deletions\\*"
-             calendar-mode))
-         (display-buffer-reuse-window
-          display-buffer-reuse-mode-window
-          display-buffer-at-bottom)
-         (window-height . 0.3))
+(custom-set-variables
+ ;; Default action if `display-buffer-alist' doesn't select an action:
+ '(display-buffer-base-action
+   '((display-buffer-reuse-window
+      display-buffer-reuse-mode-window
+      display-buffer-pop-up-window)) . nil)
 
-        ;; Like above, but with a smaller size:
-        (,(pjones:buffer-conditions
-           '("Embark Collect \\(Live\\|Completions\\)"))
-         (display-buffer-at-bottom)
-         (window-height . 0.1))
+ ;; Select a window for a buffer to be shown in:
+ '(display-buffer-alist
+   `(;; Windows that should split the entire frame:
+     (,(pjones:buffer-conditions
+        '("\\*Backtrace\\*"
+          "\\*Completions\\*"
+          "\\*Deletions\\*"
+          calendar-mode))
+      (display-buffer-reuse-window
+       display-buffer-reuse-mode-window
+       display-buffer-at-bottom)
+      (window-height . 0.3))
 
-        ;; Buffers that are related to the current window and should
-        ;; split it, opening a new window below the current window:
-        (,(pjones:buffer-conditions
-           '("\\*HTTP Response.*"
-             "\\*magit-.*popup"
-             "\\*Occur\\*"
-             "\\*transient"
-             comint-mode
-             compilation-mode
-             grep-mode
-             haskell-interactive-mode
-             inferior-python-mode
-             rg-mode
-             shell-mode))
-         (display-buffer-reuse-window
-          display-buffer-reuse-mode-window
-          display-buffer-in-direction)
-         (direction . below)
-         (window-height . 0.4))
+     ;; Like above, but with a smaller size:
+     (,(pjones:buffer-conditions
+        '("Embark Collect \\(Live\\|Completions\\)"))
+      (display-buffer-at-bottom)
+      (window-height . 0.1))
 
-        ;; Buffers that should take over the current window:
-        (,(pjones:buffer-conditions
-           '("\\*Org Agenda\\*"
-             Man-mode))
-         (display-buffer-same-window))))
+     ;; Buffers that are related to the current window and should
+     ;; split it, opening a new window below the current window:
+     (,(pjones:buffer-conditions
+        '("\\*HTTP Response.*"
+          "\\*magit-.*popup"
+          "\\*Occur\\*"
+          "\\*transient"
+          comint-mode
+          compilation-mode
+          grep-mode
+          haskell-interactive-mode
+          help-mode
+          inferior-python-mode
+          rg-mode
+          shell-mode))
+      (display-buffer-reuse-window
+       display-buffer-reuse-mode-window
+       display-buffer-in-direction)
+      (direction . below)
+      (window-height . 0.4))
+
+     ;; Buffers that should take over the current window:
+     (,(pjones:buffer-conditions
+        '("\\*Org Agenda\\*"
+          Man-mode
+          magit-status-mode))
+      (display-buffer-same-window)))))
 
 ;;; buffers.el ends here
