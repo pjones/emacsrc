@@ -28,6 +28,11 @@
  '(mouse-yank-at-point t)
  '(prettify-symbols-unprettify-at-point 'right-edge)
  '(show-paren-when-point-inside-paren t)
+ '(tab-bar-close-button-show nil)
+ '(tab-bar-new-button-show nil)
+ '(tab-bar-new-tab-choice nil) ; Duplicate the current tab
+ '(tab-bar-show nil) ; Only show the tab bar on request.
+ '(tab-bar-tab-hints t)
  '(truncate-partial-width-windows nil)
  '(uniquify-buffer-name-style 'post-forward-angle-brackets)
  '(visible-bell nil)
