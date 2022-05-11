@@ -37,6 +37,13 @@ let
     neuron-mode = update super.neuron-mode inputs.neuron-mode;
     passmm = update super.passmm inputs.passmm;
 
+    # Work around:
+    #   - https://github.com/NixOS/nixpkgs/issues/172178
+    #   - https://github.com/vedang/pdf-tools/issues/102
+    pdf-tools = super.pdf-tools.overrideAttrs (orig: {
+      CXXFLAGS = "-std=c++17";
+    });
+
     vterm =
       (update
         super.vterm
