@@ -27,7 +27,7 @@ if test -n "${DISPLAY:-}" &&
   wmctrl -d &>/dev/null; then
   EMACS_SOCKET_NAME=$(
     wmctrl -d |
-      awk '$2 == "*" { print $9 }'
+      awk '$2 == "*" { print $10 }'
   )
 fi
 
@@ -66,6 +66,10 @@ alive() {
 }
 
 ################################################################################
+if [ $# -eq 0 ]; then
+  set -- -c
+fi
+
 while getopts "cdfhns:tw" o; do
   case "${o}" in
   c)
