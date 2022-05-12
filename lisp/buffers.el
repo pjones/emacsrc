@@ -72,6 +72,7 @@ buffer name, or symbols that match a major mode."
           haskell-interactive-mode
           help-mode
           inferior-python-mode
+          pdf-outline-buffer-mode
           rg-mode
           shell-mode))
       (display-buffer-reuse-window
