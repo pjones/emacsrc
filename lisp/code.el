@@ -7,7 +7,12 @@
   (require 'saveplace))
 
 ;;; Dependencies:
+(require 'dumb-jump)
+(require 'flycheck)
 (require 'projectile)
+
+(declare-function indium-connect-to-chrome "indium")
+(declare-function indium-run-node "indium")
 
 ;; Create some faces
 (defface pjones:fixme-face
@@ -102,6 +107,7 @@ Calls `comment-indent-new-line' with ARGS."
   (local-set-key (kbd "RET") 'newline-and-indent)
   (auto-fill-mode)
   (display-line-numbers-mode)
+  (flycheck-mode)
   (flyspell-prog-mode)
   (save-place-mode)
   (whitespace-mode)

@@ -6,8 +6,6 @@
 ;;
 ;;; Code:
 
-(require 'flycheck)
-
 (declare-function consult-theme "consult")
 
 (defvar pjones:after-theme-change-hook nil
@@ -201,7 +199,6 @@ The mode construct list is then returned."
   (defun pjones:set-initial-theme ()
     (pjones:load-theme 'doom-challenger-deep)))
 
-(add-hook 'after-init-hook #'global-flycheck-mode)
 (add-hook 'after-init-hook #'pjones:configure-new-frame)
 (add-hook 'after-make-frame-functions #'pjones:configure-new-frame)
 (add-hook 'find-file-hook 'pjones:find-file-hook)
