@@ -25,16 +25,17 @@
 
 ;; Settings:
 (custom-set-variables
-  '(dired-listing-switches "-lhA --literal --group-directories-first")
   '(dired-auto-revert-buffer t)
-  '(dired-isearch-filenames t)
   '(dired-create-destination-dirs 'ask)
-  '(dired-hide-details-hide-symlink-targets nil)
+  '(dired-do-revert-buffer t)
   '(dired-dwim-target t)
-  '(dired-vc-rename-file t)
-  '(dired-filter-prefix nil)
   '(dired-filter-mark-prefix nil)
+  '(dired-filter-prefix nil)
+  '(dired-hide-details-hide-symlink-targets nil)
+  '(dired-isearch-filenames t)
+  '(dired-listing-switches "-lhA --literal --group-directories-first")
   '(dired-subtree-line-prefix-face 'subtree)
+  '(dired-vc-rename-file t)
   '(dired-subtree-use-backgrounds nil))
 
 (let ((map dired-mode-map))

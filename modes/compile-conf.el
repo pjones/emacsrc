@@ -28,13 +28,6 @@
       ret)))
 
 (advice-add 'compile-goto-error :around #'pjones:compile-goto-error)
-
-;; https://gist.github.com/wngreene/87d8b4715212e44a42aa79668af090ee
-(defun pjones:compile-apply-ansi-color nil
-  "Add support for ANSI color escapes to `compilation-mode'."
-  (let ((buffer-read-only nil))
-    (ansi-color-apply-on-region (point-min) (point-max))))
-
-(add-hook 'compilation-filter-hook #'pjones:compile-apply-ansi-color)
+(add-hook 'compilation-filter-hook #'ansi-color-compilation-filter)
 
 ;;; compile-conf.el ends here

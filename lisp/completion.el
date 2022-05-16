@@ -16,9 +16,6 @@
 (declare-function yas-expand "yasnippet")
 (declare-function yas-maybe-expand-abbrev-key-filter "yasnippet")
 
-;; I don't want to type "yes".
-(defalias 'yes-or-no-p 'y-or-n-p)
-
 ;; What to do with the tab key.
 (defun pjones:indent-or-complete (&optional arg)
   "Indent or complete.
@@ -63,6 +60,7 @@ current line.  Otherwise run the completion command.  ARG is passed to
                     (cape-capf-buster #'cape-dabbrev)))
 
 (custom-set-variables
+ '(completions-detailed t)
  '(corfu-scroll-margin 5)
  '(corfu-quit-no-match t)
  '(completion-styles '(orderless partial-completion))

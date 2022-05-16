@@ -67,7 +67,7 @@ If buffer NAME doesn't exist, COMMAND can be used to create it."
  (kbd "C-c p l") #'passmm-list-passwords
  (kbd "C-c p p") #'passmm-completing-read
  (kbd "C-c R") #'pjones:rename-current-file
- (kbd "C-c r") #'revert-buffer
+ (kbd "C-c r") #'revert-buffer-quick
  (kbd "C-c s") #'pjones:sort-lines
  (kbd "C-c t") #'pjones:open-temp-buffer
 
@@ -126,6 +126,7 @@ If buffer NAME doesn't exist, COMMAND can be used to create it."
  [remap bookmark-jump] #'consult-bookmark
  [remap exchange-point-and-mark] #'pjones:exchange-point-and-mark
  [remap indent-for-tab-command] #'pjones:indent-or-complete
+ [remap isearch-forward-symbol-at-point] #'isearch-forward-thing-at-point
  [remap kill-line] #'pjones:kill-line
  [remap kill-region] #'pjones:kill-region-or-backward-kill-word
  [remap list-buffers] #'ibuffer

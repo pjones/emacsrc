@@ -18,11 +18,14 @@
 
 (custom-set-variables
  '(compilation-scroll-output 'first-error)
+ '(describe-bindings-outline t)
  '(echo-keystrokes 0.1)
  '(enable-recursive-minibuffers t)
  '(focus-follows-mouse t)
+ '(goto-line-history-local t)
  '(inhibit-startup-message t)
  '(initial-scratch-message nil)
+ '(kill-buffer-delete-auto-save-files t)
  '(mark-even-if-inactive t)
  '(mouse-autoselect-window nil)
  '(mouse-yank-at-point t)
@@ -35,6 +38,7 @@
  '(tab-bar-tab-hints t)
  '(truncate-partial-width-windows nil)
  '(uniquify-buffer-name-style 'post-forward-angle-brackets)
+ '(use-short-answers t)
  '(visible-bell nil)
  '(winum-auto-setup-mode-line nil)
  '(x-mouse-click-focus-ignore-position nil)

@@ -7,9 +7,10 @@
 (require 'isearch)
 
 (custom-set-variables
- '(search-whitespace-regexp ".*")
+ '(isearch-allow-motion t)
  '(isearch-lax-whitespace t)
+ '(isearch-lazy-count t)
  '(search-nonincremental-instead nil)
- '(isearch-lazy-count t))
+ '(search-whitespace-regexp ".*"))
 
 ;;; isearch-conf.el ends here
