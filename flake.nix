@@ -5,12 +5,8 @@
     home-manager.url = "github:nix-community/home-manager/master";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
-    cape = { url = "github:minad/cape/0.5"; flake = false; };
-    corfu = { url = "github:minad/corfu/0.17"; flake = false; };
-    corfu-doc = { url = "github:galeo/corfu-doc"; flake = false; };
     neuron-mode = { url = "github:felko/neuron-mode/v1.0"; flake = false; };
     passmm = { url = "github:pjones/passmm"; flake = false; };
-    vterm = { url = "github:akermu/emacs-libvterm"; flake = false; };
   };
 
   outputs = inputs@{ self, nixpkgs, home-manager, ... }:
@@ -30,22 +26,21 @@
         nixpkgs.lib.genAttrs supportedSystems (system: f system);
 
       # Attribute set of nixpkgs for each system:
-      nixpkgsFor = forAllSystems (system: import nixpkgs { inherit system; });
+      nixpkgsFor = forAllSystems (system:
+        import nixpkgs { inherit system; });
     in
     {
       packages = forAllSystems (system:
         let pkgs = nixpkgsFor.${system}; in
         {
           emacsrc = import ./. { inherit pkgs inputs; };
+          default = self.packages.${system}.emacsrc;
         });
-
-      defaultPackage = forAllSystems (system:
-        self.packages.${system}.emacsrc);
 
       apps = forAllSystems (system:
         let pkgs = nixpkgsFor.${system}; in
         {
-          emacsrc = {
+          default = {
             type = "app";
             program = toString (pkgs.writeShellScript "emacsrc" ''
               ${self.packages.${system}.emacsrc}/bin/e -f
@@ -53,16 +48,13 @@
           };
         });
 
-      defaultApp = forAllSystems (system:
-        self.apps.${system}.emacsrc);
-
-      checks.x86_64-linux.emacsrc = import ./test {
+      checks.x86_64-linux.default = import ./test {
         inherit home-manager;
         pkgs = nixpkgsFor.x86_64-linux;
-        module = self.homeManagerModule;
+        module = self.homeManagerModules.default;
       };
 
-      homeManagerModule = { pkgs, ... }: {
+      homeManagerModules.default = { pkgs, ... }: {
         imports = [
           (import ./nix/home.nix {
             emacsrc = self.packages.${pkgs.system}.emacsrc;

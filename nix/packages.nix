@@ -4,9 +4,6 @@
 , inputs
 }:
 let
-  # Package sources:
-  sources = import ./sources.nix;
-
   # Function to update several attributes in an Emacs package:
   update = pkg: src: pkg.overrideAttrs (orig: rec {
     inherit src;
@@ -20,20 +17,6 @@ let
 
   # Package overrides:
   emacsWithOverrides = (emacsPackagesFor emacs).overrideScope' (self: super: {
-    corfu = update super.corfu "${inputs.corfu}/corfu.el";
-
-    corfu-doc = super.elpaBuild {
-      pname = "corfu-doc";
-      version = "0.4";
-      src = "${inputs.corfu-doc}/corfu-doc.el";
-    };
-
-    cape = super.elpaBuild {
-      pname = "cape";
-      version = "0.5";
-      src = "${inputs.cape}/cape.el";
-    };
-
     neuron-mode = update super.neuron-mode inputs.neuron-mode;
     passmm = update super.passmm inputs.passmm;
 
@@ -43,18 +26,7 @@ let
     pdf-tools = super.pdf-tools.overrideAttrs (orig: {
       CXXFLAGS = "-std=c++17";
     });
-
-    vterm =
-      (update
-        super.vterm
-        inputs.vterm).overrideAttrs (orig: {
-        postInstall = ''
-          ln -s emacs-libvterm-src source
-          ${orig.postInstall or ""}
-        '';
-      });
   });
-
 in
 # Emacs package list:
 emacsWithOverrides.emacsWithPackages (epkgs:

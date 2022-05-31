@@ -1,6 +1,6 @@
 # nix flake check --print-build-logs
 #
-# nix build .\#checks.x86_64-linux.emacsrc.driverInteractive
+# nix build .\#checks.x86_64-linux.default.driverInteractive
 # ./result/bin/nixos-test-driver
 { pkgs
 , home-manager

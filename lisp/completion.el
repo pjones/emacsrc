@@ -12,7 +12,8 @@
 (declare-function corfu-doc-mode "corfu-doc")
 (declare-function corfu-doc-scroll-down "corfu-doc")
 (declare-function corfu-doc-scroll-up "corfu-doc")
-(declare-function corfu-global-mode "corfu")
+(declare-function corfu-insert "corfu")
+(declare-function global-corfu-mode "corfu")
 (declare-function yas-expand "yasnippet")
 (declare-function yas-maybe-expand-abbrev-key-filter "yasnippet")
 
@@ -49,7 +50,7 @@ current line.  Otherwise run the completion command.  ARG is passed to
   (define-key corfu-map (kbd "M-p") #'corfu-doc-scroll-down)
   (define-key corfu-map (kbd "M-n") #'corfu-doc-scroll-up))
 
-(add-hook 'after-init-hook #'corfu-global-mode)
+(add-hook 'after-init-hook #'global-corfu-mode)
 (add-hook 'corfu-mode-hook #'corfu-doc-mode)
 (add-hook 'corfu-mode-hook #'pjones:corfu-mode-hook)
 

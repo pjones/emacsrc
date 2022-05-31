@@ -1,55 +1,5 @@
 {
   "nodes": {
-    "cape": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1641814655,
-        "narHash": "sha256-UE76xX20M9ShV/W+vlUvnpbLIv/4x+u7p2+8TKvHAB0=",
-        "owner": "minad",
-        "repo": "cape",
-        "rev": "9567f1ca09a3867e50ef8f990b486e916460df9d",
-        "type": "github"
-      },
-      "original": {
-        "owner": "minad",
-        "ref": "0.5",
-        "repo": "cape",
-        "type": "github"
-      }
-    },
-    "corfu": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1640943596,
-        "narHash": "sha256-kB5znGQ0swF41R9ZS1z6dBCOYeHQxMAunmPkCmZEQ8o=",
-        "owner": "minad",
-        "repo": "corfu",
-        "rev": "5f03ba4c75e4d43631c778900679254be5e6e4fe",
-        "type": "github"
-      },
-      "original": {
-        "owner": "minad",
-        "ref": "0.17",
-        "repo": "corfu",
-        "type": "github"
-      }
-    },
-    "corfu-doc": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1651240080,
-        "narHash": "sha256-/3zoZF08rqXYU1khR0Zco8GyvUvhyNgLyJi9LXSufuc=",
-        "owner": "galeo",
-        "repo": "corfu-doc",
-        "rev": "5a6f4f879de6dc2ca6e22789878d416e88e85905",
-        "type": "github"
-      },
-      "original": {
-        "owner": "galeo",
-        "repo": "corfu-doc",
-        "type": "github"
-      }
-    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -122,30 +72,10 @@
     },
     "root": {
       "inputs": {
-        "cape": "cape",
-        "corfu": "corfu",
-        "corfu-doc": "corfu-doc",
         "home-manager": "home-manager",
         "neuron-mode": "neuron-mode",
         "nixpkgs": "nixpkgs",
-        "passmm": "passmm",
-        "vterm": "vterm"
-      }
-    },
-    "vterm": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1651191689,
-        "narHash": "sha256-A4ptIWzeF4oFzK8bptP1UxHNp296res20Ydt6vnUAmc=",
-        "owner": "akermu",
-        "repo": "emacs-libvterm",
-        "rev": "b44723552f86407d528c4a6c8057382c061b008e",
-        "type": "github"
-      },
-      "original": {
-        "owner": "akermu",
-        "repo": "emacs-libvterm",
-        "type": "github"
+        "passmm": "passmm"
       }
     }
   },
