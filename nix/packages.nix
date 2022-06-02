@@ -75,6 +75,7 @@ emacsWithOverrides.emacsWithPackages (epkgs:
     js2-mode # Improved JavaScript editing mode
     json-mode # Major mode for editing JSON files
     jsonrpc # JSON-RPC library
+    kaolin-themes # A set of eye pleasing themes
     link-hint # Use avy to open, copy, etc. visible links
     magit # A Git porcelain inside Emacs
     magit-annex # Control git-annex from Magit
