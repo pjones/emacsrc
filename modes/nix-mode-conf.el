@@ -7,8 +7,11 @@
 (require 'nix-mode)
 (require 'reformatter)
 
+(declare-function pjones:prog-mode-hook "../lisp/code.el")
+
 (custom-set-variables
- '(nix-indent-function #'smie-indent-line))
+ '(nix-indent-function #'smie-indent-line)
+ '(nix-mode-use-smie t))
 
 (reformatter-define nix-format
   :program "nixpkgs-fmt"
@@ -17,7 +20,6 @@
 (defun pjones:nix-mode-hook ()
   "Configure `nix-mode'."
   (pjones:prog-mode-hook)
-  (electric-indent-local-mode)
   (nix-format-on-save-mode))
 
 (define-key nix-mode-map (kbd "<return>") #'newline-and-indent)
