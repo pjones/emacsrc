@@ -55,6 +55,7 @@ emacsWithOverrides.emacsWithPackages (epkgs:
     elm-mode # Elm mode for emacs
     embark # Conveniently act on minibuffer completions
     embark-consult # Consult integration for Embark
+    emms # The Emacs Multimedia System
     envrc # Support for `direnv' that operates buffer-locally
     erc-hl-nicks # ERC nick highlighter that ignores uniquifying chars when colorizing
     flycheck # On-the-fly syntax checking
