@@ -10,6 +10,7 @@
 (require 'org-appear)
 (require 'org-bullets)
 (require 'org-capture)
+(require 'ox-md)
 (require 's)
 
 ;; Silence compiler warnings
