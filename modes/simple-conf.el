@@ -14,7 +14,7 @@
  '(next-error-highlight 1)
  '(next-error-message-highlight 'keep)
  '(next-error-recenter '(4))
- '(next-line-add-newlines nil)
+ '(next-line-add-newlines t)
  '(set-mark-command-repeat-pop t)
  '(shell-command-dont-erase-buffer 'end-last-out))
 
