@@ -19,6 +19,7 @@
 
 (require 'consult-org-roam)
 (require 'org-roam)
+(require 'org-roam-export)
 
 (custom-set-variables
  '(org-roam-directory "~/notes/wiki")
@@ -49,6 +50,32 @@
     (concat (substring name 0 1) "/"
             (substring name 1 2) "/"
             name ".org")))
+
+(defun pjones:org-roam-publish (&optional force)
+  "Publish Peter's `org-roam' wiki.
+If FORCE is non-nil then rebuild the entire site."
+  (interactive "P")
+  (let ((org-export-with-broken-links 'mark)
+        (org-html-validation-link nil))
+    (org-roam-db-sync)
+    (org-id-update-id-locations)
+    (org-roam-update-org-id-locations)
+    (org-publish
+     `("wiki"
+       :base-directory ,org-roam-directory
+       :base-extension "org"
+       :recursive t
+       :auto-sitemap t
+       :sitemap-title "Peter's Knowledge Base (All Pages)"
+       :sitemap-filename "sitemap.org"
+       :sitemap-sort-folders ignore
+       :sitemap-style list
+       :publishing-function org-html-publish-to-html
+       :publishing-directory "~/public/wiki"
+       :section-numbers t
+       :with-toc nil)
+     force nil))
+  (delete-file (concat org-roam-directory "/sitemap.org")))
 
 ;; Ensure the database is up-to-date:
 (org-roam-db-autosync-mode)
