@@ -20,7 +20,6 @@
 (add-to-list 'auto-mode-alist '("\\.md$" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.markdown$" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.password-store/" . markdown-mode))
-(add-to-list 'auto-mode-alist '("/zettelkasten/.*\\.md$" . neuron-mode))
 
 ;; Org
 (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))

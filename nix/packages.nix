@@ -17,7 +17,6 @@ let
 
   # Package overrides:
   emacsWithOverrides = (emacsPackagesFor emacs).overrideScope' (self: super: {
-    neuron-mode = update super.neuron-mode inputs.neuron-mode;
     passmm = update super.passmm inputs.passmm;
 
     # Work around:
@@ -38,6 +37,7 @@ emacsWithOverrides.emacsWithPackages (epkgs:
     cape # Let your completions fly!
     clojure-mode # Major mode for Clojure code
     consult # Consulting completing-read
+    consult-org-roam # Consult integration for org-roam
     corfu # Completion Overlay Region FUnction
     corfu-doc # Documentation popup for Corfu
     csv-mode # Major mode for editing comma/char separated values
@@ -83,7 +83,6 @@ emacsWithOverrides.emacsWithPackages (epkgs:
     marginalia # Enrich existing commands with completion annotations
     markdown-mode # Major mode for Markdown-formatted text
     minions # A minor-mode menu for the mode line
-    neuron-mode # Major mode for editing zettelkasten notes using neuron
     nix-mode # Major mode for editing .nix files
     no-littering # help keeping ~/.emacs.d clean
     noccur # Run multi-occur on project/dired files
@@ -93,6 +92,7 @@ emacsWithOverrides.emacsWithPackages (epkgs:
     org-appear # Make invisible parts of Org elements appear visible.
     org-bullets # Show bullets in org-mode as UTF-8 characters
     org-clock-csv # Export `org-mode' clock entries to CSV format
+    org-roam # A database abstraction layer for Org-mode
     org-tree-slide # A presentation tool for org-mode
     orgalist # Manage Org-like lists in non-Org buffers
     passmm # A minor mode for pass (Password Store).

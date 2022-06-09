@@ -18,17 +18,14 @@ If buffer NAME doesn't exist, COMMAND can be used to create it."
 ;; for it.
 (autoload 'pjones:link-hint-open-link "link-hint")
 
-;; Autoloads for neuron-mode:
-(autoload 'pjones:rg-zettel-dir "neuron-mode")
-(autoload 'pjones:zettel-need-to-do "neuron-mode")
-(autoload 'pjones:zettel-open-inbox "neuron-mode")
-(dolist (f '(neuron-new-zettel
-             neuron-edit-zettel
-             neuron-open-daily-notes
-             neuron-select-zettelkasten
-             neuron-open-zettel
-             neuron-open-index))
-  (autoload f "neuron-mode"))
+(declare-function consult-org-roam-mode "consult-org-roam")
+(declare-function consult-org-roam-search "consult-org-roam")
+(declare-function org-roam-capture "org-roam")
+(declare-function org-roam-capture "org-roam")
+(declare-function org-roam-dailies-capture-today "org-roam")
+(declare-function org-roam-dailies-goto-date "org-roam")
+(declare-function org-roam-node-find "org-roam")
+(declare-function org-roam-node-insert "org-roam")
 
 (defun pjones:global-set-keys (key def &rest bindings)
   "Call `global-set-key' for KEY and DEF and each pair in BINDINGS."
@@ -39,12 +36,21 @@ If buffer NAME doesn't exist, COMMAND can be used to create it."
 
 (defvar pjones:zettle-map
   (let ((map (make-sparse-keymap)))
-    (define-key map (kbd "d") #'neuron-open-daily-notes)
-    (define-key map (kbd "f") #'neuron-edit-zettel)
-    (define-key map (kbd "s") #'neuron-select-zettelkasten)
-    (define-key map (kbd "z") #'neuron-new-zettel)
+    (define-key map (kbd "d") #'org-roam-dailies-capture-today)
+    (define-key map (kbd "D") #'org-roam-dailies-goto-date)
+    (define-key map (kbd "f") #'org-roam-node-find)
+    (define-key map (kbd "i") #'org-roam-node-insert)
+    (define-key map (kbd "z") #'org-roam-capture)
+
+    ;; This is a bit annoying:
+    (define-key map (kbd "s")
+      (lambda ()
+        (interactive)
+        (consult-org-roam-mode)
+        (consult-org-roam-search)))
+
     map)
-  "Key bindings for neuron-mode.")
+  "Key bindings for note taking.")
 
 (pjones:global-set-keys
  (kbd "C-c ?") #'which-key-show-top-level
@@ -95,7 +101,6 @@ If buffer NAME doesn't exist, COMMAND can be used to create it."
  (kbd "M-s r") #'consult-ripgrep
  (kbd "M-s s") #'consult-line
  (kbd "M-s u") #'consult-focus-lines
- (kbd "M-s z") #'pjones:rg-zettel-dir
 
  ;; Additional go-to bindings:
  (kbd "M-g @") #'consult-global-mark

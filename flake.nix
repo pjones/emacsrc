@@ -5,7 +5,6 @@
     home-manager.url = "github:nix-community/home-manager/release-22.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
-    neuron-mode = { url = "github:felko/neuron-mode/v1.0"; flake = false; };
     passmm = { url = "github:pjones/passmm"; flake = false; };
   };
 

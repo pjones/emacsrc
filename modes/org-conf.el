@@ -85,7 +85,7 @@
  '(org-tags-exclude-from-inheritance nil)
  '(org-goto-interface 'outline-path-completion)
  '(org-outline-path-complete-in-steps t)
- '(org-id-link-to-org-use-id t)
+ '(org-id-link-to-org-use-id 'create-if-interactive)
  '(org-edit-src-persistent-message nil)
  '(org-src-window-setup (quote current-window))
  '(org-attach-directory "attachments/")
