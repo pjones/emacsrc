@@ -77,6 +77,7 @@
  '(org-use-fast-todo-selection 'expert)
  '(org-use-fast-tag-selection (quote auto))
  '(org-fast-tag-selection-single-key nil)
+ '(org-imenu-depth 3)
  '(org-special-ctrl-a/e t)
  '(org-special-ctrl-k t)
  '(org-M-RET-may-split-line t)
