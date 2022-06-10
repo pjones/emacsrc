@@ -224,7 +224,9 @@
 
  ;; Stuff for exporting:
  '(org-icalendar-combined-agenda-file "~/notes/gtd/calendar.ics")
- '(org-icalendar-include-todo t))
+ '(org-icalendar-include-todo t)
+ '(org-html-htmlize-output-type 'css)
+ '(org-html-validation-link nil))
 
 (defun pjones:org-mode-hook ()
   "Hook to hack `org-mode'."
