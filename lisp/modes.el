@@ -46,13 +46,16 @@
   (global-prettify-symbols-mode)     ; Replace buffer symbols.
   (minions-mode)                     ; Minor-mode menu.
   (projectile-mode)                  ; Project tool
-  (puni-global-mode)                 ; Working with delimiters.
   (selectrum-mode)                   ; minibuffer completions.
   (show-paren-mode)                  ; Highlight matching brackets.
   (which-key-mode)                   ; Remind me what keys do.
   (winner-mode)                      ; Track win conifg changes
   (winum-mode)                       ; Number windows
   (yas-global-mode)                  ; Snippets.
+
+  ;; Force my overrides to apply:
+  (require 'puni)
+  (puni-global-mode) ; Working with delimiters.
 
   ;; Other modes that need to be activated:
   (pdf-tools-install)                     ; Internal PDF viewer

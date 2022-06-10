@@ -118,7 +118,7 @@ If buffer NAME doesn't exist, COMMAND can be used to create it."
  (kbd "C-_") (lambda () (interactive) (text-scale-set 0))
  (kbd "C-`") #'consult-register-load
  (kbd "C-M-`") #'consult-register
- (kbd "C-M-SPC") #'puni-expand-region
+ (kbd "C-M-SPC") #'er/expand-region
  (kbd "C-M-z") #'zap-to-char
  (kbd "C-x C-k @") #'consult-kmacro
  (kbd "C-z") pjones:zettle-map

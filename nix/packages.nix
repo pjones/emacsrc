@@ -58,6 +58,7 @@ emacsWithOverrides.emacsWithPackages (epkgs:
     emms # The Emacs Multimedia System
     envrc # Support for `direnv' that operates buffer-locally
     erc-hl-nicks # ERC nick highlighter that ignores uniquifying chars when colorizing
+    expand-region # Increase selected region by semantic units.
     flycheck # On-the-fly syntax checking
     flycheck-indicator # A fancy mode line indicator for `flycheck-mode'
     flycheck-rust # Rust additions and Cargo support
