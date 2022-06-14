@@ -96,6 +96,7 @@
  '(org-attach-method 'ln)
  '(org-attach-store-link-p t)
  '(org-attach-archive-delete nil)
+ '(org-capture-bookmark nil)
 
  ;; Showing context
  '(org-show-hierarchy-above t)
@@ -223,10 +224,61 @@
            ("~/notes/gtd/someday.org" :level . 3))))
 
  ;; Stuff for exporting:
+ '(org-export-with-smart-quotes t)
  '(org-icalendar-combined-agenda-file "~/notes/gtd/calendar.ics")
  '(org-icalendar-include-todo t)
  '(org-html-htmlize-output-type 'css)
- '(org-html-validation-link nil))
+ '(org-html-validation-link nil)
+ '(org-latex-tables-booktabs t)
+ '(org-latex-listings 'minted)
+ '(org-latex-default-class "pjones-article")
+ '(org-latex-compiler "xelatex")
+ '(org-latex-pdf-process
+   '("latexmk -xelatex -pdfxe -shell-escape %f"))
+ '(org-latex-toc-command
+   (string-join
+    '("{"
+      "\\hypersetup{linkcolor=black}"
+      "\\tableofcontents"
+      "}\n")
+    "\n"))
+ '(org-latex-packages-alist
+   '(("" "booktabs")
+     ("" "color")
+     ("" "fontspec")
+     ("newfloat" "minted")
+     ("" "svg")
+     ("" "transparent")
+     ("" "xcolor")))
+ '(org-latex-with-hyperref
+   "\\hypersetup{
+      pdfauthor={%a},
+      pdftitle={%t},
+      pdfkeywords={%k},
+      pdfsubject={%d},
+      pdfcreator={%c},
+      pdflang={%L},
+      colorlinks=true,
+      linkcolor=blue,
+      urlcolor=blue\n}\n"))
+
+;; Custom LaTeX classes:
+(setq org-latex-classes
+      (cl-remove-if
+       (lambda (entry) (string-match-p "^pjones-" (car entry)))
+       org-latex-classes))
+
+(add-to-list
+ 'org-latex-classes
+ (append `("pjones-article"
+           ,(string-join '("\\documentclass[11pt]{article}"
+                           "[DEFAULT-PACKAGES]"
+                           "[PACKAGES]"
+                           "\\setmainfont{Noto Serif Light}"
+                           "\\setsansfont{Noto Sans}"
+                           "\\setmonofont[Scale=0.85]{Hermit}")
+                         "\n"))
+         (cddr (assoc "article" org-latex-classes))))
 
 (defun pjones:org-mode-hook ()
   "Hook to hack `org-mode'."
