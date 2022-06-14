@@ -1,5 +1,5 @@
 #! /usr/bin/env nix-shell
-#! nix-shell -i bash -p pandoc texlive.combined.scheme-full gnome3.librsvg
+#! nix-shell -i bash -p pandoc texlive.combined.scheme-full librsvg
 # shellcheck shell=bash
 
 function to_pdf() {
