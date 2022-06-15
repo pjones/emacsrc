@@ -56,6 +56,7 @@
 (custom-set-variables
  ;; Visual Settings:
  '(org-hide-leading-stars t)
+ '(org-ellipsis "…")
  '(org-clock-clocked-in-display (quote both))
  '(org-clock-clocked-in-display 'frame-title)
  '(org-clock-frame-title-format (list '(t org-mode-line-string) " " frame-title-format))
@@ -85,7 +86,7 @@
  '(org-log-into-drawer t)
  '(org-tags-exclude-from-inheritance nil)
  '(org-goto-interface 'outline-path-completion)
- '(org-outline-path-complete-in-steps t)
+ '(org-outline-path-complete-in-steps nil)
  '(org-id-link-to-org-use-id 'create-if-interactive)
  '(org-edit-src-persistent-message nil)
  '(org-src-window-setup (quote current-window))
@@ -279,6 +280,19 @@
                            "\\setmonofont[Scale=0.85]{Hermit}")
                          "\n"))
          (cddr (assoc "article" org-latex-classes))))
+
+(custom-set-faces
+ '(org-block ((t (:background nil))))
+ '(org-block-begin-line ((t (:background nil))))
+ '(org-block-end-line ((t (:background nil))))
+ '(org-level-1 ((t (:inherit outline-1 :height 2.0))))
+ '(org-level-2 ((t (:inherit outline-2 :height 1.7))))
+ '(org-level-3 ((t (:inherit outline-3 :height 1.4))))
+ '(org-level-4 ((t (:inherit outline-4 :height 1.1))))
+ '(org-level-5 ((t (:inherit outline-5 :height 1.0))))
+ '(org-level-6 ((t (:inherit outline-6 :height 1.0))))
+ '(org-level-7 ((t (:inherit outline-7 :height 1.0))))
+ '(org-level-8 ((t (:inherit outline-8 :height 1.0)))))
 
 (defun pjones:org-mode-hook ()
   "Hook to hack `org-mode'."
