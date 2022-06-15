@@ -45,6 +45,15 @@
               ${self.packages.${system}.emacsrc}/bin/e -f
             '');
           };
+
+          tutorial = {
+            type = "app";
+            program = toString (pkgs.writeShellScript "emacsrc" ''
+              ${self.packages.${system}.emacsrc}/bin/e -f -- \
+                --eval '(menu-bar-mode)' \
+                --eval '(help-with-tutorial)'
+            '');
+          };
         });
 
       checks.x86_64-linux.default = import ./test {
