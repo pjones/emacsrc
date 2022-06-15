@@ -92,9 +92,9 @@ emacsWithOverrides.emacsWithPackages (epkgs:
     orderless # Completion style for matching regexps in any order
     org # Outline-based notes management and organizer
     org-appear # Make invisible parts of Org elements appear visible.
-    org-bullets # Show bullets in org-mode as UTF-8 characters
     org-clock-csv # Export `org-mode' clock entries to CSV format
     org-roam # A database abstraction layer for Org-mode
+    org-superstar # Make org-mode stars a little more super
     org-tree-slide # A presentation tool for org-mode
     orgalist # Manage Org-like lists in non-Org buffers
     passmm # A minor mode for pass (Password Store).

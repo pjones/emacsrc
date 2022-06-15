@@ -7,20 +7,21 @@
 (require 'dash)
 (require 'org)
 (require 'org-agenda)
-(require 'org-appear)
-(require 'org-bullets)
 (require 'org-capture)
 (require 'ox-md)
 (require 's)
 
 ;; Silence compiler warnings
 (declare-function dbus-send-signal "dbus")
+(declare-function org-appear-mode "org-appear")
 (declare-function org-bookmark-jump-unhide "org")
 (declare-function org-clock-sum-current-item "org-clock")
 (declare-function org-clocking-p "org-clock")
+(declare-function org-superstar-mode "org-superstar")
 (declare-function org-tree-slide-mode "org-tree-slide")
 (declare-function pjones:open-line-above "../list/interactive")
 (declare-function whitespace-mode "whitespace")
+
 (defvar whitespace-style)
 (defvar org-clock-start-time)
 (defvar dbus-path-emacs)
@@ -57,6 +58,8 @@
  ;; Visual Settings:
  '(org-hide-leading-stars t)
  '(org-ellipsis "…")
+ '(org-superstar-headline-bullets-list '(?⁍ ?◆ ?⭘ ?▶ ?◦))
+ '(org-superstar-item-bullet-alist '((?* . ?○) (?+ . ?‣) (?- . ?•)))
  '(org-clock-clocked-in-display (quote both))
  '(org-clock-clocked-in-display 'frame-title)
  '(org-clock-frame-title-format (list '(t org-mode-line-string) " " frame-title-format))
@@ -474,7 +477,7 @@ version, properly handles tables."
 
 ;;; Hooks
 (add-hook 'org-mode-hook #'org-appear-mode)
-(add-hook 'org-mode-hook #'org-bullets-mode)
+(add-hook 'org-mode-hook #'org-superstar-mode)
 
 (let ((hooks
        '(org-clock-in-hook
