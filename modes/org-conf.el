@@ -347,7 +347,7 @@ listening to the correct D-Bus signal.
 
 You can monitor this signal via the following command:
 
-    dbus-monitor type='signal',interface='org.gnu.Emacs.Org.Clock'
+    \"dbus-monitor type='signal',interface='org.gnu.Emacs.Org.Clock'\"
 
 Read the code below for the two event names and the signal arguments
 they provide."
