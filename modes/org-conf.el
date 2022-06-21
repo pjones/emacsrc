@@ -74,6 +74,7 @@
  '(org-appear-autokeywords t)
 
  ;; Behavior Settings:
+ '(org-catch-invisible-edits 'smart)
  '(org-log-done 'time)
  '(org-reverse-note-order nil)
  '(org-list-empty-line-terminates-plain-lists nil)
