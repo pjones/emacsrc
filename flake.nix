@@ -69,5 +69,11 @@
           })
         ];
       };
+
+      devShells = forAllSystems (system: {
+        default = nixpkgsFor.${system}.mkShell {
+          inputsFrom = builtins.attrValues self.packages.${system};
+        };
+      });
     };
 }

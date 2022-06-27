@@ -9,6 +9,18 @@ let
   ##############################################################################
   inherit (pkgs) lib;
 
+  ##############################################################################
+  # Packages to put into the developer shell and the user environment:
+  extraPackages = [
+    (pkgs.aspellWithDicts (d: [
+      d.en
+      d.en-computers
+      d.en-science
+    ]))
+  ] ++ lib.optionals pkgs.stdenv.isLinux [
+    pkgs.dict
+  ];
+
 in
 pkgs.stdenv.mkDerivation rec {
   name = "emacsrc";
@@ -24,7 +36,7 @@ pkgs.stdenv.mkDerivation rec {
   enableParallelBuilding = true;
   makeFlags = [ "PREFIX=$(out)" ];
 
-  buildInputs = [
+  buildInputs = extraPackages ++ [
     emacsAndPackages # Emacs!
     pkgs.git # For Magit
     pkgs.imagemagick # For image-mode
@@ -33,8 +45,10 @@ pkgs.stdenv.mkDerivation rec {
     pkgs.wmctrl # For bin/e
   ];
 
-  # Ensure 'Emacs' makes it into the closure:
-  propagatedUserEnvPkgs = [ emacsAndPackages ];
+  # Packages to push into the user's PATH:
+  propagatedUserEnvPkgs = [
+    emacsAndPackages
+  ] ++ extraPackages;
 
   postInstall = with pkgs.lib;
     let path = makeBinPath buildInputs; in

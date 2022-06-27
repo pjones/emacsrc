@@ -17,13 +17,6 @@ in
   config = lib.mkIf cfg.enable {
     home.packages = [
       emacsrc
-      pkgs.dict
-
-      (pkgs.aspellWithDicts (d: [
-        d.en
-        d.en-computers
-        d.en-science
-      ]))
     ];
 
     xdg.mimeApps = {
