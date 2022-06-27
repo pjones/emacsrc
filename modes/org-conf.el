@@ -298,6 +298,26 @@
  '(org-level-7 ((t (:inherit outline-7 :height 1.0))))
  '(org-level-8 ((t (:inherit outline-8 :height 1.0)))))
 
+;; Remove existing project entry:
+(setq org-publish-project-alist
+      (cl-remove-if
+       (lambda (entry) (string= (car entry) "gtd"))
+       org-publish-project-alist))
+
+(add-to-list
+ 'org-publish-project-alist
+ '("gtd"
+   :base-directory "~/notes/gtd/"
+   :base-extension "org"
+   :recursive t
+   :exclude "archive\\.org$"
+   :publishing-function org-html-publish-to-html
+   :publishing-directory "~/public/wiki/gtd/"
+   :section-numbers t
+   :with-broken-links t
+   :with-toc 2
+   :archived-trees nil))
+
 (defun pjones:org-mode-hook ()
   "Hook to hack `org-mode'."
   ;; Buffer Settings
