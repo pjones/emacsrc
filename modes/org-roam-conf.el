@@ -132,11 +132,11 @@ representation for the files to include, as returned by
                                   (if (> (point) start)
                                       (- (point) 1) ;; successfully found next
                                     (point-max)))))) ;; there was no next
-                    (list node end)))
+                    (cons node end)))
                 nodes-in-file)))
     (dolist (node-and-end (sort nodes-and-end (lambda (a b) (> (cdr a) (cdr b)))))
       (when-let* ((node (car node-and-end))
-                  (end-position (cadr node-and-end))
+                  (end-position (cdr node-and-end))
                   (backlinks (org-roam-backlinks-get node))
                   (heading (format "\n\n%s Related Notes\n"
                                    (make-string (+ (org-roam-node-level node) 1) ?*)))
