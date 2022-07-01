@@ -37,43 +37,6 @@
      :unnarrowed t
      :empty-lines-before 1))))
 
-(defvar pjones:org-roam-project
-  (file-name-base org-roam-directory)
-  "The name of the org publishing project.")
-
-;; Remove existing project entry:
-(setq org-publish-project-alist
-      (cl-remove-if
-       (lambda (entry) (string= (car entry) pjones:org-roam-project))
-       org-publish-project-alist))
-
-(add-to-list
- 'org-publish-project-alist
- `(,pjones:org-roam-project
-   :base-directory ,org-roam-directory
-   :base-extension "org"
-   :recursive t
-   :auto-sitemap t
-   :sitemap-title "Peter's Knowledge Base (All Pages)"
-   :sitemap-filename "sitemap.org"
-   :sitemap-function pjones:org-publish-sitemap
-   :sitemap-sort-folders ignore
-   :sitemap-style list ; Tree is broken :(
-   :preparation-function pjones:org-roam-before-publish
-   :completion-function pjones:org-roam-after-publish
-   :publishing-function org-html-publish-to-html
-   :publishing-directory "~/public/wiki"
-   :section-numbers t
-   :with-broken-links t
-   :with-toc nil
-   :html-link-home "../../../index.html"
-   :html-link-up "../../../sitemap.html"
-   :html-home/up-format
-   "<div id=\"org-div-home-and-up\">
-      <a title=\"Topics\" href=\"%s\">🌎</a>
-      <a title=\"Home\" href=\"%s\">🏠</a>
-    </div>"))
-
 (defun pjones:org-roam-buffer-name ()
   "Set the buffer name using the org title."
   (when-let* ((title (cadr (assoc "TITLE" (org-collect-keywords '("title")))))

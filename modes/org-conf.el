@@ -265,7 +265,53 @@
       pdflang={%L},
       colorlinks=true,
       linkcolor=blue,
-      urlcolor=blue\n}\n"))
+      urlcolor=blue\n}\n")
+
+ '(org-publish-project-alist
+   '(("gtd"
+      :base-directory "~/notes/gtd/"
+      :base-extension "org"
+      :recursive t
+      :exclude "archive\\.org$"
+      :publishing-function org-html-publish-to-html
+      :publishing-directory "~/public/gtd/"
+      :section-numbers t
+      :with-broken-links t
+      :with-toc 2
+      :archived-trees nil)
+     ("wiki"
+      :base-directory "~/notes/wiki/"
+      :base-extension "org"
+      :recursive t
+      :auto-sitemap t
+      :sitemap-title "Peter's Knowledge Base (All Pages)"
+      :sitemap-filename "sitemap.org"
+      :sitemap-function pjones:org-publish-sitemap
+      :sitemap-sort-folders ignore
+      :sitemap-style list ; Tree is broken :(
+      :preparation-function pjones:org-roam-before-publish
+      :completion-function pjones:org-roam-after-publish
+      :publishing-function org-html-publish-to-html
+      :publishing-directory "~/public/wiki"
+      :section-numbers t
+      :with-broken-links t
+      :with-toc nil
+      :html-link-home "../../../index.html"
+      :html-link-up "../../../sitemap.html"
+      :html-home/up-format
+      "<div id=\"org-div-home-and-up\">
+      <a title=\"Topics\" href=\"%s\">🌎</a>
+      <a title=\"Home\" href=\"%s\">🏠</a>
+    </div>")
+     ("notes-images"
+      :base-directory "~/notes/"
+      :base-extension "jpg\\|gif\\|png"
+      :recursive t
+      :exclude "\\(\\.direnv\\|result\\)/"
+      :publishing-directory "~/public/"
+      :publishing-function org-publish-attachment)
+     ("notes"
+      :components ("gtd" "wiki" "notes-images")))))
 
 ;; Custom LaTeX classes:
 (setq org-latex-classes
@@ -303,25 +349,6 @@
     '((emacs-lisp . t)
       (mermaid . t)))
 
-;; Remove existing project entry:
-(setq org-publish-project-alist
-      (cl-remove-if
-       (lambda (entry) (string= (car entry) "gtd"))
-       org-publish-project-alist))
-
-(add-to-list
- 'org-publish-project-alist
- '("gtd"
-   :base-directory "~/notes/gtd/"
-   :base-extension "org"
-   :recursive t
-   :exclude "archive\\.org$"
-   :publishing-function org-html-publish-to-html
-   :publishing-directory "~/public/wiki/gtd/"
-   :section-numbers t
-   :with-broken-links t
-   :with-toc 2
-   :archived-trees nil))
 
 (defun pjones:org-mode-hook ()
   "Hook to hack `org-mode'."
