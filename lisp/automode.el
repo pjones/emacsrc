@@ -36,10 +36,6 @@
 (add-to-list 'auto-mode-alist '("Gemfile$"    . ruby-mode))
 (add-to-list 'auto-mode-alist '("Capfile$"    . ruby-mode))
 
-;; RHTML
-(add-to-list 'auto-mode-alist '("\\.rhtml$"      . rhtml-mode))
-(add-to-list 'auto-mode-alist '("\\.html\\.erb$" . rhtml-mode))
-
 ;; YAML
 (add-to-list 'auto-mode-alist '("\\.yml$"  . yaml-mode))
 (add-to-list 'auto-mode-alist '("\\.yaml$" . yaml-mode))
