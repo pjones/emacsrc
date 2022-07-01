@@ -22,11 +22,10 @@ If buffer NAME doesn't exist, COMMAND can be used to create it."
 (declare-function consult-org-roam-search "consult-org-roam")
 (declare-function org-roam-capture "org-roam")
 (declare-function org-roam-capture "org-roam")
-(declare-function org-roam-dailies-capture-today "org-roam")
+(declare-function org-roam-dailies-capture-date "org-roam")
 (declare-function org-roam-dailies-goto-date "org-roam")
 (declare-function org-roam-node-find "org-roam")
 (declare-function org-roam-node-insert "org-roam")
-(declare-function pjones:org-roam-publish "../modes/org-roam-conf.el")
 
 (defun pjones:global-set-keys (key def &rest bindings)
   "Call `global-set-key' for KEY and DEF and each pair in BINDINGS."
@@ -37,11 +36,10 @@ If buffer NAME doesn't exist, COMMAND can be used to create it."
 
 (defvar pjones:zettle-map
   (let ((map (make-sparse-keymap)))
-    (define-key map (kbd "d") #'org-roam-dailies-capture-today)
+    (define-key map (kbd "d") #'org-roam-dailies-capture-date)
     (define-key map (kbd "D") #'org-roam-dailies-goto-date)
     (define-key map (kbd "f") #'org-roam-node-find)
     (define-key map (kbd "i") #'org-roam-node-insert)
-    (define-key map (kbd "p") #'pjones:org-roam-publish)
     (define-key map (kbd "z") #'org-roam-capture)
 
     ;; This is a bit annoying:
