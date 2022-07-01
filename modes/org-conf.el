@@ -17,6 +17,7 @@
 (declare-function org-bookmark-jump-unhide "org")
 (declare-function org-clock-sum-current-item "org-clock")
 (declare-function org-clocking-p "org-clock")
+(declare-function org-roam-dailies-goto-date "org-roam")
 (declare-function org-superstar-mode "org-superstar")
 (declare-function org-tree-slide-mode "org-tree-slide")
 (declare-function pjones:open-line-above "../list/interactive")
@@ -102,6 +103,7 @@
  '(org-attach-store-link-p t)
  '(org-attach-archive-delete nil)
  '(org-capture-bookmark nil)
+ '(org-archive-file-header-format nil)
 
  ;; Showing context
  '(org-show-hierarchy-above t)
@@ -221,7 +223,6 @@
  '(org-refile-use-outline-path t)
  '(org-refile-allow-creating-parent-nodes t)
  '(org-log-refile (quote time))
- '(org-archive-location "~/notes/gtd/archive.org::datetree/* Archived From %s")
 
  '(org-refile-targets
    (quote (("~/notes/gtd/projects.org" :level . 3)
@@ -522,6 +523,17 @@ version, properly handles tables."
   (if (org-at-table-p) (org-table-insert-row arg)
     (pjones:open-line-above arg)))
 
+(defun pjones:org-archive-subtree-to-daily ()
+  "Arhive the current subtree to the roam daily file."
+  (interactive)
+  (require 'org-roam)
+  (when-let* ((today (save-excursion
+                       (org-roam-dailies-goto-date)
+                       (buffer-file-name)))
+              (org-archive-location
+               (concat today "::* Archived From %s")))
+    (org-archive-subtree 0)))
+
 ;;; Key Bindings:
 (let ((map org-mode-map))
   (define-key map (kbd "<f12>") #'org-tree-slide-mode)
@@ -529,7 +541,8 @@ version, properly handles tables."
   (define-key map (kbd "C-o") #'pjones:org-open-line)
   (define-key map (kbd "C-c 0") #'pjones:org-hide-all)
   (define-key map (kbd "C-c 1") #'pjones:org-hide-others)
-  (define-key map (kbd "C-c C-x a") #'org-archive-subtree-default)
+  (define-key map (kbd "C-c C-x a") #'pjones:org-archive-subtree-to-daily)
+  (define-key map (kbd "C-c C-x A") #'pjones:org-archive-subtree-to-daily)
   (define-key map (kbd "C-<return>") #'pjones:org-insert-heading)
   (define-key map (kbd "M-<return>") #'pjones:org-insert-item)
   (define-key map (kbd "C-M-n") #'org-next-visible-heading)
