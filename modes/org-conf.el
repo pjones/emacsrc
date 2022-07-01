@@ -298,6 +298,11 @@
  '(org-level-7 ((t (:inherit outline-7 :height 1.0))))
  '(org-level-8 ((t (:inherit outline-8 :height 1.0)))))
 
+(org-babel-do-load-languages
+    'org-babel-load-languages
+    '((emacs-lisp . t)
+      (mermaid . t)))
+
 ;; Remove existing project entry:
 (setq org-publish-project-alist
       (cl-remove-if

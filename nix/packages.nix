@@ -84,11 +84,13 @@ emacsWithOverrides.emacsWithPackages (epkgs:
     magit-annex # Control git-annex from Magit
     marginalia # Enrich existing commands with completion annotations
     markdown-mode # Major mode for Markdown-formatted text
+    mermaid-mode # Emacs major mode for working with mermaid graphs
     minions # A minor-mode menu for the mode line
     nix-mode # Major mode for editing .nix files
     no-littering # help keeping ~/.emacs.d clean
     noccur # Run multi-occur on project/dired files
     nov # Featureful EPUB reader mode
+    ob-mermaid # Generate mermaid diagrams within Emacs org-mode babel
     orderless # Completion style for matching regexps in any order
     org # Outline-based notes management and organizer
     org-appear # Make invisible parts of Org elements appear visible.
