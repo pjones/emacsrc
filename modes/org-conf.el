@@ -14,19 +14,24 @@
 ;; Silence compiler warnings
 (declare-function dbus-send-signal "dbus")
 (declare-function org-appear-mode "org-appear")
+(declare-function org-attach-attach "org-attach")
+(declare-function org-attach-reveal-in-emacs "org-attach")
+(declare-function org-attach-url "org-attach")
 (declare-function org-bookmark-jump-unhide "org")
 (declare-function org-clock-sum-current-item "org-clock")
 (declare-function org-clocking-p "org-clock")
+(declare-function org-insert-last-stored-link "ol")
 (declare-function org-roam-dailies-goto-date "org-roam")
 (declare-function org-superstar-mode "org-superstar")
 (declare-function org-tree-slide-mode "org-tree-slide")
 (declare-function pjones:open-line-above "../list/interactive")
 (declare-function whitespace-mode "whitespace")
 
-(defvar whitespace-style)
-(defvar org-clock-start-time)
-(defvar dbus-path-emacs)
 (defvar dbus-interface-emacs)
+(defvar dbus-path-emacs)
+(defvar org-attach-store-link-p)
+(defvar org-clock-start-time)
+(defvar whitespace-style)
 
 (defun pjones:org-parse-effort-tag (tag)
   "Convert an effort TAG to a number of seconds."
@@ -95,12 +100,11 @@
  '(org-id-link-to-org-use-id 'create-if-interactive)
  '(org-edit-src-persistent-message nil)
  '(org-src-window-setup (quote current-window))
- '(org-attach-directory "attachments/")
- '(org-attach-commit nil)
- '(org-attach-git-annex-cutoff nil)
- '(org-attach-annex-auto-get nil)
+ '(org-attach-id-dir "~/notes/attachments/")
+ '(org-attach-auto-tag nil)
+ '(org-attach-dir-relative t)
  '(org-attach-method 'ln)
- '(org-attach-store-link-p t)
+ '(org-attach-store-link-p 'attached)
  '(org-attach-archive-delete nil)
  '(org-capture-bookmark nil)
  '(org-archive-file-header-format nil)
@@ -279,7 +283,14 @@
       :section-numbers t
       :with-broken-links t
       :with-toc 2
-      :archived-trees nil)
+      :archived-trees nil
+      :html-link-home "../wiki/index.html"
+      :html-link-up "../wiki/sitemap.html"
+      :html-home/up-format
+      "<div id=\"org-div-home-and-up\">
+      <a title=\"Topics\" href=\"%s\">🌎</a>
+      <a title=\"Home\" href=\"%s\">🏠</a>
+      </div>")
      ("wiki"
       :base-directory "~/notes/wiki/"
       :base-extension "org"
@@ -303,16 +314,15 @@
       "<div id=\"org-div-home-and-up\">
       <a title=\"Topics\" href=\"%s\">🌎</a>
       <a title=\"Home\" href=\"%s\">🏠</a>
-    </div>")
-     ("notes-images"
-      :base-directory "~/notes/"
-      :base-extension "jpg\\|gif\\|png"
+      </div>")
+     ("attachments"
+      :base-directory "~/notes/attachments/"
+      :base-extension 'any
       :recursive t
-      :exclude "\\(\\.direnv\\|result\\)/"
-      :publishing-directory "~/public/"
+      :publishing-directory "~/public/attachments/"
       :publishing-function org-publish-attachment)
      ("notes"
-      :components ("gtd" "wiki" "notes-images")))))
+      :components ("wiki" "gtd" "attachments")))))
 
 ;; Custom LaTeX classes:
 (setq org-latex-classes
@@ -534,19 +544,32 @@ version, properly handles tables."
                (concat today "::* Archived From %s")))
     (org-archive-subtree 0)))
 
+(defun pjones:org-attach (file)
+  "Attach a FILE then insert link to it."
+  (interactive "f")
+  (org-attach-attach file)
+  (if org-attach-store-link-p
+      (org-insert-last-stored-link 1)))
+
 ;;; Key Bindings:
 (let ((map org-mode-map))
+  ;; Reset this so I can use it as a prefix:
+  (define-key map (kbd "C-c C-a") nil)
+
   (define-key map (kbd "<f12>") #'org-tree-slide-mode)
   (define-key map (kbd "C-'") nil)
-  (define-key map (kbd "C-o") #'pjones:org-open-line)
+  (define-key map (kbd "C-<return>") #'pjones:org-insert-heading)
   (define-key map (kbd "C-c 0") #'pjones:org-hide-all)
   (define-key map (kbd "C-c 1") #'pjones:org-hide-others)
+  (define-key map (kbd "C-c C-a a") #'pjones:org-attach)
+  (define-key map (kbd "C-c C-a d") #'org-attach-reveal-in-emacs)
+  (define-key map (kbd "C-c C-a u") #'org-attach-url)
   (define-key map (kbd "C-c C-x a") #'pjones:org-archive-subtree-to-daily)
   (define-key map (kbd "C-c C-x A") #'pjones:org-archive-subtree-to-daily)
-  (define-key map (kbd "C-<return>") #'pjones:org-insert-heading)
-  (define-key map (kbd "M-<return>") #'pjones:org-insert-item)
   (define-key map (kbd "C-M-n") #'org-next-visible-heading)
   (define-key map (kbd "C-M-p") #'pjones:org-up-or-prev)
+  (define-key map (kbd "C-o") #'pjones:org-open-line)
+  (define-key map (kbd "M-<return>") #'pjones:org-insert-item)
   (define-key map (kbd "M-n") #'org-forward-heading-same-level)
   (define-key map (kbd "M-N") #'org-metadown)
   (define-key map (kbd "M-p") #'org-backward-heading-same-level)
