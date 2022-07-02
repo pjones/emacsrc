@@ -24,6 +24,8 @@
 (custom-set-variables
  '(org-roam-directory "~/notes/wiki")
  '(org-roam-dailies-directory "journal")
+ '(org-roam-db-node-include-function
+   #'org-before-first-heading-p) ; Only files are org-roam nodes.
 
  '(org-roam-capture-templates
    '(("b" "Knowledge Base" plain "%?"
