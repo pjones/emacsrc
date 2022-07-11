@@ -133,11 +133,7 @@ If PREV is non-nil go to the previous theme."
         (funcall mode -1)))
   (blink-cursor-mode)
   (require 'fringe)
-  (fringe-mode 10)
-  ;; Reset the `title' frame parameter as it may have been set on the
-  ;; command line when the frame name was set.
-  (set-frame-parameter frame 'title nil)
-  (set-frame-parameter frame 'name  nil))
+  (fringe-mode 10))
 
 (add-to-list 'default-frame-alist '(cursor-type  . bar))
 (setq frame-title-format '(:eval (pjones:frame-title-file-name)))
