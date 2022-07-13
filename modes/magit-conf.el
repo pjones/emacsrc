@@ -3,7 +3,6 @@
 ;;; Commentary:
 ;;
 ;;; Code:
-(require 'forge)
 (require 'git-rebase)
 (require 'magit)
 (require 'with-editor)
@@ -18,21 +17,14 @@
            (-flatten (-map ls (funcall ls base)))))))
 
 (custom-set-variables
+ '(magit-repository-directories (pjones:magit-repository-directories))
  '(magit-display-buffer-function 'magit-display-buffer-fullcolumn-most-v1)
  '(magit-popup-use-prefix-argument 'default)
  '(magit-status-margin '(t age magit-log-margin-width nil 18))
  '(magit-status-show-hashes-in-headers t)
  '(magit-section-initial-visibility-alist
-   '(([unpushed status] . show)))
- '(magit-repository-directories
-   (pjones:magit-repository-directories)))
+   '(([unpushed status] . show))))
 
-;; Custom forges (GitLab, Enterprise GitHub, etc.):
-(add-to-list 'forge-alist
-             '("code.rfa.sc.gov"
-               "code.rfa.sc.gov/api/v4"
-               "code.rfa.sc.gov"
-               forge-gitlab-repository))
 ;; Transient settings for magit:
 (add-to-list 'transient-values '(magit-tag "--annotate" "--sign"))
 
