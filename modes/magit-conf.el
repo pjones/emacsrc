@@ -33,6 +33,8 @@
                "code.rfa.sc.gov/api/v4"
                "code.rfa.sc.gov"
                forge-gitlab-repository))
+;; Transient settings for magit:
+(add-to-list 'transient-values '(magit-tag "--annotate" "--sign"))
 
 (defun pjones:git-branch-prefix ()
   "Attempt to extract the current branch prefix."
