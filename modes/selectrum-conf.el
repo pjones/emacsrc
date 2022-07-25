@@ -4,19 +4,18 @@
 ;;
 ;;; Code:
 
-(require 'consult)
-(require 'consult-selectrum)
-(require 'embark)
-(require 'marginalia)
 (require 'selectrum)
 
-(require 'selectrum-prescient)
-(selectrum-prescient-mode)
-
+(declare-function embark-act "embark")
+(declare-function embark-become "embark")
+(declare-function embark-collect-completions "embark")
+(declare-function marginalia-cycle "marginalia")
 (declare-function marginalia-mode "marginalia")
 
 (custom-set-variables
  '(selectrum-display-style '(vertical horizontal))
+ '(selectrum-refine-candidates-function #'orderless-filter)
+ '(selectrum-highlight-candidates-function #'orderless-highlight-matches)
  '(marginalia-annotators
    '(marginalia-annotators-heavy
      marginalia-annotators-light

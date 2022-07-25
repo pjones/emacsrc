@@ -4,16 +4,22 @@
 ;;
 ;;; Code:
 
+(require 'savehist)
+
 (declare-function cape-capf-buster "cape")
 (declare-function cape-dabbrev "cape")
 (declare-function cape-file "cape")
 (declare-function cape-keyword "cape")
 (declare-function cape-tex "cape")
+(declare-function consult-completion-in-region "consult")
 (declare-function corfu-doc-mode "corfu-doc")
 (declare-function corfu-doc-scroll-down "corfu-doc")
 (declare-function corfu-doc-scroll-up "corfu-doc")
+(declare-function corfu-history-mode "corfu-history")
 (declare-function corfu-insert "corfu")
+(declare-function corfu-insert-separator "cofu")
 (declare-function global-corfu-mode "corfu")
+(declare-function orderless-escapable-split-on-space "orderless")
 (declare-function yas-expand "yasnippet")
 (declare-function yas-maybe-expand-abbrev-key-filter "yasnippet")
 
@@ -43,14 +49,43 @@ current line.  Otherwise run the completion command.  ARG is passed to
 
 ;; In buffer completion:
 (defvar corfu-map)
+(defvar corfu--extra)
 
 (defun pjones:corfu-mode-hook ()
   "Hook for `corfu-mode-hook'."
+  (corfu-history-mode 1)
+  (add-to-list 'savehist-additional-variables 'corfu-history)
+  (define-key corfu-map (kbd "SPC") #'corfu-insert-separator)
   (define-key corfu-map (kbd "<return>") #'corfu-insert)
   (define-key corfu-map (kbd "M-p") #'corfu-doc-scroll-down)
-  (define-key corfu-map (kbd "M-n") #'corfu-doc-scroll-up))
+  (define-key corfu-map (kbd "M-n") #'corfu-doc-scroll-up)
+  (define-key corfu-map "\M-m" #'pjones:corfu-move-to-minibuffer))
+
+(defun pjones:corfu-move-to-minibuffer ()
+  "Transfer corfu completion to the minibuffer via consult."
+  (interactive)
+  (let ((completion-extra-properties corfu--extra)
+        completion-cycle-threshold completion-cycling)
+    (apply #'consult-completion-in-region completion-in-region--data)))
+
+(defun pjones:orderless-escapable-split-on-space (string)
+  "Split STRING via `orderless-escapable-split-on-space' then split on slashes."
+  (flatten-tree
+   (mapcar (lambda (str)
+             (split-string str "[/-]"))
+           (orderless-escapable-split-on-space string))))
+
+(defun pjones:orderless-bang-without (pattern _index _total)
+  "Negate matches for orderless.
+PATTERN is passed to `orderless-without-literal'."
+  (cond
+   ((equal "!" pattern)
+    '(orderless-literal . ""))
+   ((string-prefix-p "!" pattern)
+    `(orderless-without-literal . ,(substring pattern 1)))))
 
 (add-hook 'after-init-hook #'global-corfu-mode)
+(add-hook 'after-init-hook #'savehist-mode)
 (add-hook 'corfu-mode-hook #'corfu-doc-mode)
 (add-hook 'corfu-mode-hook #'pjones:corfu-mode-hook)
 
@@ -61,12 +96,13 @@ current line.  Otherwise run the completion command.  ARG is passed to
                     (cape-capf-buster #'cape-dabbrev)))
 
 (custom-set-variables
- '(completions-detailed t)
- '(corfu-scroll-margin 5)
- '(corfu-quit-no-match t)
- '(completion-styles '(orderless partial-completion))
- '(orderless-component-separator #'orderless-escapable-split-on-space)
  '(completion-category-defaults nil)
- '(completion-category-overrides '((file (styles . (partial-completion))))))
+ '(completion-category-overrides '((file (styles . (partial-completion)))))
+ '(completion-styles '(orderless partial-completion basic))
+ '(completions-detailed t)
+ '(corfu-quit-no-match 'separator)
+ '(corfu-scroll-margin 5)
+ '(orderless-component-separator #'pjones:orderless-escapable-split-on-space)
+ '(orderless-style-dispatchers '(pjones:orderless-bang-without)))
 
 ;;; completion.el ends here
