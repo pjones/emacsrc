@@ -12,6 +12,7 @@
 (require 's)
 
 ;; Silence compiler warnings
+(declare-function consult-org-heading "consult")
 (declare-function dbus-send-signal "dbus")
 (declare-function org-appear-mode "org-appear")
 (declare-function org-attach-attach "org-attach")
@@ -570,6 +571,7 @@ version, properly handles tables."
   (define-key map (kbd "C-M-p") #'pjones:org-up-or-prev)
   (define-key map (kbd "C-o") #'pjones:org-open-line)
   (define-key map (kbd "M-<return>") #'pjones:org-insert-item)
+  (define-key map (kbd "M-g i") #'consult-org-heading)
   (define-key map (kbd "M-n") #'org-forward-heading-same-level)
   (define-key map (kbd "M-N") #'org-metadown)
   (define-key map (kbd "M-p") #'org-backward-heading-same-level)
