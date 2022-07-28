@@ -37,7 +37,12 @@
      "* %U %?\n"
      :target (file+head "%<%Y>/%<%m>/%<%Y-%m-%d>.org" "#+title: %<%A, %B %d, %Y>\n")
      :unnarrowed t
-     :empty-lines-before 1))))
+     :empty-lines-before 1)
+     ("m" "Monthly Journal" entry
+      ""
+      :target (file+head "%<%Y>/%<%m>/index.org" "#+title: %<%B, %Y>\n")
+      :unnarrowed t
+      :empty-lines-before 1))))
 
 (defun pjones:org-roam-buffer-name ()
   "Set the buffer name using the org title."
