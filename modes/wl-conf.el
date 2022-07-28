@@ -35,7 +35,8 @@
 
 (custom-set-variables
  '(wl-from "Peter J. Jones <pjones@devalot.com>")
- '(wl-local-domain "pmade.com")
+ '(wl-local-domain "devalot.com")
+ '(elmo-imap4-default-server "imap.fastmail.com")
  '(elmo-imap4-default-stream-type 'ssl)
  '(elmo-imap4-default-authenticate-type 'login)
  '(elmo-passwd-storage-type 'auth-source)
@@ -55,7 +56,7 @@
     ;; Username/host separator:
     "@"
     ;; Domains:
-    (or "devalot.com" "pmade.com")))
+    (or "devalot.com" "pmade.com" "effectiveruby.com")))
 
  '(wl-address-file (expand-file-name "~/notes/contacts/wanderlust.txt"))
  '(elmo-msgdb-directory (concat user-emacs-directory "elmo/"))
@@ -86,9 +87,10 @@
  '(signature-delete-blank-lines-at-eof t)
 
  '(wl-draft-config-alist
-   '(((string-match "pmade\\.com" wl-draft-parent-folder)
+   '(((or (string= "" wl-draft-parent-folder)
+          (string-match "devalot\\.com" wl-draft-parent-folder))
       ("From" . (pjones:wl-generate-from-addr))
-      (wl-smtp-posting-server . "mail.pmade.com")
+      (wl-smtp-posting-server . "smtp.fastmail.com")
       (wl-smtp-posting-user . (pjones:wl-get-user wl-smtp-posting-server))
       (wl-smtp-posting-port . 465)
       (wl-smtp-authenticate-type . "plain")
@@ -169,13 +171,14 @@
 (defvar pjones:wl-devalot-folder-names
   '((:name "INBOX"   :nick "Inbox"  :use default :biff t)
     (:name "subs"    :nick "Subs")
+    (:name "misc"  :nick "Misc")
     (:name "mlists"  :nick "Lists")
     (:name "Archive" :nick "Archive")
     (:name "Drafts"  :nick "Drafts" :use draft)
     (:name "Sent"    :nick "Sent"   :use fcc)
     (:name "Trash"   :nick "Trash"  :use trash)
     (:name "Queue"   :nick "Queue"  :use queue)
-    (:name "Junk"    :nick "Junk")
+    (:name "Spam"    :nick "Spam")
     (:name "Travel"  :nick "Travel")
     (:name "root"    :nick "Root"))
   "Folders and their attributes for Devalot.")
@@ -187,7 +190,7 @@
 
 (defun pjones:wl-devalot-folders-init ()
   "Update `pjones:wl-devalot-folder-names' with Wanderlust entities."
-  (let* ((elmo-imap4-default-server "mail.pmade.com")
+  (let* ((elmo-imap4-default-server "imap.fastmail.com")
          (elmo-imap4-default-user (pjones:wl-get-user elmo-imap4-default-server)))
     (setq pjones:wl-devalot-folder-names
           (mapcar
@@ -244,7 +247,7 @@ PROPS is a property list which looks like `pjones:wl-devalot-folder-names'."
 (defun pjones:wl-set-folder-variables-for (name)
   "Set all folder variables for Wanderlust folder with NAME."
   (pcase name
-    ((pred (string-match-p "pmade\\.com"))
+    ((pred (string-match-p "devalot\\.com"))
      (mapc #'pjones:wl-set-folder-variables pjones:wl-devalot-folder-names))))
 
 (defun pjones:wl-insert-signature (file)
