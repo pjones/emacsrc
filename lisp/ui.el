@@ -1,4 +1,4 @@
-;;; ui.el -- User Interface and Theme Configuration.
+;;; ui.el -- User Interface and Theme Configuration.  -*- lexical-binding: t; -*-
 ;;
 ;;; Commentary:
 ;;
@@ -41,11 +41,6 @@
  '(winum-auto-setup-mode-line nil)
  '(x-mouse-click-focus-ignore-position nil)
  '(x-underline-at-descent-line t))
-
-(custom-set-faces
- '(default ((t (:font "Hermit-10"))))
- '(fixed-pitch ((t (:font "Hermit-10"))))
- '(variable-pitch ((t (:font "Noto Serif-10")))))
 
 ;; Default variables that become buffer/frame local.
 (setq-default
@@ -126,14 +121,23 @@ If PREV is non-nil go to the previous theme."
                       (if (listp dired-directory) (car dired-directory) dired-directory)))))
     (concat "Emacs: " (or file (buffer-name)))))
 
-(defun pjones:configure-new-frame (&optional frame)
+(defun pjones:configure-new-frame (&optional _frame)
   "Hook to configure new frame FRAME."
-  (dolist (mode '(menu-bar-mode tool-bar-mode scroll-bar-mode))
-    (if (and (fboundp mode) (symbol-value mode))
-        (funcall mode -1)))
-  (blink-cursor-mode)
-  (require 'fringe)
-  (fringe-mode 10))
+  (let ((font-fixed "Hermit-10")
+        (font-variable "Noto Serif-10"))
+    (dolist (mode '(menu-bar-mode tool-bar-mode scroll-bar-mode))
+      (if (and (fboundp mode) (symbol-value mode))
+          (funcall mode -1)))
+    (blink-cursor-mode)
+    (require 'fringe)
+    (fringe-mode 10)
+    (when (find-font (font-spec :name font-fixed))
+      (custom-set-faces
+       `(default ((t (:font ,font-fixed))))
+       `(fixed-pitch ((t (:font ,font-fixed))))))
+    (when (find-font (font-spec :name font-variable))
+      (custom-set-faces
+       `(variable-pitch ((t (:font ,font-variable))))))))
 
 (add-to-list 'default-frame-alist '(cursor-type  . bar))
 (setq frame-title-format '(:eval (pjones:frame-title-file-name)))
