@@ -34,6 +34,10 @@
 (defvar org-clock-start-time)
 (defvar whitespace-style)
 
+(defvar pjones:org-publish-directory
+  (expand-file-name "~/public/")
+  "Directory where published files are stored.")
+
 (defun pjones:org-parse-effort-tag (tag)
   "Convert an effort TAG to a number of seconds."
   (if (string-match "^\\([0-9]+\\)\\([mh]\\)$" tag)
@@ -186,7 +190,7 @@
    (quote ("+project+LEVEL=3"
            ("NEXT" "WAITING" "BLOCKED") nil "")))
 
- '(org-agenda-custom-commands
+ `(org-agenda-custom-commands
    (quote (("c" "Current Status"
             ((agenda ""
               ((org-agenda-overriding-header "⚡ Agenda:")
@@ -216,7 +220,8 @@
                 (org-agenda-remove-tags nil)
                 (org-agenda-todo-keyword-format "")
                 (org-agenda-cmp-user-defined #'pjones:org-sort-next-actions)
-                (org-agenda-sorting-strategy '(user-defined-up))))))
+                (org-agenda-sorting-strategy '(user-defined-up)))))
+            nil (,(concat pjones:org-publish-directory "gtd/agenda.html")))
            ("p" "Project List"
             ((tags "+project+LEVEL=3")))
            ("T" "Travel Schedule"
@@ -273,14 +278,14 @@
       linkcolor=blue,
       urlcolor=blue\n}\n")
 
- '(org-publish-project-alist
+ `(org-publish-project-alist
    '(("gtd"
       :base-directory "~/notes/gtd/"
       :base-extension "org"
       :recursive t
       :exclude "archive\\.org$"
       :publishing-function org-html-publish-to-html
-      :publishing-directory "~/public/gtd/"
+      :publishing-directory ,(concat pjones:org-publish-directory "gtd/")
       :section-numbers t
       :with-broken-links t
       :with-toc 2
@@ -305,7 +310,7 @@
       :preparation-function pjones:org-roam-before-publish
       :completion-function pjones:org-roam-after-publish
       :publishing-function org-html-publish-to-html
-      :publishing-directory "~/public/wiki"
+      :publishing-directory ,(concat pjones:org-publish-directory "wiki/")
       :section-numbers t
       :with-broken-links t
       :with-toc nil
@@ -320,7 +325,7 @@
       :base-directory "~/notes/attachments/"
       :base-extension 'any
       :recursive t
-      :publishing-directory "~/public/attachments/"
+      :publishing-directory ,(concat pjones:org-publish-directory "attachments/")
       :publishing-function org-publish-attachment)
      ("notes"
       :components ("wiki" "gtd" "attachments")))))
