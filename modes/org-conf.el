@@ -577,6 +577,18 @@ version, properly handles tables."
   (define-key map (kbd "M-p") #'org-backward-heading-same-level)
   (define-key map (kbd "M-P") #'org-metaup))
 
+(defmacro pjones:org-eval-in-calendar (function)
+  "Generate a command to call FUNCTION from within `org-eval-in-calendar'."
+  `(defun ,(intern (concat "pjones:org-eval-in-calednar-" (symbol-name function))) ()
+    (interactive)
+    (org-eval-in-calendar '(,function 1))))
+
+(let ((map org-read-date-minibuffer-local-map))
+  (define-key map (kbd "M-b") (pjones:org-eval-in-calendar calendar-backward-day))
+  (define-key map (kbd "M-f") (pjones:org-eval-in-calendar calendar-forward-day))
+  (define-key map (kbd "M-p") (pjones:org-eval-in-calendar calendar-backward-week))
+  (define-key map (kbd "M-n") (pjones:org-eval-in-calendar calendar-forward-week)))
+
 ;;; Hooks
 (add-hook 'org-mode-hook #'org-appear-mode)
 (add-hook 'org-mode-hook #'org-superstar-mode)
