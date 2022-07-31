@@ -64,6 +64,16 @@
     (cond ((< ta tb) -1)
           ((< tb ta) +1))))
 
+(defun pjones:org-time-stamp (&optional inactive time)
+  "Return an `org-mode' timestamp.
+If INACTIVE is non-nil, make the timestamp inactive.
+If TIME is nil then use the current time."
+  (let* ((style (cdr org-time-stamp-formats))
+         (fmt (if inactive
+                  (concat "[" (substring style 1 -1) "]")
+                style)))
+    (format-time-string fmt time)))
+
 ;; General Org Settings
 (custom-set-variables
  ;; Visual Settings:

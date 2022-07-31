@@ -34,8 +34,8 @@
 
  '(org-roam-dailies-capture-templates
    '(("d" "Daily Journal" entry
-     "* %U %?\n"
-     :target (file+head "%<%Y>/%<%m>/%<%Y-%m-%d>.org" "#+title: %<%A, %B %d, %Y>\n")
+     "* %?\n  %(pjones:org-time-stamp t)\n"
+     :target (file+head "%<%Y>/%<%m>/%<%Y-%m-%d>.org" "#+title: %<%A, %B %d, %Y>\n#+date: %u\n")
      :unnarrowed t
      :empty-lines-before 1)
      ("m" "Monthly Journal" entry
