@@ -605,6 +605,7 @@ version, properly handles tables."
   (define-key map (kbd "M-n") (pjones:org-eval-in-calendar calendar-forward-week)))
 
 ;;; Hooks
+(add-hook 'org-agenda-after-show-hook #'org-narrow-to-subtree)
 (add-hook 'org-mode-hook #'org-appear-mode)
 (add-hook 'org-mode-hook #'org-superstar-mode)
 
