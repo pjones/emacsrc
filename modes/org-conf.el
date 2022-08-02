@@ -397,10 +397,11 @@ If TIME is nil then use the current time."
 (defun pjones:org-hide-others ()
   "Close all headings except the heading at point."
   (interactive)
-  (org-back-to-heading)
-  (org-overview)
-  (org-show-set-visibility 'tree)
-  (org-show-entry))
+  (save-excursion
+    (org-back-to-heading)
+    (org-overview)
+    (org-show-set-visibility 'tree)
+    (org-show-entry)))
 
 (defun pjones:org-hide-all ()
   "Close all headings, move to bob."
@@ -605,7 +606,7 @@ version, properly handles tables."
   (define-key map (kbd "M-n") (pjones:org-eval-in-calendar calendar-forward-week)))
 
 ;;; Hooks
-(add-hook 'org-agenda-after-show-hook #'org-narrow-to-subtree)
+(add-hook 'org-agenda-after-show-hook #'pjones:org-hide-others)
 (add-hook 'org-mode-hook #'org-appear-mode)
 (add-hook 'org-mode-hook #'org-superstar-mode)
 
