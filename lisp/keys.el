@@ -14,6 +14,16 @@ If buffer NAME doesn't exist, COMMAND can be used to create it."
       (if buf (display-buffer buf)
         ,(if command `(,command) 'nil)))))
 
+(defmacro pjones:in-home-dir (func)
+  "Generate an interactive function to call FUNC from within $HOME.
+The original intent of this macro is to clobber `default-directory'
+for some interactive commands so that tramp doesn't try to make a new
+connection."
+  `(lambda ()
+     (interactive)
+     (let ((default-directory (expand-file-name "~")))
+       (call-interactively ,func))))
+
 ;; Loading `link-hint' will also load my settings and custom functions
 ;; for it.
 (autoload 'pjones:link-hint-open-link "link-hint")
@@ -139,9 +149,9 @@ If buffer NAME doesn't exist, COMMAND can be used to create it."
  [remap other-window] #'ace-select-window
  [remap rectangle-number-lines] #'pjones:rectangle-number-lines
  [remap save-buffers-kill-emacs] #'pjones:maybe-save-buffers-kill-terminal
- [remap switch-to-buffer-other-frame] #'consult-buffer-other-frame
- [remap switch-to-buffer-other-window] #'consult-buffer-other-window
- [remap switch-to-buffer] #'consult-buffer
+ [remap switch-to-buffer-other-frame] (pjones:in-home-dir #'consult-buffer-other-frame)
+ [remap switch-to-buffer-other-window] (pjones:in-home-dir #'consult-buffer-other-window)
+ [remap switch-to-buffer] (pjones:in-home-dir #'consult-buffer)
  [remap yank-pop] #'consult-yank-pop
  [remap zap-to-char] #'zap-up-to-char)
 
