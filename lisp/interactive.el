@@ -11,8 +11,9 @@
 (declare-function pjones:erc-bitlbee "../modes/erc-conf.el")
 (declare-function pjones:projectile-project-root "../modes/projectile-conf.el")
 
-(declare-function puni-kill-line "puni")
 (declare-function puni-kill-active-region "puni")
+(declare-function puni-kill-line "puni")
+(declare-function vterm "vterm")
 
 (defvar puni-mode)
 
@@ -86,20 +87,13 @@ When LOCAL-ONLY is non-nil, only connect to Bitlbee."
   (pjones:erc-bitlbee)
   (unless local-only (pjones:erc-freenode)))
 
-(defun pjones:start-term (&optional dont-ask)
-  "Start a new terminal buffer in the current project.
-If DONT-ASK is non-nil, don't prompt for a project."
-  (interactive "P")
-  (require 'term)
-  (let* ((default-directory (pjones:projectile-project-root dont-ask))
-         (short (directory-file-name (file-relative-name default-directory "~/")))
-         (name (generate-new-buffer-name (concat "term:" short)))
-         (buffer (get-buffer-create name)))
-    (with-current-buffer buffer
-      (term-mode)
-      (term-exec buffer name (getenv "SHELL") nil nil)
-      (term-char-mode))
-    (pop-to-buffer buffer)))
+(defun pjones:start-term ()
+  "Start a new terminal buffer."
+  (interactive)
+  (if (file-remote-p default-directory)
+      (let ((default-directory (expand-file-name "~/")))
+        (call-interactively #'vterm))
+    (call-interactively #'vterm)))
 
 (defun pjones:start-http ()
   "Create a new buffer running `http-mode'."

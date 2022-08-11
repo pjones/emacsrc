@@ -81,6 +81,7 @@ connection."
  (kbd "C-c M-w") #'pjones:kill-file-name
  (kbd "C-c p g") #'pjones:pwgen
  (kbd "C-c p l") #'passmm-list-passwords
+ (kbd "C-c p s") #'pjones:start-term
  (kbd "C-c p p") #'passmm-completing-read
  (kbd "C-c R") #'pjones:rename-current-file
  (kbd "C-c r") #'revert-buffer-quick
