@@ -18,8 +18,9 @@
 
 (let ((map vterm-mode-map))
   (define-key map (kbd "C-c C-d") #'pjones:vterm-change-dir)
-  (define-key map (kbd "C-c C-r") #'pjones:vterm-toggle-name)
   (define-key map (kbd "C-c C-g") #'vterm-send-C-g)
+  (define-key map (kbd "C-c C-r") #'pjones:vterm-restore-cursor)
+  (define-key map (kbd "C-c C-M-r") #'pjones:vterm-toggle-name)
   (define-key map (kbd "C-c C-x") #'vterm-send-C-x))
 
 (defun pjones:vterm-change-dir (dir)
@@ -43,14 +44,18 @@
   (vterm--set-title pjones:vterm-title)
   (force-mode-line-update))
 
+(defun pjones:vterm-restore-cursor ()
+  "Restore the `vterm' buffer cursor to the frame default."
+  (interactive)
+  (setq cursor-type (alist-get 'cursor-type default-frame-alist)))
+
 (defun pjones:vterm-mode-hook ()
   "Mode hook for `vterm-mode'."
   (puni-mode -1)) ; Disable puni mode.
 
 (defun pjones:vterm-copy-mode-hook ()
   "Mode hook for `vterm-copy-mode'."
-  ;; Restore cursor if it was forced to block:
-  (setq cursor-type (alist-get 'cursor-type default-frame-alist))
+  (pjones:vterm-restore-cursor)
   ;; Don't move beyond prompt, breaks copy mode:
   (setq-local next-line-add-newlines nil))
 
@@ -58,6 +63,7 @@
   "Wrapper around `vterm--set-title'.
 ORIG is the original version of `vterm--set-title' and TITLE is the
 new title to use."
+  (pjones:vterm-restore-cursor)
   (setq-local pjones:vterm-title title)
   (if vterm-buffer-name-string
       (progn
