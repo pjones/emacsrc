@@ -11,6 +11,15 @@
 (declare-function pjones:projectile-compile-project "./projectile-conf")
 (declare-function vterm "vterm")
 
+(custom-set-variables
+ '(project-switch-commands
+   '((magit-project-status "Magit" ?m)
+     (pjones:project-vterm "VTerm" ?s)
+     (project-async-shell-command "Async Command" ?&)
+     (project-dired "Dired" ?d)
+     (project-shell-command "Shell Command" ?!)
+     (projectile-find-file "Find File" ?f))))
+
 (defun pjones:project-vterm ()
   "Start a `vterm' for the current project.
 Ensures that the buffer name doesn't change so it can be found again."
