@@ -175,9 +175,11 @@ If TIME is nil then use the current time."
 
  ;; Stuff for org-agenda.
  '(org-agenda-files
-   (quote ("~/notes/gtd/routines.org"
-           "~/notes/gtd/projects.org"
-           "~/notes/gtd/inbox.org")))
+   '("~/notes/gtd/inbox.org"
+     "~/notes/gtd/projects.org"
+     "~/notes/gtd/rfa.org"
+     "~/notes/gtd/routines.org"
+     "~/notes/gtd/school.org"))
 
  '(org-agenda-window-setup (quote current-window))
  '(org-agenda-todo-ignore-with-date nil)
