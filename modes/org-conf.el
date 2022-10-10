@@ -89,7 +89,7 @@ If TIME is nil then use the current time."
  '(org-duration-format (quote h:mm))
  '(org-hide-emphasis-markers t)
  '(org-adapt-indentation t)
- '(org-appear-autolinks t)
+ '(org-appear-autolinks nil)
  '(org-appear-autosubmarkers t)
  '(org-appear-autoentities t)
  '(org-appear-autokeywords t)
