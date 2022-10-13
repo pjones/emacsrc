@@ -84,6 +84,13 @@ PATTERN is passed to `orderless-without-literal'."
    ((string-prefix-p "!" pattern)
     `(orderless-without-literal . ,(substring pattern 1)))))
 
+;; FIXME: corfu-doc assumes that this function exists, but it only
+;; exists in newer versions of corfu.  So I have to paste it in here
+;; until nixpkgs updates corfu too.
+(defun corfu--popup-support-p ()
+  "Return non-nil if child frames are supported."
+  (display-graphic-p))
+
 (add-hook 'after-init-hook #'global-corfu-mode)
 (add-hook 'after-init-hook #'savehist-mode)
 (add-hook 'corfu-mode-hook #'corfu-doc-mode)
