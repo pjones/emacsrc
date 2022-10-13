@@ -24,6 +24,18 @@
       forAllSystems = f:
         nixpkgs.lib.genAttrs supportedSystems (system: f system);
 
+      # Like `forAllSystems` except just those that are Linux:
+      forLinuxSystems = f: builtins.listToAttrs
+        (builtins.filter (set: set ? name)
+          (builtins.map
+            (system:
+              let pkgs = nixpkgsFor.${system}; in
+              nixpkgs.lib.optionalAttrs pkgs.stdenv.isLinux {
+                name = system;
+                value = f system;
+              })
+            supportedSystems));
+
       # Attribute set of nixpkgs for each system:
       nixpkgsFor = forAllSystems (system:
         import nixpkgs { inherit system; });
@@ -56,11 +68,13 @@
           };
         });
 
-      checks.x86_64-linux.default = import ./test {
-        inherit home-manager;
-        pkgs = nixpkgsFor.x86_64-linux;
-        module = self.homeManagerModules.default;
-      };
+      checks = forLinuxSystems (system: {
+        default = import ./test {
+          inherit home-manager;
+          pkgs = nixpkgsFor.${system};
+          module = self.homeManagerModules.default;
+        };
+      });
 
       homeManagerModules.default = { pkgs, ... }: {
         imports = [
