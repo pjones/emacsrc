@@ -15,6 +15,8 @@ in
   };
 
   config = lib.mkIf cfg.enable {
+    home.stateVersion = lib.mkDefault "22.11";
+
     home.packages = [
       emacsrc
     ];
