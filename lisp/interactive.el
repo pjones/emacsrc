@@ -4,17 +4,24 @@
 ;;
 ;;; Code:
 
-(require 'flycheck)
-(require 'flymake)
+(declare-function pjones:erc-bitlbee "../modes/erc-conf")
+(declare-function pjones:erc-freenode "../modes/erc-conf")
+(declare-function pjones:flymake-goto-next-error "../modes/flymake-conf")
+(declare-function pjones:markdown-visual-line "../modes/markdown-mode-conf")
+(declare-function pjones:projectile-project-root "../modes/projectile-conf")
 
-(declare-function pjones:erc-freenode "../modes/erc-conf.el")
-(declare-function pjones:erc-bitlbee "../modes/erc-conf.el")
-(declare-function pjones:projectile-project-root "../modes/projectile-conf.el")
-
+(declare-function cl-position "cl-seq")
+(declare-function dired-rename-file "dired-aux")
+(declare-function flycheck-next-error "flycheck")
+(declare-function http-mode "http")
+(declare-function markdown-mode "markdown-mode")
+(declare-function project-root "project")
 (declare-function puni-kill-active-region "puni")
 (declare-function puni-kill-line "puni")
 (declare-function vterm "vterm")
 
+(defvar flycheck-mode)
+(defvar flymake-mode)
 (defvar puni-mode)
 
 (defun pjones:maybe-save-buffers-kill-terminal (&optional arg)
@@ -183,6 +190,7 @@ absolute path name."
 ;; Adapted from: https://github.com/hlissner/doom-emacs/
 (defun pjones:next-file (n)
   "Return the name of the Nth next file."
+  (require 'cl-seq)
   (unless buffer-file-name
     (user-error "Must be called from a file-visiting buffer"))
   (let* ((directory (file-name-directory buffer-file-name))

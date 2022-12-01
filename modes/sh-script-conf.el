@@ -11,7 +11,8 @@
 
 (reformatter-define sh-format
   :program "shfmt"
-  :args '("-i" "2"))
+  :args '("-i" "2")
+  :group 'sh-mode)
 
 (add-to-list 'sh-mode-hook #'sh-format-on-save-mode)
 

@@ -18,10 +18,10 @@
 
 (let ((map vterm-mode-map))
   (define-key map (kbd "C-c C-d") #'pjones:vterm-change-dir)
-  (define-key map (kbd "C-c C-g") #'vterm-send-C-g)
   (define-key map (kbd "C-c C-r") #'pjones:vterm-restore-cursor)
   (define-key map (kbd "C-c C-M-r") #'pjones:vterm-toggle-name)
-  (define-key map (kbd "C-c C-x") #'vterm-send-C-x))
+  (define-key map (kbd "C-c C-x") #'vterm--self-insert)
+  (define-key map (kbd "C-c M-x") #'vterm--self-insert))
 
 (defun pjones:vterm-change-dir (dir)
   "Change to DIR in the current vterm shell."

@@ -9,6 +9,10 @@
 ;; fails during a nix-build.
 ;; (require 'indium)
 
+(declare-function indium-eval "indium-interaction")
+(defvar indium-interaction-mode-map)
+(defvar indium-repl-mode-map)
+
 (defun pjones:indium-eval-buffer ()
   "Eval the entire buffer."
   (interactive)

@@ -57,7 +57,7 @@ targets."
 FN and ARGS are the advised function and original arguments."
   (which-key--hide-popup-ignore-command)
   (let ((embark-indicators
-         (remq #'embark-which-key-indicator embark-indicators)))
+         (remq #'pjones:embark-which-key-indicator embark-indicators)))
       (apply fn args)))
 
 (advice-add #'embark-completing-read-prompter
