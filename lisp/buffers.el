@@ -14,8 +14,6 @@
 (eval-when-compile
   (require 'subr-x))
 
-(require 'dash)
-
 (defmacro pjones:buffer-conditions (names-or-modes)
   "Generate a condition function for `display-buffer-alist'.
 

@@ -6,13 +6,17 @@
 (eval-when-compile
   (require 'saveplace))
 
-;;; Dependencies:
-(require 'dumb-jump)
-(require 'flycheck)
-(require 'projectile)
-
+(declare-function compilation-read-command "compile")
+(declare-function dumb-jump-xref-activate "dumb-jump")
+(declare-function flycheck-mode "flycheck")
 (declare-function indium-connect-to-chrome "indium")
 (declare-function indium-run-node "indium")
+(declare-function projectile-compilation-command "projectile")
+(declare-function projectile-compilation-dir "projectile")
+(declare-function projectile-project-name "projectile")
+(declare-function projectile-project-p "projectile")
+(declare-function s-trim "s")
+(defvar projectile-compilation-cmd-map)
 
 ;; Create some faces
 (defface pjones:fixme-face
@@ -22,6 +26,7 @@
 
 (defun pjones:compilation-buffer-name-function (mode-name)
   "Per-project compilation buffers for MODE-NAME."
+  (require 'projectile)
   (concat "*" (downcase mode-name)
           (if (projectile-project-p)
               (concat ":" (projectile-project-name))
@@ -34,6 +39,8 @@
 If ASK is non-nil, prompt for a compile command even if it has
 already been cached."
   (interactive "P")
+  (require 'projectile)
+  (require 'compile)
   (let* ((compilation-buffer-name-function 'pjones:compilation-buffer-name-function)
          (default-directory (projectile-compilation-dir))
          (default-command (projectile-compilation-command default-directory))
@@ -48,6 +55,7 @@ already been cached."
 (defun pjones:comment-bar ()
   "Create a comment bar based on the current mode."
   (interactive)
+  (require 's)
   (let* ((cs (s-trim comment-start))
          (col (current-column))
          (info (cond
@@ -100,6 +108,8 @@ Calls `comment-indent-new-line' with ARGS."
 
 (defun pjones:prog-mode-hook ()
   "Settings and bindings for programming modes."
+  (require 'flycheck)
+  (require 'dumb-jump)
   (setq comment-empty-lines t)
   (setq-local comment-auto-fill-only-comments t)
   (setq-local comment-line-break-function #'pjones:comment-line-break-function)
