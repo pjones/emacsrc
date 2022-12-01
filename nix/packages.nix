@@ -115,8 +115,8 @@ emacsWithOverrides.emacsWithPackages (epkgs:
     rust-mode # A major-mode for editing Rust source code
     sage-shell-mode # A front-end for Sage Math
     scad-mode # A major mode for editing OpenSCAD code
-    selectrum # Easily select item from list
     typescript-mode # Major mode for editing typescript
+    vertico # VERTical Interactive COmpletion
     visual-fill # Auto-refill paragraphs without modifying the buffer
     vlf # View Large Files
     vterm # Fully-featured terminal emulator

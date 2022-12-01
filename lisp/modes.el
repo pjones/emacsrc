@@ -11,7 +11,7 @@
 (declare-function pdf-tools-install "pdf-tools")
 (declare-function projectile-mode "projectile")
 (declare-function puni-global-mode "puni")
-(declare-function selectrum-mode "selectrum")
+(declare-function vertico-mode "vertico")
 (declare-function which-key-mode "which-key")
 (declare-function winum-mode "winum")
 (declare-function yas-global-mode "yasnippet")
@@ -47,7 +47,7 @@
   (global-prettify-symbols-mode)     ; Replace buffer symbols.
   (minions-mode)                     ; Minor-mode menu.
   (projectile-mode)                  ; Project tool
-  (selectrum-mode)                   ; minibuffer completions.
+  (vertico-mode)                     ; minibuffer completions.
   (show-paren-mode)                  ; Highlight matching brackets.
   (which-key-mode)                   ; Remind me what keys do.
   (winner-mode)                      ; Track win conifg changes
