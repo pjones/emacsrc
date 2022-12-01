@@ -112,12 +112,20 @@ If WORD is non-nil then generate a simple password."
     (insert pw)))
 
 (defun pjones:kill-file-name (&optional full-path)
-  "Kill the base name of the buffer's file.
-When FULL-PATH is non-nil kill the entire path for the file."
-  (interactive "P")
-  (let* ((path (buffer-file-name))
-         (name (file-name-nondirectory path)))
-    (kill-new (if full-path path name))))
+  "Kill the base name of the current buffer's file.
+
+With a prefix argument (FULL-PATH is 4) make the path relative to
+the project.  With two prefix arguments (FULL-PATH is 16) use the
+absolute path name."
+  (interactive "p")
+  (let ((project (project-current)))
+    (kill-new
+     (cond
+      ((and project (= full-path 4))
+       (file-relative-name (buffer-file-name)
+                           (project-root project)))
+      ((>= full-path 4) (buffer-file-name))
+      (t (file-name-nondirectory (buffer-file-name)))))))
 
 (defun pjones:kill-whole-buffer ()
   "Kill the entire buffer contents."
