@@ -9,7 +9,9 @@
 
 ;; Port this function to project.el:
 (declare-function pjones:projectile-compile-project "./projectile-conf")
+
 (declare-function vterm "vterm")
+(declare-function magit-project-status "magit-extras")
 
 (custom-set-variables
  '(project-switch-commands
@@ -36,6 +38,7 @@ Ensures that the buffer name doesn't change so it can be found again."
   (define-key map (kbd "d") #'project-dired)
   (define-key map (kbd "D") #'project-find-dir)
   (define-key map (kbd "f") #'projectile-find-file)
+  (define-key map (kbd "m") #'magit-project-status)
   (define-key map (kbd "r") #'projectile-run-project)
   (define-key map (kbd "s") #'pjones:project-vterm)
   (define-key map (kbd "t") #'projectile-test-project))
