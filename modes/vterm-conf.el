@@ -17,6 +17,7 @@
   '(vterm-buffer-name-string "vterm %s"))
 
 (let ((map vterm-mode-map))
+  (define-key map (kbd "M-'") nil)
   (define-key map (kbd "C-c C-d") #'pjones:vterm-change-dir)
   (define-key map (kbd "C-c C-r") #'pjones:vterm-restore-cursor)
   (define-key map (kbd "C-c C-M-r") #'pjones:vterm-toggle-name)
