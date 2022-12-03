@@ -97,6 +97,16 @@ connection."
 (declare-function rotate-layout "rotate")
 (declare-function which-key-show-top-level "which-key")
 (declare-function winner-undo "winner")
+(declare-function winum-select-window-0-or-10 "winum")
+(declare-function winum-select-window-1 "winum")
+(declare-function winum-select-window-2 "winum")
+(declare-function winum-select-window-3 "winum")
+(declare-function winum-select-window-4 "winum")
+(declare-function winum-select-window-5 "winum")
+(declare-function winum-select-window-6 "winum")
+(declare-function winum-select-window-7 "winum")
+(declare-function winum-select-window-8 "winum")
+(declare-function winum-select-window-9 "winum")
 
 (defun pjones:global-set-keys (key def &rest bindings)
   "Call `global-set-key' for KEY and DEF and each pair in BINDINGS."
@@ -197,6 +207,18 @@ connection."
  (kbd "M-<backspace>") (lambda () (interactive) (kill-buffer))
  (kbd "M-`") #'consult-register-store
  (kbd "M-RET") #'delete-blank-lines
+
+ ;; Window movement keys:
+ (kbd "C-0") #'winum-select-window-0-or-10
+ (kbd "C-1") #'winum-select-window-1
+ (kbd "C-2") #'winum-select-window-2
+ (kbd "C-3") #'winum-select-window-3
+ (kbd "C-4") #'winum-select-window-4
+ (kbd "C-5") #'winum-select-window-5
+ (kbd "C-6") #'winum-select-window-6
+ (kbd "C-7") #'winum-select-window-7
+ (kbd "C-8") #'winum-select-window-8
+ (kbd "C-9") #'winum-select-window-9
 
  ;; Overriding default key bindings
  [remap apropos-command] #'consult-apropos
