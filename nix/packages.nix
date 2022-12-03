@@ -84,6 +84,7 @@ emacsWithOverrides.emacsWithPackages (epkgs:
     marginalia # Enrich existing commands with completion annotations
     markdown-mode # Major mode for Markdown-formatted text
     mermaid-mode # Emacs major mode for working with mermaid graphs
+    mini-frame # Show minibuffer in child frame on read-from-minibuffer
     minions # A minor-mode menu for the mode line
     nix-mode # Major mode for editing .nix files
     no-littering # help keeping ~/.emacs.d clean
@@ -102,6 +103,7 @@ emacsWithOverrides.emacsWithPackages (epkgs:
     passmm # A minor mode for pass (Password Store).
     password-store # Password store (pass) support
     pdf-tools # Support library for PDF documents
+    posframe # Pop a posframe (just a frame) at point
     prescient # Better sorting and filtering
     project # Operations on the current project
     projectile # Manage and navigate projects in Emacs easily
@@ -125,6 +127,7 @@ emacsWithOverrides.emacsWithPackages (epkgs:
     weyland-yutani-theme # Emacs theme based off Alien movie franchise
     wgrep # Writable grep buffer and apply the changes to files
     which-key # Display available keybindings in popup
+    which-key-posframe # Using posframe to show which-key
     winum # Navigate windows and frames using numbers.
     yaml-mode # Major mode for editing YAML files
     yasnippet # Yet another snippet extension for Emacs

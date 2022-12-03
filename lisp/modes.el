@@ -7,6 +7,7 @@
 (declare-function default-text-scale-mode "default-text-scale")
 (declare-function envrc-global-mode "envrc")
 (declare-function global-diff-hl-mode "diff-hl")
+(declare-function mini-frame-mode "mini-frame")
 (declare-function minions-mode "minions")
 (declare-function pdf-tools-install "pdf-tools")
 (declare-function projectile-mode "projectile")
@@ -45,6 +46,7 @@
   (global-auto-revert-mode)          ; External changes cause a revert
   (global-diff-hl-mode)              ; Show what changes in a buffer
   (global-prettify-symbols-mode)     ; Replace buffer symbols.
+  (mini-frame-mode)                  ; Mini-buffer in a frame
   (minions-mode)                     ; Minor-mode menu.
   (projectile-mode)                  ; Project tool
   (vertico-mode)                     ; minibuffer completions.

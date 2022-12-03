@@ -10,17 +10,14 @@
 ;; Port this function to project.el:
 (declare-function pjones:projectile-compile-project "./projectile-conf")
 
-(declare-function vterm "vterm")
 (declare-function magit-project-status "magit-extras")
+(declare-function pjones:keymap-popup-show "../lisp/interactive")
+(declare-function vterm "vterm")
 
-(custom-set-variables
- '(project-switch-commands
-   '((magit-project-status "Magit" ?m)
-     (pjones:project-vterm "VTerm" ?s)
-     (project-async-shell-command "Async Command" ?&)
-     (project-dired "Dired" ?d)
-     (project-shell-command "Shell Command" ?!)
-     (projectile-find-file "Find File" ?f))))
+(defun pjones:project-switch-commands ()
+  "Choose an operation to perform on the current project."
+  (interactive)
+  (pjones:keymap-popup-show 'project-prefix-map))
 
 (defun pjones:project-vterm ()
   "Start a `vterm' for the current project.
@@ -32,6 +29,9 @@ Ensures that the buffer name doesn't change so it can be found again."
                  (setq-local vterm-buffer-name-string nil)
                  (rename-buffer arg))))
       (call-interactively #'project-shell)))
+
+(custom-set-variables
+ '(project-switch-commands 'pjones:project-switch-commands))
 
 (let ((map project-prefix-map))
   (define-key map (kbd "c") #'pjones:projectile-compile-project)

@@ -84,6 +84,11 @@ buffer name, or symbols that match a major mode."
         '("\\*Org Agenda\\*"
           Man-mode
           magit-status-mode))
-      (display-buffer-same-window)))))
+      (display-buffer-same-window))
+
+     ;; Show in a child-frame via mini-frame:
+     (,(pjones:buffer-conditions
+        '("\\*Embark Actions\\*"))
+      (mini-frame--display-completions)))))
 
 ;;; buffers.el ends here
