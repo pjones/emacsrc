@@ -98,6 +98,7 @@ emacsWithOverrides.emacsWithPackages (epkgs:
     org-superstar # Make org-mode stars a little more super
     org-tree-slide # A presentation tool for org-mode
     orgalist # Manage Org-like lists in non-Org buffers
+    package-lint # A linting library for elisp package authors
     passmm # A minor mode for pass (Password Store).
     password-store # Password store (pass) support
     pdf-tools # Support library for PDF documents
