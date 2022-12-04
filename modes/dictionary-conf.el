@@ -1,4 +1,12 @@
-;;; dictionary-conf.el -- Confirmation for dictionary.el
+;;; dictionary-conf.el -- Settings for `dictionary' -*- lexical-binding: t -*-
+;;
+;;; Commentary:
+;;
+;;; Code:
 
-;; dict --match --strategy soundex "$@"
-;; dict --match --strategy lev     "$@"
+(require 'dictionary)
+
+(custom-set-variables
+  '(dictionary-server "dict.org"))
+
+;;; dictionary-conf.el ends here
