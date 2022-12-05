@@ -21,7 +21,8 @@ for some interactive commands so that tramp doesn't try to make a new
 connection."
   `(lambda ()
      (interactive)
-     (let ((default-directory (expand-file-name "~")))
+     (let ((default-directory (expand-file-name "~"))
+           (this-command ,func))
        (call-interactively ,func))))
 
 ;; Loading `link-hint' will also load my settings and custom functions
