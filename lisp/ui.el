@@ -19,7 +19,6 @@
  '(describe-bindings-outline t)
  '(echo-keystrokes 0.1)
  '(enable-recursive-minibuffers t)
- '(focus-follows-mouse t)
  '(goto-line-history-local t)
  '(inhibit-startup-message t)
  '(initial-scratch-message nil)

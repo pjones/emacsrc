@@ -10,6 +10,7 @@
  '(which-key-idle-secondary-delay 0.1)
  '(which-key-show-docstrings t)
  '(which-key-max-description-length 42)
- '(which-key-show-remaining-keys t))
+ '(which-key-show-remaining-keys t)
+ '(which-key-side-window-location '(bottom right)))
 
 ;;; which-key-conf.el ends here

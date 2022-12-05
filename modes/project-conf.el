@@ -10,8 +10,9 @@
 ;; Port this function to project.el:
 (declare-function pjones:projectile-compile-project "./projectile-conf")
 
-(declare-function vterm "vterm")
 (declare-function magit-project-status "magit-extras")
+(declare-function pjones:keymap-popup-show "../lisp/interactive")
+(declare-function vterm "vterm")
 
 (custom-set-variables
  '(project-switch-commands
