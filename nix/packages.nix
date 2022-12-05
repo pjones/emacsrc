@@ -119,6 +119,7 @@ emacsWithOverrides.emacsWithPackages (epkgs:
     scad-mode # A major mode for editing OpenSCAD code
     typescript-mode # Major mode for editing typescript
     vertico # VERTical Interactive COmpletion
+    vertico-posframe # Using posframe to show Vertico
     visual-fill # Auto-refill paragraphs without modifying the buffer
     vlf # View Large Files
     vterm # Fully-featured terminal emulator
