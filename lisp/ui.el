@@ -197,7 +197,7 @@ The mode construct list is then returned."
 ;; Hooks:
 (add-hook 'after-init-hook
   (defun pjones:set-initial-theme ()
-    (pjones:load-theme 'doom-challenger-deep)))
+    (pjones:load-theme 'doom-tokyo-night)))
 
 (add-hook 'after-init-hook #'pjones:configure-new-frame)
 (add-hook 'after-make-frame-functions #'pjones:configure-new-frame)
