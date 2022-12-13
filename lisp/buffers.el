@@ -64,20 +64,27 @@ buffer name, or symbols that match a major mode."
           "\\*magit-.*popup"
           "\\*Occur\\*"
           "\\*transient"
-          comint-mode
-          compilation-mode
-          grep-mode
-          haskell-interactive-mode
           help-mode
-          inferior-python-mode
-          pdf-outline-buffer-mode
-          rg-mode
-          shell-mode))
+          pdf-outline-buffer-mode))
       (display-buffer-reuse-window
        display-buffer-reuse-mode-window
        display-buffer-in-direction)
       (direction . below)
       (window-height . 0.4))
+
+     ;; Buffers that should pop out into a new frame:
+     (,(pjones:buffer-conditions
+        '(comint-mode
+          compilation-mode
+          grep-mode
+          haskell-interactive-mode
+          rg-mode
+          shell-mode))
+      (display-buffer-reuse-window
+       display-buffer-reuse-mode-window
+       display-buffer-pop-up-frame)
+      (inhibit-switch-frame . t)
+      (reusable-frames . visible))
 
      ;; Buffers that should take over the current window:
      (,(pjones:buffer-conditions
