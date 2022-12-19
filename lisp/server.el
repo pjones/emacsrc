@@ -27,6 +27,19 @@
   (when (string= server-name "mail")
     (pjones:load-theme 'doom-molokai)))
 
+(custom-set-variables
+ ;; Ensure that the current frame is used to display server buffers.
+ ;; I have no idea why this needs to be set, but without it the
+ ;; '--create-frame' flag to emacsclient opens files in the wrong
+ ;; frame.
+ '(server-window
+   (lambda (buffer)
+     (let ((display-buffer-alist
+            '((".*" .
+               ((display-buffer-same-window) .
+                nil)))))
+       (pop-to-buffer buffer)))))
+
 (add-hook 'pjones:after-server-hook #'pjones:mail-server-hook)
 (add-hook 'pjones:after-server-hook #'pjones:notes-server-hook)
 
