@@ -12,10 +12,7 @@
 (defun pjones:browse-url-browser-function (url &rest _args)
   "Open URL in a external browser."
   (interactive)
-  (let ((prog
-         (if (s-prefix-p "file:" url)
-             "browser-sidebar"
-           "browser-main")))
+  (let ((prog "browser"))
     (async-start-process prog prog nil url)))
 
 (setq browse-url-browser-function #'pjones:browse-url-browser-function)
