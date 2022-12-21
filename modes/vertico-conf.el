@@ -15,9 +15,10 @@
 
 (custom-set-variables
  '(vertico-posframe-poshandler #'posframe-poshandler-point-bottom-left-corner)
+ '(vertico-posframe-parameters '((left-fringe . 8) (right-fringe . 8)))
  '(vertico-multiform-commands
    '((execute-extended-command grid)
-     (projectile-find-file posframe grid)
+     (projectile-find-file posframe)
      (project-switch-project grid)
      (consult-org-heading buffer ,(lambda (_) (text-scale-set -1)))
      (consult-imenu buffer)
@@ -27,8 +28,8 @@
                          (direction . below)
                          (window-height . 0.1))))))
  '(vertico-multiform-categories
-   '((file posframe grid)
-     (bookmark posframe grid)
+   '((file posframe)
+     (bookmark posframe)
      (symbol-help posframe)
      (consult-grep buffer))))
 
