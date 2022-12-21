@@ -26,6 +26,7 @@
 (declare-function org-superstar-mode "org-superstar")
 (declare-function org-tree-slide-mode "org-tree-slide")
 (declare-function pjones:open-line-above "../list/interactive")
+(declare-function puni-mode "puni")
 (declare-function whitespace-mode "whitespace")
 
 (defvar dbus-interface-emacs)
@@ -381,6 +382,9 @@ If TIME is nil then use the current time."
 
 (defun pjones:org-mode-hook ()
   "Hook to hack `org-mode'."
+  ;; Puni doesn't work here:
+  (puni-mode -1)
+
   ;; Buffer Settings
   (save-place-mode -1)
 
@@ -570,6 +574,28 @@ version, properly handles tables."
   (if org-attach-store-link-p
       (org-insert-last-stored-link 1)))
 
+(defun pjones:org-promote-demote (promote)
+  "Promote or demote the current heading or item.
+PROMOTE should be non-nil to promote, or nil to demote."
+  (when-let ((fun (cond
+                   ((org-at-heading-p)
+                    (if promote #'org-promote-subtree
+                      #'org-demote-subtree))
+                   ((org-at-item-p)
+                    (if promote #'org-outdent-item-tree
+                      #'org-indent-item-tree)))))
+    (call-interactively fun)))
+
+(defun pjones:org-promote nil
+  "Promote the current heading or item."
+  (interactive)
+  (pjones:org-promote-demote t))
+
+(defun pjones:org-demote nil
+  "Demote the current heading or item."
+  (interactive)
+  (pjones:org-promote-demote nil))
+
 ;;; Key Bindings:
 (let ((map org-mode-map))
   ;; Reset this so I can use it as a prefix:
@@ -585,6 +611,8 @@ version, properly handles tables."
   (define-key map (kbd "C-c C-a u") #'org-attach-url)
   (define-key map (kbd "C-c C-x a") #'pjones:org-archive-subtree-to-daily)
   (define-key map (kbd "C-c C-x A") #'pjones:org-archive-subtree-to-daily)
+  (define-key map (kbd "C-M-b") #'pjones:org-promote)
+  (define-key map (kbd "C-M-f") #'pjones:org-demote)
   (define-key map (kbd "C-M-n") #'org-next-visible-heading)
   (define-key map (kbd "C-M-p") #'pjones:org-up-or-prev)
   (define-key map (kbd "C-o") #'pjones:org-open-line)
