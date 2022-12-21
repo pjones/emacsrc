@@ -4,6 +4,9 @@
 ;;
 ;;; Code:
 
+(eval-when-compile
+  (require 'subr-x))
+
 (declare-function pjones:erc-bitlbee "../modes/erc-conf")
 (declare-function pjones:erc-freenode "../modes/erc-conf")
 (declare-function pjones:flymake-goto-next-error "../modes/flymake-conf")
@@ -19,10 +22,14 @@
 (declare-function puni-kill-active-region "puni")
 (declare-function puni-kill-line "puni")
 (declare-function vterm "vterm")
+(declare-function which-key--hide-popup "which-key")
+(declare-function which-key--show-keymap "which-key")
 
 (defvar flycheck-mode)
 (defvar flymake-mode)
 (defvar puni-mode)
+(defvar which-key-persistent-popup)
+(defvar which-key-show-prefix)
 
 (defun pjones:maybe-save-buffers-kill-terminal (&optional arg)
   "A function to save me from myself.
@@ -265,6 +272,29 @@ The line/region will be duplicated COUNT times."
       (indent-to indent)
       (insert text))
     (move-to-column col)))
+
+(defun pjones:keymap-popup-show (keymap)
+  "Display KEYMAP and wait for the next key."
+  (interactive)
+  (setq which-key-persistent-popup t)
+  (let ((which-key-show-prefix nil))
+    (which-key--show-keymap (symbol-name keymap)
+                            (symbol-value keymap)
+                            nil nil t)
+    (when-let* ((key (read-key))
+                (cmd (lookup-key (symbol-value keymap)
+                                 (if (numberp key)
+                                     (string key)
+                                   (vector key)))))
+      (pjones:keymap-popup-hide)
+      (call-interactively cmd))
+    (pjones:keymap-popup-hide)))
+
+(defun pjones:keymap-popup-hide ()
+  "Hide the popup showing a keymap."
+  (interactive)
+  (setq which-key-persistent-popup nil)
+  (which-key--hide-popup))
 
 ;; Local Variables:
 ;; byte-compile-warnings: (not noruntime)

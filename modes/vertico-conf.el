@@ -18,7 +18,7 @@
  '(vertico-multiform-commands
    '((execute-extended-command grid)
      (projectile-find-file posframe grid)
-     (project-switch-project posframe grid)
+     (project-switch-project grid)
      (consult-org-heading buffer ,(lambda (_) (text-scale-set -1)))
      (consult-imenu buffer)
      (consult-buffer buffer
