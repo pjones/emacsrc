@@ -16,7 +16,7 @@
 (custom-set-variables
  '(vertico-posframe-poshandler #'posframe-poshandler-point-bottom-left-corner)
  '(vertico-multiform-commands
-   '((execute-extended-command unobtrusive)
+   '((execute-extended-command grid)
      (projectile-find-file posframe grid)
      (project-switch-project posframe grid)
      (consult-org-heading buffer ,(lambda (_) (text-scale-set -1)))
