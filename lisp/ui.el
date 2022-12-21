@@ -120,8 +120,12 @@ If PREV is non-nil go to the previous theme."
                       (if (listp dired-directory) (car dired-directory) dired-directory)))))
     (concat "Emacs: " (or file (buffer-name)))))
 
-(defun pjones:configure-new-frame (&optional _frame)
+(defun pjones:configure-new-frame (&optional frame)
   "Hook to configure new frame FRAME."
+  ;; Remove the "name" parameter which may have been set by one of my
+  ;; buffer management functions.  Without this the "name" parameter
+  ;; will be used as the frame title which isn't what I want.
+  (set-frame-parameter frame 'name nil)
   (let ((font-fixed "Hermit-10")
         (font-variable "Noto Serif-10"))
     (dolist (mode '(menu-bar-mode tool-bar-mode scroll-bar-mode))

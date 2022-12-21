@@ -14,6 +14,17 @@
 (eval-when-compile
   (require 'subr-x))
 
+(defun pjones:buffer-name-or-mode-matches-p (name mode condition)
+  "Return non-nil if CONDITION matches NAME or MODE.
+If CONDITION is a string, treat it like a regular expression and
+return non-nil if it matches NAME or MODE.  If CONDITION is a
+symbol, compare it to MODE."
+  (or (and (symbolp condition)
+           (eq condition mode))
+      (and (stringp condition)
+           (or (string-match condition name)
+               (string-match condition (symbol-name mode))))))
+
 (defmacro pjones:buffer-conditions (names-or-modes)
   "Generate a condition function for `display-buffer-alist'.
 
@@ -24,12 +35,35 @@ buffer name, or symbols that match a major mode."
                  (name (buffer-name buffer))
                  (mode (buffer-local-value 'major-mode buffer)))
        (-any
-        (lambda (condition)
-          (or (and (symbolp condition)
-                   (eq condition mode))
-              (and (stringp condition)
-                   (string-match condition name))))
+        (apply-partially #'pjones:buffer-name-or-mode-matches-p name mode)
         ,names-or-modes))))
+
+(defmacro pjones:selected-buffer-conditions (names-or-modes)
+  "Generate a condition function for `display-buffer-alist'.
+
+NAMES-OR-MODES should be a list of regular expressions that match
+a buffer name, or symbols that match a major mode.  They will be
+compared against the currently selected buffer, not the one being
+displayed."
+  `(lambda (_buffer-or-name action)
+     (when-let* ((window (selected-window))
+                 (buffer (window-buffer window)))
+       (funcall
+        (pjones:buffer-conditions ,names-or-modes)
+        buffer action))))
+
+(defvar pjones:modes-dedicated-to-frames
+  '(comint-mode
+    compilation-mode
+    grep-mode
+    haskell-interactive-mode
+    rg-mode
+    shell-mode)
+  "Modes that are displayed in their own frame.
+
+When displaying these buffers, pop open a new frame.  When a
+different buffer is being displayed, try to find a different
+frame for it.")
 
 (custom-set-variables
  ;; Default action if `display-buffer-alist' doesn't select an action:
@@ -40,7 +74,14 @@ buffer name, or symbols that match a major mode."
 
  ;; Select a window for a buffer to be shown in:
  '(display-buffer-alist
-   `(;; Windows that should split the entire frame:
+   `(;; Buffers that must not be displayed in the current frame:
+     (,(pjones:selected-buffer-conditions pjones:modes-dedicated-to-frames)
+      (display-buffer-reuse-window
+       display-buffer-reuse-mode-window
+       display-buffer-pop-up-frame)
+      (reusable-frames . visible))
+
+     ;; Buffers that should split the entire frame:
      (,(pjones:buffer-conditions
         '("\\*Backtrace\\*"
           "\\*Completions\\*"
@@ -73,18 +114,16 @@ buffer name, or symbols that match a major mode."
       (window-height . 0.4))
 
      ;; Buffers that should pop out into a new frame:
-     (,(pjones:buffer-conditions
-        '(comint-mode
-          compilation-mode
-          grep-mode
-          haskell-interactive-mode
-          rg-mode
-          shell-mode))
+     (,(pjones:buffer-conditions pjones:modes-dedicated-to-frames)
       (display-buffer-reuse-window
        display-buffer-reuse-mode-window
        display-buffer-pop-up-frame)
       (inhibit-switch-frame . t)
-      (reusable-frames . visible))
+      (reusable-frames . visible)
+      (pop-up-frame-parameters
+       . ((unsplittable . t)
+          (no-focus-on-map . t)
+          (name . "popup"))))
 
      ;; Buffers that should take over the current window:
      (,(pjones:buffer-conditions
