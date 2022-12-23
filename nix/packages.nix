@@ -102,7 +102,6 @@ emacsWithOverrides.emacsWithPackages (epkgs:
     passmm # A minor mode for pass (Password Store).
     password-store # Password store (pass) support
     pdf-tools # Support library for PDF documents
-    posframe # Pop a posframe (just a frame) at point
     prescient # Better sorting and filtering
     project # Operations on the current project
     projectile # Manage and navigate projects in Emacs easily
@@ -119,7 +118,6 @@ emacsWithOverrides.emacsWithPackages (epkgs:
     scad-mode # A major mode for editing OpenSCAD code
     typescript-mode # Major mode for editing typescript
     vertico # VERTical Interactive COmpletion
-    vertico-posframe # Using posframe to show Vertico
     visual-fill # Auto-refill paragraphs without modifying the buffer
     vlf # View Large Files
     vterm # Fully-featured terminal emulator
