@@ -38,19 +38,26 @@ buffer name, or symbols that match a major mode."
         (apply-partially #'pjones:buffer-name-or-mode-matches-p name mode)
         ,names-or-modes))))
 
-(defmacro pjones:selected-buffer-conditions (names-or-modes)
+(defmacro pjones:selected-buffer-conditions (names-or-modes &optional exceptions)
   "Generate a condition function for `display-buffer-alist'.
 
 NAMES-OR-MODES should be a list of regular expressions that match
 a buffer name, or symbols that match a major mode.  They will be
 compared against the currently selected buffer, not the one being
-displayed."
-  `(lambda (_buffer-or-name action)
-     (when-let* ((window (selected-window))
-                 (buffer (window-buffer window)))
-       (funcall
-        (pjones:buffer-conditions ,names-or-modes)
-        buffer action))))
+displayed.
+
+However, if the buffer to be shown matches a name or mode in
+EXCEPTIONS then return nil to indicate that we do want that
+buffer displayed in this frame and to let another rule control
+its display."
+  `(lambda (buffer-or-name action)
+     (unless (funcall (pjones:buffer-conditions ,exceptions)
+                      buffer-or-name action)
+       (when-let* ((window (selected-window))
+                   (buffer (window-buffer window)))
+         (funcall
+          (pjones:buffer-conditions ,names-or-modes)
+          buffer action)))))
 
 (defvar pjones:modes-dedicated-to-frames
   '(comint-mode
@@ -65,7 +72,14 @@ When displaying these buffers, pop open a new frame.  When a
 different buffer is being displayed, try to find a different
 frame for it.")
 
+(defvar pjones:dedicated-frame-exceptions
+  '(" \\*transient\\*")
+  "Names of buffers or modes that can be shown in dedicated frames.")
+
 (custom-set-variables
+ ;; Don't hide frames, when deleting windows, just kill the frame:
+ '(frame-auto-hide-function #'delete-frame)
+
  ;; Default action if `display-buffer-alist' doesn't select an action:
  '(display-buffer-base-action
    '((display-buffer-reuse-window
@@ -75,11 +89,27 @@ frame for it.")
  ;; Select a window for a buffer to be shown in:
  '(display-buffer-alist
    `(;; Buffers that must not be displayed in the current frame:
-     (,(pjones:selected-buffer-conditions pjones:modes-dedicated-to-frames)
+     (,(pjones:selected-buffer-conditions
+        pjones:modes-dedicated-to-frames
+        pjones:dedicated-frame-exceptions)
+      (display-buffer-reuse-window
+       display-buffer-reuse-mode-window
+       display-buffer-use-some-frame
+       display-buffer-pop-up-frame)
+      (reusable-frames . visible))
+
+     ;; Buffers that should pop out into a new frame:
+     (,(pjones:buffer-conditions
+        pjones:modes-dedicated-to-frames)
       (display-buffer-reuse-window
        display-buffer-reuse-mode-window
        display-buffer-pop-up-frame)
-      (reusable-frames . visible))
+      (inhibit-switch-frame . t)
+      (reusable-frames . visible)
+      (pop-up-frame-parameters
+       . ((unsplittable . t)
+          (no-focus-on-map . t)
+          (name . "popup"))))
 
      ;; Buffers that should split the entire frame:
      (,(pjones:buffer-conditions
@@ -112,18 +142,6 @@ frame for it.")
        display-buffer-in-direction)
       (direction . below)
       (window-height . 0.4))
-
-     ;; Buffers that should pop out into a new frame:
-     (,(pjones:buffer-conditions pjones:modes-dedicated-to-frames)
-      (display-buffer-reuse-window
-       display-buffer-reuse-mode-window
-       display-buffer-pop-up-frame)
-      (inhibit-switch-frame . t)
-      (reusable-frames . visible)
-      (pop-up-frame-parameters
-       . ((unsplittable . t)
-          (no-focus-on-map . t)
-          (name . "popup"))))
 
      ;; Buffers that should take over the current window:
      (,(pjones:buffer-conditions
