@@ -86,6 +86,17 @@ frame for it.")
       display-buffer-reuse-mode-window
       display-buffer-pop-up-window)) . nil)
 
+ ;; Ensure that the current frame is used to display server buffers.
+ ;; NOTE: This might not be necessary now that I removed an older
+ ;; setting in the deleted file: server-conf.el.
+ '(server-window
+   (lambda (buffer)
+     (let ((display-buffer-alist
+            '((".*" .
+               ((display-buffer-same-window) .
+                nil)))))
+       (pop-to-buffer buffer))))
+
  ;; Select a window for a buffer to be shown in:
  '(display-buffer-alist
    `(;; Buffers that must not be displayed in the current frame:

@@ -16,7 +16,6 @@
 (defvar pjones:lisp-files
   '("options"
      "modes"
-     "server"
      "code"
      "automode"
      "functions"
