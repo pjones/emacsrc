@@ -515,9 +515,18 @@ PARAMS is a property list of parameters:
   "Move to the parent, or previous sibling.
 ARG is the number of headings to move."
   (interactive "p")
-  (if (= 1 (org-outline-level))
+   (if (= 1 (org-outline-level))
+       (org-backward-heading-same-level arg)
+     (outline-up-heading arg)))
+
+(defun pjones:org-backward-heading-same-level (&optional arg)
+  "Move backard to the preceding headline.
+ARG is the number of headings to move."
+  (interactive "p")
+  (if (org-at-heading-p)
       (org-backward-heading-same-level arg)
-    (outline-up-heading arg)))
+    (org-back-to-heading)
+    (org-backward-heading-same-level (- arg 1))))
 
 (defun pjones:org-insert-heading ()
   "Insert a heading sanely."
@@ -620,7 +629,7 @@ PROMOTE should be non-nil to promote, or nil to demote."
   (define-key map (kbd "M-g i") #'consult-org-heading)
   (define-key map (kbd "M-n") #'org-forward-heading-same-level)
   (define-key map (kbd "M-N") #'org-metadown)
-  (define-key map (kbd "M-p") #'org-backward-heading-same-level)
+  (define-key map (kbd "M-p") #'pjones:org-backward-heading-same-level)
   (define-key map (kbd "M-P") #'org-metaup))
 
 (defmacro pjones:org-eval-in-calendar (function)
