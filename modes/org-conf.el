@@ -252,6 +252,9 @@ If TIME is nil then use the current time."
            ("~/notes/gtd/routines.org" :level . 2)
            ("~/notes/gtd/someday.org" :level . 3))))
 
+ ;; Preview control (more below):
+ '(org-preview-latex-default-process 'imagemagick)
+
  ;; Stuff for exporting:
  '(org-export-with-smart-quotes t)
  '(org-icalendar-combined-agenda-file "~/notes/gtd/calendar.ics")
@@ -360,6 +363,11 @@ If TIME is nil then use the current time."
                            "\\setmonofont[Scale=0.85]{Hermit}")
                          "\n"))
          (cddr (assoc "article" org-latex-classes))))
+
+;; Correctly generate LaTeX previews:
+(plist-put
+ (cdr (assq 'imagemagick org-preview-latex-process-alist))
+ :latex-compiler '("xelatex -interaction nonstopmode -output-directory %o %f"))
 
 (custom-set-faces
  '(org-block ((t (:background nil))))
