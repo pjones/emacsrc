@@ -103,6 +103,7 @@ PATTERN is passed to `orderless-without-literal'."
                     (cape-capf-buster #'cape-dabbrev)))
 
 (custom-set-variables
+ '(dabbrev-case-fold-search nil) ; Don't mess with case.
  '(completion-category-defaults nil)
  '(completion-category-overrides '((file (styles . (partial-completion)))))
  '(completion-styles '(orderless partial-completion basic))
