@@ -81,7 +81,7 @@ If TIME is nil then use the current time."
  '(org-hide-leading-stars t)
  '(org-ellipsis "…")
  '(org-superstar-headline-bullets-list '(?⁍ ?◆ ?⭘ ?▶ ?◦))
- '(org-superstar-item-bullet-alist '((?* . ?○) (?+ . ?‣) (?- . ?•)))
+ '(org-superstar-item-bullet-alist '((?* . ?-) (?+ . ?•) (?- . ?‣)))
  '(org-clock-clocked-in-display (quote both))
  '(org-clock-clocked-in-display 'frame-title)
  '(org-clock-frame-title-format (list '(t org-mode-line-string) " " frame-title-format))
