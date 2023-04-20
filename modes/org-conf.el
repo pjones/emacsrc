@@ -265,6 +265,14 @@ If TIME is nil then use the current time."
  '(org-latex-listings 'minted)
  '(org-latex-default-class "pjones-article")
  '(org-latex-compiler "xelatex")
+ '(org-format-latex-options
+   '(:foreground default
+     :background default
+     :scale 1.5
+     :html-foreground "Black"
+     :html-background "Transparent"
+     :html-scale 1.0
+     :matchers ("begin" "$1" "$" "$$" "\\(" "\\[")))
  '(org-latex-pdf-process
    '("latexmk -xelatex -pdfxe -shell-escape %f"))
  '(org-latex-toc-command
