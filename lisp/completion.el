@@ -12,12 +12,12 @@
 (declare-function cape-keyword "cape")
 (declare-function cape-tex "cape")
 (declare-function consult-completion-in-region "consult")
-(declare-function corfu-doc-mode "corfu-doc")
-(declare-function corfu-doc-scroll-down "corfu-doc")
-(declare-function corfu-doc-scroll-up "corfu-doc")
 (declare-function corfu-history-mode "corfu-history")
 (declare-function corfu-insert "corfu")
 (declare-function corfu-insert-separator "cofu")
+(declare-function corfu-popupinfo-mode "corfu-popupinfo")
+(declare-function corfu-popupinfo-scroll-down "corfu-popupinfo")
+(declare-function corfu-popupinfo-scroll-up "corfu-popupinfo")
 (declare-function global-corfu-mode "corfu")
 (declare-function orderless-escapable-split-on-space "orderless")
 (declare-function yas-expand "yasnippet")
@@ -57,8 +57,8 @@ current line.  Otherwise run the completion command.  ARG is passed to
   (add-to-list 'savehist-additional-variables 'corfu-history)
   (define-key corfu-map (kbd "SPC") #'corfu-insert-separator)
   (define-key corfu-map (kbd "<return>") #'corfu-insert)
-  (define-key corfu-map (kbd "M-p") #'corfu-doc-scroll-down)
-  (define-key corfu-map (kbd "M-n") #'corfu-doc-scroll-up)
+  (define-key corfu-map (kbd "M-p") #'corfu-popupinfo-scroll-down)
+  (define-key corfu-map (kbd "M-n") #'corfu-popupinfo-scroll-up)
   (define-key corfu-map "\M-m" #'pjones:corfu-move-to-minibuffer))
 
 (defun pjones:corfu-move-to-minibuffer ()
@@ -84,16 +84,9 @@ PATTERN is passed to `orderless-without-literal'."
    ((string-prefix-p "!" pattern)
     `(orderless-without-literal . ,(substring pattern 1)))))
 
-;; FIXME: corfu-doc assumes that this function exists, but it only
-;; exists in newer versions of corfu.  So I have to paste it in here
-;; until nixpkgs updates corfu too.
-(defun corfu--popup-support-p ()
-  "Return non-nil if child frames are supported."
-  (display-graphic-p))
-
 (add-hook 'after-init-hook #'global-corfu-mode)
 (add-hook 'after-init-hook #'savehist-mode)
-(add-hook 'corfu-mode-hook #'corfu-doc-mode)
+(add-hook 'corfu-mode-hook #'corfu-popupinfo-mode)
 (add-hook 'corfu-mode-hook #'pjones:corfu-mode-hook)
 
 (setq-default completion-at-point-functions
