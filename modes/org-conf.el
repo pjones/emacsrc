@@ -366,7 +366,7 @@ If TIME is nil then use the current time."
            ,(string-join '("\\documentclass[11pt]{article}"
                            "[DEFAULT-PACKAGES]"
                            "[PACKAGES]"
-                           "\\setmainfont{Noto Serif Light}"
+                           "\\setmainfont[Scale=0.85]{Noto Serif:style=Light}"
                            "\\setsansfont{Noto Sans}"
                            "\\setmonofont[Scale=0.85]{Hermit}")
                          "\n"))
