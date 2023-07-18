@@ -70,9 +70,8 @@
 If INACTIVE is non-nil, make the timestamp inactive.
 If TIME is nil then use the current time."
   (let* ((style (cdr org-time-stamp-formats))
-         (fmt (if inactive
-                  (concat "[" (substring style 1 -1) "]")
-                style)))
+         (fmt (if inactive (concat "[" style "]")
+                (concat "<" style ">"))))
     (format-time-string fmt time)))
 
 ;; General Org Settings
