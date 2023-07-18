@@ -19,7 +19,7 @@
 ;; Markdown
 (add-to-list 'auto-mode-alist '("\\.md$" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.markdown$" . markdown-mode))
-(add-to-list 'auto-mode-alist '("\\.password-store/" . markdown-mode))
+(add-to-list 'auto-mode-alist '("\\.password-store/.*\\.gpg$" . markdown-mode))
 
 ;; Mermaid: https://mermaidjs.github.io/
 (add-to-list 'auto-mode-alist '("\\.mermaid$" . mermaid-mode))
