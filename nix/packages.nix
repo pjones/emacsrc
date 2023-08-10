@@ -93,7 +93,6 @@ emacsWithOverrides.emacsWithPackages (epkgs: with epkgs; [
   org-appear # Make invisible parts of Org elements appear visible.
   org-clock-csv # Export `org-mode' clock entries to CSV format
   org-roam # A database abstraction layer for Org-mode
-  org-superstar # Make org-mode stars a little more super
   org-tree-slide # A presentation tool for org-mode
   orgalist # Manage Org-like lists in non-Org buffers
   package-lint # A linting library for elisp package authors
