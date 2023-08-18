@@ -604,6 +604,10 @@ PROMOTE should be non-nil to promote, or nil to demote."
   (interactive)
   (pjones:org-promote-demote nil))
 
+;; Fix a bug in org-mode where exported attachment links are absolute
+;; paths, which don't work in HTML!
+(advice-add 'org-attach-expand :filter-return #'file-relative-name)
+
 ;;; Key Bindings:
 (let ((map org-mode-map))
   ;; Reset this so I can use it as a prefix:
