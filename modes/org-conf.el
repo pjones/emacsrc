@@ -535,15 +535,20 @@ ARG is the number of headings to move."
 
 (defun pjones:org-insert-item (checkbox)
   "Insert a new item.
-If CHECKBOX is non-nil, add a checkbox too.
+If CHECKBOX is non-nil, add a checkbox too.  If called from a list
+item that already has a checkbox, then CHECKBOX means the opposite.
+
 This replaces `org-insert-item' which doesn't work unless there's an
 existing item.  This version works on headings too."
   (interactive "P")
+  (when (org-at-item-checkbox-p)
+    (setq checkbox (not checkbox)))
   (unless (org-insert-item checkbox)
     (org-back-to-heading)
-    (org-show-subtree)
+    (org-fold-show-subtree)
     (let ((here (point)))
       (outline-next-heading)
+      (forward-line 0)
       (if (/= here (point))
           (pjones:open-line-above nil)
         (forward-line)
