@@ -7,6 +7,7 @@
 
 (custom-set-variables
  '(message-confirm-send t)
+ '(message-send-mail-function #'smtpmail-send-it)
  '(message-directory "~/mail")
  '(message-from-style 'angles)
  '(message-citation-line-function #'message-insert-formatted-citation-line)
@@ -15,7 +16,6 @@
  '(message-auto-save-directory nil)
  '(message-dont-reply-to-names '("pjones@pmade.com" "pmadeinc@gmail.com"))
  '(message-kill-buffer-on-exit t)
- '(message-signature #'pjones:message-signature)
  '(message-signature-directory "~/notes/signatures/")
  `(mml-secure-key-preferences
    '((OpenPGP
@@ -23,35 +23,6 @@
       (encrypt ("pjones@devalot.com" ,epa-file-encrypt-to))))))
 
 ;; FIXME: Use message-send-hook to convert body to HTML
-
-(defun pjones:smtpmail-send-it ()
-  "Send mail after changing some variables."
-  (let ((from (save-restriction
-                (message-narrow-to-headers)
-                (message-fetch-field "From"))))
-    (cond
-     ((string-match-p "rfa\\.sc\\.gov" from)
-      (setq smtpmail-smtp-server "outlook.office365.com"
-            smtpmail-smtp-service 587
-            smtpmail-stream-type 'starttls))
-     (t
-      (setq smtpmail-smtp-server "mail.pmade.com"
-            smtpmail-smtp-service 465
-            smtpmail-stream-type 'ssl))))
-  (smtpmail-send-it))
-
-(defun pjones:message-signature ()
-  "Return the signature text to use."
-  (let* ((from (save-restriction
-                 (message-narrow-to-headers)
-                 (message-fetch-field "From")))
-         (file
-          (cond
-           ((string-match-p "rfa\\.sc\\.gov" from) "rfa")
-           (t "devalot"))))
-    (with-temp-buffer
-      (insert-file-contents (concat message-signature-directory file))
-      (buffer-string))))
 
 ;; A few extra key bindings:
 (let ((map message-mode-map))
@@ -108,11 +79,5 @@
       (insert "<#part type=text/html>\n")
       (exchange-point-and-mark)
       (insert "<#/multipart>\n"))))
-
-(defun pjones:message-mode-hook ()
-  "Configure message mode to my liking."
-  (setq message-send-mail-function #'pjones:smtpmail-send-it))
-
-(add-hook 'message-mode-hook #'pjones:message-mode-hook)
 
 ;;; message-conf.el ends here

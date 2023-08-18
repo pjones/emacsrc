@@ -4,7 +4,7 @@
 ;;
 ;;; Code:
 (custom-set-variables
- '(shr-color-visible-luminance-min 80)
- '(shr-use-colors nil))
+ '(shr-use-colors nil)
+ '(shr-use-fonts nil))
 
 ;;; shr-conf.el ends here

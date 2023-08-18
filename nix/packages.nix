@@ -118,7 +118,6 @@ emacsWithOverrides.emacsWithPackages (epkgs: with epkgs; [
   visual-fill # Auto-refill paragraphs without modifying the buffer
   vlf # View Large Files
   vterm # Fully-featured terminal emulator
-  wanderlust # Yet Another Message Interface on Emacsen
   weyland-yutani-theme # Emacs theme based off Alien movie franchise
   wgrep # Writable grep buffer and apply the changes to files
   which-key # Display available keybindings in popup
