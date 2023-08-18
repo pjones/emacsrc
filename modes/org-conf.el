@@ -259,7 +259,6 @@ If TIME is nil then use the current time."
  '(org-html-validation-link nil)
  '(org-latex-tables-booktabs t)
  '(org-latex-listings 'minted)
- '(org-latex-default-class "pjones-article")
  '(org-latex-compiler "xelatex")
  '(org-format-latex-options
    '(:foreground default
@@ -355,18 +354,6 @@ If TIME is nil then use the current time."
       (cl-remove-if
        (lambda (entry) (string-match-p "^pjones-" (car entry)))
        org-latex-classes))
-
-(add-to-list
- 'org-latex-classes
- (append `("pjones-article"
-           ,(string-join '("\\documentclass[11pt]{article}"
-                           "[DEFAULT-PACKAGES]"
-                           "[PACKAGES]"
-                           "\\setmainfont[Scale=0.85]{Noto Serif:style=Light}"
-                           "\\setsansfont{Noto Sans}"
-                           "\\setmonofont[Scale=0.85]{Hermit}")
-                         "\n"))
-         (cddr (assoc "article" org-latex-classes))))
 
 ;; Correctly generate LaTeX previews:
 (plist-put
