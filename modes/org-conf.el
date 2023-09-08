@@ -10,6 +10,7 @@
 (require 'org-capture)
 (require 'ox-md)
 (require 's)
+(require 'warnings)
 
 ;; Silence compiler warnings
 (declare-function consult-org-heading "consult")
@@ -378,6 +379,7 @@ If TIME is nil then use the current time."
     '((emacs-lisp . t)
       (mermaid . t)))
 
+(push '(org-element-cache) warning-suppress-types)
 
 (defun pjones:org-mode-hook ()
   "Hook to hack `org-mode'."
@@ -405,8 +407,8 @@ If TIME is nil then use the current time."
   (save-excursion
     (org-back-to-heading)
     (org-overview)
-    (org-show-set-visibility 'tree)
-    (org-show-entry)))
+    (org-fold-show-set-visibility 'tree)
+    (org-fold-show-entry)))
 
 (defun pjones:org-hide-all ()
   "Close all headings, move to bob."
@@ -483,7 +485,7 @@ PARAMS is a property list of parameters:
           (error "Cannot find entry with ID \"%s\"" id))
         (with-current-buffer (marker-buffer m)
           (goto-char m)
-          (org-show-context)
+          (org-fold-show-context)
           (setq base-level (org-current-level))
           (org-map-entries
            (lambda ()
