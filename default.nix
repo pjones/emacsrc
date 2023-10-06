@@ -4,7 +4,12 @@
 let
   ##############################################################################
   # Emacs + all of the packages I need:
-  emacsAndPackages = pkgs.callPackage ./nix/packages.nix { inherit inputs; };
+  emacsAndPackages = pkgs.callPackage ./nix/packages.nix {
+    inherit inputs;
+    emacs = pkgs.emacs29.override {
+      withGTK3 = true;
+    };
+  };
 
   ##############################################################################
   inherit (pkgs) lib;

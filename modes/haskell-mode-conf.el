@@ -88,7 +88,7 @@ The match chosen by the user will be returned."
        (if (string-match-p "/$" url) (concat url "index.html") url) t))))
 
 (defun pjones:haskell-toggle-qualified nil
-  "Toggle the 'qualified' modifier on the current line."
+  "Toggle the \"qualified\" modifier on the current line."
   (interactive)
   (save-excursion
     (beginning-of-line)

@@ -15,10 +15,12 @@
   "The currently active theme.")
 
 (custom-set-variables
+ '(calc-kill-line-numbering nil)
  '(compilation-scroll-output 'first-error)
  '(describe-bindings-outline t)
  '(echo-keystrokes 0.1)
  '(enable-recursive-minibuffers t)
+ '(font-lock-maximum-decoration t)
  '(goto-line-history-local t)
  '(inhibit-startup-message t)
  '(initial-scratch-message nil)
@@ -27,6 +29,8 @@
  '(mouse-autoselect-window nil)
  '(mouse-yank-at-point t)
  '(prettify-symbols-unprettify-at-point 'right-edge)
+ '(save-place-file (concat user-emacs-directory "places"))
+ '(show-paren-context-when-offscreen 'overlay)
  '(show-paren-when-point-inside-paren t)
  '(tab-bar-close-button-show nil)
  '(tab-bar-new-button-show nil)

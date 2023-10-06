@@ -72,13 +72,6 @@ passed on to `kill-line'."
         (kill-line arg))
     (kill-whole-line)))
 
-(defun pjones:rename-current-file (newname)
-  "Rename the current file to NEWNAME."
-  (interactive "F")
-  (let ((oldname (buffer-file-name)))
-    (when oldname
-      (dired-rename-file oldname newname nil))))
-
 (defun pjones:open-line-above (below)
   "Open a line above point and move there.
 If BELOW is non-nil, open a line below point instead."
@@ -241,37 +234,6 @@ behavior."
   (exchange-point-and-mark
    (if (region-active-p) arg
      (not arg))))
-
-(defun pjones:duplicate-region-or-line (&optional count)
-  "Duplicate the current line, or region if active.
-The line/region will be duplicated COUNT times."
-  (interactive "p")
-  (let ((indent
-         (save-excursion
-           (if (region-active-p) (goto-char (region-beginning)))
-           (back-to-indentation)
-           (current-column)))
-        (col (current-column))
-        (text
-         (if (region-active-p)
-             (buffer-substring-no-properties
-              (region-beginning)
-              (region-end))
-           (save-excursion
-             (back-to-indentation)
-             (buffer-substring-no-properties
-              (point)
-              (progn (end-of-line) (point)))))))
-    (if (region-active-p)
-      (progn
-        (goto-char (region-end))
-        (deactivate-mark))
-      (end-of-line))
-    (dotimes (n count)
-      (newline)
-      (indent-to indent)
-      (insert text))
-    (move-to-column col)))
 
 (defun pjones:keymap-popup-show (keymap)
   "Display KEYMAP and wait for the next key."

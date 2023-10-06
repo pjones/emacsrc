@@ -1,11 +1,15 @@
-;;; yaml-mode-conf.el -- Settings for yaml-mode.
-(eval-when-compile
-  (require 'yaml-mode))
+;;; yaml-mode-conf.el -- Settings for `yaml-mode' -*- lexical-binding: t -*-
+;;
+;;; Commentary:
+;;
+;;; Code:
+(require 'yaml-mode)
 
 (declare-function pjones:add-programming-hook "code.el")
 
 (defun pjones:yaml-new-array-item ()
-  "Make yaml-mode sort of like org-mode by inserting a newline,
+  "Insert a new array item.
+Make `yaml-mode' sort of like `org-mode' by inserting a newline,
 indenting, and then inserting the array marker (dash)."
   (interactive)
   (newline-and-indent)
@@ -21,3 +25,5 @@ indenting, and then inserting the array marker (dash)."
 
 (add-hook 'yaml-mode-hook 'pjones:yaml-mode-hook)
 (pjones:add-programming-hook 'yaml-mode-hook)
+
+;;; yaml-mode-conf.el ends here

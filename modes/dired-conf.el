@@ -73,7 +73,7 @@ ARG is the number of lines to jump."
   "Visit the file at point.
 
 If point is on a directory, insert that directory into the current
-dired buffer.  Otherwise visit the file under point."
+Dired buffer.  Otherwise visit the file under point."
   (interactive)
   (let ((name (dired-get-file-for-visit)))
     (if (file-directory-p name) (dired-subtree-toggle)

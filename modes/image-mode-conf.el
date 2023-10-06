@@ -7,7 +7,7 @@
 (require 'cl-macs)
 
 (defvar-local image-dimensions-minor-mode-dimensions nil
-  "Buffer-local image dimensions for `image-dimensions-minor-mode'")
+  "Buffer-local image dimensions for `image-dimensions-minor-mode'.")
 
 (define-minor-mode image-dimensions-minor-mode
   "Displays the image dimensions in the mode line."

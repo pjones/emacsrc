@@ -4,7 +4,6 @@
 ;;
 ;;; Code:
 
-(declare-function default-text-scale-mode "default-text-scale")
 (declare-function envrc-global-mode "envrc")
 (declare-function global-diff-hl-mode "diff-hl")
 (declare-function minions-mode "minions")
@@ -38,7 +37,6 @@
 
 (defun pjones:boot-global-modes ()
   "Start or prepare global modes."
-  (default-text-scale-mode)          ; Frame text scaling.
   (electric-pair-mode)               ; Insert matching brackets.
   (envrc-global-mode)                ; Respect .envrc files.
   (ffap-bindings)                    ; Finding Files and URLs at Point
@@ -47,8 +45,8 @@
   (global-prettify-symbols-mode)     ; Replace buffer symbols.
   (minions-mode)                     ; Minor-mode menu.
   (projectile-mode)                  ; Project tool
+  (repeat-mode)                      ; Easy repeating of some actions.
   (vertico-mode)                     ; minibuffer completions.
-  (show-paren-mode)                  ; Highlight matching brackets.
   (which-key-mode)                   ; Remind me what keys do.
   (winner-mode)                      ; Track win conifg changes
   (winum-mode)                       ; Number windows

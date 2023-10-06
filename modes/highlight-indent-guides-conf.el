@@ -23,4 +23,4 @@
  'pjones:after-theme-change-hook
  #'pjones:highlight-indent-guides-mode-hook)
 
-;;;  highlight-indent-guides-conf.el ends here
+;;; highlight-indent-guides-conf.el ends here

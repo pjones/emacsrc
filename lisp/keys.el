@@ -75,7 +75,6 @@ connection."
 (declare-function passmm-completing-read "passmm")
 (declare-function passmm-list-passwords "passmm")
 (declare-function pjones:agenda "./interactive")
-(declare-function pjones:duplicate-region-or-line "./interactive")
 (declare-function pjones:exchange-point-and-mark "./interactive")
 (declare-function pjones:fly-next-error "./interactive")
 (declare-function pjones:indent-or-complete "./completion")
@@ -88,7 +87,6 @@ connection."
 (declare-function pjones:open-temp-buffer "./interactive")
 (declare-function pjones:pwgen "./interactive")
 (declare-function pjones:rectangle-number-lines "./interactive")
-(declare-function pjones:rename-current-file "./interactive")
 (declare-function pjones:sort-lines "./interactive")
 (declare-function pjones:start-http "./interactive")
 (declare-function pjones:start-term "./interactive")
@@ -140,7 +138,7 @@ connection."
  (kbd "C-c b") #'eldoc-doc-buffer
  (kbd "C-c C") #'full-calc
  (kbd "C-c c") #'quick-calc
- (kbd "C-c d") #'pjones:duplicate-region-or-line
+ (kbd "C-c d") #'duplicate-dwim
  (kbd "C-c e") #'embark-act
  (kbd "C-c f") (pjones:jump-to-buffer "*flymake message*")
  (kbd "C-c h") #'pjones:start-http
@@ -155,7 +153,7 @@ connection."
  (kbd "C-c p l") #'passmm-list-passwords
  (kbd "C-c p s") #'pjones:start-term
  (kbd "C-c p p") #'passmm-completing-read
- (kbd "C-c R") #'pjones:rename-current-file
+ (kbd "C-c R") #'rename-visited-file
  (kbd "C-c r") #'revert-buffer-quick
  (kbd "C-c s") #'pjones:sort-lines
  (kbd "C-c t") #'pjones:open-temp-buffer
@@ -189,7 +187,6 @@ connection."
  (kbd "M-g @") #'consult-global-mark
  (kbd "M-g f") #'pjones:fly-next-error
  (kbd "M-g h") #'consult-outline
- (kbd "M-g i") #'consult-imenu
  (kbd "M-g m") #'consult-mark
 
  ;; Bindings that are not under C-c:
@@ -225,6 +222,7 @@ connection."
  [remap apropos-command] #'consult-apropos
  [remap bookmark-jump] #'consult-bookmark
  [remap exchange-point-and-mark] #'pjones:exchange-point-and-mark
+ [remap imenu] #'consult-imenu
  [remap indent-for-tab-command] #'pjones:indent-or-complete
  [remap isearch-forward-symbol-at-point] #'isearch-forward-thing-at-point
  [remap kill-line] #'pjones:kill-line

@@ -1,7 +1,9 @@
-;;; ediff-conf.el -- Settings for Ediff.
-(eval-when-compile
-  (require 'ediff)
-  (require 'ediff-wind))
+;;; ediff-conf.el -- Settings for `ediff' -*- lexical-binding: t -*-
+;;
+;;; Commentary:
+;;
+;;; Code:
+(require 'ediff)
 
 (custom-set-variables
   '(ediff-window-setup-function 'ediff-setup-windows-plain)

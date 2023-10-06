@@ -4,6 +4,7 @@
 ;;
 ;;; Code:
 
+(require 'flycheck-rust)
 (require 'reformatter)
 (require 'rust-mode)
 

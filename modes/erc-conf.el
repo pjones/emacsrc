@@ -11,6 +11,7 @@
 (require 'notifications)
 (require 'passmm)
 
+(declare-function passmm-get-password "passmm")
 (declare-function pjones:urgency-hint "../lisp/functions.el")
 
 (custom-set-variables

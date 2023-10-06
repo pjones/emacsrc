@@ -48,7 +48,7 @@ the default directory."
    (t default-directory)))
 
 (defun pjones:projectile-dired (&optional dont-ask)
-  "Open dired for a project.
+  "Open Dired for a project.
 
 Similar to `projectile-dired' except if you're not currently in a
 project prompt for which project to use.

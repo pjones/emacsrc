@@ -40,14 +40,12 @@ emacsWithOverrides.emacsWithPackages (epkgs: with epkgs; [
   corfu # Completion Overlay Region FUnction
   csv-mode # Major mode for editing comma/char separated values
   darkroom # Remove visual distractions and focus on writing
-  default-text-scale # Easily adjust the font size in all frames
   diff-hl # Highlight uncommitted changes using VC
   dired-filter # Ibuffer-like filtering for dired
   dired-narrow # Live-narrowing of search results for dired
   dired-subtree # Insert subdirectories in a tree-like fashion
   doom-themes # an opinionated pack of modern color-themes
   dumb-jump # Jump to definition for 40+ languages without configuration
-  eglot # Client for Language Server Protocol (LSP) servers
   eimp # Emacs Image Manipulation Package
   eldoc # Show function arglist or variable docstring in echo area
   elm-mode # Elm mode for emacs
