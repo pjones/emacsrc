@@ -19,7 +19,6 @@
 (require 'haskell-navigate-imports)
 (require 'haskell-process)
 (require 'highlight-indent-guides)
-(require 'projectile)
 (require 'reformatter)
 (require 's)
 (require 'yasnippet)

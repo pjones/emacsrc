@@ -99,7 +99,6 @@ emacsWithOverrides.emacsWithPackages (epkgs: with epkgs; [
   pdf-tools # Support library for PDF documents
   prescient # Better sorting and filtering
   project # Operations on the current project
-  projectile # Manage and navigate projects in Emacs easily
   puni # Parentheses Universalistic
   purescript-mode # A PureScript editing mode
   rainbow-mode # Colorize color names in buffers

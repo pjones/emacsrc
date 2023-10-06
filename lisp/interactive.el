@@ -11,7 +11,6 @@
 (declare-function pjones:erc-freenode "../modes/erc-conf")
 (declare-function pjones:flymake-goto-next-error "../modes/flymake-conf")
 (declare-function pjones:markdown-visual-line "../modes/markdown-mode-conf")
-(declare-function pjones:projectile-project-root "../modes/projectile-conf")
 
 (declare-function cl-position "cl-seq")
 (declare-function dired-rename-file "dired-aux")
@@ -234,29 +233,6 @@ behavior."
   (exchange-point-and-mark
    (if (region-active-p) arg
      (not arg))))
-
-(defun pjones:keymap-popup-show (keymap)
-  "Display KEYMAP and wait for the next key."
-  (interactive)
-  (setq which-key-persistent-popup t)
-  (let ((which-key-show-prefix nil))
-    (which-key--show-keymap (symbol-name keymap)
-                            (symbol-value keymap)
-                            nil nil t)
-    (when-let* ((key (read-key))
-                (cmd (lookup-key (symbol-value keymap)
-                                 (if (numberp key)
-                                     (string key)
-                                   (vector key)))))
-      (pjones:keymap-popup-hide)
-      (call-interactively cmd))
-    (pjones:keymap-popup-hide)))
-
-(defun pjones:keymap-popup-hide ()
-  "Hide the popup showing a keymap."
-  (interactive)
-  (setq which-key-persistent-popup nil)
-  (which-key--hide-popup))
 
 ;; Local Variables:
 ;; byte-compile-warnings: (not noruntime)

@@ -8,7 +8,6 @@
 (declare-function global-diff-hl-mode "diff-hl")
 (declare-function minions-mode "minions")
 (declare-function pdf-tools-install "pdf-tools")
-(declare-function projectile-mode "projectile")
 (declare-function puni-global-mode "puni")
 (declare-function vertico-mode "vertico")
 (declare-function which-key-mode "which-key")
@@ -44,7 +43,6 @@
   (global-diff-hl-mode)              ; Show what changes in a buffer
   (global-prettify-symbols-mode)     ; Replace buffer symbols.
   (minions-mode)                     ; Minor-mode menu.
-  (projectile-mode)                  ; Project tool
   (repeat-mode)                      ; Easy repeating of some actions.
   (vertico-mode)                     ; minibuffer completions.
   (which-key-mode)                   ; Remind me what keys do.
