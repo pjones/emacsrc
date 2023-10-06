@@ -23,6 +23,7 @@
  '(describe-bindings-outline t)
  '(echo-keystrokes 0.1)
  '(enable-recursive-minibuffers t)
+ '(ffap-require-prefix t)
  '(font-lock-maximum-decoration t)
  '(goto-line-history-local t)
  '(inhibit-startup-message t)
