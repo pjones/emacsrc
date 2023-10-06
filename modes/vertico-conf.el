@@ -15,8 +15,7 @@
 
 (custom-set-variables
  '(vertico-multiform-commands
-   '((project-switch-project grid)
-     (consult-org-heading buffer ,(lambda (_) (text-scale-set -1)))
+   '((consult-org-heading buffer)
      (consult-imenu buffer)
      (consult-buffer buffer
                      (vertico-buffer-display-action
