@@ -50,12 +50,10 @@
   (winum-mode)                       ; Number windows
   (yas-global-mode)                  ; Snippets.
 
-  ;; Force my overrides to apply:
-  (require 'puni)
-  (puni-global-mode) ; Working with delimiters.
-
-  ;; Other modes that need to be activated:
-  (pdf-tools-install)                     ; Internal PDF viewer
+  ;; PDF files should use pdf-tools!
+  (use-package pdf-tools
+    :magic ("%PDF" . pdf-view-mode)
+    :config (pdf-tools-install :no-query))
 
   ;; Libraries used throughout my Emacs session:
   (require 'saveplace)                    ; Saves your location in files
@@ -68,5 +66,9 @@
   (add-hook 'prog-mode-hook #'pjones:basic-mode-hook)
   (add-hook 'text-mode-hook #'pjones:basic-mode-hook)
   (add-hook 'after-init-hook #'pjones:boot-global-modes))
+
+;; Local Variables:
+;; byte-compile-warnings: (not noruntime)
+;; End:
 
 ;;; modes.el ends here

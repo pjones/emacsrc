@@ -11,6 +11,7 @@
 (declare-function flycheck-mode "flycheck")
 (declare-function indium-connect-to-chrome "indium")
 (declare-function indium-run-node "indium")
+(declare-function puni-mode "puni")
 (declare-function s-trim "s")
 
 ;; Create some faces
@@ -86,6 +87,7 @@ Calls `comment-indent-new-line' with ARGS."
   (display-line-numbers-mode)
   (flycheck-mode)
   (flyspell-prog-mode)
+  (puni-mode)
   (save-place-mode)
   (whitespace-mode)
   (pjones:add-fixme-lock)
