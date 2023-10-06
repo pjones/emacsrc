@@ -14,6 +14,9 @@
 (defvar pjones:current-theme nil
   "The currently active theme.")
 
+(defvar pjones:frame-alpha-background 90
+  "Default frame alpha background value.")
+
 (custom-set-variables
  '(calc-kill-line-numbering nil)
  '(compilation-scroll-output 'first-error)
@@ -111,6 +114,14 @@ If PREV is non-nil go to the previous theme."
  (lambda (&rest _)
    (run-hooks 'pjones:after-theme-change-hook)))
 
+(defun pjones:frame-toggle-alpha nil
+  "Toggle alpha transparency for the current frame."
+  (interactive)
+  (set-frame-parameter
+   nil 'alpha-background
+   (if (eq (frame-parameter nil 'alpha-background) pjones:frame-alpha-background)
+       nil pjones:frame-alpha-background)))
+
 (defun pjones:frame-title-file-name ()
   "How to format frame titles."
   (let* ((home (expand-file-name "~"))
@@ -147,6 +158,7 @@ If PREV is non-nil go to the previous theme."
        `(variable-pitch ((t (:font ,font-variable))))))))
 
 (add-to-list 'default-frame-alist '(cursor-type  . bar))
+(add-to-list 'default-frame-alist `(alpha-background . ,pjones:frame-alpha-background))
 (setq frame-title-format '(:eval (pjones:frame-title-file-name)))
 
 (defun pjones:find-file-hook ()

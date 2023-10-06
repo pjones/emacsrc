@@ -77,6 +77,7 @@ connection."
 (declare-function pjones:agenda "./interactive")
 (declare-function pjones:exchange-point-and-mark "./interactive")
 (declare-function pjones:fly-next-error "./interactive")
+(declare-function pjones:frame-toggle-alpha "./interactive")
 (declare-function pjones:indent-or-complete "./completion")
 (declare-function pjones:kill-directory-name "./interactive")
 (declare-function pjones:kill-file-name "./interactive")
@@ -135,6 +136,7 @@ connection."
 (pjones:global-set-keys
  (kbd "C-c ?") #'which-key-show-top-level
  (kbd "C-c a") (pjones:jump-to-buffer "*Org Agenda*" pjones:agenda)
+ (kbd "C-c A") #'pjones:frame-toggle-alpha
  (kbd "C-c b") #'eldoc-doc-buffer
  (kbd "C-c C") #'full-calc
  (kbd "C-c c") #'quick-calc
