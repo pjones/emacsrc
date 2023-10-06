@@ -192,6 +192,7 @@ If TIME is nil then use the current time."
  '(org-agenda-show-inherited-tags nil)
  '(org-deadline-warning-days 14)
  '(org-agenda-span 'day)
+ '(org-agenda-use-time-grid nil)
  '(org-agenda-start-on-weekday nil)
  '(org-agenda-start-day nil)
  '(org-agenda-block-separator ?─)
