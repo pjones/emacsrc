@@ -14,12 +14,6 @@
 (declare-function puni-mode "puni")
 (declare-function s-trim "s")
 
-;; Create some faces
-(defface pjones:fixme-face
-  '((t (:inherit 'font-lock-warning-face)))
-  "Face to style FIXME and TODO with."
-  :group 'faces)
-
 (defun pjones:comment-bar ()
   "Create a comment bar based on the current mode."
   (interactive)
@@ -60,11 +54,6 @@
         (insert-char ?  col)
         (funcall go)))))
 
-(defun pjones:add-fixme-lock ()
-  "Add todo markers as keywords."
-  (font-lock-add-keywords nil '(("\\<\\(FIXME:\\|TODO:\\|NOTE:\\)"
-                                 1 'pjones:fixme-face t))))
-
 (defun pjones:comment-line-break-function (&rest args)
   "Work around a bug in Emacs.
 Calls `comment-indent-new-line' with ARGS."
@@ -90,7 +79,6 @@ Calls `comment-indent-new-line' with ARGS."
   (puni-mode)
   (save-place-mode)
   (whitespace-mode)
-  (pjones:add-fixme-lock)
   (add-hook 'xref-backend-functions #'dumb-jump-xref-activate)
   (add-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p))
 
