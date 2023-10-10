@@ -7,12 +7,11 @@
 (require 'css-mode)
 (require 'rainbow-mode)
 
-(declare-function pjones:add-programming-hook "code.el")
-
 (custom-set-variables
  '(css-indent-offset 2))
 
-(pjones:add-programming-hook 'css-mode-hook)
 (add-hook 'css-mode-hook #'rainbow-mode)
+(when (fboundp 'pjones:prog-mode-hook)
+  (add-hook 'css-mode-hook #'pjones:prog-mode-hook))
 
 ;;; css-mode-conf.el ends here

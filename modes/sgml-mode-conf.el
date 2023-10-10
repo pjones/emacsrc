@@ -4,7 +4,7 @@
 ;;
 ;;; Code:
 
-(declare-function pjones:add-programming-hook "code.el")
-(pjones:add-programming-hook 'sgml-mode-hook)
+(when (fboundp 'pjones:prog-mode-hook)
+  (add-hook 'sgml-mode-hook #'pjones:prog-mode-hook))
 
 ;;; sgml-mode-conf.el ends here

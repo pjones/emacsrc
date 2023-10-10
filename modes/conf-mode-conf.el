@@ -6,7 +6,7 @@
 
 (require 'conf-mode)
 
-(declare-function pjones:add-programming-hook "code.el")
-(pjones:add-programming-hook 'conf-mode-hook)
+(when (fboundp 'pjones:prog-mode-hook)
+  (add-hook 'conf-mode-hook #'pjones:prog-mode-hook))
 
 ;;; conf-mode-conf.el ends here

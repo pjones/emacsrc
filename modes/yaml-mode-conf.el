@@ -5,8 +5,6 @@
 ;;; Code:
 (require 'yaml-mode)
 
-(declare-function pjones:add-programming-hook "code.el")
-
 (defun pjones:yaml-new-array-item ()
   "Insert a new array item.
 Make `yaml-mode' sort of like `org-mode' by inserting a newline,
@@ -24,6 +22,8 @@ indenting, and then inserting the array marker (dash)."
   (local-set-key (kbd "M-RET")      'pjones:yaml-new-array-item))
 
 (add-hook 'yaml-mode-hook 'pjones:yaml-mode-hook)
-(pjones:add-programming-hook 'yaml-mode-hook)
+(when (fboundp 'pjones:prog-mode-hook)
+  (add-hook 'yaml-mode-hook #'pjones:prog-mode-hook))
+
 
 ;;; yaml-mode-conf.el ends here

@@ -94,10 +94,6 @@ Calls `comment-indent-new-line' with ARGS."
   (add-hook 'xref-backend-functions #'dumb-jump-xref-activate)
   (add-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p))
 
-(defun pjones:add-programming-hook (mode-hook)
-  "Add the programming hook to the given MODE-HOOK."
-  (add-hook mode-hook 'pjones:prog-mode-hook))
-
 (defun pjones:indium-start-chrome ()
   "Start an Indium session for Chrome."
   (interactive)
