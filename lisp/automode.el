@@ -49,10 +49,4 @@
 ;; Files that trigger complication-mode
 (add-to-list 'auto-mode-alist '("errors\\.out$" . compilation-mode))
 
-;; Tree-sitter:
-(add-to-list 'major-mode-remap-alist '(ruby-mode . ruby-ts-mode))
-(add-to-list 'major-mode-remap-alist '(yaml-mode . yaml-ts-mode))
-(add-to-list 'major-mode-remap-alist '(rust-mode . rust-ts-mode))
-(add-to-list 'major-mode-remap-alist '(json-mode . json-ts-mode))
-
 ;;; automode.el ends here
