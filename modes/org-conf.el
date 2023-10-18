@@ -93,10 +93,10 @@ If TIME is nil then use the current time."
  '(org-appear-autokeywords t)
 
  ;; Behavior Settings:
+ '(org-blank-before-new-entry '((heading . t) (plain-list-item . t)))
  '(org-catch-invisible-edits 'smart)
  '(org-log-done 'time)
  '(org-reverse-note-order nil)
- '(org-list-empty-line-terminates-plain-lists nil)
  '(org-tags-column 0)
  '(org-use-fast-todo-selection 'expert)
  '(org-use-fast-tag-selection (quote auto))
