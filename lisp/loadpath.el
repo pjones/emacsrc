@@ -16,7 +16,6 @@
 (defvar pjones:lisp-files
   '("options"
      "modes"
-     "code"
      "automode"
      "functions"
      "suspend")
@@ -27,6 +26,7 @@
     "ui"
     "interactive"
     "completion"
+    "code"
     "keys")
   "Lisp files that should be loaded in non-batch Emacs.")
 

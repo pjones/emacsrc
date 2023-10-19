@@ -6,6 +6,7 @@
 
 (declare-function envrc-global-mode "envrc")
 (declare-function global-diff-hl-mode "diff-hl")
+(declare-function global-hl-todo-mode "hl-todo")
 (declare-function minions-mode "minions")
 (declare-function pdf-tools-install "pdf-tools")
 (declare-function puni-global-mode "puni")
@@ -41,6 +42,7 @@
   (ffap-bindings)                    ; Finding Files and URLs at Point
   (global-auto-revert-mode)          ; External changes cause a revert
   (global-diff-hl-mode)              ; Show what changes in a buffer
+  (global-hl-todo-mode)              ; Highlight TODO tags in text.
   (global-prettify-symbols-mode)     ; Replace buffer symbols.
   (minions-mode)                     ; Minor-mode menu.
   (repeat-mode)                      ; Easy repeating of some actions.

@@ -16,7 +16,4 @@
  '(set-mark-command-repeat-pop t)
  '(shell-command-dont-erase-buffer 'end-last-out))
 
-(when (fboundp 'pjones:prog-mode-hook)
-  (add-hook 'prog-mode-hook #'pjones:prog-mode-hook))
-
 ;;; simple-conf.el ends here

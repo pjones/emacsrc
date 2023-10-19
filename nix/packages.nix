@@ -66,6 +66,7 @@ emacsWithOverrides.emacsWithPackages (epkgs: with epkgs; [
   graphviz-dot-mode # Mode for the dot-language used by graphviz
   haskell-mode # A Haskell editing mode
   highlight-indent-guides # Minor mode to highlight indentation
+  hl-todo # Highlight TODO and similar keywords
   htmlize # Convert buffer text and decorations to HTML.
   http # Yet another HTTP client
   indium # JavaScript Awesome Development Environment
