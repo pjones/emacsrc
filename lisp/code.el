@@ -13,6 +13,7 @@
 (declare-function indium-run-node "indium")
 (declare-function puni-mode "puni")
 (declare-function s-trim "s")
+(declare-function yas-minor-mode "yasnippet")
 
 (defun pjones:comment-bar ()
   "Create a comment bar based on the current mode."
@@ -79,6 +80,7 @@ Calls `comment-indent-new-line' with ARGS."
   (puni-mode)
   (save-place-mode)
   (whitespace-mode)
+  (yas-minor-mode)
   (add-hook 'xref-backend-functions #'dumb-jump-xref-activate)
   (add-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p))
 

@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: latex-block
+# key: lb
+# expand-env: ((yas-indent-line nil))
+# --
+\\[$0\\]

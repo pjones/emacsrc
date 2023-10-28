@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: latex-inline
+# key: li
+# expand-env: ((yas-indent-line 'fixed))
+# --
+\\($0\\)

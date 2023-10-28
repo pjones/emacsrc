@@ -84,6 +84,19 @@ If BELOW is non-nil, open a line below point instead."
     (when (not already-bol)
       (indent-according-to-mode))))
 
+(defun pjones:ensure-blank-lines ()
+  "Ensure there are blank lines above and below point."
+  (interactive)
+  (save-excursion
+    (beginning-of-line 0) ;; beginning of prev line
+    (unless (looking-at-p "[ \t]*$")
+      (end-of-line)
+      (newline)))
+  (save-excursion
+    (beginning-of-line 2)
+    (unless (looking-at-p "[ \t]*$")
+      (newline))))
+
 (defun pjones:start-irc (&optional local-only)
   "Start IRC clients.
 

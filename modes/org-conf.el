@@ -25,9 +25,11 @@
 (declare-function org-insert-last-stored-link "ol")
 (declare-function org-roam-dailies-goto-date "org-roam")
 (declare-function org-tree-slide-mode "org-tree-slide")
-(declare-function pjones:open-line-above "../list/interactive")
+(declare-function pjones:ensure-blank-lines "../lisp/interactive")
+(declare-function pjones:open-line-above "../lisp/interactive")
 (declare-function puni-mode "puni")
 (declare-function whitespace-mode "whitespace")
+(declare-function yas-minor-mode "yasnippet")
 
 (defvar dbus-interface-emacs)
 (defvar dbus-path-emacs)
@@ -392,7 +394,10 @@ If TIME is nil then use the current time."
 
   ;; Tailor whitespace mode
   (setq-local whitespace-style '(trailing tabs empty))
-  (whitespace-mode))
+  (whitespace-mode)
+
+  ;; Use yasnippets:
+  (yas-minor-mode))
 
 (add-hook 'org-mode-hook #'pjones:org-mode-hook)
 
@@ -533,8 +538,12 @@ ARG is the number of headings to move."
 (defun pjones:org-insert-heading ()
   "Insert a heading sanely."
   (interactive)
-  (if (bolp) (org-insert-heading)
-    (org-insert-heading-after-current)))
+  (if (org-at-heading-p) (org-insert-heading)
+    (org-back-to-heading)
+    (end-of-line)
+    (org-insert-heading '(4)))
+  (when (org--blank-before-heading-p)
+    (pjones:ensure-blank-lines)))
 
 (defun pjones:org-insert-item (checkbox)
   "Insert a new item.
@@ -562,7 +571,8 @@ existing item.  This version works on headings too."
         (newline))
       (indent-according-to-mode)
       (insert "- ")
-      (when checkbox (insert "[ ] ")))))
+      (when checkbox (insert "[ ] "))))
+  (pjones:ensure-blank-lines))
 
 (defun pjones:org-open-line (arg)
   "Open a line, the correct way.

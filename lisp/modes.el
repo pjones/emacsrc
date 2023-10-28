@@ -50,7 +50,6 @@
   (which-key-mode)                   ; Remind me what keys do.
   (winner-mode)                      ; Track win conifg changes
   (winum-mode)                       ; Number windows
-  (yas-global-mode)                  ; Snippets.
 
   ;; PDF files should use pdf-tools!
   (use-package pdf-tools
