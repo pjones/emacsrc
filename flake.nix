@@ -6,6 +6,11 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     passmm = { url = "github:pjones/passmm"; flake = false; };
+
+    telega = {
+      url = "github:zevlg/telega.el/01e8f9e397bb18522b76d3bcdb74f5798e7c4999";
+      flake = false;
+    };
   };
 
   outputs = inputs@{ self, nixpkgs, home-manager, ... }:

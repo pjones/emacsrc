@@ -18,6 +18,7 @@ let
   # Package overrides:
   emacsWithOverrides = (emacsPackagesFor emacs).overrideScope' (self: super: {
     passmm = update super.passmm inputs.passmm;
+    telega = update super.telega inputs.telega;
 
     # Work around:
     #   - https://github.com/NixOS/nixpkgs/issues/172178
@@ -111,6 +112,7 @@ emacsWithOverrides.emacsWithPackages (epkgs: with epkgs; [
   rust-mode # A major-mode for editing Rust source code
   sage-shell-mode # A front-end for Sage Math
   scad-mode # A major mode for editing OpenSCAD code
+  telega # Telegram client (unofficial)
   treesit-grammars.with-all-grammars # For use with tree-sitter
   typescript-mode # Major mode for editing typescript
   vertico # VERTical Interactive COmpletion
