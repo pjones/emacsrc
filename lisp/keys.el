@@ -91,6 +91,7 @@ connection."
 (declare-function pjones:sort-lines "./interactive")
 (declare-function pjones:start-http "./interactive")
 (declare-function pjones:start-term "./interactive")
+(declare-function pjones:toggle-prev-buffer "./interactive")
 (declare-function resize-window "resize-window")
 (declare-function rg "rg")
 (declare-function rg-project "rg")
@@ -202,7 +203,7 @@ connection."
  (kbd "C-M-z") #'zap-to-char
  (kbd "C-x C-k @") #'consult-kmacro
  (kbd "C-z") pjones:zettle-map
- (kbd "M-'") #'mode-line-other-buffer
+ (kbd "M-'") #'pjones:toggle-prev-buffer
  (kbd "M-/") #'dabbrev-completion
  (kbd "M-<backspace>") (lambda () (interactive) (kill-buffer))
  (kbd "M-`") #'consult-register-store

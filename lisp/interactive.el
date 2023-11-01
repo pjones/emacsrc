@@ -97,6 +97,30 @@ If BELOW is non-nil, open a line below point instead."
     (unless (looking-at-p "[ \t]*$")
       (newline))))
 
+(defun pjones:toggle-prev-buffer ()
+  "Toggle between the two most recently used buffers.
+This differs from `mode-line-other-buffer' in that it respects
+`switch-to-prev-buffer-skip-p'."
+  (interactive)
+  (let* ((window (window-normalize-window nil t))
+         (old-buffer (window-buffer window))
+         new-buffer)
+    (catch 'found
+      (dolist (buffer (buffer-list))
+        (when (and (buffer-live-p buffer)
+                   (not (eq buffer old-buffer))
+                   ;; Skip buffers whose names start with a space.
+                   (not (eq (aref (buffer-name buffer) 0) ?\s))
+                   ;; Skip buffers shown in a side window before.
+                   (not (buffer-local-value 'window--sides-shown buffer))
+                   ;; Skip buffers according to a predicate:
+                   (not (switch-to-prev-buffer-skip-p nil window buffer)))
+          (setq new-buffer buffer)
+          (throw 'found t))))
+    (if new-buffer
+        (switch-to-buffer new-buffer nil t)
+      (mode-line-other-buffer))))
+
 (defun pjones:start-irc (&optional local-only)
   "Start IRC clients.
 

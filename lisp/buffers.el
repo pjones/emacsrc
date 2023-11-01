@@ -80,6 +80,13 @@ frame for it.")
  ;; Don't hide frames, when deleting windows, just kill the frame:
  '(frame-auto-hide-function #'delete-frame)
 
+ ;; Regular expressions that match buffers that should be skipped when
+ ;; moving through the buffer list.
+ '(switch-to-prev-buffer-skip-regexp
+   '("\\*Help"
+     "\\*Async-"
+     "\\*envrc\\*"))
+
  ;; Default action if `display-buffer-alist' doesn't select an action:
  '(display-buffer-base-action
    '((display-buffer-reuse-window
