@@ -106,7 +106,6 @@ If TIME is nil then use the current time."
  '(org-imenu-depth 3)
  '(org-special-ctrl-a/e t)
  '(org-special-ctrl-k t)
- '(org-M-RET-may-split-line t)
  '(org-clock-into-drawer t)
  '(org-log-into-drawer t)
  '(org-tags-exclude-from-inheritance nil)
@@ -123,6 +122,10 @@ If TIME is nil then use the current time."
  '(org-attach-archive-delete nil)
  '(org-capture-bookmark nil)
  '(org-archive-file-header-format nil)
+ '(org-M-RET-may-split-line
+   '((headline . nil)
+     (item . nil)
+     (default . t)))
 
  ;; Showing context
  '(org-show-hierarchy-above t)
@@ -535,13 +538,16 @@ ARG is the number of headings to move."
     (org-back-to-heading)
     (org-backward-heading-same-level (- arg 1))))
 
-(defun pjones:org-insert-heading ()
-  "Insert a heading sanely."
-  (interactive)
-  (if (org-at-heading-p) (org-insert-heading)
-    (org-back-to-heading)
-    (end-of-line)
-    (org-insert-heading '(4)))
+(defun pjones:org-insert-heading (&optional here)
+  "Insert a heading sanely.
+When HERE is non-nil, create a heading after point."
+  (interactive "P")
+  (let ((org-insert-heading-respect-content
+         (not (or here (and (org-at-heading-p) (bolp))))))
+    (if (or here (org-at-heading-p)) (org-insert-heading)
+      (org-back-to-heading)
+      (end-of-line)
+      (org-insert-heading)))
   (when (org--blank-before-heading-p)
     (pjones:ensure-blank-lines)))
 
