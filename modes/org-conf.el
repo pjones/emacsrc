@@ -81,10 +81,7 @@ If TIME is nil then use the current time."
  ;; Visual Settings:
  '(org-hide-leading-stars t)
  '(org-ellipsis "…")
- '(org-clock-clocked-in-display (quote both))
- '(org-clock-clocked-in-display 'frame-title)
- '(org-clock-frame-title-format (list '(t org-mode-line-string) " " frame-title-format))
- '(org-clock-mode-line-total 'current)
+ '(org-clock-clocked-in-display nil)
  '(org-show-context-detail (quote ((default . tree))))
  '(org-duration-format (quote h:mm))
  '(org-hide-emphasis-markers t)
