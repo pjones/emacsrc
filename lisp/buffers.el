@@ -64,8 +64,7 @@ its display."
     compilation-mode
     grep-mode
     haskell-interactive-mode
-    rg-mode
-    shell-mode)
+    rg-mode)
   "Modes that are displayed in their own frame.
 
 When displaying these buffers, pop open a new frame.  When a
@@ -157,7 +156,8 @@ frame for it.")
           "\\*Occur\\*"
           "\\*transient"
           help-mode
-          pdf-outline-buffer-mode))
+          pdf-outline-buffer-mode
+          shell-mode))
       (display-buffer-reuse-window
        display-buffer-reuse-mode-window
        display-buffer-in-direction)
