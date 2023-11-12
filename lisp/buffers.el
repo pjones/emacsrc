@@ -80,6 +80,9 @@ frame for it.")
  ;; Don't hide frames, when deleting windows, just kill the frame:
  '(frame-auto-hide-function #'delete-frame)
 
+ ;; Avoid switching to buffers already shown in windows:
+ '(switch-to-prev-buffer-skip 'visible)
+
  ;; Regular expressions that match buffers that should be skipped when
  ;; moving through the buffer list.
  '(switch-to-prev-buffer-skip-regexp

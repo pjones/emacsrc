@@ -103,6 +103,7 @@ This differs from `mode-line-other-buffer' in that it respects
 `switch-to-prev-buffer-skip-p'."
   (interactive)
   (let* ((window (window-normalize-window nil t))
+         (skip switch-to-prev-buffer-skip)
          (old-buffer (window-buffer window))
          new-buffer)
     (catch 'found
@@ -114,7 +115,7 @@ This differs from `mode-line-other-buffer' in that it respects
                    ;; Skip buffers shown in a side window before.
                    (not (buffer-local-value 'window--sides-shown buffer))
                    ;; Skip buffers according to a predicate:
-                   (not (switch-to-prev-buffer-skip-p nil window buffer)))
+                   (not (switch-to-prev-buffer-skip-p skip window buffer)))
           (setq new-buffer buffer)
           (throw 'found t))))
     (if new-buffer
