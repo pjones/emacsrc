@@ -7,9 +7,9 @@
 (require 'markdown-mode)
 (require 'visual-fill)
 (require 'whitespace)
+(require 'yasnippet)
 
 (declare-function pjones:open-line-above "../lisp/interactive.el")
-(declare-function pjones:add-fixme-lock "../lisp/code.el")
 (declare-function pjones:indent-or-complete "../lisp/completion.el")
 
 (autoload 'org-open-file "org")
@@ -81,33 +81,6 @@ If REVERSE is non-nil, do the opposite of what the context says."
              (lambda (name) (org-open-file name))))
     (markdown-follow-thing-at-point arg)))
 
-(defun pjones:markdown-attach-file (file &optional name)
-  "Attach FILE to the current document.
-
-The given FILE will be attached to the current document by adding
-it as a git-annex file in the `pjones:markdown-attachments-directory'
-directory.  Optionally renaming FILE to NAME."
-  (interactive
-   (let* ((f (read-file-name "Attach: " nil nil t))
-          (n (if current-prefix-arg
-                 (read-string "New Name: " (file-name-nondirectory f)))))
-     (list f n)))
-  (let* ((name (or name (file-name-nondirectory file)))
-         (dir (concat default-directory
-                      pjones:markdown-attachments-directory))
-         (dest (concat (file-name-as-directory dir)
-                       (file-name-nondirectory name))))
-    (unless (file-directory-p dir)
-      (make-directory dir t))
-    (copy-file file dest)
-    (unless (= 0 (call-process "git-annex" nil nil nil "info"))
-      (call-process "git-annex" nil nil nil "init"))
-    (unless (= 0 (call-process "git-annex" nil nil nil "add" dest))
-      (error "Error: git-annex failed"))
-    (markdown-insert-reference-definition
-     (file-name-nondirectory name)
-     (file-relative-name dest))))
-
 (defun pjones:markdown-bind-keys ()
   "Bind keys in modes derived from `markdown-mode'."
   (let* ((mode major-mode)
@@ -119,7 +92,7 @@ directory.  Optionally renaming FILE to NAME."
 (defun pjones:markdown-mode-hook ()
   "Set up key bindings and other crap for markdown-mode."
   (whitespace-mode)
-  (pjones:add-fixme-lock)
+  (yas-minor-mode)
 
   ;; Translate some strings into pretty symbols:
   (setq prettify-symbols-alist

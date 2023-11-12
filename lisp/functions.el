@@ -36,6 +36,17 @@
       ;; Fallback.
       (pop-to-buffer buffer))))
 
+(defun pjones:prog-mode-list ()
+  "Return a list of mode names that derive from `prog-mode'."
+  ;; Plus some stupid modes that don't seem to show up:
+  (append '("ruby" "python")
+          (mapcar (lambda (mode)
+                    (string-replace "-mode" "" (symbol-name mode)))
+                  (seq-filter (lambda (mode)
+                                (and (symbolp mode)
+                                     (provided-mode-derived-p mode 'prog-mode)))
+                              (mapcar 'cdr auto-mode-alist)))))
+
 (defun pjones:script (name)
   "Generate an absolute path to the script NAME."
   (concat

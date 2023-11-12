@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: group-by
+# key: gb
+# expand-env: ((yas-indent-line 'fixed))
+# --
+GROUP BY $0

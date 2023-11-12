@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: date-between
+# key: dateb
+# expand-env: ((yas-indent-line 'fixed))
+# --
+DATE(${1:column}) BETWEEN DATE('${2:`(format-time-string "%Y-%m-%d")`}') AND DATE('`(format-time-string "%Y-%m-%d")`')$0

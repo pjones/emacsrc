@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: left-join
+# key: lj
+# expand-env: ((yas-indent-line 'fixed))
+# --
+LEFT JOIN ${1:table} AS ${2:alias} ON $2.${3:column} = ${4:other}$0

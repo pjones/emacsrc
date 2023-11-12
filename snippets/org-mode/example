@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: example block
+# key: ex
+# expand-env: ((yas-indent-line 'fixed))
+# --
+#+begin_example
+#+end_example
