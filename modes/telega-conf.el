@@ -5,6 +5,7 @@
 ;;; Code:
 
 (require 'telega)
+(require 'flyspell)
 
 (custom-set-variables
  '(telega-chat-markup-functions '("markdown2" "org" nil)))
@@ -16,8 +17,9 @@
 
 (defun pjones:telega-chat-mode-hook ()
   "Hook for `telega-chat-mode'."
-  (setq flyspell-generic-check-word-predicate #'telega-flyspell-input-p)
-  (flyspell-mode)
+  (when (fboundp 'telega-flyspell-input-p)
+    (setq flyspell-generic-check-word-predicate #'telega-flyspell-input-p)
+    (flyspell-mode))
   (visual-line-mode))
 
 (add-hook 'telega-chat-mode-hook #'pjones:telega-chat-mode-hook)
