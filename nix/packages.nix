@@ -45,8 +45,8 @@ emacsWithOverrides.emacsWithPackages (epkgs: with epkgs; [
   dired-filter # Ibuffer-like filtering for dired
   dired-narrow # Live-narrowing of search results for dired
   dired-subtree # Insert subdirectories in a tree-like fashion
-  doom-themes # an opinionated pack of modern color-themes
   dumb-jump # Jump to definition for 40+ languages without configuration
+  ef-themes # Colourful (“pretty”) yet legible themes
   eimp # Emacs Image Manipulation Package
   eldoc # Show function arglist or variable docstring in echo area
   elm-mode # Elm mode for emacs
