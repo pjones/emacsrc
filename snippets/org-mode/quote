@@ -1,7 +1,8 @@
 # -*- mode: snippet -*-
 # name: quote block
 # key: qt
-# expand-env: ((yas-indent-line 'fixed))
+# expand-env: ((yas-indent-line 'auto))
 # --
 #+begin_quote
+  $0
 #+end_quote
