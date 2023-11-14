@@ -200,7 +200,7 @@ The mode construct list is then returned."
 ;; Hooks:
 (add-hook 'after-init-hook
   (defun pjones:set-initial-theme ()
-    (pjones:load-theme 'ef-dark)))
+    (pjones:load-theme 'ef-duo-dark)))
 
 (add-hook 'after-init-hook #'pjones:configure-new-frame)
 (add-hook 'after-make-frame-functions #'pjones:configure-new-frame)
