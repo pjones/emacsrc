@@ -326,7 +326,7 @@ If TIME is nil then use the current time."
       :recursive t
       :auto-sitemap t
       :sitemap-title "Peter's Knowledge Base (All Pages)"
-      :sitemap-filename "sitemap.org"
+      :sitemap-filename ,(concat pjones:org-publish-directory "wiki/sitemap.org")
       :sitemap-function pjones:org-publish-sitemap
       :sitemap-sort-folders ignore
       :sitemap-style list ; Tree is broken :(
