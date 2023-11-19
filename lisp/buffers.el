@@ -62,9 +62,7 @@ its display."
 (defvar pjones:modes-dedicated-to-frames
   '(comint-mode
     compilation-mode
-    grep-mode
-    haskell-interactive-mode
-    rg-mode)
+    haskell-interactive-mode)
   "Modes that are displayed in their own frame.
 
 When displaying these buffers, pop open a new frame.  When a
@@ -155,8 +153,10 @@ frame for it.")
           "\\*magit-.*popup"
           "\\*Occur\\*"
           "\\*transient"
+          grep-mode
           help-mode
           pdf-outline-buffer-mode
+          rg-mode
           shell-mode))
       (display-buffer-reuse-window
        display-buffer-reuse-mode-window
