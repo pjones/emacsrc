@@ -22,7 +22,7 @@
 (require 'org-roam-export)
 
 (custom-set-variables
- '(org-roam-directory "~/notes/wiki")
+ '(org-roam-directory (concat pjones:org-notes-directory "wiki"))
  '(org-roam-dailies-directory "journal")
  '(org-roam-db-node-include-function
    #'org-before-first-heading-p) ; Only files are org-roam nodes.

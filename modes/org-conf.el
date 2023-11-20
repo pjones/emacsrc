@@ -37,6 +37,10 @@
 (defvar org-clock-start-time)
 (defvar whitespace-style)
 
+(defvar pjones:org-notes-directory
+  (expand-file-name "~/notes/")
+  "Base directory where Org files are stored.")
+
 (defvar pjones:org-publish-directory
   (expand-file-name "~/public/")
   "Directory where published files are stored.")
@@ -111,7 +115,7 @@ If TIME is nil then use the current time."
  '(org-id-link-to-org-use-id 'create-if-interactive)
  '(org-edit-src-persistent-message nil)
  '(org-src-window-setup (quote current-window))
- '(org-attach-id-dir "~/notes/attachments/")
+ '(org-attach-id-dir (concat pjones:org-notes-directory "attachments/"))
  '(org-attach-auto-tag nil)
  '(org-attach-dir-relative t)
  '(org-attach-method 'ln)
@@ -175,11 +179,13 @@ If TIME is nil then use the current time."
 
  ;; Stuff for org-agenda.
  '(org-agenda-files
-   '("~/notes/gtd/inbox.org"
-     "~/notes/gtd/projects.org"
-     "~/notes/gtd/rfa.org"
-     "~/notes/gtd/routines.org"
-     "~/notes/gtd/school.org"))
+   (mapcar
+    (apply-partially #'concat pjones:org-notes-directory)
+    '("gtd/inbox.org"
+      "gtd/projects.org"
+      "gtd/rfa.org"
+      "gtd/routines.org"
+      "gtd/school.org")))
 
  '(org-agenda-window-setup (quote current-window))
  '(org-agenda-todo-ignore-with-date nil)
@@ -242,22 +248,16 @@ If TIME is nil then use the current time."
             ((org-agenda-view-columns-initially t))))))
 
  ;; Stuff for org-capture and org-refile:
- '(org-default-notes-file "~/notes/gtd/inbox.org")
+ '(org-default-notes-file (concat pjones:org-notes-directory "gtd/inbox.org"))
  '(org-refile-use-outline-path t)
  '(org-refile-allow-creating-parent-nodes t)
  '(org-log-refile (quote time))
-
- '(org-refile-targets
-   (quote (("~/notes/gtd/projects.org" :level . 3)
-           ("~/notes/gtd/routines.org" :level . 2)
-           ("~/notes/gtd/someday.org" :level . 3))))
 
  ;; Preview control (more below):
  '(org-preview-latex-default-process 'imagemagick)
 
  ;; Stuff for exporting:
  '(org-export-with-smart-quotes t)
- '(org-icalendar-combined-agenda-file "~/notes/gtd/calendar.ics")
  '(org-icalendar-include-todo t)
  '(org-html-htmlize-output-type 'css)
  '(org-html-validation-link nil)
@@ -303,7 +303,7 @@ If TIME is nil then use the current time."
 
  `(org-publish-project-alist
    '(("gtd"
-      :base-directory "~/notes/gtd/"
+      :base-directory ,(concat pjones:org-notes-directory "gtd/")
       :base-extension "org"
       :recursive t
       :exclude "archive\\.org$"
@@ -321,7 +321,7 @@ If TIME is nil then use the current time."
       <a title=\"Home\" href=\"%s\">🏠</a>
       </div>")
      ("wiki"
-      :base-directory "~/notes/wiki/"
+      :base-directory ,(concat pjones:org-notes-directory "wiki/")
       :base-extension "org"
       :recursive t
       :auto-sitemap t
@@ -345,7 +345,7 @@ If TIME is nil then use the current time."
       <a title=\"Home\" href=\"%s\">🏠</a>
       </div>")
      ("attachments"
-      :base-directory "~/notes/attachments/"
+      :base-directory ,(concat pjones:org-notes-directory "attachments/")
       :base-extension 'any
       :recursive t
       :publishing-directory ,(concat pjones:org-publish-directory "attachments/")
