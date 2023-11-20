@@ -309,10 +309,13 @@ If TIME is nil then use the current time."
       :exclude "archive\\.org$"
       :publishing-function org-html-publish-to-html
       :publishing-directory ,(concat pjones:org-publish-directory "gtd/")
+      :with-author nil
+      :with-date nil
       :section-numbers t
       :with-broken-links t
       :with-toc 2
       :archived-trees nil
+      :html-postamble nil
       :html-link-home "../wiki/index.html"
       :html-link-up "../wiki/sitemap.html"
       :html-home/up-format
@@ -334,9 +337,12 @@ If TIME is nil then use the current time."
       :completion-function pjones:org-roam-after-publish
       :publishing-function org-html-publish-to-html
       :publishing-directory ,(concat pjones:org-publish-directory "wiki/")
+      :with-author nil
+      :with-date nil
       :section-numbers t
       :with-broken-links t
       :with-toc nil
+      :html-postamble nil
       :html-link-home "../../../index.html"
       :html-link-up "../../../sitemap.html"
       :html-home/up-format
