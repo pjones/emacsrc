@@ -72,6 +72,7 @@ connection."
 (declare-function org-roam-dailies-goto-date "org-roam")
 (declare-function org-roam-node-find "org-roam")
 (declare-function org-roam-node-insert "org-roam")
+(declare-function org-store-link "ol")
 (declare-function passmm-completing-read "passmm")
 (declare-function passmm-list-passwords "passmm")
 (declare-function pjones:agenda "./interactive")
@@ -146,6 +147,7 @@ connection."
  (kbd "C-c f") (pjones:jump-to-buffer "*flymake message*")
  (kbd "C-c h") #'pjones:start-http
  (kbd "C-c k") #'pjones:kill-line
+ (kbd "C-c l l") #'org-store-link
  (kbd "C-c l o") #'link-hint-open-link
  (kbd "C-c l w") #'link-hint-copy-link
  (kbd "C-c M") #'magit-file-dispatch

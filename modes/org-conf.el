@@ -261,6 +261,7 @@ If TIME is nil then use the current time."
  '(org-icalendar-include-todo t)
  '(org-html-htmlize-output-type 'css)
  '(org-html-validation-link nil)
+ '(org-highlight-latex-and-related '(native))
  '(org-latex-tables-booktabs t)
  '(org-latex-listings 'minted)
  '(org-latex-compiler "xelatex")
