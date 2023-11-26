@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: delete
+# key: del
+# expand-env: ((yas-indent-line 'fixed))
+# --
+DELETE FROM ${1:table}
+WHERE $0;

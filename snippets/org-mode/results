@@ -1,7 +1,7 @@
 # -*- mode: snippet -*-
 # name: results block
 # key: res
-# expand-env: ((yas-indent-line 'fixed))
+# expand-env: ((yas-indent-line nil))
 # --
-#+results:
-$0
+$> #+results:
+$> $0

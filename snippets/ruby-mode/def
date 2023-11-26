@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: def
+# key: def
+# expand-env: ((yas-indent-line 'auto))
+# --
+# FIXME: Write docs for $1.
+def ${1:initialize}($0)
+  $>
+end
