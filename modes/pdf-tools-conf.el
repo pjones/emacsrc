@@ -27,6 +27,14 @@
   "Respond to a page change in PDF documents."
   (setq-local cursor-type nil))
 
+(defun pjones:pdf-sync-colors ()
+  "Sync all PDF buffer colors with current theme."
+  (dolist (buffer (buffer-list))
+    (when (pdf-util-pdf-buffer-p buffer)
+      (with-current-buffer buffer
+        (pdf-view-refresh-themed-buffer
+         pdf-view-themed-minor-mode)))))
+
 ;; Settings:
 (custom-set-variables
  '(pdf-view-continuous nil))
@@ -34,7 +42,7 @@
 (defun pjones:pdf-view-mode-hook ()
   "Hook for `pdf-view-mode-hook'."
   (pdf-view-fit-page-to-window)
-  (pdf-view-midnight-minor-mode)
+  (pdf-view-themed-minor-mode)
   (pjones:pdf-view-after-change-page-hook))
 
 (let ((map pdf-outline-buffer-mode-map))
@@ -44,5 +52,6 @@
 ;; Hooks:
 (add-hook 'pdf-view-after-change-page-hook #'pjones:pdf-view-after-change-page-hook)
 (add-hook 'pdf-view-mode-hook #'pjones:pdf-view-mode-hook)
+(add-hook 'pjones:after-theme-change-hook #'pjones:pdf-sync-colors)
 
 ;;; pdf-tools-conf.el ends here
