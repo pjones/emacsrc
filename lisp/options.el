@@ -15,6 +15,7 @@
  '(epa-file-encrypt-to "B3CDF5E4B27790430DACE07F526722D1204284CB")
  '(inhibit-eol-conversion t)
  '(make-backup-files nil)
+ '(server-client-instructions nil)
  '(vc-follow-symlinks t)) ; Don't warn prompt me about symlinks!
 
 ;;; options.el ends here

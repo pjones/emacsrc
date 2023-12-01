@@ -18,6 +18,8 @@
 
 (let ((map vterm-mode-map))
   (define-key map (kbd "M-'") nil)
+  (define-key map (kbd "M-:") nil)
+  (define-key map (kbd "M-<backspace>") nil)
   (define-key map (kbd "C-c C-d") #'pjones:vterm-change-dir)
   (define-key map (kbd "C-c C-r") #'pjones:vterm-restore-cursor)
   (define-key map (kbd "C-c C-M-r") #'pjones:vterm-toggle-name)
@@ -71,6 +73,15 @@ new title to use."
         (funcall orig title)
         (setq mode-name "VTerm"))
     (setq mode-name (concat "VTerm " title))))
+
+(defun pjones:vterm-frame (&optional cmd)
+  "Start a new vterm instance optionally running CMD."
+  (let ((vterm-shell (or cmd vterm-shell))
+        (vterm-buffer-name-string (or cmd vterm-buffer-name-string))
+        (vterm-kill-buffer-on-exit (if cmd nil vterm-kill-buffer-on-exit)))
+    (with-current-buffer (vterm t)
+      (setq-local vterm-kill-buffer-on-exit vterm-kill-buffer-on-exit)
+      (when cmd (vterm--set-title cmd)))))
 
 (advice-add 'vterm--set-title :around #'pjones:vterm--set-title)
 (add-hook 'vterm-mode-hook #'pjones:vterm-mode-hook)
