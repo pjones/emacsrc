@@ -54,6 +54,7 @@
 
 (reformatter-define haskell-format
   :program "ormolu"
+  :args '("--no-cabal")
   :group 'haskell)
 
 (defun pjones:haskell-generate-module-name (&optional file)
