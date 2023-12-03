@@ -19,13 +19,6 @@ let
   emacsWithOverrides = (emacsPackagesFor emacs).overrideScope' (self: super: {
     passmm = update super.passmm inputs.passmm;
     telega = update super.telega inputs.telega;
-
-    # Work around:
-    #   - https://github.com/NixOS/nixpkgs/issues/172178
-    #   - https://github.com/vedang/pdf-tools/issues/102
-    pdf-tools = super.pdf-tools.overrideAttrs (orig: {
-      CXXFLAGS = "-std=c++17";
-    });
   });
 in
 # Emacs package list:

@@ -1,14 +1,18 @@
 {
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.05";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.11";
 
-    home-manager.url = "github:nix-community/home-manager/release-23.05";
+    home-manager.url = "github:nix-community/home-manager/release-23.11";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
-    passmm = { url = "github:pjones/passmm"; flake = false; };
+    passmm = {
+      url = "github:pjones/passmm";
+      flake = false;
+    };
 
     telega = {
-      url = "github:zevlg/telega.el/01e8f9e397bb18522b76d3bcdb74f5798e7c4999";
+      # Commit from Oct 30, 2023
+      url = "github:zevlg/telega.el/5b49be485ae95d33b3e09c5cac4ff7e569a510f2";
       flake = false;
     };
   };
