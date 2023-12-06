@@ -142,7 +142,6 @@ If PREV is non-nil go to the previous theme."
        `(variable-pitch ((t (:font ,font-variable))))))))
 
 (add-to-list 'default-frame-alist '(cursor-type  . bar))
-(add-to-list 'default-frame-alist `(alpha-background . ,pjones:frame-alpha-background))
 (setq frame-title-format '(:eval (pjones:frame-title-file-name)))
 
 (defun pjones:find-file-hook ()
