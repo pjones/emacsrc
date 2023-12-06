@@ -45,6 +45,7 @@ emacsWithOverrides.emacsWithPackages (epkgs: with epkgs; [
   elm-mode # Elm mode for emacs
   embark # Conveniently act on minibuffer completions
   embark-consult # Consult integration for Embark
+  ement # A Matrix client for GNU Emacs.
   emms # The Emacs Multimedia System
   envrc # Support for `direnv' that operates buffer-locally
   erc-hl-nicks # ERC nick highlighter that ignores uniquifying chars when colorizing
