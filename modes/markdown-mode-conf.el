@@ -70,8 +70,7 @@ If REVERSE is non-nil, do the opposite of what the context says."
   (auto-fill-mode -1)
   (whitespace-mode -1)
   (visual-line-mode)
-  (visual-fill-mode)
-  (darkroom-mode))
+  (visual-fill-mode))
 
 (defun pjones:markdown-follow-thing-at-point (arg)
   "Call (and pass ARG) to `markdown-follow-thing-at-point'."
@@ -96,7 +95,11 @@ If REVERSE is non-nil, do the opposite of what the context says."
 
   ;; Translate some strings into pretty symbols:
   (setq prettify-symbols-alist
-        '(("[x]" . (?\] (Bl . Br) ?✓ (Bl . Br) ?\[)))))
+        '(("[x]" . (?\] (Bl . Br) ?✓ (Bl . Br) ?\[))))
+
+  (when-let* ((name (buffer-file-name))
+              (match (string-match-p "^/tmp/.*\\.txt$" name)))
+    (pjones:markdown-visual-line)))
 
 (add-hook 'markdown-mode-hook 'pjones:markdown-mode-hook)
 (add-hook 'markdown-mode-hook 'pjones:markdown-bind-keys)
