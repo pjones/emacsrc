@@ -89,6 +89,7 @@ connection."
 (declare-function pjones:open-temp-buffer "./interactive")
 (declare-function pjones:pwgen "./interactive")
 (declare-function pjones:rectangle-number-lines "./interactive")
+(declare-function pjones:set-register-buffer "./interactive")
 (declare-function pjones:sort-lines "./interactive")
 (declare-function pjones:start-http "./interactive")
 (declare-function pjones:start-term "./interactive")
@@ -199,11 +200,10 @@ connection."
  (kbd "C-+") #'text-scale-adjust
  (kbd "C--") #'text-scale-adjust
  (kbd "C-_") (lambda () (interactive) (text-scale-set 0))
- (kbd "C-`") #'consult-register-load
- (kbd "C-M-`") #'consult-register
  (kbd "C-M-SPC") #'er/expand-region
  (kbd "C-M-z") #'zap-to-char
  (kbd "C-x C-k @") #'consult-kmacro
+ (kbd "C-x r B") #'pjones:set-register-buffer
  (kbd "C-z") pjones:zettle-map
  (kbd "M-'") #'pjones:toggle-prev-buffer
  (kbd "M-/") #'dabbrev-completion
@@ -226,9 +226,11 @@ connection."
  ;; Overriding default key bindings
  [remap apropos-command] #'consult-apropos
  [remap bookmark-jump] #'consult-bookmark
+ [remap copy-to-register] #'consult-register-store
  [remap exchange-point-and-mark] #'pjones:exchange-point-and-mark
  [remap imenu] #'consult-imenu
  [remap indent-for-tab-command] #'pjones:indent-or-complete
+ [remap insert-register] #'consult-register-load
  [remap isearch-forward-symbol-at-point] #'isearch-forward-thing-at-point
  [remap kill-line] #'pjones:kill-line
  [remap kill-region] #'pjones:kill-region-or-backward-kill-word

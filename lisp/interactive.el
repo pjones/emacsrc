@@ -255,6 +255,11 @@ absolute path name."
   (interactive "p")
   (find-file (pjones:next-file (- count))))
 
+(defun pjones:set-register-buffer (register)
+  "Store the current buffer name in REGISTER."
+  (interactive (list (register-read-with-preview "Buffer to register: ")))
+  (set-register register (cons 'buffer (buffer-name))))
+
 (defun pjones:sort-lines (beg end)
   "Sort the region from BEG to END."
   (interactive "r")
