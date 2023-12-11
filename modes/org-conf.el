@@ -29,13 +29,16 @@
 (declare-function pjones:open-line-above "../lisp/interactive")
 (declare-function puni-mode "puni")
 (declare-function whitespace-mode "whitespace")
+(declare-function yas-expand "yasnippet")
 (declare-function yas-minor-mode "yasnippet")
+(declare-function yas-next-field "yasnippet")
 
 (defvar dbus-interface-emacs)
 (defvar dbus-path-emacs)
 (defvar org-attach-store-link-p)
 (defvar org-clock-start-time)
 (defvar whitespace-style)
+(defvar yas/keymap)
 
 (defvar pjones:org-notes-directory
   (expand-file-name "~/notes/")
@@ -404,7 +407,10 @@ If TIME is nil then use the current time."
   (whitespace-mode)
 
   ;; Use yasnippets:
-  (yas-minor-mode))
+  (yas-minor-mode)
+  (setq-local yas/trigger-key [tab])
+  (define-key yas/keymap [tab] #'yas-next-field)
+  (add-to-list 'org-tab-first-hook #'yas-expand))
 
 (add-hook 'org-mode-hook #'pjones:org-mode-hook)
 

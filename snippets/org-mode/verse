@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: verse block
+# key: vrs
+# expand-env: ((yas-indent-line 'auto))
+# --
+#+begin_verse
+  $0
+#+end_verse
