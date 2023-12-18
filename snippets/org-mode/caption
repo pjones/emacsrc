@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: caption
+# key: cap
+# expand-env: ((yas-indent-line 'auto))
+# --
+#+caption: $0
+#+attr_html: :width 100%
