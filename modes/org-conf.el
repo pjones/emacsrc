@@ -124,6 +124,7 @@ If TIME is nil then use the current time."
  '(org-attach-method 'ln)
  '(org-attach-store-link-p 'attached)
  '(org-attach-archive-delete nil)
+ '(org-attach-use-inheritance t)
  '(org-capture-bookmark nil)
  '(org-archive-file-header-format nil)
  '(org-M-RET-may-split-line
