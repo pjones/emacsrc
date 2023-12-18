@@ -17,6 +17,7 @@
            (-flatten (-map ls (funcall ls base)))))))
 
 (custom-set-variables
+ '(magit-show-long-lines-warning nil)
  '(magit-repository-directories (pjones:magit-repository-directories))
  '(magit-display-buffer-function 'magit-display-buffer-fullcolumn-most-v1)
  '(magit-popup-use-prefix-argument 'default)
