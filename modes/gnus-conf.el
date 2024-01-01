@@ -146,6 +146,10 @@ Declared here to avoid compiler warnings.")
                   smtpmail-smtp-server "smtp.fastmail.com"
                   smtpmail-smtp-service 465
                   smtpmail-stream-type 'ssl)))
+     ((header "to" "freerangebits")
+      (address (with-current-buffer gnus-article-buffer
+                 (message-fetch-field "to")))
+      (signature :file "freerangebits"))
      ("WGU"
       (name "Peter J. Jones")
       (address ,(concat "pjon409" "@" "wgu.edu"))
