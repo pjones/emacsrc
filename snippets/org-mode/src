@@ -3,5 +3,5 @@
 # key: src
 # expand-env: ((yas-indent-line 'fixed))
 # --
-#+begin_src ${1:$$(yas-choose-value (pjones:prog-mode-list))} :exports code$0
+#+begin_src ${1:$$(yas-choose-value (pjones:prog-mode-list))} :exports both$0
 #+end_src

@@ -8,7 +8,7 @@
 (require 'org)
 (require 'org-agenda)
 (require 'org-capture)
-(require 'ox-md)
+(require 'ox-gfm)
 (require 's)
 (require 'warnings)
 
@@ -645,8 +645,9 @@ PROMOTE should be non-nil to promote, or nil to demote."
 
 ;;; Key Bindings:
 (let ((map org-mode-map))
-  ;; Reset this so I can use it as a prefix:
+  ;; Reset these so I can use them as a prefix:
   (define-key map (kbd "C-c C-a") nil)
+  (define-key map (kbd "C-c C-e") nil)
 
   (define-key map (kbd "<f12>") #'org-tree-slide-mode)
   (define-key map (kbd "C-'") nil)
@@ -656,6 +657,10 @@ PROMOTE should be non-nil to promote, or nil to demote."
   (define-key map (kbd "C-c C-a a") #'pjones:org-attach)
   (define-key map (kbd "C-c C-a d") #'org-attach-reveal-in-emacs)
   (define-key map (kbd "C-c C-a u") #'org-attach-url)
+  (define-key map (kbd "C-c C-e b") #'org-beamer-export-to-pdf)
+  (define-key map (kbd "C-c C-e e") #'org-export-dispatch)
+  (define-key map (kbd "C-c C-e m") #'org-gfm-export-as-markdown)
+  (define-key map (kbd "C-c C-e p") #'org-latex-export-to-pdf)
   (define-key map (kbd "C-c C-x a") #'pjones:org-archive-subtree-to-daily)
   (define-key map (kbd "C-c C-x A") #'pjones:org-archive-subtree-to-daily)
   (define-key map (kbd "C-M-n") #'org-next-visible-heading)

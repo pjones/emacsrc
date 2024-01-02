@@ -89,6 +89,7 @@ emacsWithOverrides.emacsWithPackages (epkgs: with epkgs; [
   org-roam # A database abstraction layer for Org-mode
   org-tree-slide # A presentation tool for org-mode
   orgalist # Manage Org-like lists in non-Org buffers
+  ox-gfm # Github Flavored Markdown Back-End for Org Export Engine
   package-lint # A linting library for elisp package authors
   passmm # A minor mode for pass (Password Store).
   password-store # Password store (pass) support
