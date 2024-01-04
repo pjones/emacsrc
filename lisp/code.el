@@ -6,6 +6,7 @@
 (eval-when-compile
   (require 'saveplace))
 
+(declare-function aggressive-indent-mode "aggressive-indent")
 (declare-function compilation-read-command "compile")
 (declare-function dumb-jump-xref-activate "dumb-jump")
 (declare-function flycheck-mode "flycheck")
@@ -78,6 +79,7 @@ Calls `comment-indent-new-line' with ARGS."
   (flycheck-mode)
   (flyspell-prog-mode)
   (puni-mode)
+  (aggressive-indent-mode)
   (save-place-mode)
   (whitespace-mode)
   (yas-minor-mode)
