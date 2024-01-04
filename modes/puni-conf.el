@@ -13,6 +13,7 @@
   (define-key map (kbd "C-d") nil)
   (define-key map (kbd "C-k") nil)
   (define-key map (kbd "C-w") nil)
+  (define-key map (kbd "C-M-k .") #'kill-sexp)
   (define-key map (kbd "C-M-k b") #'puni-slurp-forward)
   (define-key map (kbd "C-M-k f") #'puni-barf-forward)
   (define-key map (kbd "C-M-k k") #'puni-squeeze)

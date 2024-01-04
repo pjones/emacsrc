@@ -20,6 +20,7 @@
 (declare-function project-root "project")
 (declare-function puni-kill-active-region "puni")
 (declare-function puni-kill-line "puni")
+(declare-function puni-soft-delete-by-move "puni")
 (declare-function vterm "vterm")
 (declare-function which-key--hide-popup "which-key")
 (declare-function which-key--show-keymap "which-key")
@@ -43,7 +44,7 @@ ARG is passed to `save-buffers-kill-terminal'"
 If there is a region with \\[transient-mark-mode] active, it will
 be removed and placed in the kill ring in a similar manner to
 `kill-region'.  If there isn't a region, the word before point
-will be deleted (without placing it in the kill ring)."
+will be killed."
   (interactive "p")
   (require 'subword)
   (let ((forward
@@ -54,9 +55,13 @@ will be deleted (without placing it in the kill ring)."
     (if (use-region-p)
         (if (= 0 arg) (puni-kill-active-region)
           (kill-region (region-beginning) (region-end)))
-      (delete-region (point) (progn
+      (if puni-mode
+          (dotimes (_ arg)
+            (puni-soft-delete-by-move #'backward-word nil nil 'kill
+                                      'delete-one))
+        (kill-region (point) (progn
                                (funcall forward (- arg))
-                               (point))))))
+                               (point)))))))
 
 (defun pjones:kill-line (arg)
   "Kill from point to the end of the line.
@@ -64,10 +69,7 @@ If point is at the end of a line, kill the entire line.  ARG is
 passed on to `kill-line'."
   (interactive "P")
   (if (or arg (not (looking-at-p "\\s-*$")))
-      (if puni-mode
-          (progn
-            (puni-kill-line arg)
-            (indent-according-to-mode))
+      (if puni-mode (puni-kill-line arg)
         (kill-line arg))
     (kill-whole-line)))
 
