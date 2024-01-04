@@ -604,7 +604,7 @@ version, properly handles tables."
   (interactive)
   (require 'org-roam)
   (when-let* ((today (save-excursion
-                       (org-roam-dailies-goto-date)
+                       (org-roam-dailies-goto-date nil "d")
                        (buffer-file-name)))
               (org-archive-location
                (concat today "::* Archived From %s")))
