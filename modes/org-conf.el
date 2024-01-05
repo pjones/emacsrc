@@ -127,6 +127,7 @@ If TIME is nil then use the current time."
  '(org-attach-use-inheritance t)
  '(org-capture-bookmark nil)
  '(org-archive-file-header-format nil)
+ '(org-archive-default-command #'pjones:org-archive-subtree-to-daily)
  '(org-M-RET-may-split-line
    '((headline . nil)
      (item . nil)
@@ -599,7 +600,7 @@ version, properly handles tables."
   (if (org-at-table-p) (org-table-insert-row arg)
     (pjones:open-line-above arg)))
 
-(defun pjones:org-archive-subtree-to-daily ()
+(defun pjones:org-archive-subtree-to-daily (&optional _find-done)
   "Arhive the current subtree to the roam daily file."
   (interactive)
   (require 'org-roam)
@@ -661,8 +662,6 @@ PROMOTE should be non-nil to promote, or nil to demote."
   (define-key map (kbd "C-c C-e e") #'org-export-dispatch)
   (define-key map (kbd "C-c C-e m") #'org-gfm-export-as-markdown)
   (define-key map (kbd "C-c C-e p") #'org-latex-export-to-pdf)
-  (define-key map (kbd "C-c C-x a") #'pjones:org-archive-subtree-to-daily)
-  (define-key map (kbd "C-c C-x A") #'pjones:org-archive-subtree-to-daily)
   (define-key map (kbd "C-M-n") #'org-next-visible-heading)
   (define-key map (kbd "C-M-p") #'pjones:org-up-or-prev)
   (define-key map (kbd "C-o") #'pjones:org-open-line)
