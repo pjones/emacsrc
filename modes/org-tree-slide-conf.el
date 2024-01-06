@@ -8,7 +8,8 @@
 
 (custom-set-variables
  '(org-tree-slide-activate-message nil)
- '(org-tree-slide-deactivate-message nil))
+ '(org-tree-slide-deactivate-message nil)
+ '(org-tree-slide-cursor-init nil))
 
 (let ((map org-tree-slide-mode-map))
   (define-key map (kbd "M-n") #'org-tree-slide-move-next-tree)
