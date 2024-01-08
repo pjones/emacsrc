@@ -13,18 +13,6 @@
 (declare-function marginalia-mode "marginalia")
 (declare-function vertico-directory-delete-word "vertico-directory")
 
-(custom-set-variables
- '(vertico-multiform-commands
-   '((consult-org-heading buffer)
-     (consult-imenu buffer)
-     (consult-buffer buffer
-                     (vertico-buffer-display-action
-                      . (display-buffer-in-direction
-                         (direction . below)
-                         (window-height . 0.3))))))
- '(vertico-multiform-categories
-   '((consult-grep buffer))))
-
 (let ((map vertico-map))
   (define-key map (kbd "C-<return>") #'embark-act)
   (define-key map (kbd "C-<tab>") #'embark-collect-completions)
