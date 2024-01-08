@@ -8,6 +8,10 @@
 (require 'ruby-end)
 
 (custom-set-variables
+ '(ruby-block-indent nil)
+ '(ruby-after-operator-indent nil)
+ '(ruby-align-to-stmt-keywords nil)
+ '(ruby-align-chained-calls t)
  '(ruby-deep-arglist 'space)
  '(ruby-deep-indent-paren 'space))
 
@@ -16,9 +20,6 @@
 
 (defun pjones:ruby-mode-hook ()
   "Hook for `ruby-mode'."
-  (when (fboundp 'ruby-indent-line)
-    (setq indent-line-function 'ruby-indent-line))
-  (electric-indent-local-mode)
   (when (fboundp 'pjones:prog-mode-hook)
     (pjones:prog-mode-hook)))
 
