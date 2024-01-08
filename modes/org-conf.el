@@ -378,16 +378,7 @@ If TIME is nil then use the current time."
 
 (custom-set-faces
  '(org-block ((t (:background nil))))
- '(org-block-begin-line ((t (:background nil))))
- '(org-block-end-line ((t (:background nil))))
- '(org-level-1 ((t (:inherit outline-1 :height 2.0))))
- '(org-level-2 ((t (:inherit outline-2 :height 1.7))))
- '(org-level-3 ((t (:inherit outline-3 :height 1.4))))
- '(org-level-4 ((t (:inherit outline-4 :height 1.1))))
- '(org-level-5 ((t (:inherit outline-5 :height 1.0))))
- '(org-level-6 ((t (:inherit outline-6 :height 1.0))))
- '(org-level-7 ((t (:inherit outline-7 :height 1.0))))
- '(org-level-8 ((t (:inherit outline-8 :height 1.0)))))
+ '(org-block-begin-line ((t (:background nil)))))
 
 (org-babel-do-load-languages
     'org-babel-load-languages
@@ -685,6 +676,7 @@ PROMOTE should be non-nil to promote, or nil to demote."
 ;;; Hooks
 (add-hook 'org-agenda-after-show-hook #'pjones:org-hide-others)
 (add-hook 'org-mode-hook #'org-appear-mode)
+(add-hook 'org-mode-hook #'org-num-mode)
 
 (let ((hooks
        '(org-clock-in-hook
