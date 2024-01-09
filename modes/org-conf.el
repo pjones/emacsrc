@@ -118,6 +118,7 @@ If TIME is nil then use the current time."
  '(org-id-link-to-org-use-id 'create-if-interactive)
  '(org-edit-src-persistent-message nil)
  '(org-src-window-setup (quote current-window))
+ '(org-image-actual-width nil)
  '(org-attach-id-dir (concat pjones:org-notes-directory "attachments/"))
  '(org-attach-auto-tag nil)
  '(org-attach-dir-relative t)
