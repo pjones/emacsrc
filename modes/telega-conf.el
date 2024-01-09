@@ -8,7 +8,7 @@
 (require 'flyspell)
 
 (custom-set-variables
- '(telega-chat-markup-functions '("markdown2" "org" nil)))
+ '(telega-chat-input-markups '("markdown2" "org" nil)))
 
 (unless (fboundp 'telega-flyspell-input-p)
   (defun telega-flyspell-input-p ()
