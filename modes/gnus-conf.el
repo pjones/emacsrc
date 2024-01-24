@@ -124,18 +124,18 @@ Declared here to avoid compiler warnings.")
 
  '(gnus-secondary-select-methods
    '((nnimap "Devalot"
-       (nnimap-address "imap.fastmail.com")
-       (nnimap-server-port 993)
-       (nnimap-authenticator plain)
-       (nnimap-stream tls)
-       (nnmail-expiry-target "nnimap+Devalot:Trash"))
+             (nnimap-address "imap.fastmail.com")
+             (nnimap-server-port 993)
+             (nnimap-authenticator plain)
+             (nnimap-stream tls)
+             (nnmail-expiry-target "nnimap+Devalot:Trash"))
      (nnimap "WGU"
-       (nnimap-address "imap.gmail.com")
-       (nnimap-server-port 993)
-       (nnimap-authenticator plain)
-       (nnimap-stream tls)
-       (nnir-search-engine imap)
-       (nnmail-expiry-target "nnimap+WGU:[Gmail]/Trash"))))
+             (nnimap-address "imap.gmail.com")
+             (nnimap-server-port 993)
+             (nnimap-authenticator plain)
+             (nnimap-stream tls)
+             (nnir-search-engine imap)
+             (nnmail-expiry-target "nnimap+WGU:[Gmail]/Trash"))))
 
  `(gnus-posting-styles
    '((".*"
@@ -161,27 +161,28 @@ Declared here to avoid compiler warnings.")
 
  '(gnus-parameters
    '(("^nnimap\\+\\w+:\\(.+\\)$"
-       (comment . "\\1")
-       (agent-predicate . true)
-       (agent-enable-expiration t)
-       (agent-enable-undownloaded-faces t))
+      (comment . "\\1")
+      (agent-predicate . true)
+      (agent-enable-expiration t)
+      (agent-enable-undownloaded-faces t))
      (":\\[Gmail\\]/\\(\\w+\\)"
-       (comment . "\\1"))
+      (comment . "\\1"))
      (":INBOX"
-       (comment . "Inbox")
-       (gnus-show-threads nil))
+      (comment . "Inbox")
+      (visible . t)
+      (gnus-show-threads nil))
      (":\\(INBOX\\|Archive\\|Sent\\)"
-       (display . all)
-       (gnus-article-sort-functions '(gnus-article-sort-by-date)))
+      (display . all)
+      (gnus-article-sort-functions '(gnus-article-sort-by-date)))
      (":mlists"
-       (comment . "Mailing Lists")
-       (auto-expire . t)
-       (expiry-wait . 14)
-       (display . [unread])
-       (gnus-thread-hide-subtree t))
+      (comment . "Mailing Lists")
+      (auto-expire . t)
+      (expiry-wait . 14)
+      (display . [unread])
+      (gnus-thread-hide-subtree t))
      (":subs"
-       (comment . "Sub Addrs")
-       (display . [unread]))))
+      (comment . "Sub Addrs")
+      (display . [unread]))))
 
  ;; Sending mail:
  '(message-send-mail-function #'smtpmail-send-it)
@@ -239,19 +240,20 @@ returned by `gnus-group-get-parameter'.  It does show up in
 
 (defmacro pjones:gnus-article-move-to (group)
   "Move marked/current article to GROUP."
-  `(defun ,(intern (concat "pjones:gnus-article-move-to-" group)) ()
-    ,(concat "Move article(s) to " group)
-    (interactive)
-    ;; gnus-newsgroup-name
-    ;; If group has a : remove the trailing word with
-    (let ((dest
-          (if (s-matches-p ":" gnus-newsgroup-name)
-              (s-replace-regexp
-               ":.*$"
-               (concat ":" ,group)
-               gnus-newsgroup-name t)
-            ,group)))
-      (gnus-summary-move-article nil dest))))
+  `(defun ,(intern (concat "pjones:gnus-article-move-to-" group))
+       (&optional n select-method action)
+     ,(concat "Move N article(s) to " group)
+     (interactive "P" gnus-summary-mode)
+     ;; If group has a : remove the trailing word with
+     ;; gnus-newsgroup-name.
+     (let ((dest
+            (if (s-matches-p ":" gnus-newsgroup-name)
+                (s-replace-regexp
+                 ":.*$"
+                 (concat ":" ,group)
+                 gnus-newsgroup-name t)
+              ,group)))
+       (gnus-summary-move-article n dest select-method action))))
 
 (defmacro pjones:gnus-summary-reverse-sort-by (func)
   "Generate reverse sorting function from FUNC."
@@ -262,6 +264,13 @@ returned by `gnus-group-get-parameter'.  It does show up in
      (interactive)
      (let ((current-prefix-arg '(4)))
        (call-interactively (quote ,func)))))
+
+(defmacro pjones:gnus-group-jump-to-group (group)
+  "Generate function to jump to GROUP."
+  `(defun ,(intern (concat "pjones:gnus-group-jump-to-group-" group)) ()
+     ,(concat "Jump to " group)
+     (interactive)
+     (gnus-group-jump-to-group ,group)))
 
 (defun pjones:gnus-demon-init ()
   "Prepare the Gnus Demon."
@@ -276,12 +285,17 @@ returned by `gnus-group-get-parameter'.  It does show up in
 
 ;;; Key bindings:
 (let ((map gnus-group-mode-map))
+  (define-key map (kbd "i") (pjones:gnus-group-jump-to-group "nnimap+Devalot:INBOX"))
   (define-key map (kbd "m") (lambda () (interactive) (gnus-group-mail '(4)))))
 
 (let ((map gnus-summary-mode-map))
   (define-key map (kbd "s") nil)
-  (define-key map (kbd "r") #'gnus-article-wide-reply-with-original)
-  (define-key map (kbd "R") #'gnus-article-reply-with-original)
+  (define-key map (kbd "m") nil)
+  (define-key map (kbd "m e") #'gnus-summary-put-mark-as-expirable)
+  (define-key map (kbd "m r") #'gnus-summary-put-mark-as-read)
+  (define-key map (kbd "m u") #'gnus-summary-put-mark-as-unread)
+  (define-key map (kbd "r") #'gnus-summary-reply-with-original)
+  (define-key map (kbd "R") #'gnus-summary-wide-reply-with-original)
   (define-key map (kbd "s o") #'gnus-summary-sort-by-original)
   (define-key map (kbd "s d") #'gnus-summary-sort-by-date)
   (define-key map (kbd "s a") #'gnus-summary-sort-by-author)
@@ -299,8 +313,8 @@ returned by `gnus-group-get-parameter'.  It does show up in
   (define-key map (kbd "v t") (pjones:gnus-article-move-to "Trash")))
 
 (let ((map gnus-article-mode-map))
-  (define-key map (kbd "r") #'gnus-article-wide-reply-with-original)
-  (define-key map (kbd "R") #'gnus-article-reply-with-original))
+  (define-key map (kbd "r") #'gnus-article-reply-with-original)
+  (define-key map (kbd "R") #'gnus-article-wide-reply-with-original))
 
 ;;; Hooks:
 (add-hook 'gnus-group-mode-hook #'gnus-topic-mode)
