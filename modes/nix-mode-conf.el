@@ -7,6 +7,8 @@
 (require 'nix-mode)
 (require 'reformatter)
 
+(declare-function aggressive-indent-mode "aggressive-indent")
+
 (custom-set-variables
  '(nix-indent-function #'smie-indent-line)
  '(nix-mode-use-smie t))
@@ -19,6 +21,7 @@
   "Configure `nix-mode'."
   (when (fboundp 'pjones:prog-mode-hook)
     (pjones:prog-mode-hook))
+  (aggressive-indent-mode -1)
   (nix-format-on-save-mode))
 
 (define-key nix-mode-map (kbd "<return>") #'newline-and-indent)
