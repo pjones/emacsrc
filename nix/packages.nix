@@ -87,6 +87,7 @@ emacsWithOverrides.emacsWithPackages (epkgs: with epkgs; [
   org # Outline-based notes management and organizer
   org-appear # Make invisible parts of Org elements appear visible.
   org-clock-csv # Export `org-mode' clock entries to CSV format
+  org-mime # Send HTML email using Org-mode HTML export
   org-roam # A database abstraction layer for Org-mode
   org-tree-slide # A presentation tool for org-mode
   orgalist # Manage Org-like lists in non-Org buffers
