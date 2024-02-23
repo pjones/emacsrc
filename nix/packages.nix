@@ -95,6 +95,7 @@ emacsWithOverrides.emacsWithPackages (epkgs: with epkgs; [
   passmm # A minor mode for pass (Password Store).
   password-store # Password store (pass) support
   pdf-tools # Support library for PDF documents
+  plantuml-mode # A major mode for editing PlantUML sources in Emacs
   prescient # Better sorting and filtering
   project # Operations on the current project
   puni # Parentheses Universalistic
