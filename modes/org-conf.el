@@ -144,7 +144,8 @@ If TIME is nil then use the current time."
  '(org-file-apps (quote ((auto-mode       . emacs)
                          ("\\.mm\\'"      . default)
                          ("\\.x?html?\\'" . default)
-                         ("\\.mp4\\'"     . "vlc %s"))))
+                         ("\\.mp4\\'"     . "vlc %s")
+                         ("\\.mkv\\'"     . "vlc %s"))))
 
  '(org-link-file-path-type 'relative)
  '(org-link-frame-setup
