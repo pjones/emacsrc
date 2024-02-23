@@ -7,8 +7,6 @@
 (require 'ruby-mode)
 (require 'ruby-end)
 
-(declare-function aggressive-indent-mode "aggressive-indent")
-
 (custom-set-variables
  '(ruby-block-indent nil)
  '(ruby-after-operator-indent nil)
@@ -23,8 +21,7 @@
 (defun pjones:ruby-mode-hook ()
   "Hook for `ruby-mode'."
   (when (fboundp 'pjones:prog-mode-hook)
-    (pjones:prog-mode-hook))
-  (aggressive-indent-mode))
+    (pjones:prog-mode-hook)))
 
 (add-hook 'ruby-mode-hook #'superword-mode)
 (add-hook 'ruby-mode-hook #'pjones:ruby-mode-hook)

@@ -25,7 +25,6 @@ in
 emacsWithOverrides.emacsWithPackages (epkgs: with epkgs; [
   ace-window # Quickly switch windows
   adaptive-wrap # Smart line-wrapping with wrap-prefix
-  aggressive-indent # keeps your code always indented
   async # Asynchronous processing in Emacs
   avy # Jump to arbitrary positions in visible text and select text quickly
   cape # Let your completions fly!
