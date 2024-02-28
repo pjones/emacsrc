@@ -6,6 +6,10 @@
 (require 'image-mode)
 (require 'cl-macs)
 
+(let ((map image-mode-map))
+  (define-key map (kbd "C-+") #'image-increase-size)
+  (define-key map (kbd "C--") #'image-decrease-size))
+
 (defvar-local image-dimensions-minor-mode-dimensions nil
   "Buffer-local image dimensions for `image-dimensions-minor-mode'.")
 

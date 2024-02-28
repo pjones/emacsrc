@@ -45,6 +45,10 @@
   (pdf-view-themed-minor-mode)
   (pjones:pdf-view-after-change-page-hook))
 
+(let ((map pdf-view-mode-map))
+  (define-key map (kbd "C-+") #'pdf-view-enlarge)
+  (define-key map (kbd "C--") #'pdf-view-shrink))
+
 (let ((map pdf-outline-buffer-mode-map))
   (define-key map (kbd "RET") #'pjones:pdf-outline-follow-link-and-quit)
   (define-key map (kbd "q") #'pjones:pdf-outline-quit))
