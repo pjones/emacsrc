@@ -39,7 +39,6 @@
   "Start or prepare global modes."
   (electric-pair-mode)               ; Insert matching brackets.
   (envrc-global-mode)                ; Respect .envrc files.
-  (ffap-bindings)                    ; Finding Files and URLs at Point
   (global-auto-revert-mode)          ; External changes cause a revert
   (global-diff-hl-mode)              ; Show what changes in a buffer
   (global-hl-todo-mode)              ; Highlight TODO tags in text.

@@ -228,6 +228,7 @@ connection."
  [remap bookmark-jump] #'consult-bookmark
  [remap copy-to-register] #'consult-register-store
  [remap exchange-point-and-mark] #'pjones:exchange-point-and-mark
+ [remap find-file] #'find-file-at-point
  [remap imenu] #'consult-imenu
  [remap indent-for-tab-command] #'pjones:indent-or-complete
  [remap insert-register] #'consult-register-load
