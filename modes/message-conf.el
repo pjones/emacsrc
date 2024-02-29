@@ -32,7 +32,6 @@
  '(message-citation-line-function #'message-insert-formatted-citation-line)
  '(message-citation-line-format "On %a, %b %d %Y, %N wrote:")
  '(message-cite-reply-position 'traditional)
- '(message-auto-save-directory nil)
  '(message-dont-reply-to-names '("pjones@pmade.com" "pmadeinc@gmail.com"))
  '(message-kill-buffer-on-exit t)
  '(message-signature-directory "~/notes/signatures/")
