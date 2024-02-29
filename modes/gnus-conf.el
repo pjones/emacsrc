@@ -146,9 +146,10 @@ Declared here to avoid compiler warnings.")
                   smtpmail-smtp-server "smtp.fastmail.com"
                   smtpmail-smtp-service 465
                   smtpmail-stream-type 'ssl)))
-     ((header "to" "freerangebits")
+     ((header "to" "\\(effectiveruby\\|freerangebits\\|jonesbunch\\|fastmail\\)")
       (address (with-current-buffer gnus-article-buffer
-                 (message-fetch-field "to")))
+                 (message-fetch-field "to"))))
+     ((header "to" "freerangebits")
       (signature :file "freerangebits"))
      ("WGU"
       (name "Peter J. Jones")
@@ -189,6 +190,15 @@ Declared here to avoid compiler warnings.")
  '(smtpmail-queue-dir "~/.cache/smtpmail/queue")
  '(mml-secure-openpgp-encrypt-to-self t)
  '(mml-secure-smime-encrypt-to-self t))
+
+;;; Trick Gnus into applying more article treatments:
+(defvar pjones:gnus-treat-strip-trailing-space t
+  "Automatically strip trailing space from articles.")
+
+(add-to-list 'gnus-treatment-function-alist
+             '(pjones:gnus-treat-strip-trailing-space
+               article-strip-trailing-space)
+             t)
 
 ;;; Faces:
 (defvar gnus-face-1 font-lock-builtin-face)
