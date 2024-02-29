@@ -145,7 +145,11 @@ If TIME is nil then use the current time."
                          ("\\.mm\\'"      . default)
                          ("\\.x?html?\\'" . default)
                          ("\\.mp4\\'"     . "vlc %s")
-                         ("\\.mkv\\'"     . "vlc %s"))))
+                         ("\\.m4v\\'"     . "vlc %s")
+                         ("\\.mkv\\'"     . "vlc %s")
+                         ("\\.docx\\'"    . "libreoffice %s")
+                         ("\\.xlsx\\'"    . "libreoffice %s")
+                         ("\\.pages\\'"   . "libreoffice %s"))))
 
  '(org-link-file-path-type 'relative)
  '(org-link-frame-setup
