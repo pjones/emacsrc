@@ -70,6 +70,7 @@ emacsWithOverrides.emacsWithPackages (epkgs: with epkgs; [
   json-mode # Major mode for editing JSON files
   jsonrpc # JSON-RPC library
   kaolin-themes # A set of eye pleasing themes
+  khardel # integrating khard, a console cardav client
   link-hint # Use avy to open, copy, etc. visible links
   magit # A Git porcelain inside Emacs
   magit-annex # Control git-annex from Magit

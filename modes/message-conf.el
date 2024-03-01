@@ -9,6 +9,8 @@
 (require 'org-mime)
 (require 'smtpmail)
 
+(declare-function khardel-insert-email "khardel")
+
 (defvar pjones:message-htmlize-before-send t
   "When non-nil, convert message to HTML before sending.")
 
@@ -48,6 +50,7 @@
   (define-key map (kbd "C-c C-e") #'mml-secure-message-sign-encrypt)
   (define-key map (kbd "C-c C-f") #'message-goto-from)
   (define-key map (kbd "C-c C-h") #'pjones:toggle-message-htmlize-before-send)
+  (define-key map (kbd "C-c C-i") #'khardel-insert-email)
   (define-key map (kbd "C-c C-k") #'message-kill-buffer)
   (define-key map (kbd "C-c C-s") #'message-goto-subject)
   (define-key map (kbd "C-c C-s") #'message-kill-to-signature)
