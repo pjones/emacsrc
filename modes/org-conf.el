@@ -309,6 +309,7 @@ If TIME is nil then use the current time."
       pdfsubject={%d},
       pdfcreator={%c},
       pdflang={%L},
+      citecolor=blue,
       colorlinks=true,
       linkcolor=blue,
       urlcolor=blue\n}\n")
