@@ -97,6 +97,7 @@ emacsWithOverrides.emacsWithPackages (epkgs: with epkgs; [
   password-store # Password store (pass) support
   pdf-tools # Support library for PDF documents
   plantuml-mode # A major mode for editing PlantUML sources in Emacs
+  poet-theme # An emacs theme that's well suited for modes using variable pitch
   prescient # Better sorting and filtering
   project # Operations on the current project
   puni # Parentheses Universalistic
@@ -112,6 +113,7 @@ emacsWithOverrides.emacsWithPackages (epkgs: with epkgs; [
   scad-mode # A major mode for editing OpenSCAD code
   telega # Telegram client (unofficial)
   treesit-grammars.with-all-grammars # For use with tree-sitter
+  tron-legacy-theme # Original retro-futuristic theme inspired by Tron: Legacy
   typescript-mode # Major mode for editing typescript
   vertico # VERTical Interactive COmpletion
   visual-fill # Auto-refill paragraphs without modifying the buffer
