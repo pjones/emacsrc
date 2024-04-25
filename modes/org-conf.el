@@ -99,6 +99,7 @@ If TIME is nil then use the current time."
  '(org-appear-autokeywords t)
 
  ;; Behavior Settings:
+ '(org-list-allow-alphabetical t)
  '(org-blank-before-new-entry '((heading . t) (plain-list-item . t)))
  '(org-catch-invisible-edits 'smart)
  '(org-log-done 'time)
