@@ -69,9 +69,7 @@
   (mapc #'disable-theme custom-enabled-themes)
   (condition-case nil
       (load-theme theme t)
-    (error nil))
-  (setq pjones:current-theme theme)
-  (run-hooks 'pjones:after-theme-change-hook))
+    (error nil)))
 
 (defun pjones:theme-next (&optional prev)
   "Switch to the next theme.
@@ -92,10 +90,17 @@ If PREV is non-nil go to the previous theme."
   (interactive)
   (pjones:theme-next t))
 
-;; Run my theme hooks after consult-theme:
+;; Run my theme hooks:
 (advice-add
- #'consult-theme :after
- (lambda (&rest _)
+ #'load-theme :after
+ (lambda (theme &rest _)
+   (setq pjones:current-theme theme)
+   (run-hooks 'pjones:after-theme-change-hook)))
+
+(advice-add
+ #'enable-theme :after
+ (lambda (theme)
+   (setq pjones:current-theme theme)
    (run-hooks 'pjones:after-theme-change-hook)))
 
 (defun pjones:frame-toggle-alpha nil
