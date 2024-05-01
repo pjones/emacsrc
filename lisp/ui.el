@@ -130,8 +130,8 @@ If PREV is non-nil go to the previous theme."
   ;; buffer management functions.  Without this the "name" parameter
   ;; will be used as the frame title which isn't what I want.
   (set-frame-parameter frame 'name nil)
-  (let ((font-fixed "Hermit-10")
-        (font-variable "Noto Serif-10"))
+  (let ((font-fixed "Hermit")
+        (font-variable "IBM Plex Serif"))
     (dolist (mode '(menu-bar-mode tool-bar-mode scroll-bar-mode))
       (if (and (fboundp mode) (symbol-value mode))
           (funcall mode -1)))
@@ -139,12 +139,10 @@ If PREV is non-nil go to the previous theme."
     (require 'fringe)
     (fringe-mode 10)
     (when (find-font (font-spec :name font-fixed))
-      (custom-set-faces
-       `(default ((t (:font ,font-fixed))))
-       `(fixed-pitch ((t (:font ,font-fixed))))))
+      (set-face-attribute 'default nil :family font-fixed :height 100)
+      (set-face-attribute 'fixed-pitch nil :family font-fixed))
     (when (find-font (font-spec :name font-variable))
-      (custom-set-faces
-       `(variable-pitch ((t (:font ,font-variable))))))))
+      (set-face-attribute 'variable-pitch nil :family "IBM Plex Serif"))))
 
 (add-to-list 'default-frame-alist '(cursor-type  . bar))
 (setq frame-title-format '(:eval (pjones:frame-title-file-name)))
