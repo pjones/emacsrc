@@ -1,8 +1,8 @@
 {
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.11";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05";
 
-    home-manager.url = "github:nix-community/home-manager/release-23.11";
+    home-manager.url = "github:nix-community/home-manager/release-24.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     passmm = {
@@ -53,8 +53,17 @@
       packages = forAllSystems (system:
         let pkgs = nixpkgsFor.${system}; in
         {
-          emacsrc = import ./. { inherit pkgs inputs; };
-          default = self.packages.${system}.emacsrc;
+          default = self.packages.${system}.emacsrc-xorg;
+
+          emacsrc-xorg = import ./. {
+            inherit pkgs inputs;
+            emacs = pkgs.emacs.override { withGTK3 = true; };
+          };
+
+          emacsrc-wayland = import ./. {
+            inherit pkgs inputs;
+            emacs = pkgs.emacs.override { withPgtk = true; };
+          };
         });
 
       apps = forAllSystems (system:
@@ -63,14 +72,14 @@
           default = {
             type = "app";
             program = toString (pkgs.writeShellScript "emacsrc" ''
-              ${self.packages.${system}.emacsrc}/bin/e -f
+              ${self.packages.${system}.default}/bin/e -f
             '');
           };
 
           tutorial = {
             type = "app";
             program = toString (pkgs.writeShellScript "emacsrc" ''
-              ${self.packages.${system}.emacsrc}/bin/e -f -- \
+              ${self.packages.${system}.default}/bin/e -f -- \
                 --eval '(menu-bar-mode)' \
                 --eval '(help-with-tutorial)'
             '');
@@ -85,12 +94,24 @@
         };
       });
 
-      homeManagerModules.default = { pkgs, ... }: {
-        imports = [
-          (import ./nix/home.nix {
-            emacsrc = self.packages.${pkgs.system}.emacsrc;
-          })
-        ];
+      homeManagerModules = {
+        default = self.homeManagerModules.xorg;
+
+        xorg = { pkgs, ... }: {
+          imports = [
+            (import ./nix/home.nix {
+              emacsrc = self.packages.${pkgs.system}.emacsrc-xorg;
+            })
+          ];
+        };
+
+        wayland = { pkgs, ... }: {
+          imports = [
+            (import ./nix/home.nix {
+              emacsrc = self.packages.${pkgs.system}.emacsrc-wayland;
+            })
+          ];
+        };
       };
 
       devShells = forAllSystems (system: {

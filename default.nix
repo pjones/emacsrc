@@ -1,14 +1,12 @@
 { pkgs ? import <nixpkgs> { }
 , inputs ? { }
+, emacs ? pkgs.emacs
 }:
 let
   ##############################################################################
   # Emacs + all of the packages I need:
   emacsAndPackages = pkgs.callPackage ./nix/packages.nix {
-    inherit inputs;
-    emacs = pkgs.emacs29.override {
-      withGTK3 = true;
-    };
+    inherit emacs inputs;
   };
 
   ##############################################################################
