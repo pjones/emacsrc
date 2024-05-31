@@ -8,6 +8,8 @@
 (require 'reformatter)
 
 (custom-set-variables
+ '(python-shell-prompt-detect-failure-warning nil) ; Never works.
+ '(python-shell-completion-native-enable nil) ; Doesn't work.
  '(python-indent-offset 4))
 
 (reformatter-define python-format
