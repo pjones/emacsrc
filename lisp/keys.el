@@ -33,6 +33,7 @@ connection."
 (declare-function ace-delete-window "ace-window")
 (declare-function ace-select-window "ace-window")
 (declare-function ace-swap-window "ace-window")
+(declare-function avy-goto-char-timer "avy")
 (declare-function consult-apropos "consult")
 (declare-function consult-bookmark "consult")
 (declare-function consult-buffer "consult")
@@ -191,6 +192,7 @@ connection."
 
  ;; Additional go-to bindings:
  (kbd "M-g @") #'consult-global-mark
+ (kbd "M-g a") #'avy-goto-char-timer
  (kbd "M-g f") #'pjones:fly-next-error
  (kbd "M-g h") #'consult-outline
  (kbd "M-g m") #'consult-mark
