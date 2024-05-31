@@ -28,6 +28,7 @@ emacsWithOverrides.emacsWithPackages (epkgs: with epkgs; [
   async # Asynchronous processing in Emacs
   avy # Jump to arbitrary positions in visible text and select text quickly
   cape # Let your completions fly!
+  catppuccin-theme # Soothing pastel theme for Emacs
   clojure-mode # Major mode for Clojure code
   consult # Consulting completing-read
   consult-org-roam # Consult integration for org-roam
@@ -38,6 +39,7 @@ emacsWithOverrides.emacsWithPackages (epkgs: with epkgs; [
   dired-filter # Ibuffer-like filtering for dired
   dired-narrow # Live-narrowing of search results for dired
   dired-subtree # Insert subdirectories in a tree-like fashion
+  dracula-theme # The most famous dark theme ever created.
   dumb-jump # Jump to definition for 40+ languages without configuration
   ef-themes # Colourful (“pretty”) yet legible themes
   eimp # Emacs Image Manipulation Package
