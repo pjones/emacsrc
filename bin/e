@@ -17,7 +17,7 @@ option_set_frame_name=0
 option_emacs_opts=()
 
 ################################################################################
-# Extra path entries for dependencies (wmctrl, nc, etc)
+# Extra path entries for dependencies (nc, desktop-workspace, etc)
 export PATH=@path@:$PATH
 
 ################################################################################
@@ -25,15 +25,6 @@ export PATH=@path@:$PATH
 if [ -n "${WAYLAND_DISPLAY:-}" ] || [ -n "${DISPLAY:-}" ]; then
   if type desktop-workspace &>/dev/null; then
     EMACS_SOCKET_NAME=$(desktop-workspace -n)
-  elif type wmctrl &>/dev/null && wmctrl -d &>/dev/null; then
-    EMACS_SOCKET_NAME=$(
-      wmctrl -d |
-        awk '$2 == "*" {
-        for (i=($8 == "N/A" ? 9 : 10); i<=NF; i++) {
-          printf("%s%s", $i, i<NF ? OFS : "\n")
-        }
-      }'
-    )
   fi
 fi
 

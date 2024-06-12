@@ -45,6 +45,7 @@ pkgs.stdenv.mkDerivation rec {
     pkgs.imagemagick # For image-mode
   ] ++ lib.optionals pkgs.stdenv.isLinux [
     pkgs.netcat # For bin/e
+    inputs.desktop-scripts.packages.${pkgs.system}.default # for bin/e
   ];
 
   # Packages to push into the user's PATH:

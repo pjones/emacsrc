@@ -5,6 +5,9 @@
     home-manager.url = "github:nix-community/home-manager/release-24.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
+    desktop-scripts.url = "github:pjones/desktop-scripts";
+    desktop-scripts.inputs.nixpkgs.follows = "nixpkgs";
+
     passmm = {
       url = "github:pjones/passmm";
       flake = false;

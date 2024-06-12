@@ -1,5 +1,25 @@
 {
   "nodes": {
+    "desktop-scripts": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1718056506,
+        "narHash": "sha256-K9jgvIJjakXYSVaO7NG8ZDsK6aGe+pM+EACnoceiG4w=",
+        "owner": "pjones",
+        "repo": "desktop-scripts",
+        "rev": "ad8e084b5745f0106c3a019777d6b083d2941778",
+        "type": "github"
+      },
+      "original": {
+        "owner": "pjones",
+        "repo": "desktop-scripts",
+        "type": "github"
+      }
+    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -55,6 +75,7 @@
     },
     "root": {
       "inputs": {
+        "desktop-scripts": "desktop-scripts",
         "home-manager": "home-manager",
         "nixpkgs": "nixpkgs",
         "passmm": "passmm",
