@@ -14,8 +14,8 @@
     };
 
     telega = {
-      # Commit from Oct 30, 2023
-      url = "github:zevlg/telega.el/5b49be485ae95d33b3e09c5cac4ff7e569a510f2";
+      # Commit from May 9, 2024:
+      url = "github:zevlg/telega.el/99477b075f4032a49283d730e909a26f11606ee5";
       flake = false;
     };
   };
