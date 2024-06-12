@@ -30,6 +30,7 @@
  '(org-roam-capture-templates
    '(("b" "Knowledge Base" plain "%?"
       :target (file+head "garden/${pjones:org-roam-node-to-file}" "#+title: ${title}\n")
+      :jump-to-captured t
       :unnarrowed t)))
 
  '(org-roam-dailies-capture-templates
@@ -37,11 +38,16 @@
      "* %?\n  %(pjones:org-time-stamp t)\n"
      :target (file+head "%<%Y>/%<%m>/%<%Y-%m-%d>.org" "#+title: %<%A, %B %d, %Y>\n#+date: %u\n")
      :unnarrowed t
+     :jump-to-captured t
      :empty-lines-before 1)
      ("m" "Monthly Journal" entry
       ""
       :target (file+head "%<%Y>/%<%m>/index.org" "#+title: %<%B, %Y>\n")
       :unnarrowed t
+      :empty-lines-before 1)
+     ("h" "Mental Health" entry
+      (file "~/notes/templates/org/mental-health.org")
+      :target (file+head "%<%Y>/%<%m>/%<%Y-%m-%d>.org" "#+title: %<%A, %B %d, %Y>\n#+date: %u\n")
       :empty-lines-before 1))))
 
 (defun pjones:org-roam-buffer-name ()
