@@ -56,7 +56,7 @@
       packages = forAllSystems (system:
         let pkgs = nixpkgsFor.${system}; in
         {
-          default = self.packages.${system}.emacsrc-xorg;
+          default = self.packages.${system}.emacsrc-wayland;
 
           emacsrc-xorg = import ./. {
             inherit pkgs inputs;
@@ -117,10 +117,13 @@
         };
       };
 
-      devShells = forAllSystems (system: {
-        default = nixpkgsFor.${system}.mkShell {
-          inputsFrom = builtins.attrValues self.packages.${system};
-        };
-      });
+      devShells = forAllSystems (system:
+        let pkgs = nixpkgsFor.${system}; in {
+          default = pkgs.mkShell {
+            ENCHANT_CONFIG_DIR = "${self.packages.${system}.default}/share/enchant";
+            inputsFrom = builtins.attrValues self.packages.${system};
+            buildInputs = self.packages.${system}.default.propagatedUserEnvPkgs;
+          };
+        });
     };
 }

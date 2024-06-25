@@ -5,21 +5,14 @@
 ;;; Code:
 
 (require 'telega)
-(require 'flyspell)
+(require 'jinx)
 
 (custom-set-variables
  '(telega-chat-input-markups '("markdown2" "org" nil)))
 
-(unless (fboundp 'telega-flyspell-input-p)
-  (defun telega-flyspell-input-p ()
-    "Return non-nil if point is inside chatbuf's input."
-    (> (point) telega-chatbuf--input-marker)))
-
 (defun pjones:telega-chat-mode-hook ()
   "Hook for `telega-chat-mode'."
-  (when (fboundp 'telega-flyspell-input-p)
-    (setq flyspell-generic-check-word-predicate #'telega-flyspell-input-p)
-    (flyspell-mode))
+  (jinx-mode)
   (visual-line-mode))
 
 (add-hook 'telega-chat-mode-hook #'pjones:telega-chat-mode-hook)

@@ -34,6 +34,8 @@ in
 
       configFile = {
         "emacs/init.el".source = "${emacsrc}/emacs.d/dot.emacs.el";
+        "enchant/enchant.ordering".source = "${emacsrc}/share/enchant/enchant.ordering";
+        "enchant/nuspell".source = "${emacsrc}/share/enchant/nuspell";
       };
     };
 

@@ -76,7 +76,6 @@ Calls `comment-indent-new-line' with ARGS."
   (auto-fill-mode)
   (display-line-numbers-mode)
   (flycheck-mode)
-  (flyspell-prog-mode)
   (puni-mode)
   (save-place-mode)
   (whitespace-mode)

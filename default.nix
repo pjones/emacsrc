@@ -13,14 +13,16 @@ let
   inherit (pkgs) lib;
 
   ##############################################################################
+  hunspellDicts = with pkgs.hunspellDicts; [ en_US de_DE ];
+
+  ##############################################################################
   # Packages to put into the developer shell and the user environment:
   extraPackages = [
-    (pkgs.aspellWithDicts (d: [
-      d.en
-      d.en-computers
-      d.en-science
-    ]))
-  ] ++ lib.optionals pkgs.stdenv.isLinux [
+    (pkgs.nuspellWithDicts hunspellDicts)
+    pkgs.enchant
+  ]
+  ++ hunspellDicts
+  ++ lib.optionals pkgs.stdenv.isLinux [
     pkgs.dict
   ];
 
@@ -53,12 +55,20 @@ pkgs.stdenv.mkDerivation rec {
     emacsAndPackages
   ] ++ extraPackages;
 
-  postInstall = with pkgs.lib;
-    let path = makeBinPath buildInputs; in
+  postInstall =
+    let path = lib.makeBinPath buildInputs;
+    in
     ''
       export path="${path}"
       export loadpathel="$out/emacs.d/lisp/loadpath.el"
       substituteAllInPlace "$out/emacs.d/dot.emacs.el"
       for f in $out/bin/*; do substituteAllInPlace "$f"; done
-    '';
+    '' + (lib.concatMapStringsSep "\n"
+      (dict: ''
+        mkdir -p "$out"/share/enchant/nuspell
+        for file in ${dict}/share/hunspell/*; do
+          ln -s "$file" "$out"/share/enchant/nuspell/
+        done
+      '')
+      hunspellDicts);
 }

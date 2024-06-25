@@ -55,8 +55,6 @@ emacsWithOverrides.emacsWithPackages (epkgs: with epkgs; [
   flycheck # On-the-fly syntax checking
   flycheck-indicator # A fancy mode line indicator for `flycheck-mode'
   flycheck-rust # Rust additions and Cargo support
-  flyspell-correct # Correcting words with flyspell via custom interface
-  flyspell-correct-avy-menu # Correcting words with flyspell via avy-menu interface
   git-annex # Mode for easy editing of git-annex'd files
   go-mode # Major mode for the Go programming language
   goto-chg # Go to last change
@@ -68,6 +66,7 @@ emacsWithOverrides.emacsWithPackages (epkgs: with epkgs; [
   http # Yet another HTTP client
   indium # JavaScript Awesome Development Environment
   inf-ruby # Run a Ruby process in a buffer
+  jinx # Enchanted Spell Checker
   js2-mode # Improved JavaScript editing mode
   json-mode # Major mode for editing JSON files
   jsonrpc # JSON-RPC library

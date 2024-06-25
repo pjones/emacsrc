@@ -63,6 +63,7 @@ connection."
 (declare-function er/expand-region "expand-region")
 (declare-function goto-last-change "goto-chg")
 (declare-function highlight-indent-guides-mode "highlight-indent-guides")
+(declare-function jinx-correct "jinx")
 (declare-function link-hint-copy-link "link-hint")
 (declare-function link-hint-open-link "link-hint")
 (declare-function magit-file-dispatch "magit-files")
@@ -201,6 +202,7 @@ connection."
  (kbd "C-'") #'goto-last-change
  (kbd "C-+") #'text-scale-adjust
  (kbd "C--") #'text-scale-adjust
+ (kbd "C-;") #'jinx-correct
  (kbd "C-_") (lambda () (interactive) (text-scale-set 0))
  (kbd "C-M-SPC") #'er/expand-region
  (kbd "C-M-z") #'zap-to-char
