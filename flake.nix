@@ -98,7 +98,7 @@
       });
 
       homeManagerModules = {
-        default = self.homeManagerModules.xorg;
+        default = self.homeManagerModules.wayland;
 
         xorg = { pkgs, ... }: {
           imports = [
