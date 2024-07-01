@@ -128,14 +128,7 @@ Declared here to avoid compiler warnings.")
        (nnimap-server-port 993)
        (nnimap-authenticator plain)
        (nnimap-stream tls)
-       (nnmail-expiry-target "nnimap+Devalot:Trash"))
-     (nnimap "WGU"
-       (nnimap-address "imap.gmail.com")
-       (nnimap-server-port 993)
-       (nnimap-authenticator plain)
-       (nnimap-stream tls)
-       (nnir-search-engine imap)
-       (nnmail-expiry-target "nnimap+WGU:[Gmail]/Trash"))))
+       (nnmail-expiry-target "nnimap+Devalot:Trash"))))
 
  `(gnus-posting-styles
    '((".*"
@@ -150,15 +143,7 @@ Declared here to avoid compiler warnings.")
       (address (with-current-buffer gnus-article-buffer
                  (message-fetch-field "to"))))
      ((header "to" "freerangebits")
-      (signature :file "freerangebits"))
-     ("WGU"
-      (name "Peter J. Jones")
-      (address ,(concat "pjon409" "@" "wgu.edu"))
-      (signature :file "wgu")
-      (eval (setq gnus-message-archive-group "nnimap+WGU:[Gmail]/Sent"
-                  smtpmail-smtp-server "smtp.gmail.com"
-                  smtpmail-smtp-service 465
-                  smtpmail-stream-type 'ssl)))))
+      (signature :file "freerangebits"))))
 
  '(gnus-parameters
    '(("^nnimap\\+\\w+:\\(.+\\)$"
