@@ -87,6 +87,7 @@ emacsWithOverrides.emacsWithPackages (epkgs: with epkgs; [
   orderless # Completion style for matching regexps in any order
   org # Outline-based notes management and organizer
   org-appear # Make invisible parts of Org elements appear visible.
+  org-bulletproof # Automatic bullet cycling for Org mode
   org-clock-csv # Export `org-mode' clock entries to CSV format
   org-mime # Send HTML email using Org-mode HTML export
   org-roam # A database abstraction layer for Org-mode

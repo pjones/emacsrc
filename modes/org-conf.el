@@ -20,6 +20,7 @@
 (declare-function org-attach-reveal-in-emacs "org-attach")
 (declare-function org-attach-url "org-attach")
 (declare-function org-bookmark-jump-unhide "org")
+(declare-function org-bulletproof-mode "org-bulletproof")
 (declare-function org-clock-sum-current-item "org-clock")
 (declare-function org-clocking-p "org-clock")
 (declare-function org-insert-last-stored-link "ol")
@@ -101,6 +102,7 @@ If TIME is nil then use the current time."
 
  ;; Behavior Settings:
  '(org-list-allow-alphabetical t)
+ '(org-bulletproof-ordered-cycle '("1." "a."))
  '(org-blank-before-new-entry '((heading . t) (plain-list-item . t)))
  '(org-catch-invisible-edits 'smart)
  '(org-log-done 'time)
@@ -691,6 +693,7 @@ PROMOTE should be non-nil to promote, or nil to demote."
 ;;; Hooks
 (add-hook 'org-agenda-after-show-hook #'pjones:org-hide-others)
 (add-hook 'org-mode-hook #'org-appear-mode)
+(add-hook 'org-mode-hook #'org-bulletproof-mode)
 (add-hook 'org-mode-hook #'org-num-mode)
 
 (let ((hooks
