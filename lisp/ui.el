@@ -150,6 +150,7 @@ If PREV is non-nil go to the previous theme."
       (set-face-attribute 'variable-pitch nil :family "IBM Plex Serif"))))
 
 (add-to-list 'default-frame-alist '(cursor-type  . bar))
+(add-to-list 'default-frame-alist `(alpha-background . ,pjones:frame-alpha-background))
 (setq frame-title-format '(:eval (pjones:frame-title-file-name)))
 
 (defun pjones:find-file-hook ()
