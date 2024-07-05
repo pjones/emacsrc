@@ -64,6 +64,35 @@
  truncate-lines t                       ; Don't wrap lines
  display-line-numbers-width 3)          ; Faster default.
 
+;; Fix flaky clipboard access on Wayland:
+;;
+;; Based on code from yorickvP on Github via
+;; https://www.emacswiki.org/emacs/CopyAndPaste#h5o-4
+(defvar wl-copy-process nil)
+
+(defun wl-copy (text)
+  "Use wl-copy to send killed TEXT to the clipboard."
+  (let ((tramp-ignored-file-name-regexp ".")
+        (default-directory (expand-file-name "~")))
+    (setq wl-copy-process (make-process :name "wl-copy"
+                                        :buffer nil
+                                        :command '("wl-copy" "-f" "-n")
+                                        :connection-type 'pipe
+                                        :noquery t))
+    (process-send-string wl-copy-process text)
+    (process-send-eof wl-copy-process)))
+
+(defun wl-paste ()
+  "Yank text from the clipboard."
+  (let ((tramp-ignored-file-name-regexp ".")
+        (default-directory (expand-file-name "~")))
+    (if (and wl-copy-process (process-live-p wl-copy-process))
+        nil ; should return nil if we're the current paste owner
+      (shell-command-to-string "wl-paste -n | tr -d \r"))))
+
+(setq interprogram-cut-function #'wl-copy
+      interprogram-paste-function #'wl-paste)
+
 ;; Stolen from: https://github.com/alezost/emacs-config
 (defun pjones:load-theme (theme)
   "Load THEME after unloading all other themes first."
