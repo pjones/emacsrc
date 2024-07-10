@@ -8,6 +8,8 @@
 (require 'org)
 (require 'org-agenda)
 (require 'org-capture)
+(require 'org-edna)
+(require 'org-ql)
 (require 'ox-gfm)
 (require 's)
 (require 'warnings)
@@ -244,6 +246,11 @@ If TIME is nil then use the current time."
                 (org-agenda-todo-keyword-format "")))
              (stuck ""
                ((org-agenda-overriding-header "⚡ Stuck Projects:")))
+             (org-ql-block '(and (todo "BLOCKED") (not (property "BLOCKER" nil nil)))
+               ((org-ql-block-header "⚡ Missing Blocker Dependency:")
+                (org-agenda-remove-tags t)
+                (org-agenda-prefix-format "  %-8c ")
+                (org-agenda-todo-keyword-format "")))
              (tags "+inbox+LEVEL=1"
                ((org-agenda-overriding-header "⚡ Inbox Tasks to Process:")
                 (org-agenda-prefix-format "  %-8c ")
@@ -694,6 +701,7 @@ PROMOTE should be non-nil to promote, or nil to demote."
 (add-hook 'org-agenda-after-show-hook #'pjones:org-hide-others)
 (add-hook 'org-mode-hook #'org-appear-mode)
 (add-hook 'org-mode-hook #'org-bulletproof-mode)
+(add-hook 'org-mode-hook #'org-edna-mode)
 (add-hook 'org-mode-hook #'org-num-mode)
 
 (let ((hooks
