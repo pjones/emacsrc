@@ -172,9 +172,7 @@ Declared here to avoid compiler warnings.")
 
  ;; Sending mail:
  '(message-send-mail-function #'smtpmail-send-it)
- '(smtpmail-queue-dir "~/.cache/smtpmail/queue")
- '(mml-secure-openpgp-encrypt-to-self t)
- '(mml-secure-smime-encrypt-to-self t))
+ '(smtpmail-queue-dir "~/.cache/smtpmail/queue"))
 
 ;;; Trick Gnus into applying more article treatments:
 (defvar pjones:gnus-treat-strip-trailing-space t
