@@ -9,7 +9,6 @@
 (require 'org-agenda)
 (require 'org-capture)
 (require 'org-edna)
-(require 'org-ql)
 (require 'ox-gfm)
 (require 's)
 (require 'warnings)
@@ -236,6 +235,7 @@ If TIME is nil then use the current time."
                (org-agenda-todo-keyword-format "")))
              (todo "WAITING"
                ((org-agenda-overriding-header "⚡ Waiting for Someone Else:")
+                (org-agenda-skip-function '(org-agenda-skip-entry-if 'scheduled 'deadline))
                 (org-agenda-remove-tags t)
                 (org-agenda-prefix-format "  %-8c ")
                 (org-agenda-todo-keyword-format "")))
@@ -246,8 +246,9 @@ If TIME is nil then use the current time."
                 (org-agenda-todo-keyword-format "")))
              (stuck ""
                ((org-agenda-overriding-header "⚡ Stuck Projects:")))
-             (org-ql-block '(and (todo "BLOCKED") (not (property "BLOCKER" nil nil)))
-               ((org-ql-block-header "⚡ Missing Blocker Dependency:")
+             (todo "BLOCKED"
+               ((org-agenda-overriding-header "⚡ Missing Blocker Dependency:")
+                (org-agenda-skip-function #'pjones:agenda-skip-properly-blocked)
                 (org-agenda-remove-tags t)
                 (org-agenda-prefix-format "  %-8c ")
                 (org-agenda-todo-keyword-format "")))
@@ -257,6 +258,7 @@ If TIME is nil then use the current time."
                 (org-agenda-todo-keyword-format "")))
              (todo "NEXT"
                ((org-agenda-overriding-header "⚡ Next Actions:")
+                (org-agenda-skip-function '(org-agenda-skip-entry-if 'scheduled 'deadline))
                 (org-agenda-prefix-format "  %-8c ")
                 (org-agenda-remove-tags nil)
                 (org-agenda-todo-keyword-format "")
@@ -655,6 +657,50 @@ PROMOTE should be non-nil to promote, or nil to demote."
   (interactive)
   (pjones:org-promote-demote nil))
 
+(defun pjones:agenda-skip-properly-blocked ()
+  "Skip a blocked entry if it has a proper blocker.
+Meant to be used with `org-agenda-skip-function'."
+  (org-back-to-heading t)
+  (when (string= "BLOCKED" (org-get-todo-state))
+    (let* ((end (org-entry-end-position))
+           (pom (point))
+           (form (org-entry-get pom "BLOCKER" nil)))
+      (and (org-edna-process-form form 'condition) end))))
+
+;; https://lists.gnu.org/archive/html/emacs-orgmode/2015-06/msg00266.html
+(defun pjones:org-agenda-delete-empty-blocks ()
+  "Remove empty agenda blocks.
+A block is identified as empty if there are fewer than 2
+non-empty lines in the block (excluding the line with
+`org-agenda-block-separator' characters)."
+  (when org-agenda-compact-blocks
+    (user-error "Cannot delete empty compact blocks"))
+  (setq buffer-read-only nil)
+  (save-excursion
+    (goto-char (point-min))
+    (let* ((blank-line-re "^\\s-*$")
+           (content-line-count (if (looking-at-p blank-line-re) 0 1))
+           (start-pos (point))
+           (block-re (format "%c\\{10,\\}" org-agenda-block-separator)))
+      (while (and (not (eobp)) (forward-line))
+        (cond
+         ((looking-at-p block-re)
+          (when (< content-line-count 2)
+            (delete-region start-pos (1+ (pos-bol))))
+          (setq start-pos (point))
+          (forward-line)
+          (setq content-line-count (if (looking-at-p blank-line-re) 0 1)))
+         ((not (looking-at-p blank-line-re))
+          (setq content-line-count (1+ content-line-count)))))
+      (when (< content-line-count 2)
+        (delete-region start-pos (point-max)))
+      (goto-char (point-min))
+      ;; The above strategy can leave a separator line at the beginning
+      ;; of the buffer.
+      (when (looking-at-p block-re)
+        (delete-region (point) (1+ (pos-eol))))))
+  (setq buffer-read-only t))
+
 ;;; Key Bindings:
 (let ((map org-mode-map))
   ;; Reset these so I can use them as a prefix:
@@ -699,6 +745,7 @@ PROMOTE should be non-nil to promote, or nil to demote."
 
 ;;; Hooks
 (add-hook 'org-agenda-after-show-hook #'pjones:org-hide-others)
+(add-hook 'org-agenda-finalize-hook #'pjones:org-agenda-delete-empty-blocks)
 (add-hook 'org-mode-hook #'org-appear-mode)
 (add-hook 'org-mode-hook #'org-bulletproof-mode)
 (add-hook 'org-mode-hook #'org-edna-mode)

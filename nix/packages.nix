@@ -91,7 +91,6 @@ emacsWithOverrides.emacsWithPackages (epkgs: with epkgs; [
   org-clock-csv # Export `org-mode' clock entries to CSV format
   org-edna # Extensible Dependencies ’N’ Actions (EDNA) for Org Mode tasks
   org-mime # Send HTML email using Org-mode HTML export
-  org-ql # A searching tool for Org-mode
   org-roam # A database abstraction layer for Org-mode
   org-tree-slide # A presentation tool for org-mode
   orgalist # Manage Org-like lists in non-Org buffers
