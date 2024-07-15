@@ -99,7 +99,7 @@ Declared here to avoid compiler warnings.")
  '(gnus-sum-thread-tree-single-leaf   "╰─► ")
  '(gnus-summary-to-prefix "〉 ")
  '(gnus-summary-line-format
-   "%5{%z %U %R %}%-6=%f%-25= [%ud] %B%*%s\n")
+   "%5{%z %U %R %}%-6=%f%-25= [%ua] %B%*%s\n")
  '(gnus-summary-highlight
    '(((eq mark gnus-canceled-mark)
       . gnus-summary-cancelled)
@@ -197,7 +197,7 @@ Declared here to avoid compiler warnings.")
 ;;; Functions
 (defun pjones:gnus-format-date (header)
   "Format dates for the Gnus header HEADER."
-  (let* ((base-fmt "%m/%d/%y")
+  (let* ((base-fmt "%Y-%m-%d")
          (date (cond
                 (header (gnus-date-get-time (mail-header-date header)))
                 (t (current-time))))
@@ -208,7 +208,7 @@ Declared here to avoid compiler warnings.")
                ((> since 1.0) (concat base-fmt " %a  "))
                (t (concat base-fmt " %R")))))
     (if date (format-time-string fmt date) "")))
-(defalias 'gnus-user-format-function-d #'pjones:gnus-format-date)
+(defalias 'gnus-user-format-function-a #'pjones:gnus-format-date)
 
 (defun pjones:gnus-format-comment (&rest _dummy)
   "Render a group's comment.
