@@ -690,6 +690,20 @@ non-empty lines in the block (excluding the line with
         (delete-region (point) (1+ (pos-eol))))))
   (setq buffer-read-only t))
 
+(defun pjones:org-get-id ()
+  "Return the ID of the selected heading."
+  (interactive)
+  (save-mark-and-excursion
+    (deactivate-mark)
+    (consult-org-heading)
+    (org-id-get nil t)))
+
+(defun pjones:org-insert-heading-link ()
+  "Prompt for a heading and insert a link to it."
+  (interactive)
+  (let ((id (pjones:org-get-id)))
+    (funcall-interactively 'org-insert-link nil (concat "id:" id))))
+
 ;;; Key Bindings:
 (let ((map org-mode-map))
   ;; Reset these so I can use them as a prefix:
@@ -708,6 +722,7 @@ non-empty lines in the block (excluding the line with
   (define-key map (kbd "C-c C-e e") #'org-export-dispatch)
   (define-key map (kbd "C-c C-e m") #'org-gfm-export-as-markdown)
   (define-key map (kbd "C-c C-e p") #'org-latex-export-to-pdf)
+  (define-key map (kbd "C-c l h") #'pjones:org-insert-heading-link)
   (define-key map (kbd "C-M-n") #'org-next-visible-heading)
   (define-key map (kbd "C-M-p") #'pjones:org-up-or-prev)
   (define-key map (kbd "C-o") #'pjones:org-open-line)
