@@ -454,17 +454,6 @@ If TIME is nil then use the current time."
   (goto-char (point-min))
   (org-cycle '(4)))
 
-(defun pjones:org-goto (&optional alternative-interface)
-  "Call `org-goto' after first widening the buffer.
-Jumps to the correct heading via `org-goto', then narrows the buffer
-again if necessary.  Passes ALTERNATIVE-INTERFACE to `org-goto'."
-  (interactive "P")
-  (let ((point-size (save-restriction (- (point-max) (point-min))))
-        (buff-size  (buffer-size)))
-    (widen)
-    (org-goto alternative-interface)
-    (if (/= buff-size point-size) (org-narrow-to-subtree))))
-
 (defun pjones:org-clock-update-dbus ()
   "Broadcast a D-Bus signal with the latest `org-clock' data.
 
