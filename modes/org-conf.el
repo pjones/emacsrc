@@ -411,10 +411,6 @@ If TIME is nil then use the current time."
 
 (defun pjones:org-mode-hook ()
   "Hook to hack `org-mode'."
-  ;; Use a variable pitch font if the current theme supports it:
-  (when (seq-contains-p '(poet poet-dark) pjones:current-theme)
-    (variable-pitch-mode))
-
   ;; Puni doesn't work here:
   (puni-mode -1)
 
