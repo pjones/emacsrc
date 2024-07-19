@@ -690,19 +690,58 @@ non-empty lines in the block (excluding the line with
         (delete-region (point) (1+ (pos-eol))))))
   (setq buffer-read-only t))
 
-(defun pjones:org-get-id ()
-  "Return the ID of the selected heading."
+(defun pjones:org-get-id (&optional prompt)
+  "Navigate to a heading and return its ID.
+If called interactively, also put the ID on the kill ring.
+
+If PROMPT is set, use that as the consult prompt."
   (interactive)
-  (save-mark-and-excursion
-    (deactivate-mark)
-    (consult-org-heading)
-    (org-id-get nil t)))
+  (let* ((prompt (or prompt "Get ID for heading: "))
+         (consult--customize-alist
+          `((,this-command :prompt ,prompt)))
+         (id (save-mark-and-excursion
+               (deactivate-mark)
+               (if (fboundp 'consult-org-heading)
+                   (consult-org-heading)
+                 (org-goto))
+               (org-id-get nil t))))
+    (prog1 (identity id)
+      (when (called-interactively-p 'any)
+        (kill-new id)))))
 
 (defun pjones:org-insert-heading-link ()
   "Prompt for a heading and insert a link to it."
   (interactive)
-  (let ((id (pjones:org-get-id)))
+  (let ((id (pjones:org-get-id "Insert link for heading: ")))
     (funcall-interactively 'org-insert-link nil (concat "id:" id))))
+
+(defun pjones:org-todo-block ()
+  "Mark the current heading as blocked.
+Prompts for a target heading that is blocking the current heading
+and properly sets up the BLOCKER and TRIGGER properties."
+  (interactive)
+  (let* ((heading-point (save-excursion
+                          (org-back-to-heading)
+                          (point-marker)))
+         (source (org-id-get heading-point t))
+         (target (pjones:org-get-id "Heading on which to block: "))
+         (blocker (or (org-entry-get heading-point "BLOCKER") ""))
+         (trigger (save-excursion
+                    (org-id-goto target)
+                    (or (org-entry-get (point-marker) "TRIGGER") ""))))
+    (org-todo "BLOCKED")
+    (org-entry-put heading-point "BLOCKER"
+                   (string-join (list (concat "ids(id:" target ")")
+                                      blocker " ")))
+    (if (string-empty-p trigger)
+        (save-excursion
+          (org-id-goto target)
+          (org-entry-put (point-marker) "TRIGGER"
+                         (concat "ids(id:" source ") todo!(DONE)")))
+      (org-id-goto target)
+      (org-edna-edit)
+      (kill-new source)
+      (message "Target has existing TRIGGER, edit manually (source ID in kill ring)"))))
 
 ;;; Key Bindings:
 (let ((map org-mode-map))
@@ -718,6 +757,7 @@ non-empty lines in the block (excluding the line with
   (define-key map (kbd "C-c C-a a") #'pjones:org-attach)
   (define-key map (kbd "C-c C-a d") #'org-attach-reveal-in-emacs)
   (define-key map (kbd "C-c C-a u") #'org-attach-url)
+  (define-key map (kbd "C-c C-b") #'pjones:org-todo-block)
   (define-key map (kbd "C-c C-e b") #'org-beamer-export-to-pdf)
   (define-key map (kbd "C-c C-e e") #'org-export-dispatch)
   (define-key map (kbd "C-c C-e m") #'org-gfm-export-as-markdown)
@@ -729,6 +769,7 @@ non-empty lines in the block (excluding the line with
   (define-key map (kbd "M-<left>") #'pjones:org-promote)
   (define-key map (kbd "M-<return>") #'pjones:org-insert-item)
   (define-key map (kbd "M-<right>") #'pjones:org-demote)
+  (define-key map (kbd "M-g C-i") #'pjones:org-get-id)
   (define-key map (kbd "M-g i") #'consult-org-heading)
   (define-key map (kbd "M-n") #'org-forward-heading-same-level)
   (define-key map (kbd "M-N") #'org-next-item)
