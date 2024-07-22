@@ -158,7 +158,8 @@ If TIME is nil then use the current time."
 
  '(org-link-file-path-type 'relative)
  '(org-link-frame-setup
-   (quote ((file . find-file))))
+   (quote ((file . find-file)
+           (gnus . org-gnus-no-new-news))))
 
  ;; Tags:
  '(org-tag-persistent-alist
