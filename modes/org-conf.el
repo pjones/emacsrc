@@ -164,19 +164,31 @@ If TIME is nil then use the current time."
  ;; Tags:
  '(org-tag-persistent-alist
    (quote ((:startgroup  . nil)
+           ;; Places
+           ("@home"      . ?h)
+           ("@work"      . ?W)
+           ("@out"       . ?o)
+           ("@shanna"    . ?s)
+           (:endgroup    . nil)
+           (:startgroup  . nil)
+           ;; Devices:
            ("@computer"  . ?c)
-           ("@desk"      . ?d)
+           ("@phone"     . ?P)
+           ("@tablet"    . ?t)
+           (:endgroup    . nil)
+           (:startgroup  . nil)
+           ;; Activities:
+           ("@call"      . ?a)
            ("@email"     . ?e)
            ("@errand"    . ?E)
-           ("@home"      . ?h)
-           ("@reading"   . ?r)
-           ("@phone"     . ?p)
+           ("@read"      . ?r)
+           ("@plan"      . ?p)
+           ("@write"     . ?w)
+           ("@code"      . ?C)
+           ("@labor"     . ?l)
            (:endgroup    . nil)
            (:startgroup  . nil)
-           ("@online"    . ?o)
-           ("@offline"   . ?O)
-           (:endgroup    . nil)
-           (:startgroup  . nil)
+           ;; Effort:
            ("5m"         . ?5)
            ("30m"        . ?3)
            ("1h"         . ?1)
@@ -230,7 +242,7 @@ If TIME is nil then use the current time."
    (quote (("c" "Current Status"
             ((agenda ""
               ((org-agenda-overriding-header "⚡ Agenda:")
-               (org-agenda-remove-tags t)
+               (org-agenda-remove-tags nil)
                (org-agenda-current-time-string "⮜┈┈┈┈┈┈┈ now")
                (org-agenda-prefix-format "  %-12s %-12t %-8c ")
                (org-agenda-todo-keyword-format "")))
@@ -240,24 +252,29 @@ If TIME is nil then use the current time."
                 (org-agenda-remove-tags t)
                 (org-agenda-prefix-format "  %-8c ")
                 (org-agenda-todo-keyword-format "")))
-             (tags-todo "@phone|@email"
+             (tags-todo "@call|@email"
                ((org-agenda-overriding-header "⚡ Phone Calls to Make, Emails to Send:")
                 (org-agenda-prefix-format "  %-8c ")
-                (org-agenda-remove-tags t)
+                (org-agenda-remove-tags nil)
+                (org-agenda-todo-keyword-format "")))
+             (tags-todo "@read-TODO=\"DONE\""
+               ((org-agenda-overriding-header "⚡ Reading and Research:")
+                (org-agenda-prefix-format "  %-8c ")
+                (org-agenda-remove-tags nil)
                 (org-agenda-todo-keyword-format "")))
              (stuck ""
                ((org-agenda-overriding-header "⚡ Stuck Projects:")))
              (todo "BLOCKED"
                ((org-agenda-overriding-header "⚡ Missing Blocker Dependency:")
                 (org-agenda-skip-function #'pjones:agenda-skip-properly-blocked)
-                (org-agenda-remove-tags t)
+                (org-agenda-remove-tags nil)
                 (org-agenda-prefix-format "  %-8c ")
                 (org-agenda-todo-keyword-format "")))
              (tags "+inbox+LEVEL=1"
                ((org-agenda-overriding-header "⚡ Inbox Tasks to Process:")
                 (org-agenda-prefix-format "  %-8c ")
                 (org-agenda-todo-keyword-format "")))
-             (todo "NEXT"
+             (tags-todo "TODO=\"NEXT\"-SCHEDULED={.+}-DEADLINE={.+}-@call-@read-@email"
                ((org-agenda-overriding-header "⚡ Next Actions:")
                 (org-agenda-skip-function '(org-agenda-skip-entry-if 'scheduled 'deadline))
                 (org-agenda-prefix-format "  %-8c ")
