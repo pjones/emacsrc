@@ -17,14 +17,21 @@
   '(vterm-buffer-name-string "vterm %s"))
 
 (let ((map vterm-mode-map))
+  ;; Remove some bindings:
   (define-key map (kbd "M-'") nil)
   (define-key map (kbd "M-:") nil)
-  (define-key map (kbd "M-<backspace>") nil)
+
+  ;; And add some new ones:
   (define-key map (kbd "C-c C-d") #'pjones:vterm-change-dir)
-  (define-key map (kbd "C-c C-r") #'pjones:vterm-restore-cursor)
+  (define-key map (kbd "C-c C-g") #'keyboard-quit)
   (define-key map (kbd "C-c C-M-r") #'pjones:vterm-toggle-name)
+  (define-key map (kbd "C-c C-r") #'pjones:vterm-restore-cursor)
+  (define-key map (kbd "C-c C-u") #'universal-argument)
   (define-key map (kbd "C-c C-x") #'vterm--self-insert)
-  (define-key map (kbd "C-c M-x") #'vterm--self-insert))
+  (define-key map (kbd "C-c M-x") #'vterm--self-insert)
+  (define-key map (kbd "C-g") #'vterm--self-insert)
+  (define-key map (kbd "C-u") #'vterm--self-insert)
+  (define-key map (kbd "M-<backspace>") nil))
 
 (defun pjones:vterm-change-dir (dir)
   "Change to DIR in the current vterm shell."
@@ -43,7 +50,7 @@
                                   (project-root project)
                                 default-directory)))
       (rename-buffer (generate-new-buffer-name
-                      (project-prefixed-buffer-name "shell")))))
+                      (project-prefixed-buffer-name "vterm")))))
   (vterm--set-title pjones:vterm-title)
   (force-mode-line-update))
 

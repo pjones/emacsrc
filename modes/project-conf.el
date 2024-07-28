@@ -14,12 +14,15 @@
   "Start a `vterm' for the current project.
 Ensures that the buffer name doesn't change so it can be found again."
   (interactive)
-    (cl-letf (((symbol-function 'shell)
-               (lambda (&optional arg)
-                 (vterm arg)
-                 (setq-local vterm-buffer-name-string nil)
-                 (rename-buffer arg))))
-      (call-interactively #'project-shell)))
+  (let* ((default-directory (project-root (project-current t)))
+         (default-project-vterm-name (project-prefixed-buffer-name "vterm"))
+         (vterm-buffer (get-buffer default-project-vterm-name)))
+    (if (and vterm-buffer (not current-prefix-arg))
+        (pop-to-buffer vterm-buffer)
+      (vterm current-prefix-arg)
+      ;; Keep my vterm code from overriding the new buffer name:
+      (setq-local vterm-buffer-name-string nil)
+      (rename-buffer (generate-new-buffer-name default-project-vterm-name)))))
 
 (custom-set-variables
  '(project-switch-commands
@@ -27,6 +30,7 @@ Ensures that the buffer name doesn't change so it can be found again."
      (magit-project-status "Magit" ?m)
      (pjones:project-vterm "Shell" ?s)
      (project-dired "Dired" ?d)
+     (project-find-dir "Find Dir" ?D)
      (project-find-file "File" ?f)
      (project-shell-command "Run" ?!))))
 
