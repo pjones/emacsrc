@@ -729,11 +729,23 @@ If PROMPT is set, use that as the consult prompt."
   (let ((id (pjones:org-get-id "Insert link for heading: ")))
     (funcall-interactively 'org-insert-link nil (concat "id:" id))))
 
-(defun pjones:org-todo-block ()
+(defun pjones:after-org-edna-edit ()
+  "Put each blocker and trigger on its own line."
+  (save-excursion
+    (goto-char org-edna-blocker-section-marker)
+    (while (re-search-forward ") +" nil t)
+      (replace-match ")\n" nil nil))))
+
+(advice-add 'org-edna-edit :after 'pjones:after-org-edna-edit)
+
+(defun pjones:org-todo-block (&optional edit)
   "Mark the current heading as blocked.
 Prompts for a target heading that is blocking the current heading
-and properly sets up the BLOCKER and TRIGGER properties."
-  (interactive)
+and properly sets up the BLOCKER and TRIGGER properties.
+
+If EDIT is non-nil then edit the resulting trigger with
+`org-edna-edit' even if no trigger currently exists."
+  (interactive "P")
   (let* ((heading-point (save-excursion
                           (org-back-to-heading)
                           (point-marker)))
@@ -745,17 +757,26 @@ and properly sets up the BLOCKER and TRIGGER properties."
                     (or (org-entry-get (point-marker) "TRIGGER") ""))))
     (org-todo "BLOCKED")
     (org-entry-put heading-point "BLOCKER"
-                   (string-join (list (concat "ids(id:" target ")")
-                                      blocker " ")))
-    (if (string-empty-p trigger)
+                   (string-join
+                    (remove nil (list (format "ids(id:%s)" target) blocker))
+                    " "))
+    (if (and (not edit) (string-empty-p trigger))
         (save-excursion
-          (org-id-goto target)
-          (org-entry-put (point-marker) "TRIGGER"
-                         (concat "ids(id:" source ") todo!(DONE)")))
+          (message "Select TODO state after trigger: ")
+          (let ((todo-state (or (org-fast-todo-selection) "DONE")))
+            (org-id-goto target)
+            (org-entry-put (point-marker) "TRIGGER"
+                           (format "ids(id:%s) todo!(%s)" source todo-state))))
       (org-id-goto target)
       (org-edna-edit)
-      (kill-new source)
-      (message "Target has existing TRIGGER, edit manually (source ID in kill ring)"))))
+      (goto-char org-edna-blocker-section-marker)
+      (move-beginning-of-line nil)
+      (open-line 2)
+      (insert "The first trigger references the ID of the blocked heading.")
+      (goto-char org-edna-trigger-section-marker)
+      (move-end-of-line nil)
+      (newline)
+      (insert (format "ids(id:%s)\n" source)))))
 
 ;;; Key Bindings:
 (let ((map org-mode-map))
