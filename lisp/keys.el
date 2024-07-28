@@ -60,6 +60,11 @@ connection."
 (declare-function consult-ripgrep "consult")
 (declare-function consult-yank-pop "consult")
 (declare-function embark-act "embark")
+(declare-function emms "emms")
+(declare-function emms-add-directory "emms")
+(declare-function emms-add-playlist "emms")
+(declare-function emms-insert-playlist "emms")
+(declare-function emms-smart-browse "emms")
 (declare-function er/expand-region "expand-region")
 (declare-function goto-last-change "goto-chg")
 (declare-function highlight-indent-guides-mode "highlight-indent-guides")
@@ -78,6 +83,7 @@ connection."
 (declare-function passmm-completing-read "passmm")
 (declare-function passmm-list-passwords "passmm")
 (declare-function pjones:agenda "./interactive")
+(declare-function pjones:emms-play-stream "emms")
 (declare-function pjones:exchange-point-and-mark "./interactive")
 (declare-function pjones:fly-next-error "./interactive")
 (declare-function pjones:frame-toggle-alpha "./interactive")
@@ -153,8 +159,12 @@ connection."
  (kbd "C-c l l") #'org-store-link
  (kbd "C-c l o") #'link-hint-open-link
  (kbd "C-c l w") #'link-hint-copy-link
- (kbd "C-c M") #'magit-file-dispatch
- (kbd "C-c m") #'magit-status
+ (kbd "C-c m b") #'emms-smart-browse
+ (kbd "C-c m d") #'emms-add-directory
+ (kbd "C-c m e") #'emms
+ (kbd "C-c m i") #'emms-insert-playlist
+ (kbd "C-c m p") #'emms-add-playlist
+ (kbd "C-c m SPC") (lambda () (interactive) (require 'emms) (pjones:emms-play-stream))
  (kbd "C-c M-W") #'pjones:kill-directory-name
  (kbd "C-c M-w") #'pjones:kill-file-name
  (kbd "C-c p g") #'pjones:pwgen

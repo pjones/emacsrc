@@ -45,6 +45,7 @@ pkgs.stdenv.mkDerivation rec {
     emacsAndPackages # Emacs!
     pkgs.git # For Magit
     pkgs.imagemagick # For image-mode
+    pkgs.mpv # For EMMS
   ] ++ lib.optionals pkgs.stdenv.isLinux [
     pkgs.netcat # For bin/e
     inputs.desktop-scripts.packages.${pkgs.system}.default # for bin/e
