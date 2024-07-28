@@ -139,7 +139,11 @@ Declared here to avoid compiler warnings.")
                   smtpmail-smtp-server "smtp.fastmail.com"
                   smtpmail-smtp-service 465
                   smtpmail-stream-type 'ssl)))
-     ((header "to" "\\(effectiveruby\\|freerangebits\\|jonesbunch\\|fastmail\\)")
+     ((header "to" "jonesbunch\\.com")
+      (signature :file "jonesbunch")
+      (address (with-current-buffer gnus-article-buffer
+                 (message-fetch-field "to"))))
+     ((header "to" ".")
       (address (with-current-buffer gnus-article-buffer
                  (message-fetch-field "to"))))
      ((header "to" "freerangebits")
