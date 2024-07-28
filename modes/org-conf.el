@@ -90,7 +90,8 @@ If TIME is nil then use the current time."
 (custom-set-variables
  ;; Visual Settings:
  '(org-hide-leading-stars t)
- '(org-ellipsis "…")
+ '(org-ellipsis "")
+ '(org-agenda-breadcrumbs-separator " ❱ ")
  '(org-clock-clocked-in-display nil)
  '(org-show-context-detail (quote ((default . tree))))
  '(org-duration-format (quote h:mm))
@@ -100,6 +101,9 @@ If TIME is nil then use the current time."
  '(org-appear-autosubmarkers t)
  '(org-appear-autoentities t)
  '(org-appear-autokeywords t)
+ '(org-modern-hide-stars " ")
+ '(org-modern-todo nil)
+ '(org-modern-timestamp nil)
 
  ;; Behavior Settings:
  '(org-list-allow-alphabetical t)
@@ -109,6 +113,7 @@ If TIME is nil then use the current time."
  '(org-log-done 'time)
  '(org-reverse-note-order nil)
  '(org-tags-column 0)
+ '(org-auto-align-tags nil)
  '(org-use-fast-todo-selection 'expert)
  '(org-use-fast-tag-selection (quote auto))
  '(org-fast-tag-selection-single-key nil)
@@ -829,6 +834,7 @@ If EDIT is non-nil then edit the resulting trigger with
 (add-hook 'org-mode-hook #'org-appear-mode)
 (add-hook 'org-mode-hook #'org-bulletproof-mode)
 (add-hook 'org-mode-hook #'org-edna-mode)
+(add-hook 'org-mode-hook #'org-modern-mode)
 (add-hook 'org-mode-hook #'org-num-mode)
 
 (let ((hooks
