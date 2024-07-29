@@ -97,10 +97,12 @@ PATTERN is passed to `orderless-without-literal'."
 
 (custom-set-variables
  '(dabbrev-case-fold-search nil) ; Don't mess with case.
+ '(completion-auto-select t)
  '(completion-category-defaults nil)
  '(completion-category-overrides '((file (styles . (partial-completion)))))
  '(completion-styles '(orderless partial-completion basic))
  '(completions-detailed t)
+ '(corfu-cycle t)
  '(corfu-quit-no-match 'separator)
  '(corfu-scroll-margin 5)
  '(orderless-component-separator #'pjones:orderless-escapable-split-on-space)
