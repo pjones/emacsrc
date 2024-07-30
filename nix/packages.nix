@@ -17,7 +17,6 @@ let
 
   # Package overrides:
   emacsWithOverrides = (emacsPackagesFor emacs).overrideScope' (self: super: {
-    passmm = update super.passmm inputs.passmm;
     telega = update super.telega inputs.telega;
   });
 in
@@ -97,7 +96,7 @@ emacsWithOverrides.emacsWithPackages (epkgs: with epkgs; [
   orgalist # Manage Org-like lists in non-Org buffers
   ox-gfm # Github Flavored Markdown Back-End for Org Export Engine
   package-lint # A linting library for elisp package authors
-  passmm # A minor mode for pass (Password Store).
+  pass # A major mode for password-store
   password-store # Password store (pass) support
   pdf-tools # Support library for PDF documents
   plantuml-mode # A major mode for editing PlantUML sources in Emacs

@@ -9,9 +9,7 @@
 (require 'erc)
 (require 'erc-track)
 (require 'notifications)
-(require 'passmm)
-
-(declare-function passmm-get-password "passmm")
+(require 'password-store)
 
 (custom-set-variables
  '(erc-nick "pmade")
@@ -73,7 +71,7 @@
 
 (defun pjones:erc-connect (network)
   "Connect to an IRC NETWORK via ERC."
-  (let ((pass (passmm-get-password "machines/chat.devalot.com/znc")))
+  (let ((pass (password-store-get "machines/chat.devalot.com/znc")))
     (erc-tls :server   (format "%s.pmade.com" network)
              :nick     "pjones"
              :port     6697

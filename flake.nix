@@ -8,11 +8,6 @@
     desktop-scripts.url = "github:pjones/desktop-scripts";
     desktop-scripts.inputs.nixpkgs.follows = "nixpkgs";
 
-    passmm = {
-      url = "github:pjones/passmm";
-      flake = false;
-    };
-
     telega = {
       # Commit from May 9, 2024:
       url = "github:zevlg/telega.el/99477b075f4032a49283d730e909a26f11606ee5";

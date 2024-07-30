@@ -25,6 +25,15 @@ connection."
            (this-command ,func))
        (call-interactively ,func))))
 
+(defmacro pjones:load-call (lib func)
+  "Generate and return an interactive function.
+It will load the library given in LIB and then interactively call
+FUNC."
+  `(lambda ()
+     (interactive)
+     (require ,lib)
+     (call-interactively ,func)))
+
 ;; Loading `link-hint' will also load my settings and custom functions
 ;; for it.
 (autoload 'pjones:link-hint-open-link "link-hint")
@@ -80,8 +89,8 @@ connection."
 (declare-function org-roam-node-find "org-roam")
 (declare-function org-roam-node-insert "org-roam")
 (declare-function org-store-link "ol")
-(declare-function passmm-completing-read "passmm")
-(declare-function passmm-list-passwords "passmm")
+(declare-function pass "pass")
+(declare-function pass-goto-entry "pass")
 (declare-function pjones:agenda "./interactive")
 (declare-function pjones:emms-play-stream "emms")
 (declare-function pjones:exchange-point-and-mark "./interactive")
@@ -161,16 +170,16 @@ connection."
  (kbd "C-c l w") #'link-hint-copy-link
  (kbd "C-c m b") #'emms-smart-browse
  (kbd "C-c m d") #'emms-add-directory
- (kbd "C-c m e") #'emms
+ (kbd "C-c m e") (pjones:load-call 'emms-playlist-mode #'emms)
  (kbd "C-c m i") #'emms-insert-playlist
  (kbd "C-c m p") #'emms-add-playlist
- (kbd "C-c m SPC") (lambda () (interactive) (require 'emms) (pjones:emms-play-stream))
+ (kbd "C-c m SPC") (pjones:load-call 'emms #'pjones:emms-play-stream)
  (kbd "C-c M-W") #'pjones:kill-directory-name
  (kbd "C-c M-w") #'pjones:kill-file-name
  (kbd "C-c p g") #'pjones:pwgen
- (kbd "C-c p l") #'passmm-list-passwords
+ (kbd "C-c p l") #'pass
  (kbd "C-c p s") #'pjones:start-term
- (kbd "C-c p p") #'passmm-completing-read
+ (kbd "C-c p p") (pjones:load-call 'pass #'pass-goto-entry)
  (kbd "C-c R") #'rename-visited-file
  (kbd "C-c r") #'revert-buffer-quick
  (kbd "C-c s") #'pjones:sort-lines

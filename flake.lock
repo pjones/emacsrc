@@ -57,28 +57,11 @@
         "type": "github"
       }
     },
-    "passmm": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1670182020,
-        "narHash": "sha256-VjRp0Cb8UEJMbxWXKvRW83tanc+O5jOCrnjD2WT2YOY=",
-        "owner": "pjones",
-        "repo": "passmm",
-        "rev": "66691e301dff476eaff7c6e817ed9df96d4404c8",
-        "type": "github"
-      },
-      "original": {
-        "owner": "pjones",
-        "repo": "passmm",
-        "type": "github"
-      }
-    },
     "root": {
       "inputs": {
         "desktop-scripts": "desktop-scripts",
         "home-manager": "home-manager",
         "nixpkgs": "nixpkgs",
-        "passmm": "passmm",
         "telega": "telega"
       }
     },
