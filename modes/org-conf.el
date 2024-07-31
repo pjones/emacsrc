@@ -106,6 +106,7 @@ If TIME is nil then use the current time."
  '(org-modern-timestamp nil)
  '(org-modern-block-name t)
  '(org-modern-block-fringe nil)
+ '(org-modern-tag nil)
 
  ;; Behavior Settings:
  '(org-list-allow-alphabetical t)
