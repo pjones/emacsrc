@@ -63,8 +63,7 @@ My playlists use relative file paths and EMMS doesn't like that.  If
 TRACK is either relative, or if EMMS has inferred that the file is in
 my playlists directory then this function will fix the path so it is
 absolute to the music directory."
-  (let ((track (emms-playlist-track-at))
-        (path (emms-track-name track))
+  (let ((path (emms-track-name track))
         (plst-dir (concat
                    (file-name-directory
                     (directory-file-name emms-source-file-default-directory))
@@ -175,13 +174,18 @@ URL.  If the track type isn't streamlist you must provide TYPE."
 
 (defun pjones:emms-playlist-mode-hook ()
   "Hook run when a playlist is created."
+  ;; Set some buffer local functions:
+  (setq-local emms-playlist-insert-track-function #'pjones:emms-playlist-insert-track)
   (let ((map emms-playlist-mode-map))
     (define-key map (kbd "d") #'emms-add-directory)
     (define-key map (kbd "D") #'emms-playlist-mode-goto-dired-at-point)
+    (define-key map (kbd "i") #'emms-insert-playlist)
     (define-key map (kbd "SPC") #'emms-pause)))
 
 ;; Hooks:
 (add-hook 'emms-track-updated-functions
           #'pjones:emms-mpris-change-status)
+
+(add-hook 'emms-playlist-mode-hook #'pjones:emms-playlist-mode-hook)
 
 ;;; emms-conf.el ends here
