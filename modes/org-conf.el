@@ -215,14 +215,9 @@ If TIME is nil then use the current time."
            ("BLOCKED" . (:inherit org-agenda-dimmed-todo-face)))))
 
  ;; Stuff for org-agenda.
- '(org-agenda-files
-   (mapcar
-    (apply-partially #'concat pjones:org-notes-directory)
-    '("gtd/inbox.org"
-      "gtd/projects.org"
-      "gtd/rfa.org"
-      "gtd/routines.org"
-      "gtd/school.org")))
+ '(org-agenda-files (directory-files
+                     (concat pjones:org-notes-directory "gtd/")
+                     t "\.org$"))
 
  '(org-agenda-window-setup (quote current-window))
  '(org-agenda-todo-ignore-with-date nil)
