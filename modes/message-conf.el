@@ -37,6 +37,7 @@
  '(message-dont-reply-to-names '("pjones@pmade.com" "pmadeinc@gmail.com"))
  '(message-kill-buffer-on-exit t)
  '(message-signature-directory "~/notes/signatures/")
+ '(mml-secure-method "pgpmime")
  '(mml-secure-openpgp-encrypt-to-self t)
  '(mml-secure-openpgp-sign-with-sender t)
  '(mml-secure-smime-encrypt-to-self t)

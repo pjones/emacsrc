@@ -323,6 +323,7 @@ returned by `gnus-group-get-parameter'.  It does show up in
 (add-hook 'gnus-group-mode-hook #'gnus-topic-mode)
 (add-hook 'gnus-group-mode-hook #'hl-line-mode)
 (add-hook 'gnus-group-mode-hook #'pjones:gnus-group-mode-hook)
+(add-hook 'gnus-message-setup-hook 'mml-secure-message-sign)
 (add-hook 'gnus-started-hook #'gnus-delay-initialize)
 (add-hook 'gnus-started-hook #'pjones:gnus-demon-init)
 (add-hook 'gnus-summary-mode-hook #'hl-line-mode)
