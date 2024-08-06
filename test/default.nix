@@ -39,6 +39,7 @@ pkgs.nixosTest {
       users.pjones = { ... }: {
         imports = [ module ];
         programs.pjones.emacsrc.enable = true;
+        home.stateVersion = "24.05";
         home.packages = [ tests ];
       };
     };

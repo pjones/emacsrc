@@ -1,6 +1,0 @@
-[Desktop Entry]
-Name=EmacsClient
-Exec=e -c %u
-Icon=emacs-icon
-Type=Application
-Terminal=false

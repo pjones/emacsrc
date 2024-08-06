@@ -9,6 +9,7 @@
 (require 'org-agenda)
 (require 'org-capture)
 (require 'org-edna)
+(require 'org-protocol)
 (require 'ox-gfm)
 (require 's)
 (require 'warnings)
@@ -139,7 +140,6 @@ If TIME is nil then use the current time."
  '(org-attach-store-link-p 'attached)
  '(org-attach-archive-delete nil)
  '(org-attach-use-inheritance t)
- '(org-capture-bookmark nil)
  '(org-archive-file-header-format nil)
  '(org-archive-default-command #'pjones:org-archive-subtree-to-daily)
  '(org-M-RET-may-split-line
@@ -219,7 +219,6 @@ If TIME is nil then use the current time."
                      (concat pjones:org-notes-directory "gtd/")
                      t "\.org$"))
 
- '(org-refile-targets '((org-agenda-files :maxlevel . 3)))
  '(org-agenda-window-setup (quote current-window))
  '(org-agenda-todo-ignore-with-date nil)
  '(org-agenda-todo-ignore-timestamp nil)
@@ -294,10 +293,22 @@ If TIME is nil then use the current time."
             ((org-agenda-view-columns-initially t))))))
 
  ;; Stuff for org-capture and org-refile:
+ '(org-refile-targets '((org-agenda-files :maxlevel . 3)))
  '(org-default-notes-file (concat pjones:org-notes-directory "gtd/inbox.org"))
  '(org-refile-use-outline-path t)
  '(org-refile-allow-creating-parent-nodes t)
  '(org-log-refile (quote time))
+ '(org-capture-bookmark nil)
+ '(org-capture-templates
+   `(("i" "Capture to Inbox" entry
+      (file ,org-default-notes-file)
+      "* %?"
+      :empty-lines 1)
+     ("p" "org-protocol-capture" entry
+      (file ,org-default-notes-file)
+      "* %:description\n\n  %:link\n\n  %i"
+      :immediate-finish t
+      :empty-lines 1)))
 
  ;; Preview control (more below):
  '(org-preview-latex-default-process 'imagemagick)
@@ -440,7 +451,7 @@ If TIME is nil then use the current time."
   (save-place-mode -1)
 
   ;; Tailor whitespace mode
-  (setq-local whitespace-style '(trailing tabs empty))
+  (setq-local whitespace-style '(trailing tabs))
   (whitespace-mode)
 
   ;; Use yasnippets:

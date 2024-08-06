@@ -8,6 +8,24 @@
 let
   cfg = config.programs.pjones.emacsrc;
 
+  desktopItems = {
+    emacsclient = pkgs.makeDesktopItem {
+      name = "emacsclient";
+      desktopName = "Emacs Client";
+      genericName = "Open a new Emacs window";
+      icon = "emacs";
+      exec = "e -c %u";
+    };
+
+    org-protocol = pkgs.makeDesktopItem {
+      name = "org-protocol";
+      desktopName = "Org Protocol Capture";
+      genericName = "Capture passed information via org-protocol";
+      icon = "emacs";
+      exec = "org-protocol %u";
+      mimeTypes = [ "x-scheme-handler/org-protocol" ];
+    };
+  };
 in
 {
   options.programs.pjones.emacsrc = {
@@ -15,11 +33,9 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    home.stateVersion = lib.mkDefault "22.11";
-
     home.packages = [
       emacsrc
-    ];
+    ] ++ lib.attrValues desktopItems;
 
     xdg.mimeApps = {
       enable = lib.mkDefault true;
@@ -37,11 +53,6 @@ in
         "enchant/enchant.ordering".source = "${emacsrc}/share/enchant/enchant.ordering";
         "enchant/nuspell".source = "${emacsrc}/share/enchant/nuspell";
       };
-    };
-
-    home.file = {
-      ".local/share/applications/emacsclient.desktop".source =
-        "${emacsrc}/share/applications/emacsclient.desktop";
     };
   };
 }

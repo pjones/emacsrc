@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+################################################################################
+# Send org-protocol:// links to Emacs.
+set -eu
+set -o pipefail
+
+################################################################################
+option_server=1:GTD
+
+################################################################################
+main() {
+  # Make sure Emacs is running and has org-mode loaded:
+  e -ws "$option_server" -- --eval "(require 'org)"
+
+  # Now send the actual message:
+  e -ws "$option_server" -- "$@"
+}
+
+################################################################################
+main "$@"

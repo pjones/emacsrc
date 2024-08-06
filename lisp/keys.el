@@ -155,8 +155,8 @@ FUNC."
 
 (pjones:global-set-keys
  (kbd "C-c ?") #'which-key-show-top-level
- (kbd "C-c a") (pjones:jump-to-buffer "*Org Agenda*" pjones:agenda)
  (kbd "C-c A") #'pjones:frame-toggle-alpha
+ (kbd "C-c a") (pjones:jump-to-buffer "*Org Agenda*" pjones:agenda)
  (kbd "C-c b") #'eldoc-doc-buffer
  (kbd "C-c C") #'full-calc
  (kbd "C-c c") #'quick-calc
@@ -178,11 +178,12 @@ FUNC."
  (kbd "C-c M-w") #'pjones:kill-file-name
  (kbd "C-c p g") #'pjones:pwgen
  (kbd "C-c p l") #'pass
- (kbd "C-c p s") #'pjones:start-term
  (kbd "C-c p p") (pjones:load-call 'pass #'pass-goto-entry)
  (kbd "C-c R") #'rename-visited-file
  (kbd "C-c r") #'revert-buffer-quick
+ (kbd "C-c RET") #'pjones:start-term
  (kbd "C-c s") #'pjones:sort-lines
+ (kbd "C-c SPC") #'org-capture
  (kbd "C-c t") #'pjones:open-temp-buffer
 
  ;; Additional window commands:

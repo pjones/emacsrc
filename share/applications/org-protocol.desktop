@@ -1,7 +1,0 @@
-[Desktop Entry]
-Name=Org-Protocol
-Exec=org-protocol %u
-Icon=emacs-icon
-Type=Application
-Terminal=false
-MimeType=x-scheme-handler/org-protocol

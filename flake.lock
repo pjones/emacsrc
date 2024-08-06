@@ -7,11 +7,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1721420849,
-        "narHash": "sha256-H360hxt/p0zjDFrbShXxTaEfdDnjL21a0WfzMEOelIg=",
+        "lastModified": 1722981308,
+        "narHash": "sha256-vvJRANmBpQqxXadwfokVXgOWy0anfqpv17NzN1R7l74=",
         "owner": "pjones",
         "repo": "desktop-scripts",
-        "rev": "f18c69c29e45c32730576c7fb4181fdc806cc3ad",
+        "rev": "e2ddb8af33349216991da9cc723aba2400066e72",
         "type": "github"
       },
       "original": {
@@ -43,11 +43,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1722087241,
-        "narHash": "sha256-2ShmEaFi0kJVOEEu5gmlykN5dwjWYWYUJmlRTvZQRpU=",
+        "lastModified": 1722869614,
+        "narHash": "sha256-7ojM1KSk3mzutD7SkrdSflHXEujPvW1u7QuqWoTLXQU=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "8c50662509100d53229d4be607f1a3a31157fa12",
+        "rev": "883180e6550c1723395a3a342f830bfc5c371f6b",
         "type": "github"
       },
       "original": {
