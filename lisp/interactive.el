@@ -25,6 +25,9 @@
 (declare-function which-key--hide-popup "which-key")
 (declare-function which-key--show-keymap "which-key")
 
+(autoload 'password-store-list "password-store")
+(autoload 'password-store--entry-to-file "password-store")
+
 (defvar flycheck-mode)
 (defvar flymake-mode)
 (defvar puni-mode)
@@ -210,6 +213,13 @@ absolute path name."
       (markdown-mode)
       (pjones:markdown-visual-line))
     (pop-to-buffer buf)))
+
+(defun pjones:password-goto (entry)
+  "Open the password file for ENTRY."
+  (interactive
+   (list (completing-read "Password: "
+                          (password-store-list) nil 'match)))
+  (find-file (password-store--entry-to-file entry)))
 
 (defun pjones:fly-next-error ()
   "Go to the next fly(check|make) error."

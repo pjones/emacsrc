@@ -90,7 +90,6 @@ FUNC."
 (declare-function org-roam-node-insert "org-roam")
 (declare-function org-store-link "ol")
 (declare-function pass "pass")
-(declare-function pass-goto-entry "pass")
 (declare-function pjones:agenda "./interactive")
 (declare-function pjones:emms-play-stream "emms")
 (declare-function pjones:exchange-point-and-mark "./interactive")
@@ -104,6 +103,7 @@ FUNC."
 (declare-function pjones:maybe-save-buffers-kill-terminal "./interactive")
 (declare-function pjones:open-line-above "./interactive")
 (declare-function pjones:open-temp-buffer "./interactive")
+(declare-function pjones:password-goto "./interactive")
 (declare-function pjones:pwgen "./interactive")
 (declare-function pjones:rectangle-number-lines "./interactive")
 (declare-function pjones:set-register-buffer "./interactive")
@@ -178,7 +178,7 @@ FUNC."
  (kbd "C-c M-w") #'pjones:kill-file-name
  (kbd "C-c p g") #'pjones:pwgen
  (kbd "C-c p l") #'pass
- (kbd "C-c p p") (pjones:load-call 'pass #'pass-goto-entry)
+ (kbd "C-c p p") #'pjones:password-goto
  (kbd "C-c R") #'rename-visited-file
  (kbd "C-c r") #'revert-buffer-quick
  (kbd "C-c RET") #'pjones:start-term
