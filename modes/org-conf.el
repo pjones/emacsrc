@@ -90,7 +90,7 @@ If TIME is nil then use the current time."
 (custom-set-variables
  ;; Visual Settings:
  '(org-hide-leading-stars t)
- '(org-ellipsis "")
+ '(org-ellipsis "/")
  '(org-agenda-breadcrumbs-separator " ❱ ")
  '(org-clock-clocked-in-display nil)
  '(org-show-context-detail (quote ((default . tree))))
@@ -219,6 +219,7 @@ If TIME is nil then use the current time."
                      (concat pjones:org-notes-directory "gtd/")
                      t "\.org$"))
 
+ '(org-refile-targets '((org-agenda-files :maxlevel . 3)))
  '(org-agenda-window-setup (quote current-window))
  '(org-agenda-todo-ignore-with-date nil)
  '(org-agenda-todo-ignore-timestamp nil)
