@@ -176,14 +176,6 @@ absolute path name."
       ((>= full-path 4) (buffer-file-name))
       (t (file-name-nondirectory (buffer-file-name)))))))
 
-(defun pjones:kill-whole-buffer ()
-  "Kill the entire buffer contents."
-  (interactive)
-  (kill-new
-   (buffer-substring-no-properties
-    (point-min)
-    (point-max))))
-
 (defun pjones:kill-directory-name ()
   "Put the current directory name into the kill ring."
   (interactive)

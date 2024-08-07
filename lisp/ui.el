@@ -182,14 +182,6 @@ If PREV is non-nil go to the previous theme."
 (add-to-list 'default-frame-alist `(alpha-background . ,pjones:frame-alpha-background))
 (setq frame-title-format '(:eval (pjones:frame-title-file-name)))
 
-(defun pjones:find-file-hook ()
-  "Hook called after a file is loaded into a buffer."
-  ;; Encrypted files should start as read-only:
-  (require 'epa-hook)
-  (when (and buffer-file-name
-             (string-match epa-file-name-regexp buffer-file-name))
-    (read-only-mode 1)))
-
 ;; Adapted from: https://gitlab.com/jessieh/mood-line
 (defun pjones:mode-line-align-right (construct)
   "Right-align a mode line construct.
@@ -241,6 +233,5 @@ The mode construct list is then returned."
 
 (add-hook 'after-init-hook #'pjones:configure-new-frame)
 (add-hook 'after-make-frame-functions #'pjones:configure-new-frame)
-(add-hook 'find-file-hook 'pjones:find-file-hook)
 
 ;;; ui.el ends here
