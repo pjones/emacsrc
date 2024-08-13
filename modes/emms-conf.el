@@ -10,6 +10,7 @@
 
 (emms-all)
 (emms-default-players)
+(emms-mpris-enable)
 
 ;; Make the compiler happy:
 (defvar emms-streams-built-in-list)
