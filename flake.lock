@@ -57,11 +57,46 @@
         "type": "github"
       }
     },
+    "org-capture-ref": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1722323904,
+        "narHash": "sha256-A6/TSKMYuczYtwxc+kNc9mlAZHQ3LCcyU2biRRrkoRg=",
+        "owner": "yantar92",
+        "repo": "org-capture-ref",
+        "rev": "c4df03d8522f128c990af4896a06efebd557b084",
+        "type": "github"
+      },
+      "original": {
+        "owner": "yantar92",
+        "repo": "org-capture-ref",
+        "type": "github"
+      }
+    },
+    "persid": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1724100221,
+        "narHash": "sha256-nhyMYf8DEnF3QQV40dSC5W/Vedvkj39+X/e5sPWQ0Zo=",
+        "owner": "pjones",
+        "repo": "persid",
+        "rev": "ff370f0612dd83363bb10c4649c3f21f692c2409",
+        "type": "github"
+      },
+      "original": {
+        "owner": "pjones",
+        "ref": "pjones/compile",
+        "repo": "persid",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "desktop-scripts": "desktop-scripts",
         "home-manager": "home-manager",
         "nixpkgs": "nixpkgs",
+        "org-capture-ref": "org-capture-ref",
+        "persid": "persid",
         "telega": "telega"
       }
     },

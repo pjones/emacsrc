@@ -4,12 +4,13 @@
 , inputs
 }:
 let
+  # Version number to use for custom packages:
+  version = "99999999.0";
+
   # Function to update several attributes in an Emacs package:
   update = pkg: src: pkg.overrideAttrs (orig: rec {
-    inherit src;
-
+    inherit version src;
     name = "emacs-${orig.ename or orig.pname}-${version}";
-    version = "99999999.0";
 
     # When updating a package, automatically remove the broken flag:
     meta = (orig.meta or { }) // { broken = false; };
@@ -17,6 +18,19 @@ let
 
   # Package overrides:
   emacsWithOverrides = (emacsPackagesFor emacs).overrideScope' (self: super: {
+    org-capture-ref = emacs.pkgs.trivialBuild {
+      inherit version;
+      pname = "org-capture-ref";
+      src = inputs.org-capture-ref;
+      packageRequires = [ super.compat self.persid ];
+    };
+
+    persid = emacs.pkgs.trivialBuild {
+      inherit version;
+      pname = "persid";
+      src = inputs.persid;
+    };
+
     telega = update super.telega inputs.telega;
   });
 in
@@ -87,10 +101,12 @@ emacsWithOverrides.emacsWithPackages (epkgs: with epkgs; [
   org # Outline-based notes management and organizer
   org-appear # Make invisible parts of Org elements appear visible.
   org-bulletproof # Automatic bullet cycling for Org mode
+  org-capture-ref # Extract metadata/bibtex info from websites for org-capture
   org-clock-csv # Export `org-mode' clock entries to CSV format
   org-edna # Extensible Dependencies ’N’ Actions (EDNA) for Org Mode tasks
   org-mime # Send HTML email using Org-mode HTML export
   org-modern # Modern Org Style.
+  org-ref # citations, cross-references, bibliographies in org-mode
   org-roam # A database abstraction layer for Org-mode
   org-tree-slide # A presentation tool for org-mode
   orgalist # Manage Org-like lists in non-Org buffers

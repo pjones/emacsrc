@@ -13,6 +13,16 @@
       url = "github:zevlg/telega.el/99477b075f4032a49283d730e909a26f11606ee5";
       flake = false;
     };
+
+    org-capture-ref = {
+      url = "github:yantar92/org-capture-ref";
+      flake = false;
+    };
+
+    persid = {
+      url = "github:pjones/persid/pjones/compile";
+      flake = false;
+    };
   };
 
   outputs = inputs@{ self, nixpkgs, home-manager, ... }:
