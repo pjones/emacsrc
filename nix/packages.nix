@@ -114,6 +114,7 @@ emacsWithOverrides.emacsWithPackages (epkgs: with epkgs; [
   rust-mode # A major-mode for editing Rust source code
   sage-shell-mode # A front-end for Sage Math
   scad-mode # A major mode for editing OpenSCAD code
+  separedit # Edit comment or string/docstring or code
   telega # Telegram client (unofficial)
   treesit-grammars.with-all-grammars # For use with tree-sitter
   tron-legacy-theme # Original retro-futuristic theme inspired by Tron: Legacy

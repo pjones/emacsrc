@@ -115,6 +115,7 @@ FUNC."
 (declare-function rg "rg")
 (declare-function rg-project "rg")
 (declare-function rotate-layout "rotate")
+(declare-function separedit "separedit")
 (declare-function which-key-show-top-level "which-key")
 (declare-function winner-undo "winner")
 (declare-function winum-select-window-0-or-10 "winum")
@@ -154,6 +155,7 @@ FUNC."
   "Key bindings for note taking.")
 
 (pjones:global-set-keys
+ (kbd "C-c '") #'separedit
  (kbd "C-c ?") #'which-key-show-top-level
  (kbd "C-c A") #'pjones:frame-toggle-alpha
  (kbd "C-c a") (pjones:jump-to-buffer "*Org Agenda*" pjones:agenda)

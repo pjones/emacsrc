@@ -7,7 +7,8 @@
 (require 'sh-script)
 
 (custom-set-variables
- '(sh-basic-offset 2))
+ '(sh-basic-offset 2)
+ '(sh-shell-file "bash"))
 
 (reformatter-define sh-format
   :program "shfmt"
