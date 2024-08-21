@@ -27,6 +27,8 @@
  '(org-roam-db-node-include-function
    #'org-before-first-heading-p) ; Only files are org-roam nodes.
 
+ '(consult-org-roam-buffer-enabled nil) ; Treat like other buffers.
+
  '(org-roam-capture-templates
    '(("b" "Knowledge Base" plain "%?"
       :target (file+head "garden/${pjones:org-roam-node-to-file}" "#+title: ${title}\n")
@@ -55,7 +57,7 @@
   (when-let* ((title (cadr (assoc "TITLE" (org-collect-keywords '("title")))))
               (file (buffer-file-name))
               (base (file-name-nondirectory file)))
-    (rename-buffer (concat title " (" base ")"))))
+    (rename-buffer title)))
 
 (defun pjones:org-roam-node-to-file (node)
   "Convert the NODE's ID to a file name."
