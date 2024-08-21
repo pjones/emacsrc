@@ -776,7 +776,7 @@ If EDIT is non-nil then edit the resulting trigger with
   (define-key map (kbd "C-c C-e") nil)
 
   (define-key map (kbd "<f12>") #'org-tree-slide-mode)
-  (define-key map (kbd "C-'") nil)
+  (define-key map (kbd "C-'") nil) ; Remove this binding.
   (define-key map (kbd "C-<return>") #'pjones:org-insert-heading)
   (define-key map (kbd "C-c 0") #'pjones:org-hide-all)
   (define-key map (kbd "C-c 1") #'pjones:org-hide-others)
@@ -790,6 +790,7 @@ If EDIT is non-nil then edit the resulting trigger with
   (define-key map (kbd "C-c C-e p") #'org-latex-export-to-pdf)
   (define-key map (kbd "C-c C-x @") #'org-ref-insert-link)
   (define-key map (kbd "C-c l h") #'pjones:org-insert-heading-link)
+  (define-key map (kbd "C-c RET") nil) ; Remove this binding.
   (define-key map (kbd "C-M-n") #'org-next-visible-heading)
   (define-key map (kbd "C-M-p") #'pjones:org-up-or-prev)
   (define-key map (kbd "C-o") #'pjones:org-open-line)

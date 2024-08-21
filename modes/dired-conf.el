@@ -101,7 +101,6 @@ Dired buffer.  Otherwise visit the file under point."
     (wdired-change-to-wdired-mode)))
 
 (add-hook 'dired-mode-hook #'dired-hide-details-mode)
-(add-hook 'dired-mode-hook #'turn-on-gnus-dired-mode)
 (add-hook 'dired-mode-hook #'dired-filter-mode)
 (add-hook 'dired-after-readin-hook #'pjones:dired-remove-total-lines)
 
