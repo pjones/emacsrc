@@ -73,6 +73,26 @@
         "type": "github"
       }
     },
+    "org-clock-dbus": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1724256429,
+        "narHash": "sha256-CU8+WzE3z1SM+jHJoNOTJHRt3RRaGeWlYYOVX5Ypgdc=",
+        "owner": "pjones",
+        "repo": "org-clock-dbus",
+        "rev": "3b717467e3d0833ab143518dff6b93271592a9e1",
+        "type": "github"
+      },
+      "original": {
+        "owner": "pjones",
+        "repo": "org-clock-dbus",
+        "type": "github"
+      }
+    },
     "persid": {
       "flake": false,
       "locked": {
@@ -96,6 +116,7 @@
         "home-manager": "home-manager",
         "nixpkgs": "nixpkgs",
         "org-capture-ref": "org-capture-ref",
+        "org-clock-dbus": "org-clock-dbus",
         "persid": "persid",
         "telega": "telega"
       }

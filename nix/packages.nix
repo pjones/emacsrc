@@ -25,6 +25,12 @@ let
       packageRequires = [ super.compat self.persid ];
     };
 
+    org-clock-dbus = emacs.pkgs.elpaBuild {
+      inherit version;
+      pname = "org-clock-dbus";
+      src = "${inputs.org-clock-dbus}/lisp/org-clock-dbus.el";
+    };
+
     persid = emacs.pkgs.trivialBuild {
       inherit version;
       pname = "persid";
@@ -103,6 +109,7 @@ emacsWithOverrides.emacsWithPackages (epkgs: with epkgs; [
   org-bulletproof # Automatic bullet cycling for Org mode
   org-capture-ref # Extract metadata/bibtex info from websites for org-capture
   org-clock-csv # Export `org-mode' clock entries to CSV format
+  org-clock-dbus # Monitor org-clock from outside Emacs
   org-edna # Extensible Dependencies ’N’ Actions (EDNA) for Org Mode tasks
   org-mime # Send HTML email using Org-mode HTML export
   org-modern # Modern Org Style.

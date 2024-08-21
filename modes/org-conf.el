@@ -16,16 +16,17 @@
 
 ;; Silence compiler warnings
 (declare-function consult-org-heading "consult")
-(declare-function dbus-send-signal "dbus")
 (declare-function org-appear-mode "org-appear")
 (declare-function org-attach-attach "org-attach")
 (declare-function org-attach-reveal-in-emacs "org-attach")
 (declare-function org-attach-url "org-attach")
 (declare-function org-bookmark-jump-unhide "org")
 (declare-function org-bulletproof-mode "org-bulletproof")
+(declare-function org-clock-dbus-mode "org-clock-dbus")
 (declare-function org-clock-sum-current-item "org-clock")
 (declare-function org-clocking-p "org-clock")
 (declare-function org-insert-last-stored-link "ol")
+(declare-function org-modern-mode "org-modern")
 (declare-function org-ref-insert-link "org-ref")
 (declare-function org-roam-dailies-goto-date "org-roam")
 (declare-function org-tree-slide-mode "org-tree-slide")
@@ -37,8 +38,6 @@
 (declare-function yas-minor-mode "yasnippet")
 (declare-function yas-next-field "yasnippet")
 
-(defvar dbus-interface-emacs)
-(defvar dbus-path-emacs)
 (defvar org-attach-store-link-p)
 (defvar org-clock-start-time)
 (defvar pjones:current-theme)
@@ -95,7 +94,7 @@ If TIME is nil then use the current time."
  '(org-ellipsis "/")
  '(org-agenda-breadcrumbs-separator " ❱ ")
  '(org-clock-mode-line-total 'current)
- '(org-clock-clocked-in-display 'mode-line)
+ '(org-clock-clocked-in-display nil)
  '(org-show-context-detail (quote ((default . tree))))
  '(org-duration-format (quote h:mm))
  '(org-hide-emphasis-markers t)
@@ -485,31 +484,6 @@ If TIME is nil then use the current time."
   (goto-char (point-min))
   (org-cycle '(4)))
 
-(defun pjones:org-clock-update-dbus ()
-  "Broadcast a D-Bus signal with the latest `org-clock' data.
-
-This exposes the current clock's start time and heading to any process
-listening to the correct D-Bus signal.
-
-You can monitor this signal via the following command:
-
-    \"dbus-monitor type='signal',interface='org.gnu.Emacs.Org.Clock'\"
-
-Read the code below for the two event names and the signal arguments
-they provide."
-  (require 'dbus)
-  (require 'org-clock)
-  (if (org-clocking-p)
-      (let ((start-time (floor (float-time org-clock-start-time)))
-            (description org-clock-heading))
-        (dbus-send-signal
-         :session nil dbus-path-emacs
-         (concat dbus-interface-emacs ".Org.Clock") "Started"
-         start-time description))
-    (dbus-send-signal
-     :session nil dbus-path-emacs
-     (concat dbus-interface-emacs ".Org.Clock") "Stopped")))
-
 (defun pjones:org-effort-sum (&optional skip-done clock-diff)
   "Recursively sum the Effort property.
 If SKIP-DONE is non-nil done headings report an effort of 0.  If
@@ -846,16 +820,10 @@ If EDIT is non-nil then edit the resulting trigger with
 (add-hook 'org-agenda-finalize-hook #'pjones:org-agenda-delete-empty-blocks)
 (add-hook 'org-mode-hook #'org-appear-mode)
 (add-hook 'org-mode-hook #'org-bulletproof-mode)
+(add-hook 'org-mode-hook #'org-clock-dbus-mode)
 (add-hook 'org-mode-hook #'org-edna-mode)
 (add-hook 'org-mode-hook #'org-modern-mode)
 (add-hook 'org-mode-hook #'org-num-mode)
-
-(let ((hooks
-       '(org-clock-in-hook
-         org-clock-out-hook
-         org-clock-cancel-hook)))
-  (dolist (hook hooks)
-    (add-hook hook #'pjones:org-clock-update-dbus)))
 
 ;;; org-conf.el ends here
 
