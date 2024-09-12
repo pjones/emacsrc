@@ -66,6 +66,7 @@ Declared here to avoid compiler warnings.")
 
  ;; Gnus Message:
  '(gnus-gcc-mark-as-read t)
+ '(gnus-gcc-externalize-attachments 'all)
  '(gnus-message-replysign t)
  '(gnus-message-replyencrypt t)
  '(gnus-message-replysignencrypted t)
@@ -269,10 +270,6 @@ returned by `gnus-group-get-parameter'.  It does show up in
      (interactive)
      (gnus-group-jump-to-group ,group)))
 
-(defun pjones:gnus-demon-init ()
-  "Prepare the Gnus Demon."
-  (gnus-demon-add-handler 'gnus-demon-scan-mail 2 30))
-
 (defun pjones:gnus-summary-header-line ()
   "Set `header-line-format' for `gnus-summary-mode'."
   (setq header-line-format
@@ -324,8 +321,6 @@ returned by `gnus-group-get-parameter'.  It does show up in
 (add-hook 'gnus-group-mode-hook #'hl-line-mode)
 (add-hook 'gnus-group-mode-hook #'pjones:gnus-group-mode-hook)
 (add-hook 'gnus-message-setup-hook 'mml-secure-message-sign)
-(add-hook 'gnus-started-hook #'gnus-delay-initialize)
-(add-hook 'gnus-started-hook #'pjones:gnus-demon-init)
 (add-hook 'gnus-summary-mode-hook #'hl-line-mode)
 (add-hook 'gnus-summary-mode-hook #'pjones:gnus-summary-header-line)
 (add-hook 'gnus-summary-mode-hook #'pjones:gnus-summary-mode-hook)
