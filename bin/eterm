@@ -45,7 +45,7 @@ if [ $# -gt 0 ]; then
   exit 1
 fi
 
-e -c -- \
+e -- \
   --eval "(require 'vterm)" \
   --eval "$option_funcall" \
   >/dev/null

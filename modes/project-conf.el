@@ -8,7 +8,7 @@
 
 (declare-function magit-project-status "magit-extras")
 (declare-function magit-file-dispatch "magit-files")
-(declare-function vterm "vterm")
+(declare-function vterm--internal "vterm")
 
 (defun pjones:project-vterm ()
   "Start a `vterm' for the current project.
@@ -19,7 +19,7 @@ Ensures that the buffer name doesn't change so it can be found again."
          (vterm-buffer (get-buffer default-project-vterm-name)))
     (if (and vterm-buffer (not current-prefix-arg))
         (pop-to-buffer vterm-buffer)
-      (vterm current-prefix-arg)
+      (vterm--internal #'pop-to-buffer current-prefix-arg)
       ;; Keep my vterm code from overriding the new buffer name:
       (setq-local vterm-buffer-name-string nil)
       (rename-buffer (generate-new-buffer-name default-project-vterm-name)))))

@@ -62,12 +62,24 @@ its display."
 (defvar pjones:modes-dedicated-to-frames
   '(comint-mode
     compilation-mode
-    haskell-interactive-mode)
+    haskell-interactive-mode
+    rg-mode
+    vterm-mode
+    "\\*vterm")
   "Modes that are displayed in their own frame.
 
-When displaying these buffers, pop open a new frame.  When a
-different buffer is being displayed, try to find a different
-frame for it.")
+When displaying these buffers, always open a new dedicated frame.")
+
+(defvar pjones:modes-sharing-frames
+  '(grep-mode
+    help-mode
+    rg-mode
+    shell-mode)
+  "Modes that are displayed in their own frame.
+
+When displaying these buffers, try to use an existing frame with the
+same mode, or if one doesn't exist, pop open a new frame.")
+
 
 (defvar pjones:dedicated-frame-exceptions
   '(" \\*transient\\*")
@@ -106,19 +118,22 @@ frame for it.")
 
  ;; Select a window for a buffer to be shown in:
  '(display-buffer-alist
-   `(;; Buffers that must not be displayed in the current frame:
-     (,(pjones:selected-buffer-conditions
-        pjones:modes-dedicated-to-frames
-        pjones:dedicated-frame-exceptions)
-      (display-buffer-reuse-window
-       display-buffer-reuse-mode-window
-       display-buffer-use-some-frame
-       display-buffer-pop-up-frame)
-      (reusable-frames . visible))
-
-     ;; Buffers that should pop out into a new frame:
+   `(;; Buffers that should pop out into a new frame and are not
+     ;; shared with other buffers that have the same mode:
      (,(pjones:buffer-conditions
         pjones:modes-dedicated-to-frames)
+      (display-buffer-reuse-window
+       display-buffer-pop-up-frame)
+      (reusable-frames . visible)
+      (dedicated . t)
+      (pop-up-frame-parameters
+       . ((unsplittable . t)
+          (name . "popup"))))
+
+     ;; Buffers that should pop out into a new frame that is shared
+     ;; with other buffers with the same mode.:
+     (,(pjones:buffer-conditions
+        pjones:modes-sharing-frames)
       (display-buffer-reuse-window
        display-buffer-reuse-mode-window
        display-buffer-pop-up-frame)
@@ -128,6 +143,17 @@ frame for it.")
        . ((unsplittable . t)
           (no-focus-on-map . t)
           (name . "popup"))))
+
+     ;; Buffers that must not be displayed in the current frame:
+     (,(pjones:selected-buffer-conditions
+        (append pjones:modes-sharing-frames
+                pjones:modes-dedicated-to-frames)
+        pjones:dedicated-frame-exceptions)
+      (display-buffer-reuse-window
+       display-buffer-reuse-mode-window
+       display-buffer-use-some-frame
+       display-buffer-pop-up-frame)
+      (reusable-frames . visible))
 
      ;; Buffers that should split the entire frame:
      (,(pjones:buffer-conditions
@@ -153,11 +179,7 @@ frame for it.")
           "\\*magit-.*popup"
           "\\*Occur\\*"
           "\\*transient"
-          grep-mode
-          help-mode
-          pdf-outline-buffer-mode
-          rg-mode
-          shell-mode))
+          pdf-outline-buffer-mode))
       (display-buffer-reuse-window
        display-buffer-reuse-mode-window
        display-buffer-in-direction)
