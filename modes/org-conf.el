@@ -22,6 +22,8 @@
 (declare-function org-attach-url "org-attach")
 (declare-function org-bookmark-jump-unhide "org")
 (declare-function org-bulletproof-mode "org-bulletproof")
+(declare-function org-capture-ref-get-bibtex-field "org-capture-ref")
+(declare-function org-capture-ref-process-capture "org-capture-ref")
 (declare-function org-clock-dbus-mode "org-clock-dbus")
 (declare-function org-clock-sum-current-item "org-clock")
 (declare-function org-clocking-p "org-clock")
@@ -309,6 +311,12 @@ If TIME is nil then use the current time."
       (file ,org-default-notes-file)
       "* %:description\n\n  %:link\n\n  %i"
       :immediate-finish t
+      :empty-lines 1)
+     ("b" "Bibliography Link" entry
+      (file+olp ,(concat pjones:org-notes-directory "bib/bibliography.org") "Inbox")
+      (file ,(concat pjones:org-notes-directory "templates/org/bibliography.org"))
+      :hook pjones:org-capture-ref-process
+      :immediate-finish t
       :empty-lines 1)))
 
  ;; Preview control (more below):
@@ -442,6 +450,16 @@ If TIME is nil then use the current time."
       (python . t)))
 
 (push '(org-element-cache) warning-suppress-types)
+
+(defun pjones:org-capture-ref-process ()
+  "Prepare a bibliography entry."
+  (require 'org-capture-ref)
+  (org-capture-ref-process-capture))
+
+(defun pjones:org-capture-ref-bibtex ()
+  "Return the BibTex string for use in a source block."
+  (let ((bibtex (org-capture-ref-get-bibtex-field :bibtex-string)))
+    (s-replace-regexp "^" "     " bibtex t)))
 
 (defun pjones:org-mode-hook ()
   "Hook to hack `org-mode'."
