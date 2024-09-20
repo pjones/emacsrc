@@ -96,6 +96,7 @@ emacsWithOverrides.emacsWithPackages (epkgs: with epkgs; [
   magit-annex # Control git-annex from Magit
   marginalia # Enrich existing commands with completion annotations
   markdown-mode # Major mode for Markdown-formatted text
+  mastodon # Emacs client for fediverse servers that implement the Mastodon API.
   mermaid-mode # Emacs major mode for working with mermaid graphs
   minions # A minor-mode menu for the mode line
   nix-mode # Major mode for editing .nix files
