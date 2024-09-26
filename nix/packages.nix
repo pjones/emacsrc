@@ -36,8 +36,6 @@ let
       pname = "persid";
       src = inputs.persid;
     };
-
-    telega = update super.telega inputs.telega;
   });
 in
 # Emacs package list:
@@ -139,7 +137,6 @@ emacsWithOverrides.emacsWithPackages (epkgs: with epkgs; [
   sage-shell-mode # A front-end for Sage Math
   scad-mode # A major mode for editing OpenSCAD code
   separedit # Edit comment or string/docstring or code
-  telega # Telegram client (unofficial)
   treesit-grammars.with-all-grammars # For use with tree-sitter
   tron-legacy-theme # Original retro-futuristic theme inspired by Tron: Legacy
   typescript-mode # Major mode for editing typescript
