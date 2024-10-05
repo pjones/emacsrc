@@ -14,6 +14,7 @@
   "Start a `vterm' for the current project.
 Ensures that the buffer name doesn't change so it can be found again."
   (interactive)
+  (require 'vterm)
   (let* ((default-directory (project-root (project-current t)))
          (default-project-vterm-name (project-prefixed-buffer-name "vterm"))
          (vterm-buffer (get-buffer default-project-vterm-name)))
