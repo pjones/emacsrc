@@ -33,6 +33,7 @@
  '(mouse-autoselect-window nil)
  '(mouse-yank-at-point t)
  '(prettify-symbols-unprettify-at-point 'right-edge)
+ '(save-interprogram-paste-before-kill t)
  '(save-place-file (concat user-emacs-directory "places"))
  '(show-paren-context-when-offscreen 'overlay)
  '(show-paren-when-point-inside-paren t)
