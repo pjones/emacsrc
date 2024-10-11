@@ -103,7 +103,8 @@ same mode, or if one doesn't exist, pop open a new frame.")
  '(display-buffer-base-action
    '((display-buffer-reuse-window
       display-buffer-reuse-mode-window
-      display-buffer-pop-up-window)) . nil)
+      display-buffer-pop-up-window
+      display-buffer-pop-up-frame)) . nil)
 
  ;; Ensure that the current frame is used to display server buffers.
  ;; NOTE: This might not be necessary now that I removed an older
@@ -122,9 +123,7 @@ same mode, or if one doesn't exist, pop open a new frame.")
      ;; shared with other buffers that have the same mode:
      (,(pjones:buffer-conditions
         pjones:modes-dedicated-to-frames)
-      (display-buffer-reuse-window
-       display-buffer-pop-up-frame)
-      (reusable-frames . visible)
+      (display-buffer-pop-up-frame)
       (dedicated . t)
       (pop-up-frame-parameters
        . ((unsplittable . t)
@@ -151,7 +150,6 @@ same mode, or if one doesn't exist, pop open a new frame.")
         pjones:dedicated-frame-exceptions)
       (display-buffer-reuse-window
        display-buffer-reuse-mode-window
-       display-buffer-use-some-frame
        display-buffer-pop-up-frame)
       (reusable-frames . visible))
 
