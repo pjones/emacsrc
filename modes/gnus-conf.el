@@ -129,7 +129,13 @@ Declared here to avoid compiler warnings.")
        (nnimap-server-port 993)
        (nnimap-authenticator plain)
        (nnimap-stream tls)
-       (nnmail-expiry-target "nnimap+Devalot:Trash"))))
+       (nnmail-expiry-target "nnimap+Devalot:Trash"))
+     (nnimap "Tuebingen"
+       (nnimap-address "mailserv.uni-tuebingen.de")
+       (nnimap-server-port 993)
+       (nnimap-authenticator plain)
+       (nnimap-stream tls)
+       (nnmail-expiry-target "nnimap+Tuebingen:Mail/trash"))))
 
  `(gnus-posting-styles
    '((".*"
@@ -148,7 +154,15 @@ Declared here to avoid compiler warnings.")
       (address (with-current-buffer gnus-article-buffer
                  (message-fetch-field "to"))))
      ((header "to" "freerangebits")
-      (signature :file "freerangebits"))))
+      (signature :file "freerangebits"))
+     ("Tuebingen"
+      (name "Peter J. Jones")
+      (address ,(concat "peter.jones" "@" "uni-tuebingen.de"))
+      (signature :file "tuebingen")
+      (eval (setq gnus-message-archive-group "nnimap+Tuebingen:Mail/sent"
+                  smtpmail-smtp-server "smtpserv.uni-tuebingen.de"
+                  smtpmail-smtp-service 587
+                  smtpmail-stream-type 'starttls)))))
 
  '(gnus-parameters
    '(("^nnimap\\+\\w+:\\(.+\\)$"
@@ -245,12 +259,15 @@ returned by `gnus-group-get-parameter'.  It does show up in
      ;; If group has a : remove the trailing word with
      ;; gnus-newsgroup-name.
      (let ((dest
-            (if (s-matches-p ":" gnus-newsgroup-name)
-                (s-replace-regexp
-                 ":.*$"
-                 (concat ":" ,group)
-                 gnus-newsgroup-name t)
-              ,group)))
+            (cond
+             ((and (string= ,group "Trash") nnmail-expiry-target)
+              nnmail-expiry-target)
+             ((s-matches-p ":" gnus-newsgroup-name)
+              (s-replace-regexp
+               ":.*$"
+               (concat ":" ,group)
+               gnus-newsgroup-name t))
+             (t ,group))))
        (gnus-summary-move-article n dest select-method action))))
 
 (defmacro pjones:gnus-summary-reverse-sort-by (func)
