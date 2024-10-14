@@ -157,15 +157,16 @@ If TIME is nil then use the current time."
  '(org-show-entry-below t)
 
  ;; Following Links
- '(org-file-apps (quote ((auto-mode       . emacs)
-                         ("\\.mm\\'"      . default)
-                         ("\\.x?html?\\'" . default)
-                         ("\\.mp4\\'"     . "vlc %s")
-                         ("\\.m4v\\'"     . "vlc %s")
-                         ("\\.mkv\\'"     . "vlc %s")
-                         ("\\.docx\\'"    . "libreoffice %s")
-                         ("\\.xlsx\\'"    . "libreoffice %s")
-                         ("\\.pages\\'"   . "libreoffice %s"))))
+ '(org-file-apps '((auto-mode       . emacs)
+                   ("\\.docx\\'"    . "libreoffice %s")
+                   ("\\.m4v\\'"     . "vlc %s")
+                   ("\\.mkv\\'"     . "vlc %s")
+                   ("\\.mm\\'"      . default)
+                   ("\\.mp4\\'"     . "vlc %s")
+                   ("\\.pages\\'"   . "libreoffice %s")
+                   ("\\.webm\\'"    . "vlc %s")
+                   ("\\.x?html?\\'" . default)
+                   ("\\.xlsx\\'"    . "libreoffice %s")))
 
  '(org-link-file-path-type 'relative)
  '(org-link-frame-setup
