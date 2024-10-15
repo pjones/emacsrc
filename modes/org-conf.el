@@ -321,7 +321,7 @@ If TIME is nil then use the current time."
       :empty-lines 1)))
 
  ;; Preview control (more below):
- '(org-preview-latex-default-process 'imagemagick)
+ '(org-preview-latex-default-process 'dvisvgm)
 
  ;; Stuff for exporting:
  '(org-export-with-smart-quotes t)
@@ -335,7 +335,7 @@ If TIME is nil then use the current time."
  '(org-format-latex-options
    '(:foreground default
      :background default
-     :scale 1.5
+     :scale 1.0
      :html-foreground "Black"
      :html-background "Transparent"
      :html-scale 1.0
@@ -436,8 +436,8 @@ If TIME is nil then use the current time."
 
 ;; Correctly generate LaTeX previews:
 (plist-put
- (cdr (assq 'imagemagick org-preview-latex-process-alist))
- :latex-compiler '("xelatex -interaction nonstopmode -output-directory %o %f"))
+ (cdr (assq 'dvisvgm org-preview-latex-process-alist))
+ :latex-compiler '("lualatex --output-format=dvi --interaction nonstopmode --output-directory %o %f"))
 
 (custom-set-faces
  '(org-block ((t (:background nil))))
