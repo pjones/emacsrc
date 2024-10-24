@@ -25,6 +25,15 @@ let
       exec = "org-protocol %u";
       mimeTypes = [ "x-scheme-handler/org-protocol" ];
     };
+
+    emailto = pkgs.makeDesktopItem {
+      name = "emailto";
+      desktopName = "Mail to Emacs";
+      genericName = "Use Emacs to send mail";
+      icon = "emacs";
+      exec = "emailto %u";
+      mimeTypes = [ "x-scheme-handler/mailto" ];
+    };
   };
 in
 {
