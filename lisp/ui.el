@@ -6,7 +6,15 @@
 ;;
 ;;; Code:
 
+(require 'dbus)
+
 (declare-function consult-theme "consult")
+
+(defvar pjones:dark-theme 'ef-duo-dark
+  "Default dark theme.")
+
+(defvar pjones:light-theme 'ef-duo-light
+  "Default light theme.")
 
 (defvar pjones:after-theme-change-hook nil
   "Hook run after changing themes.")
@@ -125,6 +133,21 @@ If PREV is non-nil go to the previous theme."
   (interactive)
   (pjones:theme-next t))
 
+(defun pjones:theme-from-dbus (value)
+  "Change the theme based on VALUE from dbus."
+  (while (listp value) (setq value (car value)))
+  (cond
+   ((equal value '1)
+    (pjones:load-theme pjones:dark-theme))
+   ((equal value 'prefer-dark)
+    (pjones:load-theme pjones:dark-theme))
+   ((equal value '2)
+    (pjones:load-theme pjones:light-theme))
+   ((equal value 'prefer-light)
+    (pjones:load-theme pjones:light-theme))
+   (t
+    (pjones:load-theme pjones:dark-theme))))
+
 ;; Run my theme hooks:
 (advice-add
  #'load-theme :after
@@ -228,8 +251,25 @@ The mode construct list is then returned."
 
 ;; Hooks:
 (add-hook 'after-init-hook
-  (defun pjones:set-initial-theme ()
-    (pjones:load-theme 'ef-duo-dark)))
+(defun pjones:set-initial-theme ()
+  "Set the theme on start up."
+  (dbus-call-method-asynchronously
+   :session "org.freedesktop.portal.Desktop"
+   "/org/freedesktop/portal/desktop"
+   "org.freedesktop.portal.Settings"
+   "Read"
+   #'pjones:theme-from-dbus
+   "org.freedesktop.appearance"
+   "color-scheme")
+  (dbus-register-signal
+   :session "org.freedesktop.portal.Desktop"
+   "/org/freedesktop/portal/desktop"
+   "org.freedesktop.portal.Settings"
+   "SettingChanged"
+   (lambda (path var value)
+     (when (and (string-equal path "org.freedesktop.appearance")
+                (string-equal var "color-scheme"))
+       (pjones:theme-from-dbus value))))))
 
 (add-hook 'after-init-hook #'pjones:configure-new-frame)
 (add-hook 'after-make-frame-functions #'pjones:configure-new-frame)
