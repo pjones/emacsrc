@@ -495,7 +495,7 @@ If TIME is nil then use the current time."
     (org-back-to-heading)
     (org-overview)
     (org-fold-show-set-visibility 'tree)
-    (org-fold-show-entry)))
+    (org-fold-show-children)))
 
 (defun pjones:org-hide-all ()
   "Close all headings, move to bob."
