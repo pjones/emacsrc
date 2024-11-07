@@ -14,7 +14,7 @@ main() {
   e -ws "$option_server" -- --eval "(require 'org)"
 
   # Now send the actual message:
-  e -ws "$option_server" -- "$@"
+  e -cws "$option_server" -- "$@"
 }
 
 ################################################################################

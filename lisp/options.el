@@ -15,6 +15,8 @@
  '(epa-file-encrypt-to "4D0CD0756F1B8B9D3DCD0CAAE1CF584F79D0D3DC")
  '(inhibit-eol-conversion t)
  '(make-backup-files nil)
+ '(safe-local-variable-values
+   '((eval add-hook 'after-save-hook #'org-babel-tangle nil t)))
  '(server-client-instructions nil)
  '(vc-follow-symlinks t)) ; Don't warn prompt me about symlinks!
 
