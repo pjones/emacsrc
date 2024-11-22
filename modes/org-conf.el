@@ -14,6 +14,10 @@
 (require 's)
 (require 'warnings)
 
+;; These autoloads are missing from their respective packages:
+(autoload 'org-capture-ref-get-bibtex-field "org-capture-ref")
+(autoload 'org-capture-ref-process-capture "org-capture-ref")
+
 ;; Silence compiler warnings
 (declare-function consult-org-heading "consult")
 (declare-function org-appear-mode "org-appear")
@@ -22,8 +26,6 @@
 (declare-function org-attach-url "org-attach")
 (declare-function org-bookmark-jump-unhide "org")
 (declare-function org-bulletproof-mode "org-bulletproof")
-(declare-function org-capture-ref-get-bibtex-field "org-capture-ref")
-(declare-function org-capture-ref-process-capture "org-capture-ref")
 (declare-function org-clock-dbus-mode "org-clock-dbus")
 (declare-function org-clock-sum-current-item "org-clock")
 (declare-function org-clocking-p "org-clock")
@@ -303,6 +305,8 @@ If TIME is nil then use the current time."
  '(org-refile-allow-creating-parent-nodes t)
  '(org-log-refile (quote time))
  '(org-capture-bookmark nil)
+ '(org-capture-ref-capture-template nil)
+ '(org-capture-ref-headline-tags nil) ; Fix a bug in org-capture-ref
  '(org-capture-templates
    `(("i" "Capture to Inbox" entry
       (file ,org-default-notes-file)
@@ -316,7 +320,6 @@ If TIME is nil then use the current time."
      ("b" "Bibliography Link" entry
       (file+olp ,(concat pjones:org-notes-directory "bib/bibliography.org") "Inbox")
       (file ,(concat pjones:org-notes-directory "templates/org/bibliography.org"))
-      :hook pjones:org-capture-ref-process
       :immediate-finish t
       :empty-lines 1)))
 
@@ -452,15 +455,10 @@ If TIME is nil then use the current time."
 
 (push '(org-element-cache) warning-suppress-types)
 
-(defun pjones:org-capture-ref-process ()
-  "Prepare a bibliography entry."
-  (require 'org-capture-ref)
-  (org-capture-ref-process-capture))
-
 (defun pjones:org-capture-ref-bibtex ()
   "Return the BibTex string for use in a source block."
   (let ((bibtex (org-capture-ref-get-bibtex-field :bibtex-string)))
-    (s-replace-regexp "^" "     " bibtex t)))
+    (s-replace-regexp "^" "     " (or bibtex "MISSING") t)))
 
 (defun pjones:org-mode-hook ()
   "Hook to hack `org-mode'."
