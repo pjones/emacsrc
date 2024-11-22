@@ -299,7 +299,7 @@ If TIME is nil then use the current time."
             ((org-agenda-view-columns-initially t))))))
 
  ;; Stuff for org-capture and org-refile:
- '(org-refile-targets '((org-agenda-files :maxlevel . 3)))
+ '(org-refile-targets '((nil :maxlevel . 3) (org-agenda-files :maxlevel . 3)))
  '(org-default-notes-file (concat pjones:org-notes-directory "gtd/inbox.org"))
  '(org-refile-use-outline-path t)
  '(org-refile-allow-creating-parent-nodes t)
