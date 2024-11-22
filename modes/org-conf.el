@@ -583,13 +583,19 @@ ARG is the number of headings to move."
 When HERE is non-nil, create a heading after point."
   (interactive "P")
   (let ((org-insert-heading-respect-content
-         (not (or here (and (org-at-heading-p) (bolp))))))
-    (if (or here (org-at-heading-p)) (org-insert-heading)
+         (not (or here (and (org-at-heading-p) (bolp)))))
+        (insert-fn (lambda (mark-todo)
+                     (if mark-todo
+                         (org-insert-todo-heading '(4) t)
+                       (org-insert-heading)))))
+    (if (or here (org-at-heading-p))
+        (funcall insert-fn (org-get-todo-state))
       (org-back-to-heading)
-      (end-of-line)
-      (org-insert-heading)))
-  (when (org--blank-before-heading-p)
-    (pjones:ensure-blank-lines)))
+      (let ((mark-todo (org-get-todo-state)))
+        (end-of-line)
+        (funcall insert-fn mark-todo)))
+    (when (org--blank-before-heading-p)
+      (pjones:ensure-blank-lines))))
 
 (defun pjones:org-insert-item (checkbox)
   "Insert a new item.
@@ -599,8 +605,11 @@ item that already has a checkbox, then CHECKBOX means the opposite.
 This replaces `org-insert-item' which doesn't work unless there's an
 existing item.  This version works on headings too."
   (interactive "P")
-  (when (org-at-item-checkbox-p)
-    (setq checkbox (not checkbox)))
+  (save-excursion
+    (when (not (org-at-item-p))
+      (org-backward-element))
+    (when (org-at-item-checkbox-p)
+      (setq checkbox (not checkbox))))
   (unless (org-insert-item checkbox)
     (org-back-to-heading)
     (org-fold-show-subtree)
