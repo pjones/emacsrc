@@ -10,10 +10,10 @@
 
 (declare-function consult-theme "consult")
 
-(defvar pjones:dark-theme 'ef-duo-dark
+(defvar pjones:dark-theme 'modus-vivendi-deuteranopia
   "Default dark theme.")
 
-(defvar pjones:light-theme 'ef-duo-light
+(defvar pjones:light-theme 'modus-operandi-deuteranopia
   "Default light theme.")
 
 (defvar pjones:after-theme-change-hook nil

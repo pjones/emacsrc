@@ -97,6 +97,7 @@ emacsWithOverrides.emacsWithPackages (epkgs: with epkgs; [
   mastodon # Emacs client for fediverse servers that implement the Mastodon API.
   mermaid-mode # Emacs major mode for working with mermaid graphs
   minions # A minor-mode menu for the mode line
+  modus-themes # Highly accessible themes for GNU Emacs
   nix-mode # Major mode for editing .nix files
   no-littering # help keeping ~/.emacs.d clean
   noccur # Run multi-occur on project/dired files
