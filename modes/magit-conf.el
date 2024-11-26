@@ -7,18 +7,8 @@
 (require 'magit)
 (require 'with-editor)
 
-(defun pjones:magit-repository-directories ()
-  "Generate a directory list for `magit-list-repositories'."
-  (let ((base (expand-file-name "~/src"))
-        (ls (lambda (dir) (directory-files dir t "^[^.]"))))
-    (-map (lambda (dir) (cons dir 0))
-          (-filter
-           (lambda (dir) (file-directory-p (concat dir "/.git/")))
-           (-flatten (-map ls (funcall ls base)))))))
-
 (custom-set-variables
  '(magit-show-long-lines-warning nil)
- '(magit-repository-directories (pjones:magit-repository-directories))
  '(magit-display-buffer-function 'magit-display-buffer-fullcolumn-most-v1)
  '(magit-popup-use-prefix-argument 'default)
  '(magit-status-margin '(t age magit-log-margin-width nil 18))
