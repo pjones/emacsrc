@@ -3,6 +3,6 @@
 # key: src
 # expand-env: ((yas-indent-line 'fixed))
 # --
-\`\`\`${2:$$(yas-choose-value (pjones:prog-mode-list))}
+\`\`\`${2:sh}
 $0
 \`\`\`
