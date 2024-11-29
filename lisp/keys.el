@@ -85,6 +85,7 @@ FUNC."
 (declare-function org-roam-capture "org-roam")
 (declare-function org-roam-capture "org-roam")
 (declare-function org-roam-dailies-capture-date "org-roam")
+(declare-function org-roam-dailies-capture-today "org-roam")
 (declare-function org-roam-dailies-goto-date "org-roam")
 (declare-function org-roam-node-find "org-roam")
 (declare-function org-roam-node-insert "org-roam")
@@ -138,18 +139,28 @@ FUNC."
 
 (defvar pjones:zettle-map
   (let ((map (make-sparse-keymap)))
-    (define-key map (kbd "d") #'org-roam-dailies-capture-date)
-    (define-key map (kbd "D") #'org-roam-dailies-goto-date)
+    (define-key map (kbd "C-z") #'org-roam-capture)
     (define-key map (kbd "f") #'org-roam-node-find)
     (define-key map (kbd "i") #'org-roam-node-insert)
+    (define-key map (kbd "SPC") #'org-roam-dailies-capture-date)
     (define-key map (kbd "z") #'org-roam-capture)
 
-    ;; This is a bit annoying:
-    (define-key map (kbd "s")
+    ;; Jump directly to creating a daily note for today:
+    (define-key map (kbd "d") '("org-roam-dailies-today" .
       (lambda ()
+        "Create a new daily entry for today."
         (interactive)
+        (require 'org-roam)
+        (org-roam-dailies-capture-today nil "d"))))
+
+    ;; This is a bit annoying:
+    (define-key map (kbd "s") '("org-roam-search" .
+      (lambda ()
+        "Grep through org-roam."
+        (interactive)
+        (require 'org-roam)
         (consult-org-roam-mode)
-        (consult-org-roam-search)))
+        (consult-org-roam-search))))
 
     map)
   "Key bindings for note taking.")
