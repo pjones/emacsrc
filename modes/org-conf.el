@@ -119,6 +119,7 @@ If TIME is nil then use the current time."
  '(org-bulletproof-ordered-cycle '("1." "a."))
  '(org-blank-before-new-entry '((heading . t) (plain-list-item . t)))
  '(org-catch-invisible-edits 'smart)
+ '(org-cycle-emulate-tab 'whitestart)
  '(org-log-done 'time)
  '(org-reverse-note-order nil)
  '(org-tags-column 0)
