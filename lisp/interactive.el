@@ -11,6 +11,7 @@
 (declare-function pjones:erc-freenode "../modes/erc-conf")
 (declare-function pjones:flymake-goto-next-error "../modes/flymake-conf")
 (declare-function pjones:markdown-visual-line "../modes/markdown-mode-conf")
+(declare-function pjones:vterm-frame "../modes/vterm-conf")
 
 (declare-function cl-position "cl-seq")
 (declare-function dired-rename-file "dired-aux")
@@ -139,10 +140,11 @@ When LOCAL-ONLY is non-nil, only connect to Bitlbee."
 (defun pjones:start-term ()
   "Start a new terminal buffer."
   (interactive)
+  (require 'vterm)
   (if (file-remote-p default-directory)
       (let ((default-directory (expand-file-name "~/")))
-        (call-interactively #'vterm))
-    (call-interactively #'vterm)))
+        (call-interactively #'pjones:vterm-frame))
+    (call-interactively #'pjones:vterm-frame)))
 
 (defun pjones:start-http ()
   "Create a new buffer running `http-mode'."

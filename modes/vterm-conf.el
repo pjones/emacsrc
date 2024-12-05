@@ -81,22 +81,29 @@ new title to use."
         (setq mode-name "VTerm"))
     (setq mode-name (concat "VTerm " title))))
 
-(defun pjones:vterm-quit-frame (buffer _event)
-  "Delete the frame showing BUFFER if it is dedicated."
-  (when-let ((window (and buffer (get-buffer-window buffer))))
-    (when (window-dedicated-p window)
-      (quit-window t window))))
+(defun pjones:vterm-frame ()
+  "Start a new vterm instance."
+  (interactive)
+  (let ((buffer (vterm--internal #'identity t)))
+    (with-current-buffer buffer
+      (make-frame
+       `((window-system . ,(window-system-for-display "default"))
+         (unsplittable . t)
+         (name . "popup")))
+      (set-window-dedicated-p (get-buffer-window buffer t) t))
+    buffer))
 
-(defun pjones:vterm-frame (&optional cmd)
-  "Start a new vterm instance optionally running CMD."
-  (let ((vterm-shell (or cmd vterm-shell))
-        (vterm-buffer-name-string (or cmd vterm-buffer-name-string)))
-    (with-current-buffer (vterm t)
-      (when cmd (vterm--set-title cmd)))))
+(defun pjones:vterm-frame-cmd (cmd)
+  "Start a new vterm instance running CMD."
+  (let ((vterm-shell cmd)
+        (vterm-buffer-name-string cmd)
+        (vterm-kill-buffer-on-exit nil))
+    (with-current-buffer (pjones:vterm-frame)
+      (setq-local vterm-kill-buffer-on-exit nil)
+      (vterm--set-title cmd))))
 
 (advice-add 'vterm--set-title :around #'pjones:vterm--set-title)
 (add-hook 'vterm-mode-hook #'pjones:vterm-mode-hook)
 (add-hook 'vterm-copy-mode-hook #'pjones:vterm-copy-mode-hook)
-(add-to-list 'vterm-exit-functions #'pjones:vterm-quit-frame)
 
 ;;; vterm-conf.el ends here

@@ -62,10 +62,8 @@ its display."
 (defvar pjones:modes-dedicated-to-frames
   '(comint-mode
     compilation-mode
-    haskell-interactive-mode
     rg-mode
-    vterm-mode
-    "\\*vterm")
+    haskell-interactive-mode)
   "Modes that are displayed in their own frame.
 
 When displaying these buffers, always open a new dedicated frame.")
@@ -105,6 +103,11 @@ same mode, or if one doesn't exist, pop open a new frame.")
       display-buffer-reuse-mode-window
       display-buffer-pop-up-window
       display-buffer-pop-up-frame)) . nil)
+
+ '(display-comint-buffer-action
+   '((display-buffer-reuse-window
+      display-buffer-same-window)
+     (reusable-frames . visible)))
 
  ;; Ensure that the current frame is used to display server buffers.
  ;; NOTE: This might not be necessary now that I removed an older

@@ -23,7 +23,7 @@ EOF
 while getopts "he:" o; do
   case "${o}" in
   e)
-    option_funcall="(pjones:vterm-frame \"${OPTARG//\"/}\")"
+    option_funcall="(pjones:vterm-frame-cmd \"${OPTARG//\"/}\")"
     ;;
 
   h)
