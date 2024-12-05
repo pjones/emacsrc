@@ -62,7 +62,6 @@ its display."
 (defvar pjones:modes-dedicated-to-frames
   '(comint-mode
     compilation-mode
-    rg-mode
     haskell-interactive-mode)
   "Modes that are displayed in their own frame.
 
