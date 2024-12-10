@@ -18,6 +18,13 @@ let
 
   # Package overrides:
   emacsWithOverrides = (emacsPackagesFor emacs).overrideScope' (self: super: {
+    nextflow-mode = emacs.pkgs.elpaBuild {
+      inherit version;
+      pname = "nextflow-mode";
+      src = "${inputs.nextflow-mode}/nextflow-mode.el";
+      packageRequires = [ super.groovy-mode ];
+    };
+
     org-capture-ref = emacs.pkgs.trivialBuild {
       inherit version;
       pname = "org-capture-ref";
@@ -98,6 +105,7 @@ emacsWithOverrides.emacsWithPackages (epkgs: with epkgs; [
   mermaid-mode # Emacs major mode for working with mermaid graphs
   minions # A minor-mode menu for the mode line
   modus-themes # Highly accessible themes for GNU Emacs
+  nextflow-mode # Emacs major mode for Nextflow
   nix-mode # Major mode for editing .nix files
   no-littering # help keeping ~/.emacs.d clean
   noccur # Run multi-occur on project/dired files

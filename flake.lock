@@ -41,6 +41,22 @@
         "type": "github"
       }
     },
+    "nextflow-mode": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1721759515,
+        "narHash": "sha256-0pifQD7CnCLqOOILhk2EBgAsTL4Tv0rkssDzuAueEDQ=",
+        "owner": "edmundmiller",
+        "repo": "nextflow-mode",
+        "rev": "9fc162fa0fea094a6451570c4380a1268f1921af",
+        "type": "github"
+      },
+      "original": {
+        "owner": "edmundmiller",
+        "repo": "nextflow-mode",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1733120037,
@@ -114,6 +130,7 @@
       "inputs": {
         "desktop-scripts": "desktop-scripts",
         "home-manager": "home-manager",
+        "nextflow-mode": "nextflow-mode",
         "nixpkgs": "nixpkgs",
         "org-capture-ref": "org-capture-ref",
         "org-clock-dbus": "org-clock-dbus",
