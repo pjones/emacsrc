@@ -3,5 +3,7 @@
 # key: src
 # expand-env: ((yas-indent-line 'fixed))
 # --
-#+begin_src ${1:sh} :exports both$0
+#+header: :exports code
+#+header: :eval never
+#+begin_src ${1:sh} $0
 #+end_src

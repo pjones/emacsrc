@@ -449,7 +449,8 @@ If TIME is nil then use the current time."
 
 (org-babel-do-load-languages
     'org-babel-load-languages
-    '((emacs-lisp . t)
+    '((shell . t)
+      (emacs-lisp . t)
       (mermaid . t)
       (plantuml . t)
       (python . t)))
