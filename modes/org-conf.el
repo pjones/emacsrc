@@ -493,9 +493,8 @@ If TIME is nil then use the current time."
   (interactive)
   (save-excursion
     (org-back-to-heading)
-    (org-overview)
-    (org-fold-show-set-visibility 'tree)
-    (org-fold-show-children)))
+    (org-overview))
+  (org-fold-show-context 'agenda))
 
 (defun pjones:org-hide-all ()
   "Close all headings, move to bob."
