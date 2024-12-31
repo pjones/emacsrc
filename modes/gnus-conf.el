@@ -124,7 +124,7 @@ Declared here to avoid compiler warnings.")
  '(gnus-nntp-server nil)
  '(gnus-select-method '(nnnil ""))
 
- '(gnus-secondary-select-methods
+ `(gnus-secondary-select-methods
    '((nnimap "Devalot"
        (nnimap-address "imap.fastmail.com")
        (nnimap-server-port 993)
@@ -132,11 +132,12 @@ Declared here to avoid compiler warnings.")
        (nnimap-stream tls)
        (nnmail-expiry-target "nnimap+Devalot:Trash"))
      (nnimap "Tuebingen"
-       (nnimap-address "mailserv.uni-tuebingen.de")
+       (nnimap-address "imap.jonesbunch.com")
+       (nnimap-user ,(concat "peter.jones" "@" "uni-tuebingen.de"))
        (nnimap-server-port 993)
        (nnimap-authenticator plain)
        (nnimap-stream tls)
-       (nnmail-expiry-target "nnimap+Tuebingen:Mail/trash"))))
+       (nnmail-expiry-target "nnimap+Tuebingen:Trash"))))
 
  `(gnus-posting-styles
    '((".*"
@@ -160,7 +161,7 @@ Declared here to avoid compiler warnings.")
       (name "Peter J. Jones")
       (address ,(concat "peter.jones" "@" "uni-tuebingen.de"))
       (signature :file "tuebingen")
-      (eval (setq gnus-message-archive-group "nnimap+Tuebingen:Mail/sent"
+      (eval (setq gnus-message-archive-group "nnimap+Tuebingen:Sent"
                   smtpmail-smtp-server "smtpserv.uni-tuebingen.de"
                   smtpmail-smtp-service 587
                   smtpmail-stream-type 'starttls)))))
