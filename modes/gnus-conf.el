@@ -144,10 +144,7 @@ Declared here to avoid compiler warnings.")
       (name "Peter J. Jones")
       (address ,(concat "pjones" "@" "devalot.com"))
       (signature :file "devalot")
-      (eval (setq gnus-message-archive-group "nnimap+Devalot:Sent"
-                  smtpmail-smtp-server "smtp.fastmail.com"
-                  smtpmail-smtp-service 465
-                  smtpmail-stream-type 'ssl)))
+      (eval (setq gnus-message-archive-group "nnimap+Devalot:Sent")))
      ((header "to" "jonesbunch\\.com")
       (signature :file "jonesbunch")
       (address (with-current-buffer gnus-article-buffer
@@ -161,10 +158,7 @@ Declared here to avoid compiler warnings.")
       (name "Peter J. Jones")
       (address ,(concat "peter.jones" "@" "uni-tuebingen.de"))
       (signature :file "tuebingen")
-      (eval (setq gnus-message-archive-group "nnimap+Tuebingen:Sent"
-                  smtpmail-smtp-server "smtpserv.uni-tuebingen.de"
-                  smtpmail-smtp-service 587
-                  smtpmail-stream-type 'starttls)))))
+      (eval (setq gnus-message-archive-group "nnimap+Tuebingen:Sent")))))
 
  '(gnus-parameters
    '(("^nnimap\\+\\w+:\\(.+\\)$"
@@ -189,11 +183,7 @@ Declared here to avoid compiler warnings.")
       (gnus-thread-hide-subtree t))
      (":subs"
       (comment . "Sub Addrs")
-      (display . [unread]))))
-
- ;; Sending mail:
- '(message-send-mail-function #'smtpmail-send-it)
- '(smtpmail-queue-dir "~/.cache/smtpmail/queue"))
+      (display . [unread])))))
 
 ;;; Trick Gnus into applying more article treatments:
 (defvar pjones:gnus-treat-strip-trailing-space t

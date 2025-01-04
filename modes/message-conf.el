@@ -7,7 +7,6 @@
 (require 'message)
 (require 'mml)
 (require 'org-mime)
-(require 'smtpmail)
 
 (declare-function khardel-insert-email "khardel")
 
@@ -28,7 +27,8 @@
 
 (custom-set-variables
  '(message-confirm-send t)
- '(message-send-mail-function #'smtpmail-send-it)
+ '(message-send-mail-function #'message-send-mail-with-sendmail)
+ '(sendmail-program "msmtp")
  '(message-directory "~/mail")
  '(message-from-style 'angles)
  '(message-citation-line-function #'message-insert-formatted-citation-line)
