@@ -105,6 +105,7 @@ emacsWithOverrides.emacsWithPackages (epkgs: with epkgs; [
   mermaid-mode # Emacs major mode for working with mermaid graphs
   minions # A minor-mode menu for the mode line
   modus-themes # Highly accessible themes for GNU Emacs
+  mu4e # Mu4e, the mu mail user agent
   nextflow-mode # Emacs major mode for Nextflow
   nix-mode # Major mode for editing .nix files
   no-littering # help keeping ~/.emacs.d clean

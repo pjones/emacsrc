@@ -143,21 +143,18 @@ Declared here to avoid compiler warnings.")
    '((".*"
       (name "Peter J. Jones")
       (address ,(concat "pjones" "@" "devalot.com"))
-      (signature :file "devalot")
+      (signature :file "default")
       (eval (setq gnus-message-archive-group "nnimap+Devalot:Sent")))
      ((header "to" "jonesbunch\\.com")
-      (signature :file "jonesbunch")
       (address (with-current-buffer gnus-article-buffer
                  (message-fetch-field "to"))))
      ((header "to" ".")
       (address (with-current-buffer gnus-article-buffer
                  (message-fetch-field "to"))))
-     ((header "to" "freerangebits")
-      (signature :file "freerangebits"))
      ("Tuebingen"
       (name "Peter J. Jones")
       (address ,(concat "peter.jones" "@" "uni-tuebingen.de"))
-      (signature :file "tuebingen")
+      (signature :file "uni-tuebingen.com")
       (eval (setq gnus-message-archive-group "nnimap+Tuebingen:Sent")))))
 
  '(gnus-parameters

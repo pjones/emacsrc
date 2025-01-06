@@ -34,7 +34,6 @@
  '(message-citation-line-function #'message-insert-formatted-citation-line)
  '(message-citation-line-format "On %a, %b %d %Y, %N wrote:")
  '(message-cite-reply-position 'traditional)
- '(message-dont-reply-to-names '("pjones@pmade.com" "pmadeinc@gmail.com"))
  '(message-kill-buffer-on-exit t)
  '(message-signature-directory "~/notes/signatures/")
  '(mml-secure-method "pgpmime")
@@ -43,8 +42,8 @@
  '(mml-secure-smime-encrypt-to-self t)
  `(mml-secure-key-preferences
    '((OpenPGP
-      (sign ("pjones@devalot.com" ,epa-file-encrypt-to))
-      (encrypt ("pjones@devalot.com" ,epa-file-encrypt-to))))))
+      (sign (,user-mail-address ,epa-file-encrypt-to))
+      (encrypt (,user-mail-address ,epa-file-encrypt-to))))))
 
 ;; A few extra key bindings:
 (let ((map message-mode-map))
