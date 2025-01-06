@@ -220,13 +220,8 @@ The mode construct list is then returned."
 (defun pjones:mode-line-buffer ()
   "Return a `mode-line-format' component for the buffer name."
   (propertize "%b" 'face
-              (if (or (derived-mode-p 'comint-mode)
-                      (memq major-mode '(vterm-mode
-                                         lisp-interaction-mode
-                                         org-agenda-mode))
-                      (not (buffer-modified-p)))
-                  'mode-line-buffer-id
-                'error)))
+              (if (and (buffer-file-name) (buffer-modified-p)) 'error
+                'mode-line-buffer-id)))
 
 ;; Mode line format:
 (setq-default
