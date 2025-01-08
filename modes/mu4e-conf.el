@@ -133,16 +133,24 @@ The JSON document comes from my tilde project."
          (dir (file-name-nondirectory maildir)))
     (concat prefix "/" dir)))
 
+;; FIXME: Remove this after upgrading to 1.12.8:
+(unless (boundp 'mu4e-trash-without-flag)
+  (setf (plist-get (alist-get 'trash mu4e-marks) :action)
+        (lambda (docid _msg target)
+          (mu4e--server-move
+           docid
+           (mu4e--mark-check-target target) "-N")))) ; Instead of "+T-N")
+
 ;; General Settings:
 (custom-set-variables
  '(mu4e-contexts (pjones:mu4e-contexts))
  '(mu4e-context-policy 'pick-first)
  '(mu4e-compose-context-policy 'ask)
 
+ '(mu4e-get-mail-command "mbsync --all")
  '(mu4e-main-hide-personal-addresses t)
- '(mu4e-hide-index-messages t)
+ '(mu4e-trash-without-flag t) ; Move to trash without deleting.
  '(mu4e-change-filenames-when-moving t)
- '(mu4e-use-fancy-chars nil)
  '(mu4e-date-format-long "%c")
  '(mu4e-attachment-dir "~/download")
  '(mu4e-completing-read-function 'completing-read)
