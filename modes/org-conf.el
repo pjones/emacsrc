@@ -396,6 +396,30 @@ If TIME is nil then use the current time."
       <a title=\"Topics\" href=\"%s\">🌎</a>
       <a title=\"Home\" href=\"%s\">🏠</a>
       </div>")
+     ("bib"
+      :base-directory ,(concat pjones:org-notes-directory "bib/")
+      :base-extension "org"
+      :publishing-function org-html-publish-to-html
+      :publishing-directory ,(concat pjones:org-publish-directory "bib/")
+      :with-author nil
+      :with-date nil
+      :section-numbers t
+      :with-broken-links t
+      :with-toc 2
+      :archived-trees nil
+      :html-postamble nil
+      :html-link-home "../wiki/index.html"
+      :html-link-up "../wiki/sitemap.html"
+      :html-home/up-format
+      "<div id=\"org-div-home-and-up\">
+      <a title=\"Topics\" href=\"%s\">🌎</a>
+      <a title=\"Home\" href=\"%s\">🏠</a>
+      </div>")
+     ("bib-static"
+      :base-directory ,(concat pjones:org-notes-directory "bib/")
+      :base-extension "bib"
+      :publishing-directory ,(concat pjones:org-publish-directory "bib/")
+      :publishing-function org-publish-attachment)
      ("wiki"
       :base-directory ,(concat pjones:org-notes-directory "wiki/")
       :base-extension "org"
@@ -430,7 +454,11 @@ If TIME is nil then use the current time."
       :publishing-directory ,(concat pjones:org-publish-directory "attachments/")
       :publishing-function org-publish-attachment)
      ("notes"
-      :components ("wiki" "gtd" "attachments")))))
+      :components ("wiki"
+                   "gtd"
+                   "bib"
+                   "bib-static"
+                   "attachments")))))
 
 ;; Custom LaTeX classes:
 (setq org-latex-classes
