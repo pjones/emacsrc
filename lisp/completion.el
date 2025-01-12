@@ -71,12 +71,6 @@ current line.  Otherwise run the completion command.  ARG is passed to
         completion-cycle-threshold completion-cycling)
     (apply #'consult-completion-in-region completion-in-region--data)))
 
-(add-hook 'after-init-hook #'global-corfu-mode)
-(add-hook 'after-init-hook #'savehist-mode)
-(add-hook 'corfu-mode-hook #'corfu-popupinfo-mode)
-(add-hook 'corfu-mode-hook #'corfu-prescient-mode)
-(add-hook 'corfu-mode-hook #'pjones:corfu-mode-hook)
-
 (setq-default completion-at-point-functions
               (list #'cape-file
                     #'cape-tex
@@ -93,6 +87,15 @@ current line.  Otherwise run the completion command.  ARG is passed to
  '(corfu-cycle t)
  '(corfu-popupinfo-delay nil)
  '(corfu-quit-no-match 'separator)
- '(corfu-scroll-margin 5))
+ '(corfu-scroll-margin 5)
+ '(savehist-file (concat user-emacs-directory
+                         (or server-name "emacs")
+                         ".history")))
+
+(add-hook 'after-init-hook #'global-corfu-mode)
+(add-hook 'after-init-hook #'savehist-mode)
+(add-hook 'corfu-mode-hook #'corfu-popupinfo-mode)
+(add-hook 'corfu-mode-hook #'corfu-prescient-mode)
+(add-hook 'corfu-mode-hook #'pjones:corfu-mode-hook)
 
 ;;; completion.el ends here
