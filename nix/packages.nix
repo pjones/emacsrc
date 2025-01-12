@@ -56,6 +56,7 @@ emacsWithOverrides.emacsWithPackages (epkgs: with epkgs; [
   clojure-mode # Major mode for Clojure code
   consult # Consulting completing-read
   consult-org-roam # Consult integration for org-roam
+  consult-recoll # recoll queries in emacs using consult
   corfu # Completion Overlay Region FUnction
   corfu-prescient # Prescient support for corfu
   csv-mode # Major mode for editing comma/char separated values

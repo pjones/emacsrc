@@ -63,6 +63,7 @@ FUNC."
 (declare-function consult-org-roam-mode "consult-org-roam")
 (declare-function consult-org-roam-search "consult-org-roam")
 (declare-function consult-outline "consult")
+(declare-function consult-recoll "consult-recoll")
 (declare-function consult-register "consult-register")
 (declare-function consult-register-load "consult-register")
 (declare-function consult-register-store "consult-register")
@@ -222,6 +223,7 @@ FUNC."
  (kbd "M-s p") #'rg-project
  (kbd "M-s r") #'consult-ripgrep
  (kbd "M-s s") #'consult-line
+ (kbd "M-s t") #'consult-recoll
  (kbd "M-s u") #'consult-focus-lines
 
  ;; Additional go-to bindings:
