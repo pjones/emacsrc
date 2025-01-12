@@ -69,6 +69,7 @@ FUNC."
 (declare-function consult-register-store "consult-register")
 (declare-function consult-ripgrep "consult")
 (declare-function consult-yank-pop "consult")
+(declare-function devdocs-lookup "devdocs")
 (declare-function embark-act "embark")
 (declare-function emms "emms")
 (declare-function emms-add-directory "emms")
@@ -239,6 +240,7 @@ FUNC."
  (kbd "C--") #'text-scale-adjust
  (kbd "C-;") #'jinx-correct
  (kbd "C-_") (lambda () (interactive) (text-scale-set 0))
+ (kbd "C-h D") #'devdocs-lookup
  (kbd "C-M-SPC") #'er/expand-region
  (kbd "C-M-z") #'zap-to-char
  (kbd "C-x C-k @") #'consult-kmacro

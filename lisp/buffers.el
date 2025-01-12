@@ -68,7 +68,8 @@ its display."
 When displaying these buffers, always open a new dedicated frame.")
 
 (defvar pjones:modes-sharing-frames
-  '(grep-mode
+  '(devdocs-mode
+    grep-mode
     help-mode
     rg-mode
     shell-mode)

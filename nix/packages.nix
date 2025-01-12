@@ -61,6 +61,7 @@ emacsWithOverrides.emacsWithPackages (epkgs: with epkgs; [
   corfu-prescient # Prescient support for corfu
   csv-mode # Major mode for editing comma/char separated values
   darkroom # Remove visual distractions and focus on writing
+  devdocs # Emacs viewer for DevDocs
   diff-hl # Highlight uncommitted changes using VC
   dired-filter # Ibuffer-like filtering for dired
   dired-narrow # Live-narrowing of search results for dired
