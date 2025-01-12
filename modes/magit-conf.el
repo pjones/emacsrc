@@ -14,7 +14,10 @@
  '(magit-status-margin '(t age magit-log-margin-width nil 18))
  '(magit-status-show-hashes-in-headers t)
  '(magit-section-initial-visibility-alist
-   '(([unpushed status] . show))))
+   '((stashes  . show)
+     (unpushed . show)
+     (unstaged . show)
+     (untracked . show))))
 
 ;; Transient settings for magit:
 (add-to-list 'transient-values '(magit-tag "--annotate" "--sign"))
