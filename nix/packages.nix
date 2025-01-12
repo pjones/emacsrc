@@ -57,6 +57,7 @@ emacsWithOverrides.emacsWithPackages (epkgs: with epkgs; [
   consult # Consulting completing-read
   consult-org-roam # Consult integration for org-roam
   corfu # Completion Overlay Region FUnction
+  corfu-prescient # Prescient support for corfu
   csv-mode # Major mode for editing comma/char separated values
   darkroom # Remove visual distractions and focus on writing
   diff-hl # Highlight uncommitted changes using VC
@@ -112,7 +113,6 @@ emacsWithOverrides.emacsWithPackages (epkgs: with epkgs; [
   noccur # Run multi-occur on project/dired files
   nov # Featureful EPUB reader mode
   ob-mermaid # Generate mermaid diagrams within Emacs org-mode babel
-  orderless # Completion style for matching regexps in any order
   org # Outline-based notes management and organizer
   org-appear # Make invisible parts of Org elements appear visible.
   org-bulletproof # Automatic bullet cycling for Org mode
@@ -134,6 +134,7 @@ emacsWithOverrides.emacsWithPackages (epkgs: with epkgs; [
   plantuml-mode # A major mode for editing PlantUML sources in Emacs
   poet-theme # An emacs theme that's well suited for modes using variable pitch
   prescient # Better sorting and filtering
+  prescient # Simple but effective sorting and filtering for Emacs
   project # Operations on the current project
   puni # Parentheses Universalistic
   purescript-mode # A PureScript editing mode
@@ -151,6 +152,7 @@ emacsWithOverrides.emacsWithPackages (epkgs: with epkgs; [
   tron-legacy-theme # Original retro-futuristic theme inspired by Tron: Legacy
   typescript-mode # Major mode for editing typescript
   vertico # VERTical Interactive COmpletion
+  vertico-prescient # Prescient support for vertico
   visual-fill # Auto-refill paragraphs without modifying the buffer
   vlf # View Large Files
   vterm # Fully-featured terminal emulator

@@ -18,10 +18,13 @@
 (declare-function corfu-popupinfo-mode "corfu-popupinfo")
 (declare-function corfu-popupinfo-scroll-down "corfu-popupinfo")
 (declare-function corfu-popupinfo-scroll-up "corfu-popupinfo")
+(declare-function corfu-prescient-mode "corfu-prescient")
 (declare-function global-corfu-mode "corfu")
-(declare-function orderless-escapable-split-on-space "orderless")
 (declare-function yas-expand "yasnippet")
+
+;; I'm not sure why this isn't auto loaded anymore :(
 (declare-function yas-maybe-expand-abbrev-key-filter "yasnippet")
+(autoload #'yas-maybe-expand-abbrev-key-filter "yasnippet")
 
 ;; What to do with the tab key.
 (defun pjones:indent-or-complete (&optional arg)
@@ -68,25 +71,10 @@ current line.  Otherwise run the completion command.  ARG is passed to
         completion-cycle-threshold completion-cycling)
     (apply #'consult-completion-in-region completion-in-region--data)))
 
-(defun pjones:orderless-escapable-split-on-space (string)
-  "Split STRING via `orderless-escapable-split-on-space' then split on slashes."
-  (flatten-tree
-   (mapcar (lambda (str)
-             (split-string str "[/-]"))
-           (orderless-escapable-split-on-space string))))
-
-(defun pjones:orderless-bang-without (pattern _index _total)
-  "Negate matches for orderless.
-PATTERN is passed to `orderless-without-literal'."
-  (cond
-   ((equal "!" pattern)
-    '(orderless-literal . ""))
-   ((string-prefix-p "!" pattern)
-    `(orderless-without-literal . ,(substring pattern 1)))))
-
 (add-hook 'after-init-hook #'global-corfu-mode)
 (add-hook 'after-init-hook #'savehist-mode)
 (add-hook 'corfu-mode-hook #'corfu-popupinfo-mode)
+(add-hook 'corfu-mode-hook #'corfu-prescient-mode)
 (add-hook 'corfu-mode-hook #'pjones:corfu-mode-hook)
 
 (setq-default completion-at-point-functions
@@ -100,12 +88,11 @@ PATTERN is passed to `orderless-without-literal'."
  '(completion-auto-select t)
  '(completion-category-defaults nil)
  '(completion-category-overrides '((file (styles . (partial-completion)))))
- '(completion-styles '(orderless partial-completion basic))
+ '(completion-styles '(prescient partial-completion basic))
  '(completions-detailed t)
  '(corfu-cycle t)
+ '(corfu-popupinfo-delay nil)
  '(corfu-quit-no-match 'separator)
- '(corfu-scroll-margin 5)
- '(orderless-component-separator #'pjones:orderless-escapable-split-on-space)
- '(orderless-style-dispatchers '(pjones:orderless-bang-without)))
+ '(corfu-scroll-margin 5))
 
 ;;; completion.el ends here

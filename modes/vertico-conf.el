@@ -12,6 +12,7 @@
 (declare-function embark-collect-completions "embark")
 (declare-function marginalia-mode "marginalia")
 (declare-function vertico-directory-delete-word "vertico-directory")
+(declare-function vertico-prescient-mode "vertico-prescient")
 
 (let ((map vertico-map))
   (define-key map (kbd "C-<return>") #'embark-act)
@@ -25,5 +26,6 @@
 
 (marginalia-mode)
 (vertico-multiform-mode)
+(vertico-prescient-mode)
 
 ;;; vertico-conf.el ends here
