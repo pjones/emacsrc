@@ -319,7 +319,8 @@ If TIME is nil then use the current time."
       :immediate-finish t
       :empty-lines 1)
      ("b" "Bibliography Link" entry
-      (file+olp ,(concat pjones:org-notes-directory "bib/bibliography.org") "Inbox")
+      (file+olp ,(concat pjones:org-notes-directory "bib/bibliography.org")
+                "Inbox" "Read Next")
       (file ,(concat pjones:org-notes-directory "templates/org/bibliography.org"))
       :immediate-finish t
       :empty-lines 1)))
@@ -329,10 +330,13 @@ If TIME is nil then use the current time."
 
  ;; Stuff for exporting:
  '(org-export-with-smart-quotes t)
+ '(org-babel-results-keyword "results")
+ '(org-plantuml-exec-mode 'plantuml)
  '(org-icalendar-include-todo t)
  '(org-html-htmlize-output-type 'css)
  '(org-html-validation-link nil)
  '(org-highlight-latex-and-related '(native))
+ '(org-latex-prefer-user-labels t)
  '(org-latex-tables-booktabs t)
  '(org-latex-listings 'minted)
  '(org-latex-compiler "xelatex")
@@ -357,6 +361,7 @@ If TIME is nil then use the current time."
    '(("" "booktabs")
      ("" "color")
      ("" "fontspec")
+     "\\setmainfont{FreeSerif}"
      ("newfloat" "minted")
      ("" "svg")
      ("" "transparent")
