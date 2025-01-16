@@ -6,9 +6,6 @@ set -eu
 set -o pipefail
 
 ################################################################################
-export EMACS_SOCKET_NAME=server
-
-################################################################################
 option_server_path="${XDG_RUNTIME_DIR:-$HOME/.cache}/emacs"
 option_start_daemon=1
 option_fresh=0
@@ -22,9 +19,11 @@ export PATH=@path@:$PATH
 
 ################################################################################
 # See if we can get the name of the server from the current workspace.
-if [ -n "${WAYLAND_DISPLAY:-}" ] || [ -n "${DISPLAY:-}" ]; then
-  if type desktop-workspace &>/dev/null; then
-    EMACS_SOCKET_NAME=$(desktop-workspace -n)
+if [ -z "${EMACS_SOCKET_NAME:-}" ]; then
+  if [ -n "${WAYLAND_DISPLAY:-}" ] || [ -n "${DISPLAY:-}" ]; then
+    if type desktop-workspace &>/dev/null; then
+      EMACS_SOCKET_NAME=$(desktop-workspace -n)
+    fi
   fi
 fi
 
@@ -111,6 +110,13 @@ done
 shift $((OPTIND - 1))
 
 ################################################################################
+# Default server name:
+if [ -z "${EMACS_SOCKET_NAME:-}" ] ||
+  [ "${EMACS_SOCKET_NAME:-}" = "1:GTD" ]; then
+  EMACS_SOCKET_NAME=server
+fi
+
+################################################################################
 if [ "$option_fresh" -eq 1 ]; then
   export EMACSLOADPATH=""
   exec emacs -q \
@@ -140,4 +146,4 @@ if [ "$option_wait" -eq 0 ]; then
   option_emacs_opts+=("--no-wait")
 fi
 
-emacsclient "${option_emacs_opts[@]}" "$@"
+exec emacsclient "${option_emacs_opts[@]}" "$@"

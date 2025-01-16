@@ -56,6 +56,9 @@ pkgs.stdenv.mkDerivation rec {
     emacsAndPackages
   ] ++ extraPackages;
 
+  # Get directly to Emacs from the outside:
+  passthru.emacs = emacsAndPackages;
+
   postInstall =
     let path = lib.makeBinPath buildInputs;
     in

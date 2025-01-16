@@ -14,4 +14,8 @@
   "Enchant can see nuspell dictionaries."
   (should (= 0 (call-process "enchant-lsmod-2" nil t nil "-lang" "en_US"))))
 
+;; (ert-deftest "emacsrc-fail" ()
+;;   "Always fail.  Useful for verifying this actually works."
+;;   (should nil))
+
 ;;; assertions.el ends here

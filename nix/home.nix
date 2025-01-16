@@ -39,29 +39,48 @@ in
 {
   options.programs.pjones.emacsrc = {
     enable = lib.mkEnableOption "Peter's Emacs Configuration";
-  };
 
-  config = lib.mkIf cfg.enable {
-    home.packages = [
-      emacsrc
-    ] ++ lib.attrValues desktopItems;
-
-    xdg.mimeApps = {
-      enable = lib.mkDefault true;
-
-      defaultApplications = {
-        "application/pdf" = "emacsclient.desktop";
-      };
-    };
-
-    xdg = {
-      enable = true;
-
-      configFile = {
-        "emacs/init.el".source = "${emacsrc}/emacs.d/dot.emacs.el";
-        "enchant/enchant.ordering".source = "${emacsrc}/share/enchant/enchant.ordering";
-        "enchant/nuspell".source = "${emacsrc}/share/enchant/nuspell";
-      };
+    singleton = lib.mkOption {
+      type = lib.types.bool;
+      default = true;
+      description = "Run a single Emacs daemon.";
     };
   };
+
+  config = lib.mkMerge [
+    (lib.mkIf cfg.enable {
+      home.packages = [
+        emacsrc
+      ] ++ lib.attrValues desktopItems;
+
+      xdg.mimeApps = {
+        enable = lib.mkDefault true;
+
+        defaultApplications = {
+          "application/pdf" = "emacsclient.desktop";
+        };
+      };
+
+      xdg = {
+        enable = true;
+
+        configFile = {
+          "emacs/init.el".source = "${emacsrc}/emacs.d/dot.emacs.el";
+          "enchant/enchant.ordering".source = "${emacsrc}/share/enchant/enchant.ordering";
+          "enchant/nuspell".source = "${emacsrc}/share/enchant/nuspell";
+        };
+      };
+    })
+
+    (lib.mkIf (cfg.enable && cfg.singleton) {
+      home.sessionVariables.EMACS_SOCKET_NAME = "server";
+
+      services.emacs = {
+        enable = true;
+        package = emacsrc.emacs;
+        client.enable = false;
+        startWithUserSession = "graphical";
+      };
+    })
+  ];
 }

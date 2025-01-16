@@ -22,7 +22,7 @@ in
 pkgs.nixosTest {
   name = "test-emacsrc";
 
-  nodes.emacsrc = { ... }: {
+  nodes.emacsrc = { lib, ... }: {
     imports = [ home-manager.nixosModules.home-manager ];
 
     users.users.pjones = {
@@ -38,7 +38,15 @@ pkgs.nixosTest {
 
       users.pjones = { ... }: {
         imports = [ module ];
-        programs.pjones.emacsrc.enable = true;
+
+        programs.pjones.emacsrc = {
+          enable = true;
+          singleton = true;
+        };
+
+        # Don't require a GUI:
+        services.emacs.startWithUserSession = lib.mkForce true;
+
         home.stateVersion = "24.11";
         home.packages = [ tests ];
       };
@@ -62,6 +70,7 @@ pkgs.nixosTest {
       emacsrc.wait_until_tty_matches("1", "pjones@emacsrc:~")
 
       # Run the tests:
+      emacsrc.wait_for_unit("emacs", "pjones")
       emacsrc.send_chars("emacsrc-test-runner.sh\n")
       emacsrc.wait_until_succeeds("test -e ${home}/log")
       emacsrc.wait_until_fails("pgrep --uid pjones -f emacsrc-test-runner")
