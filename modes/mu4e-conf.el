@@ -152,8 +152,9 @@ The JSON document comes from my tilde project."
  '(mu4e-trash-without-flag t) ; Move to trash without deleting.
  '(mu4e-change-filenames-when-moving t)
  '(mu4e-date-format-long "%c")
- '(mu4e-attachment-dir "~/download")
+ '(mu4e-attachment-dir "~/download/")
  '(mu4e-completing-read-function 'completing-read)
+ '(mu4e-modeline-show-global nil)
 
  '(mu4e-headers-sort-field :date)
  '(mu4e-headers-sort-direction 'ascending)
