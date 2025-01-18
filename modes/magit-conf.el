@@ -9,6 +9,7 @@
 
 (custom-set-variables
  '(magit-show-long-lines-warning nil)
+ '(magit-diff-refine-hunk t)
  '(magit-display-buffer-function 'magit-display-buffer-fullcolumn-most-v1)
  '(magit-popup-use-prefix-argument 'default)
  '(magit-status-margin '(t age magit-log-margin-width nil 18))
