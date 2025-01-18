@@ -330,8 +330,24 @@ If TIME is nil then use the current time."
 
  ;; Stuff for exporting:
  '(org-export-with-smart-quotes t)
+ '(org-babel-default-header-args
+   '((:cache   . "no")
+     (:eval    . "never-export")
+     (:exports . "both")
+     (:hlines  . "no")
+     (:noweb   . "no")
+     (:results . "replace")
+     (:session . "none")
+     (:tangle  . "no")))
+ '(org-babel-default-header-args:plantuml
+   '((:eval    . "yes")
+     (:exports . "results")
+     (:results . "file graphics")))
  '(org-babel-results-keyword "results")
  '(org-plantuml-exec-mode 'plantuml)
+ '(org-cite-export-processors
+   '((latex . (biblatex "apa" nil))
+     (t     . (basic "numeric" "numeric"))))
  '(org-icalendar-include-todo t)
  '(org-html-htmlize-output-type 'css)
  '(org-html-validation-link nil)
