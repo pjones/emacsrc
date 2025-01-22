@@ -59,6 +59,22 @@ its display."
           (pjones:buffer-conditions ,names-or-modes)
           buffer action)))))
 
+(defun pjones:frame-set-workspace (&optional frame)
+  "Record the name of the current workspace in FRAME."
+  (when (display-graphic-p)
+    (let ((frame (or frame (selected-frame)))
+          (workspace (string-trim-right
+                      (shell-command-to-string "desktop-workspace -n"))))
+      (set-frame-parameter frame 'workspace workspace))))
+(add-to-list 'after-make-frame-functions #'pjones:frame-set-workspace)
+
+(defun pjones:frame-on-this-workspace-p (frame)
+  "Return non-nil if FRAME is on the current workspace."
+  (let ((selected (selected-frame)))
+    (and (not (equal selected frame))
+         (string-equal (frame-parameter selected 'workspace)
+                       (frame-parameter frame 'workspace)))))
+
 (defvar pjones:modes-dedicated-to-frames
   '(comint-mode
     compilation-mode
@@ -66,18 +82,6 @@ its display."
   "Modes that are displayed in their own frame.
 
 When displaying these buffers, always open a new dedicated frame.")
-
-(defvar pjones:modes-sharing-frames
-  '(devdocs-mode
-    grep-mode
-    help-mode
-    rg-mode
-    shell-mode)
-  "Modes that are displayed in their own frame.
-
-When displaying these buffers, try to use an existing frame with the
-same mode, or if one doesn't exist, pop open a new frame.")
-
 
 (defvar pjones:dedicated-frame-exceptions
   '(" \\*transient\\*")
@@ -101,13 +105,15 @@ same mode, or if one doesn't exist, pop open a new frame.")
  '(display-buffer-base-action
    '((display-buffer-reuse-window
       display-buffer-reuse-mode-window
-      display-buffer-pop-up-window
-      display-buffer-pop-up-frame)) . nil)
+      display-buffer-use-some-frame
+      display-buffer-in-direction) .
+     ((reusable-frames . nil)
+      (frame-predicate . pjones:frame-on-this-workspace-p)
+      (direction . below)
+      (window-height . 0.4))))
 
  '(display-comint-buffer-action
-   '((display-buffer-reuse-window
-      display-buffer-same-window)
-     (reusable-frames . visible)))
+   '((display-buffer-same-window)))
 
  ;; Ensure that the current frame is used to display server buffers.
  ;; NOTE: This might not be necessary now that I removed an older
@@ -124,36 +130,18 @@ same mode, or if one doesn't exist, pop open a new frame.")
  '(display-buffer-alist
    `(;; Buffers that should pop out into a new frame and are not
      ;; shared with other buffers that have the same mode:
-     (,(pjones:buffer-conditions
-        pjones:modes-dedicated-to-frames)
+     (,(pjones:buffer-conditions pjones:modes-dedicated-to-frames)
       (display-buffer-pop-up-frame)
       (dedicated . t)
       (pop-up-frame-parameters
        . ((unsplittable . t)
           (name . "popup"))))
 
-     ;; Buffers that should pop out into a new frame that is shared
-     ;; with other buffers with the same mode.:
-     (,(pjones:buffer-conditions
-        pjones:modes-sharing-frames)
-      (display-buffer-reuse-window
-       display-buffer-reuse-mode-window
-       display-buffer-pop-up-frame)
-      (inhibit-switch-frame . t)
-      (reusable-frames . visible)
-      (pop-up-frame-parameters
-       . ((unsplittable . t)
-          (no-focus-on-map . t)
-          (name . "popup"))))
-
      ;; Buffers that must not be displayed in the current frame:
-     (,(pjones:selected-buffer-conditions
-        (append pjones:modes-sharing-frames
-                pjones:modes-dedicated-to-frames)
-        pjones:dedicated-frame-exceptions)
-      (display-buffer-reuse-window
-       display-buffer-reuse-mode-window
-       display-buffer-pop-up-frame)
+     (,(pjones:selected-buffer-conditions pjones:modes-dedicated-to-frames
+                                          pjones:dedicated-frame-exceptions)
+      (display-buffer-use-some-frame)
+      (frame-predicate . pjones:frame-on-this-workspace-p)
       (reusable-frames . visible))
 
      ;; Buffers that should split the entire frame:
@@ -162,9 +150,7 @@ same mode, or if one doesn't exist, pop open a new frame.")
           "\\*Completions\\*"
           "\\*Deletions\\*"
           calendar-mode))
-      (display-buffer-reuse-window
-       display-buffer-reuse-mode-window
-       display-buffer-at-bottom)
+      (display-buffer-at-bottom)
       (window-height . 0.3))
 
      ;; Like above, but with a smaller size:
@@ -172,20 +158,6 @@ same mode, or if one doesn't exist, pop open a new frame.")
         '("Embark Collect \\(Live\\|Completions\\)"))
       (display-buffer-at-bottom)
       (window-height . 0.1))
-
-     ;; Buffers that are related to the current window and should
-     ;; split it, opening a new window below the current window:
-     (,(pjones:buffer-conditions
-        '("\\*HTTP Response.*"
-          "\\*magit-.*popup"
-          "\\*Occur\\*"
-          "\\*transient"
-          pdf-outline-buffer-mode))
-      (display-buffer-reuse-window
-       display-buffer-reuse-mode-window
-       display-buffer-in-direction)
-      (direction . below)
-      (window-height . 0.4))
 
      ;; Buffers that should take over the current window:
      (,(pjones:buffer-conditions

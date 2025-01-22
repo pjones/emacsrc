@@ -283,6 +283,14 @@ behavior."
    (if (region-active-p) arg
      (not arg))))
 
+(defun pjones:window-to-frame ()
+  "Pop the selected window out into its own frame."
+  (interactive)
+  (when-let* ((buffer (current-buffer))
+              ((not (minibufferp buffer))))
+    (unless (one-window-p t) (delete-window))
+    (display-buffer-pop-up-frame buffer nil)))
+
 ;; Local Variables:
 ;; byte-compile-warnings: (not noruntime)
 ;; End:

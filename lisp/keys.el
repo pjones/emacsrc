@@ -114,6 +114,7 @@ FUNC."
 (declare-function pjones:start-http "./interactive")
 (declare-function pjones:start-term "./interactive")
 (declare-function pjones:toggle-prev-buffer "./interactive")
+(declare-function pjones:window-to-frame "./interactive")
 (declare-function resize-window "resize-window")
 (declare-function rg "rg")
 (declare-function rg-project "rg")
@@ -204,6 +205,7 @@ FUNC."
  ;; Additional window commands:
  (kbd "C-x w /") #'winner-undo
  (kbd "C-x w d") #'ace-delete-window
+ (kbd "C-x w p") #'pjones:window-to-frame
  (kbd "C-x w R") #'resize-window
  (kbd "C-x w r") #'rotate-layout
  (kbd "C-x w s") #'ace-swap-window
