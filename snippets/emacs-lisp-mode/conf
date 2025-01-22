@@ -12,6 +12,6 @@
 (require '${1:$(string-replace "-conf" "" yas-text)})
 
 (custom-set-variables
-  '($0))
+ '($0))
 
-;;; $1 ends here
+;;; $1.el ends here
