@@ -348,6 +348,8 @@ If TIME is nil then use the current time."
  '(org-cite-export-processors
    '((latex . (biblatex "apa" nil))
      (t     . (basic "numeric" "numeric"))))
+ '(org-cite-global-bibliography
+   (list (concat pjones:org-notes-directory "bib/bibliography.bib")))
  '(org-icalendar-include-todo t)
  '(org-html-htmlize-output-type 'css)
  '(org-html-validation-link nil)
