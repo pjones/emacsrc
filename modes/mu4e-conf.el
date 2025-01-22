@@ -147,29 +147,30 @@ The JSON document comes from my tilde project."
  '(mu4e-context-policy 'pick-first)
  '(mu4e-compose-context-policy 'ask)
 
+ '(mu4e-attachment-dir "~/download/")
+ '(mu4e-change-filenames-when-moving t)
+ '(mu4e-completing-read-function 'completing-read)
+ '(mu4e-date-format-long "%c")
  '(mu4e-get-mail-command "mbsync --all")
  '(mu4e-main-hide-personal-addresses t)
- '(mu4e-trash-without-flag t) ; Move to trash without deleting.
- '(mu4e-change-filenames-when-moving t)
- '(mu4e-date-format-long "%c")
- '(mu4e-attachment-dir "~/download/")
- '(mu4e-completing-read-function 'completing-read)
  '(mu4e-modeline-show-global nil)
+ '(mu4e-trash-without-flag t) ; Move to trash without deleting.
 
- '(mu4e-headers-sort-field :date)
- '(mu4e-headers-sort-direction 'ascending)
- '(mu4e-headers-results-limit 200)
- '(mu4e-headers-include-related t)
- '(mu4e-headers-show-threads t)
+ '(mu4e-search-include-related nil)
+ '(mu4e-search-results-limit 500)
+ '(mu4e-search-sort-direction 'ascending)
+ '(mu4e-search-sort-field :date)
+ '(mu4e-search-threads t)
+
  '(mu4e-headers-date-format "%a %F")
  '(mu4e-headers-long-date-format "%c")
 
  '(mu4e-view-scroll-to-next nil)
 
  '(mu4e-headers-fields
-   '((:flags         . 6)
-     (:human-date    . 12)
-     (:from          . 22)
+   '((:flags         . 4)
+     (:human-date    . 14)
+     (:from          . 15)
      (:thread-subject)))
 
  '(mu4e-maildir-shortcuts
@@ -183,10 +184,18 @@ The JSON document comes from my tilde project."
           "NOT m:/Archive/"
           "NOT m:/Spam/")
         " AND ") "Unread" ?u)
+     ("flag:flagged" "Flagged messages" ?f)
      ("m:/Drafts/" "Drafts" ?d)
      ("m:/Sent/ d:today..now" "Sent today" ?s)
      ("m:/Archive/ d:1w..now" "Archived this week" ?a)
-     ("flag:flagged" "Flagged messages" ?f))))
+     ("m:/Spam/" "Spam" ?S)
+     (,(string-join
+        '("NOT m:/Archive/"
+          "NOT m:/Trash/"
+          "NOT m:/Sent/"
+          "NOT m:/Spam/"
+          "d:1w..now")
+        " AND ") "Received this week" ?r))))
 
 ;; Extra Headers:
 (add-to-list 'mu4e-header-info-custom
