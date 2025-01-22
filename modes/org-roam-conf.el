@@ -30,8 +30,13 @@
  '(consult-org-roam-buffer-enabled nil) ; Treat like other buffers.
 
  '(org-roam-capture-templates
-   '(("b" "Knowledge Base" plain "%?"
+   `(("b" "Knowledge Base Entry" plain "%?"
       :target (file+head "garden/${pjones:org-roam-node-to-file}" "#+title: ${title}\n")
+      :jump-to-captured t
+      :unnarrowed t)
+     ("r" "Research Review Article" plain
+      (file ,(concat pjones:org-notes-directory "templates/org/review-article.org"))
+      :target (file "garden/${pjones:org-roam-node-to-file}")
       :jump-to-captured t
       :unnarrowed t)))
 
