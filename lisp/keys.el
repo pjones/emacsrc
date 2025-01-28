@@ -180,6 +180,7 @@ FUNC."
  (kbd "C-c e") #'embark-act
  (kbd "C-c f") (pjones:jump-to-buffer "*flymake message*")
  (kbd "C-c h") #'pjones:start-http
+ (kbd "C-c j") #'webjump
  (kbd "C-c k") #'pjones:kill-line
  (kbd "C-c l l") #'org-store-link
  (kbd "C-c l o") #'link-hint-open-link
