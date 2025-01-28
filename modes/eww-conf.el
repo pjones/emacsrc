@@ -6,12 +6,7 @@
 (require 'eww)
 
 (custom-set-variables
- '(eww-download-directory "~/download"))
-
-(defun pjones:eww-rename-buffer ()
-  "Rename the current `eww' buffer to include its title."
-  (interactive)
-  (let ((name (concat "*eww: " (plist-get eww-data :title) "*")))
-    (rename-buffer name t)))
+ '(eww-download-directory "~/download")
+ '(eww-auto-rename-buffer 'title))
 
 ;;; eww-conf.el ends here
