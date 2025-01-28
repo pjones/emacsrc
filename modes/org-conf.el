@@ -330,6 +330,7 @@ If TIME is nil then use the current time."
  '(org-preview-latex-default-process 'dvisvgm)
 
  ;; Stuff for exporting:
+ '(org-export-exclude-tags '("noexport" "wikionly"))
  '(org-export-with-smart-quotes t)
  '(org-babel-default-header-args
    '((:cache   . "no")
