@@ -56,6 +56,15 @@
   (expand-file-name "~/public/")
   "Directory where published files are stored.")
 
+(defun pjones:org-agenda-files ()
+  "Return a list of files that contain to-do items."
+  (rx-let ((basename (+ (any alphanumeric))))
+    (directory-files-recursively
+     (concat pjones:org-notes-directory "gtd/")
+     (rx string-start
+         (or basename (seq basename ?/ basename))
+         ?. "org" string-end))))
+
 (defun pjones:org-parse-effort-tag (tag)
   "Convert an effort TAG to a number of seconds."
   (if (string-match "^\\([0-9]+\\)\\([mh]\\)$" tag)
@@ -94,221 +103,216 @@ If TIME is nil then use the current time."
 ;; General Org Settings
 (custom-set-variables
  ;; Visual Settings:
- '(org-hide-leading-stars t)
- '(org-ellipsis "/")
- '(org-agenda-breadcrumbs-separator " ❱ ")
- '(org-clock-mode-line-total 'current)
- '(org-clock-clocked-in-display nil)
- '(org-show-context-detail (quote ((default . tree))))
- '(org-duration-format (quote h:mm))
- '(org-hide-emphasis-markers t)
  '(org-adapt-indentation t)
- '(org-appear-autolinks nil)
- '(org-appear-autosubmarkers t)
+ '(org-agenda-breadcrumbs-separator " ❱ ")
  '(org-appear-autoentities t)
  '(org-appear-autokeywords t)
- '(org-modern-hide-stars " ")
- '(org-modern-todo nil)
- '(org-modern-timestamp nil)
- '(org-modern-block-name t)
+ '(org-appear-autolinks t)
+ '(org-appear-autosubmarkers t)
+ '(org-clock-clocked-in-display nil)
+ '(org-clock-mode-line-total 'current)
+ '(org-ellipsis "/")
+ '(org-hide-emphasis-markers t)
+ '(org-hide-leading-stars t)
  '(org-modern-block-fringe nil)
+ '(org-modern-block-name t)
+ '(org-modern-hide-stars " ")
+ '(org-modern-keyword nil)
  '(org-modern-tag nil)
+ '(org-modern-timestamp nil)
+ '(org-modern-todo nil)
+ '(org-show-context-detail '((default . tree)))
+ '(org-startup-folded 'show2levels)
 
  ;; Behavior Settings:
- '(org-list-allow-alphabetical t)
- '(org-bulletproof-ordered-cycle '("1." "a."))
- '(org-blank-before-new-entry '((heading . t) (plain-list-item . t)))
- '(org-catch-invisible-edits 'smart)
- '(org-cycle-emulate-tab 'whitestart)
- '(org-log-done 'time)
- '(org-reverse-note-order nil)
- '(org-tags-column 0)
- '(org-auto-align-tags nil)
- '(org-use-fast-todo-selection 'expert)
- '(org-use-fast-tag-selection (quote auto))
- '(org-fast-tag-selection-single-key nil)
- '(org-imenu-depth 3)
- '(org-special-ctrl-a/e t)
- '(org-special-ctrl-k t)
- '(org-clock-into-drawer t)
- '(org-log-into-drawer t)
- '(org-tags-exclude-from-inheritance nil)
- '(org-goto-interface 'outline-path-completion)
- '(org-outline-path-complete-in-steps nil)
- '(org-outline-path-complete-in-steps nil)
- '(org-id-link-to-org-use-id 'create-if-interactive)
- '(org-edit-src-persistent-message nil)
- '(org-src-window-setup (quote current-window))
- '(org-image-actual-width nil)
- '(org-attach-id-dir (concat pjones:org-notes-directory "attachments/"))
+ '(org-archive-default-command #'pjones:org-archive-subtree-to-daily)
+ '(org-archive-file-header-format nil)
+ '(org-attach-archive-delete nil)
  '(org-attach-auto-tag nil)
  '(org-attach-dir-relative t)
+ '(org-attach-id-dir (concat pjones:org-notes-directory "attachments/"))
  '(org-attach-method 'ln)
  '(org-attach-store-link-p 'attached)
- '(org-attach-archive-delete nil)
  '(org-attach-use-inheritance t)
- '(org-archive-file-header-format nil)
- '(org-archive-default-command #'pjones:org-archive-subtree-to-daily)
+ '(org-auto-align-tags nil)
+ '(org-blank-before-new-entry '((heading . t) (plain-list-item . t)))
+ '(org-bulletproof-ordered-cycle '("1." "a."))
+ '(org-catch-invisible-edits 'smart)
+ '(org-clock-into-drawer t)
+ '(org-columns-default-format "%60ITEM(Task) %EFFORT{:} %CLOCKED{:}")
+ '(org-ctrl-k-protect-subtree t)
+ '(org-cycle-emulate-tab 'whitestart)
+ '(org-edit-src-persistent-message nil)
+ '(org-fast-tag-selection-single-key nil)
+ '(org-goto-interface 'outline-path-completion)
+ '(org-id-link-to-org-use-id 'create-if-interactive)
+ '(org-image-actual-width nil)
+ '(org-imenu-depth 3)
+ '(org-list-allow-alphabetical t)
+ '(org-log-done 'time)
+ '(org-log-into-drawer t)
+ '(org-outline-path-complete-in-steps nil)
+ '(org-outline-path-complete-in-steps nil)
+ '(org-reverse-note-order nil)
+ '(org-special-ctrl-a/e t)
+ '(org-special-ctrl-k t)
+ '(org-src-window-setup 'current-window)
+ '(org-tags-column 0)
+ '(org-tags-exclude-from-inheritance nil)
+ '(org-use-fast-tag-selection 'auto)
+ '(org-use-fast-todo-selection 'expert)
+
  '(org-M-RET-may-split-line
    '((headline . nil)
      (item . nil)
      (default . t)))
 
- ;; Showing context
- '(org-show-hierarchy-above t)
- '(org-show-following-heading t)
- '(org-show-siblings t)
- '(org-show-entry-below t)
-
  ;; Following Links
- '(org-file-apps '((auto-mode       . emacs)
-                   ("\\.docx\\'"    . "libreoffice %s")
-                   ("\\.m4v\\'"     . "vlc %s")
-                   ("\\.mkv\\'"     . "vlc %s")
-                   ("\\.mm\\'"      . default)
-                   ("\\.mp4\\'"     . "vlc %s")
-                   ("\\.pages\\'"   . "libreoffice %s")
-                   ("\\.webm\\'"    . "vlc %s")
-                   ("\\.x?html?\\'" . default)
-                   ("\\.xlsx\\'"    . "libreoffice %s")))
+ '(org-file-apps
+   '((auto-mode       . emacs)
+     ("\\.docx\\'"    . "libreoffice %s")
+     ("\\.m4v\\'"     . "vlc %s")
+     ("\\.mkv\\'"     . "vlc %s")
+     ("\\.mm\\'"      . default)
+     ("\\.mp4\\'"     . "vlc %s")
+     ("\\.pages\\'"   . "libreoffice %s")
+     ("\\.webm\\'"    . "vlc %s")
+     ("\\.x?html?\\'" . default)
+     ("\\.xlsx\\'"    . "libreoffice %s")))
 
  '(org-link-file-path-type 'relative)
  '(org-link-frame-setup
-   (quote ((file . find-file)
-           (gnus . org-gnus-no-new-news))))
+   '((file . find-file)
+     (gnus . org-gnus-no-new-news)))
 
  ;; Tags:
  '(org-tag-persistent-alist
-   (quote ((:startgroup  . nil)
-           ;; Places
-           ("@home"      . ?h)
-           ("@work"      . ?W)
-           ("@out"       . ?o)
-           ("@shanna"    . ?s)
-           (:endgroup    . nil)
-           (:startgroup  . nil)
-           ;; Devices:
-           ("@computer"  . ?c)
-           ("@phone"     . ?P)
-           ("@tablet"    . ?t)
-           (:endgroup    . nil)
-           (:startgroup  . nil)
-           ;; Activities:
-           ("@call"      . ?a)
-           ("@email"     . ?e)
-           ("@errand"    . ?E)
-           ("@read"      . ?r)
-           ("@plan"      . ?p)
-           ("@write"     . ?w)
-           ("@code"      . ?C)
-           ("@labor"     . ?l)
-           (:endgroup    . nil)
-           (:startgroup  . nil)
-           ;; Effort:
-           ("5m"         . ?5)
-           ("30m"        . ?3)
-           ("1h"         . ?1)
-           ("4h"         . ?4)
-           (:endgroup    . nil))))
+   '((:startgroup  . nil)
+     ;; Places
+     ("@home"      . ?h)
+     ("@work"      . ?W)
+     ("@out"       . ?o)
+     ("@shanna"    . ?s)
+     (:endgroup    . nil)
+     (:startgroup  . nil)
+     ;; Devices:
+     ("@computer"  . ?c)
+     ("@phone"     . ?P)
+     ("@tablet"    . ?t)
+     (:endgroup    . nil)
+     (:startgroup  . nil)
+     ;; Activities:
+     ("@call"      . ?a)
+     ("@email"     . ?e)
+     ("@errand"    . ?E)
+     ("@read"      . ?r)
+     ("@plan"      . ?p)
+     ("@write"     . ?w)
+     ("@code"      . ?C)
+     ("@labor"     . ?l)
+     (:endgroup    . nil)
+     (:startgroup  . nil)
+     ;; Effort:
+     ("5m"         . ?5)
+     ("30m"        . ?3)
+     ("1h"         . ?1)
+     ("4h"         . ?4)
+     (:endgroup    . nil)))
 
  ;; TODO keywords and faces:
  '(org-todo-keywords
-   (quote ((sequence "TODO(t)" "|" "DONE(d)")
-           (sequence "NEXT(n)" "WAITING(w)" "BLOCKED(b)" "|" "DONE(d)" "CANCELLED(c)"))))
+   '((sequence "TODO(t)" "|" "DONE(d)" "CANCELLED(c)")
+     (sequence "NEXT(n)" "WAITING(w)" "BLOCKED(b)" "|" "DONE(d)" "CANCELLED(c)")))
 
  '(org-todo-keyword-faces
-   (quote (("TODO"    . (:foreground "#66cccc" :weight bold))
-           ("NEXT"    . (:foreground "#66cccc" :weight bold))
-           ("WAITING" . (:foreground "#cc99cc" :weight bold))
-           ("BLOCKED" . (:inherit org-agenda-dimmed-todo-face)))))
+   '(("NEXT"    . (:inherit font-lock-constant-face :weight bold))
+     ("WAITING" . (:inherit font-lock-comment-face :weight bold))
+     ("BLOCKED" . (:inherit org-agenda-dimmed-todo-face))))
 
  ;; Stuff for org-agenda.
- '(org-agenda-files (directory-files
-                     (concat pjones:org-notes-directory "gtd/")
-                     t "\.org$"))
-
- '(org-agenda-window-setup (quote current-window))
- '(org-agenda-todo-ignore-with-date nil)
- '(org-agenda-todo-ignore-timestamp nil)
- '(org-agenda-todo-ignore-deadlines (quote near))
- '(org-agenda-todo-ignore-scheduled (quote future))
- '(org-agenda-skip-scheduled-if-done t)
- '(org-agenda-skip-deadline-if-done t)
- '(org-agenda-tags-todo-honor-ignore-options t)
- '(org-agenda-start-with-follow-mode nil)
- '(org-agenda-time-leading-zero t)
- '(org-agenda-show-inherited-tags nil)
- '(org-deadline-warning-days 14)
- '(org-agenda-span 'day)
- '(org-agenda-use-time-grid nil)
- '(org-agenda-start-on-weekday nil)
- '(org-agenda-start-day nil)
  '(org-agenda-block-separator ?─)
+ '(org-agenda-files (pjones:org-agenda-files))
+ '(org-agenda-show-inherited-tags nil)
+ '(org-agenda-skip-deadline-if-done t)
+ '(org-agenda-skip-scheduled-if-done t)
+ '(org-agenda-span 'day)
+ '(org-agenda-start-day nil)
+ '(org-agenda-start-on-weekday nil)
+ '(org-agenda-start-with-follow-mode nil)
+ '(org-agenda-tags-todo-honor-ignore-options t)
+ '(org-agenda-time-leading-zero t)
+ '(org-agenda-todo-ignore-deadlines 'near)
+ '(org-agenda-todo-ignore-scheduled 'future)
+ '(org-agenda-todo-ignore-timestamp nil)
+ '(org-agenda-todo-ignore-with-date nil)
+ '(org-agenda-use-time-grid nil)
+ '(org-agenda-window-setup 'current-window)
+ '(org-deadline-warning-days 14)
 
  '(org-stuck-projects
-   (quote ("+project+LEVEL=3"
-           ("NEXT" "WAITING" "BLOCKED") nil "")))
+   '("+project+LEVEL=2" ("NEXT" "WAITING" "BLOCKED") nil ""))
 
  `(org-agenda-custom-commands
-   (quote (("c" "Current Status"
-            ((agenda ""
-              ((org-agenda-overriding-header "⚡ Agenda:")
-               (org-agenda-remove-tags nil)
-               (org-agenda-current-time-string "⮜┈┈┈┈┈┈┈ now")
-               (org-agenda-prefix-format "  %-12s %-12t %-8c ")
-               (org-agenda-todo-keyword-format "")))
-             (todo "WAITING"
-               ((org-agenda-overriding-header "⚡ Waiting for Someone Else:")
-                (org-agenda-skip-function '(org-agenda-skip-entry-if 'scheduled 'deadline))
-                (org-agenda-remove-tags t)
-                (org-agenda-prefix-format "  %-8c ")
-                (org-agenda-todo-keyword-format "")))
-             (tags-todo "@call|@email"
-               ((org-agenda-overriding-header "⚡ Phone Calls to Make, Emails to Send:")
-                (org-agenda-prefix-format "  %-8c ")
-                (org-agenda-remove-tags nil)
-                (org-agenda-todo-keyword-format "")))
-             (tags-todo "@read-TODO=\"DONE\""
-               ((org-agenda-overriding-header "⚡ Reading and Research:")
-                (org-agenda-prefix-format "  %-8c ")
-                (org-agenda-remove-tags nil)
-                (org-agenda-todo-keyword-format "")))
-             (stuck ""
-               ((org-agenda-overriding-header "⚡ Stuck Projects:")))
-             (todo "BLOCKED"
-               ((org-agenda-overriding-header "⚡ Missing Blocker Dependency:")
-                (org-agenda-skip-function #'pjones:agenda-skip-properly-blocked)
-                (org-agenda-remove-tags nil)
-                (org-agenda-prefix-format "  %-8c ")
-                (org-agenda-todo-keyword-format "")))
-             (tags "+inbox+LEVEL=1"
-               ((org-agenda-overriding-header "⚡ Inbox Tasks to Process:")
-                (org-agenda-prefix-format "  %-8c ")
-                (org-agenda-todo-keyword-format "")))
-             (tags-todo "TODO=\"NEXT\"-SCHEDULED={.+}-DEADLINE={.+}-@call-@read-@email"
-               ((org-agenda-overriding-header "⚡ Next Actions:")
-                (org-agenda-skip-function '(org-agenda-skip-entry-if 'scheduled 'deadline))
-                (org-agenda-prefix-format "  %-8c ")
-                (org-agenda-remove-tags nil)
-                (org-agenda-todo-keyword-format "")
-                (org-agenda-cmp-user-defined #'pjones:org-sort-next-actions)
-                (org-agenda-sorting-strategy '(user-defined-up)))))
-            nil (,(concat pjones:org-publish-directory "gtd/agenda.html")))
-           ("p" "Project List"
-            ((tags "+project+LEVEL=3")))
-           ("T" "Travel Schedule"
-            ((tags "+travel+TIMESTAMP>=\"<now>\""))
-            ((org-agenda-view-columns-initially t))))))
+   '(("c" "Current Status"
+      ((agenda ""
+        ((org-agenda-overriding-header "⚡ Agenda:")
+         (org-agenda-remove-tags nil)
+         (org-agenda-current-time-string "⮜┈┈┈┈┈┈┈ now")
+         (org-agenda-prefix-format "  %-12s %-12t %-8c ")
+         (org-agenda-todo-keyword-format "")))
+       (todo "WAITING"
+        ((org-agenda-overriding-header "⚡ Waiting for Someone Else:")
+         (org-agenda-skip-function '(org-agenda-skip-entry-if 'scheduled 'deadline))
+         (org-agenda-remove-tags t)
+         (org-agenda-prefix-format "  %-8c ")
+         (org-agenda-todo-keyword-format "")))
+       (tags-todo "@call|@email"
+         ((org-agenda-overriding-header "⚡ Phone Calls to Make, Emails to Send:")
+          (org-agenda-prefix-format "  %-8c ")
+          (org-agenda-remove-tags nil)
+          (org-agenda-todo-keyword-format "")))
+       (tags-todo "@read-TODO=\"DONE\""
+         ((org-agenda-overriding-header "⚡ Reading and Research:")
+          (org-agenda-prefix-format "  %-8c ")
+          (org-agenda-remove-tags nil)
+          (org-agenda-todo-keyword-format "")))
+       (stuck ""
+         ((org-agenda-overriding-header "⚡ Stuck Projects:")))
+       (todo "BLOCKED"
+         ((org-agenda-overriding-header "⚡ Missing Blocker Dependency:")
+          (org-agenda-skip-function #'pjones:agenda-skip-properly-blocked)
+          (org-agenda-remove-tags nil)
+          (org-agenda-prefix-format "  %-8c ")
+          (org-agenda-todo-keyword-format "")))
+       (tags "+inbox+LEVEL=1"
+         ((org-agenda-overriding-header "⚡ Inbox Tasks to Process:")
+          (org-agenda-prefix-format "  %-8c ")
+          (org-agenda-todo-keyword-format "")))
+       (tags-todo "TODO=\"NEXT\"-SCHEDULED={.+}-DEADLINE={.+}-@call-@read-@email"
+         ((org-agenda-overriding-header "⚡ Next Actions:")
+          (org-agenda-skip-function '(org-agenda-skip-entry-if 'scheduled 'deadline))
+          (org-agenda-prefix-format "  %-8c ")
+          (org-agenda-remove-tags nil)
+          (org-agenda-todo-keyword-format "")
+          (org-agenda-cmp-user-defined #'pjones:org-sort-next-actions)
+          (org-agenda-sorting-strategy '(user-defined-up)))))
+      nil (,(concat pjones:org-publish-directory "gtd/agenda.html")))
+     ("p" "Project List"
+      ((tags "+project+LEVEL=2")))
+     ("T" "Travel Schedule"
+      ((tags "+travel+TIMESTAMP>=\"<now>\""))
+      ((org-agenda-view-columns-initially t)))))
 
  ;; Stuff for org-capture and org-refile:
- '(org-refile-targets '((nil :maxlevel . 3) (org-agenda-files :maxlevel . 3)))
- '(org-default-notes-file (concat pjones:org-notes-directory "gtd/inbox.org"))
- '(org-refile-use-outline-path t)
- '(org-refile-allow-creating-parent-nodes t)
- '(org-log-refile (quote time))
  '(org-capture-bookmark nil)
  '(org-capture-ref-capture-template nil)
  '(org-capture-ref-headline-tags nil) ; Fix a bug in org-capture-ref
+ '(org-default-notes-file (concat pjones:org-notes-directory "gtd/inbox.org"))
+ '(org-log-refile 'time)
+ '(org-refile-allow-creating-parent-nodes t)
+ '(org-refile-targets '((nil :maxlevel . 3) (org-agenda-files :maxlevel . 3)))
+ '(org-refile-use-outline-path t)
+
  '(org-capture-templates
    `(("i" "Capture to Inbox" entry
       (file ,org-default-notes-file)
@@ -330,8 +334,19 @@ If TIME is nil then use the current time."
  '(org-preview-latex-default-process 'dvisvgm)
 
  ;; Stuff for exporting:
+ '(org-babel-results-keyword "results")
  '(org-export-exclude-tags '("noexport" "wikionly"))
  '(org-export-with-smart-quotes t)
+ '(org-highlight-latex-and-related '(native))
+ '(org-html-htmlize-output-type 'css)
+ '(org-html-validation-link nil)
+ '(org-icalendar-include-todo t)
+ '(org-latex-compiler "xelatex")
+ '(org-latex-listings 'minted)
+ '(org-latex-prefer-user-labels t)
+ '(org-latex-tables-booktabs t)
+ '(org-plantuml-exec-mode 'plantuml)
+
  '(org-babel-default-header-args
    '((:cache   . "no")
      (:eval    . "never-export")
@@ -341,25 +356,19 @@ If TIME is nil then use the current time."
      (:results . "replace")
      (:session . "none")
      (:tangle  . "no")))
+
  '(org-babel-default-header-args:plantuml
    '((:eval    . "yes")
      (:exports . "results")
      (:results . "file graphics")))
- '(org-babel-results-keyword "results")
- '(org-plantuml-exec-mode 'plantuml)
+
  '(org-cite-export-processors
    '((latex . (biblatex "apa" nil))
      (t     . (basic "numeric" "numeric"))))
+
  '(org-cite-global-bibliography
    (list (concat pjones:org-notes-directory "bib/bibliography.bib")))
- '(org-icalendar-include-todo t)
- '(org-html-htmlize-output-type 'css)
- '(org-html-validation-link nil)
- '(org-highlight-latex-and-related '(native))
- '(org-latex-prefer-user-labels t)
- '(org-latex-tables-booktabs t)
- '(org-latex-listings 'minted)
- '(org-latex-compiler "xelatex")
+
  '(org-format-latex-options
    '(:foreground default
      :background default
@@ -368,8 +377,10 @@ If TIME is nil then use the current time."
      :html-background "Transparent"
      :html-scale 1.0
      :matchers ("begin" "$1" "$" "$$" "\\(" "\\[")))
+
  '(org-latex-pdf-process
    '("latexmk -xelatex -pdfxe -shell-escape %f"))
+
  '(org-latex-toc-command
    (string-join
     '("{"
@@ -377,6 +388,7 @@ If TIME is nil then use the current time."
       "\\tableofcontents"
       "}\n")
     "\n"))
+
  '(org-latex-packages-alist
    '(("" "booktabs")
      ("" "color")
@@ -386,6 +398,7 @@ If TIME is nil then use the current time."
      ("" "svg")
      ("" "transparent")
      ("" "xcolor")))
+
  '(org-latex-with-hyperref
    "\\hypersetup{
       pdfauthor={%a},
@@ -533,13 +546,9 @@ If TIME is nil then use the current time."
   (define-key yas/keymap [tab] #'yas-next-field)
   (add-to-list 'org-tab-first-hook #'yas-expand))
 
-(add-hook 'org-mode-hook #'pjones:org-mode-hook)
-
 (defun pjones:org-agenda-mode-hook ()
   "Hook run after a `org-agenda-mode' buffer is created."
   (hl-line-mode 1))
-
-(add-hook 'org-agenda-mode-hook #'pjones:org-agenda-mode-hook)
 
 (defun pjones:org-hide-others ()
   "Close all headings except the heading at point."
@@ -899,12 +908,14 @@ If EDIT is non-nil then edit the resulting trigger with
 ;;; Hooks
 (add-hook 'org-agenda-after-show-hook #'pjones:org-hide-others)
 (add-hook 'org-agenda-finalize-hook #'pjones:org-agenda-delete-empty-blocks)
+(add-hook 'org-agenda-mode-hook #'pjones:org-agenda-mode-hook)
 (add-hook 'org-mode-hook #'org-appear-mode)
 (add-hook 'org-mode-hook #'org-bulletproof-mode)
 (add-hook 'org-mode-hook #'org-clock-dbus-mode)
 (add-hook 'org-mode-hook #'org-edna-mode)
 (add-hook 'org-mode-hook #'org-modern-mode)
 (add-hook 'org-mode-hook #'org-num-mode)
+(add-hook 'org-mode-hook #'pjones:org-mode-hook)
 
 ;;; org-conf.el ends here
 
