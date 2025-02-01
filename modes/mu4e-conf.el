@@ -133,6 +133,24 @@ The JSON document comes from my tilde project."
          (dir (file-name-nondirectory maildir)))
     (concat prefix "/" dir)))
 
+(defun pjones:mu4e-org-capture ()
+  "Capture the current email via `org-mode'."
+  (interactive)
+  (call-interactively 'org-store-link)
+  (org-capture nil "m"))
+
+(defun pjones:mu4e-common-binds (map)
+  "Add common key bindings to MAP."
+  (define-key map (kbd "C-c SPC") #'pjones:mu4e-org-capture))
+
+(defun pjones:mu4e-headers-mode-hook ()
+  "Hook function for `mu4e-headers-mode'."
+  (pjones:mu4e-common-binds mu4e-headers-mode-map))
+
+(defun pjones:mu4e-view-mode-hook ()
+  "Hook function for `mu4e-view-mode'."
+  (pjones:mu4e-common-binds mu4e-view-mode-map))
+
 ;; FIXME: Remove this after upgrading to 1.12.8:
 (unless (boundp 'mu4e-trash-without-flag)
   (setf (plist-get (alist-get 'trash mu4e-marks) :action)
@@ -219,7 +237,9 @@ The JSON document comes from my tilde project."
 (add-to-list 'mu4e-view-actions '("tag message"     . mu4e-action-retag-message) t)
 
 ;; Hooks
-(add-hook 'mu4e-compose-mode-hook #'pjones:mu4e-compose-mode-hook)
 (add-hook 'mu4e-compose-mode-hook #'mml-secure-message-sign)
+(add-hook 'mu4e-compose-mode-hook #'pjones:mu4e-compose-mode-hook)
+(add-hook 'mu4e-headers-mode-hook #'pjones:mu4e-headers-mode-hook)
+(add-hook 'mu4e-view-mode-hook #'pjones:mu4e-view-mode-hook)
 
 ;;; mu4e-conf.el ends here

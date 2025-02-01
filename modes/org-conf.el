@@ -318,6 +318,10 @@ If TIME is nil then use the current time."
       (file ,org-default-notes-file)
       "* %?"
       :empty-lines 1)
+     ("m" "Mail Message" entry
+      (file ,org-default-notes-file)
+      (file ,(concat pjones:org-notes-directory "templates/org/mail.org"))
+      :empty-lines 1)
      ("p" "org-protocol-capture" entry
       (file ,org-default-notes-file)
       "* %:description\n\n  %:link\n\n  %i"
