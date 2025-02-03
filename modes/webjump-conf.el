@@ -38,7 +38,7 @@
                     "www.youtube.com/results?search_query=" ""])
      ("Wikipedia" .
       [simple-query "en.wikipedia.org"
-                    "en.wikipedia.org/w/index.php?search="])
+                    "en.wikipedia.org/w/index.php?search=" ""])
      ("Wiktionary" .
       [simple-query "en.wiktionary.org"
                     "en.wiktionary.org/w/index.php?search=" ""]))))
