@@ -60,6 +60,7 @@ FUNC."
 (declare-function consult-locate "consult")
 (declare-function consult-mark "consult")
 (declare-function consult-multi-occur "consult")
+(declare-function consult-org-agenda "consult-org-agenda")
 (declare-function consult-org-roam-mode "consult-org-roam")
 (declare-function consult-org-roam-search "consult-org-roam")
 (declare-function consult-outline "consult")
@@ -236,6 +237,7 @@ FUNC."
  (kbd "M-g f") #'pjones:fly-next-error
  (kbd "M-g h") #'consult-outline
  (kbd "M-g m") #'consult-mark
+ (kbd "M-g o") #'consult-org-agenda
 
  ;; Bindings that are not under C-c:
  (kbd "C-'") #'goto-last-change
