@@ -266,12 +266,12 @@ If TIME is nil then use the current time."
          (org-agenda-remove-tags t)
          (org-agenda-prefix-format "  %-8c ")
          (org-agenda-todo-keyword-format "")))
-       (tags-todo "@call|@email"
+       (tags-todo "@call|@email/NEXT"
          ((org-agenda-overriding-header "⚡ Phone Calls to Make, Emails to Send:")
           (org-agenda-prefix-format "  %-8c ")
           (org-agenda-remove-tags nil)
           (org-agenda-todo-keyword-format "")))
-       (tags-todo "@read-TODO=\"DONE\""
+       (tags-todo "@read/NEXT"
          ((org-agenda-overriding-header "⚡ Reading and Research:")
           (org-agenda-prefix-format "  %-8c ")
           (org-agenda-remove-tags nil)
