@@ -523,7 +523,8 @@ If TIME is nil then use the current time."
       (emacs-lisp . t)
       (mermaid . t)
       (plantuml . t)
-      (python . t)))
+      (python . t)
+      (ruby . t)))
 
 (push '(org-element-cache) warning-suppress-types)
 
