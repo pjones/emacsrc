@@ -105,9 +105,8 @@ When displaying these buffers, always open a new dedicated frame.")
  '(display-buffer-base-action
    '((display-buffer-reuse-window
       display-buffer-reuse-mode-window
-      display-buffer-use-some-frame
       display-buffer-in-direction) .
-     ((reusable-frames . nil)
+     ((reusable-frames . visible)
       (frame-predicate . pjones:frame-on-this-workspace-p)
       (direction . below)
       (window-height . 0.4))))
@@ -131,7 +130,8 @@ When displaying these buffers, always open a new dedicated frame.")
    `(;; Buffers that should pop out into a new frame and are not
      ;; shared with other buffers that have the same mode:
      (,(pjones:buffer-conditions pjones:modes-dedicated-to-frames)
-      (display-buffer-pop-up-frame)
+      (display-buffer-reuse-window
+       display-buffer-pop-up-frame)
       (dedicated . t)
       (pop-up-frame-parameters
        . ((unsplittable . t)
