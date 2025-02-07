@@ -4,6 +4,5 @@
 # expand-env: ((yas-indent-line 'fixed))
 # --
 #+header: :exports code
-#+header: :eval never-export
 #+begin_src ${1:sh} $0
 #+end_src
