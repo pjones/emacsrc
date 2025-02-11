@@ -34,6 +34,7 @@
 (declare-function org-ref-insert-link "org-ref")
 (declare-function org-roam-dailies-goto-date "org-roam")
 (declare-function org-tree-slide-mode "org-tree-slide")
+(declare-function pjones:calendar-contact-sync "../lisp/interactive")
 (declare-function pjones:ensure-blank-lines "../lisp/interactive")
 (declare-function pjones:open-line-above "../lisp/interactive")
 (declare-function puni-mode "puni")
@@ -897,6 +898,13 @@ If EDIT is non-nil then edit the resulting trigger with
   (define-key map (kbd "M-N") #'org-next-item)
   (define-key map (kbd "M-p") #'pjones:org-backward-heading-same-level)
   (define-key map (kbd "M-P") #'org-previous-item))
+
+(let ((map org-agenda-mode-map))
+  (define-key map (kbd "U")
+              (lambda ()
+                (interactive)
+                (pjones:calendar-contact-sync)
+                (org-agenda-redo-all))))
 
 (defmacro pjones:org-eval-in-calendar (function)
   "Generate a command to call FUNCTION from within `org-eval-in-calendar'."

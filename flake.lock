@@ -41,6 +41,22 @@
         "type": "github"
       }
     },
+    "khalel": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1716787658,
+        "narHash": "sha256-p70gZMxfd97S93nFJDiyahsLUnF2S6Q7PBkElKvg8AQ=",
+        "owner": "hperrey",
+        "repo": "khalel",
+        "rev": "14ef50352394cd1d62b80bc17ab14f4f801f47cd",
+        "type": "gitlab"
+      },
+      "original": {
+        "owner": "hperrey",
+        "repo": "khalel",
+        "type": "gitlab"
+      }
+    },
     "nextflow-mode": {
       "flake": false,
       "locked": {
@@ -130,6 +146,7 @@
       "inputs": {
         "desktop-scripts": "desktop-scripts",
         "home-manager": "home-manager",
+        "khalel": "khalel",
         "nextflow-mode": "nextflow-mode",
         "nixpkgs": "nixpkgs",
         "org-capture-ref": "org-capture-ref",

@@ -8,6 +8,11 @@
     desktop-scripts.url = "github:pjones/desktop-scripts";
     desktop-scripts.inputs.nixpkgs.follows = "nixpkgs";
 
+    khalel = {
+      url = "gitlab:hperrey/khalel";
+      flake = false;
+    };
+
     nextflow-mode = {
       url = "github:edmundmiller/nextflow-mode";
       flake = false;
