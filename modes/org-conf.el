@@ -20,6 +20,7 @@
 
 ;; Silence compiler warnings
 (declare-function consult-org-heading "consult")
+(declare-function corg-setup "corg")
 (declare-function org-appear-mode "org-appear")
 (declare-function org-attach-attach "org-attach")
 (declare-function org-attach-reveal-in-emacs "org-attach")
@@ -142,7 +143,7 @@ If TIME is nil then use the current time."
  '(org-clock-into-drawer t)
  '(org-columns-default-format "%60ITEM(Task) %EFFORT{:} %CLOCKED{:}")
  '(org-ctrl-k-protect-subtree t)
- '(org-cycle-emulate-tab 'whitestart)
+ '(org-cycle-emulate-tab t)
  '(org-edit-src-persistent-message nil)
  '(org-fast-tag-selection-single-key nil)
  '(org-goto-interface 'outline-path-completion)
@@ -922,6 +923,7 @@ If EDIT is non-nil then edit the resulting trigger with
 (add-hook 'org-agenda-after-show-hook #'pjones:org-hide-others)
 (add-hook 'org-agenda-finalize-hook #'pjones:org-agenda-delete-empty-blocks)
 (add-hook 'org-agenda-mode-hook #'pjones:org-agenda-mode-hook)
+(add-hook 'org-mode-hook #'corg-setup)
 (add-hook 'org-mode-hook #'org-appear-mode)
 (add-hook 'org-mode-hook #'org-bulletproof-mode)
 (add-hook 'org-mode-hook #'org-clock-dbus-mode)

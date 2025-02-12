@@ -8,6 +8,11 @@
     desktop-scripts.url = "github:pjones/desktop-scripts";
     desktop-scripts.inputs.nixpkgs.follows = "nixpkgs";
 
+    corg = {
+      url = "github:isamert/corg.el";
+      flake = false;
+    };
+
     khalel = {
       url = "gitlab:hperrey/khalel";
       flake = false;

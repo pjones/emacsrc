@@ -1,5 +1,21 @@
 {
   "nodes": {
+    "corg": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1728370052,
+        "narHash": "sha256-BX78yKSOj4TOPoXkLdyhrjges42h0+Wb8PUYR4XANR4=",
+        "owner": "isamert",
+        "repo": "corg.el",
+        "rev": "16d2b80fb2ff4daf0ab9bf89e5c9f649431337fc",
+        "type": "github"
+      },
+      "original": {
+        "owner": "isamert",
+        "repo": "corg.el",
+        "type": "github"
+      }
+    },
     "desktop-scripts": {
       "inputs": {
         "nixpkgs": [
@@ -144,6 +160,7 @@
     },
     "root": {
       "inputs": {
+        "corg": "corg",
         "desktop-scripts": "desktop-scripts",
         "home-manager": "home-manager",
         "khalel": "khalel",

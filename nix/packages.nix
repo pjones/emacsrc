@@ -18,6 +18,14 @@ let
 
   # Package overrides:
   emacsWithOverrides = (emacsPackagesFor emacs).overrideScope' (self: super: {
+    # Not in nixpkgs:
+    corg = emacs.pkgs.trivialBuild {
+      inherit version;
+      pname = "corg";
+      src = inputs.corg;
+      packageRequires = [ self.org super.s super.dash ];
+    };
+
     # I need this so khalel uses the same org-mode that I do and the
     # macros expand correctly.  Otherwise I get this error:
     # https://gitlab.com/hperrey/khalel/-/issues/11
@@ -69,6 +77,7 @@ emacsWithOverrides.emacsWithPackages (epkgs: with epkgs; [
   consult-recoll # recoll queries in emacs using consult
   corfu # Completion Overlay Region FUnction
   corfu-prescient # Prescient support for corfu
+  corg # Auto complete org-mode headers seamlessly
   csv-mode # Major mode for editing comma/char separated values
   darkroom # Remove visual distractions and focus on writing
   devdocs # Emacs viewer for DevDocs
