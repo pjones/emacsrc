@@ -142,7 +142,7 @@ If TIME is nil then use the current time."
  '(org-catch-invisible-edits 'smart)
  '(org-clock-into-drawer t)
  '(org-columns-default-format "%60ITEM(Task) %EFFORT{:} %CLOCKED{:}")
- '(org-ctrl-k-protect-subtree t)
+ '(org-ctrl-k-protect-subtree nil)
  '(org-cycle-emulate-tab t)
  '(org-edit-src-persistent-message nil)
  '(org-fast-tag-selection-single-key nil)
