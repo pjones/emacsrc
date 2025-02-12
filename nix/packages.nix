@@ -103,6 +103,7 @@ emacsWithOverrides.emacsWithPackages (epkgs: with epkgs; [
   flycheck-rust # Rust additions and Cargo support
   git-annex # Mode for easy editing of git-annex'd files
   go-mode # Major mode for the Go programming language
+  go-translate # Translator on Emacs
   goto-chg # Go to last change
   graphviz-dot-mode # Mode for the dot-language used by graphviz
   haskell-mode # A Haskell editing mode
