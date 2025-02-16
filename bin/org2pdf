@@ -1,0 +1,60 @@
+#!/usr/bin/env bash
+
+################################################################################
+set -eu
+set -o pipefail
+
+################################################################################
+option_export_function='(org-latex-export-to-pdf)'
+
+################################################################################
+usage() {
+  cat <<EOF
+Usage: $(basename "$0") [options]
+
+  -b      Use the Beamer exporter
+  -h      This message
+EOF
+}
+
+################################################################################
+function org2pdf() {
+  @out@/bin/ebatch \
+    --funcall package-initialize \
+    --eval "
+    (progn
+      (require 'org)
+      (dolist (file command-line-args-left)
+        (with-current-buffer (find-file-noselect file)
+          (setq org-export-use-babel t
+                org-confirm-babel-evaluate nil)
+          $option_export_function)))
+" "$@"
+}
+
+################################################################################
+main() {
+  # Option arguments are in $OPTARG
+  while getopts "bh" o; do
+    case "${o}" in
+    b)
+      option_export_function='(org-beamer-export-to-pdf)'
+      ;;
+
+    h)
+      usage
+      exit
+      ;;
+
+    *)
+      exit 1
+      ;;
+    esac
+  done
+
+  shift $((OPTIND - 1))
+  org2pdf "$@"
+}
+
+################################################################################
+main "$@"

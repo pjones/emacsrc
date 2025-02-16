@@ -537,21 +537,26 @@ If TIME is nil then use the current time."
 
 (defun pjones:org-mode-hook ()
   "Hook to hack `org-mode'."
-  ;; Puni doesn't work here:
-  (puni-mode -1)
-
   ;; Buffer Settings
   (save-place-mode -1)
 
-  ;; Tailor whitespace mode
-  (setq-local whitespace-style '(trailing tabs))
-  (whitespace-mode)
+  (unless noninteractive
+    ;; Puni doesn't work here:
+    (puni-mode -1)
 
-  ;; Use yasnippets:
-  (yas-minor-mode)
-  (setq-local yas/trigger-key [tab])
-  (define-key yas/keymap [tab] #'yas-next-field)
-  (add-to-list 'org-tab-first-hook #'yas-expand))
+    ;; Tailor whitespace mode
+    (setq-local whitespace-style '(trailing tabs))
+    (whitespace-mode)
+
+    ;; Better src block completion:
+    (require 'corg)
+    (corg-setup)
+
+    ;; Use yasnippets:
+    (yas-minor-mode)
+    (setq-local yas/trigger-key [tab])
+    (define-key yas/keymap [tab] #'yas-next-field)
+    (add-to-list 'org-tab-first-hook #'yas-expand)))
 
 (defun pjones:org-agenda-mode-hook ()
   "Hook run after a `org-agenda-mode' buffer is created."
@@ -923,7 +928,6 @@ If EDIT is non-nil then edit the resulting trigger with
 (add-hook 'org-agenda-after-show-hook #'pjones:org-hide-others)
 (add-hook 'org-agenda-finalize-hook #'pjones:org-agenda-delete-empty-blocks)
 (add-hook 'org-agenda-mode-hook #'pjones:org-agenda-mode-hook)
-(add-hook 'org-mode-hook #'corg-setup)
 (add-hook 'org-mode-hook #'org-appear-mode)
 (add-hook 'org-mode-hook #'org-bulletproof-mode)
 (add-hook 'org-mode-hook #'org-clock-dbus-mode)
