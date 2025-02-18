@@ -526,6 +526,7 @@ If TIME is nil then use the current time."
       (mermaid . t)
       (plantuml . t)
       (python . t)
+      (R . t)
       (ruby . t)))
 
 (push '(org-element-cache) warning-suppress-types)
