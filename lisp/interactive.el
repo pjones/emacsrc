@@ -16,6 +16,7 @@
 (declare-function cl-position "cl-seq")
 (declare-function comint-output-filter "comint")
 (declare-function comint-term-environment "comint")
+(declare-function dired-current-directory "dired")
 (declare-function dired-rename-file "dired-aux")
 (declare-function flycheck-next-error "flycheck")
 (declare-function http-mode "http")
@@ -27,6 +28,7 @@
 (declare-function puni-soft-delete-by-move "puni")
 (declare-function shell-mode "shell")
 (declare-function vterm "vterm")
+(declare-function vterm--internal "vterm")
 (declare-function which-key--hide-popup "which-key")
 (declare-function which-key--show-keymap "which-key")
 
@@ -141,14 +143,21 @@ When LOCAL-ONLY is non-nil, only connect to Bitlbee."
   (pjones:erc-bitlbee)
   (unless local-only (pjones:erc-freenode)))
 
-(defun pjones:start-term ()
-  "Start a new terminal buffer."
-  (interactive)
+(defun pjones:start-term (window)
+  "Start a new terminal buffer.
+If WINDOW is non-nil, show the vterm buffer in the current
+window.  Otherwise display the vterm buffer in a new frame."
+  (interactive "P")
   (require 'vterm)
-  (if (file-remote-p default-directory)
-      (let ((default-directory (expand-file-name "~/")))
-        (call-interactively #'pjones:vterm-frame))
-    (call-interactively #'pjones:vterm-frame)))
+  (let ((default-directory
+         (cond
+          ((equal major-mode 'dired-mode)
+           (dired-current-directory))
+          (t default-directory))))
+    (if (file-remote-p default-directory)
+        (setq default-directory (expand-file-name "~/")))
+    (if window (vterm--internal #'pop-to-buffer t)
+      (pjones:vterm-frame))))
 
 (defun pjones:start-http ()
   "Create a new buffer running `http-mode'."
