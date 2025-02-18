@@ -85,12 +85,11 @@ new title to use."
   "Start a new vterm instance."
   (interactive)
   (let ((buffer (vterm--internal #'identity t)))
-    (with-current-buffer buffer
-      (make-frame
-       `((window-system . ,(window-system-for-display "default"))
-         (unsplittable . t)
-         (name . "popup")))
-      (set-window-dedicated-p (get-buffer-window buffer t) t))
+    (pop-to-buffer
+     buffer
+     '((display-buffer-reuse-window
+        display-buffer-pop-up-frame) .
+        ((pop-up-frame-parameters . ((pjones-type . "vterm"))))))
     buffer))
 
 (defun pjones:vterm-frame-cmd (cmd)
@@ -102,8 +101,23 @@ new title to use."
       (setq-local vterm-kill-buffer-on-exit nil)
       (vterm--set-title cmd))))
 
+(defun pjones:vterm-maybe-delete-frame (buffer _event)
+  "Delete frame (or window) for BUFFER if certain conditions are met."
+  (when-let* ((window (get-buffer-window buffer t))
+              (frame (window-frame window))
+              (others (length (delq window (window-list frame 'no-minibuf))))
+              (type (or (frame-parameter frame 'pjones-type) "none"))
+              vterm-kill-buffer-on-exit)
+    (cond ((and (string= type "vterm")
+                (= others 0))
+           (delete-frame frame))
+          ((> others 0)
+           (delete-window window)))
+    (kill-buffer buffer)))
+
 (advice-add 'vterm--set-title :around #'pjones:vterm--set-title)
-(add-hook 'vterm-mode-hook #'pjones:vterm-mode-hook)
 (add-hook 'vterm-copy-mode-hook #'pjones:vterm-copy-mode-hook)
+(add-hook 'vterm-exit-functions #'pjones:vterm-maybe-delete-frame)
+(add-hook 'vterm-mode-hook #'pjones:vterm-mode-hook)
 
 ;;; vterm-conf.el ends here
