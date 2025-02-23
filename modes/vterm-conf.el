@@ -14,7 +14,8 @@
   "The last title set in the current buffer.")
 
 (custom-set-variables
-  '(vterm-buffer-name-string "vterm %s"))
+ '(vterm-kill-buffer-on-exit nil) ; See pjones:vterm-mode-hook
+ '(vterm-buffer-name-string "vterm %s"))
 
 (let ((map vterm-mode-map))
   ;; Remove some bindings:
@@ -61,7 +62,18 @@
 
 (defun pjones:vterm-mode-hook ()
   "Mode hook for `vterm-mode'."
-  (puni-mode -1)) ; Disable puni mode.
+  (puni-mode -1) ; Disable puni mode.
+
+  ;; If `vterm-kill-buffer-on-exit' is non-nil in the global scope
+  ;; then very short lived processes will result in the frame being
+  ;; deleted even if I want it to stay around.  That's because the
+  ;; process may exit before I have a chance to set the variable to
+  ;; `nil'.
+  ;;
+  ;; So for longer lived processes we can switch the value for the
+  ;; current buffer to close the frame when the process exits.
+  (unless (local-variable-p 'vterm-kill-buffer-on-exit)
+    (setq-local vterm-kill-buffer-on-exit t)))
 
 (defun pjones:vterm-copy-mode-hook ()
   "Mode hook for `vterm-copy-mode'."
