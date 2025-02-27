@@ -902,7 +902,7 @@ If EDIT is non-nil then edit the resulting trigger with
   (define-key map (kbd "M-<return>") #'pjones:org-insert-item)
   (define-key map (kbd "M-<right>") #'pjones:org-demote)
   (define-key map (kbd "M-g C-i") #'pjones:org-get-id)
-  (define-key map (kbd "M-g i") #'org-goto)
+  (define-key map (kbd "M-g i") #'consult-org-heading)
   (define-key map (kbd "M-n") #'org-forward-heading-same-level)
   (define-key map (kbd "M-N") #'org-next-item)
   (define-key map (kbd "M-p") #'pjones:org-backward-heading-same-level)
