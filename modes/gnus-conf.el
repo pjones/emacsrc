@@ -70,7 +70,6 @@ Declared here to avoid compiler warnings.")
  '(gnus-message-replysign t)
  '(gnus-message-replyencrypt t)
  '(gnus-message-replysignencrypted t)
- '(mail-user-agent 'gnus-user-agent)
 
  ;; Gnus Summary:
  '(gnus-preserve-marks nil)
