@@ -134,19 +134,15 @@ If PREV is non-nil go to the previous theme."
   (pjones:theme-next t))
 
 (defun pjones:theme-from-dbus (value)
-  "Change the theme based on VALUE from dbus."
-  (while (listp value) (setq value (car value)))
-  (cond
-   ((equal value '1)
-    (pjones:load-theme pjones:dark-theme))
-   ((equal value 'prefer-dark)
-    (pjones:load-theme pjones:dark-theme))
-   ((equal value '2)
-    (pjones:load-theme pjones:light-theme))
-   ((equal value 'prefer-light)
-    (pjones:load-theme pjones:light-theme))
-   (t
-    (pjones:load-theme pjones:dark-theme))))
+  "Change the theme based on a D-Bus property.
+
+VALUE should be an integer or an arbitrarily nested list that
+contains an integer.  When VALUE is equal to 2 then a light theme
+will be selected, otherwise a dark theme will be selected."
+  (pjones:load-theme
+   (if (= 2 (car (flatten-list value)))
+       pjones:light-theme
+     pjones:dark-theme)))
 
 ;; Run my theme hooks:
 (advice-add
@@ -246,25 +242,31 @@ The mode construct list is then returned."
 
 ;; Hooks:
 (add-hook 'after-init-hook
-(defun pjones:set-initial-theme ()
-  "Set the theme on start up."
-  (dbus-call-method-asynchronously
-   :session "org.freedesktop.portal.Desktop"
-   "/org/freedesktop/portal/desktop"
-   "org.freedesktop.portal.Settings"
-   "Read"
-   #'pjones:theme-from-dbus
-   "org.freedesktop.appearance"
-   "color-scheme")
-  (dbus-register-signal
-   :session "org.freedesktop.portal.Desktop"
-   "/org/freedesktop/portal/desktop"
-   "org.freedesktop.portal.Settings"
-   "SettingChanged"
-   (lambda (path var value)
-     (when (and (string-equal path "org.freedesktop.appearance")
-                (string-equal var "color-scheme"))
-       (pjones:theme-from-dbus value))))))
+  (defun pjones:set-initial-theme ()
+    "Set the theme on start up."
+    ;; Make a dbus method call to find the current color scheme:
+    ;;
+    ;; dbus-send --session --print-reply --dest=org.freedesktop.portal.Desktop \
+    ;;   /org/freedesktop/portal/desktop org.freedesktop.portal.Settings.Read \
+    ;;   string:org.freedesktop.appearance string:color-scheme
+    (dbus-call-method-asynchronously
+     :session "org.freedesktop.portal.Desktop"
+     "/org/freedesktop/portal/desktop"
+     "org.freedesktop.portal.Settings"
+     "Read"
+     #'pjones:theme-from-dbus
+     "org.freedesktop.appearance"
+     "color-scheme")
+    ;; Register to be notified when the theme changes in the future:
+    (dbus-register-signal
+     :session "org.freedesktop.portal.Desktop"
+     "/org/freedesktop/portal/desktop"
+     "org.freedesktop.portal.Settings"
+     "SettingChanged"
+     (lambda (path var value)
+       (when (and (string-equal path "org.freedesktop.appearance")
+                  (string-equal var "color-scheme"))
+         (pjones:theme-from-dbus value))))))
 
 (add-hook 'after-init-hook #'pjones:configure-new-frame)
 (add-hook 'after-make-frame-functions #'pjones:configure-new-frame)
