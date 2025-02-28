@@ -79,12 +79,12 @@
 
           emacsrc-xorg = import ./. {
             inherit pkgs inputs;
-            emacs = pkgs.emacs.override { withGTK3 = true; };
+            emacs = pkgs.emacs30-gtk3;
           };
 
           emacsrc-wayland = import ./. {
             inherit pkgs inputs;
-            emacs = pkgs.emacs.override { withPgtk = true; };
+            emacs = pkgs.emacs30-pgtk;
           };
         });
 

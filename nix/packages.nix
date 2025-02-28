@@ -182,7 +182,6 @@ emacsWithOverrides.emacsWithPackages (epkgs: with epkgs; [
   vterm # Fully-featured terminal emulator
   weyland-yutani-theme # Emacs theme based off Alien movie franchise
   wgrep # Writable grep buffer and apply the changes to files
-  which-key # Display available keybindings in popup
   winum # Navigate windows and frames using numbers.
   yaml-mode # Major mode for editing YAML files
   yasnippet # Yet another snippet extension for Emacs
