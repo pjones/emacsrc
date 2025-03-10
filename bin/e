@@ -14,15 +14,15 @@ option_set_frame_name=0
 option_emacs_opts=()
 
 ################################################################################
-# Extra path entries for dependencies (nc, desktop-workspace, etc)
+# Extra path entries for dependencies (nc, superkey-workspace.sh, etc)
 export PATH=@path@:$PATH
 
 ################################################################################
 # See if we can get the name of the server from the current workspace.
 if [ -z "${EMACS_SOCKET_NAME:-}" ]; then
   if [ -n "${WAYLAND_DISPLAY:-}" ] || [ -n "${DISPLAY:-}" ]; then
-    if type desktop-workspace &>/dev/null; then
-      EMACS_SOCKET_NAME=$(desktop-workspace -n)
+    if type superkey-workspace.sh &>/dev/null; then
+      EMACS_SOCKET_NAME=$(superkey-workspace.sh -n)
     fi
   fi
 fi

@@ -5,9 +5,6 @@
     home-manager.url = "github:nix-community/home-manager/release-24.11";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
-    desktop-scripts.url = "github:pjones/desktop-scripts";
-    desktop-scripts.inputs.nixpkgs.follows = "nixpkgs";
-
     corg = {
       url = "github:isamert/corg.el";
       flake = false;

@@ -16,26 +16,6 @@
         "type": "github"
       }
     },
-    "desktop-scripts": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1731577691,
-        "narHash": "sha256-vnM76sYS6CPynn5u8aj9qoM0ySsJObfPw6DEKjUzho4=",
-        "owner": "pjones",
-        "repo": "desktop-scripts",
-        "rev": "77841f50ba947065acea608343f88384c3abcbee",
-        "type": "github"
-      },
-      "original": {
-        "owner": "pjones",
-        "repo": "desktop-scripts",
-        "type": "github"
-      }
-    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -161,7 +141,6 @@
     "root": {
       "inputs": {
         "corg": "corg",
-        "desktop-scripts": "desktop-scripts",
         "home-manager": "home-manager",
         "khalel": "khalel",
         "nextflow-mode": "nextflow-mode",

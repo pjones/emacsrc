@@ -61,11 +61,12 @@ its display."
 
 (defun pjones:frame-set-workspace (&optional frame)
   "Record the name of the current workspace in FRAME."
-  (when (display-graphic-p)
-    (let ((frame (or frame (selected-frame)))
-          (workspace (string-trim-right
-                      (shell-command-to-string "desktop-workspace -n"))))
-      (set-frame-parameter frame 'workspace workspace))))
+  (when-let (((display-graphic-p))
+             (path (executable-find "superkey-workspace.sh"))
+             (frame (or frame (selected-frame)))
+             (workspace (string-trim-right
+                         (shell-command-to-string (concat path " -n")))))
+    (set-frame-parameter frame 'workspace workspace)))
 (add-to-list 'after-make-frame-functions #'pjones:frame-set-workspace)
 
 (defun pjones:frame-on-this-workspace-p (frame)
