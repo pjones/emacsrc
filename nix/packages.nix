@@ -17,7 +17,7 @@ let
   });
 
   # Package overrides:
-  emacsWithOverrides = (emacsPackagesFor emacs).overrideScope' (self: super: {
+  emacsWithOverrides = (emacsPackagesFor emacs).overrideScope (self: super: {
     # Not in nixpkgs:
     corg = emacs.pkgs.trivialBuild {
       inherit version;
