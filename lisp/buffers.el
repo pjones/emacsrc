@@ -59,22 +59,22 @@ its display."
           (pjones:buffer-conditions ,names-or-modes)
           buffer action)))))
 
-(defun pjones:frame-set-workspace (&optional frame)
-  "Record the name of the current workspace in FRAME."
-  (when-let (((display-graphic-p))
-             (path (executable-find "superkey-workspace.sh"))
-             (frame (or frame (selected-frame)))
-             (workspace (string-trim-right
-                         (shell-command-to-string (concat path " -n")))))
-    (set-frame-parameter frame 'workspace workspace)))
-(add-to-list 'after-make-frame-functions #'pjones:frame-set-workspace)
-
-(defun pjones:frame-on-this-workspace-p (frame)
-  "Return non-nil if FRAME is on the current workspace."
-  (let ((selected (selected-frame)))
-    (and (not (equal selected frame))
-         (string-equal (frame-parameter selected 'workspace)
-                       (frame-parameter frame 'workspace)))))
+;; (defun pjones:frame-set-workspace (&optional frame)
+;;   "Record the name of the current workspace in FRAME."
+;;   (when-let (((display-graphic-p))
+;;              (path (executable-find "superkey-workspace.sh"))
+;;              (frame (or frame (selected-frame)))
+;;              (workspace (string-trim-right
+;;                          (shell-command-to-string (concat path " -n")))))
+;;     (set-frame-parameter frame 'workspace workspace)))
+;; (add-to-list 'after-make-frame-functions #'pjones:frame-set-workspace)
+;;
+;; (defun pjones:frame-on-this-workspace-p (frame)
+;;   "Return non-nil if FRAME is on the current workspace."
+;;   (let ((selected (selected-frame)))
+;;     (and (not (equal selected frame))
+;;          (string-equal (frame-parameter selected 'workspace)
+;;                        (frame-parameter frame 'workspace)))))
 
 (defvar pjones:modes-dedicated-to-frames
   '(comint-mode
@@ -108,7 +108,7 @@ When displaying these buffers, always open a new dedicated frame.")
       display-buffer-reuse-mode-window
       display-buffer-in-direction) .
      ((reusable-frames . visible)
-      (frame-predicate . pjones:frame-on-this-workspace-p)
+      ;(frame-predicate . pjones:frame-on-this-workspace-p)
       (direction . below)
       (window-height . 0.4))))
 
@@ -142,7 +142,7 @@ When displaying these buffers, always open a new dedicated frame.")
      (,(pjones:selected-buffer-conditions pjones:modes-dedicated-to-frames
                                           pjones:dedicated-frame-exceptions)
       (display-buffer-use-some-frame)
-      (frame-predicate . pjones:frame-on-this-workspace-p)
+      ;(frame-predicate . pjones:frame-on-this-workspace-p)
       (reusable-frames . visible))
 
      ;; Buffers that should split the entire frame:
