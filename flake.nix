@@ -30,6 +30,11 @@
       flake = false;
     };
 
+    ox-ipynb = {
+      url = "github:jkitchin/ox-ipynb";
+      flake = false;
+    };
+
     persid = {
       url = "github:pjones/persid/pjones/compile";
       flake = false;

@@ -1,4 +1,4 @@
-;;; org-conf.el -- Settings for org-mode.
+;;; org-conf.el -- Settings for `org' -*- lexical-binding: t -*-
 ;;
 ;;; Commentary:
 ;;
@@ -17,6 +17,7 @@
 ;; These autoloads are missing from their respective packages:
 (autoload 'org-capture-ref-get-bibtex-field "org-capture-ref")
 (autoload 'org-capture-ref-process-capture "org-capture-ref")
+(autoload 'ox-ipynb-export-to-ipynb-buffer "ox-ipynb")
 
 ;; Silence compiler warnings
 (declare-function consult-org-heading "consult")
@@ -799,6 +800,9 @@ non-empty lines in the block (excluding the line with
         (delete-region (point) (1+ (pos-eol))))))
   (setq buffer-read-only t))
 
+;; From Consult:
+(defvar consult--customize-alist)
+
 (defun pjones:org-get-id (&optional prompt)
   "Navigate to a heading and return its ID.
 If called interactively, also put the ID on the kill ring.
@@ -873,6 +877,16 @@ If EDIT is non-nil then edit the resulting trigger with
       (newline)
       (insert (format "ids(id:%s)\n" source)))))
 
+(defun pjones:ox-ipynb-export-to-ipynb ()
+  "Export to a Juypter notebook."
+  (interactive)
+  (save-excursion
+    (when-let* ((buffer (ox-ipynb-export-to-ipynb-buffer))
+                (file (buffer-local-value 'export-file-name buffer)))
+      (with-current-buffer buffer
+        (write-file file))
+      (kill-buffer buffer))))
+
 ;;; Key Bindings:
 (let ((map org-mode-map))
   ;; Reset these so I can use them as a prefix:
@@ -890,6 +904,7 @@ If EDIT is non-nil then edit the resulting trigger with
   (define-key map (kbd "C-c C-b") #'pjones:org-todo-block)
   (define-key map (kbd "C-c C-e b") #'org-beamer-export-to-pdf)
   (define-key map (kbd "C-c C-e e") #'org-export-dispatch)
+  (define-key map (kbd "C-c C-e j") #'pjones:ox-ipynb-export-to-ipynb)
   (define-key map (kbd "C-c C-e m") #'org-gfm-export-as-markdown)
   (define-key map (kbd "C-c C-e p") #'org-latex-export-to-pdf)
   (define-key map (kbd "C-c C-x @") #'org-ref-insert-link)

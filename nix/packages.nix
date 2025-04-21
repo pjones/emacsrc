@@ -56,6 +56,13 @@ let
       src = "${inputs.org-clock-dbus}/lisp/org-clock-dbus.el";
     };
 
+    ox-ipynb = emacs.pkgs.trivialBuild {
+      inherit version;
+      name = "ox-ipynb";
+      src = inputs.ox-ipynb;
+      packageRequires = [ super.s super.dash ];
+    };
+
     persid = emacs.pkgs.trivialBuild {
       inherit version;
       pname = "persid";
@@ -151,6 +158,7 @@ emacsWithOverrides.emacsWithPackages (epkgs: with epkgs; [
   org-tree-slide # A presentation tool for org-mode
   orgalist # Manage Org-like lists in non-Org buffers
   ox-gfm # Github Flavored Markdown Back-End for Org Export Engine
+  ox-ipynb # org-mode exporter to Jupyter notebooks
   package-lint # A linting library for elisp package authors
   pass # A major mode for password-store
   password-store # Password store (pass) support

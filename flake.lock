@@ -121,6 +121,22 @@
         "type": "github"
       }
     },
+    "ox-ipynb": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1725579910,
+        "narHash": "sha256-hLhTm9Y7e2ayJpCt6OvbxcuMYQucbZfA+jjlAPxlIbg=",
+        "owner": "jkitchin",
+        "repo": "ox-ipynb",
+        "rev": "ef9ba544230f9a30c17b172b566d9756cb74b608",
+        "type": "github"
+      },
+      "original": {
+        "owner": "jkitchin",
+        "repo": "ox-ipynb",
+        "type": "github"
+      }
+    },
     "persid": {
       "flake": false,
       "locked": {
@@ -147,6 +163,7 @@
         "nixpkgs": "nixpkgs",
         "org-capture-ref": "org-capture-ref",
         "org-clock-dbus": "org-clock-dbus",
+        "ox-ipynb": "ox-ipynb",
         "persid": "persid"
       }
     }
