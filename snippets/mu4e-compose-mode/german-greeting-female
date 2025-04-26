@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+# name: german-greeting-female
+# key: gf
+# expand-env: ((yas-indent-line 'fixed))
+# --
+Sehr geehrte Frau ${1:Name},
+
+$0
+
+Mit freundlichem Grüßen
+
+Peter Jones

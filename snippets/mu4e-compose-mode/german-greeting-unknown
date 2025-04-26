@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+# name: german-greeting-unknown
+# key: gu
+# expand-env: ((yas-indent-line 'fixed))
+# --
+Sehr geehrte Damen und Herren,
+
+$0
+
+Mit freundlichem Grüßen
+
+Peter Jones

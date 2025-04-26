@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+# name: german-greeting-male
+# key: gm
+# expand-env: ((yas-indent-line 'fixed))
+# --
+Sehr geehrter Herr ${1:Name},
+
+$0
+
+Mit freundlichem Grüßen
+
+Peter Jones

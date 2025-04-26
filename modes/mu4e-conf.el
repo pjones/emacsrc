@@ -9,6 +9,10 @@
 (require 'mu4e)
 (require 'rx)
 
+(declare-function orgalist-mode "orgalist")
+(declare-function pjones:indent-or-complete "../lisp/completion.el")
+(declare-function yas-minor-mode "yasnippet")
+
 (defun pjones:mu4e-match-func (prefix msg)
   "Return non-nil if MSG is in the PREFIX maildir."
   (when msg
@@ -89,6 +93,13 @@ The JSON document comes from my tilde project."
 
 (defun pjones:mu4e-compose-mode-hook ()
   "Prepare a new compose buffer."
+  ;; Bindings:
+  (keymap-local-set "TAB" #'pjones:indent-or-complete)
+
+  ;; Enable other modes:
+  (yas-minor-mode)
+  (orgalist-mode)
+
   ;; Always make sure we use the correct drafts folder.
   (add-hook 'before-save-hook #'pjones:mu4e-compose-secret-drafts nil t)
 
