@@ -11,6 +11,6 @@
  '(isearch-lax-whitespace t)
  '(isearch-lazy-count t)
  '(search-nonincremental-instead nil)
- '(search-whitespace-regexp ".*"))
+ '(search-whitespace-regexp "[ \t\n.?!]+"))
 
 ;;; isearch-conf.el ends here
