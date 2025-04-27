@@ -24,20 +24,6 @@ Prefix the project name with NAME-OF-MODE."
             (if project (concat ":" (project-name project)) "")
             "*")))
 
-(defun pjones:compile-goto-error (orig &rest args)
-  "Call ORIG with ARGS, keeping it from using a popup frame."
-  (let ((buf (current-buffer))
-        (win (selected-window))
-        ret new)
-    (if (not (pjones:frame-popup-p (window-frame win)))
-      (apply orig args)
-      (setq ret (apply orig args)
-            new (current-buffer))
-      (set-window-buffer win buf)
-      (pjones:display-buffer-in-non-popup-frame new)
-      ret)))
-
-(advice-add 'compile-goto-error :around #'pjones:compile-goto-error)
 (add-hook 'compilation-filter-hook #'ansi-color-compilation-filter)
 
 ;;; compile-conf.el ends here
