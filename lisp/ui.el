@@ -157,7 +157,10 @@ will be selected, otherwise a dark theme will be selected."
   (set-frame-parameter frame 'name nil)
   (let ((font-fixed "Hermit")
         (font-variable "IBM Plex Serif"))
-    (dolist (mode '(menu-bar-mode tool-bar-mode scroll-bar-mode))
+    (dolist (mode '(menu-bar-mode
+                    tab-bar-mode
+                    tool-bar-mode
+                    scroll-bar-mode))
       (if (and (fboundp mode) (symbol-value mode))
           (funcall mode -1)))
     (blink-cursor-mode)

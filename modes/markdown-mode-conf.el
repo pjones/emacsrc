@@ -6,7 +6,6 @@
 (require 'darkroom)
 (require 'markdown-mode)
 (require 'visual-fill)
-(require 'whitespace)
 (require 'yasnippet)
 
 (declare-function pjones:open-line-above "../lisp/interactive.el")
@@ -68,7 +67,6 @@ If REVERSE is non-nil, do the opposite of what the context says."
   "Don't wrap lines.  Needed for most web forms."
   (interactive)
   (auto-fill-mode -1)
-  (whitespace-mode -1)
   (visual-line-mode)
   (visual-fill-mode))
 
@@ -90,7 +88,6 @@ If REVERSE is non-nil, do the opposite of what the context says."
 
 (defun pjones:markdown-mode-hook ()
   "Set up key bindings and other crap for markdown-mode."
-  (whitespace-mode)
   (yas-minor-mode)
 
   ;; Translate some strings into pretty symbols:

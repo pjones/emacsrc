@@ -1,12 +1,9 @@
-;;; code.el -- Settings and functions for programming modes
+;;; code.el -- Settings and functions for programming modes -*- lexical-binding: t -*-
 ;;
 ;;; Commentary:
 ;;
 ;;; Code:
-(eval-when-compile
-  (require 'saveplace))
 
-(declare-function compilation-read-command "compile")
 (declare-function dumb-jump-xref-activate "dumb-jump")
 (declare-function flycheck-mode "flycheck")
 (declare-function indium-connect-to-chrome "indium")
@@ -55,33 +52,22 @@
         (insert-char ?  col)
         (funcall go)))))
 
-(defun pjones:comment-line-break-function (&rest args)
-  "Work around a bug in Emacs.
-Calls `comment-indent-new-line' with ARGS."
-  (let ((comment-auto-fill-only-comments nil))
-    (apply #'comment-indent-new-line args)
-    (let ((max-backtrack (save-excursion (beginning-of-line) (point))))
-      (unless (looking-back "\\s-" max-backtrack)
-        (insert " ")))))
-
 (defun pjones:prog-mode-hook ()
   "Settings and bindings for programming modes."
-  (require 'flycheck)
-  (require 'dumb-jump)
-  (setq comment-empty-lines t)
-  (setq-local comment-auto-fill-only-comments t)
-  (setq-local comment-line-break-function #'pjones:comment-line-break-function)
-  (local-set-key (kbd "C-<tab>") 'pjones:comment-bar)
-  (local-set-key (kbd "RET") 'newline-and-indent)
+  (keymap-local-set "C-<tab>" #'pjones:comment-bar)
+
+  (setq-local
+   comment-auto-fill-only-comments t)   ; Don't auto fill code.
+
   (auto-fill-mode)
   (display-line-numbers-mode)
   (flycheck-mode)
   (puni-mode)
   (save-place-mode)
-  (whitespace-mode)
   (yas-minor-mode)
-  (add-hook 'xref-backend-functions #'dumb-jump-xref-activate)
-  (add-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p))
+
+  (add-hook 'xref-backend-functions #'dumb-jump-xref-activate 50 t)
+  (add-hook 'after-save-hook #'executable-make-buffer-file-executable-if-script-p 0 t))
 
 ;; Hook In:
 (add-hook 'prog-mode-hook #'pjones:prog-mode-hook)

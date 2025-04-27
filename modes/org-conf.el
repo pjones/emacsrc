@@ -40,7 +40,6 @@
 (declare-function pjones:ensure-blank-lines "../lisp/interactive")
 (declare-function pjones:open-line-above "../lisp/interactive")
 (declare-function puni-mode "puni")
-(declare-function whitespace-mode "whitespace")
 (declare-function yas-expand "yasnippet")
 (declare-function yas-minor-mode "yasnippet")
 (declare-function yas-next-field "yasnippet")
@@ -48,7 +47,6 @@
 (defvar org-attach-store-link-p)
 (defvar org-clock-start-time)
 (defvar pjones:current-theme)
-(defvar whitespace-style)
 (defvar yas/keymap)
 
 (defvar pjones:org-notes-directory
@@ -542,13 +540,14 @@ If TIME is nil then use the current time."
   ;; Buffer Settings
   (save-place-mode -1)
 
+  ;; Orgzly insists on inserting empty lines at the end of files.  So
+  ;; if they are removed in Emacs they will cause a sync conflict or
+  ;; just come back on their own.  So, don't delete them.
+  (setq-local delete-trailing-lines nil)
+
   (unless noninteractive
     ;; Puni doesn't work here:
     (puni-mode -1)
-
-    ;; Tailor whitespace mode
-    (setq-local whitespace-style '(trailing tabs))
-    (whitespace-mode)
 
     ;; Better src block completion:
     (require 'corg)

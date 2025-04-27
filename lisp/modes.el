@@ -37,6 +37,7 @@
 
 (defun pjones:boot-global-modes ()
   "Start or prepare global modes."
+  (editorconfig-mode)                ; EditorConfig Plugin
   (electric-pair-mode)               ; Insert matching brackets.
   (envrc-global-mode)                ; Respect .envrc files.
   (global-auto-revert-mode)          ; External changes cause a revert
