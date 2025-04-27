@@ -941,6 +941,13 @@ If EDIT is non-nil then edit the resulting trigger with
   (define-key map (kbd "M-p") (pjones:org-eval-in-calendar calendar-backward-week))
   (define-key map (kbd "M-n") (pjones:org-eval-in-calendar calendar-forward-week)))
 
+(defvar-keymap org-mode-repeat-map
+  :repeat t
+  "d" #'org-next-visible-heading
+  "n" #'org-forward-heading-same-level
+  "p" #'pjones:org-backward-heading-same-level
+  "u" #'pjones:org-up-or-prev)
+
 ;;; Hooks
 (add-hook 'org-agenda-after-show-hook #'pjones:org-hide-others)
 (add-hook 'org-agenda-finalize-hook #'pjones:org-agenda-delete-empty-blocks)

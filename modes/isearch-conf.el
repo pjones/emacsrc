@@ -13,4 +13,9 @@
  '(search-nonincremental-instead nil)
  '(search-whitespace-regexp "[ \t\n.?!]+"))
 
+(defvar-keymap isearch-repeat-map
+  :repeat t
+  "r" #'isearch-repeat-backward
+  "s" #'isearch-repeat-forward)
+
 ;;; isearch-conf.el ends here
