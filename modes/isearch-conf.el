@@ -13,6 +13,9 @@
  '(search-nonincremental-instead nil)
  '(search-whitespace-regexp "[ \t\n.?!]+"))
 
+(keymap-set isearch-mode-map "C-g" #'isearch-cancel)
+(keymap-set isearch-mode-map "C-c" #'isearch-abort)
+
 (defvar-keymap isearch-repeat-map
   :repeat t
   "r" #'isearch-repeat-backward
