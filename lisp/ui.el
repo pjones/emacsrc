@@ -147,7 +147,9 @@ will be selected, otherwise a dark theme will be selected."
                      (buffer-file-name buffer-file-name)
                      (dired-directory
                       (if (listp dired-directory) (car dired-directory) dired-directory)))))
-    (concat "Emacs: " (or file (buffer-name)))))
+    (concat "Emacs: "
+            (or file (buffer-name))
+            (format " [%s]" (frame-parameter (selected-frame) 'window-id)))))
 
 (defun pjones:configure-new-frame (&optional frame)
   "Hook to configure new frame FRAME."
