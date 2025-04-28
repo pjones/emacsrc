@@ -20,6 +20,7 @@ let
   extraPackages = [
     (pkgs.nuspellWithDicts hunspellDicts)
     pkgs.enchant
+    pkgs.nixd # I do a lot of Nix programming.
   ]
   ++ hunspellDicts
   ++ lib.optionals pkgs.stdenv.isLinux [

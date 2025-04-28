@@ -1,4 +1,4 @@
-;;; nix-mode-conf.el --- Settings for nix-mode
+;;; nix-mode-conf.el -- Settings for `nix-mode' -*- lexical-binding: t -*-
 ;;
 ;;; Commentary:
 ;;
@@ -17,11 +17,11 @@
 
 (defun pjones:nix-mode-hook ()
   "Configure `nix-mode'."
+  (eglot-ensure)
   (when (fboundp 'pjones:prog-mode-hook)
     (pjones:prog-mode-hook))
   (nix-format-on-save-mode))
 
-(define-key nix-mode-map (kbd "<return>") #'newline-and-indent)
 (add-hook 'nix-mode-hook #'pjones:nix-mode-hook)
 
 ;;; nix-mode-conf.el ends here
