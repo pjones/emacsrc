@@ -20,11 +20,30 @@
   (concat (file-name-directory (directory-file-name (file-name-directory load-file-name))) "modes/")
   "The directory where I keep mode-specific configuration files.")
 
+(defvar pjones:mode-aliases
+  '((cc-mode c-ts-mode c++-ts-mode)
+    (nix-mode nix-ts-mode)
+    (ruby-mode ruby-ts-mode)
+    (rust-mode rust-ts-mode)
+    (yaml-mode yaml-ts-mode))
+  "A list of aliases for modes.
+
+Some modes should trigger the loading of one of my configuration files
+even when the names don't match exactly.  For example, loading
+`nix-ts-mode' should trigger a load of my `nix-mode-conf.el' file.")
+
 ;; Automatically load my per-mode configuration files
 (dolist (file (directory-files pjones:modes-dir t))
   (let ((basename (file-name-nondirectory file)))
     (when (string-match "\\(-conf\\.elc\\)$" basename)
       (eval-after-load (intern (replace-match "" t t basename))
+        `(load ,file)))))
+
+(dolist (alias pjones:mode-aliases)
+  (let* ((mode (symbol-name (car alias)))
+         (file (concat pjones:modes-dir mode "-conf.elc")))
+    (dolist (other (cdr alias))
+      (eval-after-load other
         `(load ,file)))))
 
 (defun pjones:basic-mode-hook ()
@@ -56,6 +75,11 @@
   (use-package pdf-tools
     :magic ("%PDF" . pdf-view-mode)
     :config (pdf-tools-install :no-query))
+
+  ;; Seems to only work this way:
+  (use-package treesit-auto
+    :config
+    (global-treesit-auto-mode))
 
   ;; Libraries used throughout my Emacs session:
   (require 'saveplace)                    ; Saves your location in files

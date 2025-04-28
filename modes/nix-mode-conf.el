@@ -23,5 +23,6 @@
   (nix-format-on-save-mode))
 
 (add-hook 'nix-mode-hook #'pjones:nix-mode-hook)
+(add-hook 'nix-ts-mode-hook #'pjones:nix-mode-hook)
 
 ;;; nix-mode-conf.el ends here

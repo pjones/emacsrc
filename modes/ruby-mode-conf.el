@@ -21,9 +21,10 @@
 (defun pjones:ruby-mode-hook ()
   "Hook for `ruby-mode'."
   (when (fboundp 'pjones:prog-mode-hook)
-    (pjones:prog-mode-hook)))
+    (pjones:prog-mode-hook))
+  (superword-mode))
 
-(add-hook 'ruby-mode-hook #'superword-mode)
 (add-hook 'ruby-mode-hook #'pjones:ruby-mode-hook)
+(add-hook 'ruby-ts-mode-hook #'pjones:ruby-mode-hook)
 
 ;;; ruby-mode-conf.el ends here

@@ -4,6 +4,8 @@
 ;;
 ;;; Code:
 
+(require 'dash)
+
 (declare-function dumb-jump-xref-activate "dumb-jump")
 (declare-function indium-connect-to-chrome "indium")
 (declare-function indium-run-node "indium")
@@ -66,7 +68,13 @@
   (yas-minor-mode)
 
   (add-hook 'xref-backend-functions #'dumb-jump-xref-activate 50 t)
-  (add-hook 'after-save-hook #'executable-make-buffer-file-executable-if-script-p 0 t))
+  (add-hook 'after-save-hook #'executable-make-buffer-file-executable-if-script-p 0 t)
+
+  ;; Some modes (csharp-mode) put `t' in the backend list!
+  (setq xref-backend-functions
+        (-filter
+         (lambda (elm) (not (equal t elm)))
+         xref-backend-functions)))
 
 ;; Hook In:
 (add-hook 'prog-mode-hook #'pjones:prog-mode-hook)

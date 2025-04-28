@@ -137,6 +137,7 @@ emacsWithOverrides.emacsWithPackages (epkgs: with epkgs; [
   mu4e # Mu4e, the mu mail user agent
   nextflow-mode # Emacs major mode for Nextflow
   nix-mode # Major mode for editing .nix files
+  nix-ts-mode # An Emacs major mode for editing Nix expressions
   no-littering # help keeping ~/.emacs.d clean
   noccur # Run multi-occur on project/dired files
   nov # Featureful EPUB reader mode
@@ -177,6 +178,7 @@ emacsWithOverrides.emacsWithPackages (epkgs: with epkgs; [
   sage-shell-mode # A front-end for Sage Math
   scad-mode # A major mode for editing OpenSCAD code
   separedit # Edit comment or string/docstring or code
+  treesit-auto # Automatic installation, usage, and fallback for tree-sitter major modes
   treesit-grammars.with-all-grammars # For use with tree-sitter
   tron-legacy-theme # Original retro-futuristic theme inspired by Tron: Legacy
   typescript-mode # Major mode for editing typescript

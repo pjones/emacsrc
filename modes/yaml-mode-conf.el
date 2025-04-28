@@ -14,16 +14,12 @@ indenting, and then inserting the array marker (dash)."
   (insert "- "))
 
 (defun pjones:yaml-mode-hook ()
-  "Fix a few weird things about yaml-mode."
-  ;; reindent-then-newline-and-indent doesn't work very well in
-  ;; yaml-mode :(
-  (local-set-key (kbd "RET")        'newline-and-indent)
-  (local-set-key (kbd "C-<return>") 'newline)
-  (local-set-key (kbd "M-RET")      'pjones:yaml-new-array-item))
+  "Set up `yaml-mode' buffers."
+  (when (fboundp 'pjones:prog-mode-hook)
+    (pjones:prog-mode-hook))
+  (local-set-key (kbd "M-RET") 'pjones:yaml-new-array-item))
 
 (add-hook 'yaml-mode-hook 'pjones:yaml-mode-hook)
-(when (fboundp 'pjones:prog-mode-hook)
-  (add-hook 'yaml-mode-hook #'pjones:prog-mode-hook))
-
+(add-hook 'yaml-ts-mode-hook 'pjones:yaml-mode-hook)
 
 ;;; yaml-mode-conf.el ends here
