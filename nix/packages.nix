@@ -106,9 +106,6 @@ emacsWithOverrides.emacsWithPackages (epkgs: with epkgs; [
   erc-hl-nicks # ERC nick highlighter that ignores uniquifying chars when colorizing
   ess # Emacs Speaks Statistics
   expand-region # Increase selected region by semantic units.
-  flycheck # On-the-fly syntax checking
-  flycheck-indicator # A fancy mode line indicator for `flycheck-mode'
-  flycheck-rust # Rust additions and Cargo support
   git-annex # Mode for easy editing of git-annex'd files
   go-mode # Major mode for the Go programming language
   go-translate # Translator on Emacs

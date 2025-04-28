@@ -276,8 +276,6 @@ When prompting, use INITIAL as the initial module name."
   ;; Load helper packages:
   (when (fboundp 'pjones:prog-mode-hook)
     (pjones:prog-mode-hook))
-  (when (fboundp 'flycheck-mode)
-    (flycheck-mode -1))
 
   ; Other helper packages:
   (eglot-ensure)

@@ -4,7 +4,6 @@
 ;;
 ;;; Code:
 
-(require 'flycheck-rust)
 (require 'reformatter)
 (require 'rust-mode)
 
@@ -16,6 +15,5 @@
   :group 'rust-mode)
 
 (add-hook 'rust-mode-hook #'rust-format-on-save-mode)
-(add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
 
 ;;; rust-mode-conf.el ends here

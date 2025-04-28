@@ -18,7 +18,6 @@
 (declare-function comint-term-environment "comint")
 (declare-function dired-current-directory "dired")
 (declare-function dired-rename-file "dired-aux")
-(declare-function flycheck-next-error "flycheck")
 (declare-function http-mode "http")
 (declare-function khalel-import-events "khalel")
 (declare-function markdown-mode "markdown-mode")
@@ -35,7 +34,6 @@
 (autoload 'password-store-list "password-store")
 (autoload 'password-store--entry-to-file "password-store")
 
-(defvar flycheck-mode)
 (defvar flymake-mode)
 (defvar puni-mode)
 (defvar which-key-persistent-popup)
@@ -262,8 +260,6 @@ absolute path name."
   "Go to the next fly(check|make) error."
   (interactive)
   (cond
-   (flycheck-mode
-    (flycheck-next-error))
    (flymake-mode
     (pjones:flymake-goto-next-error))))
 

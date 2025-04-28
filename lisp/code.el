@@ -5,7 +5,6 @@
 ;;; Code:
 
 (declare-function dumb-jump-xref-activate "dumb-jump")
-(declare-function flycheck-mode "flycheck")
 (declare-function indium-connect-to-chrome "indium")
 (declare-function indium-run-node "indium")
 (declare-function puni-mode "puni")
@@ -61,7 +60,7 @@
 
   (auto-fill-mode)
   (display-line-numbers-mode)
-  (flycheck-mode)
+  (flymake-mode)
   (puni-mode)
   (save-place-mode)
   (yas-minor-mode)
