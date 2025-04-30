@@ -104,13 +104,14 @@ new title to use."
         ((pop-up-frame-parameters . ((pjones-type . "vterm"))))))
     buffer))
 
-(defun pjones:vterm-frame-cmd (cmd)
-  "Start a new vterm instance running CMD."
+(defun pjones:vterm-frame-cmd (cmd &optional keep)
+  "Start a new vterm instance running CMD.
+If KEEP is non-nil then don't kill the buffer when the command finishes."
   (let ((vterm-shell cmd)
         (vterm-buffer-name-string cmd)
-        (vterm-kill-buffer-on-exit nil))
+        (vterm-kill-buffer-on-exit (not keep)))
     (with-current-buffer (pjones:vterm-frame)
-      (setq-local vterm-kill-buffer-on-exit nil)
+      (setq-local vterm-kill-buffer-on-exit (not keep))
       (vterm--set-title cmd))))
 
 (defun pjones:vterm-maybe-delete-frame (buffer _event)
