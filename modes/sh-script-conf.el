@@ -15,6 +15,11 @@
   :args '("-i" "2")
   :group 'sh-mode)
 
-(add-to-list 'sh-mode-hook #'sh-format-on-save-mode)
+(defun pjones:sh-mode-hook ()
+  "Set up `sh-mode-hook' buffers."
+  (sh-format-on-save-mode))
+
+(add-to-list 'sh-mode-hook #'pjones:sh-mode-hook)
+(add-to-list 'bash-ts-mode-hook #'pjones:sh-mode-hook)
 
 ;;; sh-script-conf.el ends here

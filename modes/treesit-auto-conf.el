@@ -7,7 +7,8 @@
 (require 'treesit-auto)
 
 ;; Don't use tree sitter for the following modes:
-(dolist (mode '(c-sharp))   ; Worse syntax highlighting!
+(dolist (mode '(bash        ; Bad syntax highlighting.
+                c-sharp))   ; Worse syntax highlighting!
   (delete mode treesit-auto-langs))
 
 ;;; treesit-auto-conf.el ends here
