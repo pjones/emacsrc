@@ -100,8 +100,14 @@ Dired buffer.  Otherwise visit the file under point."
       (wdired-finish-edit)
     (wdired-change-to-wdired-mode)))
 
-(add-hook 'dired-mode-hook #'dired-hide-details-mode)
-(add-hook 'dired-mode-hook #'dired-filter-mode)
+(defun pjones:dired-mode-hook ()
+  "Set up `dired-mode' buffers."
+  (setq-local diff-hl-side 'left)
+  (dired-hide-details-mode)
+  (dired-filter-mode)
+  (diff-hl-dired-mode))
+
+(add-hook 'dired-mode-hook #'pjones:dired-mode-hook)
 (add-hook 'dired-after-readin-hook #'pjones:dired-remove-total-lines)
 
 ;; Local Variables:
