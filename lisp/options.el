@@ -19,6 +19,7 @@
  '(safe-local-variable-values
    '((eval add-hook 'after-save-hook #'org-babel-tangle nil t)))
  '(server-client-instructions nil)
+ '(trusted-content '("~/src/rc/"))
  '(vc-follow-symlinks t)) ; Don't warn prompt me about symlinks!
 
 ;;; options.el ends here
