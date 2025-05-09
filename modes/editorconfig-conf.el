@@ -23,9 +23,9 @@ Meant to be used on `hack-dir-local-get-variables-functions'."
       ;; them because hack-dir-local doesn't have the notion of "unset",
       ;; and because the conversion of `indent_size' depends on `tab_width'.
       (when-let* ((alist)
-                  (file (editorconfig-core-get-nearest-editorconfig
-                         buffer-file-name)))
-        (cons (file-name-directory file) alist)))))
+                  (ecf (or buffer-file-name
+                           (editorconfig-core-get-nearest-editorconfig buffer-file-name))))
+        (cons (file-name-directory ecf) alist)))))
 
 (defun pjones:editorconfig-apply-trim-whitespace (props)
   "Conditionally change the trim_trailing_whitespace setting.
