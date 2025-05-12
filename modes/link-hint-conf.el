@@ -1,11 +1,16 @@
-;;; link-hint-conf.el -- Settings for `link-hint'
+;;; link-hint-conf.el -- Settings for `link-hint' -*- lexical-binding: t -*-
 ;;
 ;;; Commentary:
 ;;
 ;;; Code:
 (require 'link-hint)
 
+(defvar link-buffer)
+(defvar link-buffer-original-pos)
 (defvar link-hint-avy-all-windows)
+(defvar link-pos)
+(defvar link-win)
+
 (setq link-hint-avy-all-windows t)
 
 (defun pjones:link-hint--action (action link)
@@ -16,7 +21,6 @@ contains the link."
          link-buffer-original-pos
          (link-pos (plist-get link :pos))
          (link-win (plist-get link :win))
-         new-win-buffer
          (type (plist-get link :type))
          (parser (get type :parse))
          (args (plist-get link :args))

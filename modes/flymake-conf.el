@@ -1,4 +1,4 @@
-;;; flymake-conf.el -- Settings for `flymake'
+;;; flymake-conf.el -- Settings for `flymake' -*- lexical-binding: t -*-
 ;;
 ;;; Commentary:
 ;;

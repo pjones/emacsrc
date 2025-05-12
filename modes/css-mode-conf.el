@@ -1,4 +1,4 @@
-;;; css-mode-conf.el -- Settings for `css-mode'
+;;; css-mode-conf.el -- Settings for `css-mode' -*- lexical-binding: t -*-
 ;;
 ;;; Commentary:
 ;;

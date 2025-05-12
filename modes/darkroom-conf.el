@@ -1,4 +1,4 @@
-;;; darkroom-conf.el -- Settings for `darkroom'
+;;; darkroom-conf.el -- Settings for `darkroom' -*- lexical-binding: t -*-
 ;;
 ;;; Commentary:
 ;;

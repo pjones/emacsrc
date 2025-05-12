@@ -1,4 +1,4 @@
-;;; suspend.el --- Secure Emacs on a system suspend, sleep, lock, etc.
+;;; suspend.el --- Secure Emacs on a system suspend, sleep, lock, etc. -*- lexical-binding: t -*-
 ;;
 ;;; Commentary:
 ;;

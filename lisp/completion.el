@@ -1,4 +1,4 @@
-;;; completion.el -- Configuration for completion, abbreviations, and shortcuts.
+;;; completion.el -- Configuration for completion, abbreviations, and shortcuts. -*- lexical-binding: t -*-
 ;;
 ;;; Commentary:
 ;;

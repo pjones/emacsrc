@@ -1,4 +1,4 @@
-;;; bookmark-conf.el -- Settings for `bookmark'
+;;; bookmark-conf.el -- Settings for `bookmark' -*- lexical-binding: t -*-
 ;;
 ;;; Commentary:
 ;;

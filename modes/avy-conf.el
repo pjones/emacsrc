@@ -1,4 +1,4 @@
-;;; avy-conf.el -- Settings for `avy'
+;;; avy-conf.el -- Settings for `avy' -*- lexical-binding: t -*-
 ;;
 ;;; Commentary:
 ;;

@@ -1,4 +1,4 @@
-;;; magit-conf.el -- Customizations for magit.
+;;; magit-conf.el -- Customizations for magit. -*- lexical-binding: t -*-
 ;;
 ;;; Commentary:
 ;;

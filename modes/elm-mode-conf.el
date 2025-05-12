@@ -1,4 +1,4 @@
-;;; elm-mode-conf.el -- Settings for elm-mode
+;;; elm-mode-conf.el -- Settings for elm-mode -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
 ;;; Code:

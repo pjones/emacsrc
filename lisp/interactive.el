@@ -1,4 +1,4 @@
-;;; interactive.el -- Interactive functions.
+;;; interactive.el -- Interactive functions. -*- lexical-binding: t -*-
 ;;
 ;;; Commentary:
 ;;
@@ -36,6 +36,7 @@
 
 (defvar flymake-mode)
 (defvar puni-mode)
+(defvar sort-fold-case)
 (defvar which-key-persistent-popup)
 (defvar which-key-show-prefix)
 

@@ -1,4 +1,4 @@
-;;; modes.el -- Load files from ~/.emacs.d/pjones/modes on demand.
+;;; modes.el -- Load files from ~/.emacs.d/pjones/modes on demand. -*- lexical-binding: t -*-
 ;;
 ;;; Commentary:
 ;;

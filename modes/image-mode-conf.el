@@ -1,4 +1,4 @@
-;;; image-mode-conf.el -- Settings for image-mode.
+;;; image-mode-conf.el -- Settings for image-mode. -*- lexical-binding: t -*-
 ;;
 ;;; Commentary:
 ;;

@@ -1,4 +1,4 @@
-;;; term-conf.el -- Settings for term-mode.
+;;; term-conf.el -- Settings for term-mode.  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;; Code:
 (require 'term)
@@ -15,7 +15,7 @@
  '(term-suppress-hard-newline nil))
 
 (defun pjones:term-line-mode ()
-  "Go to term-line-mode."
+  "Go to `term-line-mode'."
   (interactive)
   (term-line-mode))
 
@@ -40,7 +40,7 @@
   (let ((dir (read-directory-name "Dir: ")))
     (term-send-raw-string dir)))
 
-(defun pjones:remove-dead-term (&rest args)
+(defun pjones:remove-dead-term (&rest _args)
   "Clean up after a dead terminal.
 Ignores ARGS."
   (quit-window t))

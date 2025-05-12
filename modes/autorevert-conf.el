@@ -1,4 +1,4 @@
-;;; autorevert-conf.el -- Settings for `autorevert'
+;;; autorevert-conf.el -- Settings for `autorevert'  -*- lexical-binding: t -*-
 ;;
 ;;; Commentary:
 ;;

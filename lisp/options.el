@@ -1,4 +1,4 @@
-;;; options.el -- Emacs settings not tied to any one mode.
+;;; options.el -- Emacs settings not tied to any one mode. -*- lexical-binding: t -*-
 ;;
 ;;; Commentary:
 ;;

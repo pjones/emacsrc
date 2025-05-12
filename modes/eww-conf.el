@@ -1,4 +1,4 @@
-;;; eww-conf.el -- Settings for EWW.
+;;; eww-conf.el -- Settings for EWW. -*- lexical-binding: t -*-
 ;;
 ;;; Commentary:
 ;;

@@ -1,4 +1,4 @@
-;;; keys.el -- Global key bindings.
+;;; keys.el -- Global key bindings. -*- lexical-binding: t -*-
 ;;
 ;;; Commentary:
 ;;

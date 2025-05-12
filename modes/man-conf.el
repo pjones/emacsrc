@@ -1,4 +1,4 @@
-;;; man-conf.el -- Settings for `man'
+;;; man-conf.el -- Settings for `man' -*- lexical-binding: t -*-
 ;;
 ;;; Commentary:
 ;;

@@ -1,4 +1,4 @@
-;;; haskell-mode-conf.el -- Settings for Haskell mode.
+;;; haskell-mode-conf.el -- Settings for Haskell mode. -*- lexical-binding: t -*-
 ;;
 ;;; Commentary:
 ;;
@@ -91,8 +91,7 @@ The match chosen by the user will be returned."
   (interactive)
   (save-excursion
     (beginning-of-line)
-    (let ((bol (point))
-          (eol (save-excursion
+    (let ((eol (save-excursion
                  (end-of-line)
                  (point))))
       (cond

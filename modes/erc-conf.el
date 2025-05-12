@@ -1,4 +1,4 @@
-;;; erc-conf.el -- Settings for erc.el
+;;; erc-conf.el -- Settings for erc.el -*- lexical-binding: t -*-
 ;;
 ;;; Commentary:
 ;;
@@ -104,7 +104,7 @@
 
 (add-function
  :after after-focus-change-function
- (lambda (&rest args) (erc-modified-channels-update)))
+ (lambda (&rest _args) (erc-modified-channels-update)))
 
 (add-hook 'erc-mode-hook #'pjones:erc-mode-hook)
 (add-hook 'erc-track-mode-hook #'pjones:erc-ignore-channel)

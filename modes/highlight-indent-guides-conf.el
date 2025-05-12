@@ -1,4 +1,4 @@
-;;; highlight-indent-guides-conf.el -- Settings for indent highlighting
+;;; highlight-indent-guides-conf.el -- Settings for indent highlighting -*- lexical-binding: t -*-
 ;;
 ;;; Commentary:
 ;;

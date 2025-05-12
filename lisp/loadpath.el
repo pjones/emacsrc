@@ -1,4 +1,4 @@
-;;; loadpath.el -- Correctly set my load-path variable.
+;;; loadpath.el -- Correctly set my load-path variable. -*- lexical-binding: t -*-
 ;;
 ;;; Commentary:
 ;;

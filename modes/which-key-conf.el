@@ -1,4 +1,4 @@
-;;; which-key-conf.el -- Settings for which-key-mode
+;;; which-key-conf.el -- Settings for which-key-mode -*- lexical-binding: t -*-
 ;;
 ;;; Commentary:
 ;;

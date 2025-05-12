@@ -1,4 +1,4 @@
-;;; tramp-conf.el --- Settings for TRAMP.
+;;; tramp-conf.el --- Settings for TRAMP. -*- lexical-binding: t -*-
 ;;
 ;;; Commentary:
 ;;; Code:

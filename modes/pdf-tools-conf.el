@@ -1,4 +1,4 @@
-;;; pdf-tools-conf.el -- Setting for pdf-tools.
+;;; pdf-tools-conf.el -- Setting for pdf-tools. -*- lexical-binding: t -*-
 ;;
 ;;; Commentary:
 ;;

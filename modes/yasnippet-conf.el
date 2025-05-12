@@ -1,4 +1,4 @@
-;;; yasnippet-conf.el -- Settings for yasnippet
+;;; yasnippet-conf.el -- Settings for yasnippet -*- lexical-binding: t -*-
 ;;
 ;;; Commentary:
 ;;

@@ -1,4 +1,4 @@
-;;; simple-conf.el -- Functions and settings for simple.el (mostly for
+;;; simple-conf.el -- Functions and settings for simple.el -*- lexical-binding: t -*-
 ;;
 ;;; Commentary:
 ;;

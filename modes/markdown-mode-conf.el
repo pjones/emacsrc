@@ -1,4 +1,4 @@
-;;; markdown-conf.el -- Settings for markdown-mode.
+;;; markdown-conf.el -- Settings for markdown-mode. -*- lexical-binding: t -*-
 ;;
 ;;; Commentary:
 ;;

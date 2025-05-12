@@ -1,4 +1,4 @@
-;;; dot.emacs.el -- Bootstrap Emacs.
+;;; dot.emacs.el -- Bootstrap Emacs. -*- lexical-binding: t -*-
 ;;
 ;;; Commentary:
 ;;

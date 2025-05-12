@@ -1,4 +1,4 @@
-;;; js-conf.el -- Configuration options for js-mode (JavaScript).
+;;; js-conf.el -- Configuration options for js-mode (JavaScript). -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;; Code:
 (eval-when-compile

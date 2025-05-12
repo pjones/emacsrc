@@ -1,4 +1,4 @@
-;;; dired-conf.el --- Settings for `dired-mode'.
+;;; dired-conf.el --- Settings for `dired-mode'. -*- lexical-binding: t -*-
 
 ;;; Commentary:
 ;;

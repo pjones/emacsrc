@@ -1,4 +1,4 @@
-;;; sh-script-conf.el -- Settings for sh-mode.
+;;; sh-script-conf.el -- Settings for sh-mode. -*- lexical-binding: t -*-
 ;;
 ;;; Commentary:
 ;;

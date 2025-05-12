@@ -1,4 +1,4 @@
-;;; winum-conf.el -- Settings for `winum'
+;;; winum-conf.el -- Settings for `winum' -*- lexical-binding: t -*-
 ;;
 ;;; Commentary:
 ;;

@@ -1,4 +1,4 @@
-;;; automode.el -- Set up the auto-mode-alist variable
+;;; automode.el -- Set up the auto-mode-alist variable -*- lexical-binding: t -*-
 ;;
 ;;; Commentary:
 ;;

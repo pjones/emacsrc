@@ -1,4 +1,4 @@
-;;; shr-conf.el -- Settings for shr.
+;;; shr-conf.el -- Settings for shr. -*- lexical-binding: t -*-
 ;;
 ;;; Commentary:
 ;;

@@ -1,4 +1,4 @@
-;;; haskell-cabal-conf.el -- Settings for `haskell-cabal'
+;;; haskell-cabal-conf.el -- Settings for `haskell-cabal' -*- lexical-binding: t -*-
 ;;
 ;;; Commentary:
 ;;
