@@ -39,8 +39,8 @@
   '(dired-subtree-use-backgrounds nil))
 
 (let ((map dired-mode-map))
-  (define-key map (kbd "!") (pjones:dired-cwd-do 'dired-do-shell-command))
-  (define-key map (kbd "&") (pjones:dired-cwd-do 'dired-do-async-shell-command))
+  (define-key map (kbd "!") (pjones:dired-cwd-do #'dwim-shell-command))
+  (define-key map (kbd "&") (pjones:dired-cwd-do #'dwim-shell-command))
   (define-key map (kbd "* a") #'pjones:dired-mark-all-files)
   (define-key map (kbd "<return>") #'pjones:dired-insert-or-visit)
   (define-key map (kbd "C-c C-c") #'pjones:dired-toggle-wdired)

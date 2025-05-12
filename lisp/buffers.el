@@ -88,6 +88,9 @@ When displaying these buffers, always open a new dedicated frame.")
  ;; Avoid switching to buffers already shown in windows:
  '(switch-to-prev-buffer-skip 'visible)
 
+ ;; Always use the rules in this file:
+ '(switch-to-buffer-obey-display-actions t)
+
  ;; Regular expressions that match buffers that should be skipped when
  ;; moving through the buffer list.
  '(switch-to-prev-buffer-skip-regexp
@@ -122,29 +125,12 @@ When displaying these buffers, always open a new dedicated frame.")
 
  ;; Select a window for a buffer to be shown in:
  '(display-buffer-alist
-   `(;; Buffers that should pop out into a new frame and are not
-     ;; shared with other buffers that have the same mode:
-     (,(pjones:buffer-conditions pjones:modes-dedicated-to-frames)
-      (display-buffer-reuse-window
-       display-buffer-pop-up-frame)
-      (reusable-frames . t)
-      (dedicated . t)
-      (pop-up-frame-parameters
-       . ((unsplittable . t)
-          (name . "popup"))))
-
-     ;; Buffers that must not be displayed in the current frame:
-     (,(pjones:selected-buffer-conditions pjones:modes-dedicated-to-frames
-                                          pjones:dedicated-frame-exceptions)
-      (display-buffer-use-some-frame
-       display-buffer-pop-up-frame)
-      (frame-predicate . pjones:frame-on-this-workspace-p))
-
-     ;; Buffers that should split the entire frame:
+   `(;; Buffers that should split the entire frame:
      (,(pjones:buffer-conditions
         '("\\*Backtrace\\*"
           "\\*Completions\\*"
           "\\*Deletions\\*"
+          "\\*DWIM shell command"
           calendar-mode))
       (display-buffer-at-bottom)
       (window-height . 0.3))
@@ -160,6 +146,24 @@ When displaying these buffers, always open a new dedicated frame.")
         '("\\*Org Agenda\\*"
           Man-mode
           magit-status-mode))
-      (display-buffer-same-window)))))
+      (display-buffer-same-window))
+
+     ;; Buffers that should pop out into a new frame and are not
+     ;; shared with other buffers that have the same mode:
+     (,(pjones:buffer-conditions pjones:modes-dedicated-to-frames)
+      (display-buffer-reuse-window
+       display-buffer-pop-up-frame)
+      (reusable-frames . t)
+      (dedicated . t)
+      (pop-up-frame-parameters
+       . ((unsplittable . t)
+          (name . "popup"))))
+
+     ;; Buffers that must not be displayed in the current frame:
+     (,(pjones:selected-buffer-conditions pjones:modes-dedicated-to-frames
+                                          pjones:dedicated-frame-exceptions)
+      (display-buffer-use-some-frame
+       display-buffer-pop-up-frame)
+      (frame-predicate . pjones:frame-on-this-workspace-p)))))
 
 ;;; buffers.el ends here

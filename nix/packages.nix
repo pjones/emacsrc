@@ -94,6 +94,7 @@ emacsWithOverrides.emacsWithPackages (epkgs: with epkgs; [
   dired-subtree # Insert subdirectories in a tree-like fashion
   dracula-theme # The most famous dark theme ever created.
   dumb-jump # Jump to definition for 40+ languages without configuration
+  dwim-shell-command # Save your shell commands/scripts
   ef-themes # Colourful (“pretty”) yet legible themes
   eimp # Emacs Image Manipulation Package
   eldoc # Show function arglist or variable docstring in echo area
