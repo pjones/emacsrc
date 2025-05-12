@@ -233,6 +233,7 @@ FUNC."
  (kbd "M-g f") #'pjones:fly-next-error
  (kbd "M-g h") #'consult-outline
  (kbd "M-g m") #'consult-mark
+ (kbd "M-g M-a") #'avy-goto-char-timer
  (kbd "M-g o") #'consult-org-agenda
 
  ;; Bindings that are not under C-c:

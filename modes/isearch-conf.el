@@ -6,6 +6,8 @@
 
 (require 'isearch)
 
+(declare-function avy-isearch "avy")
+
 (custom-set-variables
  '(isearch-allow-motion t)
  '(isearch-lax-whitespace t)
@@ -13,8 +15,10 @@
  '(search-nonincremental-instead nil)
  '(search-whitespace-regexp "[ \t\n.?!]+"))
 
-(keymap-set isearch-mode-map "C-g" #'isearch-cancel)
 (keymap-set isearch-mode-map "C-c" #'isearch-abort)
+(keymap-set isearch-mode-map "C-g" #'isearch-cancel)
+(keymap-set isearch-mode-map "M-g a" #'avy-isearch)
+(keymap-set isearch-mode-map "M-g M-a" #'avy-isearch)
 
 (defvar-keymap isearch-repeat-map
   :repeat t
