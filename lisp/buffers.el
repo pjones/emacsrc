@@ -153,7 +153,7 @@ When displaying these buffers, always open a new dedicated frame.")
      (,(pjones:buffer-conditions pjones:modes-dedicated-to-frames)
       (display-buffer-reuse-window
        display-buffer-pop-up-frame)
-      (reusable-frames . t)
+      (reusable-frames . visible)
       (dedicated . t)
       (pop-up-frame-parameters
        . ((unsplittable . t)
