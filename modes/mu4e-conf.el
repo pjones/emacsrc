@@ -181,6 +181,7 @@ The JSON document comes from my tilde project."
  '(mu4e-completing-read-function 'completing-read)
  '(mu4e-date-format-long "%c")
  '(mu4e-get-mail-command "mbsync --all")
+ '(mu4e-hide-index-messages t)
  '(mu4e-main-hide-personal-addresses t)
  '(mu4e-modeline-show-global nil)
  '(mu4e-trash-without-flag t) ; Move to trash without deleting.
