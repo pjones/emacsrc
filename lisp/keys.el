@@ -34,10 +34,6 @@ FUNC."
      (require ,lib)
      (call-interactively ,func)))
 
-;; Loading `link-hint' will also load my settings and custom functions
-;; for it.
-(autoload 'pjones:link-hint-open-link "link-hint")
-
 ;; Make the linter happy:
 (declare-function ace-delete-window "ace-window")
 (declare-function ace-select-window "ace-window")
