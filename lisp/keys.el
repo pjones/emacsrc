@@ -39,6 +39,7 @@ FUNC."
 (declare-function ace-select-window "ace-window")
 (declare-function ace-swap-window "ace-window")
 (declare-function avy-goto-char-timer "avy")
+(declare-function avy-goto-line "avy")
 (declare-function consult-apropos "consult")
 (declare-function consult-bookmark "consult")
 (declare-function consult-buffer "consult")
@@ -272,6 +273,7 @@ FUNC."
  [remap copy-to-register] #'consult-register-store
  [remap exchange-point-and-mark] #'pjones:exchange-point-and-mark
  [remap find-file] #'find-file-at-point
+ [remap goto-line] #'avy-goto-line
  [remap imenu] #'consult-imenu
  [remap indent-for-tab-command] #'pjones:indent-or-complete
  [remap insert-register] #'consult-register-load
