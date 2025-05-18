@@ -10,6 +10,7 @@
 
 ;; Settings not worth their own file in the modes directory:
 (custom-set-variables
+ '(comint-terminfo-terminal "xterm-256color")
  '(mail-user-agent 'mu4e-user-agent)
  '(custom-file (concat user-emacs-directory "custom-init.el"))
  '(disabled-command-function nil)
