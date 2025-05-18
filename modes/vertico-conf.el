@@ -13,6 +13,16 @@
 (declare-function marginalia-mode "marginalia")
 (declare-function vertico-directory-delete-word "vertico-directory")
 (declare-function vertico-prescient-mode "vertico-prescient")
+(defvar crm-separator)
+
+;; Prompt indicator for `completing-read-multiple'.
+(when (< emacs-major-version 31)
+  (advice-add #'completing-read-multiple :filter-args
+              (lambda (args)
+                (cons (format "[CRM%s] %s"
+                              (string-replace "[ \t]*" "" crm-separator)
+                              (car args))
+                      (cdr args)))))
 
 (let ((map vertico-map))
   (define-key map (kbd "C-<return>") #'embark-act)

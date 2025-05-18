@@ -88,6 +88,7 @@ current line.  Otherwise run the completion command.  ARG is passed to
  '(corfu-popupinfo-delay nil)
  '(corfu-quit-no-match 'separator)
  '(corfu-scroll-margin 5)
+ '(read-extended-command-predicate #'command-completion-default-include-p)
  '(savehist-file (concat user-emacs-directory
                          (or server-name "emacs")
                          ".history")))

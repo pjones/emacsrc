@@ -7,6 +7,23 @@
 (require 'nix-mode)
 (require 'reformatter)
 
+;; Hide the following functions from `nix-flake' from M-x because I
+;; don't want to use them that way.
+(dolist (symbol '(nix-flake
+                  nix-flake-build-attribute
+                  nix-flake-build-default
+                  nix-flake-check
+                  nix-flake-dispatch
+                  nix-flake-dispatch
+                  nix-flake-init
+                  nix-flake-init-dispatch
+                  nix-flake-init-select-template
+                  nix-flake-lock
+                  nix-flake-run-attribute
+                  nix-flake-run-default
+                  nix-flake-update))
+  (put symbol 'completion-predicate #'ignore))
+
 (custom-set-variables
  '(nix-indent-function #'smie-indent-line)
  '(nix-mode-use-smie t))

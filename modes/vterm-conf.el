@@ -10,12 +10,20 @@
 (declare-function project-root "project")
 (declare-function puni-mode "puni")
 
-(defvar pjones:vterm-title nil
+(defvar-local pjones:vterm-title nil
   "The last title set in the current buffer.")
+
+(defvar-local pjones:vterm-exit-functions nil
+  "A buffer local version of `vterm-exit-functions'.")
+
+;; Don't reset this variables when vterm starts:
+(put 'pjones:vterm-exit-functions 'permanent-local t)
+(put 'pjones:vterm-title 'permanent-local t)
+(put 'vterm-kill-buffer-on-exit 'permanent-local t)
 
 (custom-set-variables
  '(vterm-kill-buffer-on-exit nil) ; See pjones:vterm-mode-hook
- '(vterm-buffer-name-string "vterm %s"))
+ '(vterm-buffer-name-string "%s"))
 
 (let ((map vterm-mode-map))
   ;; Remove some bindings:
@@ -86,33 +94,66 @@
 ORIG is the original version of `vterm--set-title' and TITLE is the
 new title to use."
   (pjones:vterm-restore-cursor)
-  (setq-local pjones:vterm-title title)
+  (setq pjones:vterm-title title)
   (if vterm-buffer-name-string
       (progn
         (funcall orig title)
         (setq mode-name "VTerm"))
     (setq mode-name (concat "VTerm " title))))
 
-(defun pjones:vterm-frame ()
-  "Start a new vterm instance."
+(cl-defun pjones:vterm (&key command name new keep exit)
+  "Open a new terminal running COMMAND.
+
+If :COMMAND is nil then run a shell.
+
+:NAME  The name for the vterm buffer.
+:NEW   If non-nil don't reuse an exiting terminal.
+:KEEP  If non-nil, don't delete the buffer when the process exits.
+:EXIT  Function to run when the process exits.
+
+Returns a new vterm buffer that has not been displayed."
   (interactive)
-  (let ((buffer (vterm--internal #'identity t)))
-    (pop-to-buffer
+  (let ((vterm-shell (or command shell-file-name))
+        (buffer-name (or name vterm-buffer-name))
+        (init (lambda (buffer)
+                (with-current-buffer buffer
+                  (setq-local vterm-kill-buffer-on-exit (not keep))
+                  (when exit (add-hook 'pjones:vterm-exit-functions exit t t))))))
+    (if (and (not new) (buffer-live-p buffer-name))
+        (pop-to-buffer buffer-name)
+      (vterm--internal init name))))
+
+(defun pjones:vterm-display-frame (buffer)
+  "Display BUFFER in a new frame."
+  (pop-to-buffer
      buffer
      '((display-buffer-reuse-window
         display-buffer-pop-up-frame) .
         ((pop-up-frame-parameters . ((pjones-type . "vterm"))))))
-    buffer))
+  buffer)
+
+(defun pjones:vterm-frame ()
+  "Start a new vterm instance."
+  (interactive)
+  (pjones:vterm-display-frame (pjones:vterm)))
 
 (defun pjones:vterm-frame-cmd (cmd &optional keep)
   "Start a new vterm instance running CMD.
 If KEEP is non-nil then don't kill the buffer when the command finishes."
-  (let ((vterm-shell cmd)
-        (vterm-buffer-name-string cmd)
-        (vterm-kill-buffer-on-exit (not keep)))
-    (with-current-buffer (pjones:vterm-frame)
-      (setq-local vterm-kill-buffer-on-exit (not keep))
-      (vterm--set-title cmd))))
+  (with-current-buffer
+      (pjones:vterm-display-frame (pjones:vterm :command cmd :keep keep :name cmd))
+    (vterm--set-title cmd)))
+
+(defun pjones:vterm-run-exit-functions (buffer event)
+  "Run all of my `vterm-exit-functions' hooks in order.
+Pass them BUFFER and EVENT."
+  (when (buffer-live-p buffer)
+    (with-current-buffer buffer
+      (pjones:vterm-run-local-exit-hooks buffer event)
+      (pjones:vterm-maybe-delete-frame buffer event)
+      (if (and (buffer-live-p buffer)
+               vterm-kill-buffer-on-exit)
+          (kill-buffer buffer)))))
 
 (defun pjones:vterm-maybe-delete-frame (buffer _event)
   "Delete frame (or window) for BUFFER if certain conditions are met."
@@ -125,12 +166,19 @@ If KEEP is non-nil then don't kill the buffer when the command finishes."
                 (= others 0))
            (delete-frame frame))
           ((> others 0)
-           (delete-window window)))
-    (kill-buffer buffer)))
+           (delete-window window)))))
 
+(defun pjones:vterm-run-local-exit-hooks (buffer event)
+  "Run local `vterm-exit-functions' hooks.
+The hooks are passed BUFFER and EVENT."
+  (run-hook-with-args 'pjones:vterm-exit-functions buffer event))
+
+;; Advice patches:
 (advice-add 'vterm--set-title :around #'pjones:vterm--set-title)
+
+;; Hooks:
 (add-hook 'vterm-copy-mode-hook #'pjones:vterm-copy-mode-hook)
-(add-hook 'vterm-exit-functions #'pjones:vterm-maybe-delete-frame)
+(add-hook 'vterm-exit-functions #'pjones:vterm-run-exit-functions)
 (add-hook 'vterm-mode-hook #'pjones:vterm-mode-hook)
 
 ;;; vterm-conf.el ends here

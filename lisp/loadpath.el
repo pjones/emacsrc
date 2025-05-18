@@ -27,6 +27,7 @@
     "interactive"
     "completion"
     "code"
+    "shell"
     "keys")
   "Lisp files that should be loaded in non-batch Emacs.")
 
