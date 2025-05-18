@@ -10,11 +10,6 @@
       flake = false;
     };
 
-    khalel = {
-      url = "gitlab:hperrey/khalel";
-      flake = false;
-    };
-
     nextflow-mode = {
       url = "github:edmundmiller/nextflow-mode";
       flake = false;

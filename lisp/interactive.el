@@ -19,7 +19,6 @@
 (declare-function dired-current-directory "dired")
 (declare-function dired-rename-file "dired-aux")
 (declare-function http-mode "http")
-(declare-function khalel-import-events "khalel")
 (declare-function markdown-mode "markdown-mode")
 (declare-function project-root "project")
 (declare-function puni-kill-active-region "puni")
@@ -202,36 +201,6 @@ absolute path name."
   (require 'org)
   (let ((default-directory "~/notes/"))
     (org-agenda nil "c")))
-
-(defun pjones:calendar-contact-sync ()
-  "Sync calendars and contacts."
-  (interactive)
-  (require 'khalel)
-  (require 'comint)
-  (require 'shell)
-  (let ((buffer (get-buffer-create "*CALENDAR-CONTACT-OUTPUT-BUFFER*"))
-        (process-connection-type 'pty)
-        (process-environment (append (comint-term-environment)
-                                     process-environment))
-        process)
-    (with-current-buffer buffer
-      (setq process (start-process "vdirsyncer" buffer
-                                   (executable-find "vdirsyncer") "sync"))
-      (shell-mode)
-      (set-process-filter process #'comint-output-filter)
-      (set-process-sentinel
-       process
-       (lambda (process _event)
-         (when-let* (((= 0 (process-exit-status process)))
-                     (buffer (process-buffer process)))
-           (khalel-import-events)
-           (delete-window (get-buffer-window buffer))
-           (kill-buffer buffer)))))
-    (save-selected-window
-      (pop-to-buffer
-       buffer '((display-buffer-in-side-window) .
-                ((side          . bottom)
-                 (window-height . 0.3)))))))
 
 (defun pjones:uuid ()
   "Create a UUID, add it to the kill ring, and insert it after point."

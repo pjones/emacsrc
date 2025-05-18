@@ -26,16 +26,6 @@ let
       packageRequires = [ self.org super.s super.dash ];
     };
 
-    # I need this so khalel uses the same org-mode that I do and the
-    # macros expand correctly.  Otherwise I get this error:
-    # https://gitlab.com/hperrey/khalel/-/issues/11
-    khalel = emacs.pkgs.trivialBuild {
-      inherit version;
-      pname = "khalel";
-      src = inputs.khalel;
-      packageRequires = [ self.org ];
-    };
-
     nextflow-mode = emacs.pkgs.elpaBuild {
       inherit version;
       pname = "nextflow-mode";
@@ -124,7 +114,6 @@ emacsWithOverrides.emacsWithPackages (epkgs: with epkgs; [
   json-mode # Major mode for editing JSON files
   jsonrpc # JSON-RPC library
   kaolin-themes # A set of eye pleasing themes
-  khalel # Import, edit and create calendar events through khal
   khardel # integrating khard, a console cardav client
   link-hint # Use avy to open, copy, etc. visible links
   magit # A Git porcelain inside Emacs
