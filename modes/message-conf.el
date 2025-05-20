@@ -23,6 +23,8 @@
 (defun pjones:message-send-hook ()
   "Hook function for `message-send-hook'."
   (when pjones:message-htmlize-before-send
+    (undo-boundary)
+    (message-goto-body)
     (org-mime-htmlize)))
 
 (custom-set-variables
