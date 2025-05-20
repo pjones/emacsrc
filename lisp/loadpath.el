@@ -28,6 +28,7 @@
     "completion"
     "code"
     "shell"
+    "whitespace"
     "keys")
   "Lisp files that should be loaded in non-batch Emacs.")
 

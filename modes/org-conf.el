@@ -36,6 +36,7 @@
 (declare-function org-ref-insert-link "org-ref")
 (declare-function org-roam-dailies-goto-date "org-roam")
 (declare-function org-tree-slide-mode "org-tree-slide")
+(declare-function pjones:delete-whitespace-mode "../lisp/whitespace.el")
 (declare-function pjones:ensure-blank-lines "../lisp/interactive")
 (declare-function pjones:open-line-above "../lisp/interactive")
 (declare-function puni-mode "puni")
@@ -543,6 +544,7 @@ If TIME is nil then use the current time."
   ;; if they are removed in Emacs they will cause a sync conflict or
   ;; just come back on their own.  So, don't delete them.
   (setq-local delete-trailing-lines nil)
+  (pjones:delete-whitespace-mode)
 
   (unless noninteractive
     ;; Puni doesn't work here:
