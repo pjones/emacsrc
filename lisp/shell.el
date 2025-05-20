@@ -120,7 +120,7 @@ NODE should be the name of an input node, or nil to use the root node."
 
 When NOW is non-nil, apply it now instead of waiting for the next boot."
   (interactive "P")
-  (let* ((command "colmena apply-local")
+  (let* ((command "nix run .#colmena -- apply-local")
          (script (string-join
                   (list command "--sudo" (unless now "boot"))
                   " ")))
