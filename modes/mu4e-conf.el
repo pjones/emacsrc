@@ -103,39 +103,40 @@ The JSON document comes from my tilde project."
   ;; Always make sure we use the correct drafts folder.
   (add-hook 'before-save-hook #'pjones:mu4e-compose-secret-drafts nil t)
 
-  ;; Set the From address to one of my email addresses, the one that
-  ;; was used in the email that is being replied to.
-  (when mu4e-compose-parent-message
-    (when-let* ((regex (pjones:mu4e-personal-addresses-re))
-                (contacts (append
-                           (mu4e-message-field mu4e-compose-parent-message :to)
-                           (mu4e-message-field mu4e-compose-parent-message :cc)
-                           (mu4e-message-field mu4e-compose-parent-message :bcc)
-                           (mu4e-message-field mu4e-compose-parent-message :from)))
-                (match (seq-find
-                        (lambda (contact)
-                          (string-match-p regex (mu4e-contact-email contact)))
-                        contacts))
-                (from (message-make-from user-full-name
-                                         (mu4e-contact-email match))))
-      (save-excursion
-        (save-restriction
-          (message-narrow-to-headers-or-head)
-          (message-remove-header "From")
-          (goto-char (point-min))
-          (insert
-           (concat "From: " from "\n"))))))
+  (unless (eq mu4e-compose-type 'edit)
+    ;; Set the From address to one of my email addresses, the one that
+    ;; was used in the email that is being replied to.
+    (when mu4e-compose-parent-message
+      (when-let* ((regex (pjones:mu4e-personal-addresses-re))
+                  (contacts (append
+                             (mu4e-message-field mu4e-compose-parent-message :to)
+                             (mu4e-message-field mu4e-compose-parent-message :cc)
+                             (mu4e-message-field mu4e-compose-parent-message :bcc)
+                             (mu4e-message-field mu4e-compose-parent-message :from)))
+                  (match (seq-find
+                          (lambda (contact)
+                            (string-match-p regex (mu4e-contact-email contact)))
+                          contacts))
+                  (from (message-make-from user-full-name
+                                           (mu4e-contact-email match))))
+        (save-excursion
+          (save-restriction
+            (message-narrow-to-headers-or-head)
+            (message-remove-header "From")
+            (goto-char (point-min))
+            (insert
+             (concat "From: " from "\n"))))))
 
-  ;; Try to find the correct signature using the sources:
-  ;; 1. A file matching the domain of the From address.
-  ;; 2. The default signature file.
-  (when-let* ((from (car (mail-header-parse-address (message-field-value "From"))))
-              (domain (cadr (split-string from "@")))
-              (message-signature-file
-               (seq-find (lambda (name) (file-exists-p
-                                    (concat message-signature-directory name)))
-                         (list domain "default"))))
-    (message-insert-signature)))
+    ;; Try to find the correct signature using the sources:
+    ;; 1. A file matching the domain of the From address.
+    ;; 2. The default signature file.
+    (when-let* ((from (car (mail-header-parse-address (message-field-value "From"))))
+                (domain (cadr (split-string from "@")))
+                (message-signature-file
+                 (seq-find (lambda (name) (file-exists-p
+                                      (concat message-signature-directory name)))
+                           (list domain "default"))))
+      (message-insert-signature))))
 
 (defun pjones:mu4e-short-maildir (msg)
   "Format the maildir of MSG so it's as short as possible."
