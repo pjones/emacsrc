@@ -887,6 +887,24 @@ If EDIT is non-nil then edit the resulting trigger with
         (write-file file))
       (kill-buffer buffer))))
 
+(defun pjones:org-check-links ()
+  "Ensure file links are valid."
+  (interactive)
+  (let ((pos (point)))
+    (goto-char (point-min))
+    (while (re-search-forward org-link-any-re nil t)
+      (when-let ((link (save-excursion
+                         (goto-char (match-beginning 0))
+                         (org-element-link-parser))))
+        (pcase (org-element-property :type link)
+          ("file"
+           (unless (file-exists-p (org-element-property :path link))
+             (goto-char (org-element-begin link))
+             (when (org-invisible-p) (org-fold-show-context 'link-search))
+             (error "The link at point doesn't exit"))))))
+    (goto-char pos)
+    (message "All links are good.")))
+
 ;;; Key Bindings:
 (let ((map org-mode-map))
   ;; Reset these so I can use them as a prefix:

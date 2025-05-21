@@ -1,5 +1,4 @@
-{ lib
-, emacs
+{ emacs
 , emacsPackagesFor
 , inputs
 }:
@@ -18,6 +17,8 @@ let
 
   # Package overrides:
   emacsWithOverrides = (emacsPackagesFor emacs).overrideScope (self: super: {
+    anki-editor = update super.anki-editor inputs.anki-editor;
+
     # Not in nixpkgs:
     corg = emacs.pkgs.trivialBuild {
       inherit version;
@@ -64,6 +65,7 @@ in
 emacsWithOverrides.emacsWithPackages (epkgs: with epkgs; [
   ace-window # Quickly switch windows
   adaptive-wrap # Smart line-wrapping with wrap-prefix
+  anki-editor # Emacs minor mode for making Anki cards with Org Mode
   async # Asynchronous processing in Emacs
   avy # Jump to arbitrary positions in visible text and select text quickly
   cape # Let your completions fly!

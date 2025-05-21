@@ -1,5 +1,21 @@
 {
   "nodes": {
+    "anki-editor": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1744537210,
+        "narHash": "sha256-1aQ/dtux9tVy1iwo6B6itRNhiUiL8aCrsKt/OkZPeEs=",
+        "owner": "anki-editor",
+        "repo": "anki-editor",
+        "rev": "5e4dfaa34cd2a54b2003b7664f5438bb40a6b09a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "anki-editor",
+        "repo": "anki-editor",
+        "type": "github"
+      }
+    },
     "corg": {
       "flake": false,
       "locked": {
@@ -140,6 +156,7 @@
     },
     "root": {
       "inputs": {
+        "anki-editor": "anki-editor",
         "corg": "corg",
         "home-manager": "home-manager",
         "nextflow-mode": "nextflow-mode",
