@@ -969,7 +969,6 @@ If EDIT is non-nil then edit the resulting trigger with
 (add-hook 'org-mode-hook #'org-clock-dbus-mode)
 (add-hook 'org-mode-hook #'org-edna-mode)
 (add-hook 'org-mode-hook #'org-modern-mode)
-(add-hook 'org-mode-hook #'org-num-mode)
 (add-hook 'org-mode-hook #'pjones:org-mode-hook)
 
 ;;; org-conf.el ends here
