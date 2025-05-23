@@ -36,31 +36,36 @@
         (kill-current-buffer)
       (vterm--self-insert))))
 
-(defun pjones:shell-on-exit (buffer event)
+(defun pjones:shell-on-exit (success buffer event)
   "Hook called with a shell process exits.
-BUFFER is the vterm buffer and EVENT is the exit message."
+BUFFER is the vterm buffer and EVENT is the exit message.  If SUCCESS is
+non-nil and a function, call it if the process exited cleanly."
   (let* ((proc (get-buffer-process buffer))
          (clean (or (and proc (= 0 (process-exit-status proc)))
                     (string-match-p "^finished" event))))
     (if (and vterm-kill-buffer-on-exit (not clean))
         (setq-local vterm-kill-buffer-on-exit nil)
       (message "%s: %s" (buffer-name buffer) (s-trim event)))
-    (setq mode-name (s-trim event))))
+    (setq mode-name (s-trim event))
+    (if (and clean (functionp success))
+        (funcall success))))
 
-(cl-defun pjones:shell-command (&key bufname command close project)
+(cl-defun pjones:shell-command (&key bufname command success close project)
   "Execute a shell command like `async-shell-command'.
 
 :BUFNAME should be the name of a buffer that will be attached to the
 process.  If :BUFNAME is nil then it is derived from the command
 name.
 
-:COMMAND is a shell command to run.
+:COMMAND A list or a string.
 
 If :PROJECT is non-nil run the command in the project's root directory
 and prefix the buffer name with the project name.
 
 If :CLOSE is non-nil then automatically close the window when the
-process exits."
+process exits.
+
+:SUCCESS a function to call if the process exits cleanly."
   (require 'vterm)
   (let* ((default-directory (if project
                                 (project-root (project-current t))
@@ -68,12 +73,14 @@ process exits."
          (name (if project
                    (pjones:project-buffer-name (or bufname command))
                  (or bufname (concat "*" command "*"))))
+         (shell (format "bash -c '%s'"
+                        (if (listp command)
+                            (string-join (mapcar #'shell-quote-argument command) " ")
+                          (shell-quote-argument command))))
          (buffer (pjones:vterm :name name
                                :keep (not close)
-                               :exit #'pjones:shell-on-exit
-                               :command (format
-                                         "bash -c %s"
-                                         (shell-quote-argument command)))))
+                               :exit (apply-partially #'pjones:shell-on-exit success)
+                               :command shell)))
     (with-current-buffer buffer
       (pjones:shell-mode 1)
       (setq mode-name "running"
