@@ -47,6 +47,13 @@ let
       src = "${inputs.org-clock-dbus}/lisp/org-clock-dbus.el";
     };
 
+    org-grader = emacs.pkgs.elpaBuild {
+      inherit version;
+      pname = "org-grader";
+      src = "${inputs.org-grader}/org-grader.el";
+      packageRequires = [ self.org ];
+    };
+
     ox-ipynb = emacs.pkgs.trivialBuild {
       inherit version;
       name = "ox-ipynb";
@@ -141,6 +148,7 @@ emacsWithOverrides.emacsWithPackages (epkgs: with epkgs; [
   org-clock-csv # Export `org-mode' clock entries to CSV format
   org-clock-dbus # Monitor org-clock from outside Emacs
   org-edna # Extensible Dependencies ’N’ Actions (EDNA) for Org Mode tasks
+  org-grader # Support for grading papers in orgmode
   org-mime # Send HTML email using Org-mode HTML export
   org-modern # Modern Org Style.
   org-ref # citations, cross-references, bibliographies in org-mode

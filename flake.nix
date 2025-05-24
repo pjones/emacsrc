@@ -30,6 +30,11 @@
       flake = false;
     };
 
+    org-grader = {
+      url = "github:pjones/org-grader";
+      flake = false;
+    };
+
     ox-ipynb = {
       url = "github:jkitchin/ox-ipynb";
       flake = false;

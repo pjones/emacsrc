@@ -121,6 +121,22 @@
         "type": "github"
       }
     },
+    "org-grader": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1748092534,
+        "narHash": "sha256-aCQ2pYjOXTGZWTtrkKjtsond0hE31Khf8KO0DvYdGb8=",
+        "owner": "pjones",
+        "repo": "org-grader",
+        "rev": "bf91f975b7773f97a6db5159c69e257bdb7bbcff",
+        "type": "github"
+      },
+      "original": {
+        "owner": "pjones",
+        "repo": "org-grader",
+        "type": "github"
+      }
+    },
     "ox-ipynb": {
       "flake": false,
       "locked": {
@@ -163,6 +179,7 @@
         "nixpkgs": "nixpkgs",
         "org-capture-ref": "org-capture-ref",
         "org-clock-dbus": "org-clock-dbus",
+        "org-grader": "org-grader",
         "ox-ipynb": "ox-ipynb",
         "persid": "persid"
       }
