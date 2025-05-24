@@ -7,6 +7,9 @@
 (eval-when-compile
   (require 'subr-x))
 
+(declare-function url-http-head "url-http")
+(declare-function url-path-and-query "url-parse")
+
 (defun pjones:frame-popup-p (&optional frame)
   "Return non-nil if FRAME is a popup frame."
   (let ((params (frame-parameters (or frame (selected-frame)))))
@@ -35,5 +38,40 @@
           byte-compile-current-file
           (buffer-file-name)))))
    "scripts/" name))
+
+(defun pjones:url-file-name (url)
+  "Try to get the file name associated with a URL."
+  (require 'url-http)
+  (require 'url-parse)
+  (let* ((uobj (url-generic-parse-url url))
+         (upath (car (url-path-and-query uobj)))
+         (base (or (file-name-base upath) ""))
+         (ext (or (file-name-extension upath) ""))
+         (get (lambda (re)
+                (save-excursion
+                  (if (re-search-forward re nil t)
+                      (match-string 1))))))
+    (when (or (string-empty-p base)
+              (string-empty-p ext))
+      (let ((http (url-http-head url))
+            hext hname)
+        (with-current-buffer http
+          (goto-char (point-min))
+          (setq hname (funcall get (rx "content-disposition: "
+                                       (* anything)
+                                       "filename=\""
+                                       (group (+ (not ?\")))))
+                hext (funcall get (rx "content-type: "
+                                      (group (+ (not (any space control)))))))
+          (if (and (string-empty-p base) hname)
+              (setq base hname))
+          (if (and (string-empty-p ext) hext)
+              (setq ext (symbol-name
+                          (mailcap-mime-type-to-extension
+                           hext)))))
+        (kill-buffer http)))
+
+    (replace-regexp-in-string (rx (+ (not (any word ?- ?.)))) "_"
+                              (concat base "." ext))))
 
 ;;; functions.el ends here
