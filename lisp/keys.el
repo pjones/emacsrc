@@ -75,6 +75,7 @@ FUNC."
 (declare-function emms-insert-playlist "emms")
 (declare-function emms-smart-browse "emms")
 (declare-function er/expand-region "expand-region")
+(declare-function google-translate-smooth-translate "google-translate")
 (declare-function goto-last-change "goto-chg")
 (declare-function highlight-indent-guides-mode "highlight-indent-guides")
 (declare-function jinx-correct "jinx")
@@ -177,6 +178,7 @@ FUNC."
  (kbd "C-c d") #'duplicate-dwim
  (kbd "C-c e") #'embark-act
  (kbd "C-c f") (pjones:jump-to-buffer "*flymake message*")
+ (kbd "C-c g") #'google-translate-smooth-translate
  (kbd "C-c h") #'pjones:start-http
  (kbd "C-c j") #'webjump
  (kbd "C-c k") #'pjones:kill-line
