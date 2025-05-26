@@ -7,6 +7,7 @@
 (eval-when-compile
   (require 'subr-x))
 
+(declare-function eww-decode-url-file-name "eww")
 (declare-function url-http-head "url-http")
 (declare-function url-path-and-query "url-parse")
 
@@ -71,7 +72,8 @@
                            hext)))))
         (kill-buffer http)))
 
-    (replace-regexp-in-string (rx (+ (not (any word ?- ?.)))) "_"
-                              (concat base "." ext))))
+    (replace-regexp-in-string
+     (rx (+ (not (any word ?- ?.)))) "_"
+     (eww-decode-url-file-name (concat base "." ext)))))
 
 ;;; functions.el ends here
