@@ -103,6 +103,10 @@ The JSON document comes from my tilde project."
   ;; Always make sure we use the correct drafts folder.
   (add-hook 'before-save-hook #'pjones:mu4e-compose-secret-drafts nil t)
 
+  ;; If the message doesn't require encryption then enable signing.
+  (unless (mml-secure-is-encrypted-p)
+    (mml-secure-message-sign))
+
   (unless (eq mu4e-compose-type 'edit)
     ;; Set the From address to one of my email addresses, the one that
     ;; was used in the email that is being replied to.
@@ -250,7 +254,6 @@ The JSON document comes from my tilde project."
 (add-to-list 'mu4e-view-actions '("tag message"     . mu4e-action-retag-message) t)
 
 ;; Hooks
-(add-hook 'mu4e-compose-mode-hook #'mml-secure-message-sign)
 (add-hook 'mu4e-compose-mode-hook #'pjones:mu4e-compose-mode-hook)
 (add-hook 'mu4e-headers-mode-hook #'pjones:mu4e-headers-mode-hook)
 (add-hook 'mu4e-view-mode-hook #'pjones:mu4e-view-mode-hook)
