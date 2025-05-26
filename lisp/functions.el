@@ -71,9 +71,6 @@
                           (mailcap-mime-type-to-extension
                            hext)))))
         (kill-buffer http)))
-
-    (replace-regexp-in-string
-     (rx (+ (not (any word ?- ?.)))) "_"
-     (eww-decode-url-file-name (concat base "." ext)))))
+     (eww-decode-url-file-name (concat base "." ext))))
 
 ;;; functions.el ends here
