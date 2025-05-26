@@ -17,7 +17,6 @@
 (declare-function dired-subtree-previous-sibling "dired-subtree")
 (declare-function dired-subtree-toggle "dired-subtree")
 (declare-function dired-subtree-up "dired-subtree")
-(declare-function dwim-shell-command "dwim-shell-command")
 (declare-function magit-clone-regular "magit-clone")
 (declare-function noccur-dired "noccur")
 (declare-function org-open-file "org")
@@ -54,8 +53,8 @@
  '(dired-vc-rename-file t))
 
 (let ((map dired-mode-map))
-  (define-key map (kbd "!") (pjones:dired-cwd-do #'dwim-shell-command))
-  (define-key map (kbd "&") (pjones:dired-cwd-do #'dwim-shell-command))
+  (define-key map (kbd "!") (pjones:dired-cwd-do #'dired-do-shell-command))
+  (define-key map (kbd "&") (pjones:dired-cwd-do #'dired-do-async-shell-command))
   (define-key map (kbd "* a") #'pjones:dired-mark-all-files)
   (define-key map (kbd "<return>") #'pjones:dired-insert-or-visit)
   (define-key map (kbd "c") #'pjones:dired-magit-clone-here)
