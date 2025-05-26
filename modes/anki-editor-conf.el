@@ -6,6 +6,7 @@
 
 (require 'anki-editor)
 
+(declare-function google-translate-format-listen-url "google-translate-core")
 (declare-function pjones:shell-command "../lisp/shell")
 (declare-function pjones:url-file-name "../lisp/functions")
 (defvar org-capture-templates)
@@ -44,7 +45,7 @@ the same."
   "Sentinel function for the download buffer.
 MARKER is where the new link should be placed.  PATH is the path to the
 the file that will be linked to."
-  (if (member (downcase (file-name-extension path)) '("ogg" "wav"))
+  (if (member (downcase (file-name-extension path)) '("ogg" "wav" "mpeg"))
       (let ((newpath (concat (file-name-sans-extension path) ".mp3")))
         (pjones:shell-command :bufname "ffmpeg"
                               :command (list "ffmpeg" "-i" path newpath)
@@ -56,16 +57,21 @@ the file that will be linked to."
                                           newpath))))
     (with-current-buffer (marker-buffer marker)
       (goto-char marker)
-      (insert (org-link-make-string (concat "file:" path))))))
+      (insert (org-link-make-string (concat "file:"
+                                            (file-relative-name path)))))))
 
-(defun pjones:anki-download-media (url)
-  "Download URL into the media directory and insert a file link."
+(defun pjones:anki-media-download (url &optional filename)
+  "Download URL into the media directory and insert a file link.
+If FILENAME is non-nil use it as the file name instead of guessing."
   (interactive (list (read-string "URL: " nil 'pjones:anki-download-url-history)))
   (let* ((file (expand-file-name
                 (read-file-name
                  "Download to file: "
                  pjones:anki-media-subdir
-                 nil nil (pjones:url-file-name url ))))
+                 nil nil
+                 (replace-regexp-in-string
+                  (rx (+ (not (any word ?.)))) "-"
+                  (or filename (pjones:url-file-name url))))))
          (marker (point-marker))
          (callback (apply-partially #'pjones:anki-download-media-insert marker file)))
     (if (or (not (file-exists-p file))
@@ -74,6 +80,28 @@ the file that will be linked to."
                               :command (list "curl" "-o" file url)
                               :close t
                               :success callback))))
+
+(defun pjones:anki-media-tts (begin end)
+  "Generate an audio file and link to it.
+TEXT to translate is taken from BEGIN to END."
+  (interactive "r")
+  (require 'google-translate-core)
+  (let ((text (buffer-substring-no-properties begin end)))
+    (end-of-line)
+    (newline-and-indent 2)
+    (pjones:anki-media-download
+     (google-translate-format-listen-url text "de")
+     (concat (replace-regexp-in-string
+              (rx (+ (not (any word blank)))) ""
+              (downcase text))
+             ".mpeg"))))
+
+(defun pjones:anki-media ()
+  "Download media or use TTS."
+  (interactive)
+  (call-interactively
+   (if (use-region-p) #'pjones:anki-media-tts
+     #'pjones:anki-media-download)))
 
 (defun pjones:anki-template-insert ()
   "Insert a template in the current tree.
@@ -95,8 +123,9 @@ current tree."
 
 (defun pjones:anki-editor-mode-hook ()
   "Hook for `anki-editor-mode'."
-  (keymap-local-set "C-c i" #'pjones:anki-template-insert))
-
+  (keymap-local-set "C-c C-e a" #'anki-editor-push-notes)
+  (keymap-local-set "C-c i" #'pjones:anki-template-insert)
+  (keymap-local-set "C-c m" #'pjones:anki-media))
 
 (custom-set-variables
  '(anki-editor-include-default-style nil)
