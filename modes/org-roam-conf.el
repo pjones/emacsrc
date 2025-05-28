@@ -21,6 +21,12 @@
 (require 'org-roam)
 (require 'org-roam-export)
 
+(defvar pjones:org-roam-daily-target
+  '(file+head+olp "%<%Y>/%<%m>.org"
+                  "#+title: %<%B, %Y>\n#+date: %u\n"
+                  ("Entries" "Week %<%V>" "%<%A, %d %B>"))
+  "The capture target for the daily journal.")
+
 (custom-set-variables
  '(org-roam-directory (concat pjones:org-notes-directory "wiki"))
  '(org-roam-dailies-directory "journal")
@@ -41,21 +47,21 @@
       :unnarrowed t)))
 
  '(org-roam-dailies-capture-templates
-   '(("d" "Daily Journal" entry
+   `(("d" "Daily Journal" entry
      "* %?\n  %(pjones:org-time-stamp t)\n"
-     :target (file+head "%<%Y>/%<%m>/%<%Y-%m-%d>.org" "#+title: %<%A, %B %d, %Y>\n#+date: %u\n")
+     :target ,pjones:org-roam-daily-target
      :unnarrowed t
      :jump-to-captured nil
      :empty-lines-before 1)
-     ("m" "Monthly Journal" entry
-      ""
-      :target (file+head "%<%Y>/%<%m>/index.org" "#+title: %<%B, %Y>\n")
-      :unnarrowed nil
-      :empty-lines-before 1)
      ("h" "Mental Health" entry
       (file "~/notes/templates/org/mental-health.org")
-      :target (file+head "%<%Y>/%<%m>/%<%Y-%m-%d>.org" "#+title: %<%A, %B %d, %Y>\n#+date: %u\n")
-      :empty-lines-before 1))))
+      :target ,pjones:org-roam-daily-target
+      :empty-lines-before 1)
+     ("a" "Archive" entry
+      ""
+      :target ,(list 'file+head
+                     (cadr pjones:org-roam-daily-target)
+                     (caddr pjones:org-roam-daily-target))))))
 
 (defun pjones:org-roam-buffer-name ()
   "Set the buffer name using the org title."

@@ -59,12 +59,24 @@
 
 (defun pjones:org-agenda-files ()
   "Return a list of files that contain to-do items."
-  (rx-let ((basename (+ (any alphanumeric))))
-    (directory-files-recursively
-     (concat pjones:org-notes-directory "gtd/")
-     (rx string-start
-         (or basename (seq basename ?/ basename))
-         ?. "org" string-end))))
+  (append
+   (rx-let ((basename (+ (any alphanumeric))))
+     (directory-files-recursively
+      (concat pjones:org-notes-directory "gtd/")
+      (rx string-start
+          (or basename (seq basename ?/ basename))
+          ?. "org" string-end)))
+   (let ((today (calendar-current-date))
+         files)
+     (dotimes (n 3)
+       (let* ((date (calendar-increment-month-cons
+                     (* -1 n) (car today) (caddr today)))
+              (path (format "%swiki/journal/%d/%02d.org"
+                            pjones:org-notes-directory
+                            (cdr date) (car date))))
+         (when (file-exists-p path)
+           (push path files))))
+     files)))
 
 (defun pjones:org-parse-effort-tag (tag)
   "Convert an effort TAG to a number of seconds."
@@ -717,14 +729,14 @@ version, properly handles tables."
     (pjones:open-line-above arg)))
 
 (defun pjones:org-archive-subtree-to-daily (&optional _find-done)
-  "Arhive the current subtree to the roam daily file."
+  "Archive the current subtree to the roam daily file."
   (interactive)
   (require 'org-roam)
   (when-let* ((today (save-excursion
-                       (org-roam-dailies-goto-date nil "d")
+                       (org-roam-dailies-goto-date nil "a")
                        (buffer-file-name)))
               (org-archive-location
-               (concat today "::* Archived From %s")))
+               (concat today "::* Archive")))
     (org-archive-subtree 0)))
 
 (defun pjones:org-attach (file)
