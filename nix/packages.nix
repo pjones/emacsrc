@@ -162,7 +162,6 @@ emacsWithOverrides.emacsWithPackages (epkgs: with epkgs; [
   pdf-tools # Support library for PDF documents
   plantuml-mode # A major mode for editing PlantUML sources in Emacs
   poet-theme # An emacs theme that's well suited for modes using variable pitch
-  prescient # Better sorting and filtering
   prescient # Simple but effective sorting and filtering for Emacs
   project # Operations on the current project
   puni # Parentheses Universalistic

@@ -15,6 +15,11 @@
 (declare-function vertico-prescient-mode "vertico-prescient")
 (defvar crm-separator)
 
+(custom-set-variables
+ '(vertico-prescient-enable-filtering nil)
+ '(vertico-prescient-enable-sorting t)
+ '(vertico-prescient-override-sorting nil))
+
 ;; Prompt indicator for `completing-read-multiple'.
 (when (< emacs-major-version 31)
   (advice-add #'completing-read-multiple :filter-args
