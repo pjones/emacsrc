@@ -18,6 +18,7 @@ let
   # Package overrides:
   emacsWithOverrides = (emacsPackagesFor emacs).overrideScope (self: super: {
     anki-editor = update super.anki-editor inputs.anki-editor;
+    meow = update super.meow inputs.meow-edit;
 
     # Not in nixpkgs:
     corg = emacs.pkgs.trivialBuild {
@@ -129,6 +130,8 @@ emacsWithOverrides.emacsWithPackages (epkgs: with epkgs; [
   marginalia # Enrich existing commands with completion annotations
   markdown-mode # Major mode for Markdown-formatted text
   mastodon # Emacs client for fediverse servers that implement the Mastodon API.
+  meow # Yet another modal editing on Emacs
+  meow-tree-sitter # Tree-sitter powered 🌳 motions for Meow 🐱
   mermaid-mode # Emacs major mode for working with mermaid graphs
   minions # A minor-mode menu for the mode line
   modus-themes # Highly accessible themes for GNU Emacs

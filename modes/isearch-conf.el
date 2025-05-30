@@ -19,9 +19,13 @@
 (keymap-set isearch-mode-map "C-g" #'isearch-cancel)
 (keymap-set isearch-mode-map "M-g a" #'avy-isearch)
 (keymap-set isearch-mode-map "M-g M-a" #'avy-isearch)
+(keymap-set isearch-mode-map "n" #'isearch-repeat-forward)
+(keymap-set isearch-mode-map "p" #'isearch-repeat-backward)
 
 (defvar-keymap isearch-repeat-map
   :repeat t
+  "n" #'isearch-repeat-forward
+  "p" #'isearch-repeat-backward
   "r" #'isearch-repeat-backward
   "s" #'isearch-repeat-forward)
 

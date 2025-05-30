@@ -38,6 +38,7 @@ FUNC."
 (declare-function ace-delete-window "ace-window")
 (declare-function ace-select-window "ace-window")
 (declare-function ace-swap-window "ace-window")
+(declare-function ace-window "ace-window")
 (declare-function avy-goto-char-timer "avy")
 (declare-function avy-goto-line "avy")
 (declare-function consult-apropos "consult")
@@ -103,6 +104,7 @@ FUNC."
 (declare-function pjones:kill-line "./interactive")
 (declare-function pjones:kill-region-or-backward-kill-word "./interactive")
 (declare-function pjones:maybe-save-buffers-kill-terminal "./interactive")
+(declare-function pjones:meow-sort "../modes/meow-conf")
 (declare-function pjones:open-line-above "./interactive")
 (declare-function pjones:open-temp-buffer "./interactive")
 (declare-function pjones:password-goto "./interactive")
@@ -114,6 +116,11 @@ FUNC."
 (declare-function pjones:start-term "./interactive")
 (declare-function pjones:toggle-prev-buffer "./interactive")
 (declare-function pjones:window-to-frame "./interactive")
+(declare-function puni-barf-backward "puni")
+(declare-function puni-barf-forward "puni")
+(declare-function puni-raise "puni")
+(declare-function puni-slurp-backward "puni")
+(declare-function puni-slurp-forward "puni")
 (declare-function resize-window "resize-window")
 (declare-function rg "rg")
 (declare-function rg-project "rg")
@@ -168,20 +175,30 @@ FUNC."
   "Key bindings for note taking.")
 
 (pjones:global-set-keys
+ ;; A couple notes about the C-c map:
+ ;;
+ ;; Because of Meow, the following keys need to remain empty:
+ ;;
+ ;;   - C-c c
+ ;;   - C-c k
  (kbd "C-c '") #'separedit
  (kbd "C-c ?") #'which-key-show-top-level
  (kbd "C-c A") #'pjones:frame-toggle-alpha
- (kbd "C-c a") (pjones:jump-to-buffer "*Org Agenda*" pjones:agenda)
- (kbd "C-c b") #'eldoc-doc-buffer
- (kbd "C-c C") #'full-calc
- (kbd "C-c c") #'quick-calc
+ (kbd "C-c b a") (pjones:jump-to-buffer "*Org Agenda*" pjones:agenda)
+ (kbd "C-c b b") (pjones:in-home-dir #'consult-buffer)
+ (kbd "C-c b e") #'eldoc-doc-buffer
+ (kbd "C-c b g") #'pjones:pwgen
+ (kbd "C-c b l") #'pass
+ (kbd "C-c b p") #'pjones:password-goto
+ (kbd "C-c b r") #'revert-buffer-quick
+ (kbd "C-c b t") #'pjones:open-temp-buffer
  (kbd "C-c d") #'duplicate-dwim
  (kbd "C-c e") #'embark-act
- (kbd "C-c f") (pjones:jump-to-buffer "*flymake message*")
+ (kbd "C-c f f") (pjones:jump-to-buffer "*flymake message*")
+ (kbd "C-c f R") #'rename-visited-file
  (kbd "C-c g") #'google-translate-smooth-translate
  (kbd "C-c h") #'pjones:start-http
  (kbd "C-c j") #'webjump
- (kbd "C-c k") #'pjones:kill-line
  (kbd "C-c l l") #'org-store-link
  (kbd "C-c l o") #'link-hint-open-link
  (kbd "C-c l w") #'link-hint-copy-link
@@ -193,19 +210,29 @@ FUNC."
  (kbd "C-c m SPC") (pjones:load-call 'emms #'pjones:emms-play-stream)
  (kbd "C-c M-W") #'pjones:kill-directory-name
  (kbd "C-c M-w") #'pjones:kill-file-name
- (kbd "C-c p g") #'pjones:pwgen
- (kbd "C-c p l") #'pass
- (kbd "C-c p p") #'pjones:password-goto
- (kbd "C-c R") #'rename-visited-file
- (kbd "C-c r") #'revert-buffer-quick
+ (kbd "C-c o") #'ace-window
+ (kbd "C-c p") (keymap-lookup ctl-x-map "p")
+ (kbd "C-c Q") #'full-calc
+ (kbd "C-c q") #'quick-calc
+ (kbd "C-c r") ctl-x-r-map
  (kbd "C-c RET") #'pjones:start-term
- (kbd "C-c s") #'pjones:sort-lines
  (kbd "C-c SPC") #'org-capture
- (kbd "C-c t") #'pjones:open-temp-buffer
+ (kbd "C-c t B") #'puni-barf-backward
+ (kbd "C-c t b") #'puni-barf-forward
+ (kbd "C-c t c") #'capitalize-dwim
+ (kbd "C-c t d") #'delete-blank-lines
+ (kbd "C-c t l") #'downcase-dwim
+ (kbd "C-c t P") #'puni-slurp-backward
+ (kbd "C-c t p") #'puni-slurp-forward
+ (kbd "C-c t r") #'puni-raise
+ (kbd "C-c t s") #'pjones:meow-sort
+ (kbd "C-c t u") #'upcase-dwim
+ (kbd "C-c w") (keymap-lookup ctl-x-map "w")
 
  ;; Additional window commands:
  (kbd "C-x w /") #'winner-undo
  (kbd "C-x w d") #'ace-delete-window
+ (kbd "C-x w o") #'delete-other-windows
  (kbd "C-x w p") #'pjones:window-to-frame
  (kbd "C-x w R") #'resize-window
  (kbd "C-x w r") #'rotate-layout
@@ -249,7 +276,10 @@ FUNC."
  (kbd "C-M-SPC") #'er/expand-region
  (kbd "C-M-z") #'zap-to-char
  (kbd "C-x C-k @") #'consult-kmacro
+ (kbd "C-x C-k S") #'kmacro-end-macro
  (kbd "C-x r B") #'pjones:set-register-buffer
+ (kbd "C-x r r") #'consult-register-load
+ (kbd "C-x r s") #'consult-register-store
  (kbd "C-z") pjones:zettle-map
  (kbd "M-'") #'pjones:toggle-prev-buffer
  (kbd "M-/") #'dabbrev-completion

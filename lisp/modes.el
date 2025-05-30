@@ -85,6 +85,9 @@ even when the names don't match exactly.  For example, loading
   (require 'saveplace)                    ; Saves your location in files
   (require 'vlf-setup)                    ; Deal with large files
 
+  ;; Load my Meow config and start it:
+  (require 'meow)
+
   (add-hook 'text-mode-hook #'abbrev-mode))
 
 ;; Hook in:

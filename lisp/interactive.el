@@ -7,12 +7,6 @@
 (eval-when-compile
   (require 'subr-x))
 
-(declare-function pjones:erc-bitlbee "../modes/erc-conf")
-(declare-function pjones:erc-freenode "../modes/erc-conf")
-(declare-function pjones:flymake-goto-next-error "../modes/flymake-conf")
-(declare-function pjones:markdown-visual-line "../modes/markdown-mode-conf")
-(declare-function pjones:vterm-frame "../modes/vterm-conf")
-
 (declare-function cl-position "cl-seq")
 (declare-function comint-output-filter "comint")
 (declare-function comint-term-environment "comint")
@@ -20,6 +14,11 @@
 (declare-function dired-rename-file "dired-aux")
 (declare-function http-mode "http")
 (declare-function markdown-mode "markdown-mode")
+(declare-function pjones:erc-bitlbee "../modes/erc-conf")
+(declare-function pjones:erc-freenode "../modes/erc-conf")
+(declare-function pjones:flymake-goto-next-error "../modes/flymake-conf")
+(declare-function pjones:markdown-visual-line "../modes/markdown-mode-conf")
+(declare-function pjones:vterm-frame "../modes/vterm-conf")
 (declare-function project-root "project")
 (declare-function puni-kill-active-region "puni")
 (declare-function puni-kill-line "puni")
@@ -29,15 +28,14 @@
 (declare-function vterm--internal "vterm")
 (declare-function which-key--hide-popup "which-key")
 (declare-function which-key--show-keymap "which-key")
-
-(autoload 'password-store-list "password-store")
-(autoload 'password-store--entry-to-file "password-store")
-
 (defvar flymake-mode)
 (defvar puni-mode)
 (defvar sort-fold-case)
 (defvar which-key-persistent-popup)
 (defvar which-key-show-prefix)
+
+(autoload 'password-store-list "password-store")
+(autoload 'password-store--entry-to-file "password-store")
 
 (defun pjones:maybe-save-buffers-kill-terminal (&optional arg)
   "A function to save me from myself.
@@ -279,8 +277,10 @@ absolute path name."
   "Sort the region from BEG to END."
   (interactive "r")
   (let ((sort-fold-case t))
-    (save-excursion
-      (sort-lines nil beg end))))
+    (save-mark-and-excursion
+      (save-restriction
+        (narrow-to-region beg end)
+        (sort-lines nil beg end)))))
 
 (defun pjones:exchange-point-and-mark (&optional arg)
   "Exchange point and mark without alerting region state.

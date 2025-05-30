@@ -53,6 +53,22 @@
         "type": "github"
       }
     },
+    "meow-edit": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1743777156,
+        "narHash": "sha256-3YzEpgXhftN3g1p84aTfSd31XHbwkmySMUWQArZg0ZY=",
+        "owner": "meow-edit",
+        "repo": "meow",
+        "rev": "e5817f3b5ef82cbcf8a729af205191dc6b142282",
+        "type": "github"
+      },
+      "original": {
+        "owner": "meow-edit",
+        "repo": "meow",
+        "type": "github"
+      }
+    },
     "nextflow-mode": {
       "flake": false,
       "locked": {
@@ -175,6 +191,7 @@
         "anki-editor": "anki-editor",
         "corg": "corg",
         "home-manager": "home-manager",
+        "meow-edit": "meow-edit",
         "nextflow-mode": "nextflow-mode",
         "nixpkgs": "nixpkgs",
         "org-capture-ref": "org-capture-ref",

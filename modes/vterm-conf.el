@@ -42,6 +42,14 @@
   (define-key map (kbd "C-u") #'vterm--self-insert)
   (define-key map (kbd "M-<backspace>") nil))
 
+(defun pjones:meow-vterm-state-change (state)
+  "Update `vterm-copy-mode' when changing states.
+STATE is the new state meow changed to."
+  (if (eq state 'insert)
+      (if vterm-copy-mode
+          (vterm-copy-mode -1))
+    (vterm-copy-mode)))
+
 (defun pjones:vterm-change-dir (dir)
   "Change to DIR in the current vterm shell."
   (interactive (list (read-directory-name "cd: ")))
@@ -72,6 +80,11 @@
   "Mode hook for `vterm-mode'."
   (puni-mode -1) ; Disable puni mode.
 
+  ;; Support Meow normal state:
+  (add-hook 'meow-switch-state-hook
+            #'pjones:meow-vterm-state-change
+            nil t)
+
   ;; If `vterm-kill-buffer-on-exit' is non-nil in the global scope
   ;; then very short lived processes will result in the frame being
   ;; deleted even if I want it to stay around.  That's because the
@@ -85,7 +98,6 @@
 
 (defun pjones:vterm-copy-mode-hook ()
   "Mode hook for `vterm-copy-mode'."
-  (pjones:vterm-restore-cursor)
   ;; Don't move beyond prompt, breaks copy mode:
   (setq-local next-line-add-newlines nil))
 

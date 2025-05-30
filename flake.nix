@@ -15,6 +15,11 @@
       flake = false;
     };
 
+    meow-edit = {
+      url = "github:meow-edit/meow";
+      flake = false;
+    };
+
     nextflow-mode = {
       url = "github:edmundmiller/nextflow-mode";
       flake = false;

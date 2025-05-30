@@ -167,6 +167,10 @@ The JSON document comes from my tilde project."
   "Hook function for `mu4e-view-mode'."
   (pjones:mu4e-common-binds mu4e-view-mode-map))
 
+(defun pjones:mu4e-main-mode-hook ()
+  "Hook for `mu4e-main-mode'."
+  (ignore))
+
 ;; FIXME: Remove this after upgrading to 1.12.8:
 (unless (boundp 'mu4e-trash-without-flag)
   (setf (plist-get (alist-get 'trash mu4e-marks) :action)
@@ -256,6 +260,7 @@ The JSON document comes from my tilde project."
 ;; Hooks
 (add-hook 'mu4e-compose-mode-hook #'pjones:mu4e-compose-mode-hook)
 (add-hook 'mu4e-headers-mode-hook #'pjones:mu4e-headers-mode-hook)
+(add-hook 'mu4e-main-mode-hook #'pjones:mu4e-main-mode-hook)
 (add-hook 'mu4e-view-mode-hook #'pjones:mu4e-view-mode-hook)
 
 ;;; mu4e-conf.el ends here

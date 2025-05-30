@@ -27,7 +27,7 @@ Ensures that the buffer name doesn't change so it can be found again."
 
 (custom-set-variables
  '(project-switch-commands
-   '((project-async-shell-command "Async" ?&)
+   '((project-async-shell-command "Async" ?r)
      (magit-project-status "Magit" ?m)
      (pjones:project-vterm "Shell" ?s)
      (project-dired "Dired" ?d)
@@ -40,6 +40,8 @@ Ensures that the buffer name doesn't change so it can be found again."
   (define-key map (kbd "D") #'project-find-dir)
   (define-key map (kbd "m") #'magit-project-status)
   (define-key map (kbd "M") #'magit-file-dispatch)
+  (define-key map (kbd "r") #'project-async-shell-command)
+  (define-key map (kbd "R") #'project-query-replace-regexp)
   (define-key map (kbd "s") #'pjones:project-vterm))
 
 ;;; project-conf.el ends here

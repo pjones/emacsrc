@@ -205,6 +205,10 @@ The mode construct list is then returned."
    (:eval (if (and (fboundp 'winum--get-window-vector)
                              (> (length (winum--get-window-vector)) 2))
                         (format winum-format (winum-get-number-string))))
+
+   ;; Meow state:
+   (:eval (meow-indicator))
+
    ;; Buffer name, colored when modified:
    (:eval (or mode-line-buffer-identification (pjones:mode-line-buffer))) " "
    ;; Buffer position and size:
