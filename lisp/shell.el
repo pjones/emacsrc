@@ -84,7 +84,7 @@ process exits.
     (with-current-buffer buffer
       (pjones:shell-mode 1)
       (setq mode-name "running"
-            header-line-format command))
+            header-line-format shell))
     (save-selected-window
       (pop-to-buffer
        buffer '((display-buffer-in-side-window) .
