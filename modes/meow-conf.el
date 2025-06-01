@@ -169,7 +169,7 @@ When NO-SELECTION is non-nil, don't activate a selection."
 
 (custom-set-variables
  '(meow-cheatsheet-layout meow-cheatsheet-layout-qwerty)
- '(meow--minibuffer-setup nil)
+ '(meow-select-on-change nil)
  '(meow-use-clipboard t)
  '(meow-keypad-message nil)
  '(meow-cursor-type-motion '(hbar . 2))
