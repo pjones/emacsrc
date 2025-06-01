@@ -3,6 +3,6 @@
 # key: conj
 # expand-env: ((yas-indent-line 'fixed))
 # --
-| ich$0 | wir |
+| $0ich | wir |
 | du    | ihr |
 | er    | sie |
