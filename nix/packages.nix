@@ -93,6 +93,7 @@ emacsWithOverrides.emacsWithPackages (epkgs: with epkgs; [
   dired-filter # Ibuffer-like filtering for dired
   dired-narrow # Live-narrowing of search results for dired
   dired-subtree # Insert subdirectories in a tree-like fashion
+  dockerfile-mode # An emacs mode for handling Dockerfiles
   dracula-theme # The most famous dark theme ever created.
   dumb-jump # Jump to definition for 40+ languages without configuration
   ef-themes # Colourful (“pretty”) yet legible themes
