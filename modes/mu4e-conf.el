@@ -171,14 +171,6 @@ The JSON document comes from my tilde project."
   "Hook for `mu4e-main-mode'."
   (ignore))
 
-;; FIXME: Remove this after upgrading to 1.12.8:
-(unless (boundp 'mu4e-trash-without-flag)
-  (setf (plist-get (alist-get 'trash mu4e-marks) :action)
-        (lambda (docid _msg target)
-          (mu4e--server-move
-           docid
-           (mu4e--mark-check-target target) "-N")))) ; Instead of "+T-N")
-
 ;; General Settings:
 (custom-set-variables
  '(mu4e-contexts (pjones:mu4e-contexts))
