@@ -19,6 +19,7 @@ let
   emacsWithOverrides = (emacsPackagesFor emacs).overrideScope (self: super: {
     anki-editor = update super.anki-editor inputs.anki-editor;
     meow = update super.meow inputs.meow-edit;
+    org-roam = update super.org-roam inputs.org-roam;
 
     # Not in nixpkgs:
     corg = emacs.pkgs.trivialBuild {
@@ -155,6 +156,7 @@ emacsWithOverrides.emacsWithPackages (epkgs: with epkgs; [
   org-modern # Modern Org Style.
   org-ref # citations, cross-references, bibliographies in org-mode
   org-roam # A database abstraction layer for Org-mode
+  org-transclusion # Enable transclusion with Org Mode
   org-tree-slide # A presentation tool for org-mode
   orgalist # Manage Org-like lists in non-Org buffers
   ox-gfm # Github Flavored Markdown Back-End for Org Export Engine

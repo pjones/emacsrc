@@ -153,6 +153,23 @@
         "type": "github"
       }
     },
+    "org-roam": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1748153192,
+        "narHash": "sha256-qjWN/+p7z44q0C1iYYDk0S6np/L2DXBuamUq+PS+MgI=",
+        "owner": "org-roam",
+        "repo": "org-roam",
+        "rev": "2ff616fbd8277bd797254befe34d5036b35a7dbf",
+        "type": "github"
+      },
+      "original": {
+        "owner": "org-roam",
+        "ref": "v2.3.0",
+        "repo": "org-roam",
+        "type": "github"
+      }
+    },
     "ox-ipynb": {
       "flake": false,
       "locked": {
@@ -197,6 +214,7 @@
         "org-capture-ref": "org-capture-ref",
         "org-clock-dbus": "org-clock-dbus",
         "org-grader": "org-grader",
+        "org-roam": "org-roam",
         "ox-ipynb": "ox-ipynb",
         "persid": "persid"
       }

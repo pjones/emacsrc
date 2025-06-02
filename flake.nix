@@ -45,6 +45,11 @@
       flake = false;
     };
 
+    org-roam = {
+      url = "github:org-roam/org-roam/v2.3.0";
+      flake = false;
+    };
+
     persid = {
       url = "github:pjones/persid/pjones/compile";
       flake = false;
