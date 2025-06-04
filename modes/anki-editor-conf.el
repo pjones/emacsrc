@@ -17,10 +17,10 @@
            (+ (char blank))
            (char upper)
            (+ (char word))
-           (? (seq ","
-                   (+ (char blank))
-                   (or "-" "⸚")
-                   (* (char word ?/))))))
+           (seq ","
+                (+ (char blank))
+                (or "-" "⸚")
+                (* (char word ?/)))))
   "Regular expression to match German nouns.")
 
 (defvar pjones:anki-media-subdir "media/"
