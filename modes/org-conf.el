@@ -124,7 +124,7 @@ If TIME is nil then use the current time."
  '(org-appear-autosubmarkers t)
  '(org-clock-clocked-in-display nil)
  '(org-clock-mode-line-total 'current)
- '(org-ellipsis "/")
+ '(org-ellipsis " ")
  '(org-hide-emphasis-markers t)
  '(org-hide-leading-stars t)
  '(org-modern-block-fringe nil)
@@ -136,6 +136,12 @@ If TIME is nil then use the current time."
  '(org-modern-todo nil)
  '(org-show-context-detail '((default . tree)))
  '(org-startup-folded 'show2levels)
+
+ '(org-modern-fold-stars '(("⯈" . "⯆")
+                           ("▶" . "▼")
+                           ("▷" . "▽")
+                           ("▸" . "▾")
+                           ("▹" . "▿")))
 
  ;; Behavior Settings:
  '(org-archive-default-command #'pjones:org-archive-subtree-to-daily)
