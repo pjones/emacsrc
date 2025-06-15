@@ -12,16 +12,25 @@
 (defvar org-capture-templates)
 
 (defvar pjones:anki-de-noun-gender-re
-  (rx (seq word-boundary
-           (group (or "der" "das" "die"))
+  (rx word-boundary
+      (group (or "der" "das" "die"))
+      (+ (char blank))
+      (group (char upper)
+             (+ (char word ? )))
+      (seq ","
            (+ (char blank))
-           (char upper)
-           (+ (char word))
-           (seq ","
-                (+ (char blank))
-                (or "-" "⸚")
-                (* (char word ?/)))))
+           (or "-" "⸚")
+           (* (char word ?/))))
   "Regular expression to match German nouns.")
+
+(defvar pjones:anki-de-noun-nur-plural-re
+  (rx word-boundary
+      "die"
+      (+ (char blank))
+      (group (char upper)
+             (+ (char word ? )))
+      " (nur Pl.)")
+  "Regular expression to match nouns that are only plural.")
 
 (defvar pjones:anki-media-subdir "media/"
   "Directory where media files are stored.")
@@ -29,17 +38,65 @@
 (defvar pjones:anki-download-url-history nil
   "History of URLs read from the user.")
 
+(defvar pjones:anki-de-noun-gender-table nil
+  "A lookup table for noun to gender translation.")
+
 (defun pjones:anki-de-noun-gender-filter (text backend info)
   "Tag nouns in TEXT with their gender.
 Only works when BACKEND is the `anki-editor' backend or INFO indicates
 the same."
-  (let ((backend (or backend (plist-get info :back-end)))
-        (case-fold-search nil))
-    (if (and (eq backend anki-editor--ox-anki-html-backend)
-             (string-match pjones:anki-de-noun-gender-re text))
-        (let* ((gender (match-string 1 text))
-               (replacement (concat "<span class=\"noun " gender "\">\\&</span>")))
-          (replace-match replacement t nil text)))))
+  (let* ((backend (or backend (plist-get info :back-end)))
+         (case-fold-search nil)
+         (noun-re (rx word-boundary
+                      (group (char upper)
+                             (+ (char word ? )))
+                      word-boundary))
+         (span (lambda (gender body)
+                 (concat "<span class=\"noun "
+                         gender "\">"
+                         body "</span>")))
+         (replace (lambda (gender)
+                    (replace-match (funcall span gender "\\&")
+                                   t nil text))))
+    (when (eq backend anki-editor--ox-anki-html-backend)
+      (cond
+       ((string-match pjones:anki-de-noun-gender-re text)
+        ;; Defines a gendered noun.
+        (funcall replace (match-string 1 text)))
+       ((string-match pjones:anki-de-noun-nur-plural-re text)
+        ;; Defines a plural-only noun.
+        (funcall replace "plu"))
+       (t
+        ;; Might reference an existing noun.
+        (let ((pos 0)
+              (final text))
+          (while-let ((npos (string-match noun-re final pos))
+                      (noun (match-string-no-properties 1 final)))
+            (setq pos (+ npos (length noun)))
+            (when-let* ((gender (gethash noun pjones:anki-de-noun-gender-table))
+                        (tagged (funcall span gender noun)))
+              (setq pos (+ npos (length tagged))
+                    final (replace-match tagged t t final 1))))
+          final))))))
+
+(defun pjones:anki-de-noun-gender-scan ()
+  "Return a hash table of noun to gender mappings."
+  (let ((nouns (make-hash-table :test 'equal))
+        (regex (concat pjones:anki-de-noun-gender-re "\\|"
+                       pjones:anki-de-noun-nur-plural-re)))
+    (save-excursion
+      (save-restriction
+        (widen)
+        (goto-char (point-min))
+        (while (re-search-forward regex nil t)
+          (cond
+           ((and (match-string 1) (match-string 2)) ; der, das, or die
+            (puthash (match-string-no-properties 2)
+                     (match-string-no-properties 1)
+                     nouns))
+           ((match-string 3) ; plural
+            (puthash (match-string-no-properties 3) "plu" nouns))))))
+    nouns))
 
 (defun pjones:anki-download-media-insert (marker path)
   "Sentinel function for the download buffer.
@@ -121,11 +178,21 @@ current tree."
          (org-capture-templates (list template)))
     (org-capture nil key)))
 
+(defun pjones:anki-editor-push-notes ()
+  "Export Anki notes with some magic."
+  (interactive)
+  (setq pjones:anki-de-noun-gender-table
+        (pjones:anki-de-noun-gender-scan))
+  (call-interactively #'anki-editor-push-notes))
+
 (defun pjones:anki-editor-mode-hook ()
   "Hook for `anki-editor-mode'."
-  (keymap-local-set "C-c C-e a" #'anki-editor-push-notes)
-  (keymap-local-set "C-c i" #'pjones:anki-template-insert)
-  (keymap-local-set "C-c m" #'pjones:anki-media))
+  (keymap-set anki-editor-mode-map "C-c C-e a" #'pjones:anki-editor-push-notes)
+  (keymap-set anki-editor-mode-map "C-c i"     #'pjones:anki-template-insert)
+  (keymap-set anki-editor-mode-map "C-c m"     #'pjones:anki-media)
+
+  (add-hook 'org-export-filter-plain-text-functions
+            #'pjones:anki-de-noun-gender-filter nil t))
 
 (custom-set-variables
  '(anki-editor-include-default-style nil)
@@ -135,8 +202,5 @@ current tree."
                    ("Deutsche Notizen" . "Notes"))))))
 
 (add-hook 'anki-editor-mode-hook #'pjones:anki-editor-mode-hook)
-
-(add-hook 'org-export-filter-plain-text-functions
-          #'pjones:anki-de-noun-gender-filter)
 
 ;;; anki-editor-conf.el ends here
