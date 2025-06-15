@@ -292,6 +292,21 @@ behavior."
    (if (region-active-p) arg
      (not arg))))
 
+(defvar-local pjones:jump-marker nil
+  "A marker that points at the last jump point.")
+
+(defun pjones:jump-to-marker (reset)
+  "Jump to the last marked jump location.
+If the last jump location is nil or RESET is non-nil then just record
+the current location as the next jump location without going anywhere."
+  (interactive "P")
+  (let ((here (point-marker))
+        (there pjones:jump-marker))
+    (setq pjones:jump-marker here)
+    (if (or reset (null there))
+        (message "Jump point recorded.")
+      (goto-char (marker-position there)))))
+
 (defun pjones:window-to-frame ()
   "Pop the selected window out into its own frame."
   (interactive)

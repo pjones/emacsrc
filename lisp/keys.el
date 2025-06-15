@@ -99,6 +99,7 @@ FUNC."
 (declare-function pjones:fly-next-error "./interactive")
 (declare-function pjones:frame-toggle-alpha "./interactive")
 (declare-function pjones:indent-or-complete "./completion")
+(declare-function pjones:jump-to-marker "./interactive")
 (declare-function pjones:kill-directory-name "./interactive")
 (declare-function pjones:kill-file-name "./interactive")
 (declare-function pjones:kill-line "./interactive")
@@ -187,18 +188,15 @@ FUNC."
  (kbd "C-c b a") (pjones:jump-to-buffer "*Org Agenda*" pjones:agenda)
  (kbd "C-c b b") (pjones:in-home-dir #'consult-buffer)
  (kbd "C-c b e") #'eldoc-doc-buffer
- (kbd "C-c b g") #'pjones:pwgen
- (kbd "C-c b l") #'pass
- (kbd "C-c b p") #'pjones:password-goto
- (kbd "C-c b r") #'revert-buffer-quick
  (kbd "C-c b t") #'pjones:open-temp-buffer
  (kbd "C-c d") #'duplicate-dwim
  (kbd "C-c e") #'embark-act
  (kbd "C-c f f") (pjones:jump-to-buffer "*flymake message*")
  (kbd "C-c f R") #'rename-visited-file
  (kbd "C-c g") #'google-translate-smooth-translate
- (kbd "C-c h") #'pjones:start-http
- (kbd "C-c j") #'webjump
+ (kbd "C-c h h") #'pjones:start-http
+ (kbd "C-c h j") #'webjump
+ (kbd "C-c j") #'pjones:jump-to-marker
  (kbd "C-c l l") #'org-store-link
  (kbd "C-c l o") #'link-hint-open-link
  (kbd "C-c l w") #'link-hint-copy-link
