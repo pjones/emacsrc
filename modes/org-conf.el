@@ -368,6 +368,7 @@ If TIME is nil then use the current time."
  '(org-latex-listings 'minted)
  '(org-latex-prefer-user-labels t)
  '(org-latex-tables-booktabs t)
+ '(org-beamer-frame-level 2)
  '(org-plantuml-exec-mode 'plantuml)
 
  '(org-babel-default-header-args
@@ -923,6 +924,48 @@ If EDIT is non-nil then edit the resulting trigger with
     (goto-char pos)
     (message "All links are good.")))
 
+(defun pjones:org-before-beamer-export (backend)
+  "Prepare buffer for export to beamer.
+
+Only works with BACKEND is \='beamer.
+
+Called from `org-export-before-processing-functions'."
+  (when-let (((eq backend 'beamer))
+             (keywords '(("beamer_class_options"    . "latex_class_options")
+                         ("beamer_options"          . "options")
+                         ("beamer_exclude_tags"     . "exclude_tags")
+                         ("beamer_export_file_name" . "export_file_name"))))
+    (pjones:org-translate-keywords keywords)))
+
+(defun pjones:org-translate-keywords (keywords)
+  "Replace keywords in the current buffer according to KEYWORDS.
+
+KEYWORDS should be an alist of strings where the keys are keywords to
+match and the values are replacement keywords."
+  (let* ((quoted (mapcar (lambda (e) (regexp-quote (car e))) keywords))
+         (regexp (concat "^[[:blank:]]*#\\+\\("
+                         (string-join quoted "\\|")
+                         "\\):"))
+         (case-fold-search t))
+    (undo-boundary)
+    (save-excursion
+      (goto-char (point-min))
+      (while-let (((search-forward-regexp regexp nil t))
+                  (key (match-string-no-properties 1))
+                  (val (alist-get key keywords nil nil #'string=)))
+        (replace-match val nil t nil 1)
+        (forward-line)))))
+
+(defun pjones:org-latex-export-to-pdf ()
+  "Smart (DWIM) export to PDF."
+  (interactive)
+  (message "Generating PDF...")
+  (let ((use-async t)
+        (only-subtree (buffer-narrowed-p)))
+    (save-excursion
+      (goto-char (point-min))
+      (org-latex-export-to-pdf use-async only-subtree))))
+
 ;;; Key Bindings:
 (let ((map org-mode-map))
   ;; Reset these so I can use them as a prefix:
@@ -942,7 +985,7 @@ If EDIT is non-nil then edit the resulting trigger with
   (define-key map (kbd "C-c C-e e") #'org-export-dispatch)
   (define-key map (kbd "C-c C-e j") #'pjones:ox-ipynb-export-to-ipynb)
   (define-key map (kbd "C-c C-e m") #'org-gfm-export-as-markdown)
-  (define-key map (kbd "C-c C-e p") #'org-latex-export-to-pdf)
+  (define-key map (kbd "C-c C-e p") #'pjones:org-latex-export-to-pdf)
   (define-key map (kbd "C-c C-x @") #'org-ref-insert-link)
   (define-key map (kbd "C-c l h") #'pjones:org-insert-heading-link)
   (define-key map (kbd "C-c RET") nil) ; Remove this binding.
@@ -982,6 +1025,7 @@ If EDIT is non-nil then edit the resulting trigger with
 (add-hook 'org-agenda-after-show-hook #'pjones:org-hide-others)
 (add-hook 'org-agenda-finalize-hook #'pjones:org-agenda-delete-empty-blocks)
 (add-hook 'org-agenda-mode-hook #'pjones:org-agenda-mode-hook)
+(add-hook 'org-export-before-processing-functions #'pjones:org-before-beamer-export)
 (add-hook 'org-mode-hook #'org-appear-mode)
 (add-hook 'org-mode-hook #'org-bulletproof-mode)
 (add-hook 'org-mode-hook #'org-clock-dbus-mode)
