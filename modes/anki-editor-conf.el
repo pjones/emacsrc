@@ -160,24 +160,6 @@ TEXT to translate is taken from BEGIN to END."
    (if (use-region-p) #'pjones:anki-media-tts
      #'pjones:anki-media-download)))
 
-(defun pjones:anki-template-insert ()
-  "Insert a template in the current tree.
-The template file name will be taken from the TEMPLATE property in the
-current tree."
-  (interactive)
-  (let* ((key "A")
-         (file (or (org-entry-get nil "TEMPLATE" t) "template.org"))
-         (id (org-entry-get nil "ID" t))
-         (template `(,key "Anki Template" entry
-                          ,(if id (list 'id id) '(here))
-                          (file ,(if (file-name-absolute-p file) file
-                                   (concat default-directory file)))
-                          :empty-lines 1
-                          :immediate-finish t
-                          :jump-to-captured t))
-         (org-capture-templates (list template)))
-    (org-capture nil key)))
-
 (defun pjones:anki-editor-push-notes ()
   "Export Anki notes with some magic."
   (interactive)
@@ -188,7 +170,6 @@ current tree."
 (defun pjones:anki-editor-mode-hook ()
   "Hook for `anki-editor-mode'."
   (keymap-set anki-editor-mode-map "C-c C-e a" #'pjones:anki-editor-push-notes)
-  (keymap-set anki-editor-mode-map "C-c i"     #'pjones:anki-template-insert)
   (keymap-set anki-editor-mode-map "C-c m"     #'pjones:anki-media)
 
   (add-hook 'org-export-filter-plain-text-functions

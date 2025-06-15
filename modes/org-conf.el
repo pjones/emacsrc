@@ -113,6 +113,36 @@ If TIME is nil then use the current time."
                 (concat "<" style ">"))))
     (format-time-string fmt time)))
 
+(defvar pjones:org-template-jump-point nil
+  "Where to jump after inserting a template.")
+
+(defun pjones:org-template-insert (file)
+  "Insert a template in the current tree.
+
+If FILE is nil the template file name will be taken from the TEMPLATE
+property in the current tree if that property exists.  Otherwise a file
+name will be requested.  With a prefix argument the file name will
+always be requested."
+  (interactive (list (or (and (not current-prefix-arg)
+                              (org-entry-get nil "TEMPLATE" t))
+                         (read-file-name "Template: "))))
+  (let* ((key "A")
+         (id (org-entry-get nil "ID" t))
+         (template `(,key "Anki Template" entry
+                          ,(if id (list 'id id) '(here))
+                          (file ,(if (file-name-absolute-p file) file
+                                   (concat default-directory file)))
+                          :empty-lines 1
+                          :immediate-finish t
+                          :jump-to-captured nil
+                          :prepare-finalize
+                          (lambda () (setq pjones:org-template-jump-point (point)))))
+         (org-capture-templates (list template)))
+    (undo-boundary)
+    (org-capture nil key)
+    (when pjones:org-template-jump-point
+      (goto-char pjones:org-template-jump-point))))
+
 ;; General Org Settings
 (custom-set-variables
  ;; Visual Settings:
@@ -980,6 +1010,7 @@ match and the values are replacement keywords."
   (define-key map (kbd "C-c C-a a") #'pjones:org-attach)
   (define-key map (kbd "C-c C-a d") #'org-attach-reveal-in-emacs)
   (define-key map (kbd "C-c C-a u") #'org-attach-url)
+  (define-key map (kbd "C-c i") #'pjones:org-template-insert)
   (define-key map (kbd "C-c C-b") #'pjones:org-todo-block)
   (define-key map (kbd "C-c C-e b") #'org-beamer-export-to-pdf)
   (define-key map (kbd "C-c C-e e") #'org-export-dispatch)
