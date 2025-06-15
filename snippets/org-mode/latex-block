@@ -3,4 +3,4 @@
 # key: lb
 # expand-env: ((yas-indent-line nil))
 # --
-\\[$0\\]
+\\[ $0 \\]
