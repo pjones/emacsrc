@@ -37,7 +37,7 @@
 
 ;; Settings:
 (custom-set-variables
- '(pdf-view-continuous nil))
+ '(pdf-view-continuous t))
 
 (defun pjones:pdf-view-mode-hook ()
   "Hook for `pdf-view-mode-hook'."
