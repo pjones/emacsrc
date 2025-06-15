@@ -209,10 +209,12 @@ FUNC."
  (kbd "C-c M-W") #'pjones:kill-directory-name
  (kbd "C-c M-w") #'pjones:kill-file-name
  (kbd "C-c o") #'ace-window
- (kbd "C-c p") (keymap-lookup ctl-x-map "p")
+ (kbd "C-c p g") #'pjones:pwgen
+ (kbd "C-c p l") #'pass
+ (kbd "C-c p p") #'pjones:password-goto
  (kbd "C-c Q") #'full-calc
  (kbd "C-c q") #'quick-calc
- (kbd "C-c r") ctl-x-r-map
+ (kbd "C-c r") #'revert-buffer-quick
  (kbd "C-c RET") #'pjones:start-term
  (kbd "C-c SPC") #'org-capture
  (kbd "C-c t B") #'puni-barf-backward
@@ -225,7 +227,7 @@ FUNC."
  (kbd "C-c t r") #'puni-raise
  (kbd "C-c t s") #'pjones:meow-sort
  (kbd "C-c t u") #'upcase-dwim
- (kbd "C-c w") (keymap-lookup ctl-x-map "w")
+ (kbd "C-c w") nil
 
  ;; Additional window commands:
  (kbd "C-x w /") #'winner-undo
@@ -237,6 +239,12 @@ FUNC."
  (kbd "C-x w s") #'ace-swap-window
  (kbd "C-x w S") #'window-toggle-side-windows
  (kbd "C-x w u") #'winner-undo
+
+ ;; Additional register commands:
+ (kbd "C-x r B") #'pjones:set-register-buffer
+ (kbd "C-x r r") #'consult-register-load
+ (kbd "C-x r /") #'consult-register-load
+ (kbd "C-x r s") #'consult-register-store
 
  ;; Additional searching/grepping bindings:
  (kbd "M-s d") #'rg
@@ -275,9 +283,6 @@ FUNC."
  (kbd "C-M-z") #'zap-to-char
  (kbd "C-x C-k @") #'consult-kmacro
  (kbd "C-x C-k S") #'kmacro-end-macro
- (kbd "C-x r B") #'pjones:set-register-buffer
- (kbd "C-x r r") #'consult-register-load
- (kbd "C-x r s") #'consult-register-store
  (kbd "C-z") pjones:zettle-map
  (kbd "M-'") #'pjones:toggle-prev-buffer
  (kbd "M-/") #'dabbrev-completion

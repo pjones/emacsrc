@@ -72,6 +72,31 @@ When NO-SELECTION is non-nil, don't activate a selection."
     (if cmd (call-interactively cmd)
       (call-interactively #'meow-quit))))
 
+(defun pjones:meow-insert-line ()
+  "Move to beginning of line and enter insert mode."
+  (interactive)
+  (when (use-region-p)
+    (meow--direction-backward)
+    (meow--cancel-selection))
+  (back-to-indentation)
+  (meow--switch-state 'insert))
+
+(defun pjones:meow-append-line ()
+  "Move to end of line and enter insert mode."
+  (interactive)
+  (when (use-region-p)
+    (meow--direction-forward)
+    (meow--cancel-selection))
+  (end-of-line)
+  (meow--switch-state 'insert))
+
+(defun pjones:isearch-forward-thing-at-point ()
+  "Use function `isearch-forward-thing-at-point' with `repeat-mode'."
+  (interactive)
+  (isearch-forward-thing-at-point)
+  (setq this-command 'isearch-repeat-forward
+        last-command-event ?\C-s))
+
 ;; When there is no selection, have:
 ;;
 ;;   - `meow-pop-selection' reactivate the mark
@@ -96,7 +121,6 @@ When NO-SELECTION is non-nil, don't activate a selection."
  '("<escape>" . ignore))
 
 (meow-leader-define-key
- ;; Use SPC (0-9) for digit arguments.
  '("-" . negative-argument)
  '("/" . meow-keypad-describe-key)
  '("0" . meow-digit-argument)
@@ -110,10 +134,9 @@ When NO-SELECTION is non-nil, don't activate a selection."
  '("8" . meow-digit-argument))
 
 (meow-normal-define-key
- '("'" . repeat)
- '("," . meow-inner-of-thing)
+ '("'" . "C-x b")
  '("-" . negative-argument)
- '("." . meow-bounds-of-thing)
+ '("/" . "C-x r")
  '("0" . meow-expand)
  '("1" . meow-expand)
  '("2" . meow-expand)
@@ -126,9 +149,8 @@ When NO-SELECTION is non-nil, don't activate a selection."
  '("9" . meow-expand)
  '(";" . meow-reverse)
  '("<escape>" . ignore)
- '("[" . meow-beginning-of-thing)
- '("]" . meow-end-of-thing)
  '("a" . meow-append)
+ '("A" . pjones:meow-append-line)
  '("B" . meow-back-symbol)
  '("b" . meow-back-word)
  '("c" . meow-change)
@@ -141,6 +163,7 @@ When NO-SELECTION is non-nil, don't activate a selection."
  '("h" . meow-left)
  '("H" . meow-left-expand)
  '("i" . meow-insert)
+ '("I" . pjones:meow-insert-line)
  '("j" . meow-next)
  '("J" . meow-next-expand)
  '("k" . meow-prev)
@@ -148,11 +171,15 @@ When NO-SELECTION is non-nil, don't activate a selection."
  '("l" . meow-right)
  '("L" . meow-right-expand)
  '("m" . meow-join)
- '("n" . isearch-forward-thing-at-point)
+ '("n" . pjones:isearch-forward-thing-at-point)
  '("o" . meow-open-above)
  '("O" . meow-open-below)
+ '("p" . "C-x p")
  '("q" . pjones:meow-quit)
- '("r" . meow-replace)
+ '("r a" . meow-beginning-of-thing)
+ '("r e" . meow-end-of-thing)
+ '("r i" . meow-inner-of-thing)
+ '("r o" . meow-bounds-of-thing)
  '("R" . meow-swap-grab)
  '("RET" . meow-line)
  '("S" . meow-mark-symbol)
@@ -161,6 +188,7 @@ When NO-SELECTION is non-nil, don't activate a selection."
  '("t" . "C-c t")
  '("u" . meow-undo)
  '("U" . meow-undo-in-selection)
+ '("v" . "C-x w")
  '("w" . meow-save)
  '("W" . meow-sync-grab)
  '("X" . meow-backward-delete)
@@ -175,12 +203,15 @@ When NO-SELECTION is non-nil, don't activate a selection."
  '(meow-use-clipboard t)
  '(meow-keypad-message nil)
  '(meow-cursor-type-motion '(hbar . 2))
+ '(meow-expand-hint-remove-delay 0)
  '(meow-replace-state-name-list
    '((normal . "[N]")
      (motion . "[M]")
      (keypad . "[K]")
      (insert . "[I]")
      (beacon . "[B]"))))
+
+(keymap-global-set "C-c n" meow-normal-state-keymap)
 
 (meow-global-mode 1)
 
