@@ -90,6 +90,12 @@ When NO-SELECTION is non-nil, don't activate a selection."
   (end-of-line)
   (meow--switch-state 'insert))
 
+(defun pjones:meow-insert-select ()
+  "Enter insert mode and select symbol at point."
+  (interactive)
+  (meow-insert-exit)
+  (call-interactively #'meow-mark-symbol))
+
 (defun pjones:isearch-forward-thing-at-point ()
   "Use function `isearch-forward-thing-at-point' with `repeat-mode'."
   (interactive)

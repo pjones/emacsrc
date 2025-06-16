@@ -75,7 +75,6 @@ FUNC."
 (declare-function emms-add-playlist "emms")
 (declare-function emms-insert-playlist "emms")
 (declare-function emms-smart-browse "emms")
-(declare-function er/expand-region "expand-region")
 (declare-function google-translate-smooth-translate "google-translate")
 (declare-function goto-last-change "goto-chg")
 (declare-function highlight-indent-guides-mode "highlight-indent-guides")
@@ -105,6 +104,7 @@ FUNC."
 (declare-function pjones:kill-line "./interactive")
 (declare-function pjones:kill-region-or-backward-kill-word "./interactive")
 (declare-function pjones:maybe-save-buffers-kill-terminal "./interactive")
+(declare-function pjones:meow-insert-select "meow")
 (declare-function pjones:meow-sort "../modes/meow-conf")
 (declare-function pjones:open-line-above "./interactive")
 (declare-function pjones:open-temp-buffer "./interactive")
@@ -279,7 +279,7 @@ FUNC."
  (kbd "C-;") #'jinx-correct
  (kbd "C-_") (lambda () (interactive) (text-scale-set 0))
  (kbd "C-h D") #'devdocs-lookup
- (kbd "C-M-SPC") #'er/expand-region
+ (kbd "C-M-SPC") #'pjones:meow-insert-select
  (kbd "C-M-z") #'zap-to-char
  (kbd "C-x C-k @") #'consult-kmacro
  (kbd "C-x C-k S") #'kmacro-end-macro
