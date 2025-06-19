@@ -886,6 +886,9 @@ If PROMPT is set, use that as the consult prompt."
 
 (advice-add 'org-edna-edit :after 'pjones:after-org-edna-edit)
 
+(defvar pjones:org-todo-state-after-block "DONE"
+  "The state to move a to-do item after it is unblocked.")
+
 (defun pjones:org-todo-block (&optional edit)
   "Mark the current heading as blocked.
 Prompts for a target heading that is blocking the current heading
@@ -910,11 +913,11 @@ If EDIT is non-nil then edit the resulting trigger with
                     " "))
     (if (and (not edit) (string-empty-p trigger))
         (save-excursion
-          (message "Select TODO state after trigger: ")
-          (let ((todo-state (or (org-fast-todo-selection) "DONE")))
-            (org-id-goto target)
-            (org-entry-put (point-marker) "TRIGGER"
-                           (format "ids(id:%s) todo!(%s)" source todo-state))))
+          (org-id-goto target)
+          (org-entry-put (point-marker) "TRIGGER"
+                         (format "ids(id:%s) todo!(%s)"
+                                 source
+                                 pjones:org-todo-state-after-block)))
       (org-id-goto target)
       (org-edna-edit)
       (goto-char org-edna-blocker-section-marker)
