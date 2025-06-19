@@ -177,6 +177,7 @@ FUNC."
 
 (pjones:global-set-keys
  (kbd "C-c '") #'separedit
+ (kbd "C-c :") #'eval-expression
  (kbd "C-c ?") #'which-key-show-top-level
  (kbd "C-c A") #'pjones:frame-toggle-alpha
  (kbd "C-c a a") (pjones:jump-to-buffer "*Org Agenda*" pjones:agenda)
