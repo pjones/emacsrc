@@ -176,17 +176,10 @@ FUNC."
   "Key bindings for note taking.")
 
 (pjones:global-set-keys
- ;; A couple notes about the C-c map:
- ;;
- ;; Because of Meow, the following keys need to remain empty:
- ;;
- ;;   - C-c c
- ;;   - C-c k
  (kbd "C-c '") #'separedit
  (kbd "C-c ?") #'which-key-show-top-level
  (kbd "C-c A") #'pjones:frame-toggle-alpha
- (kbd "C-c b a") (pjones:jump-to-buffer "*Org Agenda*" pjones:agenda)
- (kbd "C-c b b") (pjones:in-home-dir #'consult-buffer)
+ (kbd "C-c a a") (pjones:jump-to-buffer "*Org Agenda*" pjones:agenda)
  (kbd "C-c b e") #'eldoc-doc-buffer
  (kbd "C-c b t") #'pjones:open-temp-buffer
  (kbd "C-c d") #'duplicate-dwim
@@ -227,7 +220,6 @@ FUNC."
  (kbd "C-c t r") #'puni-raise
  (kbd "C-c t s") #'pjones:meow-sort
  (kbd "C-c t u") #'upcase-dwim
- (kbd "C-c w") nil
 
  ;; Additional window commands:
  (kbd "C-x w /") #'winner-undo

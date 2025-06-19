@@ -121,6 +121,31 @@ When NO-SELECTION is non-nil, don't activate a selection."
                  (vterm-mode     . insert)))
   (add-to-list 'meow-mode-state-list entry))
 
+;; Like the existing key maps used as the parent, except some bindings
+;; have been moved around so they work with meow's keypad mode without
+;; needing to use the space key all the time.
+(defvar-keymap pjones:ctl-x-map
+  :doc "C-x map with some things moved around."
+  :parent ctl-x-map
+  "C-b" (keymap-lookup ctl-x-map "b")
+  "b" (keymap-lookup ctl-x-map "C-b"))
+
+(defvar-keymap pjones:project-map
+  :doc "Project map with easier keypad bindings."
+  :parent (keymap-lookup ctl-x-map "p")
+  "C-b" #'project-switch-to-buffer
+  "b"   #'project-list-buffers)
+
+;; Give meow a private version of `mode-specific-map' so that it
+;; doesn't alter the existing map.
+(defvar-keymap pjones:mode-specific-map
+  :doc "Private C-c map for meow."
+  :parent mode-specific-map)
+
+(setopt meow-keymap-alist
+        (append `((leader . ,pjones:mode-specific-map))
+                (assq-delete-all 'leader meow-keymap-alist)))
+
 (meow-motion-define-key
  '("j" . meow-next)
  '("k" . meow-prev)
@@ -137,12 +162,14 @@ When NO-SELECTION is non-nil, don't activate a selection."
  '("5" . meow-digit-argument)
  '("6" . meow-digit-argument)
  '("7" . meow-digit-argument)
- '("8" . meow-digit-argument))
+ '("8" . meow-digit-argument)
+ '("r" . "C-x r")
+ '("w" . "C-x w")
+ (cons "p" pjones:project-map)
+ (cons "x" pjones:ctl-x-map))
 
 (meow-normal-define-key
- '("'" . "C-x b")
  '("-" . negative-argument)
- '("/" . "C-x r")
  '("0" . meow-expand)
  '("1" . meow-expand)
  '("2" . meow-expand)
@@ -180,7 +207,6 @@ When NO-SELECTION is non-nil, don't activate a selection."
  '("n" . pjones:isearch-forward-thing-at-point)
  '("o" . meow-open-above)
  '("O" . meow-open-below)
- '("p" . "C-x p")
  '("q" . pjones:meow-quit)
  '("r a" . meow-beginning-of-thing)
  '("r e" . meow-end-of-thing)
@@ -194,7 +220,6 @@ When NO-SELECTION is non-nil, don't activate a selection."
  '("t" . "C-c t")
  '("u" . meow-undo)
  '("U" . meow-undo-in-selection)
- '("v" . "C-x w")
  '("w" . meow-save)
  '("W" . meow-sync-grab)
  '("X" . meow-backward-delete)
@@ -205,11 +230,13 @@ When NO-SELECTION is non-nil, don't activate a selection."
 
 (custom-set-variables
  '(meow-cheatsheet-layout meow-cheatsheet-layout-qwerty)
+ '(meow-keypad-leader-dispatch nil)
  '(meow-select-on-change nil)
  '(meow-use-clipboard t)
  '(meow-keypad-message nil)
  '(meow-cursor-type-motion '(hbar . 2))
  '(meow-expand-hint-remove-delay 0)
+ '(meow-keypad-start-keys '((?c . ?c) (?h . ?h)))
  '(meow-replace-state-name-list
    '((normal . "[N]")
      (motion . "[M]")
