@@ -170,10 +170,12 @@ TEXT to translate is taken from BEGIN to END."
 (defun pjones:anki-editor-mode-hook ()
   "Hook for `anki-editor-mode'."
   (keymap-set anki-editor-mode-map "C-c C-e a" #'pjones:anki-editor-push-notes)
-  (keymap-set anki-editor-mode-map "C-c m"     #'pjones:anki-media)
+  (keymap-set anki-editor-mode-map "C-c C-a m" #'pjones:anki-media)
 
+  ;; This can't be buffer local because anki-editor uses
+  ;; `org-export-string-as' which creates a new buffer.
   (add-hook 'org-export-filter-plain-text-functions
-            #'pjones:anki-de-noun-gender-filter nil t))
+            #'pjones:anki-de-noun-gender-filter))
 
 (custom-set-variables
  '(anki-editor-include-default-style nil)
