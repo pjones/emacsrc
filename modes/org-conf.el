@@ -223,6 +223,7 @@ always be requested."
      ("\\.m4v\\'"     . "vlc %s")
      ("\\.mkv\\'"     . "vlc %s")
      ("\\.mm\\'"      . default)
+     ("\\.mp3\\'"     . "mpv %s")
      ("\\.mp4\\'"     . "vlc %s")
      ("\\.pages\\'"   . "libreoffice %s")
      ("\\.webm\\'"    . "vlc %s")
