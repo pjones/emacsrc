@@ -8,7 +8,7 @@
 
 ;; https://codeberg.org/martianh/mastodon.el
 (custom-set-variables
- '(mastodon-instance-url "https://fosstodon.org/")
+ '(mastodon-instance-url "https://hostux.social/")
  '(mastodon-active-user "devalot"))
 
 ;;; mastodon-conf.el ends here
