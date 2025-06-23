@@ -165,6 +165,7 @@ When NO-SELECTION is non-nil, don't activate a selection."
  '("8" . meow-digit-argument)
  '("r" . "C-x r")
  '("w" . "C-x w")
+ '("z" . "C-z")
  (cons "p" pjones:project-map)
  (cons "x" pjones:ctl-x-map))
 
