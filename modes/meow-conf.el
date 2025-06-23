@@ -96,6 +96,12 @@ When NO-SELECTION is non-nil, don't activate a selection."
   (meow-insert-exit)
   (call-interactively #'meow-mark-symbol))
 
+(defun pjones:meow-change-to-line-end ()
+  "Kill line then enter insert mode."
+  (interactive)
+  (kill-line)
+  (meow--switch-state 'insert))
+
 (defun pjones:isearch-forward-thing-at-point ()
   "Use function `isearch-forward-thing-at-point' with `repeat-mode'."
   (interactive)
@@ -187,6 +193,7 @@ When NO-SELECTION is non-nil, don't activate a selection."
  '("A" . pjones:meow-append-line)
  '("B" . meow-back-symbol)
  '("b" . meow-back-word)
+ '("C" . pjones:meow-change-to-line-end)
  '("c" . meow-change)
  '("d" . pjones:meow-block)
  '("DEL" . pjones:meow-jump)
