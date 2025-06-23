@@ -572,6 +572,7 @@ always be requested."
     'org-babel-load-languages
     '((shell . t)
       (emacs-lisp . t)
+      (jq . t)
       (mermaid . t)
       (plantuml . t)
       (python . t)

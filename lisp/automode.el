@@ -15,6 +15,7 @@
 (add-to-list 'auto-mode-alist '("\\.js$"       . js2-mode))
 (add-to-list 'auto-mode-alist '("\\.mjs$"      . js2-mode))
 (add-to-list 'auto-mode-alist '("\\.js\\.erb$" . js2-mode))
+(add-to-list 'auto-mode-alist '("\\.jq$"       . jq-mode))
 
 ;; Markdown
 (add-to-list 'auto-mode-alist '("\\.txt$" . markdown-mode))
