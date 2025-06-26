@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: read
+# key: read
+# expand-env: ((yas-indent-line 'fixed))
+# --
+while IFS= read -r -d "" file; do
+  echo "$file"
+done < <(find . -type f $0 -print0)
