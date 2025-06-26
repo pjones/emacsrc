@@ -122,7 +122,7 @@ When NO-SELECTION is non-nil, don't activate a selection."
                                  meow-selection-command-fallback)))
 
 ;; Override some mode's default state:
-(dolist (entry '((mu4e-main-mode . insert)
+(dolist (entry '((mu4e-main-mode . motion)
                  (mu4e-view-mode . motion)
                  (vterm-mode     . insert)))
   (add-to-list 'meow-mode-state-list entry))
@@ -153,8 +153,6 @@ When NO-SELECTION is non-nil, don't activate a selection."
                 (assq-delete-all 'leader meow-keymap-alist)))
 
 (meow-motion-define-key
- '("j" . meow-next)
- '("k" . meow-prev)
  '("<escape>" . ignore))
 
 (meow-leader-define-key
