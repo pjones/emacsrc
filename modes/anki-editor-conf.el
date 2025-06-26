@@ -16,7 +16,7 @@
       (group (or "der" "das" "die"))
       (+ (char blank))
       (group (char upper)
-             (+ (char word ? )))
+             (+ (char word ?  ?-)))
       (seq ","
            (+ (char blank))
            (or "-" "⸚")
@@ -28,7 +28,7 @@
       "die"
       (+ (char blank))
       (group (char upper)
-             (+ (char word ? )))
+             (+ (char word ?  ?-)))
       " (nur Pl.)")
   "Regular expression to match nouns that are only plural.")
 
