@@ -991,15 +991,15 @@ match and the values are replacement keywords."
         (replace-match val nil t nil 1)
         (forward-line)))))
 
-(defun pjones:org-latex-export-to-pdf ()
-  "Smart (DWIM) export to PDF."
-  (interactive)
+(defun pjones:org-latex-export-to-pdf (async)
+  "Smart (DWIM) export to PDF.
+When ASYNC is non-nil then export in the background."
+  (interactive "P")
   (message "Generating PDF...")
-  (let ((use-async t)
-        (only-subtree (buffer-narrowed-p)))
+  (let ((only-subtree (buffer-narrowed-p)))
     (save-excursion
       (goto-char (point-min))
-      (org-latex-export-to-pdf use-async only-subtree))))
+      (org-latex-export-to-pdf async only-subtree))))
 
 ;;; Key Bindings:
 (let ((map org-mode-map))
