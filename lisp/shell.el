@@ -8,17 +8,16 @@
 (require 'dash)
 (require 's)
 
+(declare-function comint-output-filter "comint")
+(declare-function comint-term-environment "comint")
 (declare-function json-read-file "json")
-(declare-function pjones:vterm "vterm")
 (declare-function project-name "project")
 (declare-function project-prefixed-buffer-name "project")
 (declare-function project-root "project")
-(declare-function vterm--self-insert "vterm")
-(declare-function vterm--set-title "vterm")
-(defvar vterm-kill-buffer-on-exit)
 
 (defvar pjones:shell-mode-map
   (define-keymap
+    "g" #'pjones:shell-repeat-if-done
     "q" #'pjones:shell-kill-if-done
     "C-c C-c" #'kill-current-buffer)
   "Keymap for `pjones:shell-mode'.")
@@ -28,27 +27,37 @@
   :init-value nil
   :lighter nil)
 
+(defun pjones:shell-is-running ()
+  "Return non-nil if the process in this buffer is still running."
+  (let ((process (get-buffer-process (current-buffer))))
+    (and process (not (eq 'exit (process-status process))))))
+
 (defun pjones:shell-kill-if-done ()
   "Kill the current `pjones:shell-mode' buffer if the process is done."
   (interactive)
-  (let ((process (get-buffer-process (current-buffer))))
-    (if (or (not process) (eq 'exit (process-status process)))
-        (kill-current-buffer)
-      (vterm--self-insert))))
+  (if (pjones:shell-is-running)
+      (call-interactively #'self-insert-command)
+    (kill-current-buffer)))
 
-(defun pjones:shell-on-exit (success buffer event)
+(defun pjones:shell-repeat-if-done ()
+  "Rerun the current command if it has finished."
+  (interactive)
+  (if (pjones:shell-is-running)
+      (call-interactively #'self-insert-command)
+    (revert-buffer)))
+
+(defun pjones:shell-on-exit (success process event)
   "Hook called with a shell process exits.
-BUFFER is the vterm buffer and EVENT is the exit message.  If SUCCESS is
+PROCESS is the process and EVENT is the exit message.  If SUCCESS is
 non-nil and a function, call it if the process exited cleanly."
-  (let* ((proc (get-buffer-process buffer))
-         (clean (or (and proc (= 0 (process-exit-status proc)))
+  (let* ((buffer (process-buffer process))
+         (clean (or (and process (= 0 (process-exit-status process)))
                     (string-match-p "^finished" event))))
-    (if (and vterm-kill-buffer-on-exit (not clean))
-        (setq-local vterm-kill-buffer-on-exit nil)
-      (message "%s: %s" (buffer-name buffer) (s-trim event)))
-    (setq mode-name (s-trim event))
-    (if (and clean (functionp success))
-        (funcall success))))
+    (message "%s: %s" (buffer-name buffer) (s-trim event))
+    (if (buffer-live-p buffer)
+        (with-current-buffer buffer
+          (if (and clean (functionp success))
+              (funcall success))))))
 
 (cl-defun pjones:shell-command (&key bufname command success close project)
   "Execute a shell command like `async-shell-command'.
@@ -57,7 +66,8 @@ non-nil and a function, call it if the process exited cleanly."
 process.  If :BUFNAME is nil then it is derived from the command
 name.
 
-:COMMAND A list or a string.
+:COMMAND A list or a string.  If it is a string it will be given to the
+shell to run as a shell command.
 
 If :PROJECT is non-nil run the command in the project's root directory
 and prefix the buffer name with the project name.
@@ -65,31 +75,61 @@ and prefix the buffer name with the project name.
 If :CLOSE is non-nil then automatically close the window when the
 process exits.
 
-:SUCCESS a function to call if the process exits cleanly."
-  (require 'vterm)
-  (let* ((default-directory (if project
-                                (project-root (project-current t))
-                              default-directory))
-         (name (if project
-                   (pjones:project-buffer-name (or bufname command))
-                 (or bufname (concat "*" command "*"))))
-         (shell (format "bash -c '%s'"
-                        (if (listp command)
-                            (string-join (mapcar #'shell-quote-argument command) " ")
-                          (shell-quote-argument command))))
-         (buffer (pjones:vterm :name name
-                               :keep (not close)
-                               :exit (apply-partially #'pjones:shell-on-exit success)
-                               :command shell)))
+:SUCCESS a function to call if the process exits cleanly.  The function
+is called with no arguments and with the process buffer as the current
+buffer.  If the buffer is no longer live then this function will not be
+called."
+  (let ((default-directory (if project
+                               (project-root (project-current t))
+                             default-directory))
+        (name (if project
+                  (pjones:project-buffer-name (or bufname command))
+                (or bufname (format "*%s*" command)))))
+    (pjones:shell-command-in-buffer
+     :buffer (get-buffer-create name)
+     :command command
+     :success (lambda ()
+                (if (functionp success)
+                    (funcall success))
+                (if close (kill-buffer))))))
+
+(cl-defun pjones:shell-command-in-buffer (&key buffer command success)
+  "Run COMMAND in an existing BUFFER.
+If SUCCESS is non-nil, and a function, call it if the process
+exits successfully."
+  (require 'comint)
+  (when-let ((old-proc (get-buffer-process buffer)))
+    (kill-process old-proc))
+  (let* ((proc-cmd (if (listp command) command
+                     (list shell-file-name shell-command-switch command)))
+         (display (string-join proc-cmd " "))
+         (process-environment
+          (append (and (natnump async-shell-command-width)
+                       (list (format "COLUMNS=%d" async-shell-command-width)))
+           (comint-term-environment)
+           process-environment)))
     (with-current-buffer buffer
+      (funcall async-shell-command-mode)
       (pjones:shell-mode 1)
-      (setq mode-name "running"
-            header-line-format shell))
-    (save-selected-window
-      (pop-to-buffer
-       buffer '((display-buffer-in-side-window) .
-                ((side          . bottom)
-                 (window-height . 0.2)))))))
+      (setq header-line-format display)
+      (setq-local revert-buffer-function
+                  (lambda (&rest _)
+                    (pjones:shell-command-in-buffer
+                     :buffer buffer
+                     :command command
+                     :success success))))
+    (when (make-process
+           :name (buffer-name buffer)
+           :buffer buffer
+           :command proc-cmd
+           :connection-type 'pty
+           :filter #'comint-output-filter
+           :sentinel (apply-partially #'pjones:shell-on-exit success))
+      (save-selected-window
+        (pop-to-buffer
+         buffer '((display-buffer-in-side-window) .
+                  ((side          . bottom)
+                   (window-height . 0.2))))))))
 
 (defun pjones:nix-flake-lock-json (&optional file)
   "Return the \"flake.lock\" JSON data for FILE.
