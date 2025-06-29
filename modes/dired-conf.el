@@ -82,9 +82,10 @@ ARG is the number of lines to jump."
 (defun pjones:dired-copy-filename-as-kill (&optional path)
   "Copy file name or entire PATH."
   (interactive "P")
-  (if path
-      (dired-copy-filename-as-kill '(nil . nil))
-    (dired-copy-filename-as-kill)))
+  (pcase path
+    ('(4) (dired-copy-filename-as-kill '(nil . nil)))
+    ('(16) (dired-copy-filename-as-kill 0))
+    (_ (dired-copy-filename-as-kill))))
 
 (defun pjones:dired-insert-or-visit ()
   "Visit the file at point.
