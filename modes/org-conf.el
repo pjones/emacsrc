@@ -579,7 +579,9 @@ always be requested."
       (R . t)
       (ruby . t)))
 
+;; Fucking `org-element' constant bugs:
 (push '(org-element-cache) warning-suppress-types)
+(push '(org-element) warning-suppress-types)
 
 (defun pjones:org-capture-ref-bibtex ()
   "Return the BibTex string for use in a source block."
