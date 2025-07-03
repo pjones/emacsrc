@@ -140,11 +140,11 @@
     "org-grader": {
       "flake": false,
       "locked": {
-        "lastModified": 1750949725,
-        "narHash": "sha256-HrsoC2CXxOnjxxJ1JJW75nwp/AxfDIPj7QAaqogkicM=",
+        "lastModified": 1751551115,
+        "narHash": "sha256-6X1+4W3ehRkL/3L+7vf6D3k1uutyMt/aCaGCVHZkYXA=",
         "owner": "pjones",
         "repo": "org-grader",
-        "rev": "d9e42b7f9f16cef17bb627c508708d0c39683160",
+        "rev": "59c6b586d47db5d1604903563a6140878c73252a",
         "type": "github"
       },
       "original": {
