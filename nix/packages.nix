@@ -73,7 +73,6 @@ in
 # Emacs package list:
 emacsWithOverrides.emacsWithPackages (epkgs: with epkgs; [
   ace-window # Quickly switch windows
-  adaptive-wrap # Smart line-wrapping with wrap-prefix
   anki-editor # Emacs minor mode for making Anki cards with Org Mode
   async # Asynchronous processing in Emacs
   avy # Jump to arbitrary positions in visible text and select text quickly

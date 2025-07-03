@@ -5,11 +5,13 @@
 ;;; Code:
 ;; Dependencies:
 
-(require 'adaptive-wrap)
 (require 'erc)
 (require 'erc-track)
 (require 'notifications)
 (require 'password-store)
+
+;; Make the linting tool happy:
+(defvar visual-wrap-extra-indent)
 
 (custom-set-variables
  '(erc-nick "pmade")
@@ -91,9 +93,9 @@
   "Hook run in new ERC buffers."
   (make-local-variable 'scroll-conservatively)
   (setq scroll-conservatively 1000      ; Don't recenter window
-        adaptive-wrap-extra-indent 8)   ; Leave space for timestamp.
+        visual-wrap-extra-indent 8)   ; Leave space for timestamp.
   (visual-line-mode)
-  (adaptive-wrap-prefix-mode))
+  (visual-wrap-prefix-mode))
 
 (defun pjones:erc-ignore-channel ()
   "Disable ERC tracking for channels."
