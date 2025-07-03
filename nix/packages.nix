@@ -191,6 +191,7 @@ emacsWithOverrides.emacsWithPackages (epkgs: with epkgs; [
   visual-fill # Auto-refill paragraphs without modifying the buffer
   vlf # View Large Files
   vterm # Fully-featured terminal emulator
+  vue-mode # Emacs major mode for vue.js
   weyland-yutani-theme # Emacs theme based off Alien movie franchise
   wgrep # Writable grep buffer and apply the changes to files
   winum # Navigate windows and frames using numbers.
