@@ -177,18 +177,6 @@ will be selected, otherwise a dark theme will be selected."
 (add-to-list 'default-frame-alist '(cursor-type  . bar))
 (setq frame-title-format '(:eval (pjones:frame-title-file-name)))
 
-;; Adapted from: https://gitlab.com/jessieh/mood-line
-(defun pjones:mode-line-align-right (construct)
-  "Right-align a mode line construct.
-CONSTRUCT should be a list, representing a mode line construct.
-An appropriately wide string is prepend to the list, such that
-the construct itself is pushed to the right side of the window.
-The mode construct list is then returned."
-  (let ((reserve (length (format-mode-line construct))))
-    (cons
-     (propertize " " 'display `((space :align-to (- right (- 0 right-margin) ,reserve))))
-     construct)))
-
 (defun pjones:mode-line-buffer ()
   "Return a `mode-line-format' component for the buffer name."
   (propertize "%b" 'face
@@ -200,8 +188,7 @@ The mode construct list is then returned."
  mode-line-buffer-identification nil
 
  mode-line-format
- '(" "
-   ;; Show window numbers if there are enough windows:
+ '(;; Show window numbers if there are enough windows:
    (:eval (if (and (fboundp 'winum--get-window-vector)
                              (> (length (winum--get-window-vector)) 2))
                         (format winum-format (winum-get-number-string))))
@@ -211,14 +198,18 @@ The mode construct list is then returned."
 
    ;; Buffer name, colored when modified:
    (:eval (or mode-line-buffer-identification (pjones:mode-line-buffer))) " "
+
    ;; Buffer position and size:
    mode-line-position
-   (:eval (pjones:mode-line-align-right
-           '(" "
-             ;; Misc (and global) mode info:
-             mode-line-misc-info
-             ;; Major and minor modes:
-             mode-line-modes " ")))))
+
+   ;; Now the right side:
+   mode-line-format-right-align
+
+   ;; Misc (and global) mode info:
+   mode-line-misc-info
+
+   ;; Major and minor modes:
+   mode-line-modes " "))
 
 ;; Hooks:
 (add-hook 'after-init-hook
