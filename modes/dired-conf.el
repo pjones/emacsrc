@@ -68,6 +68,21 @@
   (define-key map (kbd "M-s o") #'noccur-dired)
   (define-key map (kbd "X") #'dired-do-compress-to))
 
+(defun pjones:dired-imenu-create-index ()
+  "Create `imenu' index for Dired."
+  (let (files directories)
+    (goto-char (point-min))
+    (while (= 0 (forward-line))
+      (when-let (name (dired-get-filename t t))
+        (cond
+         ((file-directory-p name)
+          (push (cons name (point-marker)) directories))
+         (t
+          (push (cons name (point-marker)) files)))))
+    (list
+     (cons "Directories" (nreverse directories))
+     (cons "Files" (nreverse files)))))
+
 (defun pjones:dired-subtree-up-or-prev (&optional arg)
   "Move point up a directory, or to the previous sibling.
 When in a nested directory, move up to the parent.  If at the top of
@@ -123,6 +138,7 @@ Dired buffer.  Otherwise visit the file under point."
 (defun pjones:dired-mode-hook ()
   "Set up `dired-mode' buffers."
   (setq-local diff-hl-side 'left)
+  (setq imenu-create-index-function #'pjones:dired-imenu-create-index)
   (dired-hide-details-mode)
   (dired-filter-mode)
   (diff-hl-dired-mode))
