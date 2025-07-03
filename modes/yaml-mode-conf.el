@@ -17,6 +17,7 @@ indenting, and then inserting the array marker (dash)."
   "Set up `yaml-mode' buffers."
   (when (fboundp 'pjones:prog-mode-hook)
     (pjones:prog-mode-hook))
+  (setq-local indent-line-function #'yaml-indent-line)
   (local-set-key (kbd "M-RET") 'pjones:yaml-new-array-item))
 
 (add-hook 'yaml-mode-hook 'pjones:yaml-mode-hook)
