@@ -83,6 +83,7 @@ FUNC."
 (declare-function link-hint-open-link "link-hint")
 (declare-function magit-file-dispatch "magit-files")
 (declare-function magit-status "magit-status")
+(declare-function mu4e "mu4e")
 (declare-function org-roam-capture "org-roam")
 (declare-function org-roam-capture "org-roam")
 (declare-function org-roam-dailies-capture-date "org-roam")
@@ -185,8 +186,9 @@ FUNC."
  (kbd "C-c '") #'separedit
  (kbd "C-c :") #'eval-expression
  (kbd "C-c ?") #'which-key-show-top-level
- (kbd "C-c A") #'pjones:frame-toggle-alpha
  (kbd "C-c a a") (pjones:jump-to-buffer "*Org Agenda*" pjones:agenda)
+ (kbd "C-c a m") #'mu4e
+ (kbd "C-c A") #'pjones:frame-toggle-alpha
  (kbd "C-c b e") #'eldoc-doc-buffer
  (kbd "C-c b t") #'pjones:open-temp-buffer
  (kbd "C-c d") #'duplicate-dwim
