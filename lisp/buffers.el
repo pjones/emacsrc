@@ -109,9 +109,6 @@ When displaying these buffers, always open a new dedicated frame.")
       (direction . below)
       (window-height . 0.4))))
 
- '(display-comint-buffer-action
-   '((display-buffer-same-window)))
-
  ;; Ensure that the current frame is used to display server buffers.
  ;; NOTE: This might not be necessary now that I removed an older
  ;; setting in the deleted file: server-conf.el.

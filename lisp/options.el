@@ -14,6 +14,7 @@
  '(custom-file (concat user-emacs-directory "custom-init.el"))
  '(disabled-command-function nil)
  '(epa-file-encrypt-to "4D0CD0756F1B8B9D3DCD0CAAE1CF584F79D0D3DC")
+ '(epa-keys-select-method 'minibuffer)
  '(history-delete-duplicates t)
  '(inhibit-eol-conversion t)
  '(mail-user-agent 'mu4e-user-agent)
