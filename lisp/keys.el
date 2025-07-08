@@ -176,6 +176,12 @@ FUNC."
   "Key bindings for note taking.")
 
 (pjones:global-set-keys
+ ;; Keys under C-c:
+ ;;
+ ;; Reserved keys:
+ ;;
+ ;;   - k: Custom bindings for the current major mode.
+ ;;
  (kbd "C-c '") #'separedit
  (kbd "C-c :") #'eval-expression
  (kbd "C-c ?") #'which-key-show-top-level
@@ -191,6 +197,7 @@ FUNC."
  (kbd "C-c h h") #'pjones:start-http
  (kbd "C-c h j") #'webjump
  (kbd "C-c j") #'pjones:jump-to-marker
+ (kbd "C-c k") nil ; Reserved for major mode customzation.
  (kbd "C-c l l") #'org-store-link
  (kbd "C-c l o") #'link-hint-open-link
  (kbd "C-c l w") #'link-hint-copy-link

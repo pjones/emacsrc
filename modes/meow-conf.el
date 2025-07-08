@@ -168,6 +168,7 @@ When NO-SELECTION is non-nil, don't activate a selection."
  '("6" . meow-digit-argument)
  '("7" . meow-digit-argument)
  '("8" . meow-digit-argument)
+ '("k" . "C-c k") ; Overridden in modes.
  '("r" . "C-x r")
  '("w" . "C-x w")
  '("z" . "C-z")

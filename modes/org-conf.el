@@ -588,31 +588,6 @@ always be requested."
   (let ((bibtex (org-capture-ref-get-bibtex-field :bibtex-string)))
     (s-replace-regexp "^" "     " (or bibtex "MISSING") t)))
 
-(defun pjones:org-mode-hook ()
-  "Hook to hack `org-mode'."
-  ;; Buffer Settings
-  (save-place-mode -1)
-
-  ;; Orgzly insists on inserting empty lines at the end of files.  So
-  ;; if they are removed in Emacs they will cause a sync conflict or
-  ;; just come back on their own.  So, don't delete them.
-  (setq-local delete-trailing-lines nil)
-  (pjones:delete-whitespace-mode)
-
-  (unless noninteractive
-    ;; Puni doesn't work here:
-    (puni-mode -1)
-
-    ;; Better src block completion:
-    (require 'corg)
-    (corg-setup)
-
-    ;; Use yasnippets:
-    (yas-minor-mode)
-    (setq-local yas/trigger-key [tab])
-    (define-key yas/keymap [tab] #'yas-next-field)
-    (add-to-list 'org-tab-first-hook #'yas-expand)))
-
 (defun pjones:org-agenda-mode-hook ()
   "Hook run after a `org-agenda-mode' buffer is created."
   (hl-line-mode 1))
@@ -626,12 +601,6 @@ always be requested."
   (org-fold-show-context 'agenda)
   (org-fold-show-children)
   (org-fold-show-entry))
-
-(defun pjones:org-hide-all ()
-  "Close all headings, move to bob."
-  (interactive)
-  (goto-char (point-min))
-  (org-cycle '(4)))
 
 (defun pjones:org-effort-sum (&optional skip-done clock-diff)
   "Recursively sum the Effort property.
@@ -709,6 +678,15 @@ ARG is the number of headings to move."
       (org-backward-heading-same-level arg)
     (org-back-to-heading)
     (org-backward-heading-same-level (- arg 1))))
+
+(defun pjones:org-next-item ()
+  "Move to the next plain item.
+This is a wrapper around `org-next-item'.  That function doesn't work if
+you are not already in a plain list."
+  (interactive)
+  (require 'org-list)
+  (if (org-in-item-p) (org-next-item)
+    (org-list-search-forward (org-item-beginning-re))))
 
 (defun pjones:org-insert-heading (&optional here)
   "Insert a heading sanely.
@@ -1012,8 +990,6 @@ When ASYNC is non-nil then export in the background."
   (define-key map (kbd "<f12>") #'org-tree-slide-mode)
   (define-key map (kbd "C-'") nil) ; Remove this binding.
   (define-key map (kbd "C-<return>") #'pjones:org-insert-heading)
-  (define-key map (kbd "C-c 0") #'pjones:org-hide-all)
-  (define-key map (kbd "C-c 1") #'pjones:org-hide-others)
   (define-key map (kbd "C-c C-a a") #'pjones:org-attach)
   (define-key map (kbd "C-c C-a d") #'org-attach-reveal-in-emacs)
   (define-key map (kbd "C-c C-a u") #'org-attach-url)
@@ -1036,7 +1012,7 @@ When ASYNC is non-nil then export in the background."
   (define-key map (kbd "M-g C-i") #'pjones:org-get-id)
   (define-key map (kbd "M-g i") #'consult-org-heading)
   (define-key map (kbd "M-n") #'org-forward-heading-same-level)
-  (define-key map (kbd "M-N") #'org-next-item)
+  (define-key map (kbd "M-N") #'pjones:org-next-item)
   (define-key map (kbd "M-p") #'pjones:org-backward-heading-same-level)
   (define-key map (kbd "M-P") #'org-previous-item))
 
@@ -1058,6 +1034,43 @@ When ASYNC is non-nil then export in the background."
   "n" #'org-forward-heading-same-level
   "p" #'pjones:org-backward-heading-same-level
   "u" #'pjones:org-up-or-prev)
+
+(defvar-keymap pjones:org-mode-map
+  :doc "Access frequently used `org-mode' functions."
+  "a" #'org-fold-show-subtree
+  "b" #'org-fold-show-branches
+  "h" #'org-fold-hide-sublevels
+  "k" #'org-ctrl-c-ctrl-c
+  "o" #'pjones:org-hide-others
+  "s" #'org-toggle-narrow-to-subtree)
+
+(defun pjones:org-mode-hook ()
+  "Hook to hack `org-mode'."
+  ;; Buffer Settings
+  (save-place-mode -1)
+
+  ;; Orgzly insists on inserting empty lines at the end of files.  So
+  ;; if they are removed in Emacs they will cause a sync conflict or
+  ;; just come back on their own.  So, don't delete them.
+  (setq-local delete-trailing-lines nil)
+  (pjones:delete-whitespace-mode)
+
+  (unless noninteractive
+    ;; Puni doesn't work here:
+    (puni-mode -1)
+
+    ;; Better src block completion:
+    (require 'corg)
+    (corg-setup)
+
+    ;; Use yasnippets:
+    (yas-minor-mode)
+    (setq-local yas/trigger-key [tab])
+    (define-key yas/keymap [tab] #'yas-next-field)
+    (add-to-list 'org-tab-first-hook #'yas-expand)
+
+    ;; Install custom key bindings:
+    (keymap-local-set "C-c k" pjones:org-mode-map)))
 
 ;;; Hooks
 (add-hook 'org-agenda-after-show-hook #'pjones:org-hide-others)
