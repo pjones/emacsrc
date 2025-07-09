@@ -3,6 +3,7 @@
 ;;; Commentary:
 ;;
 ;;; Code:
+
 (require 'flymake)
 
 (eval-when-compile
@@ -51,6 +52,9 @@ If point goes past this distance the flymake window will be closed.")
   "Respond to a change in `flymake-mode' status."
   (when flymake-mode
     (add-hook 'post-command-hook #'pjones:flymake-maybe-bury-buffer nil t)))
+
+(custom-set-variables
+ '(flymake-show-diagnostics-at-end-of-line 'fancy))
 
 (add-hook 'flymake-mode-hook #'pjones:flymake-mode-hook)
 
