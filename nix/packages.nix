@@ -172,15 +172,18 @@ emacsWithOverrides.emacsWithPackages (epkgs: with epkgs; [
   puni # Parentheses Universalistic
   purescript-mode # A PureScript editing mode
   rainbow-mode # Colorize color names in buffers
+  rebecca-theme # The purple turtle theme for Spacemacs
   reformatter # Define commands which run reformatters on the current Emacs buffer
   resize-window # easily resize windows
   rg # A search tool based on ripgrep
+  rg-themes # A collection of light and dark Emacs themes that are not hash on the eyes.
   rotate # Rotate the layout of emacs
   ruby-end # Automatic insertion of end blocks for Ruby
   rust-mode # A major-mode for editing Rust source code
   sage-shell-mode # A front-end for Sage Math
   scad-mode # A major mode for editing OpenSCAD code
   separedit # Edit comment or string/docstring or code
+  timu-rouge-theme # Color theme inspired by the Rouge Theme for VSCode
   treesit-auto # Automatic installation, usage, and fallback for tree-sitter major modes
   treesit-grammars.with-all-grammars # For use with tree-sitter
   tron-legacy-theme # Original retro-futuristic theme inspired by Tron: Legacy

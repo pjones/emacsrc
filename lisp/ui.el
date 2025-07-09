@@ -10,7 +10,7 @@
 
 (declare-function consult-theme "consult")
 
-(defvar pjones:dark-theme 'ef-maris-dark
+(defvar pjones:dark-theme 'timu-rouge
   "Default dark theme.")
 
 (defvar pjones:light-theme 'ef-maris-light
