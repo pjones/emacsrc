@@ -77,7 +77,6 @@ FUNC."
 (declare-function emms-smart-browse "emms")
 (declare-function google-translate-smooth-translate "google-translate")
 (declare-function goto-last-change "goto-chg")
-(declare-function highlight-indent-guides-mode "highlight-indent-guides")
 (declare-function jinx-correct "jinx")
 (declare-function link-hint-copy-link "link-hint")
 (declare-function link-hint-open-link "link-hint")
@@ -253,7 +252,6 @@ FUNC."
  (kbd "M-s f") #'consult-find
  (kbd "M-s G") #'consult-git-grep
  (kbd "M-s g") #'consult-grep
- (kbd "M-s h g") #'highlight-indent-guides-mode
  (kbd "M-s h L") #'hl-line-mode
  (kbd "M-s k") #'consult-keep-lines
  (kbd "M-s l") #'consult-locate

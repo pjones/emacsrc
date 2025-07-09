@@ -7,6 +7,8 @@
 (require 'python)
 (require 'reformatter)
 
+(declare-function indent-bars-mode "indent-bars")
+
 (custom-set-variables
  '(python-shell-prompt-detect-failure-warning nil) ; Never works.
  '(python-shell-completion-native-enable nil) ; Doesn't work.
@@ -19,6 +21,7 @@
 
 (defun pjones:python-mode-hook ()
   "Hook function for `python-mode'."
+  (indent-bars-mode)
   (when (fboundp 'pjones:prog-mode-hook)
     (pjones:prog-mode-hook))
   (when (buffer-file-name)

@@ -112,10 +112,10 @@ emacsWithOverrides.emacsWithPackages (epkgs: with epkgs; [
   goto-chg # Go to last change
   graphviz-dot-mode # Mode for the dot-language used by graphviz
   haskell-mode # A Haskell editing mode
-  highlight-indent-guides # Minor mode to highlight indentation
   hl-todo # Highlight TODO and similar keywords
   htmlize # Convert buffer text and decorations to HTML.
   http # Yet another HTTP client
+  indent-bars # Fast, configurable indentation guide-bars for Emacs
   indium # JavaScript Awesome Development Environment
   inf-ruby # Run a Ruby process in a buffer
   jinx # Enchanted Spell Checker

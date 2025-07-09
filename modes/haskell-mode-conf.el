@@ -18,7 +18,6 @@
 (require 'haskell-mode)
 (require 'haskell-navigate-imports)
 (require 'haskell-process)
-(require 'highlight-indent-guides)
 (require 'reformatter)
 (require 's)
 (require 'yasnippet)

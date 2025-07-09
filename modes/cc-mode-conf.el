@@ -7,12 +7,15 @@
 (require 'cc-mode)
 (require 'eglot)
 
+(declare-function indent-bars-mode "indent-bars")
+
 (custom-set-variables
  '(c-basic-offset 2)
  '(c-default-style "bsd"))
 
 (defun pjones:c-mode-hook ()
   "Set up C-like modes."
+  (indent-bars-mode)
   (eglot-ensure))
 
 (dolist (hook '(c-mode-hook c-ts-mode-hook
