@@ -183,6 +183,7 @@ emacsWithOverrides.emacsWithPackages (epkgs: with epkgs; [
   sage-shell-mode # A front-end for Sage Math
   scad-mode # A major mode for editing OpenSCAD code
   separedit # Edit comment or string/docstring or code
+  somafm # A simple somafm interface in emacs
   timu-rouge-theme # Color theme inspired by the Rouge Theme for VSCode
   treesit-auto # Automatic installation, usage, and fallback for tree-sitter major modes
   treesit-grammars.with-all-grammars # For use with tree-sitter
