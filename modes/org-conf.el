@@ -559,6 +559,16 @@ always be requested."
        (lambda (entry) (string-match-p "^pjones-" (car entry)))
        org-latex-classes))
 
+;; Basic support for the letter class:
+(add-to-list 'org-latex-classes
+             '("letter"
+               "\\documentclass{letter}\n\\newcommand\\maketitle{}"
+               ("\\section{%s}" . "\\section*{%s}")
+               ("\\subsection{%s}" . "\\subsection*{%s}")
+               ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+               ("\\paragraph{%s}" . "\\paragraph*{%s}")
+               ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+
 ;; Correctly generate LaTeX previews:
 (plist-put
  (cdr (assq 'dvisvgm org-preview-latex-process-alist))
