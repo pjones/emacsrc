@@ -179,6 +179,7 @@ TEXT to translate is taken from BEGIN to END."
 
 (custom-set-variables
  '(anki-editor-include-default-style nil)
+ '(anki-editor-latex-style 'mathjax)
  '(anki-editor-field-alias
    '(("Deutsch" . (("Deutsch"          . "Front")
                    ("Englisch"         . "Back")
