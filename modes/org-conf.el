@@ -765,6 +765,48 @@ version, properly handles tables."
   (if org-attach-store-link-p
       (org-insert-last-stored-link 1)))
 
+;; Allow DIR property to be relative to org-attach-id-dir
+(defun pjones:org-attach-dir (&optional create-if-not-exists-p no-fs-check)
+  "Return the directory associated with the current outline node.
+First check for DIR property, then ID property.
+`org-attach-use-inheritance' determines whether inherited
+properties also will be considered.
+
+If an ID property is found the default mechanism using that ID
+will be invoked to access the directory for the current entry.
+Note that this method returns the directory as declared by ID or
+DIR even if the directory doesn't exist in the filesystem.
+
+If CREATE-IF-NOT-EXISTS-P is non-nil, `org-attach-dir-get-create'
+is run.  If NO-FS-CHECK is non-nil, the function returns the path
+to the attachment even if it has not yet been initialized in the
+filesystem.
+
+If no attachment directory can be derived, return nil."
+  (let (attach-dir id)
+    (cond
+     (create-if-not-exists-p
+      (setq attach-dir (org-attach-dir-get-create)))
+     ((setq attach-dir (org-entry-get nil "DIR" org-attach-use-inheritance))
+      (org-attach-check-absolute-path attach-dir)
+      (unless (file-name-absolute-p attach-dir)
+        (setq attach-dir (file-name-concat (or org-attach-id-dir
+                                               default-directory)
+                                           attach-dir))))
+     ;; Deprecated and removed from documentation, but still
+     ;; works. FIXME: Remove after major nr change.
+     ((setq attach-dir (org-entry-get nil "ATTACH_DIR" org-attach-use-inheritance))
+      (org-attach-check-absolute-path attach-dir))
+     ((setq id (org-entry-get nil "ID" org-attach-use-inheritance))
+      (org-attach-check-absolute-path nil)
+      (setq attach-dir (org-attach-dir-from-id id 'existing))))
+    (if no-fs-check
+	attach-dir
+      (when (and attach-dir (file-directory-p attach-dir))
+	attach-dir))))
+
+(advice-add #'org-attach-dir :override #'pjones:org-attach-dir)
+
 (defun pjones:org-promote-demote (promote)
   "Promote or demote the current heading or item.
 PROMOTE should be non-nil to promote, or nil to demote."
