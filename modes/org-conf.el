@@ -1088,18 +1088,23 @@ When ASYNC is non-nil then export in the background."
 
 (defun pjones:org-mode-hook ()
   "Hook to hack `org-mode'."
-  ;; Buffer Settings
-  (save-place-mode -1)
-
-  ;; Orgzly insists on inserting empty lines at the end of files.  So
-  ;; if they are removed in Emacs they will cause a sync conflict or
-  ;; just come back on their own.  So, don't delete them.
-  (setq-local delete-trailing-lines nil)
-  (pjones:delete-whitespace-mode)
-
   (unless noninteractive
-    ;; Puni doesn't work here:
-    (puni-mode -1)
+    ;; Orgzly insists on inserting empty lines at the end of files.  So
+    ;; if they are removed in Emacs they will cause a sync conflict or
+    ;; just come back on their own.  So, don't delete them.
+    (setq-local delete-trailing-lines nil)
+    (pjones:delete-whitespace-mode)
+
+    ;; Modes to turn off:
+    (save-place-mode -1)                ; Don't jump to hidden places
+    (puni-mode -1)                      ; Puni doesn't work here
+
+    ;; Modes to turn on:
+    (org-appear-mode)
+    (org-bulletproof-mode)
+    (org-clock-dbus-mode)
+    (org-edna-mode)
+    (org-modern-mode)
 
     ;; Better src block completion:
     (require 'corg)
@@ -1119,11 +1124,6 @@ When ASYNC is non-nil then export in the background."
 (add-hook 'org-agenda-finalize-hook #'pjones:org-agenda-delete-empty-blocks)
 (add-hook 'org-agenda-mode-hook #'pjones:org-agenda-mode-hook)
 (add-hook 'org-export-before-processing-functions #'pjones:org-before-beamer-export)
-(add-hook 'org-mode-hook #'org-appear-mode)
-(add-hook 'org-mode-hook #'org-bulletproof-mode)
-(add-hook 'org-mode-hook #'org-clock-dbus-mode)
-(add-hook 'org-mode-hook #'org-edna-mode)
-(add-hook 'org-mode-hook #'org-modern-mode)
 (add-hook 'org-mode-hook #'pjones:org-mode-hook)
 
 ;;; org-conf.el ends here
