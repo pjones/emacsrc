@@ -9,6 +9,7 @@
 (custom-set-variables
  '(minions-mode-line-lighter "≡")
  '(minions-mode-line-delimiters nil)
- '(minions-prominent-modes '(flymake-mode)))
+ '(minions-prominent-modes '(flymake-mode
+                             mu4e-modeline-mode)))
 
 ;;; minions-conf.el ends here
