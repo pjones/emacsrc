@@ -32,7 +32,7 @@
       " (nur Pl.)")
   "Regular expression to match nouns that are only plural.")
 
-(defvar pjones:anki-media-subdir "media/"
+(defvar pjones:anki-media-subdir "../media/"
   "Directory where media files are stored.")
 
 (defvar pjones:anki-download-url-history nil
