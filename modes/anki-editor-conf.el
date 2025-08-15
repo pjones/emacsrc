@@ -102,7 +102,7 @@ the same."
   "Sentinel function for the download buffer.
 MARKER is where the new link should be placed.  PATH is the path to the
 the file that will be linked to."
-  (if (member (downcase (file-name-extension path)) '("ogg" "wav" "mpeg"))
+  (if (member (downcase (file-name-extension path)) '("ogg" "oga" "wav" "mpeg"))
       (let ((newpath (concat (file-name-sans-extension path) ".mp3")))
         (pjones:shell-command :bufname "ffmpeg"
                               :command (list "ffmpeg" "-i" path newpath)
