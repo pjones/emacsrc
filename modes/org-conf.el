@@ -772,8 +772,8 @@ version, properly handles tables."
   "Attach a FILE then insert link to it."
   (interactive "f")
   (org-attach-attach file)
-  (if org-attach-store-link-p
-      (org-insert-last-stored-link 1)))
+  (when org-attach-store-link-p
+    (org-insert-link nil (caar org-stored-links))))
 
 ;; Allow DIR property to be relative to org-attach-id-dir
 (defun pjones:org-attach-dir (&optional create-if-not-exists-p no-fs-check)
