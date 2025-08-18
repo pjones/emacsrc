@@ -154,7 +154,7 @@ always be requested."
  '(org-appear-autosubmarkers t)
  '(org-clock-clocked-in-display nil)
  '(org-clock-mode-line-total 'current)
- '(org-ellipsis " ")
+ '(org-ellipsis "⋮")
  '(org-hide-emphasis-markers t)
  '(org-hide-leading-stars t)
  '(org-modern-block-fringe nil)
