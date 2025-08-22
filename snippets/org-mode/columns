@@ -1,0 +1,17 @@
+# -*- mode: snippet -*-
+# name: columns
+# key: col
+# expand-env: ((yas-indent-line 'auto))
+# --
+#+beamer: \begin{columns}[T]
+#+beamer: \begin{column}{0.5\textwidth}
+
+Column 1$0
+
+#+beamer: \end{column}
+#+beamer: \begin{column}{0.5\textwidth}
+
+Column 2
+
+#+beamer: \end{column}
+#+beamer: \end{columns}
