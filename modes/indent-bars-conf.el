@@ -14,6 +14,11 @@
         init_declarator
         parameter_list
         parenthesized_expression)
+     (cpp argument_list
+          binary_expression
+          init_declarator
+          parameter_list
+          parenthesized_expression)
      (python argument_list
 	     dictionary
 	     list
