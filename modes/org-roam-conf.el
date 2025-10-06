@@ -169,7 +169,8 @@ BACKEND is a symbol indicating the current publishing back-end."
 ;; Ensure the database is up-to-date:
 (org-roam-db-autosync-mode)
 
-;; Activate the consult helper mode:
+;; Activate helper modes:
+(citar-org-roam-mode)
 (consult-org-roam-mode)
 
 ;; Hooks:

@@ -36,13 +36,6 @@ let
       packageRequires = [ super.groovy-mode ];
     };
 
-    org-capture-ref = emacs.pkgs.trivialBuild {
-      inherit version;
-      pname = "org-capture-ref";
-      src = inputs.org-capture-ref;
-      packageRequires = [ super.compat self.persid ];
-    };
-
     org-clock-dbus = emacs.pkgs.elpaBuild {
       inherit version;
       pname = "org-clock-dbus";
@@ -62,12 +55,6 @@ let
       src = inputs.ox-ipynb;
       packageRequires = [ super.s super.dash ];
     };
-
-    persid = emacs.pkgs.trivialBuild {
-      inherit version;
-      pname = "persid";
-      src = inputs.persid;
-    };
   });
 in
 # Emacs package list:
@@ -78,6 +65,8 @@ emacsWithOverrides.emacsWithPackages (epkgs: with epkgs; [
   avy # Jump to arbitrary positions in visible text and select text quickly
   cape # Let your completions fly!
   catppuccin-theme # Soothing pastel theme for Emacs
+  citar # quickly find and act on bibliographic references
+  citar-org-roam # citar/org-roam integration
   clojure-mode # Major mode for Clojure code
   consult # Consulting completing-read
   consult-org-roam # Consult integration for org-roam
@@ -147,14 +136,12 @@ emacsWithOverrides.emacsWithPackages (epkgs: with epkgs; [
   org # Outline-based notes management and organizer
   org-appear # Make invisible parts of Org elements appear visible.
   org-bulletproof # Automatic bullet cycling for Org mode
-  org-capture-ref # Extract metadata/bibtex info from websites for org-capture
   org-clock-csv # Export `org-mode' clock entries to CSV format
   org-clock-dbus # Monitor org-clock from outside Emacs
   org-edna # Extensible Dependencies ’N’ Actions (EDNA) for Org Mode tasks
   org-grader # Support for grading papers in orgmode
   org-mime # Send HTML email using Org-mode HTML export
   org-modern # Modern Org Style.
-  org-ref # citations, cross-references, bibliographies in org-mode
   org-roam # A database abstraction layer for Org-mode
   org-transclusion # Enable transclusion with Org Mode
   org-tree-slide # A presentation tool for org-mode

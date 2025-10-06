@@ -15,11 +15,10 @@
 (require 'warnings)
 
 ;; These autoloads are missing from their respective packages:
-(autoload 'org-capture-ref-get-bibtex-field "org-capture-ref")
-(autoload 'org-capture-ref-process-capture "org-capture-ref")
 (autoload 'ox-ipynb-export-to-ipynb-buffer "ox-ipynb")
 
 ;; Silence compiler warnings
+(declare-function citar-capf-setup "citar")
 (declare-function consult-org-heading "consult")
 (declare-function corg-setup "corg")
 (declare-function org-appear-mode "org-appear")
@@ -33,7 +32,6 @@
 (declare-function org-clocking-p "org-clock")
 (declare-function org-insert-last-stored-link "ol")
 (declare-function org-modern-mode "org-modern")
-(declare-function org-ref-insert-link "org-ref")
 (declare-function org-roam-dailies-goto-date "org-roam")
 (declare-function org-tree-slide-mode "org-tree-slide")
 (declare-function pjones:delete-whitespace-mode "../lisp/whitespace.el")
@@ -355,8 +353,6 @@ always be requested."
 
  ;; Stuff for org-capture and org-refile:
  '(org-capture-bookmark nil)
- '(org-capture-ref-capture-template nil)
- '(org-capture-ref-headline-tags nil) ; Fix a bug in org-capture-ref
  '(org-default-notes-file (concat pjones:org-notes-directory "gtd/inbox.org"))
  '(org-log-refile 'time)
  '(org-refile-allow-creating-parent-nodes t)
@@ -375,12 +371,6 @@ always be requested."
      ("p" "org-protocol-capture" entry
       (file ,org-default-notes-file)
       "* %:description\n\n  %:link\n\n  %i"
-      :immediate-finish t
-      :empty-lines 1)
-     ("b" "Bibliography Link" entry
-      (file+olp ,(concat pjones:org-notes-directory "bib/bibliography.org")
-                "Inbox" "Read Next")
-      (file ,(concat pjones:org-notes-directory "templates/org/bibliography.org"))
       :immediate-finish t
       :empty-lines 1)))
 
@@ -417,6 +407,9 @@ always be requested."
      (:exports . "results")
      (:results . "file graphics")))
 
+ '(org-cite-insert-processor 'citar)
+ '(org-cite-follow-processor 'citar)
+ '(org-cite-activate-processor 'citar)
  '(org-cite-export-processors
    '((latex . (biblatex "apa" nil))
      (t     . (basic "numeric" "numeric"))))
@@ -592,11 +585,6 @@ always be requested."
 ;; Fucking `org-element' constant bugs:
 (push '(org-element-cache) warning-suppress-types)
 (push '(org-element) warning-suppress-types)
-
-(defun pjones:org-capture-ref-bibtex ()
-  "Return the BibTex string for use in a source block."
-  (let ((bibtex (org-capture-ref-get-bibtex-field :bibtex-string)))
-    (s-replace-regexp "^" "     " (or bibtex "MISSING") t)))
 
 (defun pjones:org-agenda-mode-hook ()
   "Hook run after a `org-agenda-mode' buffer is created."
@@ -1052,7 +1040,6 @@ When ASYNC is non-nil then export in the background."
   (define-key map (kbd "C-c C-e j") #'pjones:ox-ipynb-export-to-ipynb)
   (define-key map (kbd "C-c C-e m") #'org-gfm-export-as-markdown)
   (define-key map (kbd "C-c C-e p") #'pjones:org-latex-export-to-pdf)
-  (define-key map (kbd "C-c C-x @") #'org-ref-insert-link)
   (define-key map (kbd "C-c l h") #'pjones:org-insert-heading-link)
   (define-key map (kbd "C-c RET") nil) ; Remove this binding.
   (define-key map (kbd "C-M-n") #'org-next-visible-heading)
@@ -1110,6 +1097,7 @@ When ASYNC is non-nil then export in the background."
     (puni-mode -1)                      ; Puni doesn't work here
 
     ;; Modes to turn on:
+    (citar-capf-setup)
     (org-appear-mode)
     (org-bulletproof-mode)
     (org-clock-dbus-mode)

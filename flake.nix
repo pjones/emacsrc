@@ -30,11 +30,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    org-capture-ref = {
-      url = "github:yantar92/org-capture-ref";
-      flake = false;
-    };
-
     org-grader = {
       url = "github:pjones/org-grader";
       flake = false;
@@ -47,11 +42,6 @@
 
     org-roam = {
       url = "github:org-roam/org-roam/v2.3.0";
-      flake = false;
-    };
-
-    persid = {
-      url = "github:pjones/persid/pjones/compile";
       flake = false;
     };
   };
