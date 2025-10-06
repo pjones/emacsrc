@@ -68,7 +68,7 @@
           ?. "org" string-end)))
    (let ((today (calendar-current-date))
          files)
-     (dotimes (n 3)
+     (dotimes (n 12)
        (let* ((date (calendar-increment-month-cons
                      (* -1 n) (car today) (caddr today)))
               (path (format "%swiki/journal/%d/%02d.org"
