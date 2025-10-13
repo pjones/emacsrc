@@ -58,7 +58,7 @@ the same."
          (replace (lambda (gender)
                     (replace-match (funcall span gender "\\&")
                                    t nil text))))
-    (when (eq backend anki-editor--ox-anki-html-backend)
+    (when (eq backend 'anki-html)
       (cond
        ((string-match pjones:anki-de-noun-gender-re text)
         ;; Defines a gendered noun.
