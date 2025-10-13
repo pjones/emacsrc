@@ -21,6 +21,8 @@
 (require 'org-roam)
 (require 'org-roam-export)
 
+(declare-function citar-org-roam-mode "citar-org-roam")
+
 (defvar pjones:org-roam-daily-target
   '(file+head+olp "%<%Y>/%<%m>.org"
                   "#+title: %<%B, %Y>\n#+date: %u\n"
@@ -34,10 +36,15 @@
    #'org-before-first-heading-p) ; Only files are org-roam nodes.
 
  '(consult-org-roam-buffer-enabled nil) ; Treat like other buffers.
+ '(citar-org-roam-capture-template-key "c") ; Use my file naming scheme.
 
  '(org-roam-capture-templates
-   `(("b" "Knowledge Base Entry" plain "%?"
+   `(("b" "Knowledge Base Entry" plain "* %?"
       :target (file+head "garden/${pjones:org-roam-node-to-file}" "#+title: ${title}\n")
+      :jump-to-captured nil
+      :unnarrowed t)
+     ("c" "Citation Notes" plain "* %?"
+      :target (file+head "garden/${pjones:org-roam-node-to-file}" "#+title: ${note-title}\n")
       :jump-to-captured nil
       :unnarrowed t)
      ("r" "Research Review Article" plain

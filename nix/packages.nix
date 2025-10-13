@@ -66,6 +66,7 @@ emacsWithOverrides.emacsWithPackages (epkgs: with epkgs; [
   cape # Let your completions fly!
   catppuccin-theme # Soothing pastel theme for Emacs
   citar # quickly find and act on bibliographic references
+  citar-embark # Citar integration with embark
   citar-org-roam # citar/org-roam integration
   clojure-mode # Major mode for Clojure code
   consult # Consulting completing-read
@@ -143,6 +144,7 @@ emacsWithOverrides.emacsWithPackages (epkgs: with epkgs; [
   org-mime # Send HTML email using Org-mode HTML export
   org-modern # Modern Org Style.
   org-roam # A database abstraction layer for Org-mode
+  org-roam-bibtex # Org Roam integration with bibliography management software
   org-transclusion # Enable transclusion with Org Mode
   org-tree-slide # A presentation tool for org-mode
   orgalist # Manage Org-like lists in non-Org buffers
