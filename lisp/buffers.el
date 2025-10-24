@@ -101,11 +101,10 @@ When displaying these buffers, always open a new dedicated frame.")
  ;; Default action if `display-buffer-alist' doesn't select an action:
  '(display-buffer-base-action
    '((display-buffer-reuse-window
-      display-buffer-reuse-mode-window
       display-buffer-in-direction
       display-buffer-pop-up-window
       display-buffer-pop-up-frame) .
-     ((reusable-frames . nil)
+     ((reusable-frames . visible)
       (direction . below)
       (window-height . 0.4))))
 
