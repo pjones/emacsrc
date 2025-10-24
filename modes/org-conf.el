@@ -303,41 +303,45 @@ always be requested."
  `(org-agenda-custom-commands
    '(("c" "Current Status"
       ((agenda ""
-        ((org-agenda-overriding-header "⚡ Agenda:")
+        ((org-agenda-overriding-header "📅 Agenda:")
          (org-agenda-remove-tags nil)
          (org-agenda-current-time-string "⮜┈┈┈┈┈┈┈ now")
          (org-agenda-prefix-format "  %-12s %-12t %-8c ")
          (org-agenda-todo-keyword-format "")))
        (todo "WAITING"
-        ((org-agenda-overriding-header "⚡ Waiting for Someone Else:")
+        ((org-agenda-overriding-header "🙎 Waiting for Someone Else:")
          (org-agenda-skip-function '(org-agenda-skip-entry-if 'scheduled 'deadline))
          (org-agenda-remove-tags t)
          (org-agenda-prefix-format "  %-8c ")
          (org-agenda-todo-keyword-format "")))
        (tags-todo "@call|@email/NEXT"
-         ((org-agenda-overriding-header "⚡ Phone Calls to Make, Emails to Send:")
+         ((org-agenda-overriding-header "✉️ Phone Calls to Make, Emails to Send:")
           (org-agenda-prefix-format "  %-8c ")
           (org-agenda-remove-tags nil)
           (org-agenda-todo-keyword-format "")))
        (tags-todo "@read/NEXT"
-         ((org-agenda-overriding-header "⚡ Reading and Research:")
+         ((org-agenda-overriding-header "💻 Reading and Research:")
           (org-agenda-prefix-format "  %-8c ")
           (org-agenda-remove-tags nil)
           (org-agenda-todo-keyword-format "")))
        (stuck ""
-         ((org-agenda-overriding-header "⚡ Stuck Projects:")))
+         ((org-agenda-overriding-header "⚠️ Stuck Projects:")))
        (todo "BLOCKED"
-         ((org-agenda-overriding-header "⚡ Missing Blocker Dependency:")
+         ((org-agenda-overriding-header "☣️ Missing Blocker Dependency:")
           (org-agenda-skip-function #'pjones:agenda-skip-properly-blocked)
           (org-agenda-remove-tags nil)
           (org-agenda-prefix-format "  %-8c ")
           (org-agenda-todo-keyword-format "")))
+       (tags-todo "homework/TODO"
+         ((org-agenda-overriding-header "📘 Homework:")
+          (org-agenda-prefix-format "  %-8c ")
+          (org-agenda-todo-keyword-format "")))
        (tags "+inbox+LEVEL=1"
-         ((org-agenda-overriding-header "⚡ Inbox Tasks to Process:")
+         ((org-agenda-overriding-header "📥 Inbox Tasks to Process:")
           (org-agenda-prefix-format "  %-8c ")
           (org-agenda-todo-keyword-format "")))
        (tags-todo "TODO=\"NEXT\"-SCHEDULED={.+}-DEADLINE={.+}-@call-@read-@email"
-         ((org-agenda-overriding-header "⚡ Next Actions:")
+         ((org-agenda-overriding-header "🎯 Next Actions:")
           (org-agenda-skip-function '(org-agenda-skip-entry-if 'scheduled 'deadline))
           (org-agenda-prefix-format "  %-8c ")
           (org-agenda-remove-tags nil)

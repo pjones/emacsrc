@@ -163,6 +163,14 @@ FUNC."
         (require 'org-roam)
         (org-roam-dailies-capture-today nil "d"))))
 
+    ;; Jump directly to creating a German lesson note:
+    (define-key map (kbd "g") '("org-roam-german-today" .
+      (lambda ()
+        "Create a new daily entry for today."
+        (interactive)
+        (require 'org-roam)
+        (org-roam-dailies-capture-today nil "g"))))
+
     ;; This is a bit annoying:
     (define-key map (kbd "s") '("org-roam-search" .
       (lambda ()

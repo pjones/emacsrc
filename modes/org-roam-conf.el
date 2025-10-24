@@ -60,6 +60,12 @@
      :unnarrowed t
      :jump-to-captured nil
      :empty-lines-before 1)
+     ("g" "German Lesson" entry
+      (file "~/notes/templates/org/german-lesson.org")
+      :target ,pjones:org-roam-daily-target
+      :immediate-finish t
+      :jump-to-captured t
+      :empty-lines 1)
      ("h" "Mental Health" entry
       (file "~/notes/templates/org/mental-health.org")
       :target ,pjones:org-roam-daily-target
