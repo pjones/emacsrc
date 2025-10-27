@@ -152,7 +152,7 @@ always be requested."
  '(org-appear-autosubmarkers t)
  '(org-clock-clocked-in-display nil)
  '(org-clock-mode-line-total 'current)
- '(org-ellipsis "⋮")
+ '(org-ellipsis "...")
  '(org-hide-emphasis-markers t)
  '(org-hide-leading-stars t)
  '(org-modern-block-fringe nil)
@@ -298,7 +298,7 @@ always be requested."
  '(org-deadline-warning-days 14)
 
  '(org-stuck-projects
-   '("+project+LEVEL=2" ("NEXT" "WAITING" "BLOCKED") nil ""))
+   '("+project+LEVEL=3" ("NEXT" "WAITING" "BLOCKED") nil ""))
 
  `(org-agenda-custom-commands
    '(("c" "Current Status"
@@ -326,6 +326,8 @@ always be requested."
           (org-agenda-todo-keyword-format "")))
        (stuck ""
          ((org-agenda-overriding-header "⚠️ Stuck Projects:")))
+       (tags-todo "-SCHEDULED={.+}-DEADLINE={.+}+area/TODO"
+         ((org-agenda-overriding-header "☢️ Unscheduled Area Maintenance:")))
        (todo "BLOCKED"
          ((org-agenda-overriding-header "☣️ Missing Blocker Dependency:")
           (org-agenda-skip-function #'pjones:agenda-skip-properly-blocked)
@@ -350,7 +352,7 @@ always be requested."
           (org-agenda-sorting-strategy '(user-defined-up)))))
       nil (,(concat pjones:org-publish-directory "gtd/agenda.html")))
      ("p" "Project List"
-      ((tags "+project+LEVEL=2")))
+      ((tags "+project+LEVEL=3")))
      ("T" "Travel Schedule"
       ((tags "+travel+TIMESTAMP>=\"<now>\""))
       ((org-agenda-view-columns-initially t)))))
