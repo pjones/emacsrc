@@ -1085,8 +1085,10 @@ When ASYNC is non-nil then export in the background."
   "a" #'org-fold-show-subtree
   "b" #'org-fold-show-branches
   "h" #'org-fold-hide-sublevels
+  "i" #'org-tree-to-indirect-buffer
   "k" #'org-ctrl-c-ctrl-c
   "o" #'pjones:org-hide-others
+  "r" #'org-reveal
   "s" #'org-toggle-narrow-to-subtree)
 
 (defun pjones:org-mode-hook ()
