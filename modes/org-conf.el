@@ -326,7 +326,7 @@ always be requested."
           (org-agenda-todo-keyword-format "")))
        (stuck ""
          ((org-agenda-overriding-header "⚠️ Stuck Projects:")))
-       (tags-todo "-SCHEDULED={.+}-DEADLINE={.+}+area/TODO"
+       (tags "area+TODO=\"DONE\"|-SCHEDULED={.+}-DEADLINE={.+}+area+TODO=\"TODO\""
          ((org-agenda-overriding-header "☢️ Unscheduled Area Maintenance:")))
        (todo "BLOCKED"
          ((org-agenda-overriding-header "☣️ Missing Blocker Dependency:")
