@@ -105,9 +105,18 @@ ARG is passed on to `kill-line'."
   (meow--switch-state 'insert))
 
 (defun pjones:isearch-forward-thing-at-point ()
-  "Use function `isearch-forward-thing-at-point' with `repeat-mode'."
+  "Use function `isearch-forward-thing-at-point' with `repeat-mode'.
+If the region is active, search for that instead."
   (interactive)
-  (isearch-forward-thing-at-point)
+  (if (use-region-p)
+      (let* ((begin (region-beginning))
+             (end (region-end))
+             (region (buffer-substring-no-properties begin end)))
+        (meow--cancel-selection)
+        (goto-char begin)
+        (isearch-mode t)
+        (isearch-yank-string region))
+    (isearch-forward-thing-at-point))
   (setq this-command 'isearch-repeat-forward
         last-command-event ?\C-s))
 
