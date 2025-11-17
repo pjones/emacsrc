@@ -417,7 +417,7 @@ always be requested."
  '(org-cite-follow-processor 'citar)
  '(org-cite-activate-processor 'citar)
  '(org-cite-export-processors
-   '((latex . (biblatex "apa" nil))
+   '((latex . (biblatex "nature" nil))
      (t     . (basic "numeric" "numeric"))))
 
  '(org-cite-global-bibliography
@@ -1027,6 +1027,19 @@ When ASYNC is non-nil then export in the background."
       (goto-char (point-min))
       (org-latex-export-to-pdf async only-subtree))))
 
+(defun pjones:latex-filter-export-block (text backend _info)
+  "Filter LaTeX export blocks.
+
+For example, expand `org-mode' macros.  TEXT and BACKEND are provided by
+`org-mode'."
+  (when (org-export-derived-backend-p backend 'latex)
+    (let ((macros org-macro-templates))
+      (with-temp-buffer
+        (insert text)
+        (goto-char (point-min))
+        (org-macro-replace-all macros)
+        (buffer-substring (point-min) (point-max))))))
+
 ;;; Key Bindings:
 (let ((map org-mode-map))
   ;; Reset these so I can use them as a prefix:
@@ -1130,6 +1143,7 @@ When ASYNC is non-nil then export in the background."
 (add-hook 'org-agenda-finalize-hook #'pjones:org-agenda-delete-empty-blocks)
 (add-hook 'org-agenda-mode-hook #'pjones:org-agenda-mode-hook)
 (add-hook 'org-export-before-processing-functions #'pjones:org-before-beamer-export)
+(add-hook 'org-export-filter-export-block-functions #'pjones:latex-filter-export-block)
 (add-hook 'org-mode-hook #'pjones:org-mode-hook)
 
 ;;; org-conf.el ends here
