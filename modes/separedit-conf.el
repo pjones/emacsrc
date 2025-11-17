@@ -26,6 +26,17 @@
                :modes (markdown-mode)
                :body   ""))
 
+;; Add support for YAML blocks (CI/CD bullshit):
+(add-to-list 'separedit-block-regexp-plists
+             `(:header ,(rx bol (= 6 ? ) "run: |")
+               :footer ,(rx bol
+                            (repeat 0 6 ? )
+                            (any alphanumeric punctuation))
+               :body ,(rx bol (= 8 ? ))
+               :straight t
+               :modes (yaml-mode yaml-ts-mode)
+               :edit-mode sh-mode))
+
 (add-to-list 'separedit-code-lang-modes
              '("python" . python-mode))
 
