@@ -102,6 +102,43 @@
     (cond ((< ta tb) -1)
           ((< tb ta) +1))))
 
+(defun pjones:org-priority-get-priority-function (s)
+  "Return the priority value found in string S.
+If no priority value is found, return a negative number."
+  (if (not (string-match org-priority-regexp s)) -1000
+    (* 1000 (- org-priority-lowest
+	       (org-priority-to-value (match-string 2 s))))))
+
+(defun pjones:org-agenda-items-less (a b)
+  "Return sort order for agenda items A and B.
+
+Requires `org-priority-get-priority-function' to be set to the function
+`pjones:org-priority-get-priority-function' in order to work properly."
+  (let* ((props (lambda (property)
+                  (list (get-text-property 0 property a)
+                        (get-text-property 0 property b))))
+         (comp (lambda (vals)
+                 (let ((v1 (car vals))
+                       (v2 (cadr vals)))
+                   (cond
+                    ((if v1 (and v2 (< v1 v2)) v2) -1)
+                    ((if v2 (and v1 (< v2 v1)) v1) +1)))))
+         (timestamp (funcall props 'time-of-day))
+         (scheduled (reverse (funcall props 'ts-date)))
+         (priority (mapcar (lambda (priority)
+                             (if (and priority (< priority 0)) nil
+                               priority))
+                           (funcall props 'priority))))
+    (cl-find-if
+     #'identity
+     (mapcar (lambda (vals)
+               (when (cl-notevery #'null vals)
+                 (unless (equal (car vals) (cadr vals))
+                   (funcall comp vals))))
+             (list timestamp
+                   priority
+                   scheduled)))))
+
 (defun pjones:org-time-stamp (&optional inactive time)
   "Return an `org-mode' timestamp.
 If INACTIVE is non-nil, make the timestamp inactive.
@@ -200,6 +237,7 @@ always be requested."
  '(org-log-into-drawer t)
  '(org-outline-path-complete-in-steps nil)
  '(org-outline-path-complete-in-steps nil)
+ '(org-priority-get-priority-function #'pjones:org-priority-get-priority-function)
  '(org-reverse-note-order nil)
  '(org-special-ctrl-a/e t)
  '(org-special-ctrl-k t)
@@ -307,7 +345,9 @@ always be requested."
          (org-agenda-remove-tags nil)
          (org-agenda-current-time-string "⮜┈┈┈┈┈┈┈ now")
          (org-agenda-prefix-format "  %-12s %-12t %-8c ")
-         (org-agenda-todo-keyword-format "")))
+         (org-agenda-todo-keyword-format "")
+         (org-agenda-sorting-strategy '(user-defined-down))
+         (org-agenda-cmp-user-defined #'pjones:org-agenda-items-less)))
        (todo "WAITING"
         ((org-agenda-overriding-header "🙎 Waiting for Someone Else:")
          (org-agenda-skip-function '(org-agenda-skip-entry-if 'scheduled 'deadline))
@@ -340,7 +380,7 @@ always be requested."
           (org-agenda-todo-keyword-format "")))
        (tags "+inbox+LEVEL=1"
          ((org-agenda-overriding-header "📥 Inbox Tasks to Process:")
-          (org-agenda-prefix-format "  %-8c ")
+          (org-agenda-prefix-format "  ")
           (org-agenda-todo-keyword-format "")))
        (tags-todo "TODO=\"NEXT\"-SCHEDULED={.+}-DEADLINE={.+}-@call-@read-@email"
          ((org-agenda-overriding-header "🎯 Next Actions:")
