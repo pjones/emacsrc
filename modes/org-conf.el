@@ -1144,6 +1144,16 @@ For example, expand `org-mode' macros.  TEXT and BACKEND are provided by
   "r" #'org-reveal
   "s" #'org-toggle-narrow-to-subtree)
 
+(defvar org-state)
+(defun pjones:org-after-todo-state-change-hook ()
+  "Hook run when a item's state is changed."
+  (when (and org-state
+             org-done-keywords
+             (member org-state org-done-keywords)
+             (not (org-get-repeat)) ; `org-priority' breaks repeating.
+             (string-match-p org-priority-regexp (org-get-heading)))
+    (org-priority 'remove)))
+
 (defun pjones:org-mode-hook ()
   "Hook to hack `org-mode'."
   (unless noninteractive
@@ -1179,6 +1189,7 @@ For example, expand `org-mode' macros.  TEXT and BACKEND are provided by
     (keymap-local-set "C-c k" pjones:org-mode-map)))
 
 ;;; Hooks
+(add-hook 'org-after-todo-state-change-hook #'pjones:org-after-todo-state-change-hook)
 (add-hook 'org-agenda-after-show-hook #'pjones:org-hide-others)
 (add-hook 'org-agenda-finalize-hook #'pjones:org-agenda-delete-empty-blocks)
 (add-hook 'org-agenda-mode-hook #'pjones:org-agenda-mode-hook)
