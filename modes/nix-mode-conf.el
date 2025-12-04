@@ -29,7 +29,7 @@
  '(nix-mode-use-smie t))
 
 (reformatter-define nix-format
-  :program "nixpkgs-fmt"
+  :program "nixfmt"
   :group 'nix-mode)
 
 (defun pjones:nix-mode-hook ()

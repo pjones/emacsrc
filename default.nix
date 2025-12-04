@@ -13,16 +13,12 @@ let
   inherit (pkgs) lib;
 
   ##############################################################################
-  hunspellDicts = with pkgs.hunspellDicts; [ en_US de_DE ];
-
-  ##############################################################################
   # Packages to put into the developer shell and the user environment:
   extraPackages = [
-    (pkgs.nuspellWithDicts hunspellDicts)
+    (pkgs.nuspell.withDicts (dicts: with dicts; [ en_US de_DE ]))
     pkgs.enchant
     pkgs.nixd # I do a lot of Nix programming.
   ]
-  ++ hunspellDicts
   ++ lib.optionals pkgs.stdenv.isLinux [
     pkgs.dict
   ];
@@ -66,12 +62,14 @@ pkgs.stdenv.mkDerivation rec {
       export loadpathel="$out/emacs.d/lisp/loadpath.el"
       substituteAllInPlace "$out/emacs.d/dot.emacs.el"
       for f in $out/bin/*; do substituteAllInPlace "$f"; done
-    '' + (lib.concatMapStringsSep "\n"
-      (dict: ''
-        mkdir -p "$out"/share/enchant/nuspell
-        for file in ${dict}/share/hunspell/*; do
-          ln -s "$file" "$out"/share/enchant/nuspell/
-        done
-      '')
-      hunspellDicts);
+    '';
+
+  meta = {
+    description = "Peter's Emacs Configuration";
+    longDescription = "Emacs configuration and scripts.";
+    homepage = "https://github.com/pjones/emacsrc/";
+    license = lib.licenses.bsd3;
+    maintainers = with lib.maintainers; [ pjones ];
+    platforms = lib.platforms.all;
+  };
 }

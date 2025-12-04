@@ -19,7 +19,7 @@ let
     '';
   };
 in
-pkgs.nixosTest {
+pkgs.testers.nixosTest {
   name = "test-emacsrc";
 
   nodes.emacsrc = { lib, ... }: {

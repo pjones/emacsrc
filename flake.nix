@@ -1,8 +1,8 @@
 {
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
 
-    home-manager.url = "github:nix-community/home-manager/release-25.05";
+    home-manager.url = "github:nix-community/home-manager/release-25.11";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     anki-editor = {
@@ -100,6 +100,7 @@
         {
           default = {
             type = "app";
+            meta = self.packages.${system}.default.meta;
             program = toString (pkgs.writeShellScript "emacsrc" ''
               ${self.packages.${system}.default}/bin/e -f
             '');
@@ -107,6 +108,7 @@
 
           tutorial = {
             type = "app";
+            meta = self.packages.${system}.default.meta;
             program = toString (pkgs.writeShellScript "emacsrc" ''
               ${self.packages.${system}.default}/bin/e -f -- \
                 --eval '(menu-bar-mode)' \
@@ -129,7 +131,7 @@
         xorg = { pkgs, ... }: {
           imports = [
             (import ./nix/home.nix {
-              emacsrc = self.packages.${pkgs.system}.emacsrc-xorg;
+              emacsrc = self.packages.${pkgs.stdenv.hostPlatform.system}.emacsrc-xorg;
             })
           ];
         };
@@ -137,7 +139,7 @@
         wayland = { pkgs, ... }: {
           imports = [
             (import ./nix/home.nix {
-              emacsrc = self.packages.${pkgs.system}.emacsrc-wayland;
+              emacsrc = self.packages.${pkgs.stdenv.hostPlatform.system}.emacsrc-wayland;
             })
           ];
         };
