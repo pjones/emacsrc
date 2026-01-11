@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: german case
+# key: decase
+# expand-env: ((yas-indent-line 'auto) (yas-wrap-around-region t))
+# --
+#+begin_export html
+  <p><span class="`(yas-choose-value '("nominativ" "akkusativ" "dativ"))`">$0<span><p>
+#+end_export
