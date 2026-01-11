@@ -25,6 +25,11 @@
       flake = false;
     };
 
+    ob-duckdb = {
+      url = "github:gggion/ob-duckdb";
+      flake = false;
+    };
+
     org-clock-dbus = {
       url = "github:pjones/org-clock-dbus";
       inputs.nixpkgs.follows = "nixpkgs";

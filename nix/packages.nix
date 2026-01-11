@@ -46,6 +46,13 @@ let
         packageRequires = [ super.groovy-mode ];
       };
 
+      ob-duckdb = emacs.pkgs.trivialBuild {
+        inherit version;
+        pname = "ob-duckdb";
+        src = inputs.ob-duckdb;
+        packageRequires = [ self.org ];
+      };
+
       org-clock-dbus = emacs.pkgs.elpaBuild {
         inherit version;
         pname = "org-clock-dbus";
@@ -148,6 +155,7 @@ emacsWithOverrides.emacsWithPackages (
     no-littering # help keeping ~/.emacs.d clean
     noccur # Run multi-occur on project/dired files
     nov # Featureful EPUB reader mode
+    ob-duckdb # Org Babel integration with DuckDB
     ob-mermaid # Generate mermaid diagrams within Emacs org-mode babel
     org # Outline-based notes management and organizer
     org-appear # Make invisible parts of Org elements appear visible.

@@ -101,6 +101,22 @@
         "type": "github"
       }
     },
+    "ob-duckdb": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1766435750,
+        "narHash": "sha256-7A711IJavzSUoCOQqaoFpSshvrUT6T7wIGkDXxGigWI=",
+        "owner": "gggion",
+        "repo": "ob-duckdb",
+        "rev": "560507c85db252a01396e73b2cf719b5720e6bc1",
+        "type": "github"
+      },
+      "original": {
+        "owner": "gggion",
+        "repo": "ob-duckdb",
+        "type": "github"
+      }
+    },
     "org-clock-dbus": {
       "inputs": {
         "nixpkgs": [
@@ -178,6 +194,7 @@
         "meow-edit": "meow-edit",
         "nextflow-mode": "nextflow-mode",
         "nixpkgs": "nixpkgs",
+        "ob-duckdb": "ob-duckdb",
         "org-clock-dbus": "org-clock-dbus",
         "org-grader": "org-grader",
         "org-roam": "org-roam",

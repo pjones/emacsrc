@@ -619,14 +619,15 @@ always be requested."
 
 (org-babel-do-load-languages
     'org-babel-load-languages
-    '((shell . t)
+    '((duckdb . t)
       (emacs-lisp . t)
       (jq . t)
       (mermaid . t)
       (plantuml . t)
       (python . t)
       (R . t)
-      (ruby . t)))
+      (ruby . t)
+      (shell . t)))
 
 ;; Fucking `org-element' constant bugs:
 (push '(org-element-cache) warning-suppress-types)
