@@ -163,6 +163,7 @@ emacsWithOverrides.emacsWithPackages (
     org-transclusion # Enable transclusion with Org Mode
     org-tree-slide # A presentation tool for org-mode
     orgalist # Manage Org-like lists in non-Org buffers
+    outline-indent # Folding text based on indentation
     ox-gfm # Github Flavored Markdown Back-End for Org Export Engine
     ox-ipynb # org-mode exporter to Jupyter notebooks
     package-lint # A linting library for elisp package authors
