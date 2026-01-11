@@ -1,9 +1,9 @@
-{ emacsrc
-}:
-{ pkgs
-, lib
-, config
-, ...
+{ emacsrc }:
+{
+  pkgs,
+  lib,
+  config,
+  ...
 }:
 let
   cfg = config.programs.pjones.emacsrc;
@@ -49,9 +49,7 @@ in
 
   config = lib.mkMerge [
     (lib.mkIf cfg.enable {
-      home.packages = [
-        emacsrc
-      ] ++ lib.attrValues desktopItems;
+      home.packages = [ emacsrc ] ++ lib.attrValues desktopItems;
 
       xdg.mimeApps = {
         enable = lib.mkDefault true;

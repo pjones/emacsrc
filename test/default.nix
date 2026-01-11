@@ -2,14 +2,19 @@
 #
 # nix build .\#checks.x86_64-linux.default.driverInteractive
 # ./result/bin/nixos-test-driver
-{ pkgs
-, home-manager
-, module
+{
+  pkgs,
+  home-manager,
+  module,
 }:
 let
   tests = pkgs.stdenvNoCC.mkDerivation {
     name = "emacsrc-test-files";
-    phases = [ "unpackPhase" "installPhase" "fixupPhase" ];
+    phases = [
+      "unpackPhase"
+      "installPhase"
+      "fixupPhase"
+    ];
     src = ./.;
 
     installPhase = ''
@@ -22,39 +27,44 @@ in
 pkgs.testers.nixosTest {
   name = "test-emacsrc";
 
-  nodes.emacsrc = { lib, ... }: {
-    imports = [ home-manager.nixosModules.home-manager ];
+  nodes.emacsrc =
+    { lib, ... }:
+    {
+      imports = [ home-manager.nixosModules.home-manager ];
 
-    users.users.pjones = {
-      createHome = true;
-      isNormalUser = true;
-      password = "password";
-      group = "users";
-    };
+      users.users.pjones = {
+        createHome = true;
+        isNormalUser = true;
+        password = "password";
+        group = "users";
+      };
 
-    home-manager = {
-      # Don't load nixpkgs from the environment:
-      useGlobalPkgs = true;
+      home-manager = {
+        # Don't load nixpkgs from the environment:
+        useGlobalPkgs = true;
 
-      users.pjones = { ... }: {
-        imports = [ module ];
+        users.pjones =
+          { ... }:
+          {
+            imports = [ module ];
 
-        programs.pjones.emacsrc = {
-          enable = true;
-          singleton = true;
-        };
+            programs.pjones.emacsrc = {
+              enable = true;
+              singleton = true;
+            };
 
-        # Don't require a GUI:
-        services.emacs.startWithUserSession = lib.mkForce true;
+            # Don't require a GUI:
+            services.emacs.startWithUserSession = lib.mkForce true;
 
-        home.stateVersion = "24.11";
-        home.packages = [ tests ];
+            home.stateVersion = "24.11";
+            home.packages = [ tests ];
+          };
       };
     };
-  };
 
   testScript =
-    let home = "/home/pjones";
+    let
+      home = "/home/pjones";
     in
     ''
       # Boot
