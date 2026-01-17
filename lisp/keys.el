@@ -287,7 +287,11 @@ FUNC."
  (kbd "C--") #'text-scale-adjust
  (kbd "C-;") #'jinx-correct
  (kbd "C-_") (lambda () (interactive) (text-scale-set 0))
- (kbd "C-h D") #'devdocs-lookup
+ (kbd "C-h D") #'apropos-documentation
+ (kbd "C-h d") #'devdocs-lookup
+ (kbd "C-h m") #'man
+ (kbd "C-h r") #'info-display-manual
+ (kbd "C-h R") #'info-emacs-manual
  (kbd "C-M-SPC") #'pjones:meow-insert-select
  (kbd "C-M-z") #'zap-to-char
  (kbd "C-x C-k @") #'consult-kmacro
