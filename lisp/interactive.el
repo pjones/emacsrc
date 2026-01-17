@@ -45,6 +45,16 @@ ARG is passed to `save-buffers-kill-terminal'"
   (if (yes-or-no-p "Really close this terminal? ")
       (save-buffers-kill-terminal arg)))
 
+(defun pjones:move-beginning-of-line (arg)
+  "Move point to visible beginning of current logical line.
+First tries to `back-to-indentation' and if that does nothing moves to
+the beginning of the line.  Passes ARG to `move-beginning-of-line'."
+  (interactive "^p")
+  (let ((start (point)))
+    (back-to-indentation)
+    (when (= start (point))
+      (move-beginning-of-line arg))))
+
 (defun pjones:kill-region-or-backward-kill-word (arg)
   "Replacement for `kill-region' to kill ARG preceding words.
 If there is a region with \\[transient-mark-mode] active, it will

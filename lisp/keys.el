@@ -106,6 +106,7 @@ FUNC."
 (declare-function pjones:maybe-save-buffers-kill-terminal "./interactive")
 (declare-function pjones:meow-insert-select "meow")
 (declare-function pjones:meow-sort "../modes/meow-conf")
+(declare-function pjones:move-beginning-of-line "./interactive")
 (declare-function pjones:open-line-above "./interactive")
 (declare-function pjones:open-temp-buffer "./interactive")
 (declare-function pjones:password-goto "./interactive")
@@ -324,6 +325,7 @@ FUNC."
  [remap kill-line] #'pjones:kill-line
  [remap kill-region] #'pjones:kill-region-or-backward-kill-word
  [remap list-buffers] #'ibuffer
+ [remap move-beginning-of-line] #'pjones:move-beginning-of-line
  [remap open-line] #'pjones:open-line-above
  [remap other-window] #'ace-select-window
  [remap rectangle-number-lines] #'pjones:rectangle-number-lines
