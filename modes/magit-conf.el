@@ -38,5 +38,6 @@
   (insert (concat (pjones:git-branch-prefix) " | ")))
 
 (define-key git-commit-mode-map (kbd "C-c C-b") #'pjones:git-insert-branch-prefix)
+(add-hook 'git-commit-mode-hook #'orgalist-mode)
 
 ;;; magit-conf.el ends here
