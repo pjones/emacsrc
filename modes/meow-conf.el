@@ -167,7 +167,7 @@ If the region is active, search for that instead."
                 (assq-delete-all 'leader meow-keymap-alist)))
 
 (meow-motion-define-key
- '("<escape>" . ignore))
+ '("<escape>" . meow-temp-normal))
 
 (meow-leader-define-key
  '("-" . negative-argument)
