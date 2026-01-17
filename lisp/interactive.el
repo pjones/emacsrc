@@ -5,6 +5,7 @@
 ;;; Code:
 
 (eval-when-compile
+  (require 'cl-macs)
   (require 'subr-x))
 
 (declare-function cl-position "cl-seq")
@@ -287,10 +288,18 @@ absolute path name."
   "Sort the region from BEG to END."
   (interactive "r")
   (let ((sort-fold-case t))
-    (save-mark-and-excursion
-      (save-restriction
-        (narrow-to-region beg end)
-        (sort-lines nil beg end)))))
+    (when (> beg end)
+      (cl-rotatef beg end))
+    (save-excursion
+      (goto-char beg)
+      (while (looking-at-p (rx (* space) line-end))
+        (forward-line 1))
+      (setq beg (point))
+      (goto-char end)
+      (when (looking-at-p (rx (syntax close-parenthesis)))
+        (forward-line -1)
+        (setq end (point))))
+    (sort-lines nil beg end)))
 
 (defun pjones:exchange-point-and-mark (&optional arg)
   "Exchange point and mark without alerting region state.
