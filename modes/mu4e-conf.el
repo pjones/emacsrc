@@ -192,6 +192,7 @@ The JSON document comes from my tilde project."
  '(mu4e-search-sort-direction 'ascending)
  '(mu4e-search-sort-field :date)
  '(mu4e-search-threads t)
+ '(mu4e-org-link-query-in-headers-mode t)
 
  '(mu4e-headers-date-format "%a %F")
  '(mu4e-headers-long-date-format "%c")
