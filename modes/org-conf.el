@@ -178,6 +178,10 @@ always be requested."
     (when pjones:org-template-jump-point
       (goto-char pjones:org-template-jump-point))))
 
+(defun pjones:org-reset-agenda-files nil
+  "Ensure variable `org-agenda-files' is correct."
+  (setq org-agenda-files (pjones:org-agenda-files)))
+
 ;; General Org Settings
 (custom-set-variables
  ;; Visual Settings:
@@ -1188,6 +1192,10 @@ For example, expand `org-mode' macros.  TEXT and BACKEND are provided by
 
     ;; Install custom key bindings:
     (keymap-local-set "C-c k" pjones:org-mode-map)))
+
+;;; Advice
+(advice-add 'org-agenda :before
+  (lambda (&rest _) (pjones:org-reset-agenda-files)))
 
 ;;; Hooks
 (add-hook 'org-after-todo-state-change-hook #'pjones:org-after-todo-state-change-hook)
