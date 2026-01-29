@@ -25,7 +25,7 @@
 
 (defvar pjones:org-roam-daily-target
   '(file+head+olp "%<%Y>/%<%m>.org"
-                  "#+title: %<%B, %Y>\n#+date: %u\n"
+                  "#+title: %<%B, %Y>\n#+date: %u\n\n* Entries\n\n* Archive\n\n"
                   ("Entries" "Week %<%V>" "%<%A, %d %B>"))
   "The capture target for the daily journal.")
 
@@ -42,15 +42,18 @@
    `(("b" "Knowledge Base Entry" plain "* %?"
       :target (file+head "garden/${pjones:org-roam-node-to-file}" "#+title: ${title}\n")
       :jump-to-captured nil
+      :empty-lines 1
       :unnarrowed t)
      ("c" "Citation Notes" plain "* %?"
       :target (file+head "garden/${pjones:org-roam-node-to-file}" "#+title: ${note-title}\n")
       :jump-to-captured nil
+      :empty-lines 1
       :unnarrowed t)
      ("r" "Research Review Article" plain
       (file ,(concat pjones:org-notes-directory "templates/org/review-article.org"))
       :target (file "garden/${pjones:org-roam-node-to-file}")
       :jump-to-captured t
+      :empty-lines 1
       :unnarrowed t)))
 
  '(org-roam-dailies-capture-templates
@@ -59,7 +62,7 @@
      :target ,pjones:org-roam-daily-target
      :unnarrowed t
      :jump-to-captured nil
-     :empty-lines-before 1)
+     :empty-lines 1)
      ("g" "German Lesson" entry
       (file "~/notes/templates/org/german-lesson.org")
       :target ,pjones:org-roam-daily-target
@@ -69,12 +72,13 @@
      ("h" "Mental Health" entry
       (file "~/notes/templates/org/mental-health.org")
       :target ,pjones:org-roam-daily-target
-      :empty-lines-before 1)
+      :empty-lines 1)
      ("a" "Archive" entry
       ""
       :target ,(list 'file+head
                      (cadr pjones:org-roam-daily-target)
-                     (caddr pjones:org-roam-daily-target))))))
+                     (caddr pjones:org-roam-daily-target))
+      :empty-lines 1))))
 
 (defun pjones:org-roam-buffer-name ()
   "Set the buffer name using the org title."
