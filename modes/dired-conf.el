@@ -42,7 +42,7 @@
  '(dired-auto-revert-buffer t)
  '(dired-create-destination-dirs 'ask)
  '(dired-do-revert-buffer t)
- '(dired-dwim-target t)
+ '(dired-dwim-target #'dired-dwim-target-recent)
  '(dired-filter-mark-prefix nil)
  '(dired-filter-prefix nil)
  '(dired-hide-details-hide-symlink-targets nil)
