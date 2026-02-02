@@ -135,6 +135,7 @@ emacsWithOverrides.emacsWithPackages (
     js2-mode # Improved JavaScript editing mode
     json-mode # Major mode for editing JSON files
     jsonrpc # JSON-RPC library
+    jupyter # An interface to communicate with Jupyter kernels.
     kaolin-themes # A set of eye pleasing themes
     khardel # integrating khard, a console cardav client
     link-hint # Use avy to open, copy, etc. visible links
