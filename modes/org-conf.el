@@ -1143,8 +1143,10 @@ For example, expand `org-mode' macros.  TEXT and BACKEND are provided by
   "a" #'org-fold-show-subtree
   "b" #'org-fold-show-branches
   "h" #'org-fold-hide-sublevels
+  "I" #'org-clock-in
   "i" #'org-tree-to-indirect-buffer
   "k" #'org-ctrl-c-ctrl-c
+  "O" #'org-clock-out
   "o" #'pjones:org-hide-others
   "r" #'org-reveal
   "s" #'org-toggle-narrow-to-subtree)
