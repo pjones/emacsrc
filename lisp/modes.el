@@ -22,6 +22,7 @@
 
 (defvar pjones:mode-aliases
   '((cc-mode c-ts-mode c++-ts-mode)
+    (jupyter jupyter-repl)
     (lua-mode lua-ts-mode)
     (nix-mode nix-ts-mode)
     (ruby-mode ruby-ts-mode)

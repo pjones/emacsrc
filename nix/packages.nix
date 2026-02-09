@@ -130,6 +130,7 @@ emacsWithOverrides.emacsWithPackages (
     indent-bars # Fast, configurable indentation guide-bars for Emacs
     indium # JavaScript Awesome Development Environment
     inf-ruby # Run a Ruby process in a buffer
+    inheritenv # Make emacs temp buffers inherit buffer-local environment variables.
     jinx # Enchanted Spell Checker
     jq-mode # Emacs major mode for editing jq queries
     js2-mode # Improved JavaScript editing mode

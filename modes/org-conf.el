@@ -25,6 +25,7 @@
 (declare-function org-attach-attach "org-attach")
 (declare-function org-attach-reveal-in-emacs "org-attach")
 (declare-function org-attach-url "org-attach")
+(declare-function org-babel-jupyter-aliases-from-kernelspecs "ob-jupyter")
 (declare-function org-bookmark-jump-unhide "org")
 (declare-function org-bulletproof-mode "org-bulletproof")
 (declare-function org-clock-dbus-mode "org-clock-dbus")
@@ -197,7 +198,7 @@ always be requested."
  '(org-hide-emphasis-markers t)
  '(org-hide-leading-stars t)
  '(org-modern-block-fringe nil)
- '(org-modern-block-name t)
+ '(org-modern-block-name nil)
  '(org-modern-hide-stars " ")
  '(org-modern-keyword nil)
  '(org-modern-tag nil)
@@ -448,6 +449,7 @@ always be requested."
      (:exports . "both")
      (:hlines  . "no")
      (:noweb   . "no")
+     (:pandoc  . "yes") ; Buggy ob-jupyter.el
      (:results . "replace")
      (:session . "none")
      (:tangle  . "no")))
@@ -620,6 +622,9 @@ always be requested."
 (custom-set-faces
  '(org-block ((t (:background nil))))
  '(org-block-begin-line ((t (:background nil)))))
+
+;; Set this up since I delay loading jupyter.el:
+(add-to-list 'org-src-lang-modes (cons "jupyter-python" "python"))
 
 (org-babel-do-load-languages
     'org-babel-load-languages
@@ -958,6 +963,66 @@ If PROMPT is set, use that as the consult prompt."
       (replace-match ")\n" nil nil))))
 
 (advice-add 'org-edna-edit :after 'pjones:after-org-edna-edit)
+
+(defun pjones:org-jupyter-bootstrap (info params)
+  "Bootstrap `ob-jupyter' before executing a code block.
+INFO and PARAMS are related to the code block to be executed."
+  ;; Pull in the library:
+  (require 'jupyter)
+
+  ;; If Python isn't already in
+  ;; `org-src-lang-modes' and `org-babel-tangle-lang-exts' then
+  ;; jupyter.el won't be able to create its method aliases:
+  (unless (assoc "python" org-src-lang-modes)
+    (setq org-src-lang-modes
+          (append org-src-lang-modes
+                  '(("python" . python)))))
+  (unless (assoc "python" org-babel-tangle-lang-exts)
+    (setq org-babel-tangle-lang-exts
+          (append '(("python" "py")))))
+
+  ;; Adding `jupyter' to `org-babel-load-languages' causes the library
+  ;; to start the jupyter process to load kernel specs.  don't want
+  ;; that to happen until /after/ an environment is loaded that
+  ;; contains the jupyter executable.
+  (when (not (assoc 'jupyter org-babel-load-languages))
+    (org-babel-do-load-languages
+     'org-babel-load-languages
+     (append org-babel-load-languages
+             '((jupyter . t)))))
+
+  ;; Find kernels from the current directory:
+  (org-babel-jupyter-aliases-from-kernelspecs)
+
+  ;; Add the discovered kernel to the current invocation:
+  (when-let* (((not (alist-get :kernel params)))
+              (var (intern (concat "org-babel-default-header-args:" (car info))))
+              (kernel (alist-get :kernel (symbol-value var))))
+    (push (cons :kernel kernel) params))
+
+  ;; If the session name isn't set, create one using the current
+  ;; buffer's file name.
+  (let ((session (alist-get :session params)))
+    (when (or (not session) (string= session "none"))
+      (setq params (assq-delete-all :session params))
+      (push (cons :session (or (buffer-file-name) (buffer-name))) params)))
+  params)
+
+(defun pjones:org-babel-execute-src-block-for-jupyter (func &rest args)
+  "Bootstrap `ob-jupyter' when executing a source block.
+FUNC is the original `org-babel-execute-src-block' function.  Its
+arguments are passed as ARGS"
+  (let* ((info (cadr args))
+         (params (caddr args)))
+    (when (null info)
+      (setq info (org-babel-get-src-block-info)))
+    (setq params (org-babel-merge-params (nth 2 info) params))
+    (when (string-match-p "^jupyter-" (or (car info) ""))
+      (setq params (pjones:org-jupyter-bootstrap info params)))
+    (apply func (append (list (car args) info params) (drop 3 args)))))
+
+(advice-add #'org-babel-execute-src-block :around
+            #'pjones:org-babel-execute-src-block-for-jupyter)
 
 (defvar pjones:org-todo-state-after-block "DONE"
   "The state to move a to-do item after it is unblocked.")
