@@ -120,6 +120,15 @@ If the region is active, search for that instead."
   (setq this-command 'isearch-repeat-forward
         last-command-event ?\C-s))
 
+(defun pjones:isearch-backward-thing-at-point ()
+  "Search backwards for the thing at point with `repeat-mode'.
+If the region is active, search for that instead."
+  (interactive)
+  (pjones:isearch-forward-thing-at-point)
+  (isearch-repeat-backward)
+  (setq this-command 'isearch-repeat-backward
+        last-command-event ?\C-r))
+
 ;; When there is no selection, have:
 ;;
 ;;   - `meow-pop-selection' reactivate the mark
@@ -228,6 +237,7 @@ If the region is active, search for that instead."
  '("m" . meow-join)
  '("n" . pjones:isearch-forward-thing-at-point)
  '("o" . meow-open-below)
+ '("p" . pjones:isearch-backward-thing-at-point)
  '("q" . pjones:meow-quit)
  '("r a" . meow-beginning-of-thing)
  '("r e" . meow-end-of-thing)
