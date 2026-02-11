@@ -21,4 +21,12 @@
  'eglot-ignored-server-capabilities
  :documentOnTypeFormattingProvider)
 
+;; clangd needs to know where the commands file is so that it picks
+;; the correct language version.  In this case I always use the
+;; "build" directory for this.
+(add-to-list
+ 'eglot-server-programs
+ '((c-mode c-ts-mode c++-mode c++-ts-mode ) .
+     ("clangd" "--compile-commands-dir=build")))
+
 ;;; eglot-conf.el ends here
