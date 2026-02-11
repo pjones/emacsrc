@@ -54,7 +54,7 @@ If point goes past this distance the flymake window will be closed.")
     (add-hook 'post-command-hook #'pjones:flymake-maybe-bury-buffer nil t)))
 
 (custom-set-variables
- '(flymake-show-diagnostics-at-end-of-line 'fancy))
+ '(flymake-show-diagnostics-at-end-of-line nil))
 
 (add-hook 'flymake-mode-hook #'pjones:flymake-mode-hook)
 
