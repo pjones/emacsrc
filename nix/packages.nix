@@ -148,6 +148,7 @@ emacsWithOverrides.emacsWithPackages (
     meow # Yet another modal editing on Emacs
     meow-tree-sitter # Tree-sitter powered 🌳 motions for Meow 🐱
     mermaid-mode # Emacs major mode for working with mermaid graphs
+    meson-mode # Emacs major mode for the Meson build system
     minions # A minor-mode menu for the mode line
     modus-themes # Highly accessible themes for GNU Emacs
     mu4e # Mu4e, the mu mail user agent
