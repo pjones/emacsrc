@@ -21,11 +21,13 @@
 (declare-function citar-capf-setup "citar")
 (declare-function consult-org-heading "consult")
 (declare-function corg-setup "corg")
+(declare-function jupyter-repl-interaction-mode "jupyter-repl")
 (declare-function org-appear-mode "org-appear")
 (declare-function org-attach-attach "org-attach")
 (declare-function org-attach-reveal-in-emacs "org-attach")
 (declare-function org-attach-url "org-attach")
 (declare-function org-babel-jupyter-aliases-from-kernelspecs "ob-jupyter")
+(declare-function org-babel-jupyter-session-initiated-p "ob-jupyter")
 (declare-function org-bookmark-jump-unhide "org")
 (declare-function org-bulletproof-mode "org-bulletproof")
 (declare-function org-clock-dbus-mode "org-clock-dbus")
@@ -1023,6 +1025,25 @@ arguments are passed as ARGS"
 
 (advice-add #'org-babel-execute-src-block :around
             #'pjones:org-babel-execute-src-block-for-jupyter)
+
+(defun pjones:org-jupyter-edit-source-block ()
+  "Connect a source block buffer to a kernel.
+Works around some issues with jupyter.el so that I can connect a
+jupyter-python source block with the `python-mode' edit buffer."
+  (when-let* ((src org-src-source-file-name)
+              (block org-src--beg-marker)
+              (info (save-excursion
+                      (with-current-buffer (marker-buffer block)
+                        (goto-char (marker-position block))
+                        (org-babel-get-src-block-info))))
+              (params (when (string-match-p "^jupyter-" (or (car info) ""))
+                        (with-current-buffer (marker-buffer block)
+                          (pjones:org-jupyter-bootstrap info (nth 2 info)))))
+              (client (org-babel-jupyter-session-initiated-p params t)))
+    (setq-local jupyter-current-client client)
+    (jupyter-repl-interaction-mode)))
+
+(add-hook 'org-src-mode-hook #'pjones:org-jupyter-edit-source-block)
 
 (defvar pjones:org-todo-state-after-block "DONE"
   "The state to move a to-do item after it is unblocked.")
