@@ -6,8 +6,13 @@
 
 (require 'cc-mode)
 (require 'eglot)
+(require 'reformatter)
 
 (declare-function indent-bars-mode "indent-bars")
+
+(reformatter-define cc-format
+  :program "clang-format"
+  :group 'cc-mode)
 
 (custom-set-variables
  '(c-basic-offset 2)
@@ -15,6 +20,7 @@
 
 (defun pjones:c-mode-hook ()
   "Set up C-like modes."
+  (cc-format-on-save-mode)
   (indent-bars-mode)
   (eglot-ensure))
 
