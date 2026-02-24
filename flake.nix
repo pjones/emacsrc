@@ -40,6 +40,11 @@
       flake = false;
     };
 
+    org-inline-image-mode = {
+      url = "github:pjones/org-inline-image-mode";
+      flake = false;
+    };
+
     ox-ipynb = {
       url = "github:jkitchin/ox-ipynb";
       flake = false;

@@ -66,6 +66,13 @@ let
         packageRequires = [ self.org ];
       };
 
+      org-inline-image-mode = emacs.pkgs.elpaBuild {
+        inherit version;
+        pname = "org-inline-image-mode";
+        src = "${inputs.org-inline-image-mode}/org-inline-image-mode.el";
+        packageRequires = [ self.org ];
+      };
+
       ox-ipynb = emacs.pkgs.trivialBuild {
         inherit version;
         name = "ox-ipynb";
@@ -167,6 +174,7 @@ emacsWithOverrides.emacsWithPackages (
     org-clock-dbus # Monitor org-clock from outside Emacs
     org-edna # Extensible Dependencies ’N’ Actions (EDNA) for Org Mode tasks
     org-grader # Support for grading papers in orgmode
+    org-inline-image-mode # Update displayed images as an org-mode buffer changes.
     org-mime # Send HTML email using Org-mode HTML export
     org-modern # Modern Org Style.
     org-roam # A database abstraction layer for Org-mode

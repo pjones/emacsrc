@@ -153,6 +153,22 @@
         "type": "github"
       }
     },
+    "org-inline-image-mode": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1771943944,
+        "narHash": "sha256-acpQFB0ZjtVsXCPrsQHHDOIMIWITb/C9zMApg3JgGWs=",
+        "owner": "pjones",
+        "repo": "org-inline-image-mode",
+        "rev": "bb2291c71678919f0b096476661638217b60d76a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "pjones",
+        "repo": "org-inline-image-mode",
+        "type": "github"
+      }
+    },
     "org-roam": {
       "flake": false,
       "locked": {
@@ -197,6 +213,7 @@
         "ob-duckdb": "ob-duckdb",
         "org-clock-dbus": "org-clock-dbus",
         "org-grader": "org-grader",
+        "org-inline-image-mode": "org-inline-image-mode",
         "org-roam": "org-roam",
         "ox-ipynb": "ox-ipynb"
       }
