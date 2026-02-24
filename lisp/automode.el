@@ -4,6 +4,13 @@
 ;;
 ;;; Code:
 
+(declare-function pjones:sqlite-mode-open-file "../modes/sqlite-mode-conf")
+
+(defun pjones:sqlite-mode-magic ()
+  "File handler for SQLite files."
+  (require 'sqlite-mode)
+  (pjones:sqlite-mode-open-file))
+
 ;; ePub
 ;; https://github.com/wasamasa/nov.el
 (add-to-list 'auto-mode-alist '("\\.epub\\'" . nov-mode))
@@ -39,6 +46,10 @@
 (add-to-list 'auto-mode-alist '("Rakefile$"   . ruby-mode))
 (add-to-list 'auto-mode-alist '("Gemfile$"    . ruby-mode))
 (add-to-list 'auto-mode-alist '("Capfile$"    . ruby-mode))
+
+;; SQLite
+(add-to-list 'magic-mode-alist
+             '("SQLite format 3\x00" . pjones:sqlite-mode-magic))
 
 ;; YAML
 (add-to-list 'auto-mode-alist '("\\.yml$"  . yaml-mode))
