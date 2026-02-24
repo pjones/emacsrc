@@ -17,4 +17,7 @@
 ;; is lost.  This should fix it.
 (inheritenv-add-advice #'jupyter-session-with-random-ports)
 
+(let ((map jupyter-repl-interaction-mode-map))
+  (keymap-set map "C-c C-c" #'jupyter-eval-buffer))
+
 ;;; jupyter-conf.el ends here
