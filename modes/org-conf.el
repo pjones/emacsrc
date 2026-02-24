@@ -11,6 +11,7 @@
 (require 'org-edna)
 (require 'org-protocol)
 (require 'ox-gfm)
+(require 'project)
 (require 's)
 (require 'warnings)
 
@@ -1004,10 +1005,15 @@ INFO and PARAMS are related to the code block to be executed."
 
   ;; If the session name isn't set, create one using the current
   ;; buffer's file name.
-  (let ((session (alist-get :session params)))
-    (when (or (not session) (string= session "none"))
+  (when-let* ((session (alist-get :session params))
+              ((or (not session) (string= session "none")))
+              (new-session (or (let ((project (project-current)))
+                                 (and project (project-root project)))
+                               (buffer-file-name)
+                               (buffer-name)
+                               "jupyter")))
       (setq params (assq-delete-all :session params))
-      (push (cons :session (or (buffer-file-name) (buffer-name))) params)))
+      (push (cons :session new-session) params))
   params)
 
 (defun pjones:org-babel-execute-src-block-for-jupyter (func &rest args)
