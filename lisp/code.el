@@ -104,4 +104,30 @@
    ((string= type "node")
     (indium-run-node "node"))))
 
+;; Add rules for finding sibling files:
+(rx-let ((file (+ (not ?/)))
+         (c-ext (seq ".c" (? "pp") eos))
+         (h-ext (seq ".h" eos))
+         (file-sans-ext (ext) (seq (group file) ext))
+         (path-sans-ext (path ext) (seq (group "/" (+? anychar) "/") path (group (+? anychar) "/" file) ext)))
+  (let ((rules
+         `(;; Find header file in the same directory:
+           (,(rx (file-sans-ext c-ext)) "\\1.h")
+
+           ;; Find source file in the same directory:
+           (,(rx (file-sans-ext h-ext)) "\\1.cpp")
+
+           ;; OpenMS source file to header:
+           (,(rx (path-sans-ext "src/openms/source/" c-ext))
+            "\\1src/openms/include/OpenMS/\\2.h")
+
+           ;; OpenMS header file to source:
+           (,(rx (path-sans-ext "src/openms/include/OpenMS/" h-ext))
+            "\\1src/openms/source/\\2.cpp")
+
+           ;; End of rules.
+           )))
+    (dolist (rule rules)
+      (add-to-list 'find-sibling-rules rule))))
+
 ;;; code.el ends here

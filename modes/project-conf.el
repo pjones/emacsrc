@@ -36,12 +36,13 @@ Ensures that the buffer name doesn't change so it can be found again."
      (project-shell-command "Run" ?!))))
 
 (let ((map project-prefix-map))
-  (define-key map (kbd "d") #'project-dired)
-  (define-key map (kbd "D") #'project-find-dir)
-  (define-key map (kbd "m") #'magit-project-status)
-  (define-key map (kbd "M") #'magit-file-dispatch)
-  (define-key map (kbd "r") #'project-async-shell-command)
-  (define-key map (kbd "R") #'project-query-replace-regexp)
-  (define-key map (kbd "s") #'pjones:project-vterm))
+  (keymap-set map "a" #'find-sibling-file)
+  (keymap-set map "d" #'project-dired)
+  (keymap-set map "D" #'project-find-dir)
+  (keymap-set map "m" #'magit-project-status)
+  (keymap-set map "M" #'magit-file-dispatch)
+  (keymap-set map "r" #'project-async-shell-command)
+  (keymap-set map "R" #'project-query-replace-regexp)
+  (keymap-set map "s" #'pjones:project-vterm))
 
 ;;; project-conf.el ends here
