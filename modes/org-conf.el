@@ -1196,7 +1196,7 @@ For example, expand `org-mode' macros.  TEXT and BACKEND are provided by
   (define-key map (kbd "C-c C-e j") #'pjones:ox-ipynb-export-to-ipynb)
   (define-key map (kbd "C-c C-e m") #'org-gfm-export-as-markdown)
   (define-key map (kbd "C-c C-e p") #'pjones:org-latex-export-to-pdf)
-  (define-key map (kbd "C-c l h") #'pjones:org-insert-heading-link)
+  ;(define-key map (kbd "C-c l h") #'pjones:org-insert-heading-link)
   (define-key map (kbd "C-c RET") nil) ; Remove this binding.
   (define-key map (kbd "C-M-n") #'org-next-visible-heading)
   (define-key map (kbd "C-M-p") #'pjones:org-up-or-prev)

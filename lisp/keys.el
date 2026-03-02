@@ -78,8 +78,7 @@ FUNC."
 (declare-function google-translate-smooth-translate "google-translate")
 (declare-function goto-last-change "goto-chg")
 (declare-function jinx-correct "jinx")
-(declare-function link-hint-copy-link "link-hint")
-(declare-function link-hint-open-link "link-hint")
+(declare-function link-hint-avy-act "link-hint")
 (declare-function magit-file-dispatch "magit-files")
 (declare-function magit-status "magit-status")
 (declare-function mu4e "mu4e")
@@ -208,9 +207,8 @@ FUNC."
  (kbd "C-c h j") #'webjump
  (kbd "C-c j") #'pjones:jump-to-marker
  (kbd "C-c k") nil ; Reserved for major mode customzation.
- (kbd "C-c l l") #'org-store-link
- (kbd "C-c l o") #'link-hint-open-link
- (kbd "C-c l w") #'link-hint-copy-link
+ (kbd "C-c L") #'org-store-link
+ (kbd "C-c l") #'link-hint-avy-act
  (kbd "C-c m b") #'emms-smart-browse
  (kbd "C-c m d") #'emms-add-directory
  (kbd "C-c m e") (pjones:load-call 'emms-playlist-mode #'emms)

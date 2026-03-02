@@ -24,6 +24,7 @@ let
   emacsWithOverrides = (emacsPackagesFor emacs).overrideScope (
     self: super: {
       anki-editor = update super.anki-editor inputs.anki-editor;
+      link-hint = update super.link-hint inputs.link-hint;
       meow = update super.meow inputs.meow-edit;
       org-roam = update super.org-roam inputs.org-roam;
 

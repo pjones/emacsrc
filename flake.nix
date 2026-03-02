@@ -15,6 +15,11 @@
       flake = false;
     };
 
+    link-hint = {
+      url = "github:pjones/link-hint.el/pjones/fix-avy-action";
+      flake = false;
+    };
+
     meow-edit = {
       url = "github:meow-edit/meow";
       flake = false;

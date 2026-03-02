@@ -53,6 +53,23 @@
         "type": "github"
       }
     },
+    "link-hint": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1772630619,
+        "narHash": "sha256-ooHmnosujrVWxQg0becFcl6u5FB13pgrp0yhI00FvtI=",
+        "owner": "pjones",
+        "repo": "link-hint.el",
+        "rev": "c1cf875b28322767ba52d3e201fd2afabbe47da0",
+        "type": "github"
+      },
+      "original": {
+        "owner": "pjones",
+        "ref": "pjones/fix-avy-action",
+        "repo": "link-hint.el",
+        "type": "github"
+      }
+    },
     "meow-edit": {
       "flake": false,
       "locked": {
@@ -207,6 +224,7 @@
         "anki-editor": "anki-editor",
         "corg": "corg",
         "home-manager": "home-manager",
+        "link-hint": "link-hint",
         "meow-edit": "meow-edit",
         "nextflow-mode": "nextflow-mode",
         "nixpkgs": "nixpkgs",
