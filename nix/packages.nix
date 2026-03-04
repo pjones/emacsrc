@@ -83,6 +83,12 @@ let
           super.dash
         ];
       };
+
+      xref-project-history = emacs.pkgs.trivialBuild {
+        inherit version;
+        name = "xref-project-history";
+        src = inputs.xref-project-history;
+      };
     }
   );
 in
@@ -228,5 +234,6 @@ emacsWithOverrides.emacsWithPackages (
     winum # Navigate windows and frames using numbers.
     yaml-mode # Major mode for editing YAML files
     yasnippet # Yet another snippet extension for Emacs
+    xref-project-history # Per-project xref-history-storage for Emacs
   ]
 )

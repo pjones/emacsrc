@@ -233,7 +233,24 @@
         "org-grader": "org-grader",
         "org-inline-image-mode": "org-inline-image-mode",
         "org-roam": "org-roam",
-        "ox-ipynb": "ox-ipynb"
+        "ox-ipynb": "ox-ipynb",
+        "xref-project-history": "xref-project-history"
+      }
+    },
+    "xref-project-history": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1748065393,
+        "narHash": "sha256-CFVo47C8FSRSOeA8GcRAYFbIG5rL0ZMwURQjHyNXVnk=",
+        "ref": "refs/heads/master",
+        "rev": "f2794a3548a49b984ecf099b056e2f147c690ece",
+        "revCount": 5,
+        "type": "git",
+        "url": "https://codeberg.org/imarko/xref-project-history"
+      },
+      "original": {
+        "type": "git",
+        "url": "https://codeberg.org/imarko/xref-project-history"
       }
     }
   },

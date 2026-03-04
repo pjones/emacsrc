@@ -59,6 +59,11 @@
       url = "github:org-roam/org-roam/v2.3.0";
       flake = false;
     };
+
+    xref-project-history = {
+      url = "git+https://codeberg.org/imarko/xref-project-history";
+      flake = false;
+    };
   };
 
   outputs =
