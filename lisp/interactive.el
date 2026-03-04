@@ -297,7 +297,7 @@ absolute path name."
       (setq beg (point))
       (goto-char end)
       (when (looking-at-p (rx (syntax close-parenthesis)))
-        (forward-line -1)
+        (beginning-of-line)
         (setq end (point))))
     (sort-lines nil beg end)))
 
