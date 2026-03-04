@@ -115,6 +115,29 @@ will be selected, otherwise a dark theme will be selected."
        pjones:light-theme
      pjones:dark-theme)))
 
+(defun pjones:theme-fixups (&rest _)
+  "Fix some UI elements after a changing themes."
+  ;; Step 1: Emulate spacious-padding for the mode line:
+  (let* ((base (custom-face-attributes-get 'mode-line nil))
+         (faces '(mode-line
+                  mode-line-active
+                  mode-line-inactive
+                  mode-line-highlight))
+         (or-base (lambda (spec attr)
+                    (let ((val (plist-get spec attr)))
+                      (or (and (stringp val) val)
+                          (plist-get base attr))))))
+    (dolist (face faces)
+      (let ((spec (custom-face-attributes-get face nil)))
+        (custom-set-faces
+         `(,face ((t (:background ,(funcall or-base spec :background)
+                      :foreground ,(funcall or-base spec :foreground)
+                      :box (:line-width 6
+                            :color ,(funcall or-base spec :background)
+                            :style nil))))))))))
+
+(add-hook 'enable-theme-functions #'pjones:theme-fixups)
+
 ;; Run my theme hooks:
 (advice-add
  #'load-theme :after

@@ -99,12 +99,14 @@ emacsWithOverrides.emacsWithPackages (
     anki-editor # Emacs minor mode for making Anki cards with Org Mode
     async # Asynchronous processing in Emacs
     avy # Jump to arbitrary positions in visible text and select text quickly
+    base16-theme # Base16 themes for Emacs
     cape # Let your completions fly!
     catppuccin-theme # Soothing pastel theme for Emacs
     citar # quickly find and act on bibliographic references
     citar-embark # Citar integration with embark
     citar-org-roam # citar/org-roam integration
     clojure-mode # Major mode for Clojure code
+    color-theme-sanityinc-tomorrow # A set of comprehensive Emacs color themes based on Chris Kempson's 'tomorrow' themes
     consult # Consulting completing-read
     consult-org-roam # Consult integration for org-roam
     consult-recoll # recoll queries in emacs using consult
@@ -232,8 +234,8 @@ emacsWithOverrides.emacsWithPackages (
     weyland-yutani-theme # Emacs theme based off Alien movie franchise
     wgrep # Writable grep buffer and apply the changes to files
     winum # Navigate windows and frames using numbers.
+    xref-project-history # Per-project xref-history-storage for Emacs
     yaml-mode # Major mode for editing YAML files
     yasnippet # Yet another snippet extension for Emacs
-    xref-project-history # Per-project xref-history-storage for Emacs
   ]
 )
