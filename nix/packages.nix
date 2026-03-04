@@ -126,6 +126,7 @@ emacsWithOverrides.emacsWithPackages (
     envrc # Support for `direnv' that operates buffer-locally
     erc-hl-nicks # ERC nick highlighter that ignores uniquifying chars when colorizing
     ess # Emacs Speaks Statistics
+    expreg # Your friendly neighborhood expand-region clone
     git-annex # Mode for easy editing of git-annex'd files
     go-mode # Major mode for the Go programming language
     google-translate # Emacs interface to Google Translate

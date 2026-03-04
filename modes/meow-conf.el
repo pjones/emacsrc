@@ -51,20 +51,6 @@ When NO-SELECTION is non-nil, don't activate a selection."
   (interactive)
   (activate-mark))
 
-(defun pjones:meow-block ()
-  "Select or expand the current sexp."
-  (interactive)
-  (if puni-mode
-      (let (beg end)
-        (save-mark-and-excursion
-          (puni-expand-region)
-          (setq beg (region-beginning)
-                end (region-end)))
-        (thread-first
-          (meow--make-selection '(expand . block) beg end)
-          (meow--select)))
-    (meow-block nil)))
-
 (defun pjones:meow-quit ()
   "Close a buffer or window."
   (interactive)
@@ -219,7 +205,8 @@ If the region is active, search for that instead."
  '("c" . meow-change)
  '("C" . pjones:meow-change-to-line-end)
  '("C-o" . meow-open-above)
- '("d" . pjones:meow-block)
+ '("D" . expreg-contract)
+ '("d" . expreg-expand)
  '("f" . meow-next-symbol)
  '("F" . meow-next-word)
  '("g" . meow-cancel-selection)
@@ -260,6 +247,7 @@ If the region is active, search for that instead."
  '("z" . meow-pop-selection))
 
 (custom-set-variables
+ '(expreg-restore-point-on-quit t) ; Since this is the only place I use expreg.
  '(meow-cheatsheet-layout meow-cheatsheet-layout-qwerty)
  '(meow-keypad-leader-dispatch nil)
  '(meow-select-on-change nil)
