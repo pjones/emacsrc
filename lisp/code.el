@@ -63,7 +63,6 @@
    comment-auto-fill-only-comments t)   ; Don't auto fill code.
 
   (auto-fill-mode)
-  (display-line-numbers-mode)
   (flymake-mode)
   (outline-indent-minor-mode)
   (pjones:delete-whitespace-mode)
