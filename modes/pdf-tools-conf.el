@@ -27,7 +27,7 @@
   "Respond to a page change in PDF documents."
   (setq-local cursor-type nil))
 
-(defun pjones:pdf-sync-colors ()
+(defun pjones:pdf-sync-colors (&rest _)
   "Sync all PDF buffer colors with current theme."
   (dolist (buffer (buffer-list))
     (when (pdf-util-pdf-buffer-p buffer)
@@ -56,6 +56,6 @@
 ;; Hooks:
 (add-hook 'pdf-view-after-change-page-hook #'pjones:pdf-view-after-change-page-hook)
 (add-hook 'pdf-view-mode-hook #'pjones:pdf-view-mode-hook)
-(add-hook 'pjones:after-theme-change-hook #'pjones:pdf-sync-colors)
+(add-hook 'enable-theme-functions #'pjones:pdf-sync-colors)
 
 ;;; pdf-tools-conf.el ends here

@@ -16,9 +16,6 @@
 (defvar pjones:light-theme 'ef-maris-light
   "Default light theme.")
 
-(defvar pjones:after-theme-change-hook nil
-  "Hook run after changing themes.")
-
 (defvar pjones:current-theme nil
   "The currently active theme.")
 
@@ -137,19 +134,6 @@ will be selected, otherwise a dark theme will be selected."
                             :style nil))))))))))
 
 (add-hook 'enable-theme-functions #'pjones:theme-fixups)
-
-;; Run my theme hooks:
-(advice-add
- #'load-theme :after
- (lambda (theme &rest _)
-   (setq pjones:current-theme theme)
-   (run-hooks 'pjones:after-theme-change-hook)))
-
-(advice-add
- #'enable-theme :after
- (lambda (theme)
-   (setq pjones:current-theme theme)
-   (run-hooks 'pjones:after-theme-change-hook)))
 
 (defun pjones:frame-toggle-alpha nil
   "Toggle alpha transparency for the current frame."
