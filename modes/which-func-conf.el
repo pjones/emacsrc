@@ -9,4 +9,7 @@
 (custom-set-variables
  '(which-func-display 'header))
 
+(custom-set-faces
+ '(which-func ((t (:inherit header-line)))))
+
 ;;; which-func-conf.el ends here
