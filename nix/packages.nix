@@ -128,6 +128,7 @@ emacsWithOverrides.emacsWithPackages (
     ess # Emacs Speaks Statistics
     expreg # Your friendly neighborhood expand-region clone
     git-annex # Mode for easy editing of git-annex'd files
+    git-link # Emacs package to get the GitHub/Bitbucket/GitLab/... URL for a buffer location
     go-mode # Major mode for the Go programming language
     google-translate # Emacs interface to Google Translate
     goto-chg # Go to last change
