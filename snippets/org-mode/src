@@ -3,6 +3,5 @@
 # key: src
 # expand-env: ((yas-indent-line 'fixed))
 # --
-#+header: :exports code
 #+begin_src ${1:sh} $0
 #+end_src
