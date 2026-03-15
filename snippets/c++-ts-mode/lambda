@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: lambda
+# key: lambda
+# expand-env: ((yas-indent-line 'fixed))
+# --
+[&](auto& ${1:arg}) -> ${2:return} {
+  return $0;
+}

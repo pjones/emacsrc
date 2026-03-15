@@ -8,6 +8,8 @@
   (require 'subr-x))
 
 (declare-function eww-decode-url-file-name "eww")
+(declare-function project-name "project")
+(declare-function project-root "project")
 (declare-function url-http-head "url-http")
 (declare-function url-path-and-query "url-parse")
 
@@ -72,5 +74,28 @@
                            hext)))))
         (kill-buffer http)))
      (eww-decode-url-file-name (concat base "." ext))))
+
+(defun pjones:project-name ()
+  "Return the name of the current project."
+  (let* ((project (project-current t))
+         (root (project-root project))
+         (name (project-name project))
+         (include-dir (concat root "include/"))
+         (include (when (file-exists-p include-dir)
+                    (car (directory-files include-dir nil nil nil 1)))))
+    (or include
+        name)))
+
+(defun pjones:project-license-notice ()
+  "Return a license notice for the current project."
+  (let* ((indent "") ; For future use.
+         (str (concat "This file is part of the "
+                      (pjones:project-name)
+                      " project.  It is subject to the license specified in"
+                      " the LICENSE file which can be found in the top-level"
+                      " directory of this repository.")))
+    (replace-regexp-in-string (rx bol)
+                              indent
+                              (string-fill str (- fill-column (length indent))))))
 
 ;;; functions.el ends here

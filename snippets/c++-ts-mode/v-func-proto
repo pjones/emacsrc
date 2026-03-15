@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: virtual function prototype
+# key: vfp
+# expand-env: ((yas-indent-line 'fixed))
+# --
+/**
+ * FIXME: Write documentation!
+ */
+virtual ${2:void} ${1:name}($0) = 0;

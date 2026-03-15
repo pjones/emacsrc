@@ -1,0 +1,20 @@
+# -*- mode: snippet -*-
+# name: pure virtual class
+# key: pvclass
+# condition: (pjones:yas-bolp)
+# expand-env: ((yas-indent-line 'fixed))
+# --
+/**
+ * FIXME: Write documentation!
+ */
+class ${1:name} {
+  public:
+    /// Destructor.
+    virtual ~$1() = default;
+
+    $0
+
+  protected:
+    /// Constructor.
+    $1() = default;
+};

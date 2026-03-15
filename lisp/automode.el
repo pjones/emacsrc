@@ -15,6 +15,9 @@
 ;; https://github.com/wasamasa/nov.el
 (add-to-list 'auto-mode-alist '("\\.epub\\'" . nov-mode))
 
+;; Always treat headers as C++
+(add-to-list 'auto-mode-alist '("\\.h$" . c++-mode))
+
 ;; CSS
 (add-to-list 'auto-mode-alist '("\\.css\\.scss" . css-mode))
 

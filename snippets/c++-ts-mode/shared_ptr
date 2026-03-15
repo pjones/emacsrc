@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: shared_ptr
+# key: sp
+# expand-env: ((yas-indent-line 'fixed))
+# --
+std::shared_ptr<$0>

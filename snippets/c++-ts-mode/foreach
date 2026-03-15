@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: foreach
+# key: fe
+# expand-env: ((yas-indent-line 'fixed))
+# --
+for (auto& ${1:i} : ${2:container}) {
+  $0
+}

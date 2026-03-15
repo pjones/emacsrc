@@ -1,0 +1,13 @@
+# -*- mode: snippet -*-
+# name: file
+# key: file
+# condition: (pjones:yas-bolp)
+# expand-env: ((yas-indent-line 'fixed))
+# --
+/*
+
+`(pjones:project-license-notice)`
+
+*/
+
+`(when (s-ends-with-p ".h" (buffer-file-name)) "#pragma once\n\n")`$0

@@ -5,6 +5,7 @@
 ;;; Code:
 
 (require 'dash)
+(require 's)
 
 (declare-function dumb-jump-xref-activate "dumb-jump")
 (declare-function indium-connect-to-chrome "indium")
@@ -15,36 +16,38 @@
 (declare-function s-trim "s")
 (declare-function yas-minor-mode "yasnippet")
 
-(defun pjones:comment-bar ()
-  "Create a comment bar based on the current mode."
-  (interactive)
-  (require 's)
+(defun pjones:comment-bar-str ()
+  "Return a comment bar string."
   (let* ((cs (s-trim comment-start))
          (col (current-column))
          (info (cond
-                ((string= cs "--") '(?- "-"  ""))
-                ((string= cs "//") '(?* "/*" "*/"))
-                ((string= cs "/*") '(?* "/*" "*/"))
-                ((string= cs "#")  '(?# "#"  "#"))
-                (t (list ?# comment-start
+                ((string= cs "--") '("-" "-"  ""))
+                ((string= cs "//") '("*" "/*" "*/"))
+                ((string= cs "/*") '("*" "/*" "*/"))
+                ((string= cs "#")  '("#" "#"  "#"))
+                (t (list "#" comment-start
                          (if (> (length comment-end) 0)
                              comment-end
                            "")))))
+         (spacer (nth 0 info))
+         (start (nth 1 info))
+         (end   (nth 2 info)))
+    (concat start
+            (s-repeat (- 80 (length start) (length end) col) spacer)
+            end)))
+
+(defun pjones:comment-bar ()
+  "Create a comment bar based on the current mode."
+  (interactive)
+  (let* ((col (current-column))
          (leading (buffer-substring
                    (save-excursion
                      (beginning-of-line)
                      (point))
-                   (point)))
-         (go (lambda ()
-               (let ((char  (nth 0 info))
-                     (start (nth 1 info))
-                     (end   (nth 2 info)))
-                 (insert start)
-                 (insert-char char (- 80 (length start) (length end) col))
-                 (insert end)))))
+                   (point))))
     (if (string-match-p "^\\s-*$" leading)
         (progn
-          (funcall go)
+          (insert (pjones:comment-bar-str))
           (newline)
           (insert leading))
       (save-excursion
@@ -53,7 +56,7 @@
         (beginning-of-line)
         (open-line 1)
         (insert-char ?  col)
-        (funcall go)))))
+        (insert (pjones:comment-bar-str))))))
 
 (defun pjones:prog-mode-hook ()
   "Settings and bindings for programming modes."
@@ -115,6 +118,9 @@
 
            ;; Find source file in the same directory:
            (,(rx (file-sans-ext h-ext)) "\\1.cpp")
+
+           ;; Find source file outside of the include directory.
+           (,(rx (file-sans-ext h-ext)) "../../src/\\1.cpp")
 
            ;; OpenMS source file to header:
            (,(rx (path-sans-ext "src/openms/source/" c-ext))

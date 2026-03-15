@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: function body
+# key: fn
+# expand-env: ((yas-indent-line 'fixed))
+# --
+`(pjones:comment-bar-str)`
+${3:void} ${1:class}::${2:name}($4) {
+    $0
+}

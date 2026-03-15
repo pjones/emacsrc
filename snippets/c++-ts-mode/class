@@ -1,0 +1,20 @@
+# -*- mode: snippet -*-
+# name: class
+# key: class
+# condition: (pjones:yas-bolp)
+# expand-env: ((yas-indent-line 'fixed))
+# --
+/**
+ * FIXME: Write documentation!
+ */
+class ${1:name} final {
+  public:
+    /// Constructor.
+    $1();
+
+    /// Destructor.
+    ~$1() = default;
+
+  private:
+    $0
+};

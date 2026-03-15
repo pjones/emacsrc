@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: destructor
+# key: dtor
+# expand-env: ((yas-indent-line 'fixed))
+# --
+`(pjones:comment-bar-str)`
+${1:class}::~$1() {
+    $0
+}

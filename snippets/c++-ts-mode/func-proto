@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: function prototype
+# key: fp
+# expand-env: ((yas-indent-line 'fixed))
+# --
+/**
+ * FIXME: Write documentation!
+ */
+${2:void} ${1:name}($0);

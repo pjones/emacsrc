@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: constructor
+# key: ctor
+# expand-env: ((yas-indent-line 'fixed))
+# --
+`(pjones:comment-bar-str)`
+${1:class}::$1(${2:args}):
+      ${3:init}
+{
+    $0
+}
