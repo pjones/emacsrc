@@ -15,8 +15,8 @@
  '(python-indent-offset 4))
 
 (reformatter-define python-format
-  :program "black"
-  :args '("-")
+  :program "ruff"
+  :args '("format" "-")
   :group 'python)
 
 (defun pjones:python-mode-hook ()
