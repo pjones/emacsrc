@@ -101,12 +101,11 @@ When displaying these buffers, always open a new dedicated frame.")
  ;; Default action if `display-buffer-alist' doesn't select an action:
  '(display-buffer-base-action
    '((display-buffer-reuse-window
-      display-buffer-in-direction
       display-buffer-pop-up-window
+      display-buffer-reuse-mode-window
+      display-buffer-use-some-window
       display-buffer-pop-up-frame) .
-     ((reusable-frames . visible)
-      (direction . below)
-      (window-height . 0.4))))
+      ((reusable-frames . nil))))
 
  ;; Ensure that the current frame is used to display server buffers.
  ;; NOTE: This might not be necessary now that I removed an older
@@ -126,16 +125,9 @@ When displaying these buffers, always open a new dedicated frame.")
         '("\\*Backtrace\\*"
           "\\*Completions\\*"
           "\\*Deletions\\*"
-          "\\*DWIM shell command"
           calendar-mode))
       (display-buffer-at-bottom)
       (window-height . 0.3))
-
-     ;; Like above, but with a smaller size:
-     (,(pjones:buffer-conditions
-        '("Embark Collect \\(Live\\|Completions\\)"))
-      (display-buffer-at-bottom)
-      (window-height . 0.1))
 
      ;; Buffers that should take over the current window:
      (,(pjones:buffer-conditions
