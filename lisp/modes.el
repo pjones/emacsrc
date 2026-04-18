@@ -4,6 +4,7 @@
 ;;
 ;;; Code:
 
+(declare-function beframe-mode "beframe")
 (declare-function envrc-global-mode "envrc")
 (declare-function global-diff-hl-mode "diff-hl")
 (declare-function global-hl-todo-mode "hl-todo")
@@ -58,6 +59,7 @@ even when the names don't match exactly.  For example, loading
 
 (defun pjones:boot-global-modes ()
   "Start or prepare global modes."
+  (beframe-mode)                     ; Isolate buffers per frame
   (editorconfig-mode)                ; EditorConfig Plugin
   (electric-pair-mode)               ; Insert matching brackets.
   (envrc-global-mode)                ; Respect .envrc files.

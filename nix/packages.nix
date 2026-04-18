@@ -100,6 +100,7 @@ emacsWithOverrides.emacsWithPackages (
     async # Asynchronous processing in Emacs
     avy # Jump to arbitrary positions in visible text and select text quickly
     base16-theme # Base16 themes for Emacs
+    beframe # Isolate Emacs buffers per frame
     cape # Let your completions fly!
     catppuccin-theme # Soothing pastel theme for Emacs
     citar # quickly find and act on bibliographic references

@@ -8,6 +8,7 @@
   (require 'cl-macs)
   (require 'subr-x))
 
+(declare-function beframe-buffer-list "beframe")
 (declare-function cl-position "cl-seq")
 (declare-function comint-output-filter "comint")
 (declare-function comint-term-environment "comint")
@@ -126,7 +127,7 @@ This differs from `mode-line-other-buffer' in that it respects
          (old-buffer (window-buffer window))
          new-buffer)
     (catch 'found
-      (dolist (buffer (buffer-list))
+      (dolist (buffer (beframe-buffer-list))
         (when (and (buffer-live-p buffer)
                    (not (eq buffer old-buffer))
                    ;; Skip buffers whose names start with a space.

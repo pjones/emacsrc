@@ -25,6 +25,15 @@ Ensures that the buffer name doesn't change so it can be found again."
         (setq-local vterm-buffer-name-string nil)
         (rename-buffer (generate-new-buffer-name default-project-vterm-name))))))
 
+(defun pjones:project-switch-project ()
+  "Switch projects, probably in a new frame."
+  (interactive)
+  (if (project-current nil)
+      (let ((switch-to-buffer-obey-display-actions t)
+            (display-buffer-overriding-action '((display-buffer-pop-up-frame)) ))
+        (call-interactively #'project-switch-project))
+    (call-interactively #'project-switch-project)))
+
 (custom-set-variables
  '(project-switch-commands
    '((project-async-shell-command "Async" ?r)
@@ -41,6 +50,8 @@ Ensures that the buffer name doesn't change so it can be found again."
   (keymap-set map "D" #'project-find-dir)
   (keymap-set map "m" #'magit-project-status)
   (keymap-set map "M" #'magit-file-dispatch)
+  (keymap-set map "p" #'pjones:project-switch-project)
+  (keymap-set map "P" #'project-switch-project)
   (keymap-set map "r" #'project-async-shell-command)
   (keymap-set map "R" #'project-query-replace-regexp)
   (keymap-set map "s" #'pjones:project-vterm))
