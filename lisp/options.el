@@ -27,4 +27,16 @@
 (setopt safe-local-variable-values
         '((eval add-hook 'after-save-hook #'org-babel-tangle nil t)))
 
+;; Purely for performance:
+;;
+;; https://emacsredux.com/blog/2026/04/07/stealing-from-the-best-emacs-configs/
+(setq-default
+ bidi-display-reordering 'left-to-right
+ bidi-paragraph-direction 'left-to-right)
+
+(setopt
+ bidi-inhibit-bpa t
+ redisplay-skip-fontification-on-input t
+ read-process-output-max (* 4 1024 1024))
+
 ;;; options.el ends here
