@@ -265,6 +265,7 @@ Expects ORIG to be `meow-insert-exit'."
  '("t" . "C-c t")
  '("u" . meow-undo)
  '("U" . meow-undo-in-selection)
+ '("v" . meow-visit)
  '("w" . meow-save)
  '("W" . meow-sync-grab)
  '("X" . meow-backward-delete)
