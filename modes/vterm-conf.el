@@ -6,6 +6,7 @@
 
 (require 'vterm)
 
+(declare-function meow-insert-exit "meow")
 (declare-function project-prefixed-buffer-name "project")
 (declare-function project-root "project")
 (declare-function puni-mode "puni")
@@ -27,20 +28,26 @@
 
 (let ((map vterm-mode-map))
   ;; Remove some bindings:
-  (define-key map (kbd "M-'") nil)
-  (define-key map (kbd "M-:") nil)
+  (keymap-set map "M-'" nil)
+  (keymap-set map "M-:" nil)
 
   ;; And add some new ones:
-  (define-key map (kbd "C-c C-d") #'pjones:vterm-change-dir)
-  (define-key map (kbd "C-c C-g") #'keyboard-quit)
-  (define-key map (kbd "C-c C-M-r") #'pjones:vterm-toggle-name)
-  (define-key map (kbd "C-c C-r") #'pjones:vterm-restore-cursor)
-  (define-key map (kbd "C-c C-u") #'universal-argument)
-  (define-key map (kbd "C-c C-x") #'vterm--self-insert)
-  (define-key map (kbd "C-c M-x") #'vterm--self-insert)
-  (define-key map (kbd "C-g") #'vterm--self-insert)
-  (define-key map (kbd "C-u") #'vterm--self-insert)
-  (define-key map (kbd "M-<backspace>") nil))
+  (keymap-set map "<escape>" #'meow-insert-exit)
+  (keymap-set map "C-<escape>" #'vterm--self-insert)
+  (keymap-set map "C-c C-d" #'pjones:vterm-change-dir)
+  (keymap-set map "C-c C-g" #'keyboard-quit)
+  (keymap-set map "C-c C-M-r" #'pjones:vterm-toggle-name)
+  (keymap-set map "C-c C-r" #'pjones:vterm-restore-cursor)
+  (keymap-set map "C-c C-u" #'universal-argument)
+  (keymap-set map "C-c C-x" #'vterm--self-insert)
+  (keymap-set map "C-c M-x" #'vterm--self-insert)
+  (keymap-set map "C-g" #'vterm--self-insert)
+  (keymap-set map "C-u" #'vterm--self-insert)
+  (keymap-set map "M-<backspace>" nil))
+
+(let ((map vterm-copy-mode-map))
+  ;; Remove some bindings:
+  (keymap-set map "<return>" nil))
 
 (defun pjones:meow-vterm-state-change (state)
   "Update `vterm-copy-mode' when changing states.
