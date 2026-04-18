@@ -17,6 +17,9 @@
 (defvar avy-all-windows)
 (defvar puni-mode)
 
+(defvar-local pjones:meow-mark-active-at-exit nil
+  "Record whether or not the mark was active when exiting insert mode.")
+
 (defun pjones:meow-sort (n)
   "Sort the region or N lines."
   (interactive "p")
@@ -114,6 +117,29 @@ If the region is active, search for that instead."
   (isearch-repeat-backward)
   (setq this-command 'isearch-repeat-backward
         last-command-event ?\C-r))
+
+(defun pjones:meow-insert-exit (orig &rest args)
+  "Wrapper around ORIG with ARGS.
+Expects ORIG to be `meow-insert-exit'."
+  (setq pjones:meow-mark-active-at-exit
+        (if (use-region-p)
+            (cons (region-beginning)
+                  (region-end))))
+  (apply orig args))
+
+(advice-add #'meow-insert-exit
+            :around #'pjones:meow-insert-exit)
+
+(defun pjones:meow-maybe-restore-mark ()
+  "Maybe restore a previously active mark."
+  (when-let ((beg (car pjones:meow-mark-active-at-exit))
+             (end (cdr pjones:meow-mark-active-at-exit)))
+    (goto-char beg)
+    (set-mark end)
+    (meow--make-selection '(select . transient) end beg))
+  (setq pjones:meow-mark-active-at-exit nil))
+
+(add-hook 'meow-insert-exit-hook #'pjones:meow-maybe-restore-mark)
 
 ;; When there is no selection, have:
 ;;
