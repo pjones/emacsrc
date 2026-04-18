@@ -233,6 +233,7 @@ Expects ORIG to be `meow-insert-exit'."
  '("C-o" . meow-open-above)
  '("D" . expreg-contract)
  '("d" . expreg-expand)
+ '("e" . embrace-commander)
  '("f" . meow-next-symbol)
  '("F" . meow-next-word)
  '("g" . meow-cancel-selection)

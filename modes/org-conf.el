@@ -22,6 +22,7 @@
 (declare-function citar-capf-setup "citar")
 (declare-function consult-org-heading "consult")
 (declare-function corg-setup "corg")
+(declare-function embrace-org-mode-hook "embrace")
 (declare-function jupyter-repl-interaction-mode "jupyter-repl")
 (declare-function org-appear-mode "org-appear")
 (declare-function org-attach-attach "org-attach")
@@ -1299,6 +1300,7 @@ For example, expand `org-mode' macros.  TEXT and BACKEND are provided by
 (add-hook 'org-export-before-processing-functions #'pjones:org-before-beamer-export)
 (add-hook 'org-export-filter-export-block-functions #'pjones:latex-filter-export-block)
 (add-hook 'org-mode-hook #'pjones:org-mode-hook)
+(add-hook 'org-mode-hook #'embrace-org-mode-hook)
 
 ;;; org-conf.el ends here
 

@@ -129,6 +129,7 @@ emacsWithOverrides.emacsWithPackages (
     elm-mode # Elm mode for emacs
     embark # Conveniently act on minibuffer completions
     embark-consult # Consult integration for Embark
+    embrace # Add/Change/Delete pairs
     ement # A Matrix client for GNU Emacs.
     emms # The Emacs Multimedia System
     envrc # Support for `direnv' that operates buffer-locally
