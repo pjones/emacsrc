@@ -19,7 +19,7 @@
  '(markdown-header-scaling nil)
  '(markdown-reference-location 'end)
  '(markdown-asymmetric-header t)
- '(markdown-hide-urls t)
+ '(markdown-hide-urls nil)
  '(markdown-command
    (concat "pandoc -s --mathjax --filter "
            (pjones:script "pandoc-filter-title.sh"))))
