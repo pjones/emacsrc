@@ -624,8 +624,8 @@ always be requested."
  :latex-compiler '("lualatex --output-format=dvi --interaction nonstopmode --output-directory %o %f"))
 
 (custom-set-faces
- '(org-block ((t (:background nil))))
- '(org-block-begin-line ((t (:background nil)))))
+ '(org-block ((t (:background unspecified))))
+ '(org-block-begin-line ((t (:background unspecified)))))
 
 ;; Set this up since I delay loading jupyter.el:
 (add-to-list 'org-src-lang-modes (cons "jupyter-python" "python"))

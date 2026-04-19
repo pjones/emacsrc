@@ -114,25 +114,27 @@ will be selected, otherwise a dark theme will be selected."
        pjones:light-theme
      pjones:dark-theme)))
 
-(defun pjones:theme-fixups (&rest _)
-  "Fix some UI elements after a changing themes."
+(defun pjones:theme-fixups (theme)
+  "Fix some UI elements after a changing themes to THEME."
+  (setq pjones:current-theme theme)
   ;; Step 1: Emulate spacious-padding for the mode line:
-  (let* ((base (custom-face-attributes-get 'mode-line nil))
-         (faces '(mode-line
-                  mode-line-active
-                  mode-line-inactive
-                  mode-line-highlight))
-         (or-base (lambda (spec attr)
-                    (let ((val (plist-get spec attr)))
-                      (or (and (stringp val) val)
-                          (plist-get base attr))))))
+  (when-let* ((base (custom-face-attributes-get 'mode-line nil))
+              (faces '(mode-line
+                       mode-line-active
+                       mode-line-inactive
+                       mode-line-highlight))
+              (or-base (lambda (spec attr default)
+                         (let ((val (plist-get spec attr)))
+                           (or (and (stringp val) val)
+                               (plist-get base attr)
+                               default)))))
     (dolist (face faces)
-      (let ((spec (custom-face-attributes-get face nil)))
+      (when-let ((spec (custom-face-attributes-get face nil)))
         (custom-set-faces
-         `(,face ((t (:background ,(funcall or-base spec :background)
-                      :foreground ,(funcall or-base spec :foreground)
+         `(,face ((t (:background ,(funcall or-base spec :background 'unspecified)
+                      :foreground ,(funcall or-base spec :foreground 'unspecified)
                       :box (:line-width 6
-                            :color ,(funcall or-base spec :background)
+                            :color ,(funcall or-base spec :background nil)
                             :style nil))))))))))
 
 (add-hook 'enable-theme-functions #'pjones:theme-fixups)

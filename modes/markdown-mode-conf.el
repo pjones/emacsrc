@@ -25,7 +25,7 @@
            (pjones:script "pandoc-filter-title.sh"))))
 
 (custom-set-faces
- '(markdown-code-face ((t (:background nil))))
+ '(markdown-code-face ((t (:background unspecified))))
  '(markdown-header-delimiter-face ((t (:inherit org-done))))
  '(markdown-header-face-1 ((t (:inherit outline-1 :height 2.0))))
  '(markdown-header-face-2 ((t (:inherit outline-2 :height 1.7))))
