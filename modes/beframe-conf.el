@@ -15,7 +15,8 @@
 (with-eval-after-load 'consult
   (defface beframe-buffer
     '((t :inherit font-lock-string-face))
-    "Face for `consult' framed buffers.")
+    "Face for `consult' framed buffers."
+    :group 'beframe)
 
   (defun my-beframe-buffer-names-sorted (&optional frame)
     "Return the list of buffers from `beframe-buffer-names' sorted by visibility.
@@ -33,5 +34,8 @@ With optional argument FRAME, return the list of buffers of FRAME."
        :state    ,#'consult--buffer-state))
 
   (add-to-list 'consult-buffer-sources 'beframe-consult-source))
+
+(custom-set-variables
+ '(beframe-create-frame-scratch-buffer nil))
 
 ;;; beframe-conf.el ends here
