@@ -38,49 +38,6 @@ buffer name, or symbols that match a major mode."
         (apply-partially #'pjones:buffer-name-or-mode-matches-p name mode)
         ,names-or-modes))))
 
-(defmacro pjones:selected-buffer-conditions (names-or-modes &optional exceptions)
-  "Generate a condition function for `display-buffer-alist'.
-
-NAMES-OR-MODES should be a list of regular expressions that match
-a buffer name, or symbols that match a major mode.  They will be
-compared against the currently selected buffer, not the one being
-displayed.
-
-However, if the buffer to be shown matches a name or mode in
-EXCEPTIONS then return nil to indicate that we do want that
-buffer displayed in this frame and to let another rule control
-its display."
-  `(lambda (buffer-or-name action)
-     (unless (funcall (pjones:buffer-conditions ,exceptions)
-                      buffer-or-name action)
-       (when-let* ((window (selected-window))
-                   (buffer (window-buffer window)))
-         (funcall
-          (pjones:buffer-conditions ,names-or-modes)
-          buffer action)))))
-
-(defun pjones:frame-on-this-workspace-p (frame)
-  "Return non-nil if FRAME is on the current workspace."
-  (when-let* ((selected (selected-frame))
-              (wid (lambda (frame) (frame-parameter frame 'window-id)))
-              ((eq t (frame-parameter frame 'minibuffer)))
-              ((not (frame-parameter frame 'parent-frame))))
-    (= 0 (call-process "e-on-same-workspace" nil nil nil
-                       (funcall wid selected)
-                       (funcall wid frame)))))
-
-(defvar pjones:modes-dedicated-to-frames
-  '(comint-mode
-    compilation-mode
-    haskell-interactive-mode)
-  "Modes that are displayed in their own frame.
-
-When displaying these buffers, always open a new dedicated frame.")
-
-(defvar pjones:dedicated-frame-exceptions
-  '(" \\*transient\\*")
-  "Names of buffers or modes that can be shown in dedicated frames.")
-
 (custom-set-variables
  ;; Don't hide frames, when deleting windows, just kill the frame:
  '(frame-auto-hide-function #'delete-frame)
@@ -134,24 +91,6 @@ When displaying these buffers, always open a new dedicated frame.")
         '("\\*Org Agenda\\*"
           Man-mode
           magit-status-mode))
-      (display-buffer-same-window))
-
-     ;; Buffers that should pop out into a new frame and are not
-     ;; shared with other buffers that have the same mode:
-     (,(pjones:buffer-conditions pjones:modes-dedicated-to-frames)
-      (display-buffer-reuse-window
-       display-buffer-pop-up-frame)
-      (reusable-frames . visible)
-      (dedicated . t)
-      (pop-up-frame-parameters
-       . ((unsplittable . t)
-          (name . "popup"))))
-
-     ;; Buffers that must not be displayed in the current frame:
-     (,(pjones:selected-buffer-conditions pjones:modes-dedicated-to-frames
-                                          pjones:dedicated-frame-exceptions)
-      (display-buffer-use-some-frame
-       display-buffer-pop-up-frame)
-      (frame-predicate . pjones:frame-on-this-workspace-p)))))
+      (display-buffer-same-window)))))
 
 ;;; buffers.el ends here
