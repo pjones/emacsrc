@@ -720,22 +720,41 @@ PARAMS is a property list of parameters:
         (insert "|\n"))
       (org-table-align)))
 
-(defun pjones:org-up-or-prev (&optional arg)
-  "Move to the parent, or previous sibling.
-ARG is the number of headings to move."
+(defun pjones:org-up (&optional arg)
+  "Move up to the parent.
+When ARG is set, move that many levels."
   (interactive "p")
-   (if (= 1 (org-outline-level))
-       (org-backward-heading-same-level arg)
-     (outline-up-heading arg)))
-
-(defun pjones:org-backward-heading-same-level (&optional arg)
-  "Move backard to the preceding headline.
-ARG is the number of headings to move."
-  (interactive "p")
-  (if (org-at-heading-p)
+  (if (= 1 (org-outline-level))
       (org-backward-heading-same-level arg)
-    (org-back-to-heading)
-    (org-backward-heading-same-level (- arg 1))))
+    (outline-up-heading arg)))
+
+(defun pjones:org-up-or-prev (&optional arg)
+  "Move to the previous sibling, or the parent.
+ARG is the number of headings to move."
+  (interactive "p")
+  (if (not (org-at-heading-p))
+      (org-back-to-heading)
+    (let ((before (progn
+                    (org-back-to-heading)
+                    (point)))
+          (after (progn
+                   (org-backward-heading-same-level arg)
+                   (point))))
+      (when (= before after)
+        (org-previous-visible-heading arg)))))
+
+(defun pjones:org-down-or-next (&optional arg)
+  "Move to the next sibling or parent's sibling.
+ARG is the number of headings to move."
+  (interactive "p")
+  (let ((before (progn
+                  (org-back-to-heading)
+                  (point)))
+        (after (progn
+                 (org-forward-heading-same-level arg)
+                 (point))))
+    (when (= before after)
+      (org-next-visible-heading arg))))
 
 (defun pjones:org-next-item ()
   "Move to the next plain item.
@@ -1200,16 +1219,16 @@ For example, expand `org-mode' macros.  TEXT and BACKEND are provided by
   ;(define-key map (kbd "C-c l h") #'pjones:org-insert-heading-link)
   (define-key map (kbd "C-c RET") nil) ; Remove this binding.
   (define-key map (kbd "C-M-n") #'org-next-visible-heading)
-  (define-key map (kbd "C-M-p") #'pjones:org-up-or-prev)
+  (define-key map (kbd "C-M-p") #'pjones:org-up)
   (define-key map (kbd "C-o") #'pjones:org-open-line)
   (define-key map (kbd "M-<left>") #'pjones:org-promote)
   (define-key map (kbd "M-<return>") #'pjones:org-insert-item)
   (define-key map (kbd "M-<right>") #'pjones:org-demote)
   (define-key map (kbd "M-g C-i") #'pjones:org-get-id)
   (define-key map (kbd "M-g i") #'consult-org-heading)
-  (define-key map (kbd "M-n") #'org-forward-heading-same-level)
+  (define-key map (kbd "M-n") #'pjones:org-down-or-next)
   (define-key map (kbd "M-N") #'pjones:org-next-item)
-  (define-key map (kbd "M-p") #'pjones:org-backward-heading-same-level)
+  (define-key map (kbd "M-p") #'pjones:org-up-or-prev)
   (define-key map (kbd "M-P") #'org-previous-item))
 
 (defmacro pjones:org-eval-in-calendar (function)
@@ -1227,9 +1246,9 @@ For example, expand `org-mode' macros.  TEXT and BACKEND are provided by
 (defvar-keymap org-mode-repeat-map
   :repeat t
   "d" #'org-next-visible-heading
-  "n" #'org-forward-heading-same-level
-  "p" #'pjones:org-backward-heading-same-level
-  "u" #'pjones:org-up-or-prev)
+  "n" #'pjones:org-down-or-next
+  "p" #'pjones:org-up-or-prev
+  "u" #'pjones:org-up)
 
 (defvar-keymap pjones:org-mode-map
   :doc "Access frequently used `org-mode' functions."
