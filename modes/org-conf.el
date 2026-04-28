@@ -1181,10 +1181,16 @@ match and the values are replacement keywords."
 When ASYNC is non-nil then export in the background."
   (interactive "P")
   (message "Generating PDF...")
-  (let ((only-subtree (buffer-narrowed-p)))
+  (let* ((only-subtree (buffer-narrowed-p))
+         (name (org-export-output-file-name ".pdf" only-subtree))
+         (others (list (concat (file-name-sans-extension name) ".tex")
+                       (concat (file-name-sans-extension name) ".bbl"))))
     (save-excursion
       (goto-char (point-min))
-      (org-latex-export-to-pdf async only-subtree))))
+      (org-latex-export-to-pdf async only-subtree))
+    (unless async
+      (dolist (file others)
+        (delete-file file)))))
 
 (defun pjones:latex-filter-export-block (text backend _info)
   "Filter LaTeX export blocks.
