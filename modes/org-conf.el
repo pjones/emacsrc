@@ -35,6 +35,7 @@
 (declare-function org-clock-dbus-mode "org-clock-dbus")
 (declare-function org-clock-sum-current-item "org-clock")
 (declare-function org-clocking-p "org-clock")
+(declare-function org-columns-quit "org-colview")
 (declare-function org-insert-last-stored-link "ol")
 (declare-function org-modern-mode "org-modern")
 (declare-function org-roam-dailies-goto-date "org-roam")
@@ -49,6 +50,7 @@
 
 (defvar org-attach-store-link-p)
 (defvar org-clock-start-time)
+(defvar org-columns-begin-marker)
 (defvar pjones:current-theme)
 (defvar yas/keymap)
 
@@ -1197,6 +1199,19 @@ For example, expand `org-mode' macros.  TEXT and BACKEND are provided by
         (org-macro-replace-all macros)
         (buffer-substring (point-min) (point-max))))))
 
+(defun pjones:org-toggle-columns ()
+  "Toggle column view."
+  (interactive)
+  (if (markerp org-columns-begin-marker)
+      (progn
+        (org-columns-quit)
+        (setq org-columns-begin-marker nil))
+    (let ((local (save-excursion
+                   (org-back-to-heading)
+                   (org-entry-get (point) "COLUMNS" nil))))
+      (org-back-to-heading)
+      (org-columns (not local)))))
+
 ;;; Key Bindings:
 (let ((map org-mode-map))
   ;; Reset these so I can use them as a prefix:
@@ -1206,6 +1221,7 @@ For example, expand `org-mode' macros.  TEXT and BACKEND are provided by
   (define-key map (kbd "<f12>") #'org-tree-slide-mode)
   (define-key map (kbd "C-'") nil) ; Remove this binding.
   (define-key map (kbd "C-<return>") #'pjones:org-insert-heading)
+  (define-key map (kbd "C-c C-x C-c") #'pjones:org-toggle-columns)
   (define-key map (kbd "C-c C-a a") #'pjones:org-attach)
   (define-key map (kbd "C-c C-a d") #'org-attach-reveal-in-emacs)
   (define-key map (kbd "C-c C-a u") #'org-attach-url)
@@ -1254,6 +1270,7 @@ For example, expand `org-mode' macros.  TEXT and BACKEND are provided by
   :doc "Access frequently used `org-mode' functions."
   "a" #'org-fold-show-subtree
   "b" #'org-fold-show-branches
+  "c" #'pjones:org-toggle-columns
   "h" #'org-fold-hide-sublevels
   "I" #'org-clock-in
   "i" #'org-tree-to-indirect-buffer
