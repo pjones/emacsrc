@@ -1284,7 +1284,8 @@ For example, expand `org-mode' macros.  TEXT and BACKEND are provided by
   "O" #'org-clock-out
   "o" #'pjones:org-hide-others
   "r" #'org-reveal
-  "s" #'org-toggle-narrow-to-subtree)
+  "s" #'org-toggle-narrow-to-subtree
+  "t" #'org-todo)
 
 (defvar org-state)
 (defun pjones:org-after-todo-state-change-hook ()
