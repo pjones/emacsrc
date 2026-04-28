@@ -198,6 +198,7 @@ FUNC."
  (kbd "C-c A") #'pjones:frame-toggle-alpha
  (kbd "C-c b e") #'eldoc-doc-buffer
  (kbd "C-c b t") #'pjones:open-temp-buffer
+ (kbd "C-c c") #'quick-calc
  (kbd "C-c d") #'duplicate-dwim
  (kbd "C-c e") #'embark-act
  (kbd "C-c f f") (pjones:jump-to-buffer "*flymake message*")
@@ -207,8 +208,8 @@ FUNC."
  (kbd "C-c h j") #'webjump
  (kbd "C-c j") #'pjones:jump-to-marker
  (kbd "C-c k") nil ; Reserved for major mode customzation.
- (kbd "C-c L") #'org-store-link
  (kbd "C-c l") #'link-hint-avy-act
+ (kbd "C-c L") #'org-store-link
  (kbd "C-c m b") #'emms-smart-browse
  (kbd "C-c m d") #'emms-add-directory
  (kbd "C-c m e") (pjones:load-call 'emms-playlist-mode #'emms)
@@ -222,7 +223,6 @@ FUNC."
  (kbd "C-c p l") #'pass
  (kbd "C-c p p") #'pjones:password-goto
  (kbd "C-c Q") #'full-calc
- (kbd "C-c q") #'quick-calc
  (kbd "C-c r") #'revert-buffer-quick
  (kbd "C-c RET") #'pjones:start-term
  (kbd "C-c SPC") #'org-capture
