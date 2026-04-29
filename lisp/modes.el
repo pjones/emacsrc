@@ -9,6 +9,7 @@
 (declare-function global-diff-hl-mode "diff-hl")
 (declare-function global-hl-todo-mode "hl-todo")
 (declare-function global-jinx-mode "jinx")
+(declare-function lin-global-mode "lin")
 (declare-function minions-mode "minions")
 (declare-function pdf-tools-install "pdf-tools")
 (declare-function puni-global-mode "puni")
@@ -68,6 +69,7 @@ even when the names don't match exactly.  For example, loading
   (global-hl-todo-mode)              ; Highlight TODO tags in text.
   (global-jinx-mode)                 ; Enchanted Spell Checker
   (global-prettify-symbols-mode)     ; Replace buffer symbols.
+  (lin-global-mode)                  ; Improve hl-line-mode
   (minions-mode)                     ; Minor-mode menu.
   (repeat-mode)                      ; Easy repeating of some actions.
   (vertico-mode)                     ; minibuffer completions.

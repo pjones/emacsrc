@@ -159,6 +159,7 @@ emacsWithOverrides.emacsWithPackages (
     jupyter # An interface to communicate with Jupyter kernels.
     kaolin-themes # A set of eye pleasing themes
     khardel # integrating khard, a console cardav client
+    lin # Make 'hl-line-mode' more suitable for selection UIs
     link-hint # Use avy to open, copy, etc. visible links
     magit # A Git porcelain inside Emacs
     magit-annex # Control git-annex from Magit
