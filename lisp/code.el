@@ -7,6 +7,7 @@
 (require 'dash)
 (require 's)
 
+(declare-function breadcrumb-local-mode "breadcrumb")
 (declare-function dumb-jump-xref-activate "dumb-jump")
 (declare-function indium-connect-to-chrome "indium")
 (declare-function indium-run-node "indium")
@@ -66,6 +67,7 @@
    comment-auto-fill-only-comments t)   ; Don't auto fill code.
 
   (auto-fill-mode)
+  (breadcrumb-local-mode)
   (flymake-mode)
   (outline-indent-minor-mode)
   (pjones:delete-whitespace-mode)
