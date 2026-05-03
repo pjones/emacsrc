@@ -104,18 +104,22 @@ If BELOW is non-nil, open a line below point instead."
     (when (not already-bol)
       (indent-according-to-mode))))
 
-(defun pjones:ensure-blank-lines ()
-  "Ensure there are blank lines above and below point."
+(defun pjones:ensure-blank-lines (&optional where)
+  "Ensure there are blank lines above and below point.
+If WHERE is non-nil it can be a symbol, either above or below, to
+indicate only blank lines should be created there."
   (interactive)
-  (save-excursion
-    (beginning-of-line 0) ;; beginning of prev line
-    (unless (looking-at-p "[ \t]*$")
-      (end-of-line)
-      (newline)))
-  (save-excursion
-    (beginning-of-line 2)
-    (unless (looking-at-p "[ \t]*$")
-      (newline))))
+  (when (or (not where) (eq where 'above))
+    (save-excursion
+      (forward-line -1) ;; beginning of prev line
+      (unless (looking-at-p "[ \t]*$")
+        (end-of-line)
+        (newline))))
+  (when (or (not where) (eq where 'below))
+    (save-excursion
+      (forward-line 1)
+      (when (or (eobp) (not (looking-at-p "[ \t]*$")))
+        (newline)))))
 
 (defun pjones:toggle-prev-buffer ()
   "Toggle between the two most recently used buffers.

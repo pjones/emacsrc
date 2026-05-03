@@ -656,7 +656,7 @@ always be requested."
   "Close all headings except the heading at point."
   (interactive)
   (save-excursion
-    (org-back-to-heading)
+    (org-back-to-heading-or-point-min)
     (org-overview))
   (org-fold-show-context 'agenda)
   (org-fold-show-children)
@@ -735,9 +735,9 @@ When ARG is set, move that many levels."
 ARG is the number of headings to move."
   (interactive "p")
   (if (not (org-at-heading-p))
-      (org-back-to-heading)
+      (org-back-to-heading-or-point-min)
     (let ((before (progn
-                    (org-back-to-heading)
+                    (org-back-to-heading-or-point-min)
                     (point)))
           (after (progn
                    (org-backward-heading-same-level arg)
@@ -750,7 +750,7 @@ ARG is the number of headings to move."
 ARG is the number of headings to move."
   (interactive "p")
   (let ((before (progn
-                  (org-back-to-heading)
+                  (org-back-to-heading-or-point-min)
                   (point)))
         (after (progn
                  (org-forward-heading-same-level arg)
@@ -778,13 +778,24 @@ When HERE is non-nil, create a heading after point."
                          (org-insert-todo-heading '(4) t)
                        (org-insert-heading)))))
     (if (or here (org-at-heading-p))
-        (funcall insert-fn (org-get-todo-state))
-      (org-back-to-heading)
-      (let ((mark-todo (org-get-todo-state)))
-        (end-of-line)
-        (funcall insert-fn mark-todo)))
+        (funcall insert-fn (and (org-at-heading-p)
+                                (org-get-todo-state)))
+      (org-back-to-heading-or-point-min)
+      (end-of-line)
+      (funcall insert-fn (and (org-at-heading-p)
+                              (org-get-todo-state))))
     (when (org--blank-before-heading-p)
-      (pjones:ensure-blank-lines))))
+      (pjones:ensure-blank-lines 'above))))
+
+(defun pjones:org-ensure-created-timestamp ()
+  "Ensure the current heading has a CREATED property."
+  (interactive)
+  (save-excursion
+    (when-let* ((epom (progn (org-back-to-heading-or-point-min) (point))))
+      (unless (org-entry-get epom "CREATED" nil)
+        (org-entry-put epom "CREATED" (pjones:org-time-stamp t (current-time)))
+        (goto-char (cdr (org-get-property-block epom 'force)))
+        (pjones:ensure-blank-lines 'below)))))
 
 (defun pjones:org-insert-item (checkbox)
   "Insert a new item.
@@ -800,7 +811,7 @@ existing item.  This version works on headings too."
     (when (org-at-item-checkbox-p)
       (setq checkbox (not checkbox))))
   (unless (org-insert-item checkbox)
-    (org-back-to-heading)
+    (org-back-to-heading-or-point-min)
     (org-fold-show-subtree)
     (let ((here (point)))
       (outline-next-heading)
@@ -911,7 +922,7 @@ PROMOTE should be non-nil to promote, or nil to demote."
 (defun pjones:agenda-skip-properly-blocked ()
   "Skip a blocked entry if it has a proper blocker.
 Meant to be used with `org-agenda-skip-function'."
-  (org-back-to-heading t)
+  (org-back-to-heading-or-point-min t)
   (when (string= "BLOCKED" (org-get-todo-state))
     (let* ((end (org-entry-end-position))
            (pom (point))
@@ -1085,7 +1096,7 @@ If EDIT is non-nil then edit the resulting trigger with
 `org-edna-edit' even if no trigger currently exists."
   (interactive "P")
   (let* ((heading-point (save-excursion
-                          (org-back-to-heading)
+                          (org-back-to-heading-or-point-min)
                           (point-marker)))
          (source (org-id-get heading-point t))
          (target (pjones:org-get-id "Heading on which to block: "))
@@ -1208,14 +1219,15 @@ For example, expand `org-mode' macros.  TEXT and BACKEND are provided by
 (defun pjones:org-toggle-columns ()
   "Toggle column view."
   (interactive)
-  (if (markerp org-columns-begin-marker)
+  (if (and (boundp 'org-columns-begin-marker)
+           (markerp org-columns-begin-marker))
       (progn
         (org-columns-quit)
         (setq org-columns-begin-marker nil))
     (let ((local (save-excursion
-                   (org-back-to-heading)
+                   (org-back-to-heading-or-point-min)
                    (org-entry-get (point) "COLUMNS" nil))))
-      (org-back-to-heading)
+      (org-back-to-heading-or-point-min)
       (org-columns (not local)))))
 
 ;;; Key Bindings:
@@ -1342,8 +1354,9 @@ For example, expand `org-mode' macros.  TEXT and BACKEND are provided by
 (add-hook 'org-agenda-mode-hook #'pjones:org-agenda-mode-hook)
 (add-hook 'org-export-before-processing-functions #'pjones:org-before-beamer-export)
 (add-hook 'org-export-filter-export-block-functions #'pjones:latex-filter-export-block)
-(add-hook 'org-mode-hook #'pjones:org-mode-hook)
+(add-hook 'org-insert-heading-hook #'pjones:org-ensure-created-timestamp)
 (add-hook 'org-mode-hook #'embrace-org-mode-hook)
+(add-hook 'org-mode-hook #'pjones:org-mode-hook)
 
 ;;; org-conf.el ends here
 
