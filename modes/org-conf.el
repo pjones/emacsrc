@@ -1286,13 +1286,21 @@ For example, expand `org-mode' macros.  TEXT and BACKEND are provided by
 
 (defvar-keymap pjones:org-mode-map
   :doc "Access frequently used `org-mode' functions."
+  "A" #'org-archive-subtree-default
   "a" #'org-fold-show-subtree
   "b" #'org-fold-show-branches
   "c" #'pjones:org-toggle-columns
+  "e b" #'org-beamer-export-to-pdf
+  "e e" #'org-export-dispatch
+  "e j" #'pjones:ox-ipynb-export-to-ipynb
+  "e m" #'org-gfm-export-as-markdown
+  "e p" #'pjones:org-latex-export-to-pdf
+  "f" #'pjones:org-attach
   "h" #'org-fold-hide-sublevels
   "I" #'org-clock-in
   "i" #'org-tree-to-indirect-buffer
   "k" #'org-ctrl-c-ctrl-c
+  "l" #'org-insert-link
   "O" #'org-clock-out
   "o" #'pjones:org-hide-others
   "r" #'org-reveal
