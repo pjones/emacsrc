@@ -43,6 +43,7 @@
 (declare-function pjones:delete-whitespace-mode "../lisp/whitespace.el")
 (declare-function pjones:ensure-blank-lines "../lisp/interactive")
 (declare-function pjones:open-line-above "../lisp/interactive")
+(declare-function pjones:random-json-entry "../lisp/functions")
 (declare-function puni-mode "puni")
 (declare-function yas-expand "yasnippet")
 (declare-function yas-minor-mode "yasnippet")
@@ -82,6 +83,35 @@
          (when (file-exists-p path)
            (push path files))))
      files)))
+
+(defvar pjones:org-agenda-quote-today nil
+  "The quote for today.")
+
+(defun pjones:org-agenda-quote (&rest _)
+  "Generate an `org-agenda' section containing a quote."
+  (let* ((today (format-time-string "%F"))
+         (quote (if (and pjones:org-agenda-quote-today
+                         (string= today (car pjones:org-agenda-quote-today)))
+                    (cdr pjones:org-agenda-quote-today)
+                  (pjones:random-json-entry
+                   (concat pjones:org-notes-directory
+                           "data/stoic-quotes.json"))))
+         (width (window-text-width))
+         (text  (alist-get 'text quote))
+         (inhibit-read-only t))
+    (setq pjones:org-agenda-quote-today (cons today quote))
+    (org-agenda-prepare)
+    (org-agenda--insert-overriding-header
+      (concat "🪦 Today's Quote from "
+              (alist-get 'author quote)
+              ":\n"))
+    (add-text-properties
+     (point-min) (1- (point))
+     (list 'face 'org-agenda-structure
+           'org-date-line t))
+    (org-agenda-mark-header-line (point-min))
+    (insert (concat (s-word-wrap width text) "\n"))
+    (org-agenda-finalize)))
 
 (defun pjones:org-parse-effort-tag (tag)
   "Convert an effort TAG to a number of seconds."
@@ -359,6 +389,7 @@ always be requested."
          (org-agenda-todo-keyword-format "")
          (org-agenda-sorting-strategy '(user-defined-down))
          (org-agenda-cmp-user-defined #'pjones:org-agenda-items-less)))
+       (pjones:org-agenda-quote "")
        (todo "WAITING"
         ((org-agenda-overriding-header "🙎 Waiting for Someone Else:")
          (org-agenda-skip-function '(org-agenda-skip-entry-if 'scheduled 'deadline))

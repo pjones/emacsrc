@@ -8,6 +8,7 @@
   (require 'subr-x))
 
 (declare-function eww-decode-url-file-name "eww")
+(declare-function json-read-file "json")
 (declare-function project-name "project")
 (declare-function project-root "project")
 (declare-function url-http-head "url-http")
@@ -97,5 +98,15 @@
     (replace-regexp-in-string (rx bol)
                               indent
                               (string-fill str (- fill-column (length indent))))))
+
+(defun pjones:random-json-entry (file-name &optional key)
+  "Return a random entry from FILE-NAME.
+
+Since JSON documents are typically objects, KEY is used to find the list
+of quotes.  It defaults to \='quote."
+  (require 'json)
+  (when-let* ((json (json-read-file (expand-file-name file-name)))
+              (key (or key 'quotes)))
+    (seq-random-elt (cdr (assoc key json)))))
 
 ;;; functions.el ends here
