@@ -1,37 +1,16 @@
 {
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
-
-    home-manager.url = "github:nix-community/home-manager/release-25.11";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";
+    home-manager.url = "github:nix-community/home-manager/release-26.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
-
-    anki-editor = {
-      url = "github:anki-editor/anki-editor";
-      flake = false;
-    };
-
-    corg = {
-      url = "github:isamert/corg.el";
-      flake = false;
-    };
 
     link-hint = {
       url = "github:pjones/link-hint.el/pjones/fix-avy-action";
       flake = false;
     };
 
-    meow-edit = {
-      url = "github:meow-edit/meow";
-      flake = false;
-    };
-
     nextflow-mode = {
       url = "github:edmundmiller/nextflow-mode";
-      flake = false;
-    };
-
-    ob-duckdb = {
-      url = "github:gggion/ob-duckdb";
       flake = false;
     };
 
@@ -52,11 +31,6 @@
 
     ox-ipynb = {
       url = "github:jkitchin/ox-ipynb";
-      flake = false;
-    };
-
-    org-roam = {
-      url = "github:org-roam/org-roam/v2.3.0";
       flake = false;
     };
 

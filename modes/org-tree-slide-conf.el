@@ -17,7 +17,7 @@
 
 (defun pjones:org-tree-slide-after-narrow-hook ()
   "Hook called at slideshow start."
-  (org-display-inline-images nil t))
+  (org-link-preview-region))
 
 (add-hook 'org-tree-slide-after-narrow-hook
           #'pjones:org-tree-slide-after-narrow-hook)

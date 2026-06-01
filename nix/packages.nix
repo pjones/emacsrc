@@ -23,35 +23,14 @@ let
   # Package overrides:
   emacsWithOverrides = (emacsPackagesFor emacs).overrideScope (
     self: super: {
-      anki-editor = update super.anki-editor inputs.anki-editor;
       link-hint = update super.link-hint inputs.link-hint;
-      meow = update super.meow inputs.meow-edit;
-      org-roam = update super.org-roam inputs.org-roam;
 
       # Not in nixpkgs:
-      corg = emacs.pkgs.trivialBuild {
-        inherit version;
-        pname = "corg";
-        src = inputs.corg;
-        packageRequires = [
-          self.org
-          super.s
-          super.dash
-        ];
-      };
-
       nextflow-mode = emacs.pkgs.elpaBuild {
         inherit version;
         pname = "nextflow-mode";
         src = "${inputs.nextflow-mode}/nextflow-mode.el";
         packageRequires = [ super.groovy-mode ];
-      };
-
-      ob-duckdb = emacs.pkgs.trivialBuild {
-        inherit version;
-        pname = "ob-duckdb";
-        src = inputs.ob-duckdb;
-        packageRequires = [ self.org ];
       };
 
       org-clock-dbus = emacs.pkgs.elpaBuild {

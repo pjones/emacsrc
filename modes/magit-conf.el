@@ -3,9 +3,9 @@
 ;;; Commentary:
 ;;
 ;;; Code:
-(require 'git-rebase)
+
 (require 'magit)
-(require 'with-editor)
+(require 'orgalist)
 
 (custom-set-variables
  '(magit-show-long-lines-warning nil)

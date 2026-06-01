@@ -1305,7 +1305,7 @@ For example, expand `org-mode' macros.  TEXT and BACKEND are provided by
   "Generate a command to call FUNCTION from within `org-eval-in-calendar'."
   `(defun ,(intern (concat "pjones:org-eval-in-calednar-" (symbol-name function))) ()
     (interactive)
-    (org-eval-in-calendar '(,function 1))))
+    (org-funcall-in-calendar '(,function 1))))
 
 (let ((map org-read-date-minibuffer-local-map))
   (define-key map (kbd "M-b") (pjones:org-eval-in-calendar calendar-backward-day))

@@ -6,8 +6,9 @@
 
 (require 'beframe)
 
-(defvar consult-buffer-sources)
 (declare-function consult--buffer-state "consult")
+(declare-function my-beframe-buffer-names-sorted "beframe-conf")
+(defvar consult-buffer-sources)
 
 ;;; Take from the beframe manual:
 ;;;

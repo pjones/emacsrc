@@ -1,37 +1,5 @@
 {
   "nodes": {
-    "anki-editor": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1773733699,
-        "narHash": "sha256-yESsSL1jHKLLWwUEB9mM/a90Gf2Id3+N1XtQc0CPes4=",
-        "owner": "anki-editor",
-        "repo": "anki-editor",
-        "rev": "0af0bdc7f792206df9739d37e8f231553284e17a",
-        "type": "github"
-      },
-      "original": {
-        "owner": "anki-editor",
-        "repo": "anki-editor",
-        "type": "github"
-      }
-    },
-    "corg": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1774810266,
-        "narHash": "sha256-nR1mpsdqtJStq/V33Q+SDifsEirkPtMwUWORPFQEQzY=",
-        "owner": "isamert",
-        "repo": "corg.el",
-        "rev": "e41bcf68c8462e3c8ab50f861fbf3e5e4def9751",
-        "type": "github"
-      },
-      "original": {
-        "owner": "isamert",
-        "repo": "corg.el",
-        "type": "github"
-      }
-    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -39,16 +7,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1775077333,
-        "narHash": "sha256-OXcxobt7lBkh1B8AjwreU+24myhtKpqeLfAeIyNLFY8=",
+        "lastModified": 1779726825,
+        "narHash": "sha256-RUkMrREjKDQrA+dA9+xZviGAxM5W1aVdyOr/bSYpHrE=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "49ca96b2714c5931e17401eff87f3edd42d2b0f2",
+        "rev": "b179bde238977f7d4454fc770b1a727eaf55111c",
         "type": "github"
       },
       "original": {
         "owner": "nix-community",
-        "ref": "release-25.11",
+        "ref": "release-26.05",
         "repo": "home-manager",
         "type": "github"
       }
@@ -70,22 +38,6 @@
         "type": "github"
       }
     },
-    "meow-edit": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1757868847,
-        "narHash": "sha256-vXdhvLbYruCXmo3Ej2QWFHCMPrkIcX3qOG3JhBY0o5k=",
-        "owner": "meow-edit",
-        "repo": "meow",
-        "rev": "2246f593552c6208bac533de9af04b085fafa6fa",
-        "type": "github"
-      },
-      "original": {
-        "owner": "meow-edit",
-        "repo": "meow",
-        "type": "github"
-      }
-    },
     "nextflow-mode": {
       "flake": false,
       "locked": {
@@ -104,33 +56,17 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1775002709,
-        "narHash": "sha256-d3Yx83vSrN+2z/loBh4mJpyRqr9aAJqlke4TkpFmRJA=",
+        "lastModified": 1780203844,
+        "narHash": "sha256-K5sT4jTpGs15ADhviMKNBH38REpPf5Q6mM1+N6cArVE=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "bcd464ccd2a1a7cd09aa2f8d4ffba83b761b1d0e",
+        "rev": "b51242d7d43689db2f3be91bd05d5b24fbb469c4",
         "type": "github"
       },
       "original": {
         "owner": "NixOS",
-        "ref": "nixos-25.11",
+        "ref": "nixos-26.05",
         "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
-    "ob-duckdb": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1766435750,
-        "narHash": "sha256-7A711IJavzSUoCOQqaoFpSshvrUT6T7wIGkDXxGigWI=",
-        "owner": "gggion",
-        "repo": "ob-duckdb",
-        "rev": "560507c85db252a01396e73b2cf719b5720e6bc1",
-        "type": "github"
-      },
-      "original": {
-        "owner": "gggion",
-        "repo": "ob-duckdb",
         "type": "github"
       }
     },
@@ -186,23 +122,6 @@
         "type": "github"
       }
     },
-    "org-roam": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1748153192,
-        "narHash": "sha256-qjWN/+p7z44q0C1iYYDk0S6np/L2DXBuamUq+PS+MgI=",
-        "owner": "org-roam",
-        "repo": "org-roam",
-        "rev": "2ff616fbd8277bd797254befe34d5036b35a7dbf",
-        "type": "github"
-      },
-      "original": {
-        "owner": "org-roam",
-        "ref": "v2.3.0",
-        "repo": "org-roam",
-        "type": "github"
-      }
-    },
     "ox-ipynb": {
       "flake": false,
       "locked": {
@@ -221,18 +140,13 @@
     },
     "root": {
       "inputs": {
-        "anki-editor": "anki-editor",
-        "corg": "corg",
         "home-manager": "home-manager",
         "link-hint": "link-hint",
-        "meow-edit": "meow-edit",
         "nextflow-mode": "nextflow-mode",
         "nixpkgs": "nixpkgs",
-        "ob-duckdb": "ob-duckdb",
         "org-clock-dbus": "org-clock-dbus",
         "org-grader": "org-grader",
         "org-inline-image-mode": "org-inline-image-mode",
-        "org-roam": "org-roam",
         "ox-ipynb": "ox-ipynb",
         "xref-project-history": "xref-project-history"
       }
