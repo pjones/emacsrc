@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+# name: flake-parts-home-module
+# key: hm
+# expand-env: ((yas-indent-line 'fixed))
+# --
+flake.homeModules.${1:name} =
+  { ... }:
+  {
+    config = {
+      $0
+    };
+  };

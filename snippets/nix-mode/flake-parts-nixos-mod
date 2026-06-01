@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+# name: flake-parts-nixos-module
+# key: nm
+# expand-env: ((yas-indent-line 'fixed))
+# --
+flake.nixosModules.${1:name} =
+  { ... }:
+  {
+    config = {
+      $0
+    };
+  };

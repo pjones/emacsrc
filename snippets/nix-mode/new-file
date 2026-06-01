@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: new-file
+# key: file
+# expand-env: ((yas-indent-line 'fixed))
+# --
+{ ... }:
+{
+  $0
+}

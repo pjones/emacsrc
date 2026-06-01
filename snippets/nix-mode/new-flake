@@ -1,0 +1,40 @@
+# -*- mode: snippet -*-
+# name: new-flake
+# key: flake
+# expand-env: ((yas-indent-line 'fixed))
+# --
+{
+  inputs = {
+    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    flake-parts.url = "github:hercules-ci/flake-parts";
+  };
+
+  outputs =
+    inputs:
+    inputs.flake-parts.lib.mkFlake { inherit inputs; } {
+      systems = [
+        "x86_64-linux"
+        "aarch64-darwin"
+        "x86_64-darwin"
+      ];
+
+      perSystem =
+        { pkgs, ... }:
+        {$0
+          devShells.default = pkgs.mkShell {
+            NIX_PATH = "nixpkgs=${pkgs.path}";
+
+            nativeBuildInputs = with pkgs; [
+              (python3.withPackages (
+                ps: with ps; [
+                  pygments
+                ]
+              ))
+
+              graphviz
+              texliveFull
+            ];
+          };
+        };
+    };
+}
