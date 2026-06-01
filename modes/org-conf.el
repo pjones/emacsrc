@@ -226,7 +226,7 @@ always be requested."
  '(org-agenda-breadcrumbs-separator " ❱ ")
  '(org-appear-autoentities t)
  '(org-appear-autokeywords t)
- '(org-appear-autolinks t)
+ '(org-appear-autolinks nil)
  '(org-appear-autosubmarkers t)
  '(org-clock-clocked-in-display nil)
  '(org-clock-mode-line-total 'current)
@@ -665,7 +665,8 @@ always be requested."
 
 (org-babel-do-load-languages
     'org-babel-load-languages
-    '((duckdb . t)
+    '((dot . t)
+      (duckdb . t)
       (emacs-lisp . t)
       (jq . t)
       (mermaid . t)
@@ -818,11 +819,15 @@ When HERE is non-nil, create a heading after point."
     (when (org--blank-before-heading-p)
       (pjones:ensure-blank-lines 'above))))
 
+(defvar-local pjones:org-add-created-timestamp t
+  "Whether to add a CREATED timestamp to all headings.")
+
 (defun pjones:org-ensure-created-timestamp ()
   "Ensure the current heading has a CREATED property."
   (interactive)
   (save-excursion
-    (when-let* ((epom (progn (org-back-to-heading-or-point-min) (point))))
+    (when-let* ((pjones:org-add-created-timestamp)
+                (epom (progn (org-back-to-heading-or-point-min) (point))))
       (unless (org-entry-get epom "CREATED" nil)
         (org-entry-put epom "CREATED" (pjones:org-time-stamp t (current-time)))
         (goto-char (cdr (org-get-property-block epom 'force)))

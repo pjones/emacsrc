@@ -68,7 +68,6 @@ even when the names don't match exactly.  For example, loading
   (global-diff-hl-mode)              ; Show what changes in a buffer
   (global-hl-todo-mode)              ; Highlight TODO tags in text.
   (global-jinx-mode)                 ; Enchanted Spell Checker
-  (global-prettify-symbols-mode)     ; Replace buffer symbols.
   (lin-global-mode)                  ; Improve hl-line-mode
   (minions-mode)                     ; Minor-mode menu.
   (repeat-mode)                      ; Easy repeating of some actions.
