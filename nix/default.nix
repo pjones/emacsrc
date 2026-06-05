@@ -5,6 +5,7 @@
   enchant,
   netcat,
   nuspell,
+  recutils,
 }:
 let
   # Tools that are needed by the scripts in this package, but don't
@@ -47,6 +48,7 @@ stdenvNoCC.mkDerivation (finalAttrs: {
     ))
     emacs
     enchant
+    recutils
   ];
 
   postPatch = ''

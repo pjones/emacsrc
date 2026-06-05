@@ -191,6 +191,7 @@ emacsWithOverrides.emacsWithPackages (
     purescript-mode # A PureScript editing mode
     rainbow-mode # Colorize color names in buffers
     rebecca-theme # The purple turtle theme for Spacemacs
+    rec-mode # Major mode for viewing/editing rec files
     reformatter # Define commands which run reformatters on the current Emacs buffer
     resize-window # easily resize windows
     rg # A search tool based on ripgrep
