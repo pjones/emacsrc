@@ -35,9 +35,6 @@
 (add-to-list 'auto-mode-alist '("\\.md$" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.markdown$" . markdown-mode))
 
-;; Mermaid: https://mermaidjs.github.io/
-(add-to-list 'auto-mode-alist '("\\.mermaid$" . mermaid-mode))
-
 ;; Org
 (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
 

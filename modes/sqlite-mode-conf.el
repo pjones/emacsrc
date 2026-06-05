@@ -5,7 +5,6 @@
 ;;; Code:
 
 (require 'sqlite-mode)
-(require 'sqlite-mode-extras)
 
 ;; Adapted from:
 ;;
@@ -17,7 +16,5 @@ buffer, killing it."
   (let ((file-name buffer-file-name))
     (kill-current-buffer)
     (sqlite-mode-open-file file-name)))
-
-(add-hook 'sqlite-mode-hook #'sqlite-extras-minor-mode)
 
 ;;; sqlite-mode-conf.el ends here

@@ -664,17 +664,16 @@ always be requested."
 (add-to-list 'org-src-lang-modes (cons "jupyter-python" "python"))
 
 (org-babel-do-load-languages
-    'org-babel-load-languages
-    '((dot . t)
-      (duckdb . t)
-      (emacs-lisp . t)
-      (jq . t)
-      (mermaid . t)
-      (plantuml . t)
-      (python . t)
-      (R . t)
-      (ruby . t)
-      (shell . t)))
+ 'org-babel-load-languages
+ '((dot . t)
+   (duckdb . t)
+   (emacs-lisp . t)
+   (jq . t)
+   (plantuml . t)
+   (python . t)
+   (R . t)
+   (ruby . t)
+   (shell . t)))
 
 ;; Fucking `org-element' constant bugs:
 (push '(org-element-cache) warning-suppress-types)
@@ -1375,7 +1374,6 @@ For example, expand `org-mode' macros.  TEXT and BACKEND are provided by
     (org-modern-mode)
 
     ;; Better src block completion:
-    (require 'corg)
     (corg-setup)
 
     ;; Use yasnippets:
