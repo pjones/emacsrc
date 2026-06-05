@@ -82,11 +82,9 @@ emacsWithOverrides.emacsWithPackages (
     beframe # Isolate Emacs buffers per frame
     breadcrumb # Headerline indication of where you are in a large project
     cape # Let your completions fly!
-    catppuccin-theme # Soothing pastel theme for Emacs
     citar # quickly find and act on bibliographic references
     citar-embark # Citar integration with embark
     citar-org-roam # citar/org-roam integration
-    clojure-mode # Major mode for Clojure code
     color-theme-sanityinc-tomorrow # A set of comprehensive Emacs color themes based on Chris Kempson's 'tomorrow' themes
     consult # Consulting completing-read
     consult-org-roam # Consult integration for org-roam
@@ -102,16 +100,13 @@ emacsWithOverrides.emacsWithPackages (
     dired-narrow # Live-narrowing of search results for dired
     dired-subtree # Insert subdirectories in a tree-like fashion
     dockerfile-mode # An emacs mode for handling Dockerfiles
-    dracula-theme # The most famous dark theme ever created.
     dumb-jump # Jump to definition for 40+ languages without configuration
     ef-themes # Colourful (“pretty”) yet legible themes
     eimp # Emacs Image Manipulation Package
     eldoc # Show function arglist or variable docstring in echo area
-    elm-mode # Elm mode for emacs
     embark # Conveniently act on minibuffer completions
     embark-consult # Consult integration for Embark
     embrace # Add/Change/Delete pairs
-    ement # A Matrix client for GNU Emacs.
     emms # The Emacs Multimedia System
     envrc # Support for `direnv' that operates buffer-locally
     erc-hl-nicks # ERC nick highlighter that ignores uniquifying chars when colorizing
@@ -119,7 +114,6 @@ emacsWithOverrides.emacsWithPackages (
     expreg # Your friendly neighborhood expand-region clone
     git-annex # Mode for easy editing of git-annex'd files
     git-link # Emacs package to get the GitHub/Bitbucket/GitLab/... URL for a buffer location
-    go-mode # Major mode for the Go programming language
     google-translate # Emacs interface to Google Translate
     goto-chg # Go to last change
     graphviz-dot-mode # Mode for the dot-language used by graphviz
@@ -128,8 +122,6 @@ emacsWithOverrides.emacsWithPackages (
     htmlize # Convert buffer text and decorations to HTML.
     http # Yet another HTTP client
     indent-bars # Fast, configurable indentation guide-bars for Emacs
-    indium # JavaScript Awesome Development Environment
-    inf-ruby # Run a Ruby process in a buffer
     inheritenv # Make emacs temp buffers inherit buffer-local environment variables.
     jinx # Enchanted Spell Checker
     jq-mode # Emacs major mode for editing jq queries
@@ -148,7 +140,6 @@ emacsWithOverrides.emacsWithPackages (
     mastodon # Emacs client for fediverse servers that implement the Mastodon API.
     meow # Yet another modal editing on Emacs
     meow-tree-sitter # Tree-sitter powered 🌳 motions for Meow 🐱
-    mermaid-mode # Emacs major mode for working with mermaid graphs
     meson-mode # Emacs major mode for the Meson build system
     minions # A minor-mode menu for the mode line
     modus-themes # Highly accessible themes for GNU Emacs
@@ -160,7 +151,6 @@ emacsWithOverrides.emacsWithPackages (
     noccur # Run multi-occur on project/dired files
     nov # Featureful EPUB reader mode
     ob-duckdb # Org Babel integration with DuckDB
-    ob-mermaid # Generate mermaid diagrams within Emacs org-mode babel
     org # Outline-based notes management and organizer
     org-appear # Make invisible parts of Org elements appear visible.
     org-bulletproof # Automatic bullet cycling for Org mode
@@ -173,7 +163,6 @@ emacsWithOverrides.emacsWithPackages (
     org-modern # Modern Org Style.
     org-roam # A database abstraction layer for Org-mode
     org-roam-bibtex # Org Roam integration with bibliography management software
-    org-transclusion # Enable transclusion with Org Mode
     org-tree-slide # A presentation tool for org-mode
     orgalist # Manage Org-like lists in non-Org buffers
     outline-indent # Folding text based on indentation
@@ -184,11 +173,9 @@ emacsWithOverrides.emacsWithPackages (
     password-store # Password store (pass) support
     pdf-tools # Support library for PDF documents
     plantuml-mode # A major mode for editing PlantUML sources in Emacs
-    poet-theme # An emacs theme that's well suited for modes using variable pitch
     prescient # Simple but effective sorting and filtering for Emacs
     project # Operations on the current project
     puni # Parentheses Universalistic
-    purescript-mode # A PureScript editing mode
     rainbow-mode # Colorize color names in buffers
     rebecca-theme # The purple turtle theme for Spacemacs
     rec-mode # Major mode for viewing/editing rec files
@@ -199,15 +186,11 @@ emacsWithOverrides.emacsWithPackages (
     rotate # Rotate the layout of emacs
     ruby-end # Automatic insertion of end blocks for Ruby
     rust-mode # A major-mode for editing Rust source code
-    sage-shell-mode # A front-end for Sage Math
     scad-mode # A major mode for editing OpenSCAD code
     separedit # Edit comment or string/docstring or code
-    somafm # A simple somafm interface in emacs
-    sqlite-mode-extras # Emacs sqlite-mode extras
     timu-rouge-theme # Color theme inspired by the Rouge Theme for VSCode
     treesit-auto # Automatic installation, usage, and fallback for tree-sitter major modes
     treesit-grammars.with-all-grammars # For use with tree-sitter
-    tron-legacy-theme # Original retro-futuristic theme inspired by Tron: Legacy
     typescript-mode # Major mode for editing typescript
     vertico # VERTical Interactive COmpletion
     vertico-prescient # Prescient support for vertico
