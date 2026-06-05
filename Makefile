@@ -1,4 +1,3 @@
-LOADPATHEL ?= lisp/loadpath.el
 PREFIX ?= out
 USER_DIR ?= $(PREFIX)/emacs.d
 
@@ -23,7 +22,6 @@ define INSTALL_FILE
 install: $(2)/$(1)
 
 $(2)/$(1): $(1)
-	@echo "install $$@"
 	@mkdir -p $(2)/$(dir $(1))
 	@install --mode=$(3) $$< $$@
 endef
@@ -38,14 +36,13 @@ endef
 ################################################################################
 %.elc: %.el
 	@echo "compile" "$(shell sed -E 's|/nix/store/[^/]+/||' <<<"$<")"
-	@emacs --quick --batch \
-          --load "$(LOADPATHEL)" \
+	@emacs --no-init-file --quick --batch \
           --funcall batch-byte-compile \
           "$<"
 
 ################################################################################
 $(foreach f,\
-  $(shell find dot.emacs.el lisp modes -type f -name '*.el'),\
+  $(shell find init.el lisp modes -type f -name '*.el'),\
   $(eval $(call COMPILE_LISP,$(f))))
 
 $(foreach f,\

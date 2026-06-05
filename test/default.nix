@@ -3,9 +3,9 @@
 # nix build .\#checks.x86_64-linux.default.driverInteractive
 # ./result/bin/nixos-test-driver
 {
+  self,
+  inputs,
   pkgs,
-  home-manager,
-  module,
 }:
 let
   tests = pkgs.stdenvNoCC.mkDerivation {
@@ -30,7 +30,7 @@ pkgs.testers.nixosTest {
   nodes.emacsrc =
     { lib, ... }:
     {
-      imports = [ home-manager.nixosModules.home-manager ];
+      imports = [ inputs.home-manager.nixosModules.home-manager ];
 
       users.users.pjones = {
         createHome = true;
@@ -46,12 +46,7 @@ pkgs.testers.nixosTest {
         users.pjones =
           { ... }:
           {
-            imports = [ module ];
-
-            programs.pjones.emacsrc = {
-              enable = true;
-              singleton = true;
-            };
+            imports = [ self.homeModules.emacsrc ];
 
             # Don't require a GUI:
             services.emacs.startWithUserSession = lib.mkForce true;

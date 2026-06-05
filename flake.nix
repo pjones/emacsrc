@@ -1,6 +1,8 @@
 {
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";
+    flake-parts.url = "github:hercules-ci/flake-parts";
+
     home-manager.url = "github:nix-community/home-manager/release-26.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
@@ -41,140 +43,17 @@
   };
 
   outputs =
-    inputs@{
-      self,
-      nixpkgs,
-      home-manager,
-      ...
-    }:
-    let
-      # List of supported systems:
-      supportedSystems = [
+    inputs:
+    inputs.flake-parts.lib.mkFlake { inherit inputs; } {
+      systems = [
         "x86_64-linux"
         "aarch64-linux"
-        "x86_64-darwin"
         "aarch64-darwin"
-        "armv7l-linux"
-        "i686-linux"
       ];
 
-      # Function to generate a set based on supported systems:
-      forAllSystems = f: nixpkgs.lib.genAttrs supportedSystems (system: f system);
-
-      # Like `forAllSystems` except just those that are Linux:
-      forLinuxSystems =
-        f:
-        builtins.listToAttrs (
-          builtins.filter (set: set ? name) (
-            builtins.map (
-              system:
-              let
-                pkgs = nixpkgsFor.${system};
-              in
-              nixpkgs.lib.optionalAttrs pkgs.stdenv.isLinux {
-                name = system;
-                value = f system;
-              }
-            ) supportedSystems
-          )
-        );
-
-      # Attribute set of nixpkgs for each system:
-      nixpkgsFor = forAllSystems (system: import nixpkgs { inherit system; });
-    in
-    {
-      packages = forAllSystems (
-        system:
-        let
-          pkgs = nixpkgsFor.${system};
-        in
-        {
-          default = self.packages.${system}.emacsrc-wayland;
-
-          emacsrc-xorg = import ./. {
-            inherit pkgs inputs;
-            emacs = pkgs.emacs30-gtk3;
-          };
-
-          emacsrc-wayland = import ./. {
-            inherit pkgs inputs;
-            emacs = pkgs.emacs30-pgtk;
-          };
-        }
-      );
-
-      apps = forAllSystems (
-        system:
-        let
-          pkgs = nixpkgsFor.${system};
-        in
-        {
-          default = {
-            type = "app";
-            meta = self.packages.${system}.default.meta;
-            program = toString (
-              pkgs.writeShellScript "emacsrc" ''
-                ${self.packages.${system}.default}/bin/e -f
-              ''
-            );
-          };
-
-          tutorial = {
-            type = "app";
-            meta = self.packages.${system}.default.meta;
-            program = toString (
-              pkgs.writeShellScript "emacsrc" ''
-                ${self.packages.${system}.default}/bin/e -f -- \
-                  --eval '(menu-bar-mode)' \
-                  --eval '(help-with-tutorial)'
-              ''
-            );
-          };
-        }
-      );
-
-      checks = forLinuxSystems (system: {
-        default = import ./test {
-          inherit home-manager;
-          pkgs = nixpkgsFor.${system};
-          module = self.homeManagerModules.default;
-        };
-      });
-
-      homeManagerModules = {
-        default = self.homeManagerModules.wayland;
-
-        xorg =
-          { pkgs, ... }:
-          {
-            imports = [
-              (import ./nix/home.nix { emacsrc = self.packages.${pkgs.stdenv.hostPlatform.system}.emacsrc-xorg; })
-            ];
-          };
-
-        wayland =
-          { pkgs, ... }:
-          {
-            imports = [
-              (import ./nix/home.nix {
-                emacsrc = self.packages.${pkgs.stdenv.hostPlatform.system}.emacsrc-wayland;
-              })
-            ];
-          };
-      };
-
-      devShells = forAllSystems (
-        system:
-        let
-          pkgs = nixpkgsFor.${system};
-        in
-        {
-          default = pkgs.mkShell {
-            ENCHANT_CONFIG_DIR = "${self.packages.${system}.default}/share/enchant";
-            inputsFrom = builtins.attrValues self.packages.${system};
-            buildInputs = self.packages.${system}.default.propagatedUserEnvPkgs;
-          };
-        }
-      );
+      imports = [
+        nix/top-level.nix
+        nix/home.nix
+      ];
     };
 }
