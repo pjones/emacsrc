@@ -75,6 +75,7 @@ FUNC."
 (declare-function emms-add-playlist "emms")
 (declare-function emms-insert-playlist "emms")
 (declare-function emms-smart-browse "emms")
+(declare-function flymake-show-buffer-diagnostics "flymake")
 (declare-function google-translate-smooth-translate "google-translate")
 (declare-function goto-last-change "goto-chg")
 (declare-function jinx-correct "jinx")
@@ -94,7 +95,6 @@ FUNC."
 (declare-function pjones:agenda "./interactive")
 (declare-function pjones:emms-play-stream "emms")
 (declare-function pjones:exchange-point-and-mark "./interactive")
-(declare-function pjones:fly-next-error "./interactive")
 (declare-function pjones:frame-toggle-alpha "./interactive")
 (declare-function pjones:indent-or-complete "./completion")
 (declare-function pjones:jump-to-marker "./interactive")
@@ -273,7 +273,7 @@ FUNC."
  ;; Additional go-to bindings:
  (kbd "M-g @") #'consult-global-mark
  (kbd "M-g a") #'avy-goto-char-timer
- (kbd "M-g f") #'pjones:fly-next-error
+ (kbd "M-g f") #'flymake-show-buffer-diagnostics
  (kbd "M-g h") #'consult-outline
  (kbd "M-g m") #'consult-mark
  (kbd "M-g M-a") #'avy-goto-char-timer

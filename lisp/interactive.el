@@ -240,13 +240,6 @@ absolute path name."
                           (password-store-list) nil 'match)))
   (find-file (password-store--entry-to-file entry)))
 
-(defun pjones:fly-next-error ()
-  "Go to the next fly(check|make) error."
-  (interactive)
-  (cond
-   (flymake-mode
-    (pjones:flymake-goto-next-error))))
-
 (defun pjones:rectangle-number-lines ()
   "Call `rectangle-number-lines' with prefix argument set."
   (interactive)
