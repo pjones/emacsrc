@@ -20,21 +20,17 @@ interesting things:
     needed.  See `lisp/modes.el` for more information.  This makes a
     big difference for Emacs start-up time.
 
-  * The `dot.emacs.el` file bootstraps all of this.
+  * The `init.el` file bootstraps all of this.
 
 ## Installation
 
 Want to try this configuration out without having to change your
-existing configuartion in any way?
+existing configuration in any way?
 
   1. Install the [Nix Package Manager](https://nixos.org/nix/)
 
   2. Run the following command:
 
-         nix build
-
-  3. Start Emacs:
-
-         ./result/bin/e -f
+         nix run github:pjones/emacsrc
 
 [emacs]: http://www.gnu.org/software/emacs/
