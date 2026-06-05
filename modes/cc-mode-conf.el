@@ -8,6 +8,7 @@
 (require 'eglot)
 (require 'reformatter)
 
+(declare-function c-ts-mode--indent-styles "c-ts-mode")
 (declare-function electric-pair-default-inhibit "elec-pair")
 (declare-function indent-bars-mode "indent-bars")
 (defvar electric-pair-pairs)
@@ -63,9 +64,17 @@ ARGS are passed on to the original function ORIG."
   (advice-add 'electric-pair-syntax-info
               :around #'pjones:cc-electric-pair-syntax-info))
 
+(defun pjones:c-ts-mode-indent-style ()
+  "Return indentation rules for `c-ts-mode'."
+  ;; NOTE: Use `treesit-explore-mode' to help figure these out.
+  (let ((bsd (alist-get 'bsd (c-ts-mode--indent-styles 'cpp))))
+    `(((n-p-gp nil nil "namespace_definition")
+       grand-parent 0) ; No namespace indenting
+      ,@bsd))) ; Inherit from BSD style
+
 (custom-set-variables
  '(c-default-style "bsd")
- '(c-ts-mode-indent-style 'bsd))
+ '(c-ts-mode-indent-style #'pjones:c-ts-mode-indent-style))
 
 (let ((offset 2))
   (setopt c-basic-offset offset
