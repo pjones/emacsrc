@@ -19,7 +19,7 @@
 (defvar pjones:current-theme nil
   "The currently active theme.")
 
-(defvar pjones:frame-alpha-background 90
+(defvar pjones:frame-alpha-background 85
   "Default frame alpha background value.")
 
 (custom-set-variables
@@ -186,6 +186,7 @@ will be selected, otherwise a dark theme will be selected."
       (set-face-attribute 'variable-pitch nil :family "IBM Plex Serif"))))
 
 (add-to-list 'default-frame-alist '(cursor-type  . bar))
+(add-to-list 'default-frame-alist (cons 'alpha-background pjones:frame-alpha-background))
 (setq frame-title-format '(:eval (pjones:frame-title-file-name)))
 
 (defun pjones:mode-line-buffer ()
