@@ -25,7 +25,8 @@ cat <<EOF >"$custom_file"
 EOF
 
 # Run the tests:
-tests=$(realpath "$(dirname "$0")/../share/assertions.el")
+top=$(realpath "$(dirname "$0")/..")
+tests="$top/share/assertions.el"
 
 emacs \
   --batch \
@@ -33,6 +34,7 @@ emacs \
   --load ~/.config/emacs/init.el \
   --load ert \
   --load "$tests" \
+  --eval "(setq emacsrc-test-top \"${top}/\")" \
   --funcall ert-run-tests-batch-and-exit
 
 # Done.

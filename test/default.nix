@@ -21,6 +21,7 @@ let
       mkdir -p "$out/bin" "$out/share"
       install -m 0555 runner.sh "$out/bin/emacsrc-test-runner.sh"
       install -m 0444 assertions.el "$out/share/assertions.el"
+      cp -a files "$out/share"
     '';
   };
 in

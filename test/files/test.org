@@ -1,0 +1,11 @@
+#+title: Test File
+
+* Test
+  :PROPERTIES:
+  :CREATED:  [2026-06-08 Mon 09:11]
+  :END:
+
+  #+begin_src sh
+    ls -l
+  #+end_src
+
