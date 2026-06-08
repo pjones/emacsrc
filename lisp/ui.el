@@ -25,6 +25,7 @@
 (custom-set-variables
  '(calc-kill-line-numbering nil)
  '(compilation-scroll-output 'first-error)
+ '(debugger-stack-frame-as-list t)
  '(describe-bindings-outline t)
  '(echo-keystrokes 0.1)
  '(enable-recursive-minibuffers t)
