@@ -14,7 +14,6 @@
 (declare-function pdf-tools-install "pdf-tools")
 (declare-function puni-global-mode "puni")
 (declare-function vertico-mode "vertico")
-(declare-function which-key-mode "which-key")
 (declare-function winum-mode "winum")
 (declare-function yas-global-mode "yasnippet")
 
@@ -72,7 +71,6 @@ even when the names don't match exactly.  For example, loading
   (minions-mode)                     ; Minor-mode menu.
   (repeat-mode)                      ; Easy repeating of some actions.
   (vertico-mode)                     ; minibuffer completions.
-  (which-key-mode)                   ; Remind me what keys do.
   (winner-mode)                      ; Track win conifg changes
   (winum-mode)                       ; Number windows
 

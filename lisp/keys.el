@@ -127,7 +127,6 @@ FUNC."
 (declare-function rg-project "rg")
 (declare-function rotate-layout "rotate")
 (declare-function separedit "separedit")
-(declare-function which-key-show-top-level "which-key")
 (declare-function winner-undo "winner")
 (declare-function winum-select-window-0-or-10 "winum")
 (declare-function winum-select-window-1 "winum")
@@ -192,7 +191,6 @@ FUNC."
  ;;
  (kbd "C-c '") #'separedit
  (kbd "C-c :") #'eval-expression
- (kbd "C-c ?") #'which-key-show-top-level
  (kbd "C-c a a") (pjones:jump-to-buffer "*Org Agenda*" pjones:agenda)
  (kbd "C-c a m") #'mu4e
  (kbd "C-c A") #'pjones:frame-toggle-alpha

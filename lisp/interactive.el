@@ -28,13 +28,9 @@
 (declare-function shell-mode "shell")
 (declare-function vterm "vterm")
 (declare-function vterm--internal "vterm")
-(declare-function which-key--hide-popup "which-key")
-(declare-function which-key--show-keymap "which-key")
 (defvar flymake-mode)
 (defvar puni-mode)
 (defvar sort-fold-case)
-(defvar which-key-persistent-popup)
-(defvar which-key-show-prefix)
 
 (autoload 'password-store-list "password-store")
 (autoload 'password-store--entry-to-file "password-store")
