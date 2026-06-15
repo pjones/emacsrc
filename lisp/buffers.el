@@ -62,7 +62,7 @@ buffer name, or symbols that match a major mode."
       display-buffer-reuse-mode-window
       display-buffer-use-some-window
       display-buffer-pop-up-frame) .
-      ((reusable-frames . nil))))
+      ((reusable-frames . visible))))
 
  ;; Ensure that the current frame is used to display server buffers.
  ;; NOTE: This might not be necessary now that I removed an older
