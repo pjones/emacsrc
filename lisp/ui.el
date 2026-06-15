@@ -57,12 +57,7 @@
  '(window-combination-resize t)
  '(winum-auto-setup-mode-line nil)
  '(x-mouse-click-focus-ignore-position nil)
- '(x-underline-at-descent-line t)
-
- ;; Settings for various themes:
- '(catppuccin-enlarge-headings nil)
- '(catppuccin-highlight-matches t)
- '(dracula-enlarge-headings nil))
+ '(x-underline-at-descent-line t))
 
 ;; Default variables that become buffer/frame local.
 (setq-default
