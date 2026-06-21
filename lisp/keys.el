@@ -75,7 +75,10 @@ FUNC."
 (declare-function emms-add-playlist "emms")
 (declare-function emms-insert-playlist "emms")
 (declare-function emms-smart-browse "emms")
+(declare-function flymake-goto-next-error "flymake")
+(declare-function flymake-goto-prev-error "flymake")
 (declare-function flymake-show-buffer-diagnostics "flymake")
+(declare-function flymake-show-project-diagnostics "flymake")
 (declare-function google-translate-smooth-translate "google-translate")
 (declare-function goto-last-change "goto-chg")
 (declare-function jinx-correct "jinx")
@@ -271,7 +274,10 @@ FUNC."
  ;; Additional go-to bindings:
  (kbd "M-g @") #'consult-global-mark
  (kbd "M-g a") #'avy-goto-char-timer
- (kbd "M-g f") #'flymake-show-buffer-diagnostics
+ (kbd "M-g f b") #'flymake-show-buffer-diagnostics
+ (kbd "M-g f B") #'flymake-show-project-diagnostics
+ (kbd "M-g f n") #'flymake-goto-next-error
+ (kbd "M-g f p") #'flymake-goto-prev-error
  (kbd "M-g h") #'consult-outline
  (kbd "M-g m") #'consult-mark
  (kbd "M-g M-a") #'avy-goto-char-timer
