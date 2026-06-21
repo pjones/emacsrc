@@ -197,7 +197,6 @@ FUNC."
  (kbd "C-c a a") (pjones:jump-to-buffer "*Org Agenda*" pjones:agenda)
  (kbd "C-c a m") #'mu4e
  (kbd "C-c A") #'pjones:frame-toggle-alpha
- (kbd "C-c b e") #'eldoc-doc-buffer
  (kbd "C-c b t") #'pjones:open-temp-buffer
  (kbd "C-c c") #'quick-calc
  (kbd "C-c d") #'duplicate-dwim
@@ -274,6 +273,7 @@ FUNC."
  ;; Additional go-to bindings:
  (kbd "M-g @") #'consult-global-mark
  (kbd "M-g a") #'avy-goto-char-timer
+ (kbd "M-g e") #'eldoc-doc-buffer
  (kbd "M-g f b") #'flymake-show-buffer-diagnostics
  (kbd "M-g f B") #'flymake-show-project-diagnostics
  (kbd "M-g f n") #'flymake-goto-next-error
@@ -287,6 +287,7 @@ FUNC."
  (kbd "C-'") #'goto-last-change
  (kbd "C-+") #'text-scale-adjust
  (kbd "C--") #'text-scale-adjust
+ (kbd "C-.") #'embark-act
  (kbd "C-;") #'jinx-correct
  (kbd "C-_") (lambda () (interactive) (text-scale-set 0))
  (kbd "C-h D") #'apropos-documentation

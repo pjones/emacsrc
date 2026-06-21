@@ -3,17 +3,27 @@
 ;;; Commentary:
 ;;
 ;;; Code:
+
 (require 'eglot)
 
-(custom-set-variables
- '(eglot-autoshutdown t))
+(defun pjones:eglot-managed-mode-hook nil
+  "Hook function for `eglot-managed-mode-hook'."
+  ;; I don't want this (too noisy):
+  (eglot-inlay-hints-mode -1))
 
-(defun pjones:eglot--snippet-expansion-fn ()
-  "Keep eglot from using yasnippet."
-  nil)
+(custom-set-variables
+ '(eglot-autoshutdown t)
+ '(eglot-code-action-indications '(margin)))
+
+ ;; Better function argument descriptions:
+(require 'eglot-signature-eldoc-talkative)
+(advice-add #'eglot-signature-eldoc-function
+  :override #'eglot-signature-eldoc-talkative)
+
+;; I don't want magic snippet expansion.
 (advice-add
  'eglot--snippet-expansion-fn
- :override #'pjones:eglot--snippet-expansion-fn)
+ :override #'ignore)
 
 ;; Don't reformat buffers while I'm typing:
 ;; https://chaos.social/@root42/113548269273998426

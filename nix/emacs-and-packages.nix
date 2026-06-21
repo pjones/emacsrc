@@ -102,6 +102,7 @@ emacsWithOverrides.emacsWithPackages (
     dockerfile-mode # An emacs mode for handling Dockerfiles
     dumb-jump # Jump to definition for 40+ languages without configuration
     ef-themes # Colourful (“pretty”) yet legible themes
+    eglot-signature-eldoc-talkative # Better function signatures
     eimp # Emacs Image Manipulation Package
     eldoc # Show function arglist or variable docstring in echo area
     embark # Conveniently act on minibuffer completions

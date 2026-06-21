@@ -27,10 +27,10 @@
 (custom-set-faces
  '(markdown-code-face ((t (:background unspecified))))
  '(markdown-header-delimiter-face ((t (:inherit org-done))))
- '(markdown-header-face-1 ((t (:inherit outline-1 :height 2.0))))
- '(markdown-header-face-2 ((t (:inherit outline-2 :height 1.7))))
- '(markdown-header-face-3 ((t (:inherit outline-3 :height 1.4))))
- '(markdown-header-face-4 ((t (:inherit outline-4 :height 1.1))))
+ '(markdown-header-face-1 ((t (:inherit outline-1 :height 1.0))))
+ '(markdown-header-face-2 ((t (:inherit outline-2 :height 1.0))))
+ '(markdown-header-face-3 ((t (:inherit outline-3 :height 1.0))))
+ '(markdown-header-face-4 ((t (:inherit outline-4 :height 1.0))))
  '(markdown-header-face-5 ((t (:inherit outline-5))))
  '(markdown-header-face-6 ((t (:inherit outline-6)))))
 
