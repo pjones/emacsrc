@@ -4,8 +4,6 @@
 ;;
 ;;; Code:
 
-(require 'savehist)
-
 (declare-function cape-capf-buster "cape")
 (declare-function cape-dabbrev "cape")
 (declare-function cape-file "cape")
@@ -57,7 +55,6 @@ current line.  Otherwise run the completion command.  ARG is passed to
 (defun pjones:corfu-mode-hook ()
   "Hook for `corfu-mode-hook'."
   (corfu-history-mode 1)
-  (add-to-list 'savehist-additional-variables 'corfu-history)
   (define-key corfu-map (kbd "SPC") #'corfu-insert-separator)
   (define-key corfu-map (kbd "<return>") #'corfu-insert)
   (define-key corfu-map (kbd "M-p") #'corfu-popupinfo-scroll-down)
@@ -91,10 +88,7 @@ current line.  Otherwise run the completion command.  ARG is passed to
  '(corfu-prescient-override-sorting nil)
  '(corfu-quit-no-match 'separator)
  '(corfu-scroll-margin 5)
- '(read-extended-command-predicate #'command-completion-default-include-p)
- '(savehist-file (concat user-emacs-directory
-                         (or server-name "emacs")
-                         ".history")))
+ '(read-extended-command-predicate #'command-completion-default-include-p))
 
 (add-hook 'after-init-hook #'global-corfu-mode)
 (add-hook 'after-init-hook #'savehist-mode)
