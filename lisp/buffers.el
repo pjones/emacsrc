@@ -90,7 +90,8 @@ buffer name, or symbols that match a major mode."
      (,(pjones:buffer-conditions
         '("\\*Org Agenda\\*"
           Man-mode
-          magit-status-mode))
+          magit-status-mode
+          proced-mode))
       (display-buffer-same-window)))))
 
 ;;; buffers.el ends here
