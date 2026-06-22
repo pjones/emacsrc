@@ -129,7 +129,6 @@ FUNC."
 (declare-function rg "rg")
 (declare-function rg-project "rg")
 (declare-function rotate-layout "rotate")
-(declare-function separedit "separedit")
 (declare-function winner-undo "winner")
 (declare-function winum-select-window-0-or-10 "winum")
 (declare-function winum-select-window-1 "winum")
@@ -192,7 +191,7 @@ FUNC."
  ;;
  ;;   - k: Custom bindings for the current major mode.
  ;;
- (kbd "C-c '") #'separedit
+ ;;(kbd "C-c '") #'separedit
  (kbd "C-c :") #'eval-expression
  (kbd "C-c a a") (pjones:jump-to-buffer "*Org Agenda*" pjones:agenda)
  (kbd "C-c a m") #'mu4e

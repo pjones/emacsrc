@@ -10,7 +10,6 @@
 
 (declare-function pjones:indent-or-complete "../lisp/completion.el")
 (declare-function pjones:open-line-above "../lisp/interactive.el")
-(declare-function separedit "separedit")
 
 (autoload 'org-open-file "org")
 
@@ -85,8 +84,7 @@ If REVERSE is non-nil, do the opposite of what the context says."
          (map (symbol-value (intern (concat (symbol-name mode) "-map")))))
     (define-key map (kbd "C-<return>") #'pjones:markdown-insert-heading-or-item)
     (define-key map (kbd "TAB") #'pjones:indent-or-complete)
-    (define-key map (kbd "C-c C-c") #'markdown-preview)
-    (define-key map (kbd "C-c '") #'separedit)))
+    (define-key map (kbd "C-c C-c") #'markdown-preview)))
 
 (defun pjones:markdown-mode-hook ()
   "Set up key bindings and other crap for `markdown-mode'."
