@@ -78,13 +78,11 @@ emacsWithOverrides.emacsWithPackages (
     anki-editor # Emacs minor mode for making Anki cards with Org Mode
     async # Asynchronous processing in Emacs
     avy # Jump to arbitrary positions in visible text and select text quickly
-    base16-theme # Base16 themes for Emacs
     beframe # Isolate Emacs buffers per frame
     cape # Let your completions fly!
     citar # quickly find and act on bibliographic references
     citar-embark # Citar integration with embark
     citar-org-roam # citar/org-roam integration
-    color-theme-sanityinc-tomorrow # A set of comprehensive Emacs color themes based on Chris Kempson's 'tomorrow' themes
     consult # Consulting completing-read
     consult-org-roam # Consult integration for org-roam
     consult-recoll # recoll queries in emacs using consult
@@ -99,6 +97,7 @@ emacsWithOverrides.emacsWithPackages (
     dired-narrow # Live-narrowing of search results for dired
     dired-subtree # Insert subdirectories in a tree-like fashion
     dockerfile-mode # An emacs mode for handling Dockerfiles
+    doom-themes # A megapack of themes for GNU Emacs.
     dumb-jump # Jump to definition for 40+ languages without configuration
     ef-themes # Colourful (“pretty”) yet legible themes
     eglot-signature-eldoc-talkative # Better function signatures
@@ -129,7 +128,6 @@ emacsWithOverrides.emacsWithPackages (
     json-mode # Major mode for editing JSON files
     jsonrpc # JSON-RPC library
     jupyter # An interface to communicate with Jupyter kernels.
-    kaolin-themes # A set of eye pleasing themes
     khardel # integrating khard, a console cardav client
     lin # Make 'hl-line-mode' more suitable for selection UIs
     link-hint # Use avy to open, copy, etc. visible links
@@ -142,7 +140,6 @@ emacsWithOverrides.emacsWithPackages (
     meow-tree-sitter # Tree-sitter powered 🌳 motions for Meow 🐱
     meson-mode # Emacs major mode for the Meson build system
     minions # A minor-mode menu for the mode line
-    modus-themes # Highly accessible themes for GNU Emacs
     mu4e # Mu4e, the mu mail user agent
     nextflow-mode # Emacs major mode for Nextflow
     nix-mode # Major mode for editing .nix files
@@ -177,17 +174,14 @@ emacsWithOverrides.emacsWithPackages (
     project # Operations on the current project
     puni # Parentheses Universalistic
     rainbow-mode # Colorize color names in buffers
-    rebecca-theme # The purple turtle theme for Spacemacs
     rec-mode # Major mode for viewing/editing rec files
     reformatter # Define commands which run reformatters on the current Emacs buffer
     resize-window # easily resize windows
     rg # A search tool based on ripgrep
-    rg-themes # A collection of light and dark Emacs themes that are not hash on the eyes.
     rotate # Rotate the layout of emacs
     ruby-end # Automatic insertion of end blocks for Ruby
     rust-mode # A major-mode for editing Rust source code
     scad-mode # A major mode for editing OpenSCAD code
-    timu-rouge-theme # Color theme inspired by the Rouge Theme for VSCode
     treesit-auto # Automatic installation, usage, and fallback for tree-sitter major modes
     treesit-grammars.with-all-grammars # For use with tree-sitter
     typescript-mode # Major mode for editing typescript
@@ -197,7 +191,6 @@ emacsWithOverrides.emacsWithPackages (
     vlf # View Large Files
     vterm # Fully-featured terminal emulator
     vue-mode # Emacs major mode for vue.js
-    weyland-yutani-theme # Emacs theme based off Alien movie franchise
     wgrep # Writable grep buffer and apply the changes to files
     winum # Navigate windows and frames using numbers.
     xref-project-history # Per-project xref-history-storage for Emacs
