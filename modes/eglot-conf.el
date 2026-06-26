@@ -39,4 +39,6 @@
  '((c-mode c-ts-mode c++-mode c++-ts-mode ) .
      ("clangd" "--compile-commands-dir=build")))
 
+(add-hook 'eglot-managed-mode-hook #'pjones:eglot-managed-mode-hook)
+
 ;;; eglot-conf.el ends here
