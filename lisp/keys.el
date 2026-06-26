@@ -184,6 +184,17 @@ FUNC."
     map)
   "Key bindings for note taking.")
 
+;; Additional help commands (under C-h).  The couple of extra keys
+;; under C- are so meow will expose them without using the spacebar.
+(let ((map help-map))
+  (keymap-set map "D" #'apropos-documentation)
+  (keymap-set map "d" #'devdocs-lookup)
+  (keymap-set map "C-d" #'devdocs-lookup)
+  (keymap-set map "m" #'man)
+  (keymap-set map "C-m" #'man)
+  (keymap-set map "r" #'info-display-manual)
+  (keymap-set map "R" #'info-emacs-manual))
+
 (pjones:global-set-keys
  ;; Keys under C-c:
  ;;
@@ -289,11 +300,6 @@ FUNC."
  (kbd "C-.") #'embark-act
  (kbd "C-;") #'jinx-correct
  (kbd "C-_") (lambda () (interactive) (text-scale-set 0))
- (kbd "C-h D") #'apropos-documentation
- (kbd "C-h d") #'devdocs-lookup
- (kbd "C-h m") #'man
- (kbd "C-h r") #'info-display-manual
- (kbd "C-h R") #'info-emacs-manual
  (kbd "C-M-SPC") #'pjones:meow-insert-select
  (kbd "C-M-z") #'zap-to-char
  (kbd "C-x C-k @") #'consult-kmacro

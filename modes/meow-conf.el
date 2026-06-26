@@ -238,7 +238,7 @@ Expects ORIG to be `meow-insert-exit'."
  '("F" . meow-next-word)
  '("g" . meow-cancel-selection)
  '("G" . meow-grab)
- '("h" . nil)
+ '("h" . "C-h")
  '("H" . nil)
  '("i" . meow-insert)
  '("I" . pjones:meow-insert-line)
