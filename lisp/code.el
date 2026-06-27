@@ -12,6 +12,8 @@
 (declare-function indium-run-node "indium")
 (declare-function outline-indent-minor-mode "outline-indent")
 (declare-function pjones:delete-whitespace-mode "./whitespace.el")
+(declare-function pjones:project-name "./functions")
+(declare-function project-root "project")
 (declare-function puni-mode "puni")
 (declare-function s-trim "s")
 (declare-function yas-minor-mode "yasnippet")
@@ -106,33 +108,115 @@
    ((string= type "node")
     (indium-run-node "node"))))
 
+(defvar pjones:cc-file-extensions
+  '(".h" ".hh" ".hpp" ".c" ".cc" ".cpp" ".cxx")
+  "List of file extensions for C/C++ file.")
+
+(defun pjones:cc-file-p (file)
+  "Return non-nil if FILE is a C/C++ file."
+  (member (file-name-extension file t)
+          pjones:cc-file-extensions))
+
+(defun pjones:cc-add-extension (paths)
+  "Add file extensions to PATHS.
+Each path will produce appended with each extension."
+  (flatten-list
+   (mapcar (lambda (path)
+             (mapcar (lambda (ext) (concat path ext))
+                     pjones:cc-file-extensions))
+           (flatten-list paths))))
+
+(defun pjones:cc-include-to-src (from-root)
+  "Translate the path FROM-ROOT from a header to a source file.
+The path should be relative to the project root.  Returns all possible
+matching paths even if they don't exist.  Does not change file
+extensions."
+  (let ((re (rx (or ?/ word-boundary)
+                (group "include/" (? (+ (not ?/)) ?/)))))
+    (when (string-match re from-root)
+      (list
+       (replace-match "source/" t t from-root 1)
+       (replace-match "src/" t t from-root 1)))))
+
+(defun pjones:cc-src-to-include (from-root project-name)
+  "Translate the path FROM-ROOT from a source to a header file.
+PROJECT-NAME is used to form header paths that include the project name.
+The path should be relative to the project root.  Returns all possible
+matching paths even if they don't exist.  Does not change file
+extensions."
+  (let ((src (rx (or ?/ word-boundary) (group "src/")))
+        (source (rx (or ?/ word-boundary) (group "source/"))))
+    (when (or (string-match source from-root)
+              (string-match src from-root))
+      (list
+       (replace-match "include/" t t from-root 1)
+       (replace-match (concat "include/" project-name "/") t t from-root 1)))))
+
+(defun pjones:find-sibling-cc (file)
+  "Return a C/C++ sibling file for FILE."
+  (when-let*
+      (((pjones:cc-file-p file))
+       (sans-ext (file-name-sans-extension (expand-file-name file)))
+       (project (project-current t))
+       (root (project-root project))
+       (project-name (pjones:project-name))
+       (from-root (file-relative-name sans-ext root))
+       (base (file-name-base file))
+       (paths (list from-root
+                    (pjones:cc-include-to-src from-root)
+                    (pjones:cc-src-to-include from-root project-name)
+                    (concat "test/" base "_test")
+                    (concat "test/" "test_" base))))
+    (seq-filter #'file-exists-p
+                (mapcar (apply-partially #'concat root)
+                        (pjones:cc-add-extension paths)))))
+
 ;; Add rules for finding sibling files:
-(rx-let ((file (+ (not ?/)))
-         (c-ext (seq ".c" (? "pp") eos))
-         (h-ext (seq ".h" eos))
-         (file-sans-ext (ext) (seq (group file) ext))
-         (path-sans-ext (path ext) (seq (group "/" (+? anychar) "/") path (group (+? anychar) "/" file) ext)))
-  (let ((rules
-         `(;; Find header file in the same directory:
-           (,(rx (file-sans-ext c-ext)) "\\1.h")
+(add-to-list 'find-sibling-rules #'pjones:find-sibling-cc)
 
-           ;; Find source file in the same directory:
-           (,(rx (file-sans-ext h-ext)) "\\1.cpp")
+(defun pjones:find-sibling-file-search (file &optional rules)
+  "Return a list of FILE's \"siblings\".
+RULES should be a list on the form defined by `find-sibling-rules' (which
+see), and if nil, defaults to `find-sibling-rules'."
+  (let ((results nil))
+    ;;(pcase-dolist (`(,match . ,expansions) (or rules find-sibling-rules))
+    (dolist (rule (or rules find-sibling-rules))
+      (pcase rule
+        (`(,match . ,expansions)
+         ;; Go through the list and find matches.
+         (when (string-match match file)
+           (let ((match-data (match-data)))
+             (dolist (expansion expansions)
+               (let ((start 0))
+                 ;; Expand \\1 forms in the expansions.
+                 (while (string-match "\\\\\\([&0-9]+\\)" expansion start)
+                   (let ((index (string-to-number (match-string 1 expansion))))
+                     (setq start (match-end 0)
+                           expansion
+                           (replace-match
+                            (substring file
+                                       (elt match-data (* index 2))
+                                       (elt match-data (1+ (* index 2))))
+                            t t expansion)))))
+               ;; Then see which files we have that are matching.  (And
+               ;; expand from the end of the file's match, since we might
+               ;; be doing a relative match.)
+               (let ((default-directory (substring file 0 (car match-data))))
+                 ;; Keep the first matches first.
+                 (setq results
+                       (nconc
+                        results
+                        (mapcar #'expand-file-name
+                                (file-expand-wildcards expansion nil t)))))))))
+        ((pred functionp)
+         (setq results
+               (nconc results
+                      (mapcar #'expand-file-name (funcall rule file)))))))
+    ;; Delete the file itself (in case it matched), and remove
+    ;; duplicates, in case we have several expansions and some match
+    ;; the same subsets of files.
+    (delete file (delete-dups results))))
 
-           ;; Find source file outside of the include directory.
-           (,(rx (file-sans-ext h-ext)) "../../src/\\1.cpp")
-
-           ;; OpenMS source file to header:
-           (,(rx (path-sans-ext "src/openms/source/" c-ext))
-            "\\1src/openms/include/OpenMS/\\2.h")
-
-           ;; OpenMS header file to source:
-           (,(rx (path-sans-ext "src/openms/include/OpenMS/" h-ext))
-            "\\1src/openms/source/\\2.cpp")
-
-           ;; End of rules.
-           )))
-    (dolist (rule rules)
-      (add-to-list 'find-sibling-rules rule))))
+(advice-add 'find-sibling-file-search :override #'pjones:find-sibling-file-search)
 
 ;;; code.el ends here
