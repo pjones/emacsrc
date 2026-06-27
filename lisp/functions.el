@@ -76,16 +76,24 @@
         (kill-buffer http)))
      (eww-decode-url-file-name (concat base "." ext))))
 
+;; Allow setting a project name in .dir-local.el.
+(defvar-local pjones:project-name nil
+  "The name of the current project, as it appears in the \"include\" directory.")
+
 (defun pjones:project-name ()
   "Return the name of the current project."
-  (let* ((project (project-current t))
-         (root (project-root project))
-         (name (project-name project))
-         (include-dir (concat root "include/"))
-         (include (when (file-exists-p include-dir)
-                    (car (directory-files include-dir nil nil nil 1)))))
-    (or include
-        name)))
+  (if (and (boundp 'pjones:project-name)
+           pjones:project-name)
+      pjones:project-name
+    (let* ((project (project-current t))
+           (root (project-root project))
+           (name (project-name project))
+           (include-dir (concat root "include/"))
+           (include (when (file-exists-p include-dir)
+                      (car (seq-filter
+                            (lambda (f) (file-directory-p (concat include-dir f)))
+                            (directory-files include-dir nil (rx bol (not ?.))))))))
+      (or include name))))
 
 (defun pjones:project-license-notice ()
   "Return a license notice for the current project."
