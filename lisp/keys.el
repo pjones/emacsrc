@@ -190,6 +190,7 @@ FUNC."
   (keymap-set map "D" #'apropos-documentation)
   (keymap-set map "d" #'devdocs-lookup)
   (keymap-set map "C-d" #'devdocs-lookup)
+  (keymap-set map "C-f" #'describe-function)
   (keymap-set map "m" #'man)
   (keymap-set map "C-m" #'man)
   (keymap-set map "r" #'info-display-manual)
