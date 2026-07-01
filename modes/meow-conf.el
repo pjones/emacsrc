@@ -282,7 +282,8 @@ Expects ORIG to be `meow-insert-exit'."
  '(meow-select-on-change nil)
  '(meow-use-clipboard t)
  '(meow-keypad-message nil)
- '(meow-cursor-type-motion '(hbar . 2))
+ '(meow-cursor-type-motion 'bar)
+ '(meow-cursor-type-default 'bar)
  '(meow-expand-hint-remove-delay 0)
  '(meow-keypad-start-keys '((?c . ?c) (?h . ?h)))
  '(meow-replace-state-name-list
