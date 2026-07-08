@@ -1362,7 +1362,6 @@ For example, expand `org-mode' macros.  TEXT and BACKEND are provided by
     (pjones:delete-whitespace-mode)
 
     ;; Modes to turn off:
-    (save-place-mode -1)                ; Don't jump to hidden places
     (puni-mode -1)                      ; Puni doesn't work here
 
     ;; Modes to turn on:
