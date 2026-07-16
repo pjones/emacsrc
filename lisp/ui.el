@@ -27,6 +27,7 @@
  '(compilation-scroll-output 'first-error)
  '(debugger-stack-frame-as-list t)
  '(describe-bindings-outline t)
+ '(describe-bindings-outline-rules '((match-regexp . "Key translations\\|Minor Mode")))
  '(echo-keystrokes 0.1)
  '(enable-recursive-minibuffers t)
  '(ffap-machine-p-known 'reject)
