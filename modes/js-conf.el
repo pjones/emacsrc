@@ -1,19 +1,25 @@
 ;;; js-conf.el -- Configuration options for js-mode (JavaScript). -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;; Code:
-(eval-when-compile
-  (require 'js))
+
+(require 'reformatter)
+(require 'js)
+
+(reformatter-define js-format
+  :program "prettier"
+  :args '("--parser" "babel")
+  :group 'js-mode)
+
+(defun pjones:js-mode-hook ()
+  "Set up `js-mode'."
+  (js-format-on-save-mode 1))
 
 ;; JavaScript mode settings
-(setq js-indent-level 2
-      js-flat-functions t)
+(custom-set-variables
+ '(js-indent-level 2)
+ '(js-flat-functions t))
 
-;; FIXME:
-;;   (define-key map (kbd "j c") #'pjones:indium-start-chrome)
-;;   (define-key map (kbd "j n") #'pjones:indium-start-node)
+(add-to-list 'js-mode-hook #'pjones:js-mode-hook)
+(add-to-list 'js-ts-mode-hook #'pjones:js-mode-hook)
 
 ;;; js-conf.el ends here
-
-;; Local Variables:
-;; byte-compile-warnings: (not noruntime)
-;; End:
