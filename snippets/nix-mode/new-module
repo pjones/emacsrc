@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: new-module
+# key: mod
+# expand-env: ((yas-indent-line 'fixed))
+# --
+{ moduleWithSystem, ... }:
+{
+  $0
+}

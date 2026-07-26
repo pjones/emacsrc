@@ -3,10 +3,12 @@
 # key: nm
 # expand-env: ((yas-indent-line 'fixed))
 # --
-flake.nixosModules.${1:name} =
+flake.nixosModules.${1:name} = moduleWithSystem (
+  { ... }:
   { ... }:
   {
     config = {
       $0
     };
-  };
+  }
+);

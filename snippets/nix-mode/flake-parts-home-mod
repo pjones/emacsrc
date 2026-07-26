@@ -3,10 +3,12 @@
 # key: hm
 # expand-env: ((yas-indent-line 'fixed))
 # --
-flake.homeModules.${1:name} =
+flake.homeModules.${1:name} = moduleWithSystem (
+  { ... }:
   { ... }:
   {
     config = {
       $0
     };
-  };
+  }
+);
