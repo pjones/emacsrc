@@ -213,7 +213,6 @@ FUNC."
  (kbd "C-c c") #'quick-calc
  (kbd "C-c d") #'duplicate-dwim
  (kbd "C-c e") #'embark-act
- (kbd "C-c f f") (pjones:jump-to-buffer "*flymake message*")
  (kbd "C-c f R") #'rename-visited-file
  (kbd "C-c g") #'google-translate-smooth-translate
  (kbd "C-c h h") #'pjones:start-http
