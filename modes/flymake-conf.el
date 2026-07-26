@@ -13,4 +13,9 @@
 (custom-set-variables
  '(flymake-show-diagnostics-at-end-of-line nil))
 
+(defvar-keymap flymake-repeat-map
+  :repeat t
+  "n" #'flymake-goto-next-error
+  "p" #'flymake-goto-prev-error)
+
 ;;; flymake-conf.el ends here
