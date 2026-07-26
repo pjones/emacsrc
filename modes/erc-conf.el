@@ -8,86 +8,12 @@
 (require 'erc)
 (require 'erc-track)
 (require 'notifications)
-(require 'password-store)
 
 ;; Make the linting tool happy:
 (defvar visual-wrap-extra-indent)
 
-(custom-set-variables
- '(erc-nick "pmade")
- '(erc-user-full-name "Peter Jones")
- '(erc-rename-buffers nil)
- '(erc-prompt "❯")
- '(erc-query-display 'buffer)
- '(erc-auto-query 'bury)
- `(erc-notifications-icon ,notifications-application-icon)
- '(erc-track-visibility 'selected-visible)
- '(erc-track-exclude-server-buffer t)
- '(erc-track-shorten-start 4)
- '(erc-track-shorten-cutoff 4)
- '(erc-track-switch-from-erc nil)
- '(erc-track-when-inactive nil)
- '(erc-track-position-in-mode-line t)
- '(erc-timestamp-format "[%H:%M] ")
- '(erc-timestamp-format-left "[%H:%M] ")
- '(erc-insert-timestamp-function 'erc-insert-timestamp-left)
- '(erc-insert-away-timestamp-function 'erc-insert-timestamp-left)
- '(erc-server-auto-reconnect nil)
- '(erc-timestamp-only-if-changed-flag nil)
-
- '(erc-modules '(autojoin
-                 button
-                 completion
-                 hl-nicks
-                 irccontrols
-                 list
-                 match
-                 move-to-prompt
-                 netsplit
-                 networks
-                 noncommands
-                 notifications
-                 readonly
-                 ring
-                 spelling
-                 stamp
-                 track
-                 truncate))
-
- '(erc-network-hide-list '(("freenode" "JOIN" "PART" "QUIT")))
-
- '(erc-track-exclude-types '("JOIN" "NICK" "PART" "QUIT" "MODE"
-                             "324" "329" "332" "333" "353" "477")))
-
-
-(custom-set-faces
- '(erc-timestamp-face ((t (:foreground nil :inherit 'mode-line-inactive))))
- '(erc-input-face ((t (:foreground nil :inherit 'erc-fool-face))))
- '(erc-my-nick-face ((t (:foreground nil :inherit 'erc-fool-face)))))
-
-;; Always ignore the bitlbee control channel.
-(add-to-list 'erc-track-exclude "&bitlbee")
-
 (defvar pjones:erc-modified-channels-alist nil
   "A cache of `erc-modified-channels-alist'.")
-
-(defun pjones:erc-connect (network)
-  "Connect to an IRC NETWORK via ERC."
-  (let ((pass (password-store-get "machines/chat.devalot.com/znc")))
-    (erc-tls :server   (format "%s.pmade.com" network)
-             :nick     "pjones"
-             :port     6697
-             :password (format "pjones/%s:%s" network pass))))
-
-(defun pjones:erc-freenode ()
-  "Connect to the freenode network."
-  (interactive)
-  (pjones:erc-connect "freenode"))
-
-(defun pjones:erc-bitlbee ()
-  "Connect to the bitlbee network."
-  (interactive)
-  (pjones:erc-connect "bitlbee"))
 
 (defun pjones:erc-mode-hook ()
   "Hook run in new ERC buffers."
@@ -103,6 +29,48 @@
   (when (and (erc-default-target)
              (string-match-p "^#" (erc-default-target)))
     (add-to-list 'erc-track-exclude (erc-default-target))))
+
+(defun pjones:erc-connect ()
+  "Connect to irc."
+  (interactive)
+  (erc :server "irc.freerangebits.com"
+       :port 6667
+       :user "pjones"))
+
+(custom-set-variables
+ '(erc-nick "devalot")
+ `(erc-user-full-name ,user-full-name)
+ '(erc-rename-buffers nil)
+ '(erc-prompt "❯")
+ '(erc-query-display 'buffer)
+ '(erc-auto-query 'bury)
+ `(erc-notifications-icon ,notifications-application-icon)
+ '(erc-track-visibility 'selected-visible)
+ '(erc-track-exclude-server-buffer t)
+ '(erc-track-shorten-start 4)
+ '(erc-track-shorten-cutoff 4)
+ '(erc-track-switch-from-erc nil)
+ '(erc-track-when-inactive nil)
+ '(erc-track-position-in-mode-line nil)
+ '(erc-timestamp-format "[%H:%M] ")
+ '(erc-timestamp-format-left "[%H:%M] ")
+ '(erc-insert-timestamp-function 'erc-insert-timestamp-left)
+ '(erc-insert-away-timestamp-function 'erc-insert-timestamp-left)
+ '(erc-server-auto-reconnect nil)
+ '(erc-timestamp-only-if-changed-flag nil)
+ '(erc-modules '(autojoin button completion hl-nicks irccontrols
+                 list match move-to-prompt netsplit networks noncommands
+                 notifications readonly ring spelling stamp track))
+ '(erc-network-hide-list '(("Libera.Chat" "JOIN" "PART" "QUIT")))
+ '(erc-track-exclude-types '("JOIN" "NICK" "PART" "QUIT" "MODE"
+                             "324" "329" "332" "333" "353" "477"))
+ '(erc-autojoin-channels-alist '((irc.libera.chat:6697 "#emacs" "#human-emacs"))))
+
+
+(custom-set-faces
+ '(erc-timestamp-face ((t (:foreground nil :inherit 'org-agenda-date-today))))
+ '(erc-input-face ((t (:foreground nil :inherit 'default))))
+ '(erc-my-nick-face ((t (:foreground nil :inherit 'font-lock-constant-face)))))
 
 (add-function
  :after after-focus-change-function
