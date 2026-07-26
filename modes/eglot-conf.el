@@ -6,10 +6,27 @@
 
 (require 'eglot)
 
+(declare-function cape-capf-buster "cape")
+(declare-function cape-capf-noninterruptible "cape")
+(declare-function cape-capf-super "cape")
+(declare-function cape-dabbrev "cape")
+(declare-function cape-file "cape")
+(declare-function cape-keyword "cape")
+
 (defun pjones:eglot-managed-mode-hook nil
   "Hook function for `eglot-managed-mode-hook'."
   ;; I don't want this (too noisy):
-  (eglot-inlay-hints-mode -1))
+  (eglot-inlay-hints-mode -1)
+
+  ;; Better completions:
+  (setq-local completion-at-point-functions
+              (list (cape-capf-noninterruptible
+                     (cape-capf-buster
+                       (cape-capf-super
+                        #'eglot-completion-at-point
+                        #'cape-file
+                        #'cape-keyword
+                        #'cape-dabbrev))))))
 
 (custom-set-variables
  '(eglot-autoshutdown t)

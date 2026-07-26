@@ -5,6 +5,7 @@
 ;;; Code:
 
 (declare-function cape-capf-buster "cape")
+(declare-function cape-capf-super "cape")
 (declare-function cape-dabbrev "cape")
 (declare-function cape-file "cape")
 (declare-function cape-keyword "cape")
@@ -69,10 +70,10 @@ current line.  Otherwise run the completion command.  ARG is passed to
     (apply #'consult-completion-in-region completion-in-region--data)))
 
 (setq-default completion-at-point-functions
-              (list #'cape-file
-                    #'cape-tex
-                    #'cape-keyword
-                    (cape-capf-buster #'cape-dabbrev)))
+              (list (cape-capf-super
+                     #'cape-file
+                     #'cape-keyword
+                     #'cape-dabbrev)))
 
 (custom-set-variables
  '(dabbrev-case-fold-search nil) ; Don't mess with case.
