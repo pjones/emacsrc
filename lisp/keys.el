@@ -47,6 +47,7 @@ FUNC."
 (declare-function consult-buffer-other-frame "consult")
 (declare-function consult-buffer-other-window "consult")
 (declare-function consult-find "consult")
+(declare-function consult-flymake "consult-flymake")
 (declare-function consult-focus-lines "consult")
 (declare-function consult-git-grep "consult")
 (declare-function consult-global-mark "consult")
@@ -286,6 +287,7 @@ FUNC."
  (kbd "M-g a") #'avy-goto-char-timer
  (kbd "M-g e") #'eldoc-doc-buffer
  (kbd "M-g f b") #'flymake-show-buffer-diagnostics
+ (kbd "M-g f c") #'consult-flymake
  (kbd "M-g f B") #'flymake-show-project-diagnostics
  (kbd "M-g f n") #'flymake-goto-next-error
  (kbd "M-g f p") #'flymake-goto-prev-error
