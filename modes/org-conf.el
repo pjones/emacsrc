@@ -1300,17 +1300,29 @@ For example, expand `org-mode' macros.  TEXT and BACKEND are provided by
   (define-key map (kbd "M-p") #'pjones:org-up-or-prev)
   (define-key map (kbd "M-P") #'org-previous-item))
 
+;; This function was deleted upstream.
+(defun calendar-backward-day (&rest _)
+  "Move backward by a day."
+  (interactive)
+  (calendar-forward-day -1))
+
+;; This function was deleted upstream.
+(defun calendar-backward-week (&rest _)
+  "Move backward by a week."
+  (interactive)
+  (calendar-forward-week -1))
+
 (defmacro pjones:org-eval-in-calendar (function)
   "Generate a command to call FUNCTION from within `org-eval-in-calendar'."
-  `(defun ,(intern (concat "pjones:org-eval-in-calednar-" (symbol-name function))) ()
+  `(lambda ()
     (interactive)
-    (org-funcall-in-calendar '(,function 1))))
+    (org-funcall-in-calendar ,function)))
 
 (let ((map org-read-date-minibuffer-local-map))
-  (define-key map (kbd "M-b") (pjones:org-eval-in-calendar calendar-backward-day))
-  (define-key map (kbd "M-f") (pjones:org-eval-in-calendar calendar-forward-day))
-  (define-key map (kbd "M-p") (pjones:org-eval-in-calendar calendar-backward-week))
-  (define-key map (kbd "M-n") (pjones:org-eval-in-calendar calendar-forward-week)))
+  (define-key map (kbd "M-b") (pjones:org-eval-in-calendar #'calendar-backward-day))
+  (define-key map (kbd "M-f") (pjones:org-eval-in-calendar #'calendar-forward-day))
+  (define-key map (kbd "M-p") (pjones:org-eval-in-calendar #'calendar-backward-week))
+  (define-key map (kbd "M-n") (pjones:org-eval-in-calendar #'calendar-forward-week)))
 
 (defvar-keymap org-mode-repeat-map
   :repeat t
