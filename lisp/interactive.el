@@ -16,8 +16,7 @@
 (declare-function dired-rename-file "dired-aux")
 (declare-function http-mode "http")
 (declare-function markdown-mode "markdown-mode")
-(declare-function pjones:erc-bitlbee "../modes/erc-conf")
-(declare-function pjones:erc-freenode "../modes/erc-conf")
+(declare-function pjones:erc-connect "../modes/erc-conf")
 (declare-function pjones:flymake-goto-next-error "../modes/flymake-conf")
 (declare-function pjones:markdown-visual-line "../modes/markdown-mode-conf")
 (declare-function pjones:vterm-frame "../modes/vterm-conf")
@@ -148,8 +147,8 @@ This differs from `mode-line-other-buffer' in that it respects
 When LOCAL-ONLY is non-nil, only connect to Bitlbee."
   (interactive "P")
   (require 'erc) ; Loads in my erc-conf.el file
-  (pjones:erc-bitlbee)
-  (unless local-only (pjones:erc-freenode)))
+  (pjones:erc-connect "bitlbee")
+  (unless local-only (pjones:erc-connect "libera")))
 
 (defun pjones:start-term (window)
   "Start a new terminal buffer.

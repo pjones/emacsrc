@@ -9,63 +9,70 @@
 (require 'erc-track)
 (require 'notifications)
 
-;; Make the linting tool happy:
-(defvar visual-wrap-extra-indent)
-
-(defvar pjones:erc-modified-channels-alist nil
-  "A cache of `erc-modified-channels-alist'.")
-
 (defun pjones:erc-mode-hook ()
   "Hook run in new ERC buffers."
-  (make-local-variable 'scroll-conservatively)
-  (setq scroll-conservatively 1000      ; Don't recenter window
-        visual-wrap-extra-indent 8)   ; Leave space for timestamp.
+  (setq-local scroll-conservatively 1000
+              visual-wrap-extra-indent 8)
   (visual-line-mode)
   (visual-wrap-prefix-mode))
 
 (defun pjones:erc-ignore-channel ()
   "Disable ERC tracking for channels."
   (interactive)
-  (when (and (erc-default-target)
-             (string-match-p "^#" (erc-default-target)))
-    (add-to-list 'erc-track-exclude (erc-default-target))))
+  (when-let* ((this-channel (or (erc-default-target)
+			        (buffer-name (current-buffer))))
+              ((and (string-match-p "^#" this-channel)
+                    (not (string-match-p "bitlbee" this-channel)))))
+    (add-to-list 'erc-track-exclude this-channel)))
 
-(defun pjones:erc-connect ()
-  "Connect to irc."
-  (interactive)
-  (erc :server "irc.freerangebits.com"
-       :port 6667
-       :user "pjones"))
+(defun pjones:erc-connect (network)
+  "Connect to the given IRC NETWORK."
+  (interactive
+   (list (completing-read "Network: " '("libera" "bitlbee"))))
+  (let ((pass (string-trim-right (shell-command-to-string "rbw get znc"))))
+    (erc :server (format "%s.freerangebits.com" network)
+         :port 6667
+         :user "pjones"
+         :password (format "pjones/%s:%s" network pass))))
 
 (custom-set-variables
  '(erc-nick "devalot")
  `(erc-user-full-name ,user-full-name)
  '(erc-rename-buffers nil)
  '(erc-prompt "❯")
+ '(erc-join-buffer 'buffer)
  '(erc-query-display 'buffer)
  '(erc-auto-query 'bury)
+ '(erc-auto-reconnect-display 'buffer)
  `(erc-notifications-icon ,notifications-application-icon)
+
  '(erc-track-visibility 'selected-visible)
  '(erc-track-exclude-server-buffer t)
  '(erc-track-shorten-start 4)
  '(erc-track-shorten-cutoff 4)
  '(erc-track-switch-from-erc nil)
  '(erc-track-when-inactive nil)
- '(erc-track-position-in-mode-line nil)
+ '(erc-track-position-in-mode-line t)
+ '(erc-track-exclude-types '("JOIN" "NICK" "PART" "QUIT" "MODE"
+                             "324" "329" "332" "333" "353" "477"))
+
  '(erc-timestamp-format "[%H:%M] ")
  '(erc-timestamp-format-left "[%H:%M] ")
  '(erc-insert-timestamp-function 'erc-insert-timestamp-left)
  '(erc-insert-away-timestamp-function 'erc-insert-timestamp-left)
  '(erc-server-auto-reconnect nil)
  '(erc-timestamp-only-if-changed-flag nil)
- '(erc-modules '(autojoin button completion hl-nicks irccontrols
-                 list match move-to-prompt netsplit networks noncommands
-                 notifications readonly ring spelling stamp track))
- '(erc-network-hide-list '(("Libera.Chat" "JOIN" "PART" "QUIT")))
- '(erc-track-exclude-types '("JOIN" "NICK" "PART" "QUIT" "MODE"
-                             "324" "329" "332" "333" "353" "477"))
- '(erc-autojoin-channels-alist '((irc.libera.chat:6697 "#emacs" "#human-emacs"))))
 
+ '(erc-modules
+   '(autojoin button completion nicks irccontrols
+     keep-place list match move-to-prompt netsplit networks
+     noncommands notifications readonly ring stamp track))
+
+ '(erc-network-hide-list '(("irc.freerangebits.com" "JOIN" "PART" "QUIT")))
+ '(erc-autojoin-channels-alist '(("irc.freerangebits.com"
+                                  "#emacs"
+                                  "#human-emacs"
+                                  "#nixos"))))
 
 (custom-set-faces
  '(erc-timestamp-face ((t (:foreground nil :inherit 'org-agenda-date-today))))
