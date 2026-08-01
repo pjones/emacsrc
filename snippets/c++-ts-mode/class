@@ -12,9 +12,6 @@ class ${1:name} final {
     /// Constructor.
     $1();
 
-    /// Destructor.
-    ~$1() = default;
-
   private:
     $0
 };
