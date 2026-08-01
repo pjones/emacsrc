@@ -34,6 +34,16 @@ Ensures that the buffer name doesn't change so it can be found again."
         (call-interactively #'project-switch-project))
     (call-interactively #'project-switch-project)))
 
+(defun pjones:project-compile (prompt)
+  "Compile the current project.
+When PROMPT is non-nil always prompt for the compile command."
+  (interactive "P")
+  (let* ((default-directory (project-root (project-current t)))
+         (current-prefix-arg prompt))
+    (if (and (not prompt) compile-command)
+        (compile compile-command t)
+      (call-interactively #'compile))))
+
 (custom-set-variables
  '(project-switch-commands
    '((project-async-shell-command "Async" ?r)
@@ -46,6 +56,7 @@ Ensures that the buffer name doesn't change so it can be found again."
 
 (let ((map project-prefix-map))
   (keymap-set map "a" #'find-sibling-file)
+  (keymap-set map "c" #'pjones:project-compile)
   (keymap-set map "d" #'project-dired)
   (keymap-set map "D" #'project-find-dir)
   (keymap-set map "m" #'magit-project-status)
