@@ -22,7 +22,7 @@
         { pkgs, ... }:
         {$0
           devShells.default = pkgs.mkShell {
-            NIX_PATH = "nixpkgs=${pkgs.path}";
+            NIX_PATH = "nixpkgs=\${pkgs.path}";
 
             nativeBuildInputs = with pkgs; [
               (python3.withPackages (
