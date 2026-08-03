@@ -6,12 +6,11 @@
 
 (require 'cc-mode)
 (require 'eglot)
+(require 'elec-pair)
 (require 'reformatter)
 
 (declare-function c-ts-mode--indent-styles "c-ts-mode")
-(declare-function electric-pair-default-inhibit "elec-pair")
 (declare-function indent-bars-mode "indent-bars")
-(defvar electric-pair-pairs)
 
 (reformatter-define cc-format
   :program "clang-format"
