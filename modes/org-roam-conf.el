@@ -39,7 +39,7 @@
  '(citar-org-roam-capture-template-key "c") ; Use my file naming scheme.
 
  '(org-roam-capture-templates
-   `(("b" "Knowledge Base Entry" plain "* %?"
+   `(("b" "Plain Notes" plain "* %?"
       :target (file+head "garden/${pjones:org-roam-node-to-file}" "#+title: ${title}\n")
       :jump-to-captured nil
       :empty-lines 1
@@ -49,7 +49,13 @@
       :jump-to-captured nil
       :empty-lines 1
       :unnarrowed t)
-     ("r" "Research Review Article" plain
+     ("r" "Research Notes" plain
+      (file ,(concat pjones:org-notes-directory "templates/org/research-notes.org"))
+      :target (file "garden/${pjones:org-roam-node-to-file}")
+      :jump-to-captured t
+      :empty-lines 1
+      :unnarrowed t)
+     ("w" "Research Review Article" plain
       (file ,(concat pjones:org-notes-directory "templates/org/review-article.org"))
       :target (file "garden/${pjones:org-roam-node-to-file}")
       :jump-to-captured t
