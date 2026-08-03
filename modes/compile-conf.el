@@ -8,9 +8,6 @@
 (require 'compile)
 (require 'project)
 
-(declare-function pjones:display-buffer-in-non-popup-frame "../lisp/functions")
-(declare-function pjones:frame-popup-p "../lisp/functions")
-
 (custom-set-variables
  '(compilation-buffer-name-function #'pjones:compile-make-buffer-name)
  '(compilation-auto-jump-to-first-error nil)
