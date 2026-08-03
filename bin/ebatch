@@ -7,12 +7,13 @@ set -o pipefail
 
 ################################################################################
 export PATH=@path@:$PATH
-lispdir=$(dirname "@loadpathel@")
+basedir=$(realpath "$(dirname "@loadpathel@")/..")
 
 ################################################################################
 _emacs() {
-  emacs --batch \
-    --load "$lispdir/modes.el" \
+  emacs \
+    --batch \
+    --load "$basedir/init.el" \
     "$@"
 }
 
