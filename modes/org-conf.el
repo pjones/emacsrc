@@ -1401,15 +1401,17 @@ For example, expand `org-mode' macros.  TEXT and BACKEND are provided by
   (lambda (&rest _) (pjones:org-reset-agenda-files)))
 
 ;;; Hooks
-(add-hook 'org-after-todo-state-change-hook #'pjones:org-after-todo-state-change-hook)
-(add-hook 'org-agenda-after-show-hook #'pjones:org-hide-others)
 (add-hook 'org-agenda-finalize-hook #'pjones:org-agenda-delete-empty-blocks)
-(add-hook 'org-agenda-mode-hook #'pjones:org-agenda-mode-hook)
 (add-hook 'org-export-before-processing-functions #'pjones:org-before-beamer-export)
 (add-hook 'org-export-filter-export-block-functions #'pjones:latex-filter-export-block)
-(add-hook 'org-insert-heading-hook #'pjones:org-ensure-created-timestamp)
-(add-hook 'org-mode-hook #'embrace-org-mode-hook)
-(add-hook 'org-mode-hook #'pjones:org-mode-hook)
+
+(unless noninteractive
+  (add-hook 'org-after-todo-state-change-hook #'pjones:org-after-todo-state-change-hook)
+  (add-hook 'org-agenda-after-show-hook #'pjones:org-hide-others)
+  (add-hook 'org-agenda-mode-hook #'pjones:org-agenda-mode-hook)
+  (add-hook 'org-insert-heading-hook #'pjones:org-ensure-created-timestamp)
+  (add-hook 'org-mode-hook #'embrace-org-mode-hook)
+  (add-hook 'org-mode-hook #'pjones:org-mode-hook))
 
 ;;; org-conf.el ends here
 
