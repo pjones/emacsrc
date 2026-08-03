@@ -187,8 +187,9 @@ BACKEND is a symbol indicating the current publishing back-end."
 (org-roam-db-autosync-mode)
 
 ;; Activate helper modes:
-(citar-org-roam-mode)
-(consult-org-roam-mode)
+(unless noninteractive
+  (citar-org-roam-mode)
+  (consult-org-roam-mode))
 
 ;; Hooks:
 (add-hook 'org-export-before-processing-functions #'pjones:org-roam-insert-backlinks)
