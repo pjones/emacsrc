@@ -1,5 +1,16 @@
-{ self, inputs, ... }:
 {
+  self,
+  config,
+  lib,
+  inputs,
+  withSystem,
+  ...
+}:
+{
+  flake.pkgs = lib.mapAttrs (
+    system: config: withSystem system ({ pkgs, ... }: pkgs)
+  ) config.allSystems;
+
   perSystem =
     { pkgs, system, ... }:
     {
