@@ -7,6 +7,7 @@
 
 (require 'erc)
 (require 'erc-track)
+(require 'jinx)
 (require 'notifications)
 
 (defun pjones:erc-mode-hook ()
@@ -14,7 +15,8 @@
   (setq-local scroll-conservatively 1000
               visual-wrap-extra-indent 8)
   (visual-line-mode)
-  (visual-wrap-prefix-mode))
+  (visual-wrap-prefix-mode)
+  (jinx-mode 1))
 
 (defun pjones:erc-ignore-channel ()
   "Disable ERC tracking for channels."
@@ -40,6 +42,7 @@
  `(erc-user-full-name ,user-full-name)
  '(erc-rename-buffers nil)
  '(erc-prompt "❯")
+ '(erc-send-whitespace-lines t)
  '(erc-join-buffer 'buffer)
  '(erc-query-display 'buffer)
  '(erc-auto-query 'bury)
