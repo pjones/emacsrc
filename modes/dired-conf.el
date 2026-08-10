@@ -36,6 +36,25 @@
   (let ((magit-clone-default-directory (dired-current-directory)))
     (call-interactively #'magit-clone-regular)))
 
+(defun pjones:dired-image-invert (&optional arg)
+  "Invert the marked images.
+If no images are marked then invert the next ARG images or the current
+image."
+  (interactive "P" dired-mode)
+  (let (files progress)
+    (dired-map-over-marks (push (dired-get-filename) files) arg)
+    (setq progress (progress-reporter-make "magick: " 0 (length files)))
+    (dolist (file files)
+      (let* ((base (file-name-sans-extension file))
+             (ext (file-name-extension file))
+             (tmp (concat base "-inverted" ext)))
+        (if (file-exists-p tmp)
+            (error "File already exists: %s" tmp)
+          (call-process "magick" nil "*magick*" nil file "-channel" "RGB" "-negate" tmp)
+          (rename-file tmp file t))
+        (progress-reporter-update progress)))
+    (progress-reporter-done progress)))
+
 ;; Settings:
 (custom-set-variables
  '(diff-hl-dired-extra-indicators nil)
