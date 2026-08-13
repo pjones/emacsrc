@@ -71,11 +71,6 @@ FUNC."
 (declare-function consult-yank-pop "consult")
 (declare-function devdocs-lookup "devdocs")
 (declare-function embark-act "embark")
-(declare-function emms "emms")
-(declare-function emms-add-directory "emms")
-(declare-function emms-add-playlist "emms")
-(declare-function emms-insert-playlist "emms")
-(declare-function emms-smart-browse "emms")
 (declare-function flymake-goto-next-error "flymake")
 (declare-function flymake-goto-prev-error "flymake")
 (declare-function flymake-show-buffer-diagnostics "flymake")
@@ -97,7 +92,6 @@ FUNC."
 (declare-function org-store-link "ol")
 (declare-function pass "pass")
 (declare-function pjones:agenda "./interactive")
-(declare-function pjones:emms-play-stream "emms")
 (declare-function pjones:exchange-point-and-mark "./interactive")
 (declare-function pjones:frame-toggle-alpha "./interactive")
 (declare-function pjones:indent-or-complete "./completion")
@@ -221,12 +215,6 @@ FUNC."
  (kbd "C-c k") nil ; Reserved for major mode customzation.
  (kbd "C-c l") #'link-hint-avy-act
  (kbd "C-c L") #'org-store-link
- (kbd "C-c m b") #'emms-smart-browse
- (kbd "C-c m d") #'emms-add-directory
- (kbd "C-c m e") (pjones:load-call 'emms-playlist-mode #'emms)
- (kbd "C-c m i") #'emms-insert-playlist
- (kbd "C-c m p") #'emms-add-playlist
- (kbd "C-c m SPC") (pjones:load-call 'emms #'pjones:emms-play-stream)
  (kbd "C-c M-W") #'pjones:kill-directory-name
  (kbd "C-c M-w") #'pjones:kill-file-name
  (kbd "C-c o") #'ace-window

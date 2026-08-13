@@ -106,7 +106,7 @@ emacsWithOverrides.emacsWithPackages (
     embark # Conveniently act on minibuffer completions
     embark-consult # Consult integration for Embark
     embrace # Add/Change/Delete pairs
-    emms # The Emacs Multimedia System
+    empv # An Emacs media player, media library manager, radio player, YouTube frontend, Subsonic client
     envrc # Support for `direnv' that operates buffer-locally
     erc-hl-nicks # ERC nick highlighter that ignores uniquifying chars when colorizing
     ess # Emacs Speaks Statistics

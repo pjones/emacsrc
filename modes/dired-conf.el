@@ -17,6 +17,8 @@
 (declare-function dired-subtree-previous-sibling "dired-subtree")
 (declare-function dired-subtree-toggle "dired-subtree")
 (declare-function dired-subtree-up "dired-subtree")
+(declare-function empv-play-directory "empv")
+(declare-function empv-play-file "empv")
 (declare-function magit-clone-regular "magit-clone")
 (declare-function noccur-dired "noccur")
 (declare-function org-open-file "org")
@@ -55,6 +57,14 @@ image."
         (progress-reporter-update progress)))
     (progress-reporter-done progress)))
 
+(defun pjones:dired-empv-play ()
+  "Play the item at point via `empv'."
+  (interactive)
+  (let ((name (dired-get-file-for-visit)))
+    (if (file-directory-p name)
+        (empv-play-directory name t)
+      (empv-play-file name))))
+
 ;; Settings:
 (custom-set-variables
  '(diff-hl-dired-extra-indicators nil)
@@ -85,6 +95,7 @@ image."
   (define-key map (kbd "M-n") #'dired-subtree-next-sibling)
   (define-key map (kbd "M-p") #'pjones:dired-subtree-up-or-prev)
   (define-key map (kbd "M-s o") #'noccur-dired)
+  (define-key map (kbd "P") #'pjones:dired-empv-play)
   (define-key map (kbd "X") #'dired-do-compress-to))
 
 (defun pjones:dired-imenu-create-index ()
