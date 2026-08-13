@@ -297,13 +297,14 @@ always be requested."
  '(org-file-apps
    '((auto-mode       . emacs)
      ("\\.docx\\'"    . "libreoffice %s")
-     ("\\.m4v\\'"     . "vlc %s")
-     ("\\.mkv\\'"     . "vlc %s")
+     ("\\.m3u\\'"     . emacs)
+     ("\\.m4v\\'"     . "mpv %s")
+     ("\\.mkv\\'"     . "mpv %s")
      ("\\.mm\\'"      . default)
      ("\\.mp3\\'"     . "mpv %s")
-     ("\\.mp4\\'"     . "vlc %s")
+     ("\\.mp4\\'"     . "mpv %s")
      ("\\.pages\\'"   . "libreoffice %s")
-     ("\\.webm\\'"    . "vlc %s")
+     ("\\.webm\\'"    . "pmv %s")
      ("\\.x?html?\\'" . default)
      ("\\.xlsx\\'"    . "libreoffice %s")))
 
