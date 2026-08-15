@@ -43,19 +43,17 @@
 If no images are marked then invert the next ARG images or the current
 image."
   (interactive "P" dired-mode)
-  (let (files progress)
+  (let (files)
     (dired-map-over-marks (push (dired-get-filename) files) arg)
-    (setq progress (progress-reporter-make "magick: " 0 (length files)))
-    (dolist (file files)
+    (dolist-with-progress-reporter (file files)
+        (progress-reporter-make "magick invert: " 0 (length files))
       (let* ((base (file-name-sans-extension file))
              (ext (file-name-extension file))
              (tmp (concat base "-inverted" ext)))
         (if (file-exists-p tmp)
             (error "File already exists: %s" tmp)
           (call-process "magick" nil "*magick*" nil file "-channel" "RGB" "-negate" tmp)
-          (rename-file tmp file t))
-        (progress-reporter-update progress)))
-    (progress-reporter-done progress)))
+          (rename-file tmp file t))))))
 
 (defun pjones:dired-empv-play ()
   "Play the item at point via `empv'."
