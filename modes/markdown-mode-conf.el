@@ -19,9 +19,7 @@
  '(markdown-reference-location 'end)
  '(markdown-asymmetric-header t)
  '(markdown-hide-urls nil)
- '(markdown-command
-   (concat "pandoc -s --mathjax --filter "
-           (pjones:script "pandoc-filter-title.sh"))))
+ '(markdown-command "pandoc -s --mathjax"))
 
 (custom-set-faces
  '(markdown-code-face ((t (:background unspecified))))
@@ -83,26 +81,19 @@ If REVERSE is non-nil, do the opposite of what the context says."
   (let* ((mode major-mode)
          (map (symbol-value (intern (concat (symbol-name mode) "-map")))))
     (define-key map (kbd "C-<return>") #'pjones:markdown-insert-heading-or-item)
-    (define-key map (kbd "TAB") #'pjones:indent-or-complete)
-    (define-key map (kbd "C-c C-c") #'markdown-preview)))
+    (define-key map (kbd "M-<return>") #'pjones:markdown-insert-heading-or-item)
+    (define-key map (kbd "TAB") #'pjones:indent-or-complete)))
 
 (defun pjones:markdown-mode-hook ()
   "Set up key bindings and other crap for `markdown-mode'."
   (yas-minor-mode)
+  (pjones:markdown-visual-line)
 
   ;; Translate some strings into pretty symbols:
   (setq prettify-symbols-alist
-        '(("[x]" . (?\] (Bl . Br) ?✓ (Bl . Br) ?\[))))
-
-  (when-let* ((name (buffer-file-name))
-              (match (string-match-p "^/tmp/.*\\.txt$" name)))
-    (pjones:markdown-visual-line)))
+        '(("[x]" . (?\] (Bl . Br) ?✓ (Bl . Br) ?\[)))))
 
 (add-hook 'markdown-mode-hook 'pjones:markdown-mode-hook)
 (add-hook 'markdown-mode-hook 'pjones:markdown-bind-keys)
-
-;; Local Variables:
-;; byte-compile-warnings: (not noruntime)
-;; End:
 
 ;;; markdown-mode-conf.el ends here
