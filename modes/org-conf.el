@@ -382,7 +382,18 @@ always be requested."
 
  `(org-agenda-custom-commands
    '(("c" "Current Status"
-      ((agenda ""
+      ((stuck ""
+         ((org-agenda-overriding-header "⚠️ Stuck Projects:")))
+       (tags "area+TODO=\"DONE\"|-SCHEDULED={.+}-DEADLINE={.+}+area+TODO=\"TODO\""
+         ((org-agenda-overriding-header "☢️ Unscheduled Area Maintenance:")))
+       (todo "BLOCKED"
+         ((org-agenda-overriding-header "☣️ Missing Blocker Dependency:")
+          (org-agenda-skip-function #'pjones:agenda-skip-properly-blocked)
+          (org-agenda-remove-tags nil)
+          (org-agenda-prefix-format "  %-8c ")
+          (org-agenda-todo-keyword-format "")))
+       (pjones:org-agenda-quote "")
+       (agenda ""
         ((org-agenda-overriding-header "📅 Agenda:")
          (org-agenda-remove-tags nil)
          (org-agenda-current-time-string "⮜┈┈┈┈┈┈┈ now")
@@ -390,13 +401,14 @@ always be requested."
          (org-agenda-todo-keyword-format "")
          (org-agenda-sorting-strategy '(user-defined-down))
          (org-agenda-cmp-user-defined #'pjones:org-agenda-items-less)))
-       (pjones:org-agenda-quote "")
-       (todo "WAITING"
-        ((org-agenda-overriding-header "🙎 Waiting for Someone Else:")
-         (org-agenda-skip-function '(org-agenda-skip-entry-if 'scheduled 'deadline))
-         (org-agenda-remove-tags t)
-         (org-agenda-prefix-format "  %-8c ")
-         (org-agenda-todo-keyword-format "")))
+       (tags-todo "TODO=\"NEXT\"-SCHEDULED={.+}-DEADLINE={.+}-@call-@read-@email"
+         ((org-agenda-overriding-header "🎯 Next Actions:")
+          (org-agenda-skip-function '(org-agenda-skip-entry-if 'scheduled 'deadline))
+          (org-agenda-prefix-format "  %-8c ")
+          (org-agenda-remove-tags nil)
+          (org-agenda-todo-keyword-format "")
+          (org-agenda-cmp-user-defined #'pjones:org-sort-next-actions)
+          (org-agenda-sorting-strategy '(user-defined-up))))
        (tags-todo "@call|@email/NEXT"
          ((org-agenda-overriding-header "✉️ Phone Calls to Make, Emails to Send:")
           (org-agenda-prefix-format "  %-8c ")
@@ -407,32 +419,20 @@ always be requested."
           (org-agenda-prefix-format "  %-8c ")
           (org-agenda-remove-tags nil)
           (org-agenda-todo-keyword-format "")))
-       (stuck ""
-         ((org-agenda-overriding-header "⚠️ Stuck Projects:")))
-       (tags "area+TODO=\"DONE\"|-SCHEDULED={.+}-DEADLINE={.+}+area+TODO=\"TODO\""
-         ((org-agenda-overriding-header "☢️ Unscheduled Area Maintenance:")))
-       (todo "BLOCKED"
-         ((org-agenda-overriding-header "☣️ Missing Blocker Dependency:")
-          (org-agenda-skip-function #'pjones:agenda-skip-properly-blocked)
-          (org-agenda-remove-tags nil)
-          (org-agenda-prefix-format "  %-8c ")
-          (org-agenda-todo-keyword-format "")))
        (tags-todo "homework/TODO"
          ((org-agenda-overriding-header "📘 Homework:")
           (org-agenda-prefix-format "  %-8c ")
           (org-agenda-todo-keyword-format "")))
+       (todo "WAITING"
+        ((org-agenda-overriding-header "🙎 Waiting for Someone Else:")
+         (org-agenda-skip-function '(org-agenda-skip-entry-if 'scheduled 'deadline))
+         (org-agenda-remove-tags t)
+         (org-agenda-prefix-format "  %-8c ")
+         (org-agenda-todo-keyword-format "")))
        (tags "+inbox+LEVEL=1"
          ((org-agenda-overriding-header "📥 Inbox Tasks to Process:")
           (org-agenda-prefix-format "  ")
-          (org-agenda-todo-keyword-format "")))
-       (tags-todo "TODO=\"NEXT\"-SCHEDULED={.+}-DEADLINE={.+}-@call-@read-@email"
-         ((org-agenda-overriding-header "🎯 Next Actions:")
-          (org-agenda-skip-function '(org-agenda-skip-entry-if 'scheduled 'deadline))
-          (org-agenda-prefix-format "  %-8c ")
-          (org-agenda-remove-tags nil)
-          (org-agenda-todo-keyword-format "")
-          (org-agenda-cmp-user-defined #'pjones:org-sort-next-actions)
-          (org-agenda-sorting-strategy '(user-defined-up)))))
+          (org-agenda-todo-keyword-format ""))))
       nil (,(concat pjones:org-publish-directory "gtd/agenda.html")))
      ("p" "Project List"
       ((tags "+project+LEVEL=3")))
