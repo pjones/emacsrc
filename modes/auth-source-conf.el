@@ -7,7 +7,8 @@
 (require 'auth-source)
 
 (custom-set-variables
- '(auth-sources '(password-store)))     ; Use pass(1) for passwords.
+ '(auth-sources '("~/keys/emacs/authinfo.gpg"
+                  password-store)))
 
 (auth-source-pass-enable)
 

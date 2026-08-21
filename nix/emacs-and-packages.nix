@@ -111,6 +111,7 @@ emacsWithOverrides.emacsWithPackages (
     erc-hl-nicks # ERC nick highlighter that ignores uniquifying chars when colorizing
     ess # Emacs Speaks Statistics
     expreg # Your friendly neighborhood expand-region clone
+    forge # Work with Git forges from the comfort of Magit
     git-annex # Mode for easy editing of git-annex'd files
     git-link # Emacs package to get the GitHub/Bitbucket/GitLab/... URL for a buffer location
     google-translate # Emacs interface to Google Translate
@@ -162,6 +163,7 @@ emacsWithOverrides.emacsWithPackages (
     org-roam-bibtex # Org Roam integration with bibliography management software
     org-tree-slide # A presentation tool for org-mode
     orgalist # Manage Org-like lists in non-Org buffers
+    orgit-forge # Org links to Forge Issue buffers
     outline-indent # Folding text based on indentation
     ox-gfm # Github Flavored Markdown Back-End for Org Export Engine
     ox-ipynb # org-mode exporter to Jupyter notebooks
