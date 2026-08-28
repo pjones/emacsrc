@@ -69,6 +69,7 @@ FUNC."
 (declare-function consult-register-store "consult-register")
 (declare-function consult-ripgrep "consult")
 (declare-function consult-yank-pop "consult")
+(declare-function define-word-at-point "define-word")
 (declare-function devdocs-lookup "devdocs")
 (declare-function embark-act "embark")
 (declare-function flymake-goto-next-error "flymake")
@@ -235,6 +236,7 @@ FUNC."
  (kbd "C-c t r") #'puni-raise
  (kbd "C-c t s") #'pjones:meow-sort
  (kbd "C-c t u") #'upcase-dwim
+ (kbd "C-c w") #'define-word-at-point
 
  ;; Additional window commands:
  (kbd "C-x w /") #'winner-undo

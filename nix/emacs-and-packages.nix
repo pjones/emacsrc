@@ -91,6 +91,7 @@ emacsWithOverrides.emacsWithPackages (
     corg # Auto complete org-mode headers seamlessly
     csv-mode # Major mode for editing comma/char separated values
     darkroom # Remove visual distractions and focus on writing
+    define-word # Display the definition of word at point in Emacs
     devdocs # Emacs viewer for DevDocs
     diff-hl # Highlight uncommitted changes using VC
     dired-filter # Ibuffer-like filtering for dired
