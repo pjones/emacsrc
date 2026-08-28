@@ -9,6 +9,7 @@
 (declare-function avy-isearch "avy")
 
 (custom-set-variables
+ '(isearch-allow-scroll 'unlimited)
  '(isearch-allow-motion t)
  '(isearch-lax-whitespace t)
  '(isearch-lazy-count t)
