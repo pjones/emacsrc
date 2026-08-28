@@ -7,11 +7,11 @@
 ;;; Code:
 
 (require 'dired)
+(require 'dired-filter)
 (require 'dired-x)
 
 ;; Make the linter happy:
 (declare-function diff-hl-dired-mode "diff-hl-dired")
-(declare-function dired-filter-mode "dired-filter")
 (declare-function dired-subtree--get-ov "dired-subtree")
 (declare-function dired-subtree-next-sibling "dired-subtree")
 (declare-function dired-subtree-previous-sibling "dired-subtree")
@@ -83,6 +83,7 @@ image."
   (define-key map (kbd "!") (pjones:dired-cwd-do #'dired-do-shell-command))
   (define-key map (kbd "&") (pjones:dired-cwd-do #'dired-do-async-shell-command))
   (define-key map (kbd "* a") #'pjones:dired-mark-all-files)
+  (define-key map (kbd "/") dired-filter-map)
   (define-key map (kbd "<return>") #'pjones:dired-insert-or-visit)
   (define-key map (kbd "c") #'pjones:dired-magit-clone-here)
   (define-key map (kbd "C-c C-c") #'pjones:dired-toggle-wdired)
