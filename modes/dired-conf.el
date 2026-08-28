@@ -22,6 +22,7 @@
 (declare-function magit-clone-regular "magit-clone")
 (declare-function noccur-dired "noccur")
 (declare-function org-open-file "org")
+(declare-function pjones:shell-command "../lisp/shell")
 (declare-function wdired-finish-edit "wdired")
 (defvar magit-clone-default-directory)
 
@@ -63,6 +64,16 @@ image."
         (empv-play-directory name t)
       (empv-play-file name))))
 
+(defun pjones:dired-execute ()
+  "Execute the file at point."
+  (interactive)
+  (let* ((name (dired-get-file-for-visit))
+         (base (file-name-base name))
+        (default-directory (dired-current-directory))
+        (arguments (read-string (concat "Arguments for " base ": "))))
+    (pjones:shell-command :bufname base
+                          :command (concat name " " arguments))))
+
 ;; Settings:
 (custom-set-variables
  '(diff-hl-dired-extra-indicators nil)
@@ -94,6 +105,7 @@ image."
   (define-key map (kbd "M-n") #'dired-subtree-next-sibling)
   (define-key map (kbd "M-p") #'pjones:dired-subtree-up-or-prev)
   (define-key map (kbd "M-s o") #'noccur-dired)
+  (define-key map (kbd "e") #'pjones:dired-execute)
   (define-key map (kbd "P") #'pjones:dired-empv-play)
   (define-key map (kbd "X") #'dired-do-compress-to))
 
