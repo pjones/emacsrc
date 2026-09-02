@@ -2,6 +2,7 @@
   emacs,
   emacsPackagesFor,
   inputs,
+  pkgs,
 }:
 let
   # Version number to use for custom packages:
@@ -33,10 +34,31 @@ let
         packageRequires = [ super.groovy-mode ];
       };
 
+      org = super.org.overrideAttrs (
+        orig:
+        let
+          fetchurl = pkgs.callPackage (
+            pkgs.path + "/pkgs/applications/editors/emacs/elisp-packages/fetchelpa.nix"
+          ) { };
+          version = "9.8.10";
+        in
+        if pkgs.lib.strings.versionOlder orig.version version then
+          {
+            inherit version;
+            src = fetchurl {
+              url = "https://elpa.gnu.org/packages/org-${version}.tar";
+              sha256 = "sha256-iQqd1cTx0nn27Qs9EGcNeWqsy3/ccaKmZc0VO+xGPx0=";
+            };
+          }
+        else
+          orig
+      );
+
       org-clock-dbus = emacs.pkgs.elpaBuild {
         inherit version;
         pname = "org-clock-dbus";
         src = "${inputs.org-clock-dbus}/lisp/org-clock-dbus.el";
+        packageRequires = [ self.org ];
       };
 
       org-grader = emacs.pkgs.elpaBuild {
