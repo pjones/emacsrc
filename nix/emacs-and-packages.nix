@@ -1,4 +1,5 @@
 {
+  system,
   emacs,
   emacsPackagesFor,
   inputs,
@@ -27,12 +28,10 @@ let
       link-hint = update super.link-hint inputs.link-hint;
 
       # Not in nixpkgs:
-      nextflow-mode = emacs.pkgs.elpaBuild {
-        inherit version;
-        pname = "nextflow-mode";
-        src = "${inputs.nextflow-mode}/nextflow-mode.el";
-        packageRequires = [ super.groovy-mode ];
-      };
+      nextflow-mode = inputs.nextflow.packages.${system}.nextflow-mode.override (_: {
+        inherit emacs;
+        emacsPackages = self;
+      });
 
       org = super.org.overrideAttrs (
         orig:
@@ -90,6 +89,14 @@ let
         name = "xref-project-history";
         src = inputs.xref-project-history;
       };
+
+      treesit-grammars-all = super.treesit-grammars.with-grammars (
+        gs:
+        builtins.attrValues gs
+        ++ [
+          inputs.nextflow.packages.${system}.tree-sitter-nextflow
+        ]
+      );
     }
   );
 in
@@ -208,7 +215,7 @@ emacsWithOverrides.emacsWithPackages (
     rust-mode # A major-mode for editing Rust source code
     scad-mode # A major mode for editing OpenSCAD code
     treesit-auto # Automatic installation, usage, and fallback for tree-sitter major modes
-    treesit-grammars.with-all-grammars # For use with tree-sitter
+    treesit-grammars-all # For use with tree-sitter
     typescript-mode # Major mode for editing typescript
     vertico # VERTical Interactive COmpletion
     vertico-prescient # Prescient support for vertico

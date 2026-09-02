@@ -11,10 +11,7 @@
       flake = false;
     };
 
-    nextflow-mode = {
-      url = "github:edmundmiller/nextflow-mode";
-      flake = false;
-    };
+    nextflow.url = "github:pjones/nextflow.nix";
 
     org-clock-dbus = {
       url = "github:pjones/org-clock-dbus";

@@ -21,7 +21,7 @@
       };
 
       packages.emacs = pkgs.callPackage ./emacs-and-packages.nix {
-        inherit inputs;
+        inherit inputs system;
         emacs = pkgs.emacs-pgtk;
       };
 

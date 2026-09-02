@@ -18,6 +18,24 @@
         "type": "github"
       }
     },
+    "flake-parts_2": {
+      "inputs": {
+        "nixpkgs-lib": "nixpkgs-lib_2"
+      },
+      "locked": {
+        "lastModified": 1787559586,
+        "narHash": "sha256-onL0VLf9vPllmT0H/OlURIU5r5t5WIEl7t4tVNKT0Nw=",
+        "owner": "hercules-ci",
+        "repo": "flake-parts",
+        "rev": "9d0d87172c374f89da73c1cfe6d81ae62feac1f1",
+        "type": "github"
+      },
+      "original": {
+        "owner": "hercules-ci",
+        "repo": "flake-parts",
+        "type": "github"
+      }
+    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -39,6 +57,21 @@
         "type": "github"
       }
     },
+    "import-tree": {
+      "locked": {
+        "lastModified": 1788210572,
+        "narHash": "sha256-iDArQutSbrjtMQLUIc32iSb6tFqjl6IJU3cA8p8isuM=",
+        "owner": "vic",
+        "repo": "import-tree",
+        "rev": "8961e2418a12a71e08943c9f3d8cf6dbbc3cd172",
+        "type": "github"
+      },
+      "original": {
+        "owner": "vic",
+        "repo": "import-tree",
+        "type": "github"
+      }
+    },
     "link-hint": {
       "flake": false,
       "locked": {
@@ -56,34 +89,38 @@
         "type": "github"
       }
     },
-    "nextflow-mode": {
-      "flake": false,
+    "nextflow": {
+      "inputs": {
+        "flake-parts": "flake-parts_2",
+        "import-tree": "import-tree",
+        "nixpkgs": "nixpkgs"
+      },
       "locked": {
-        "lastModified": 1735275074,
-        "narHash": "sha256-j2y3WHkUee5/xMMmQjHvcsdNpj6cTZvbHXmcDf+RxXw=",
-        "owner": "edmundmiller",
-        "repo": "nextflow-mode",
-        "rev": "f78a67966c6475b618223ebfc2a9bc66a4ff4821",
+        "lastModified": 1788288969,
+        "narHash": "sha256-l6Cyq7AACkvqhr1UzLmOwYZqhHZQ40XmaZNM3txF540=",
+        "owner": "pjones",
+        "repo": "nextflow.nix",
+        "rev": "764cf612507f92d8f8c939bca7527d83e9c23b20",
         "type": "github"
       },
       "original": {
-        "owner": "edmundmiller",
-        "repo": "nextflow-mode",
+        "owner": "pjones",
+        "repo": "nextflow.nix",
         "type": "github"
       }
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1785599192,
-        "narHash": "sha256-dg4RTtDxnXY13UkJNdhmgTUTl0n/IJBlCigfO7nutZw=",
+        "lastModified": 1787964612,
+        "narHash": "sha256-0N9nghg3nwzX6b6qc77EzjR9cu/Z+UR66FlfsCqiURs=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "6d65bfc1bcef2ef39a239d38e577e92a89fb0f07",
+        "rev": "e8be7818e19ada32105a8af937a6a473b38167ca",
         "type": "github"
       },
       "original": {
         "owner": "NixOS",
-        "ref": "nixos-26.05",
+        "ref": "nixpkgs-unstable",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -100,6 +137,37 @@
       "original": {
         "owner": "nix-community",
         "repo": "nixpkgs.lib",
+        "type": "github"
+      }
+    },
+    "nixpkgs-lib_2": {
+      "locked": {
+        "lastModified": 1785031560,
+        "narHash": "sha256-OmshNvn2vupOFpYinLUu+1Dnpu4n7Q5N3ggGVNHpkUI=",
+        "owner": "nix-community",
+        "repo": "nixpkgs.lib",
+        "rev": "0e79af5e3d4dcfcd676ab5ba3f95d2e3352e078c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "nixpkgs.lib",
+        "type": "github"
+      }
+    },
+    "nixpkgs_2": {
+      "locked": {
+        "lastModified": 1785599192,
+        "narHash": "sha256-dg4RTtDxnXY13UkJNdhmgTUTl0n/IJBlCigfO7nutZw=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "6d65bfc1bcef2ef39a239d38e577e92a89fb0f07",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-26.05",
+        "repo": "nixpkgs",
         "type": "github"
       }
     },
@@ -176,8 +244,8 @@
         "flake-parts": "flake-parts",
         "home-manager": "home-manager",
         "link-hint": "link-hint",
-        "nextflow-mode": "nextflow-mode",
-        "nixpkgs": "nixpkgs",
+        "nextflow": "nextflow",
+        "nixpkgs": "nixpkgs_2",
         "org-clock-dbus": "org-clock-dbus",
         "org-grader": "org-grader",
         "org-inline-image-mode": "org-inline-image-mode",
