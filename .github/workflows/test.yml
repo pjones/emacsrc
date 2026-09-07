@@ -5,6 +5,8 @@ on:
     types: [ "opened", "synchronize", "reopened", "closed" ]
   push:
     branches: [ "nixos-*" ]
+  schedule:
+    - cron: "45 3 * * *"
 
 jobs:
   build:
@@ -16,6 +18,15 @@ jobs:
     steps:
       - uses: actions/checkout@v6
       - uses: nixbuild/nix-quick-install-action@v34
+
+      - uses: cachix/cachix-action@v17
+        with:
+          name: pjones
+          authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
+
+      - name: Update All Dependencies for Nightly Builds
+        if: github.event_name == 'schedule'
+        run: nix flake update
 
       - name: macOS Package Only
         if: runner.os == 'macOS'
