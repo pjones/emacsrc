@@ -382,7 +382,15 @@ always be requested."
 
  `(org-agenda-custom-commands
    '(("c" "Current Status"
-      ((stuck ""
+      ((agenda ""
+        ((org-agenda-overriding-header "📅 Agenda:")
+         (org-agenda-remove-tags nil)
+         (org-agenda-current-time-string "⮜┈┈┈┈┈┈┈ now")
+         (org-agenda-prefix-format "  %-12s %-12t %-8c ")
+         (org-agenda-todo-keyword-format "")
+         (org-agenda-sorting-strategy '(user-defined-down))
+         (org-agenda-cmp-user-defined #'pjones:org-agenda-items-less)))
+       (stuck ""
          ((org-agenda-overriding-header "⚠️ Stuck Projects:")))
        (tags "area+TODO=\"DONE\"|-SCHEDULED={.+}-DEADLINE={.+}+area+TODO=\"TODO\""
          ((org-agenda-overriding-header "☢️ Unscheduled Area Maintenance:")))
@@ -393,14 +401,6 @@ always be requested."
           (org-agenda-prefix-format "  %-8c ")
           (org-agenda-todo-keyword-format "")))
        (pjones:org-agenda-quote "")
-       (agenda ""
-        ((org-agenda-overriding-header "📅 Agenda:")
-         (org-agenda-remove-tags nil)
-         (org-agenda-current-time-string "⮜┈┈┈┈┈┈┈ now")
-         (org-agenda-prefix-format "  %-12s %-12t %-8c ")
-         (org-agenda-todo-keyword-format "")
-         (org-agenda-sorting-strategy '(user-defined-down))
-         (org-agenda-cmp-user-defined #'pjones:org-agenda-items-less)))
        (tags-todo "TODO=\"NEXT\"-SCHEDULED={.+}-DEADLINE={.+}-@call-@read-@email"
          ((org-agenda-overriding-header "🎯 Next Actions:")
           (org-agenda-skip-function '(org-agenda-skip-entry-if 'scheduled 'deadline))
