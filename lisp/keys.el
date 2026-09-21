@@ -177,6 +177,16 @@ FUNC."
         (consult-org-roam-mode)
         (consult-org-roam-search))))
 
+    (define-key map (kbd "S") '("org-roam-semester-report" .
+      (lambda ()
+        "Create a new status report."
+        (interactive)
+        (require 'org-roam)
+        (org-roam-capture- :goto nil
+                           :keys "s"
+                           :templates nil
+                           :node (org-roam-node-create)))))
+
     map)
   "Key bindings for note taking.")
 

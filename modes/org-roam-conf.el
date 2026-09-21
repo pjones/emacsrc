@@ -29,6 +29,14 @@
                   ("Entries" "Week %<%V>" "%<%A, %d %B>"))
   "The capture target for the daily journal.")
 
+(defun pjones:org-roam-semester-report-date ()
+  "Return the date for the next semester report."
+  (let* ((now (current-time))
+         (decoded (decode-time now)))
+    (if (> (decoded-time-month decoded) 4)
+        (encode-time (list 0 0 0 1 10 (decoded-time-year decoded)))
+      (encode-time (list 0 0 0 1 4 (decoded-time-year decoded))))))
+
 (custom-set-variables
  '(org-roam-directory (concat pjones:org-notes-directory "wiki"))
  '(org-roam-dailies-directory "journal")
@@ -53,6 +61,13 @@
       (file ,(concat pjones:org-notes-directory "templates/org/research-notes.org"))
       :target (file "garden/${pjones:org-roam-node-to-file}")
       :jump-to-captured t
+      :empty-lines 1
+      :unnarrowed t)
+     ("s" "Semester Progress Report" plain
+      (file ,(concat pjones:org-notes-directory "templates/org/semester-progress-report.org"))
+      :target (file "garden/${pjones:org-roam-node-to-file}")
+      :jump-to-captured t
+      :immediate-finish t
       :empty-lines 1
       :unnarrowed t)
      ("w" "Research Review Article" plain
