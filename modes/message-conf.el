@@ -10,7 +10,7 @@
 
 (declare-function khardel-insert-email "khardel")
 
-(defvar pjones:message-htmlize-before-send t
+(defvar pjones:message-htmlize-before-send nil
   "When non-nil, convert message to HTML before sending.")
 
 (defun pjones:toggle-message-htmlize-before-send ()
