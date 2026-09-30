@@ -7,6 +7,7 @@
 (require 'json)
 (require 'message)
 (require 'mu4e)
+(require 'mu4e-icalendar)
 (require 'rx)
 
 (declare-function orgalist-mode "orgalist")
