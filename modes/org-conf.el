@@ -821,6 +821,7 @@ When HERE is non-nil, create a heading after point."
 
 (defvar-local pjones:org-add-created-timestamp t
   "Whether to add a CREATED timestamp to all headings.")
+(put 'pjones:org-add-created-timestamp 'safe-local-variable 'booleanp)
 
 (defun pjones:org-ensure-created-timestamp ()
   "Ensure the current heading has a CREATED property."
