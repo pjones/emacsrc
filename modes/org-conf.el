@@ -160,7 +160,7 @@ Requires `org-priority-get-priority-function' to be set to the function
                    (cond
                     ((if v1 (and v2 (< v1 v2)) v2) -1)
                     ((if v2 (and v1 (< v2 v1)) v1) +1)))))
-         (timestamp (funcall props 'time-of-day))
+         (timestamp (reverse (funcall props 'time-of-day)))
          (scheduled (reverse (funcall props 'ts-date)))
          (priority (mapcar (lambda (priority)
                              (if (and priority (< priority 0)) nil
