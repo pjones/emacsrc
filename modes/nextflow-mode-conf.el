@@ -7,27 +7,28 @@
 (require 'eglot)
 (require 'nextflow-mode)
 (require 'nextflow-ts-mode)
-(require 'reformatter)
 
-(reformatter-define nextflow-format
-  :program "nextflow"
-  :args (list "lint" "-format" "-output" "json" input-file)
-  :stdin nil
-  :stdout nil
-  :input-file (reformatter-temp-file-in-current-directory "nf")
-  :group 'nextflow)
+;; Using the built-in linter is really slow and randomly deletes
+;; comments.
+;;
+;; (require 'reformatter)
+;;
+;; (reformatter-define nextflow-format
+;;   :program "nextflow"
+;;   :args (list "lint" "-format" "-output" "json" input-file)
+;;   :stdin nil
+;;   :stdout nil
+;;   :input-file (reformatter-temp-file-in-current-directory "nf")
+;;   :group 'nextflow)
 
 (defun pjones:nextflow-mode-hook ()
   "Hook for `nextflow-mode-hook'."
-  (if (eq major-mode 'nextflow-mode)
-      (nextflow-ts-mode)
-    (let* ((project (project-current))
-           (dir (or (and project (project-root project))
-                    default-directory)))
-      (dir-locals-set-directory-class dir 'nextflow-project)
-      (eglot-ensure)
-      (eglot-semantic-tokens-mode -1)
-      (nextflow-format-on-save-mode))))
+  (let* ((project (project-current))
+         (dir (or (and project (project-root project))
+                  default-directory)))
+    (dir-locals-set-directory-class dir 'nextflow-project)
+    (eglot-ensure)
+    (eglot-semantic-tokens-mode -1)))
 
 ;; These variable need to be set for nextflow to work correctly:
 (let ((variables '((eglot-workspace-configuration
