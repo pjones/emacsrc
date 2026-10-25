@@ -10,7 +10,6 @@
 (declare-function dumb-jump-xref-activate "dumb-jump")
 (declare-function indium-connect-to-chrome "indium")
 (declare-function indium-run-node "indium")
-(declare-function outline-indent-minor-mode "outline-indent")
 (declare-function pjones:delete-whitespace-mode "./whitespace.el")
 (declare-function pjones:project-name "./functions")
 (declare-function project-root "project")
@@ -69,7 +68,6 @@
 
   (auto-fill-mode)
   (flymake-mode)
-  (outline-indent-minor-mode)
   (pjones:delete-whitespace-mode)
   (puni-mode)
   (save-place-mode)
