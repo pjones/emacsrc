@@ -28,6 +28,7 @@
     (nix-mode nix-ts-mode)
     (ruby-mode ruby-ts-mode)
     (rust-mode rust-ts-mode)
+    (typst-mode typst-ts-mode)
     (yaml-mode yaml-ts-mode))
   "A list of aliases for modes.
 

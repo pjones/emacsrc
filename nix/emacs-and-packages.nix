@@ -112,6 +112,7 @@ emacsWithOverrides.emacsWithPackages (
     citar # quickly find and act on bibliographic references
     citar-embark # Citar integration with embark
     citar-org-roam # citar/org-roam integration
+    citar-typst # Typst support for the Citar package in Emacs
     consult # Consulting completing-read
     consult-org-roam # Consult integration for org-roam
     consult-recoll # recoll queries in emacs using consult
@@ -217,6 +218,7 @@ emacsWithOverrides.emacsWithPackages (
     treesit-auto # Automatic installation, usage, and fallback for tree-sitter major modes
     treesit-grammars-all # For use with tree-sitter
     typescript-mode # Major mode for editing typescript
+    typst-ts-mode # Typst tree sitter major mode for Emacs
     vertico # VERTical Interactive COmpletion
     vertico-prescient # Prescient support for vertico
     visual-fill # Auto-refill paragraphs without modifying the buffer
