@@ -6,6 +6,11 @@
     home-manager.url = "github:nix-community/home-manager/release-26.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
+    khalel = {
+      url = "github:emacsmirror/khalel";
+      flake = false;
+    };
+
     link-hint = {
       url = "github:pjones/link-hint.el/pjones/fix-avy-action";
       flake = false;

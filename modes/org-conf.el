@@ -40,6 +40,7 @@
 (declare-function org-modern-mode "org-modern")
 (declare-function org-roam-dailies-goto-date "org-roam")
 (declare-function org-tree-slide-mode "org-tree-slide")
+(declare-function pjones:calendar-contact-sync "../lisp/interactive.el")
 (declare-function pjones:delete-whitespace-mode "../lisp/whitespace.el")
 (declare-function pjones:ensure-blank-lines "../lisp/interactive")
 (declare-function pjones:open-line-above "../lisp/interactive")
@@ -1306,6 +1307,13 @@ For example, expand `org-mode' macros.  TEXT and BACKEND are provided by
   (define-key map (kbd "M-N") #'pjones:org-next-item)
   (define-key map (kbd "M-p") #'pjones:org-up-or-prev)
   (define-key map (kbd "M-P") #'org-previous-item))
+
+(let ((map org-agenda-mode-map))
+  (define-key map (kbd "U")
+              (lambda ()
+                (interactive)
+                (pjones:calendar-contact-sync)
+                (org-agenda-redo-all))))
 
 ;; This function was deleted upstream.
 (defun calendar-backward-day (&rest _)
