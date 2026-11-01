@@ -401,14 +401,6 @@ always be requested."
           (org-agenda-prefix-format "  %-8c ")
           (org-agenda-todo-keyword-format "")))
        (pjones:org-agenda-quote "")
-       (tags-todo "TODO=\"NEXT\"-SCHEDULED={.+}-DEADLINE={.+}-@call-@read-@email"
-         ((org-agenda-overriding-header "🎯 Next Actions:")
-          (org-agenda-skip-function '(org-agenda-skip-entry-if 'scheduled 'deadline))
-          (org-agenda-prefix-format "  %-8c ")
-          (org-agenda-remove-tags nil)
-          (org-agenda-todo-keyword-format "")
-          (org-agenda-cmp-user-defined #'pjones:org-sort-next-actions)
-          (org-agenda-sorting-strategy '(user-defined-up))))
        (tags-todo "@call|@email/NEXT"
          ((org-agenda-overriding-header "✉️ Phone Calls to Make, Emails to Send:")
           (org-agenda-prefix-format "  %-8c ")
@@ -419,6 +411,19 @@ always be requested."
           (org-agenda-prefix-format "  %-8c ")
           (org-agenda-remove-tags nil)
           (org-agenda-todo-keyword-format "")))
+       (tags-todo "@write/NEXT"
+         ((org-agenda-overriding-header "🖊️ Writing Block:")
+          (org-agenda-prefix-format "  %-8c ")
+          (org-agenda-remove-tags nil)
+          (org-agenda-todo-keyword-format "")))
+       (tags-todo "TODO=\"NEXT\"-SCHEDULED={.+}-DEADLINE={.+}-@call-@read-@write-@email"
+         ((org-agenda-overriding-header "🎯 Next Actions:")
+          (org-agenda-skip-function '(org-agenda-skip-entry-if 'scheduled 'deadline))
+          (org-agenda-prefix-format "  %-8c ")
+          (org-agenda-remove-tags nil)
+          (org-agenda-todo-keyword-format "")
+          (org-agenda-cmp-user-defined #'pjones:org-sort-next-actions)
+          (org-agenda-sorting-strategy '(user-defined-up))))
        (tags-todo "homework/TODO"
          ((org-agenda-overriding-header "📘 Homework:")
           (org-agenda-prefix-format "  %-8c ")
