@@ -20,7 +20,7 @@
  '(mail-user-agent 'mu4e-user-agent)
  '(make-backup-files nil)
  '(server-client-instructions nil)
- '(trusted-content '("~/src/rc/"))
+ '(trusted-content '("~/src/self/"))
  '(vc-follow-symlinks t)) ; Don't warn prompt me about symlinks!
 
 ;; Mark some file variables as safe:
