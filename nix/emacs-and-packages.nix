@@ -25,6 +25,12 @@ let
   # Package overrides:
   emacsWithOverrides = (emacsPackagesFor emacs).overrideScope (
     self: super: {
+      cdsync = emacs.pkgs.melpaBuild {
+        inherit version;
+        pname = "cdsync";
+        src = inputs.cdsync;
+      };
+
       # I need this so khalel uses the same org-mode that I do and the
       # macros expand correctly.  Otherwise I get this error:
       # https://gitlab.com/hperrey/khalel/-/issues/11
@@ -119,6 +125,7 @@ emacsWithOverrides.emacsWithPackages (
     avy # Jump to arbitrary positions in visible text and select text quickly
     beframe # Isolate Emacs buffers per frame
     cape # Let your completions fly!
+    cdsync # CalDAV Sync for Emacs diary files
     citar # quickly find and act on bibliographic references
     citar-embark # Citar integration with embark
     citar-org-roam # citar/org-roam integration

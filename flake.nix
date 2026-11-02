@@ -6,6 +6,11 @@
     home-manager.url = "github:nix-community/home-manager/release-26.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
+    cdsync = {
+      url = "git+https://git.sr.ht/~sebasmonia/cdsync.el";
+      flake = false;
+    };
+
     khalel = {
       url = "github:emacsmirror/khalel";
       flake = false;

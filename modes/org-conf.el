@@ -361,6 +361,8 @@ always be requested."
  ;; Stuff for org-agenda.
  '(org-agenda-block-separator ?─)
  '(org-agenda-files (pjones:org-agenda-files))
+ '(org-agenda-include-diary t)
+ '(org-agenda-show-current-time-in-grid t)
  '(org-agenda-show-inherited-tags nil)
  '(org-agenda-skip-deadline-if-done t)
  '(org-agenda-skip-scheduled-if-done t)
@@ -374,7 +376,7 @@ always be requested."
  '(org-agenda-todo-ignore-scheduled 'future)
  '(org-agenda-todo-ignore-timestamp nil)
  '(org-agenda-todo-ignore-with-date nil)
- '(org-agenda-use-time-grid nil)
+ '(org-agenda-use-time-grid t)
  '(org-agenda-window-setup 'current-window)
  '(org-deadline-warning-days 14)
 

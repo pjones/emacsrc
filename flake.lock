@@ -1,5 +1,21 @@
 {
   "nodes": {
+    "cdsync": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1696742913,
+        "narHash": "sha256-j3i8k/aoUKNGPwiNHcP0YxkVfhXXlHHQBiDGV2w/LQ0=",
+        "ref": "refs/heads/main",
+        "rev": "9ddee49a1e4052a2f87c3b1c9c57c76954b1e479",
+        "revCount": 27,
+        "type": "git",
+        "url": "https://git.sr.ht/~sebasmonia/cdsync.el"
+      },
+      "original": {
+        "type": "git",
+        "url": "https://git.sr.ht/~sebasmonia/cdsync.el"
+      }
+    },
     "fenix": {
       "inputs": {
         "nixpkgs": [
@@ -429,6 +445,7 @@
     },
     "root": {
       "inputs": {
+        "cdsync": "cdsync",
         "flake-parts": "flake-parts",
         "home-manager": "home-manager",
         "khalel": "khalel",
