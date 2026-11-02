@@ -31,16 +31,6 @@ let
         src = inputs.cdsync;
       };
 
-      # I need this so khalel uses the same org-mode that I do and the
-      # macros expand correctly.  Otherwise I get this error:
-      # https://gitlab.com/hperrey/khalel/-/issues/11
-      khalel = emacs.pkgs.trivialBuild {
-        inherit version;
-        pname = "khalel";
-        src = inputs.khalel;
-        packageRequires = [ self.org ];
-      };
-
       link-hint = update super.link-hint inputs.link-hint;
 
       # Not in nixpkgs:
@@ -177,7 +167,6 @@ emacsWithOverrides.emacsWithPackages (
     json-mode # Major mode for editing JSON files
     jsonrpc # JSON-RPC library
     jupyter # An interface to communicate with Jupyter kernels.
-    khalel # Import, edit and create calendar events through khal
     khardel # integrating khard, a console cardav client
     lin # Make 'hl-line-mode' more suitable for selection UIs
     link-hint # Use avy to open, copy, etc. visible links

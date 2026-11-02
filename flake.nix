@@ -11,11 +11,6 @@
       flake = false;
     };
 
-    khalel = {
-      url = "github:emacsmirror/khalel";
-      flake = false;
-    };
-
     link-hint = {
       url = "github:pjones/link-hint.el/pjones/fix-avy-action";
       flake = false;

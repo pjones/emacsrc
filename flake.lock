@@ -169,22 +169,6 @@
         "type": "github"
       }
     },
-    "khalel": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1783580104,
-        "narHash": "sha256-9LtJ0peEs1MOlLZrgSCoUZ2CPsq0OMjKCXJAqXyULL0=",
-        "owner": "emacsmirror",
-        "repo": "khalel",
-        "rev": "3691b4545eaef5a246f020f57bd0f843cc9c84ef",
-        "type": "github"
-      },
-      "original": {
-        "owner": "emacsmirror",
-        "repo": "khalel",
-        "type": "github"
-      }
-    },
     "link-hint": {
       "flake": false,
       "locked": {
@@ -322,11 +306,11 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1793410479,
-        "narHash": "sha256-HzgjxrLY4AEc0044ZuM5CHbLSWLZgDlay1idmzvvpJs=",
+        "lastModified": 1792898606,
+        "narHash": "sha256-Mg3rRjsbMqhSMxop5PYMXos8SwAjejrxSgVThTvP9eg=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "fa1373130d5a21c040a47c5dbe1913d59ed91808",
+        "rev": "1f607aa79b6356ed45d3cd3c8079c196e79efa2c",
         "type": "github"
       },
       "original": {
@@ -448,7 +432,6 @@
         "cdsync": "cdsync",
         "flake-parts": "flake-parts",
         "home-manager": "home-manager",
-        "khalel": "khalel",
         "link-hint": "link-hint",
         "nextflow": "nextflow",
         "nixpkgs": "nixpkgs_2",
