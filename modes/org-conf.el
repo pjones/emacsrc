@@ -19,6 +19,7 @@
 (autoload 'ox-ipynb-export-to-ipynb-buffer "ox-ipynb")
 
 ;; Silence compiler warnings
+(declare-function cdsync-update-all-calendars "cdsync")
 (declare-function citar-capf-setup "citar")
 (declare-function consult-org-heading "consult")
 (declare-function corg-setup "corg")
@@ -1274,6 +1275,14 @@ For example, expand `org-mode' macros.  TEXT and BACKEND are provided by
       (org-back-to-heading-or-point-min)
       (org-columns (not local)))))
 
+(defun pjones:org-agenda-reload ()
+  "Reload data needed for the `org-agenda'."
+  (interactive)
+  (require 'cdsync)
+  (cdsync-update-all-calendars)
+  (pjones:org-reset-agenda-files)
+  (org-agenda-redo-all))
+
 ;;; Key Bindings:
 (let ((map org-mode-map))
   ;; Reset these so I can use them as a prefix:
@@ -1308,6 +1317,9 @@ For example, expand `org-mode' macros.  TEXT and BACKEND are provided by
   (define-key map (kbd "M-N") #'pjones:org-next-item)
   (define-key map (kbd "M-p") #'pjones:org-up-or-prev)
   (define-key map (kbd "M-P") #'org-previous-item))
+
+(let ((map org-agenda-mode-map))
+  (keymap-set map "U" #'pjones:org-agenda-reload))
 
 ;; This function was deleted upstream.
 (defun calendar-backward-day (&rest _)
