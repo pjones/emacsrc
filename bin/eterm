@@ -6,9 +6,9 @@ set -eu
 set -o pipefail
 
 ################################################################################
-option_keep=nil
 option_cmd=
 option_funcall='(pjones:vterm-frame)'
+option_args=()
 
 ################################################################################
 usage() {
@@ -18,24 +18,29 @@ Usage: $(basename "$0") [options]
   -e CMD  Run CMD instead of a shell
   -k      Keep the window after CMD finishes
   -h      This message
+  -m      Blank the mode-line
 
 EOF
 }
 
 ################################################################################
-while getopts "he:k" o; do
+while getopts "he:km" o; do
   case "${o}" in
   e)
     option_cmd=$OPTARG
     ;;
 
   k)
-    option_keep=t
+    option_args+=(":keep t")
     ;;
 
   h)
     usage
     exit
+    ;;
+
+  m)
+    option_args+=(":no-mode-line t")
     ;;
 
   *)
@@ -53,7 +58,7 @@ if [ $# -gt 0 ]; then
 fi
 
 if [ -n "$option_cmd" ]; then
-  option_funcall="(pjones:vterm-frame-cmd \"${option_cmd//\"/}\" ${option_keep})"
+  option_funcall="(pjones:vterm-frame-cmd \"${option_cmd//\"/}\" ${option_args[*]})"
 fi
 
 e -- \

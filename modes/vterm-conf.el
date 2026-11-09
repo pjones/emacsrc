@@ -120,7 +120,7 @@ new title to use."
         (setq mode-name "VTerm"))
     (setq mode-name (concat "VTerm " title))))
 
-(cl-defun pjones:vterm (&key command name new keep exit)
+(cl-defun pjones:vterm (&key command name new keep no-mode-line exit)
   "Open a new terminal running COMMAND.
 
 If :COMMAND is nil then run a shell.
@@ -129,6 +129,7 @@ If :COMMAND is nil then run a shell.
 :NEW   If non-nil don't reuse an exiting terminal.
 :KEEP  If non-nil, don't delete the buffer when the process exits.
 :EXIT  Function to run when the process exits.
+:NO-MODE-LINE Remove the mode line when non-nil.
 
 Returns a new vterm buffer that has not been displayed."
   (interactive)
@@ -140,7 +141,9 @@ Returns a new vterm buffer that has not been displayed."
                   (when exit (add-hook 'pjones:vterm-exit-functions exit t t))))))
     (if (and (not new) (buffer-live-p buffer-name))
         (pop-to-buffer buffer-name)
-      (vterm--internal init name))))
+      (with-current-buffer (vterm--internal init name)
+        (when no-mode-line (setq-local mode-line-format nil))
+        (current-buffer)))))
 
 (defun pjones:vterm-display-frame (buffer)
   "Display BUFFER in a new frame."
@@ -156,11 +159,16 @@ Returns a new vterm buffer that has not been displayed."
   (interactive)
   (pjones:vterm-display-frame (pjones:vterm)))
 
-(defun pjones:vterm-frame-cmd (cmd &optional keep)
+(cl-defun pjones:vterm-frame-cmd (cmd &key keep no-mode-line)
   "Start a new vterm instance running CMD.
-If KEEP is non-nil then don't kill the buffer when the command finishes."
+If KEEP is non-nil then don't kill the buffer when the command finishes.
+If NO-MODE-LINE is non-nil, blank the mode-line."
   (with-current-buffer
-      (pjones:vterm-display-frame (pjones:vterm :command cmd :keep keep :name cmd))
+      (pjones:vterm-display-frame
+       (pjones:vterm :command cmd
+                     :keep keep
+                     :no-mode-line no-mode-line
+                     :name cmd))
     (vterm--set-title cmd)))
 
 (defun pjones:vterm-run-exit-functions (buffer event)
